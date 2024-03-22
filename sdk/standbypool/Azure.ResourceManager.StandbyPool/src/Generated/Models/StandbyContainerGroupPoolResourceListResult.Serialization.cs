@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             var format = options.Format == "W" ? ((IPersistableModel<StandbyContainerGroupPoolResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StandbyContainerGroupPoolResourceListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StandbyContainerGroupPoolResourceListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             var format = options.Format == "W" ? ((IPersistableModel<StandbyContainerGroupPoolResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StandbyContainerGroupPoolResourceListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StandbyContainerGroupPoolResourceListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 return null;
             }
-            IReadOnlyList<StandbyContainerGroupPoolResourceData> value = default;
+            IReadOnlyList<StandbyContainerGroupPoolData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<StandbyContainerGroupPoolResourceData> array = new List<StandbyContainerGroupPoolResourceData>();
+                    List<StandbyContainerGroupPoolData> array = new List<StandbyContainerGroupPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StandbyContainerGroupPoolResourceData.DeserializeStandbyContainerGroupPoolResourceData(item, options));
+                        array.Add(StandbyContainerGroupPoolData.DeserializeStandbyContainerGroupPoolData(item, options));
                     }
                     value = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StandbyContainerGroupPoolResourceListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StandbyContainerGroupPoolResourceListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                         return DeserializeStandbyContainerGroupPoolResourceListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StandbyContainerGroupPoolResourceListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StandbyContainerGroupPoolResourceListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

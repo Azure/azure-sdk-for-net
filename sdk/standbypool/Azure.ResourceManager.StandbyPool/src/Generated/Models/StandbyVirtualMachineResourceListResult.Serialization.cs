@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachineResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StandbyVirtualMachineResourceListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StandbyVirtualMachineResourceListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachineResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StandbyVirtualMachineResourceListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StandbyVirtualMachineResourceListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 return null;
             }
-            IReadOnlyList<StandbyVirtualMachineResourceData> value = default;
+            IReadOnlyList<StandbyVirtualMachineData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<StandbyVirtualMachineResourceData> array = new List<StandbyVirtualMachineResourceData>();
+                    List<StandbyVirtualMachineData> array = new List<StandbyVirtualMachineData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StandbyVirtualMachineResourceData.DeserializeStandbyVirtualMachineResourceData(item, options));
+                        array.Add(StandbyVirtualMachineData.DeserializeStandbyVirtualMachineData(item, options));
                     }
                     value = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StandbyVirtualMachineResourceListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StandbyVirtualMachineResourceListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                         return DeserializeStandbyVirtualMachineResourceListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StandbyVirtualMachineResourceListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StandbyVirtualMachineResourceListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

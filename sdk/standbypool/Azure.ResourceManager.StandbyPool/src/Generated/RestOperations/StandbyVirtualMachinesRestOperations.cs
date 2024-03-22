@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="standbyVirtualMachinePoolName"/> or <paramref name="standbyVirtualMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="standbyVirtualMachinePoolName"/> or <paramref name="standbyVirtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StandbyVirtualMachineResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string standbyVirtualMachinePoolName, string standbyVirtualMachineName, CancellationToken cancellationToken = default)
+        public async Task<Response<StandbyVirtualMachineData>> GetAsync(string subscriptionId, string resourceGroupName, string standbyVirtualMachinePoolName, string standbyVirtualMachineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -158,13 +158,13 @@ namespace Azure.ResourceManager.StandbyPool
             {
                 case 200:
                     {
-                        StandbyVirtualMachineResourceData value = default;
+                        StandbyVirtualMachineData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StandbyVirtualMachineResourceData.DeserializeStandbyVirtualMachineResourceData(document.RootElement);
+                        value = StandbyVirtualMachineData.DeserializeStandbyVirtualMachineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((StandbyVirtualMachineResourceData)null, message.Response);
+                    return Response.FromValue((StandbyVirtualMachineData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="standbyVirtualMachinePoolName"/> or <paramref name="standbyVirtualMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="standbyVirtualMachinePoolName"/> or <paramref name="standbyVirtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StandbyVirtualMachineResourceData> Get(string subscriptionId, string resourceGroupName, string standbyVirtualMachinePoolName, string standbyVirtualMachineName, CancellationToken cancellationToken = default)
+        public Response<StandbyVirtualMachineData> Get(string subscriptionId, string resourceGroupName, string standbyVirtualMachinePoolName, string standbyVirtualMachineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -191,13 +191,13 @@ namespace Azure.ResourceManager.StandbyPool
             {
                 case 200:
                     {
-                        StandbyVirtualMachineResourceData value = default;
+                        StandbyVirtualMachineData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StandbyVirtualMachineResourceData.DeserializeStandbyVirtualMachineResourceData(document.RootElement);
+                        value = StandbyVirtualMachineData.DeserializeStandbyVirtualMachineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((StandbyVirtualMachineResourceData)null, message.Response);
+                    return Response.FromValue((StandbyVirtualMachineData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

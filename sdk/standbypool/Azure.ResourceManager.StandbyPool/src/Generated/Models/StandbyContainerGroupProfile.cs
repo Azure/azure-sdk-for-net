@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    /// <summary> The response of a StandbyVirtualMachinePoolResource list operation. </summary>
-    internal partial class StandbyVirtualMachinePoolResourceListResult
+    /// <summary> Details of the ContainerGroupProfile. </summary>
+    public partial class StandbyContainerGroupProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +46,35 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolResourceListResult"/>. </summary>
-        /// <param name="value"> The StandbyVirtualMachinePoolResource items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal StandbyVirtualMachinePoolResourceListResult(IEnumerable<StandbyVirtualMachinePoolData> value)
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupProfile"/>. </summary>
+        /// <param name="id"> Specifies container group profile id of standby container groups. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public StandbyContainerGroupProfile(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            Argument.AssertNotNull(id, nameof(id));
 
-            Value = value.ToList();
+            Id = id;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolResourceListResult"/>. </summary>
-        /// <param name="value"> The StandbyVirtualMachinePoolResource items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupProfile"/>. </summary>
+        /// <param name="id"> Specifies container group profile id of standby container groups. </param>
+        /// <param name="revision"> Specifies revision of container group profile. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyVirtualMachinePoolResourceListResult(IReadOnlyList<StandbyVirtualMachinePoolData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyContainerGroupProfile(ResourceIdentifier id, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            Id = id;
+            Revision = revision;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolResourceListResult"/> for deserialization. </summary>
-        internal StandbyVirtualMachinePoolResourceListResult()
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupProfile"/> for deserialization. </summary>
+        internal StandbyContainerGroupProfile()
         {
         }
 
-        /// <summary> The StandbyVirtualMachinePoolResource items on this page. </summary>
-        public IReadOnlyList<StandbyVirtualMachinePoolData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> Specifies container group profile id of standby container groups. </summary>
+        public ResourceIdentifier Id { get; set; }
+        /// <summary> Specifies revision of container group profile. </summary>
+        public long? Revision { get; set; }
     }
 }

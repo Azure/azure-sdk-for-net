@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    /// <summary> The response of a StandbyVirtualMachinePoolResource list operation. </summary>
-    internal partial class StandbyVirtualMachinePoolResourceListResult
+    /// <summary> Details of the elasticity profile. </summary>
+    internal partial class StandbyVirtualMachinePoolElasticityPatchProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +45,21 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolResourceListResult"/>. </summary>
-        /// <param name="value"> The StandbyVirtualMachinePoolResource items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal StandbyVirtualMachinePoolResourceListResult(IEnumerable<StandbyVirtualMachinePoolData> value)
+        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolElasticityPatchProfile"/>. </summary>
+        public StandbyVirtualMachinePoolElasticityPatchProfile()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolResourceListResult"/>. </summary>
-        /// <param name="value"> The StandbyVirtualMachinePoolResource items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolElasticityPatchProfile"/>. </summary>
+        /// <param name="maxReadyCapacity"> Specifies maximum number of virtual machines in the standby virtual machine pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyVirtualMachinePoolResourceListResult(IReadOnlyList<StandbyVirtualMachinePoolData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyVirtualMachinePoolElasticityPatchProfile(long? maxReadyCapacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            MaxReadyCapacity = maxReadyCapacity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolResourceListResult"/> for deserialization. </summary>
-        internal StandbyVirtualMachinePoolResourceListResult()
-        {
-        }
-
-        /// <summary> The StandbyVirtualMachinePoolResource items on this page. </summary>
-        public IReadOnlyList<StandbyVirtualMachinePoolData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> Specifies maximum number of virtual machines in the standby virtual machine pool. </summary>
+        public long? MaxReadyCapacity { get; set; }
     }
 }

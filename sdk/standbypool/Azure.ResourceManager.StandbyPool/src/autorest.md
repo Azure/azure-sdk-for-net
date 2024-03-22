@@ -8,6 +8,7 @@ csharp: true
 library-name: StandbyPool
 namespace: Azure.ResourceManager.StandbyPool
 require: https://github.com/Azure/azure-rest-api-specs/blob/1fe785dc9b49c48088a9d11db023eee07dd168e7/specification/standbypool/resource-manager/readme.md
+#tag: package-preview-2023-12
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -21,7 +22,23 @@ use-model-reader-writer: true
 #mgmt-debug:
 #  show-serialized-names: true
 
+rename-mapping:
+  StandbyContainerGroupPoolResource: StandbyContainerGroupPool
+  StandbyVirtualMachinePoolResource: StandbyVirtualMachinePool
+  StandbyVirtualMachinePoolResource.properties.attachedVirtualMachineScaleSetId: -|arm-id
+  StandbyVirtualMachineResource: StandbyVirtualMachine
+  StandbyVirtualMachineResource.properties.virtualMachineResourceId: -|arm-id
+  VirtualMachineState: StandbyVirtualMachineState
+  ContainerGroupProfile: StandbyContainerGroupProfile
+  ContainerGroupProperties: StandbyContainerGroupProperties
+  ContainerGroupPropertiesUpdate: StandbyContainerGroupPatchProperties
+  ContainerGroupProfileUpdate: StandbyContainerGroupPatchProfile
+  StandbyContainerGroupPoolElasticityProfileUpdate: StandbyContainerGroupPoolElasticityPatchProfile
+  StandbyVirtualMachinePoolElasticityProfileUpdate: StandbyVirtualMachinePoolElasticityPatchProfile
 
+prepend-rp-prefix:
+  - ProvisioningState
+  - RefillPolicy
 
 format-by-name-rules:
   'tenantId': 'uuid'

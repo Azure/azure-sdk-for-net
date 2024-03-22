@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
 
         /// <summary> Gets a collection of StandbyContainerGroupPoolResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of StandbyContainerGroupPoolResources and their operations over a StandbyContainerGroupPoolResource. </returns>
-        public virtual StandbyContainerGroupPoolResourceCollection GetStandbyContainerGroupPoolResources()
+        public virtual StandbyContainerGroupPoolCollection GetStandbyContainerGroupPools()
         {
-            return GetCachedClient(client => new StandbyContainerGroupPoolResourceCollection(client, Id));
+            return GetCachedClient(client => new StandbyContainerGroupPoolCollection(client, Id));
         }
 
         /// <summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="standbyContainerGroupPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="standbyContainerGroupPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<StandbyContainerGroupPoolResource>> GetStandbyContainerGroupPoolResourceAsync(string standbyContainerGroupPoolName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StandbyContainerGroupPoolResource>> GetStandbyContainerGroupPoolAsync(string standbyContainerGroupPoolName, CancellationToken cancellationToken = default)
         {
-            return await GetStandbyContainerGroupPoolResources().GetAsync(standbyContainerGroupPoolName, cancellationToken).ConfigureAwait(false);
+            return await GetStandbyContainerGroupPools().GetAsync(standbyContainerGroupPoolName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -97,16 +97,16 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="standbyContainerGroupPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="standbyContainerGroupPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<StandbyContainerGroupPoolResource> GetStandbyContainerGroupPoolResource(string standbyContainerGroupPoolName, CancellationToken cancellationToken = default)
+        public virtual Response<StandbyContainerGroupPoolResource> GetStandbyContainerGroupPool(string standbyContainerGroupPoolName, CancellationToken cancellationToken = default)
         {
-            return GetStandbyContainerGroupPoolResources().Get(standbyContainerGroupPoolName, cancellationToken);
+            return GetStandbyContainerGroupPools().Get(standbyContainerGroupPoolName, cancellationToken);
         }
 
         /// <summary> Gets a collection of StandbyVirtualMachinePoolResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of StandbyVirtualMachinePoolResources and their operations over a StandbyVirtualMachinePoolResource. </returns>
-        public virtual StandbyVirtualMachinePoolResourceCollection GetStandbyVirtualMachinePoolResources()
+        public virtual StandbyVirtualMachinePoolCollection GetStandbyVirtualMachinePools()
         {
-            return GetCachedClient(client => new StandbyVirtualMachinePoolResourceCollection(client, Id));
+            return GetCachedClient(client => new StandbyVirtualMachinePoolCollection(client, Id));
         }
 
         /// <summary>
@@ -135,9 +135,9 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="standbyVirtualMachinePoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="standbyVirtualMachinePoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<StandbyVirtualMachinePoolResource>> GetStandbyVirtualMachinePoolResourceAsync(string standbyVirtualMachinePoolName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StandbyVirtualMachinePoolResource>> GetStandbyVirtualMachinePoolAsync(string standbyVirtualMachinePoolName, CancellationToken cancellationToken = default)
         {
-            return await GetStandbyVirtualMachinePoolResources().GetAsync(standbyVirtualMachinePoolName, cancellationToken).ConfigureAwait(false);
+            return await GetStandbyVirtualMachinePools().GetAsync(standbyVirtualMachinePoolName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="standbyVirtualMachinePoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="standbyVirtualMachinePoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<StandbyVirtualMachinePoolResource> GetStandbyVirtualMachinePoolResource(string standbyVirtualMachinePoolName, CancellationToken cancellationToken = default)
+        public virtual Response<StandbyVirtualMachinePoolResource> GetStandbyVirtualMachinePool(string standbyVirtualMachinePoolName, CancellationToken cancellationToken = default)
         {
-            return GetStandbyVirtualMachinePoolResources().Get(standbyVirtualMachinePoolName, cancellationToken);
+            return GetStandbyVirtualMachinePools().Get(standbyVirtualMachinePoolName, cancellationToken);
         }
     }
 }

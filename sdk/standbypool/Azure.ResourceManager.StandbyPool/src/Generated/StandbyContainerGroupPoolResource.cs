@@ -18,10 +18,10 @@ using Azure.ResourceManager.StandbyPool.Models;
 namespace Azure.ResourceManager.StandbyPool
 {
     /// <summary>
-    /// A Class representing a StandbyContainerGroupPoolResource along with the instance operations that can be performed on it.
+    /// A Class representing a StandbyContainerGroupPool along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StandbyContainerGroupPoolResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetStandbyContainerGroupPoolResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetStandbyContainerGroupPoolResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetStandbyContainerGroupPool method.
     /// </summary>
     public partial class StandbyContainerGroupPoolResource : ArmResource
     {
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.StandbyPool
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsClientDiagnostics;
-        private readonly StandbyContainerGroupPoolsRestOperations _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsRestClient;
-        private readonly StandbyContainerGroupPoolResourceData _data;
+        private readonly ClientDiagnostics _standbyContainerGroupPoolClientDiagnostics;
+        private readonly StandbyContainerGroupPoolsRestOperations _standbyContainerGroupPoolRestClient;
+        private readonly StandbyContainerGroupPoolData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.StandbyPool/standbyContainerGroupPools";
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// <summary> Initializes a new instance of the <see cref="StandbyContainerGroupPoolResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal StandbyContainerGroupPoolResource(ArmClient client, StandbyContainerGroupPoolResourceData data) : this(client, data.Id)
+        internal StandbyContainerGroupPoolResource(ArmClient client, StandbyContainerGroupPoolData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.StandbyPool
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal StandbyContainerGroupPoolResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StandbyPool", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string standbyContainerGroupPoolResourceStandbyContainerGroupPoolsApiVersion);
-            _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsRestClient = new StandbyContainerGroupPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, standbyContainerGroupPoolResourceStandbyContainerGroupPoolsApiVersion);
+            _standbyContainerGroupPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StandbyPool", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string standbyContainerGroupPoolApiVersion);
+            _standbyContainerGroupPoolRestClient = new StandbyContainerGroupPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, standbyContainerGroupPoolApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.StandbyPool
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual StandbyContainerGroupPoolResourceData Data
+        public virtual StandbyContainerGroupPoolData Data
         {
             get
             {
@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.StandbyPool
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<StandbyContainerGroupPoolResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsClientDiagnostics.CreateScope("StandbyContainerGroupPoolResource.Get");
+            using var scope = _standbyContainerGroupPoolClientDiagnostics.CreateScope("StandbyContainerGroupPoolResource.Get");
             scope.Start();
             try
             {
-                var response = await _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _standbyContainerGroupPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new StandbyContainerGroupPoolResource(Client, response.Value), response.GetRawResponse());
@@ -154,11 +154,11 @@ namespace Azure.ResourceManager.StandbyPool
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<StandbyContainerGroupPoolResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsClientDiagnostics.CreateScope("StandbyContainerGroupPoolResource.Get");
+            using var scope = _standbyContainerGroupPoolClientDiagnostics.CreateScope("StandbyContainerGroupPoolResource.Get");
             scope.Start();
             try
             {
-                var response = _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _standbyContainerGroupPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new StandbyContainerGroupPoolResource(Client, response.Value), response.GetRawResponse());
@@ -195,12 +195,12 @@ namespace Azure.ResourceManager.StandbyPool
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsClientDiagnostics.CreateScope("StandbyContainerGroupPoolResource.Delete");
+            using var scope = _standbyContainerGroupPoolClientDiagnostics.CreateScope("StandbyContainerGroupPoolResource.Delete");
             scope.Start();
             try
             {
-                var response = await _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StandbyPoolArmOperation(_standbyContainerGroupPoolResourceStandbyContainerGroupPoolsClientDiagnostics, Pipeline, _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _standbyContainerGroupPoolRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new StandbyPoolArmOperation(_standbyContainerGroupPoolClientDiagnostics, Pipeline, _standbyContainerGroupPoolRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -237,12 +237,12 @@ namespace Azure.ResourceManager.StandbyPool
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsClientDiagnostics.CreateScope("StandbyContainerGroupPoolResource.Delete");
+            using var scope = _standbyContainerGroupPoolClientDiagnostics.CreateScope("StandbyContainerGroupPoolResource.Delete");
             scope.Start();
             try
             {
-                var response = _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new StandbyPoolArmOperation(_standbyContainerGroupPoolResourceStandbyContainerGroupPoolsClientDiagnostics, Pipeline, _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _standbyContainerGroupPoolRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new StandbyPoolArmOperation(_standbyContainerGroupPoolClientDiagnostics, Pipeline, _standbyContainerGroupPoolRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -278,15 +278,15 @@ namespace Azure.ResourceManager.StandbyPool
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<StandbyContainerGroupPoolResource>> UpdateAsync(StandbyContainerGroupPoolResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StandbyContainerGroupPoolResource>> UpdateAsync(StandbyContainerGroupPoolPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsClientDiagnostics.CreateScope("StandbyContainerGroupPoolResource.Update");
+            using var scope = _standbyContainerGroupPoolClientDiagnostics.CreateScope("StandbyContainerGroupPoolResource.Update");
             scope.Start();
             try
             {
-                var response = await _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var response = await _standbyContainerGroupPoolRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new StandbyContainerGroupPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -320,15 +320,15 @@ namespace Azure.ResourceManager.StandbyPool
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<StandbyContainerGroupPoolResource> Update(StandbyContainerGroupPoolResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<StandbyContainerGroupPoolResource> Update(StandbyContainerGroupPoolPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsClientDiagnostics.CreateScope("StandbyContainerGroupPoolResource.Update");
+            using var scope = _standbyContainerGroupPoolClientDiagnostics.CreateScope("StandbyContainerGroupPoolResource.Update");
             scope.Start();
             try
             {
-                var response = _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var response = _standbyContainerGroupPoolRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new StandbyContainerGroupPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.StandbyPool
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsClientDiagnostics.CreateScope("StandbyContainerGroupPoolResource.AddTag");
+            using var scope = _standbyContainerGroupPoolClientDiagnostics.CreateScope("StandbyContainerGroupPoolResource.AddTag");
             scope.Start();
             try
             {
@@ -377,13 +377,13 @@ namespace Azure.ResourceManager.StandbyPool
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _standbyContainerGroupPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new StandbyContainerGroupPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new StandbyContainerGroupPoolResourcePatch();
+                    var patch = new StandbyContainerGroupPoolPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.StandbyPool
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsClientDiagnostics.CreateScope("StandbyContainerGroupPoolResource.AddTag");
+            using var scope = _standbyContainerGroupPoolClientDiagnostics.CreateScope("StandbyContainerGroupPoolResource.AddTag");
             scope.Start();
             try
             {
@@ -439,13 +439,13 @@ namespace Azure.ResourceManager.StandbyPool
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _standbyContainerGroupPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new StandbyContainerGroupPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new StandbyContainerGroupPoolResourcePatch();
+                    var patch = new StandbyContainerGroupPoolPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.StandbyPool
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsClientDiagnostics.CreateScope("StandbyContainerGroupPoolResource.SetTags");
+            using var scope = _standbyContainerGroupPoolClientDiagnostics.CreateScope("StandbyContainerGroupPoolResource.SetTags");
             scope.Start();
             try
             {
@@ -500,13 +500,13 @@ namespace Azure.ResourceManager.StandbyPool
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _standbyContainerGroupPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new StandbyContainerGroupPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new StandbyContainerGroupPoolResourcePatch();
+                    var patch = new StandbyContainerGroupPoolPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.StandbyPool
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsClientDiagnostics.CreateScope("StandbyContainerGroupPoolResource.SetTags");
+            using var scope = _standbyContainerGroupPoolClientDiagnostics.CreateScope("StandbyContainerGroupPoolResource.SetTags");
             scope.Start();
             try
             {
@@ -557,13 +557,13 @@ namespace Azure.ResourceManager.StandbyPool
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _standbyContainerGroupPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new StandbyContainerGroupPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new StandbyContainerGroupPoolResourcePatch();
+                    var patch = new StandbyContainerGroupPoolPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
                     return result;
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.StandbyPool
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsClientDiagnostics.CreateScope("StandbyContainerGroupPoolResource.RemoveTag");
+            using var scope = _standbyContainerGroupPoolClientDiagnostics.CreateScope("StandbyContainerGroupPoolResource.RemoveTag");
             scope.Start();
             try
             {
@@ -613,13 +613,13 @@ namespace Azure.ResourceManager.StandbyPool
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _standbyContainerGroupPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new StandbyContainerGroupPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new StandbyContainerGroupPoolResourcePatch();
+                    var patch = new StandbyContainerGroupPoolPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.StandbyPool
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsClientDiagnostics.CreateScope("StandbyContainerGroupPoolResource.RemoveTag");
+            using var scope = _standbyContainerGroupPoolClientDiagnostics.CreateScope("StandbyContainerGroupPoolResource.RemoveTag");
             scope.Start();
             try
             {
@@ -673,13 +673,13 @@ namespace Azure.ResourceManager.StandbyPool
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _standbyContainerGroupPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new StandbyContainerGroupPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new StandbyContainerGroupPoolResourcePatch();
+                    var patch = new StandbyContainerGroupPoolPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

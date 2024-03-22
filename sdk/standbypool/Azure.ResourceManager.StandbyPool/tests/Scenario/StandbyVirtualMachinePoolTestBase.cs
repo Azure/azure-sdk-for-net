@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
 
         protected async Task<StandbyVirtualMachinePoolResource> CreateStandbyVirtualMachinePoolResource(ResourceGroupResource resourceGroup, string standbyVirtualMachinePoolName, long maxReadyCapacity, AzureLocation location, ResourceIdentifier vmssId)
         {
-            StandbyVirtualMachinePoolResourceData input = new StandbyVirtualMachinePoolResourceData(location)
+            StandbyVirtualMachinePoolData input = new StandbyVirtualMachinePoolData(location)
             {
                 Location = location,
                 VirtualMachineState = "Running",
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
                 },
                 AttachedVirtualMachineScaleSetId = vmssId
             };
-            StandbyVirtualMachinePoolResourceCollection collection = resourceGroup.GetStandbyVirtualMachinePoolResources();
+            StandbyVirtualMachinePoolCollection collection = resourceGroup.GetStandbyVirtualMachinePools();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, standbyVirtualMachinePoolName, input);
             return lro.Value;
         }

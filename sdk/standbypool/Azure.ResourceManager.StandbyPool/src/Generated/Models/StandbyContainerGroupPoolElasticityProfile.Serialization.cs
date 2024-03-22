@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             var format = options.Format == "W" ? ((IPersistableModel<StandbyContainerGroupPoolElasticityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StandbyContainerGroupPoolElasticityProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StandbyContainerGroupPoolElasticityProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             var format = options.Format == "W" ? ((IPersistableModel<StandbyContainerGroupPoolElasticityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StandbyContainerGroupPoolElasticityProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StandbyContainerGroupPoolElasticityProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 return null;
             }
             long maxReadyCapacity = default;
-            RefillPolicy? refillPolicy = default;
+            StandbyPoolRefillPolicy? refillPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                     {
                         continue;
                     }
-                    refillPolicy = new RefillPolicy(property.Value.GetString());
+                    refillPolicy = new StandbyPoolRefillPolicy(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StandbyContainerGroupPoolElasticityProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StandbyContainerGroupPoolElasticityProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                         return DeserializeStandbyContainerGroupPoolElasticityProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StandbyContainerGroupPoolElasticityProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StandbyContainerGroupPoolElasticityProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

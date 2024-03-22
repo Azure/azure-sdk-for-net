@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
             ResourceGroupResource resourceGroup = await CreateResourceGroup(subscription, resourceGroupName, location);
             await this.CreateResources(resourceGroup);
 
-            AsyncPageable<StandbyContainerGroupPoolResource> standbyContainerGroupPools = StandbyPoolExtensions.GetStandbyContainerGroupPoolResourcesAsync(subscription);
+            AsyncPageable<StandbyContainerGroupPoolResource> standbyContainerGroupPools = StandbyPoolExtensions.GetStandbyContainerGroupPoolsAsync(subscription);
             List<StandbyContainerGroupPoolResource> standbyContainerGroupPoolResults = await standbyContainerGroupPools.ToEnumerableAsync();
 
             Assert.NotNull(standbyContainerGroupPoolResults);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
             ResourceGroupResource resourceGroup = await CreateResourceGroup(subscription, resourceGroupName, location);
             await this.CreateResources(resourceGroup);
             await this.CreateResources(resourceGroup);
-            List<StandbyContainerGroupPoolResource> standbyContainerGroupPoolCollection = await resourceGroup.GetStandbyContainerGroupPoolResources().ToEnumerableAsync();
+            List<StandbyContainerGroupPoolResource> standbyContainerGroupPoolCollection = await resourceGroup.GetStandbyContainerGroupPools().ToEnumerableAsync();
             Assert.AreEqual(2, standbyContainerGroupPoolCollection.Count);
         }
     }

@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.StandbyPool.Samples
             string standbyVirtualMachinePoolName = "pool";
             string standbyVirtualMachineName = "v-m3mbxY7j5yRugj347t4sQ-1_C7sD7-_H-IbUG26s__B8pE_bGqZm";
             ResourceIdentifier standbyVirtualMachineResourceId = StandbyVirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, standbyVirtualMachinePoolName, standbyVirtualMachineName);
-            StandbyVirtualMachineResource standbyVirtualMachineResource = client.GetStandbyVirtualMachineResource(standbyVirtualMachineResourceId);
+            StandbyVirtualMachineResource standbyVirtualMachine = client.GetStandbyVirtualMachineResource(standbyVirtualMachineResourceId);
 
             // invoke the operation
-            StandbyVirtualMachineResource result = await standbyVirtualMachineResource.GetAsync();
+            StandbyVirtualMachineResource result = await standbyVirtualMachine.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            StandbyVirtualMachineResourceData resourceData = result.Data;
+            StandbyVirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.StandbyPool.Samples
             string standbyVirtualMachinePoolName = "pool";
             string standbyVirtualMachineName = "v-m3mbxY7j5yRugj347t4sQ-1_C7sD7-_H-IbUG26s__B8pE_bGqZm";
             ResourceIdentifier standbyVirtualMachineResourceId = StandbyVirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, standbyVirtualMachinePoolName, standbyVirtualMachineName);
-            StandbyVirtualMachineResource standbyVirtualMachineResource = client.GetStandbyVirtualMachineResource(standbyVirtualMachineResourceId);
+            StandbyVirtualMachineResource standbyVirtualMachine = client.GetStandbyVirtualMachineResource(standbyVirtualMachineResourceId);
 
             // invoke the operation
-            StandbyVirtualMachineResource result = await standbyVirtualMachineResource.GetAsync();
+            StandbyVirtualMachineResource result = await standbyVirtualMachine.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            StandbyVirtualMachineResourceData resourceData = result.Data;
+            StandbyVirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

@@ -18,10 +18,10 @@ using Azure.ResourceManager.StandbyPool.Models;
 namespace Azure.ResourceManager.StandbyPool
 {
     /// <summary>
-    /// A Class representing a StandbyVirtualMachinePoolResource along with the instance operations that can be performed on it.
+    /// A Class representing a StandbyVirtualMachinePool along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StandbyVirtualMachinePoolResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetStandbyVirtualMachinePoolResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetStandbyVirtualMachinePoolResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetStandbyVirtualMachinePool method.
     /// </summary>
     public partial class StandbyVirtualMachinePoolResource : ArmResource
     {
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.StandbyPool
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsClientDiagnostics;
-        private readonly StandbyVirtualMachinePoolsRestOperations _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsRestClient;
-        private readonly StandbyVirtualMachinePoolResourceData _data;
+        private readonly ClientDiagnostics _standbyVirtualMachinePoolClientDiagnostics;
+        private readonly StandbyVirtualMachinePoolsRestOperations _standbyVirtualMachinePoolRestClient;
+        private readonly StandbyVirtualMachinePoolData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.StandbyPool/standbyVirtualMachinePools";
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// <summary> Initializes a new instance of the <see cref="StandbyVirtualMachinePoolResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal StandbyVirtualMachinePoolResource(ArmClient client, StandbyVirtualMachinePoolResourceData data) : this(client, data.Id)
+        internal StandbyVirtualMachinePoolResource(ArmClient client, StandbyVirtualMachinePoolData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.StandbyPool
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal StandbyVirtualMachinePoolResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StandbyPool", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsApiVersion);
-            _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsRestClient = new StandbyVirtualMachinePoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsApiVersion);
+            _standbyVirtualMachinePoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StandbyPool", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string standbyVirtualMachinePoolApiVersion);
+            _standbyVirtualMachinePoolRestClient = new StandbyVirtualMachinePoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, standbyVirtualMachinePoolApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.StandbyPool
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual StandbyVirtualMachinePoolResourceData Data
+        public virtual StandbyVirtualMachinePoolData Data
         {
             get
             {
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.StandbyPool
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of StandbyVirtualMachineResources in the StandbyVirtualMachinePoolResource. </summary>
+        /// <summary> Gets a collection of StandbyVirtualMachineResources in the StandbyVirtualMachinePool. </summary>
         /// <returns> An object representing collection of StandbyVirtualMachineResources and their operations over a StandbyVirtualMachineResource. </returns>
-        public virtual StandbyVirtualMachineResourceCollection GetStandbyVirtualMachineResources()
+        public virtual StandbyVirtualMachineCollection GetStandbyVirtualMachines()
         {
-            return GetCachedClient(client => new StandbyVirtualMachineResourceCollection(client, Id));
+            return GetCachedClient(client => new StandbyVirtualMachineCollection(client, Id));
         }
 
         /// <summary>
@@ -123,9 +123,9 @@ namespace Azure.ResourceManager.StandbyPool
         /// <exception cref="ArgumentNullException"> <paramref name="standbyVirtualMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="standbyVirtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<StandbyVirtualMachineResource>> GetStandbyVirtualMachineResourceAsync(string standbyVirtualMachineName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StandbyVirtualMachineResource>> GetStandbyVirtualMachineAsync(string standbyVirtualMachineName, CancellationToken cancellationToken = default)
         {
-            return await GetStandbyVirtualMachineResources().GetAsync(standbyVirtualMachineName, cancellationToken).ConfigureAwait(false);
+            return await GetStandbyVirtualMachines().GetAsync(standbyVirtualMachineName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.StandbyPool
         /// <exception cref="ArgumentNullException"> <paramref name="standbyVirtualMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="standbyVirtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<StandbyVirtualMachineResource> GetStandbyVirtualMachineResource(string standbyVirtualMachineName, CancellationToken cancellationToken = default)
+        public virtual Response<StandbyVirtualMachineResource> GetStandbyVirtualMachine(string standbyVirtualMachineName, CancellationToken cancellationToken = default)
         {
-            return GetStandbyVirtualMachineResources().Get(standbyVirtualMachineName, cancellationToken);
+            return GetStandbyVirtualMachines().Get(standbyVirtualMachineName, cancellationToken);
         }
 
         /// <summary>
@@ -183,11 +183,11 @@ namespace Azure.ResourceManager.StandbyPool
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<StandbyVirtualMachinePoolResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsClientDiagnostics.CreateScope("StandbyVirtualMachinePoolResource.Get");
+            using var scope = _standbyVirtualMachinePoolClientDiagnostics.CreateScope("StandbyVirtualMachinePoolResource.Get");
             scope.Start();
             try
             {
-                var response = await _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _standbyVirtualMachinePoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new StandbyVirtualMachinePoolResource(Client, response.Value), response.GetRawResponse());
@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.StandbyPool
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<StandbyVirtualMachinePoolResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsClientDiagnostics.CreateScope("StandbyVirtualMachinePoolResource.Get");
+            using var scope = _standbyVirtualMachinePoolClientDiagnostics.CreateScope("StandbyVirtualMachinePoolResource.Get");
             scope.Start();
             try
             {
-                var response = _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _standbyVirtualMachinePoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new StandbyVirtualMachinePoolResource(Client, response.Value), response.GetRawResponse());
@@ -264,12 +264,12 @@ namespace Azure.ResourceManager.StandbyPool
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsClientDiagnostics.CreateScope("StandbyVirtualMachinePoolResource.Delete");
+            using var scope = _standbyVirtualMachinePoolClientDiagnostics.CreateScope("StandbyVirtualMachinePoolResource.Delete");
             scope.Start();
             try
             {
-                var response = await _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StandbyPoolArmOperation(_standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsClientDiagnostics, Pipeline, _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _standbyVirtualMachinePoolRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new StandbyPoolArmOperation(_standbyVirtualMachinePoolClientDiagnostics, Pipeline, _standbyVirtualMachinePoolRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -306,12 +306,12 @@ namespace Azure.ResourceManager.StandbyPool
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsClientDiagnostics.CreateScope("StandbyVirtualMachinePoolResource.Delete");
+            using var scope = _standbyVirtualMachinePoolClientDiagnostics.CreateScope("StandbyVirtualMachinePoolResource.Delete");
             scope.Start();
             try
             {
-                var response = _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new StandbyPoolArmOperation(_standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsClientDiagnostics, Pipeline, _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _standbyVirtualMachinePoolRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new StandbyPoolArmOperation(_standbyVirtualMachinePoolClientDiagnostics, Pipeline, _standbyVirtualMachinePoolRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -347,15 +347,15 @@ namespace Azure.ResourceManager.StandbyPool
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<StandbyVirtualMachinePoolResource>> UpdateAsync(StandbyVirtualMachinePoolResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StandbyVirtualMachinePoolResource>> UpdateAsync(StandbyVirtualMachinePoolPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsClientDiagnostics.CreateScope("StandbyVirtualMachinePoolResource.Update");
+            using var scope = _standbyVirtualMachinePoolClientDiagnostics.CreateScope("StandbyVirtualMachinePoolResource.Update");
             scope.Start();
             try
             {
-                var response = await _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var response = await _standbyVirtualMachinePoolRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new StandbyVirtualMachinePoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,15 +389,15 @@ namespace Azure.ResourceManager.StandbyPool
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<StandbyVirtualMachinePoolResource> Update(StandbyVirtualMachinePoolResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<StandbyVirtualMachinePoolResource> Update(StandbyVirtualMachinePoolPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsClientDiagnostics.CreateScope("StandbyVirtualMachinePoolResource.Update");
+            using var scope = _standbyVirtualMachinePoolClientDiagnostics.CreateScope("StandbyVirtualMachinePoolResource.Update");
             scope.Start();
             try
             {
-                var response = _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var response = _standbyVirtualMachinePoolRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new StandbyVirtualMachinePoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.StandbyPool
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsClientDiagnostics.CreateScope("StandbyVirtualMachinePoolResource.AddTag");
+            using var scope = _standbyVirtualMachinePoolClientDiagnostics.CreateScope("StandbyVirtualMachinePoolResource.AddTag");
             scope.Start();
             try
             {
@@ -446,13 +446,13 @@ namespace Azure.ResourceManager.StandbyPool
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _standbyVirtualMachinePoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new StandbyVirtualMachinePoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new StandbyVirtualMachinePoolResourcePatch();
+                    var patch = new StandbyVirtualMachinePoolPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.StandbyPool
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsClientDiagnostics.CreateScope("StandbyVirtualMachinePoolResource.AddTag");
+            using var scope = _standbyVirtualMachinePoolClientDiagnostics.CreateScope("StandbyVirtualMachinePoolResource.AddTag");
             scope.Start();
             try
             {
@@ -508,13 +508,13 @@ namespace Azure.ResourceManager.StandbyPool
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _standbyVirtualMachinePoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new StandbyVirtualMachinePoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new StandbyVirtualMachinePoolResourcePatch();
+                    var patch = new StandbyVirtualMachinePoolPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.StandbyPool
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsClientDiagnostics.CreateScope("StandbyVirtualMachinePoolResource.SetTags");
+            using var scope = _standbyVirtualMachinePoolClientDiagnostics.CreateScope("StandbyVirtualMachinePoolResource.SetTags");
             scope.Start();
             try
             {
@@ -569,13 +569,13 @@ namespace Azure.ResourceManager.StandbyPool
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _standbyVirtualMachinePoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new StandbyVirtualMachinePoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new StandbyVirtualMachinePoolResourcePatch();
+                    var patch = new StandbyVirtualMachinePoolPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.StandbyPool
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsClientDiagnostics.CreateScope("StandbyVirtualMachinePoolResource.SetTags");
+            using var scope = _standbyVirtualMachinePoolClientDiagnostics.CreateScope("StandbyVirtualMachinePoolResource.SetTags");
             scope.Start();
             try
             {
@@ -626,13 +626,13 @@ namespace Azure.ResourceManager.StandbyPool
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _standbyVirtualMachinePoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new StandbyVirtualMachinePoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new StandbyVirtualMachinePoolResourcePatch();
+                    var patch = new StandbyVirtualMachinePoolPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
                     return result;
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.StandbyPool
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsClientDiagnostics.CreateScope("StandbyVirtualMachinePoolResource.RemoveTag");
+            using var scope = _standbyVirtualMachinePoolClientDiagnostics.CreateScope("StandbyVirtualMachinePoolResource.RemoveTag");
             scope.Start();
             try
             {
@@ -682,13 +682,13 @@ namespace Azure.ResourceManager.StandbyPool
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _standbyVirtualMachinePoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new StandbyVirtualMachinePoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new StandbyVirtualMachinePoolResourcePatch();
+                    var patch = new StandbyVirtualMachinePoolPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.StandbyPool
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsClientDiagnostics.CreateScope("StandbyVirtualMachinePoolResource.RemoveTag");
+            using var scope = _standbyVirtualMachinePoolClientDiagnostics.CreateScope("StandbyVirtualMachinePoolResource.RemoveTag");
             scope.Start();
             try
             {
@@ -742,13 +742,13 @@ namespace Azure.ResourceManager.StandbyPool
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _standbyVirtualMachinePoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new StandbyVirtualMachinePoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new StandbyVirtualMachinePoolResourcePatch();
+                    var patch = new StandbyVirtualMachinePoolPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

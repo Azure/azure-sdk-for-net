@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableStandbyPoolSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsClientDiagnostics;
-        private StandbyContainerGroupPoolsRestOperations _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsRestClient;
-        private ClientDiagnostics _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsClientDiagnostics;
-        private StandbyVirtualMachinePoolsRestOperations _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsRestClient;
+        private ClientDiagnostics _standbyContainerGroupPoolClientDiagnostics;
+        private StandbyContainerGroupPoolsRestOperations _standbyContainerGroupPoolRestClient;
+        private ClientDiagnostics _standbyVirtualMachinePoolClientDiagnostics;
+        private StandbyVirtualMachinePoolsRestOperations _standbyVirtualMachinePoolRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableStandbyPoolSubscriptionResource"/> class for mocking. </summary>
         protected MockableStandbyPoolSubscriptionResource()
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         {
         }
 
-        private ClientDiagnostics StandbyContainerGroupPoolResourceStandbyContainerGroupPoolsClientDiagnostics => _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StandbyPool", StandbyContainerGroupPoolResource.ResourceType.Namespace, Diagnostics);
-        private StandbyContainerGroupPoolsRestOperations StandbyContainerGroupPoolResourceStandbyContainerGroupPoolsRestClient => _standbyContainerGroupPoolResourceStandbyContainerGroupPoolsRestClient ??= new StandbyContainerGroupPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(StandbyContainerGroupPoolResource.ResourceType));
-        private ClientDiagnostics StandbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsClientDiagnostics => _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StandbyPool", StandbyVirtualMachinePoolResource.ResourceType.Namespace, Diagnostics);
-        private StandbyVirtualMachinePoolsRestOperations StandbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsRestClient => _standbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsRestClient ??= new StandbyVirtualMachinePoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(StandbyVirtualMachinePoolResource.ResourceType));
+        private ClientDiagnostics StandbyContainerGroupPoolClientDiagnostics => _standbyContainerGroupPoolClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StandbyPool", StandbyContainerGroupPoolResource.ResourceType.Namespace, Diagnostics);
+        private StandbyContainerGroupPoolsRestOperations StandbyContainerGroupPoolRestClient => _standbyContainerGroupPoolRestClient ??= new StandbyContainerGroupPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(StandbyContainerGroupPoolResource.ResourceType));
+        private ClientDiagnostics StandbyVirtualMachinePoolClientDiagnostics => _standbyVirtualMachinePoolClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StandbyPool", StandbyVirtualMachinePoolResource.ResourceType.Namespace, Diagnostics);
+        private StandbyVirtualMachinePoolsRestOperations StandbyVirtualMachinePoolRestClient => _standbyVirtualMachinePoolRestClient ??= new StandbyVirtualMachinePoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(StandbyVirtualMachinePoolResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StandbyContainerGroupPoolResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StandbyContainerGroupPoolResource> GetStandbyContainerGroupPoolResourcesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<StandbyContainerGroupPoolResource> GetStandbyContainerGroupPoolsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => StandbyContainerGroupPoolResourceStandbyContainerGroupPoolsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StandbyContainerGroupPoolResourceStandbyContainerGroupPoolsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StandbyContainerGroupPoolResource(Client, StandbyContainerGroupPoolResourceData.DeserializeStandbyContainerGroupPoolResourceData(e)), StandbyContainerGroupPoolResourceStandbyContainerGroupPoolsClientDiagnostics, Pipeline, "MockableStandbyPoolSubscriptionResource.GetStandbyContainerGroupPoolResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => StandbyContainerGroupPoolRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StandbyContainerGroupPoolRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StandbyContainerGroupPoolResource(Client, StandbyContainerGroupPoolData.DeserializeStandbyContainerGroupPoolData(e)), StandbyContainerGroupPoolClientDiagnostics, Pipeline, "MockableStandbyPoolSubscriptionResource.GetStandbyContainerGroupPools", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StandbyContainerGroupPoolResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StandbyContainerGroupPoolResource> GetStandbyContainerGroupPoolResources(CancellationToken cancellationToken = default)
+        public virtual Pageable<StandbyContainerGroupPoolResource> GetStandbyContainerGroupPools(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => StandbyContainerGroupPoolResourceStandbyContainerGroupPoolsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StandbyContainerGroupPoolResourceStandbyContainerGroupPoolsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StandbyContainerGroupPoolResource(Client, StandbyContainerGroupPoolResourceData.DeserializeStandbyContainerGroupPoolResourceData(e)), StandbyContainerGroupPoolResourceStandbyContainerGroupPoolsClientDiagnostics, Pipeline, "MockableStandbyPoolSubscriptionResource.GetStandbyContainerGroupPoolResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => StandbyContainerGroupPoolRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StandbyContainerGroupPoolRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StandbyContainerGroupPoolResource(Client, StandbyContainerGroupPoolData.DeserializeStandbyContainerGroupPoolData(e)), StandbyContainerGroupPoolClientDiagnostics, Pipeline, "MockableStandbyPoolSubscriptionResource.GetStandbyContainerGroupPools", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -126,11 +126,11 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StandbyVirtualMachinePoolResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StandbyVirtualMachinePoolResource> GetStandbyVirtualMachinePoolResourcesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<StandbyVirtualMachinePoolResource> GetStandbyVirtualMachinePoolsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => StandbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StandbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StandbyVirtualMachinePoolResource(Client, StandbyVirtualMachinePoolResourceData.DeserializeStandbyVirtualMachinePoolResourceData(e)), StandbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsClientDiagnostics, Pipeline, "MockableStandbyPoolSubscriptionResource.GetStandbyVirtualMachinePoolResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => StandbyVirtualMachinePoolRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StandbyVirtualMachinePoolRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StandbyVirtualMachinePoolResource(Client, StandbyVirtualMachinePoolData.DeserializeStandbyVirtualMachinePoolData(e)), StandbyVirtualMachinePoolClientDiagnostics, Pipeline, "MockableStandbyPoolSubscriptionResource.GetStandbyVirtualMachinePools", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -156,11 +156,11 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StandbyVirtualMachinePoolResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StandbyVirtualMachinePoolResource> GetStandbyVirtualMachinePoolResources(CancellationToken cancellationToken = default)
+        public virtual Pageable<StandbyVirtualMachinePoolResource> GetStandbyVirtualMachinePools(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => StandbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StandbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StandbyVirtualMachinePoolResource(Client, StandbyVirtualMachinePoolResourceData.DeserializeStandbyVirtualMachinePoolResourceData(e)), StandbyVirtualMachinePoolResourceStandbyVirtualMachinePoolsClientDiagnostics, Pipeline, "MockableStandbyPoolSubscriptionResource.GetStandbyVirtualMachinePoolResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => StandbyVirtualMachinePoolRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StandbyVirtualMachinePoolRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StandbyVirtualMachinePoolResource(Client, StandbyVirtualMachinePoolData.DeserializeStandbyVirtualMachinePoolData(e)), StandbyVirtualMachinePoolClientDiagnostics, Pipeline, "MockableStandbyPoolSubscriptionResource.GetStandbyVirtualMachinePools", "value", "nextLink", cancellationToken);
         }
     }
 }

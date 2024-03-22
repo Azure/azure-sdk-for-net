@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    /// <summary> The response of a StandbyVirtualMachinePoolResource list operation. </summary>
-    internal partial class StandbyVirtualMachinePoolResourceListResult
+    /// <summary> Details of the ContainerGroupProperties. </summary>
+    public partial class StandbyContainerGroupPatchProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +46,26 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolResourceListResult"/>. </summary>
-        /// <param name="value"> The StandbyVirtualMachinePoolResource items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal StandbyVirtualMachinePoolResourceListResult(IEnumerable<StandbyVirtualMachinePoolData> value)
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPatchProperties"/>. </summary>
+        public StandbyContainerGroupPatchProperties()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            SubnetIds = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolResourceListResult"/>. </summary>
-        /// <param name="value"> The StandbyVirtualMachinePoolResource items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPatchProperties"/>. </summary>
+        /// <param name="containerGroupProfile"> Specifies container group profile of standby container groups. </param>
+        /// <param name="subnetIds"> Specifies subnet Ids for container group. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyVirtualMachinePoolResourceListResult(IReadOnlyList<StandbyVirtualMachinePoolData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyContainerGroupPatchProperties(StandbyContainerGroupPatchProfile containerGroupProfile, IList<WritableSubResource> subnetIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            ContainerGroupProfile = containerGroupProfile;
+            SubnetIds = subnetIds;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolResourceListResult"/> for deserialization. </summary>
-        internal StandbyVirtualMachinePoolResourceListResult()
-        {
-        }
-
-        /// <summary> The StandbyVirtualMachinePoolResource items on this page. </summary>
-        public IReadOnlyList<StandbyVirtualMachinePoolData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> Specifies container group profile of standby container groups. </summary>
+        public StandbyContainerGroupPatchProfile ContainerGroupProfile { get; set; }
+        /// <summary> Specifies subnet Ids for container group. </summary>
+        public IList<WritableSubResource> SubnetIds { get; }
     }
 }

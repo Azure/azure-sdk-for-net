@@ -24,15 +24,15 @@ namespace Azure.ResourceManager.StandbyPool.Tests
 
         protected async Task<StandbyContainerGroupPoolResource> CreateContainerGroupPoolResource(ResourceGroupResource resourceGroup, string standbyContainerGroupPoolName, long maxReadyCapacity, AzureLocation location, GenericResource containerGroupProfile, ResourceIdentifier subnetId)
         {
-            StandbyContainerGroupPoolResourceData input = new StandbyContainerGroupPoolResourceData(location)
+            StandbyContainerGroupPoolData input = new StandbyContainerGroupPoolData(location)
             {
                 Location = location,
                 ElasticityProfile = new StandbyContainerGroupPoolElasticityProfile()
                 {
                     MaxReadyCapacity = maxReadyCapacity,
-                    RefillPolicy = RefillPolicy.Always,
+                    RefillPolicy = StandbyPoolRefillPolicy.Always,
                 },
-                ContainerGroupProperties = new ContainerGroupProperties(new ContainerGroupProfile(containerGroupProfile.Id))
+                ContainerGroupProperties = new StandbyContainerGroupProperties(new StandbyContainerGroupProfile(containerGroupProfile.Id))
                 {
                     SubnetIds = {
                         new WritableSubResource()
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
                     }
                 }
             };
-            StandbyContainerGroupPoolResourceCollection collection = resourceGroup.GetStandbyContainerGroupPoolResources();
+            StandbyContainerGroupPoolCollection collection = resourceGroup.GetStandbyContainerGroupPools();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, standbyContainerGroupPoolName, input);
             return lro.Value;
         }
