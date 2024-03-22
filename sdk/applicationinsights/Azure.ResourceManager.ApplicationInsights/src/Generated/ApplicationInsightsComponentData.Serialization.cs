@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkScopedResources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PrivateLinkScopedResourceContent>(item, options);
                 }
                 writer.WriteEndArray();
             }

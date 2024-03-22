@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Avs.Models
             if (Optional.IsDefined(ManagementCluster))
             {
                 writer.WritePropertyName("managementCluster"u8);
-                writer.WriteObjectValue(ManagementCluster);
+                writer.WriteObjectValue<AvsManagementCluster>(ManagementCluster, options);
             }
             if (Optional.IsDefined(Internet))
             {
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WriteStartArray();
                 foreach (var item in IdentitySources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SingleSignOnIdentitySource>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Availability))
             {
                 writer.WritePropertyName("availability"u8);
-                writer.WriteObjectValue(Availability);
+                writer.WriteObjectValue<PrivateCloudAvailabilityProperties>(Availability, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<CustomerManagedEncryption>(Encryption, options);
             }
             if (Optional.IsCollectionDefined(ExtendedNetworkBlocks))
             {

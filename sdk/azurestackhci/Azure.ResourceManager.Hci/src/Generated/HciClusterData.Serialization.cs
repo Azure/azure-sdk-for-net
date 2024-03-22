@@ -106,17 +106,17 @@ namespace Azure.ResourceManager.Hci
             if (Optional.IsDefined(SoftwareAssuranceProperties))
             {
                 writer.WritePropertyName("softwareAssuranceProperties"u8);
-                writer.WriteObjectValue(SoftwareAssuranceProperties);
+                writer.WriteObjectValue<SoftwareAssuranceProperties>(SoftwareAssuranceProperties, options);
             }
             if (Optional.IsDefined(DesiredProperties))
             {
                 writer.WritePropertyName("desiredProperties"u8);
-                writer.WriteObjectValue(DesiredProperties);
+                writer.WriteObjectValue<HciClusterDesiredProperties>(DesiredProperties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReportedProperties))
             {
                 writer.WritePropertyName("reportedProperties"u8);
-                writer.WriteObjectValue(ReportedProperties);
+                writer.WriteObjectValue<HciClusterReportedProperties>(ReportedProperties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TrialDaysRemaining))
             {

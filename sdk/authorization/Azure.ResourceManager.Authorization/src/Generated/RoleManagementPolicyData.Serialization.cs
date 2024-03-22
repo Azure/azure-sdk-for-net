@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Authorization
             if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
-                writer.WriteObjectValue(LastModifiedBy);
+                writer.WriteObjectValue<RoleManagementPrincipal>(LastModifiedBy, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Authorization
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RoleManagementPolicyRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -96,14 +96,14 @@ namespace Azure.ResourceManager.Authorization
                 writer.WriteStartArray();
                 foreach (var item in EffectiveRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RoleManagementPolicyRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(PolicyProperties))
             {
                 writer.WritePropertyName("policyProperties"u8);
-                writer.WriteObjectValue(PolicyProperties);
+                writer.WriteObjectValue<RoleManagementPolicyProperties>(PolicyProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             if (Optional.IsDefined(StorageQoSPolicy))
             {
                 writer.WritePropertyName("storageQoSPolicy"u8);
-                writer.WriteObjectValue(StorageQoSPolicy);
+                writer.WriteObjectValue<StorageQoSPolicyDetails>(StorageQoSPolicy, options);
             }
             if (Optional.IsDefined(CreateDiffDisk))
             {

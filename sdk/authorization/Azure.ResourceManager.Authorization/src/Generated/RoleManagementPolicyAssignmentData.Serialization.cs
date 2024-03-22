@@ -71,14 +71,14 @@ namespace Azure.ResourceManager.Authorization
                 writer.WriteStartArray();
                 foreach (var item in EffectiveRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RoleManagementPolicyRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(PolicyAssignmentProperties))
             {
                 writer.WritePropertyName("policyAssignmentProperties"u8);
-                writer.WriteObjectValue(PolicyAssignmentProperties);
+                writer.WriteObjectValue<PolicyAssignmentProperties>(PolicyAssignmentProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

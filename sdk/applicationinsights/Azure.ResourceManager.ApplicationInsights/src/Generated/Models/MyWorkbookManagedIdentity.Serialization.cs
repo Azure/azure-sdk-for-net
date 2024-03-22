@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             if (Optional.IsDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
-                writer.WriteObjectValue(UserAssignedIdentities);
+                writer.WriteObjectValue<MyWorkbookUserAssignedIdentities>(UserAssignedIdentities, options);
             }
             if (Optional.IsDefined(IdentityType))
             {

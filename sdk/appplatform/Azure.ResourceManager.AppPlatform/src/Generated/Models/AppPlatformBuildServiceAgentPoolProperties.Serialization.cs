@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(PoolSize))
             {
                 writer.WritePropertyName("poolSize"u8);
-                writer.WriteObjectValue(PoolSize);
+                writer.WriteObjectValue<BuildServiceAgentPoolSizeProperties>(PoolSize, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

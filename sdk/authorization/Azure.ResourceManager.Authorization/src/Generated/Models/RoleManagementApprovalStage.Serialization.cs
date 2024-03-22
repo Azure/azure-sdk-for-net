@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WriteStartArray();
                 foreach (var item in PrimaryApprovers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RoleManagementUserInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WriteStartArray();
                 foreach (var item in EscalationApprovers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RoleManagementUserInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

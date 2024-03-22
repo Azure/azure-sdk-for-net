@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Analysis.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AnalysisResourceSku>(item, options);
                 }
                 writer.WriteEndArray();
             }
