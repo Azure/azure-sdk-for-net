@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OperationalInsightsClusterData>(item, options);
                 }
                 writer.WriteEndArray();
             }

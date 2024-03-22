@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in ScrubbingRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WebApplicationFirewallScrubbingRules>(item, options);
                 }
                 writer.WriteEndArray();
             }

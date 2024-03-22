@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             if (Optional.IsDefined(LogRules))
             {
                 writer.WritePropertyName("logRules"u8);
-                writer.WriteObjectValue(LogRules);
+                writer.WriteObjectValue<NewRelicObservabilityLogRules>(LogRules, options);
             }
             if (Optional.IsDefined(MetricRules))
             {
                 writer.WritePropertyName("metricRules"u8);
-                writer.WriteObjectValue(MetricRules);
+                writer.WriteObjectValue<NewRelicObservabilityMetricRules>(MetricRules, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

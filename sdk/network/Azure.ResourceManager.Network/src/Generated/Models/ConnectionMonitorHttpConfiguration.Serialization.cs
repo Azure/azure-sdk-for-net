@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RequestHeaders)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkWatcherHttpHeader>(item, options);
                 }
                 writer.WriteEndArray();
             }

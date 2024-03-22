@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(PlayReady))
             {
                 writer.WritePropertyName("playReady"u8);
-                writer.WriteObjectValue(PlayReady);
+                writer.WriteObjectValue<StreamingPolicyPlayReadyConfiguration>(PlayReady, options);
             }
             if (Optional.IsDefined(Widevine))
             {
                 writer.WritePropertyName("widevine"u8);
-                writer.WriteObjectValue(Widevine);
+                writer.WriteObjectValue<StreamingPolicyWidevineConfiguration>(Widevine, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

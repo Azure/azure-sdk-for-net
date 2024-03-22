@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Columns)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OperationalInsightsColumn>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in StandardColumns)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OperationalInsightsColumn>(item, options);
                 }
                 writer.WriteEndArray();
             }

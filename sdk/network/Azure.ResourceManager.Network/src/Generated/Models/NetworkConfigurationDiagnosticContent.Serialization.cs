@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartArray();
             foreach (var item in Profiles)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<NetworkConfigurationDiagnosticProfile>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                writer.WriteObjectValue<ConnectionMonitorSource>(Source, options);
             }
             if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination);
+                writer.WriteObjectValue<ConnectionMonitorDestination>(Destination, options);
             }
             if (Optional.IsDefined(AutoStart))
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConnectionMonitorEndpoint>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in TestConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConnectionMonitorTestConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in TestGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConnectionMonitorTestGroup>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConnectionMonitorOutput>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in PolicyEvaluations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PolicyEvaluationResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
