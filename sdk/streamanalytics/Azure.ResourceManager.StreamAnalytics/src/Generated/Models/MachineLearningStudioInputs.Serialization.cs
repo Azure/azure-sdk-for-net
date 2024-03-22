@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in ColumnNames)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineLearningStudioInputColumn>(item, options);
                 }
                 writer.WriteEndArray();
             }

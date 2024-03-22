@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualDirectories)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VirtualDirectory>(item, options);
                 }
                 writer.WriteEndArray();
             }

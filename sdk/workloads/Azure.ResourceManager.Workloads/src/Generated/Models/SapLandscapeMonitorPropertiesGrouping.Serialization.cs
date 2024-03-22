@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WriteStartArray();
                 foreach (var item in Landscape)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SapLandscapeMonitorSidMapping>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WriteStartArray();
                 foreach (var item in SapApplication)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SapLandscapeMonitorSidMapping>(item, options);
                 }
                 writer.WriteEndArray();
             }

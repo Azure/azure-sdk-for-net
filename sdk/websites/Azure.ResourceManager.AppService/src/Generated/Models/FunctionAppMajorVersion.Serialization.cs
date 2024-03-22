@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in MinorVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FunctionAppMinorVersion>(item, options);
                 }
                 writer.WriteEndArray();
             }

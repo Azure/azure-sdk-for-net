@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(LogLocationSettings))
             {
                 writer.WritePropertyName("logLocationSettings"u8);
-                writer.WriteObjectValue(LogLocationSettings);
+                writer.WriteObjectValue<LogLocationSettings>(LogLocationSettings);
             }
             writer.WriteEndObject();
         }

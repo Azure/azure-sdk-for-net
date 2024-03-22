@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FilesNotTieringError>(item, options);
                 }
                 writer.WriteEndArray();
             }

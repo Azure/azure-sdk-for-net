@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceTenants)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ServiceTenant>(item, options);
                 }
                 writer.WriteEndArray();
             }

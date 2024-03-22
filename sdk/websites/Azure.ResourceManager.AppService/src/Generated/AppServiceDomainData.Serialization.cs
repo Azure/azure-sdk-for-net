@@ -71,22 +71,22 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(ContactAdmin))
             {
                 writer.WritePropertyName("contactAdmin"u8);
-                writer.WriteObjectValue(ContactAdmin);
+                writer.WriteObjectValue<RegistrationContactInfo>(ContactAdmin, options);
             }
             if (Optional.IsDefined(ContactBilling))
             {
                 writer.WritePropertyName("contactBilling"u8);
-                writer.WriteObjectValue(ContactBilling);
+                writer.WriteObjectValue<RegistrationContactInfo>(ContactBilling, options);
             }
             if (Optional.IsDefined(ContactRegistrant))
             {
                 writer.WritePropertyName("contactRegistrant"u8);
-                writer.WriteObjectValue(ContactRegistrant);
+                writer.WriteObjectValue<RegistrationContactInfo>(ContactRegistrant, options);
             }
             if (Optional.IsDefined(ContactTech))
             {
                 writer.WritePropertyName("contactTech"u8);
-                writer.WriteObjectValue(ContactTech);
+                writer.WriteObjectValue<RegistrationContactInfo>(ContactTech, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RegistrationStatus))
             {
@@ -144,14 +144,14 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in ManagedHostNames)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AppServiceHostName>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Consent))
             {
                 writer.WritePropertyName("consent"u8);
-                writer.WriteObjectValue(Consent);
+                writer.WriteObjectValue<DomainPurchaseConsent>(Consent, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(DomainNotRenewableReasons))
             {

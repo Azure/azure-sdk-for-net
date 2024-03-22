@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState);
+                writer.WriteObjectValue<PrivateLinkConnectionState>(PrivateLinkServiceConnectionState, options);
             }
             if (Optional.IsCollectionDefined(IPAddresses))
             {
