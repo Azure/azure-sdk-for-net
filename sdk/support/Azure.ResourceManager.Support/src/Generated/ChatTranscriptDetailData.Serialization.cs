@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Support
                 writer.WriteStartArray();
                 foreach (var item in Messages)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ChatTranscriptMessageProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }

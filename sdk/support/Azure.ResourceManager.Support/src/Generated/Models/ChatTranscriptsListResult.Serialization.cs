@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Support.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ChatTranscriptDetailData>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -31,42 +31,42 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(AzureActiveDirectory))
             {
                 writer.WritePropertyName("azureActiveDirectory"u8);
-                writer.WriteObjectValue(AzureActiveDirectory);
+                writer.WriteObjectValue<AppServiceAadProvider>(AzureActiveDirectory, options);
             }
             if (Optional.IsDefined(Facebook))
             {
                 writer.WritePropertyName("facebook"u8);
-                writer.WriteObjectValue(Facebook);
+                writer.WriteObjectValue<AppServiceFacebookProvider>(Facebook, options);
             }
             if (Optional.IsDefined(GitHub))
             {
                 writer.WritePropertyName("gitHub"u8);
-                writer.WriteObjectValue(GitHub);
+                writer.WriteObjectValue<AppServiceGitHubProvider>(GitHub, options);
             }
             if (Optional.IsDefined(Google))
             {
                 writer.WritePropertyName("google"u8);
-                writer.WriteObjectValue(Google);
+                writer.WriteObjectValue<AppServiceGoogleProvider>(Google, options);
             }
             if (Optional.IsDefined(LegacyMicrosoftAccount))
             {
                 writer.WritePropertyName("legacyMicrosoftAccount"u8);
-                writer.WriteObjectValue(LegacyMicrosoftAccount);
+                writer.WriteObjectValue<LegacyMicrosoftAccount>(LegacyMicrosoftAccount, options);
             }
             if (Optional.IsDefined(Twitter))
             {
                 writer.WritePropertyName("twitter"u8);
-                writer.WriteObjectValue(Twitter);
+                writer.WriteObjectValue<AppServiceTwitterProvider>(Twitter, options);
             }
             if (Optional.IsDefined(Apple))
             {
                 writer.WritePropertyName("apple"u8);
-                writer.WriteObjectValue(Apple);
+                writer.WriteObjectValue<AppServiceAppleProvider>(Apple, options);
             }
             if (Optional.IsDefined(AzureStaticWebApps))
             {
                 writer.WritePropertyName("azureStaticWebApps"u8);
-                writer.WriteObjectValue(AzureStaticWebApps);
+                writer.WriteObjectValue<AppServiceStaticWebAppsProvider>(AzureStaticWebApps, options);
             }
             if (Optional.IsCollectionDefined(CustomOpenIdConnectProviders))
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService.Models
                 foreach (var item in CustomOpenIdConnectProviders)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<CustomOpenIdConnectProvider>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

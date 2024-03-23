@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(ArcConfiguration))
             {
                 writer.WritePropertyName("arcConfiguration"u8);
-                writer.WriteObjectValue(ArcConfiguration);
+                writer.WriteObjectValue<ArcConfiguration>(ArcConfiguration, options);
             }
             if (Optional.IsDefined(AppLogsConfiguration))
             {
                 writer.WritePropertyName("appLogsConfiguration"u8);
-                writer.WriteObjectValue(AppLogsConfiguration);
+                writer.WriteObjectValue<AppLogsConfiguration>(AppLogsConfiguration, options);
             }
             if (Optional.IsDefined(AksResourceId))
             {

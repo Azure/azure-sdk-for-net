@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DiagnosticMetricSample>(item, options);
                 }
                 writer.WriteEndArray();
             }

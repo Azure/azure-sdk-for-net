@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in UserProvidedFunctionApps)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StaticSiteUserProvidedFunctionAppData>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in BlockingFeatures)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteCloneabilityCriterion>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in UnsupportedFeatures)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteCloneabilityCriterion>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in BlockingCharacteristics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteCloneabilityCriterion>(item, options);
                 }
                 writer.WriteEndArray();
             }

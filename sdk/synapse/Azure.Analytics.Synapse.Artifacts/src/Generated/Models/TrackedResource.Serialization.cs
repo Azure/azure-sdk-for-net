@@ -90,7 +90,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, TrackedResource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<TrackedResource>(model);
             }
             public override TrackedResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

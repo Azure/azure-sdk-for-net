@@ -20,7 +20,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartArray();
             foreach (var item in Lines)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<SpatialAnalysisPersonLineCrossingLineEvents>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Debug))

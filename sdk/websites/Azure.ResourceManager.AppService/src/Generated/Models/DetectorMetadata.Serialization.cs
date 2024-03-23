@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(DataSource))
             {
                 writer.WritePropertyName("dataSource"u8);
-                writer.WriteObjectValue(DataSource);
+                writer.WriteObjectValue<DetectorDataSource>(DataSource, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StorageSync
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StorageSyncPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }

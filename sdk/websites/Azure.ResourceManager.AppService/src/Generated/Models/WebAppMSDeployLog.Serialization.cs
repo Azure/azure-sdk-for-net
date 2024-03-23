@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Entries)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WebAppMSDeployLogEntry>(item, options);
                 }
                 writer.WriteEndArray();
             }

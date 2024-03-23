@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(InfrastructureConfiguration))
             {
                 writer.WritePropertyName("infrastructureConfiguration"u8);
-                writer.WriteObjectValue(InfrastructureConfiguration);
+                writer.WriteObjectValue<InfrastructureConfiguration>(InfrastructureConfiguration, options);
             }
             if (Optional.IsDefined(SoftwareConfiguration))
             {
                 writer.WritePropertyName("softwareConfiguration"u8);
-                writer.WriteObjectValue(SoftwareConfiguration);
+                writer.WriteObjectValue<SapSoftwareConfiguration>(SoftwareConfiguration, options);
             }
             writer.WritePropertyName("configurationType"u8);
             writer.WriteStringValue(ConfigurationType.ToString());

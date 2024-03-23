@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity);
+                writer.WriteObjectValue<AppServiceSkuCapacity>(Capacity, options);
             }
             if (Optional.IsCollectionDefined(Locations))
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AppServiceSkuCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }

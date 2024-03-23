@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
-                writer.WriteObjectValue(Registration);
+                writer.WriteObjectValue<AppRegistration>(Registration, options);
             }
             if (Optional.IsDefined(GraphApiVersion))
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
-                writer.WriteObjectValue(Login);
+                writer.WriteObjectValue<LoginScopes>(Login, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
