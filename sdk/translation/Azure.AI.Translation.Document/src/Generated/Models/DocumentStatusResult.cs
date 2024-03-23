@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.Translation.Document
@@ -13,6 +14,38 @@ namespace Azure.AI.Translation.Document
     /// <summary> Document Status Response. </summary>
     public partial class DocumentStatusResult
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DocumentStatusResult"/>. </summary>
         /// <param name="sourceDocumentUri"> Location of the source document. </param>
         /// <param name="createdOn"> Operation created date time. </param>
@@ -44,11 +77,15 @@ namespace Azure.AI.Translation.Document
         /// <param name="lastModified"> Date time in which the operation's status has been updated. </param>
         /// <param name="status"> List of possible statuses for job or document. </param>
         /// <param name="translatedToLanguageCode"> To language. </param>
-        /// <param name="error"> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </param>
+        /// <param name="error">
+        /// This contains an outer error with error code, message, details, target and an
+        /// inner error with more descriptive details.
+        /// </param>
         /// <param name="progress"> Progress of the translation if available. </param>
         /// <param name="id"> Document Id. </param>
         /// <param name="charactersCharged"> Character charged by the API. </param>
-        internal DocumentStatusResult(Uri translatedDocumentUri, Uri sourceDocumentUri, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, string translatedToLanguageCode, JsonElement error, float progress, string id, long charactersCharged)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentStatusResult(Uri translatedDocumentUri, Uri sourceDocumentUri, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, string translatedToLanguageCode, JsonElement error, float progress, string id, long charactersCharged, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TranslatedDocumentUri = translatedDocumentUri;
             SourceDocumentUri = sourceDocumentUri;
@@ -60,6 +97,12 @@ namespace Azure.AI.Translation.Document
             Progress = progress;
             Id = id;
             CharactersCharged = charactersCharged;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentStatusResult"/> for deserialization. </summary>
+        internal DocumentStatusResult()
+        {
         }
     }
 }
