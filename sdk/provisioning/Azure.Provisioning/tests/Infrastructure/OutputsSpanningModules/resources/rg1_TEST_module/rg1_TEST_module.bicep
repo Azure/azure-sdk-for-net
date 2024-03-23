@@ -20,6 +20,9 @@ resource appServicePlan_viooTTlOI 'Microsoft.Web/serverfarms@2021-02-01' = {
 resource webSite_dOTaZfna6 'Microsoft.Web/sites@2021-02-01' = {
   name: 'frontEnd-TEST'
   location: 'westus'
+  identity: {
+    type: 'SystemAssigned'
+  }
   kind: 'app,linux'
   properties: {
     serverFarmId: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1-TEST/providers/Microsoft.Web/serverfarms/appServicePlan-TEST'
@@ -51,8 +54,8 @@ resource keyVault_aUw0nRbmu 'Microsoft.KeyVault/vaults@2022-07-01' = {
   properties: {
     tenantId: tenant().tenantId
     sku: {
-      name: 'standard'
       family: 'A'
+      name: 'standard'
     }
     enableSoftDelete: enableSoftDelete
     enableRbacAuthorization: true

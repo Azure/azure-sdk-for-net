@@ -94,31 +94,17 @@ namespace Azure.ResourceManager.Models
             string propertyOverride = null;
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalId), out propertyOverride);
-            if (Optional.IsDefined(PrincipalId) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagedServiceIdentityType), out propertyOverride);
+            if (Optional.IsDefined(ManagedServiceIdentityType) || hasPropertyOverride)
             {
-                builder.Append("  principalId:");
+                builder.Append("  type:");
                 if (hasPropertyOverride)
                 {
                     builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{PrincipalId.Value}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
-            if (Optional.IsDefined(TenantId) || hasPropertyOverride)
-            {
-                builder.Append("tenantId:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{TenantId.Value}'");
+                    builder.AppendLine($" '{ManagedServiceIdentityType}'");
                 }
             }
 
