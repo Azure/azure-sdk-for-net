@@ -1,8 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Provisioning.ResourceManager;
 using Azure.ResourceManager.KeyVault.Models;
 
 namespace Azure.Provisioning.KeyVaults
@@ -18,7 +20,8 @@ namespace Azure.Provisioning.KeyVaults
                 accessPolicies: new List<KeyVaultAccessPolicy>
                 {
                     new KeyVaultAccessPolicy(
-                        scope.Root.Properties.TenantId!.Value,
+                        // this value will be replaced by the tenant().tenantId expression
+                        Guid.Empty,
                         // this value will be replaced by the parameter reference
                         "dummy",
                         new IdentityAccessPermissions()
@@ -32,6 +35,7 @@ namespace Azure.Provisioning.KeyVaults
                 }))
         {
             AssignProperty(p => p.AccessPolicies[0].ObjectId, principalIdParameter);
+            AssignProperty(p => p.AccessPolicies[0].TenantId, Tenant.TenantIdExpression);
         }
 
         private static string GetParamValue(Parameter principalIdParameter, IConstruct scope)

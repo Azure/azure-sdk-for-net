@@ -13,7 +13,7 @@ resource webSite_80I4ejz5T 'Microsoft.Web/sites@2021-02-01' = {
   name: 'frontEnd-TEST'
   location: 'westus'
   identity: {
-    principalId: STORAGE_PRINCIPAL_ID
+    type: 'SystemAssigned'
   }
   kind: 'app,linux'
   properties: {
