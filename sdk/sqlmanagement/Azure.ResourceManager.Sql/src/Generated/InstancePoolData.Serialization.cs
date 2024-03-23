@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<SqlSku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {

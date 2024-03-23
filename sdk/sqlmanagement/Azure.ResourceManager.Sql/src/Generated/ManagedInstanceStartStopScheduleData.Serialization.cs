@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in ScheduleList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SqlScheduleItem>(item, options);
                 }
                 writer.WriteEndArray();
             }

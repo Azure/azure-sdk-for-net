@@ -119,12 +119,12 @@ namespace Azure.ResourceManager.Sql
             if (options.Format != "W" && Optional.IsDefined(OperationParameters))
             {
                 writer.WritePropertyName("operationParameters"u8);
-                writer.WriteObjectValue(OperationParameters);
+                writer.WriteObjectValue<ManagedInstanceOperationParametersPair>(OperationParameters, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OperationSteps))
             {
                 writer.WritePropertyName("operationSteps"u8);
-                writer.WriteObjectValue(OperationSteps);
+                writer.WriteObjectValue<ManagedInstanceOperationSteps>(OperationSteps, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

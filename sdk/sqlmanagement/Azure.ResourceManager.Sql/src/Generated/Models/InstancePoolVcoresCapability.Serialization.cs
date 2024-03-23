@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(StorageLimit))
             {
                 writer.WritePropertyName("storageLimit"u8);
-                writer.WriteObjectValue(StorageLimit);
+                writer.WriteObjectValue<MaxSizeCapability>(StorageLimit, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {

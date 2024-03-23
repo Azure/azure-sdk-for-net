@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
-                writer.WriteObjectValue(Filters);
+                writer.WriteObjectValue<BlobInventoryPolicyFilter>(Filters, options);
             }
             writer.WritePropertyName("format"u8);
             writer.WriteStringValue(Format.ToString());

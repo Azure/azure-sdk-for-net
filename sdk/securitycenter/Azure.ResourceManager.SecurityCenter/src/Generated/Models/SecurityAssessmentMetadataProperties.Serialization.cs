@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(PartnerData))
             {
                 writer.WritePropertyName("partnerData"u8);
-                writer.WriteObjectValue(PartnerData);
+                writer.WriteObjectValue<SecurityAssessmentMetadataPartner>(PartnerData, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
-                writer.WriteObjectValue(Filters);
+                writer.WriteObjectValue<ObjectReplicationPolicyFilter>(Filters, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

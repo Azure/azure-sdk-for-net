@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             if (Optional.IsDefined(UpgradePolicy))
             {
                 writer.WritePropertyName("upgradePolicy"u8);
-                writer.WriteObjectValue(UpgradePolicy);
+                writer.WriteObjectValue<ApplicationUpgradePolicy>(UpgradePolicy, options);
             }
             if (Optional.IsCollectionDefined(ManagedIdentities))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in ManagedIdentities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplicationUserAssignedIdentityInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue<UserAssignedIdentityProperties>(Identity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

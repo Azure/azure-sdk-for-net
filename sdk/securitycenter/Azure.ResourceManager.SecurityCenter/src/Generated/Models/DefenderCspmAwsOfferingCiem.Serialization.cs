@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(CiemDiscovery))
             {
                 writer.WritePropertyName("ciemDiscovery"u8);
-                writer.WriteObjectValue(CiemDiscovery);
+                writer.WriteObjectValue<DefenderCspmAwsOfferingCiemDiscovery>(CiemDiscovery, options);
             }
             if (Optional.IsDefined(CiemOidc))
             {
                 writer.WritePropertyName("ciemOidc"u8);
-                writer.WriteObjectValue(CiemOidc);
+                writer.WriteObjectValue<DefenderCspmAwsOfferingCiemOidc>(CiemOidc, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

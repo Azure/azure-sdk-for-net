@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(DataTypes))
             {
                 writer.WritePropertyName("dataTypes"u8);
-                writer.WriteObjectValue(DataTypes);
+                writer.WriteObjectValue<SecurityInsightsAlertsDataTypeOfDataConnector>(DataTypes, options);
             }
             if (Optional.IsDefined(SubscriptionId))
             {

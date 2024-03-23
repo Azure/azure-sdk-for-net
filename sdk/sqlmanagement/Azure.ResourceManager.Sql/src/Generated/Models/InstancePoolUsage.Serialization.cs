@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                writer.WriteObjectValue<InstancePoolUsageName>(Name, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {

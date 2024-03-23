@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartArray();
             foreach (var item in VirtualMachines)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<JitNetworkAccessRequestVirtualMachine>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("startTimeUtc"u8);

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (options.Format != "W" && Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Parameters);
+                writer.WriteObjectValue<BlobRestoreContent>(Parameters, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

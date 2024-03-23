@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             if (Optional.IsDefined(HealthPolicy))
             {
                 writer.WritePropertyName("healthPolicy"u8);
-                writer.WriteObjectValue(HealthPolicy);
+                writer.WriteObjectValue<ManagedClusterHealthPolicy>(HealthPolicy, options);
             }
             if (Optional.IsDefined(DeltaHealthPolicy))
             {
                 writer.WritePropertyName("deltaHealthPolicy"u8);
-                writer.WriteObjectValue(DeltaHealthPolicy);
+                writer.WriteObjectValue<ManagedClusterUpgradeDeltaHealthPolicy>(DeltaHealthPolicy, options);
             }
             if (Optional.IsDefined(MonitoringPolicy))
             {
                 writer.WritePropertyName("monitoringPolicy"u8);
-                writer.WriteObjectValue(MonitoringPolicy);
+                writer.WriteObjectValue<ManagedClusterMonitoringPolicy>(MonitoringPolicy, options);
             }
             if (Optional.IsDefined(UpgradeReplicaSetCheckTimeout))
             {

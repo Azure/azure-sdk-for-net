@@ -30,22 +30,22 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(MinValue))
             {
                 writer.WritePropertyName("minValue"u8);
-                writer.WriteObjectValue(MinValue);
+                writer.WriteObjectValue<MaxSizeCapability>(MinValue, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MaxValue))
             {
                 writer.WritePropertyName("maxValue"u8);
-                writer.WriteObjectValue(MaxValue);
+                writer.WriteObjectValue<MaxSizeCapability>(MaxValue, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ScaleSize))
             {
                 writer.WritePropertyName("scaleSize"u8);
-                writer.WriteObjectValue(ScaleSize);
+                writer.WriteObjectValue<MaxSizeCapability>(ScaleSize, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LogSize))
             {
                 writer.WritePropertyName("logSize"u8);
-                writer.WriteObjectValue(LogSize);
+                writer.WriteObjectValue<LogSizeCapability>(LogSize, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {

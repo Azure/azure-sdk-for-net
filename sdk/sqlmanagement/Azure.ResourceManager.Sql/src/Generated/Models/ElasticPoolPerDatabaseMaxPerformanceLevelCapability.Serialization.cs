@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedPerDatabaseMinPerformanceLevels)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ElasticPoolPerDatabaseMinPerformanceLevelCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(BaseBlob))
             {
                 writer.WritePropertyName("baseBlob"u8);
-                writer.WriteObjectValue(BaseBlob);
+                writer.WriteObjectValue<ManagementPolicyBaseBlob>(BaseBlob, options);
             }
             if (Optional.IsDefined(Snapshot))
             {
                 writer.WritePropertyName("snapshot"u8);
-                writer.WriteObjectValue(Snapshot);
+                writer.WriteObjectValue<ManagementPolicySnapShot>(Snapshot, options);
             }
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
-                writer.WriteObjectValue(Version);
+                writer.WriteObjectValue<ManagementPolicyVersion>(Version, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
