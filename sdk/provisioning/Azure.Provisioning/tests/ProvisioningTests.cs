@@ -725,6 +725,7 @@ namespace Azure.Provisioning.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/42921")]
         public async Task OutputsSpanningModules()
         {
             var infra = new TestInfrastructure();
