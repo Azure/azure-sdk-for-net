@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(TargetCost))
             {
                 writer.WritePropertyName("targetCost"u8);
-                writer.WriteObjectValue(TargetCost);
+                writer.WriteObjectValue<DevTestLabTargetCost>(TargetCost, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LabCostSummary))
             {
                 writer.WritePropertyName("labCostSummary"u8);
-                writer.WriteObjectValue(LabCostSummary);
+                writer.WriteObjectValue<LabCostSummaryProperties>(LabCostSummary, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(LabCostDetails))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WriteStartArray();
                 foreach (var item in LabCostDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DevTestLabCostDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WriteStartArray();
                 foreach (var item in ResourceCosts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DevTestLabResourceCost>(item, options);
                 }
                 writer.WriteEndArray();
             }

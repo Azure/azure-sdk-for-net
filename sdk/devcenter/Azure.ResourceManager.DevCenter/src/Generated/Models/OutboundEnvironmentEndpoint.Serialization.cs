@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EndpointDependency>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue<EventSubscriptionIdentity>(Identity, options);
             }
             if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination);
+                writer.WriteObjectValue<EventSubscriptionDestination>(Destination, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

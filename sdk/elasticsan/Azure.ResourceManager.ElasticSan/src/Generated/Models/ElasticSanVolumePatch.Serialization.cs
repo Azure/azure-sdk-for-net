@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             if (Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
-                writer.WriteObjectValue(ManagedBy);
+                writer.WriteObjectValue<ManagedByInfo>(ManagedBy, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

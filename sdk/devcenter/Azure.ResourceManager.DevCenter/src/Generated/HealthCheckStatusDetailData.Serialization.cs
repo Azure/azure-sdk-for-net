@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WriteStartArray();
                 foreach (var item in HealthChecks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DevCenterHealthCheck>(item, options);
                 }
                 writer.WriteEndArray();
             }

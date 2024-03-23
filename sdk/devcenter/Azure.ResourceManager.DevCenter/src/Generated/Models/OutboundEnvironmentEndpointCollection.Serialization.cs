@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OutboundEnvironmentEndpoint>(item, options);
                 }
                 writer.WriteEndArray();
             }

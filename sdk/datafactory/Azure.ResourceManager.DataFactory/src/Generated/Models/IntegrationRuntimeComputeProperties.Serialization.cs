@@ -49,22 +49,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(DataFlowProperties))
             {
                 writer.WritePropertyName("dataFlowProperties"u8);
-                writer.WriteObjectValue(DataFlowProperties);
+                writer.WriteObjectValue<IntegrationRuntimeDataFlowProperties>(DataFlowProperties, options);
             }
             if (Optional.IsDefined(VnetProperties))
             {
                 writer.WritePropertyName("vNetProperties"u8);
-                writer.WriteObjectValue(VnetProperties);
+                writer.WriteObjectValue<IntegrationRuntimeVnetProperties>(VnetProperties, options);
             }
             if (Optional.IsDefined(CopyComputeScaleProperties))
             {
                 writer.WritePropertyName("copyComputeScaleProperties"u8);
-                writer.WriteObjectValue(CopyComputeScaleProperties);
+                writer.WriteObjectValue<CopyComputeScaleProperties>(CopyComputeScaleProperties, options);
             }
             if (Optional.IsDefined(PipelineExternalComputeScaleProperties))
             {
                 writer.WritePropertyName("pipelineExternalComputeScaleProperties"u8);
-                writer.WriteObjectValue(PipelineExternalComputeScaleProperties);
+                writer.WriteObjectValue<PipelineExternalComputeScaleProperties>(PipelineExternalComputeScaleProperties, options);
             }
             foreach (var item in AdditionalProperties)
             {

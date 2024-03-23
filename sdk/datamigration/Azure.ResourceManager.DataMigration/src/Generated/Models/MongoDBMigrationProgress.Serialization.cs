@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 foreach (var item in Databases)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<MongoDBDatabaseProgress>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             foreach (var item in Errors)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<MongoDBError>(item.Value, options);
             }
             writer.WriteEndObject();
             writer.WritePropertyName("eventsPending"u8);
