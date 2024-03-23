@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.MobileNetwork
             }
             writer.WritePropertyName("sku"u8);
             writer.WriteStringValue(Sku.ToString());
-            if (Optional.IsDefined(UeMtu))
+            if (Optional.IsDefined(UEMtu))
             {
                 writer.WritePropertyName("ueMtu"u8);
-                writer.WriteNumberValue(UeMtu.Value);
+                writer.WriteNumberValue(UEMtu.Value);
             }
             writer.WritePropertyName("localDiagnosticsAccess"u8);
             writer.WriteObjectValue(LocalDiagnosticsAccess);
@@ -155,6 +155,11 @@ namespace Azure.ResourceManager.MobileNetwork
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
+            }
+            if (options.Format != "W" && Optional.IsDefined(HomeNetworkPrivateKeysProvisioning))
+            {
+                writer.WritePropertyName("homeNetworkPrivateKeysProvisioning"u8);
+                writer.WriteObjectValue(HomeNetworkPrivateKeysProvisioning);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -219,6 +224,7 @@ namespace Azure.ResourceManager.MobileNetwork
             MobileNetworkEventHubConfiguration eventHub = default;
             SignalingConfiguration signaling = default;
             BinaryData interopSettings = default;
+            HomeNetworkPrivateKeysProvisioning homeNetworkPrivateKeysProvisioning = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -415,6 +421,15 @@ namespace Azure.ResourceManager.MobileNetwork
                             interopSettings = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("homeNetworkPrivateKeysProvisioning"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            homeNetworkPrivateKeysProvisioning = HomeNetworkPrivateKeysProvisioning.DeserializeHomeNetworkPrivateKeysProvisioning(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -449,6 +464,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 eventHub,
                 signaling,
                 interopSettings,
+                homeNetworkPrivateKeysProvisioning,
                 serializedAdditionalRawData);
         }
 

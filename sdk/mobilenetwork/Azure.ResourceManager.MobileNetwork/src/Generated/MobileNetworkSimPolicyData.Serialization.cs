@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteEndObject();
             }
             writer.WritePropertyName("ueAmbr"u8);
-            writer.WriteObjectValue(UeAmbr);
+            writer.WriteObjectValue(UEAmbr);
             writer.WritePropertyName("defaultSlice"u8);
             JsonSerializer.Serialize(writer, DefaultSlice);
             if (Optional.IsDefined(RfspIndex))

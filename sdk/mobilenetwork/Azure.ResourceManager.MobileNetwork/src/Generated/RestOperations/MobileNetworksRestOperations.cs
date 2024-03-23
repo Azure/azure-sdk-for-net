@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01";
+            _apiVersion = apiVersion ?? "2024-02-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.MobileNetwork
             }
         }
 
-        internal HttpMessage CreateUpdateTagsRequest(string subscriptionId, string resourceGroupName, string mobileNetworkName, MobileNetworkTagsPatch patch)
+        internal HttpMessage CreateUpdateTagsRequest(string subscriptionId, string resourceGroupName, string mobileNetworkName, MobileNetworkResourcePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -292,15 +292,15 @@ namespace Azure.ResourceManager.MobileNetwork
             return message;
         }
 
-        /// <summary> Updates mobile network tags. </summary>
+        /// <summary> Updates mobile network tags and managed identity. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="patch"> Parameters supplied to update mobile network tags. </param>
+        /// <param name="patch"> Parameters supplied to update mobile network tags and/or identity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MobileNetworkData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string mobileNetworkName, MobileNetworkTagsPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<MobileNetworkData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string mobileNetworkName, MobileNetworkResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -323,15 +323,15 @@ namespace Azure.ResourceManager.MobileNetwork
             }
         }
 
-        /// <summary> Updates mobile network tags. </summary>
+        /// <summary> Updates mobile network tags and managed identity. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="patch"> Parameters supplied to update mobile network tags. </param>
+        /// <param name="patch"> Parameters supplied to update mobile network tags and/or identity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MobileNetworkData> UpdateTags(string subscriptionId, string resourceGroupName, string mobileNetworkName, MobileNetworkTagsPatch patch, CancellationToken cancellationToken = default)
+        public Response<MobileNetworkData> UpdateTags(string subscriptionId, string resourceGroupName, string mobileNetworkName, MobileNetworkResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
