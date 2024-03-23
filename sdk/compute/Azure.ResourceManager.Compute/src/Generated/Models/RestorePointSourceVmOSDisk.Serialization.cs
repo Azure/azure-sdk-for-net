@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
-                writer.WriteObjectValue(EncryptionSettings);
+                writer.WriteObjectValue<DiskEncryptionSettings>(EncryptionSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
-                writer.WriteObjectValue(ManagedDisk);
+                writer.WriteObjectValue<VirtualMachineManagedDisk>(ManagedDisk, options);
             }
             if (Optional.IsDefined(DiskRestorePoint))
             {
                 writer.WritePropertyName("diskRestorePoint"u8);
-                writer.WriteObjectValue(DiskRestorePoint);
+                writer.WriteObjectValue<DiskRestorePointAttributes>(DiskRestorePoint, options);
             }
             if (options.Format != "W" && Optional.IsDefined(WriteAcceleratorEnabled))
             {

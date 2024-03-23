@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WriteStartArray();
                 foreach (var item in RestorableLocations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RestorableLocationResourceInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

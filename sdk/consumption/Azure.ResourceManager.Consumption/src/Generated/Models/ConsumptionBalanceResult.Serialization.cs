@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in NewPurchasesDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConsumptionBalanceNewPurchasesDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in AdjustmentDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConsumptionBalanceAdjustmentDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }

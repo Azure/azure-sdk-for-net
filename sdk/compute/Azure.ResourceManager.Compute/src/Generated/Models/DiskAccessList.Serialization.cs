@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DiskAccessData>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))

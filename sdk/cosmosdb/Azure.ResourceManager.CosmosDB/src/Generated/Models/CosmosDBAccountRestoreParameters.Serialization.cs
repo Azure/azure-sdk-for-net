@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in DatabasesToRestore)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DatabaseRestoreResourceInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in GremlinDatabasesToRestore)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GremlinDatabaseRestoreResourceInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

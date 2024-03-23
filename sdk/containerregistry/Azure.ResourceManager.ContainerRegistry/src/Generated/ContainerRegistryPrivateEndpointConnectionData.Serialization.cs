@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState);
+                writer.WriteObjectValue<ContainerRegistryPrivateLinkServiceConnectionState>(ConnectionState, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(OSDisk))
             {
                 writer.WritePropertyName("osDisk"u8);
-                writer.WriteObjectValue(OSDisk);
+                writer.WriteObjectValue<RestorePointSourceVmOSDisk>(OSDisk, options);
             }
             if (Optional.IsCollectionDefined(DataDiskList))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDiskList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RestorePointSourceVmDataDisk>(item, options);
                 }
                 writer.WriteEndArray();
             }

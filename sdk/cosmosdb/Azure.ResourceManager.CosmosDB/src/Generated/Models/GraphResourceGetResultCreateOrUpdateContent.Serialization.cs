@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue(Options);
+                writer.WriteObjectValue<CosmosDBCreateUpdateConfig>(Options, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

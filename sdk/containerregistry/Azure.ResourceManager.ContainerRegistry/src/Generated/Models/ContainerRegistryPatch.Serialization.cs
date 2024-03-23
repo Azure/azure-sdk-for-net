@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<ContainerRegistrySku>(Sku, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -58,17 +58,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkRuleSet"u8);
-                writer.WriteObjectValue(NetworkRuleSet);
+                writer.WriteObjectValue<ContainerRegistryNetworkRuleSet>(NetworkRuleSet, options);
             }
             if (Optional.IsDefined(Policies))
             {
                 writer.WritePropertyName("policies"u8);
-                writer.WriteObjectValue(Policies);
+                writer.WriteObjectValue<ContainerRegistryPolicies>(Policies, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<ContainerRegistryEncryption>(Encryption, options);
             }
             if (Optional.IsDefined(IsDataEndpointEnabled))
             {

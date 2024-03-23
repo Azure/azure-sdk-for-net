@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(ContactDetails))
             {
                 writer.WritePropertyName("contactDetails"u8);
-                writer.WriteObjectValue(ContactDetails);
+                writer.WriteObjectValue<DataBoxContactDetails>(ContactDetails, options);
             }
             if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue(ShippingAddress);
+                writer.WriteObjectValue<DataBoxShippingAddress>(ShippingAddress, options);
             }
             if (Optional.IsDefined(ReverseShippingDetails))
             {
                 writer.WritePropertyName("reverseShippingDetails"u8);
-                writer.WriteObjectValue(ReverseShippingDetails);
+                writer.WriteObjectValue<ReverseShippingDetails>(ReverseShippingDetails, options);
             }
             if (Optional.IsDefined(Preferences))
             {
                 writer.WritePropertyName("preferences"u8);
-                writer.WriteObjectValue(Preferences);
+                writer.WriteObjectValue<DataBoxOrderPreferences>(Preferences, options);
             }
             if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
-                writer.WriteObjectValue(KeyEncryptionKey);
+                writer.WriteObjectValue<DataBoxKeyEncryptionKey>(KeyEncryptionKey, options);
             }
             if (Optional.IsDefined(ReturnToCustomerPackageDetails))
             {
                 writer.WritePropertyName("returnToCustomerPackageDetails"u8);
-                writer.WriteObjectValue(ReturnToCustomerPackageDetails);
+                writer.WriteObjectValue<PackageCarrierDetails>(ReturnToCustomerPackageDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

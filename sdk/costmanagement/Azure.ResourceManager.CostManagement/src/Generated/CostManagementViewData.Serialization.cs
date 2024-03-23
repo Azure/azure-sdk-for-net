@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.CostManagement
                 writer.WriteStartArray();
                 foreach (var item in Kpis)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ViewKpiProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.CostManagement
                 writer.WriteStartArray();
                 foreach (var item in Pivots)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ViewPivotProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(TimePeriod))
             {
                 writer.WritePropertyName("timePeriod"u8);
-                writer.WriteObjectValue(TimePeriod);
+                writer.WriteObjectValue<ReportConfigTimePeriod>(TimePeriod, options);
             }
             if (Optional.IsDefined(DataSet))
             {
                 writer.WritePropertyName("dataSet"u8);
-                writer.WriteObjectValue(DataSet);
+                writer.WriteObjectValue<ReportConfigDataset>(DataSet, options);
             }
             if (Optional.IsDefined(IncludeMonetaryCommitment))
             {

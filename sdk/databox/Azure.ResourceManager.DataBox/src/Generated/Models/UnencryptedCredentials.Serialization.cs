@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataBox.Models
             if (options.Format != "W" && Optional.IsDefined(JobSecrets))
             {
                 writer.WritePropertyName("jobSecrets"u8);
-                writer.WriteObjectValue(JobSecrets);
+                writer.WriteObjectValue<JobSecrets>(JobSecrets, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

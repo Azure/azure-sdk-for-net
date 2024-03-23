@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(ClusterStorageCapacityInfo))
             {
                 writer.WritePropertyName("clusterStorageCapacityInfo"u8);
-                writer.WriteObjectValue(ClusterStorageCapacityInfo);
+                writer.WriteObjectValue<EdgeClusterStorageViewInfo>(ClusterStorageCapacityInfo, options);
             }
             if (Optional.IsDefined(ClusterComputeCapacityInfo))
             {
                 writer.WritePropertyName("clusterComputeCapacityInfo"u8);
-                writer.WriteObjectValue(ClusterComputeCapacityInfo);
+                writer.WriteObjectValue<EdgeClusterCapacityViewInfo>(ClusterComputeCapacityInfo, options);
             }
             if (Optional.IsCollectionDefined(NodeCapacityInfos))
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 foreach (var item in NodeCapacityInfos)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<HostCapacity>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
