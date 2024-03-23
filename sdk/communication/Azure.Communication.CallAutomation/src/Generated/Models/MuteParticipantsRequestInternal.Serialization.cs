@@ -19,7 +19,7 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartArray();
             foreach (var item in TargetParticipants)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<CommunicationIdentifierModel>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(OperationContext))

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartArray();
             foreach (var item in MatchConditions)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<CustomRuleMatchCondition>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("action"u8);

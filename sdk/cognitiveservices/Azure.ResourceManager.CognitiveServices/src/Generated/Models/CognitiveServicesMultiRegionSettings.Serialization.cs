@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Regions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CognitiveServicesRegionSetting>(item, options);
                 }
                 writer.WriteEndArray();
             }

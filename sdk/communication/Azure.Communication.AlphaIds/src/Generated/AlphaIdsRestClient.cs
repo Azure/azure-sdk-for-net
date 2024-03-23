@@ -106,7 +106,7 @@ namespace Azure.Communication.AlphaIds
             request.Headers.Add("Content-Type", "application/merge-patch+json");
             var model = new AlphaIdConfiguration(enabled);
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue<AlphaIdConfiguration>(model);
             request.Content = content;
             return message;
         }
