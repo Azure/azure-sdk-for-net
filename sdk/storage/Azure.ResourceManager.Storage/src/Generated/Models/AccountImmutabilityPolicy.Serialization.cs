@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -122,6 +123,64 @@ namespace Azure.ResourceManager.Storage.Models
             return new AccountImmutabilityPolicy(immutabilityPeriodSinceCreationInDays, state, allowProtectedAppendWrites, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ImmutabilityPeriodSinceCreationInDays), out propertyOverride);
+            if (Optional.IsDefined(ImmutabilityPeriodSinceCreationInDays) || hasPropertyOverride)
+            {
+                builder.Append("  immutabilityPeriodSinceCreationInDays: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{ImmutabilityPeriodSinceCreationInDays.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
+            if (Optional.IsDefined(State) || hasPropertyOverride)
+            {
+                builder.Append("  state: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{State.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowProtectedAppendWrites), out propertyOverride);
+            if (Optional.IsDefined(AllowProtectedAppendWrites) || hasPropertyOverride)
+            {
+                builder.Append("  allowProtectedAppendWrites: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = AllowProtectedAppendWrites.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AccountImmutabilityPolicy>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AccountImmutabilityPolicy>)this).GetFormatFromOptions(options) : options.Format;
@@ -130,6 +189,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AccountImmutabilityPolicy)} does not support writing '{options.Format}' format.");
             }

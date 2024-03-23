@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <summary> Describes the properties of an existing Private Endpoint connection to the Azure Cognitive Search service. </summary>
+        [WirePath("properties")]
         public SearchServicePrivateEndpointConnectionProperties Properties { get; set; }
     }
 }

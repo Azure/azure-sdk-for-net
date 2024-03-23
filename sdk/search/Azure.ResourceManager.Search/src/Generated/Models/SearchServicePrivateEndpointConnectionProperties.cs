@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <summary> The private endpoint resource from Microsoft.Network provider. </summary>
         internal WritableSubResource PrivateEndpoint { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("privateEndpoint.id")]
         public ResourceIdentifier PrivateEndpointId
         {
             get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
@@ -82,10 +83,13 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> Describes the current state of an existing Private Link Service connection to the Azure Private Endpoint. </summary>
+        [WirePath("privateLinkServiceConnectionState")]
         public SearchServicePrivateLinkServiceConnectionState ConnectionState { get; set; }
         /// <summary> The group id from the provider of resource the private link service connection is for. </summary>
+        [WirePath("groupId")]
         public string GroupId { get; set; }
         /// <summary> The provisioning state of the private link service connection. Can be Updating, Deleting, Failed, Succeeded, or Incomplete. </summary>
+        [WirePath("provisioningState")]
         public SearchPrivateLinkServiceConnectionProvisioningState? ProvisioningState { get; set; }
     }
 }

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -167,6 +169,101 @@ namespace Azure.ResourceManager.AppService.Models
             return new SiteCloneability(result, blockingFeatures ?? new ChangeTrackingList<SiteCloneabilityCriterion>(), unsupportedFeatures ?? new ChangeTrackingList<SiteCloneabilityCriterion>(), blockingCharacteristics ?? new ChangeTrackingList<SiteCloneabilityCriterion>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Result), out propertyOverride);
+            if (Optional.IsDefined(Result) || hasPropertyOverride)
+            {
+                builder.Append("  result: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Result.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlockingFeatures), out propertyOverride);
+            if (Optional.IsCollectionDefined(BlockingFeatures) || hasPropertyOverride)
+            {
+                if (BlockingFeatures.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  blockingFeatures: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in BlockingFeatures)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  blockingFeatures: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UnsupportedFeatures), out propertyOverride);
+            if (Optional.IsCollectionDefined(UnsupportedFeatures) || hasPropertyOverride)
+            {
+                if (UnsupportedFeatures.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  unsupportedFeatures: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in UnsupportedFeatures)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  unsupportedFeatures: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlockingCharacteristics), out propertyOverride);
+            if (Optional.IsCollectionDefined(BlockingCharacteristics) || hasPropertyOverride)
+            {
+                if (BlockingCharacteristics.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  blockingCharacteristics: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in BlockingCharacteristics)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  blockingCharacteristics: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SiteCloneability>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SiteCloneability>)this).GetFormatFromOptions(options) : options.Format;
@@ -175,6 +272,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SiteCloneability)} does not support writing '{options.Format}' format.");
             }

@@ -14,6 +14,7 @@ sample-gen:
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
 skip-csproj: true
+enable-bicep-serialization: true
 
 modelerfour:
   flatten-payloads: false

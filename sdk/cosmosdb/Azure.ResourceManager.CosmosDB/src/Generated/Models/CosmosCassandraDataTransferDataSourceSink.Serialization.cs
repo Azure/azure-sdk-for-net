@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -112,6 +113,98 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new CosmosCassandraDataTransferDataSourceSink(component, serializedAdditionalRawData, remoteAccountName, keyspaceName, tableName);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyspaceName), out propertyOverride);
+            if (Optional.IsDefined(KeyspaceName) || hasPropertyOverride)
+            {
+                builder.Append("  keyspaceName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (KeyspaceName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{KeyspaceName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{KeyspaceName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TableName), out propertyOverride);
+            if (Optional.IsDefined(TableName) || hasPropertyOverride)
+            {
+                builder.Append("  tableName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (TableName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TableName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TableName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemoteAccountName), out propertyOverride);
+            if (Optional.IsDefined(RemoteAccountName) || hasPropertyOverride)
+            {
+                builder.Append("  remoteAccountName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (RemoteAccountName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RemoteAccountName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RemoteAccountName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Component), out propertyOverride);
+            builder.Append("  component: ");
+            if (hasPropertyOverride)
+            {
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Component.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<CosmosCassandraDataTransferDataSourceSink>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CosmosCassandraDataTransferDataSourceSink>)this).GetFormatFromOptions(options) : options.Format;
@@ -120,6 +213,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CosmosCassandraDataTransferDataSourceSink)} does not support writing '{options.Format}' format.");
             }

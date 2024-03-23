@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -102,6 +104,43 @@ namespace Azure.ResourceManager.SignalR.Models
             return new ServerlessUpstreamSettings(templates ?? new ChangeTrackingList<SignalRUpstreamTemplate>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Templates), out propertyOverride);
+            if (Optional.IsCollectionDefined(Templates) || hasPropertyOverride)
+            {
+                if (Templates.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  templates: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Templates)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  templates: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ServerlessUpstreamSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServerlessUpstreamSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -110,6 +149,8 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ServerlessUpstreamSettings)} does not support writing '{options.Format}' format.");
             }

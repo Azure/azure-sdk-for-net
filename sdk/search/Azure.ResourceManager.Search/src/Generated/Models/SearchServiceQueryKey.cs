@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> The name of the query API key; may be empty. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The value of the query API key. </summary>
+        [WirePath("key")]
         public string Key { get; }
     }
 }

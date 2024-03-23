@@ -108,6 +108,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <summary> The SKU of the Search Service, which determines price tier and capacity limits. This property is required when creating a new Search Service. </summary>
         internal SearchSku Sku { get; set; }
         /// <summary> The SKU of the search service. Valid values include: 'free': Shared service. 'basic': Dedicated service with up to 3 replicas. 'standard': Dedicated service with up to 12 partitions and 12 replicas. 'standard2': Similar to standard, but with more capacity per search unit. 'standard3': The largest Standard offering with up to 12 partitions and 12 replicas (or up to 3 partitions with more indexes if you also set the hostingMode property to 'highDensity'). 'storage_optimized_l1': Supports 1TB per partition, up to 12 partitions. 'storage_optimized_l2': Supports 2TB per partition, up to 12 partitions.'. </summary>
+        [WirePath("sku.name")]
         public SearchSkuName? SkuName
         {
             get => Sku is null ? default : Sku.Name;
@@ -120,24 +121,33 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> The identity of the resource. Current supported identity types: None, SystemAssigned. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The number of replicas in the search service. If specified, it must be a value between 1 and 12 inclusive for standard SKUs or between 1 and 3 inclusive for basic SKU. </summary>
+        [WirePath("properties.replicaCount")]
         public int? ReplicaCount { get; set; }
         /// <summary> The number of partitions in the search service; if specified, it can be 1, 2, 3, 4, 6, or 12. Values greater than 1 are only valid for standard SKUs. For 'standard3' services with hostingMode set to 'highDensity', the allowed values are between 1 and 3. </summary>
+        [WirePath("properties.partitionCount")]
         public int? PartitionCount { get; set; }
         /// <summary> Applicable only for the standard3 SKU. You can set this property to enable up to 3 high density partitions that allow up to 1000 indexes, which is much higher than the maximum indexes allowed for any other SKU. For the standard3 SKU, the value is either 'default' or 'highDensity'. For all other SKUs, this value must be 'default'. </summary>
+        [WirePath("properties.hostingMode")]
         public SearchServiceHostingMode? HostingMode { get; set; }
         /// <summary> This value can be set to 'enabled' to avoid breaking changes on existing customer resources and templates. If set to 'disabled', traffic over public interface is not allowed, and private endpoint connections would be the exclusive access method. </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public SearchServicePublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The status of the search service. Possible values include: 'running': The search service is running and no provisioning operations are underway. 'provisioning': The search service is being provisioned or scaled up or down. 'deleting': The search service is being deleted. 'degraded': The search service is degraded. This can occur when the underlying search units are not healthy. The search service is most likely operational, but performance might be slow and some requests might be dropped. 'disabled': The search service is disabled. In this state, the service will reject all API requests. 'error': The search service is in an error state. If your service is in the degraded, disabled, or error states, it means the Azure Cognitive Search team is actively investigating the underlying issue. Dedicated services in these states are still chargeable based on the number of search units provisioned. </summary>
+        [WirePath("properties.status")]
         public SearchServiceStatus? Status { get; }
         /// <summary> The details of the search service status. </summary>
+        [WirePath("properties.statusDetails")]
         public string StatusDetails { get; }
         /// <summary> The state of the last provisioning operation performed on the search service. Provisioning is an intermediate state that occurs while service capacity is being established. After capacity is set up, provisioningState changes to either 'succeeded' or 'failed'. Client applications can poll provisioning status (the recommended polling interval is from 30 seconds to one minute) by using the Get Search Service operation to see when an operation is completed. If you are using the free service, this value tends to come back as 'succeeded' directly in the call to Create search service. This is because the free service uses capacity that is already set up. </summary>
+        [WirePath("properties.provisioningState")]
         public SearchServiceProvisioningState? ProvisioningState { get; }
         /// <summary> Network specific rules that determine how the Azure Cognitive Search service may be reached. </summary>
         internal NetworkRuleSet NetworkRuleSet { get; set; }
         /// <summary> A list of IP restriction rules that defines the inbound network(s) with allowing access to the search service endpoint. At the meantime, all other public IP networks are blocked by the firewall. These restriction rules are applied only when the 'publicNetworkAccess' of the search service is 'enabled'; otherwise, traffic over public interface is not allowed even with any public IP rules, and private endpoint connections would be the exclusive access method. </summary>
+        [WirePath("properties.networkRuleSet.ipRules")]
         public IList<SearchServiceIPRule> IPRules
         {
             get
@@ -149,16 +159,22 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> Specifies any policy regarding encryption of resources (such as indexes) using customer manager keys within a search service. </summary>
+        [WirePath("properties.encryptionWithCmk")]
         public SearchEncryptionWithCmk EncryptionWithCmk { get; set; }
         /// <summary> When set to true, calls to the search service will not be permitted to utilize API keys for authentication. This cannot be set to true if 'dataPlaneAuthOptions' are defined. </summary>
+        [WirePath("properties.disableLocalAuth")]
         public bool? IsLocalAuthDisabled { get; set; }
         /// <summary> Defines the options for how the data plane API of a search service authenticates requests. This cannot be set if 'disableLocalAuth' is set to true. </summary>
+        [WirePath("properties.authOptions")]
         public SearchAadAuthDataPlaneAuthOptions AuthOptions { get; set; }
         /// <summary> The list of private endpoint connections to the Azure Cognitive Search service. </summary>
+        [WirePath("properties.privateEndpointConnections")]
         public IReadOnlyList<SearchPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> Sets options that control the availability of semantic search. This configuration is only possible for certain Azure Cognitive Search SKUs in certain locations. </summary>
+        [WirePath("properties.semanticSearch")]
         public SearchSemanticSearch? SemanticSearch { get; set; }
         /// <summary> The list of shared private link resources managed by the Azure Cognitive Search service. </summary>
+        [WirePath("properties.sharedPrivateLinkResources")]
         public IReadOnlyList<SharedSearchServicePrivateLinkResourceData> SharedPrivateLinkResources { get; }
     }
 }
