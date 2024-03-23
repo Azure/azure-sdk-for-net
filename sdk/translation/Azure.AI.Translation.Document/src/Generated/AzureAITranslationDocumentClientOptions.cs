@@ -18,10 +18,8 @@ namespace Azure.AI.Translation.Document
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2023-11-01-preview". </summary>
-            V2023_11_01_Preview = 1,
             /// <summary> Service version "2024-05-01". </summary>
-            V2024_05_01 = 2,
+            V2024_05_01 = 1,
         }
 
         internal string Version { get; }
@@ -31,7 +29,6 @@ namespace Azure.AI.Translation.Document
         {
             Version = version switch
             {
-                ServiceVersion.V2023_11_01_Preview => "2023-11-01-preview",
                 ServiceVersion.V2024_05_01 => "2024-05-01",
                 _ => throw new NotSupportedException()
             };
