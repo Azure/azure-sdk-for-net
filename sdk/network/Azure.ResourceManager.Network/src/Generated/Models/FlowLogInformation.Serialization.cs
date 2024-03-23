@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(FlowAnalyticsConfiguration))
             {
                 writer.WritePropertyName("flowAnalyticsConfiguration"u8);
-                writer.WriteObjectValue(FlowAnalyticsConfiguration);
+                writer.WriteObjectValue<TrafficAnalyticsProperties>(FlowAnalyticsConfiguration, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
-                writer.WriteObjectValue(RetentionPolicy);
+                writer.WriteObjectValue<RetentionPolicyParameters>(RetentionPolicy, options);
             }
             if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
-                writer.WriteObjectValue(Format);
+                writer.WriteObjectValue<FlowLogProperties>(Format, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

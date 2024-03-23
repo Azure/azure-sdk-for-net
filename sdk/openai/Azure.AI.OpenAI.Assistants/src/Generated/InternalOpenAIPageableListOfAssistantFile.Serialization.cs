@@ -32,7 +32,7 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStartArray();
             foreach (var item in Data)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<AssistantFile>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("first_id"u8);
@@ -176,7 +176,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<InternalOpenAIPageableListOfAssistantFile>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

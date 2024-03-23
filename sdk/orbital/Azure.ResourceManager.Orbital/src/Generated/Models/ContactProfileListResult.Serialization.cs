@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Orbital.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OrbitalContactProfileData>(item, options);
                 }
                 writer.WriteEndArray();
             }

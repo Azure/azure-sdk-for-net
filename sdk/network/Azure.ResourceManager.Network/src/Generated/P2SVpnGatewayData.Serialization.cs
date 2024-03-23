@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in P2SConnectionConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<P2SConnectionConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network
             if (options.Format != "W" && Optional.IsDefined(VpnClientConnectionHealth))
             {
                 writer.WritePropertyName("vpnClientConnectionHealth"u8);
-                writer.WriteObjectValue(VpnClientConnectionHealth);
+                writer.WriteObjectValue<VpnClientConnectionHealth>(VpnClientConnectionHealth, options);
             }
             if (Optional.IsCollectionDefined(CustomDnsServers))
             {

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in SessionInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UESessionInfo5G>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in AllowedNssai)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<Snssai>(item, options);
                 }
                 writer.WriteEndArray();
             }

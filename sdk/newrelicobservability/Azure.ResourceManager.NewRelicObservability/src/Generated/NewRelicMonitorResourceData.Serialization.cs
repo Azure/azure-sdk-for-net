@@ -91,17 +91,17 @@ namespace Azure.ResourceManager.NewRelicObservability
             if (Optional.IsDefined(NewRelicAccountProperties))
             {
                 writer.WritePropertyName("newRelicAccountProperties"u8);
-                writer.WriteObjectValue(NewRelicAccountProperties);
+                writer.WriteObjectValue<NewRelicAccountProperties>(NewRelicAccountProperties, options);
             }
             if (Optional.IsDefined(UserInfo))
             {
                 writer.WritePropertyName("userInfo"u8);
-                writer.WriteObjectValue(UserInfo);
+                writer.WriteObjectValue<NewRelicObservabilityUserInfo>(UserInfo, options);
             }
             if (Optional.IsDefined(PlanData))
             {
                 writer.WritePropertyName("planData"u8);
-                writer.WriteObjectValue(PlanData);
+                writer.WriteObjectValue<NewRelicPlanDetails>(PlanData, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LiftrResourceCategory))
             {

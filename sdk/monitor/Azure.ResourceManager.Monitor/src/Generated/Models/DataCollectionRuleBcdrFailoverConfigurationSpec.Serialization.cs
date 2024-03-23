@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataCollectionRuleBcdrLocationSpec>(item, options);
                 }
                 writer.WriteEndArray();
             }

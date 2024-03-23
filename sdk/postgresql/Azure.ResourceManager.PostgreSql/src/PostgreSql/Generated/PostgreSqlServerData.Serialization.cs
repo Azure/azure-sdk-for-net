@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PostgreSql
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<PostgreSqlSku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.PostgreSql
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                writer.WriteObjectValue<PostgreSqlStorageProfile>(StorageProfile, options);
             }
             if (Optional.IsDefined(ReplicationRole))
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.PostgreSql
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PostgreSqlServerPrivateEndpointConnection>(item, options);
                 }
                 writer.WriteEndArray();
             }

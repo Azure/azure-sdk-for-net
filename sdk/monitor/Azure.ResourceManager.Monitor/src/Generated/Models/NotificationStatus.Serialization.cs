@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
-                writer.WriteObjectValue(Context);
+                writer.WriteObjectValue<NotificationContext>(Context, options);
             }
             writer.WritePropertyName("state"u8);
             writer.WriteStringValue(State);
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in ActionDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NotificationActionDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }

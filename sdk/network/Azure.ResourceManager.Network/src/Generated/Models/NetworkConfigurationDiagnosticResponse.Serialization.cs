@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Results)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkConfigurationDiagnosticResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
