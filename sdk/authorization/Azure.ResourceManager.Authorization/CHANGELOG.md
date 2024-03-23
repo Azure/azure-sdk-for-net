@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.1 (Unreleased)
+## 1.1.1 (2024-03-23)
 
 ### Features Added
 
@@ -11,8 +11,6 @@
 
 - Change ResourceType from `Microsoft.Authorization/roleManagementPolicyAssignment` to `Microsoft.Authorization/roleManagementPolicyAssignments`
 - Fixed [the issue](https://github.com/Azure/azure-sdk-for-net/issues/40050) by removing the three extra operations of `DenyAssignments_ListForResource` , `DenyAssignments_ListForResourceGroup` , and `DenyAssignments_List`.
-
-### Other Changes
 
 ## 1.1.0 (2023-11-21)
 
