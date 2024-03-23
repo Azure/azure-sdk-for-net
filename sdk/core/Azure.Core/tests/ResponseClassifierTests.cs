@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Reflection;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -96,6 +97,22 @@ namespace Azure.Core.Tests
             message.Response = new MockResponse(code);
 
             Assert.AreEqual(isError, classifier.IsErrorResponse(message));
+        }
+
+        [Test]
+        public void TryClassifyIsSealed()
+        {
+            // It is important that ResponseClassifier.TryClassify methods are sealed
+            // so that when TryClassify is called from the base PipelineMessageClassifier
+            // it calls through to the ResponseClassifier implementation of IsError
+            // and IsRetriable methods.
+
+            Type type = typeof(ResponseClassifier);
+            MethodInfo tryClassifyError = type.GetMethod("TryClassify", new Type[] { typeof(HttpMessage), typeof(bool).MakeByRefType() });
+            MethodInfo tryClassifyRetriable = type.GetMethod("TryClassify", new Type[] { typeof(HttpMessage), typeof(Exception), typeof(bool).MakeByRefType() });
+
+            Assert.True(tryClassifyError.IsFinal);
+            Assert.True(tryClassifyRetriable.IsFinal);
         }
     }
 }

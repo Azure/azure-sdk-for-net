@@ -18,7 +18,7 @@ namespace Azure.Core.Tests
 
         protected async Task ProcessAsync(HttpMessage message, HttpPipelineTransport transport, CancellationToken cancellationToken = default)
         {
-            message.CancellationToken = cancellationToken;
+            message.SetCancellationToken(cancellationToken);
             if (_isAsync)
             {
                 await transport.ProcessAsync(message);
@@ -32,7 +32,7 @@ namespace Azure.Core.Tests
         protected async Task<Response> ExecuteRequest(Request request, HttpPipelineTransport transport, CancellationToken cancellationToken = default)
         {
             var message = new HttpMessage(request, ResponseClassifier.Shared);
-            message.CancellationToken = cancellationToken;
+            message.SetCancellationToken(cancellationToken);
             if (_isAsync)
             {
                 await transport.ProcessAsync(message);
