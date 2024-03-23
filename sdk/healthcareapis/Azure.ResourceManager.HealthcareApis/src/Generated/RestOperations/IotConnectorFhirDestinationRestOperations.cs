@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -32,7 +31,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-06-01";
+            _apiVersion = apiVersion ?? "2023-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Gets the properties of the specified Iot Connector FHIR destination. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
@@ -96,7 +95,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Gets the properties of the specified Iot Connector FHIR destination. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
@@ -159,7 +158,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Creates or updates an IoT Connector FHIR destination resource with the specified parameters. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
@@ -191,7 +190,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Creates or updates an IoT Connector FHIR destination resource with the specified parameters. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
@@ -247,7 +246,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Deletes an IoT Connector FHIR destination. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
@@ -277,7 +276,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Deletes an IoT Connector FHIR destination. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>

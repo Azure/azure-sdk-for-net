@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Common;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Specialized;
@@ -3130,7 +3131,7 @@ namespace Azure.Storage.Queues
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-queues")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-queues")]
         public virtual Uri GenerateSasUri(QueueSasPermissions permissions, DateTimeOffset expiresOn)
             => GenerateSasUri(new QueueSasBuilder(permissions, expiresOn) { QueueName = Name });
 
@@ -3152,7 +3153,7 @@ namespace Azure.Storage.Queues
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-queues")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-queues")]
         public virtual Uri GenerateSasUri(
             QueueSasBuilder builder)
         {

@@ -12,17 +12,15 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RedisEnterprise
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RedisEnterprisePrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="RedisEnterprisePrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="RedisEnterpriseClusterResource" />.
-    /// To get a <see cref="RedisEnterprisePrivateEndpointConnectionCollection" /> instance call the GetRedisEnterprisePrivateEndpointConnections method from an instance of <see cref="RedisEnterpriseClusterResource" />.
+    /// A class representing a collection of <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="RedisEnterpriseClusterResource"/>.
+    /// To get a <see cref="RedisEnterprisePrivateEndpointConnectionCollection"/> instance call the GetRedisEnterprisePrivateEndpointConnections method from an instance of <see cref="RedisEnterpriseClusterResource"/>.
     /// </summary>
     public partial class RedisEnterprisePrivateEndpointConnectionCollection : ArmCollection, IEnumerable<RedisEnterprisePrivateEndpointConnectionResource>, IAsyncEnumerable<RedisEnterprisePrivateEndpointConnectionResource>
     {
@@ -63,6 +61,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Put</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterprisePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +111,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Put</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterprisePrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +160,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterprisePrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
@@ -182,6 +204,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterprisePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +250,18 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterprisePrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RedisEnterprisePrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RedisEnterprisePrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -241,10 +279,18 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterprisePrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RedisEnterprisePrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RedisEnterprisePrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -261,6 +307,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterprisePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,6 +351,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterprisePrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
@@ -331,6 +393,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterprisePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -368,6 +438,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterprisePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

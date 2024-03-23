@@ -8,4 +8,8 @@
     <PackageReference Include="Azure.ResourceManager.KeyVault" VersionOverride="1.0.0" />
     <PackageReference Include="Azure.ResourceManager.ManagedServiceIdentities" VersionOverride="1.0.0" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
+    <Compile Include="..\..\..\..\common\ManagementTestShared\Temp\*.cs" LinkBase="TestShared" />
+  </ItemGroup>
 </Project>

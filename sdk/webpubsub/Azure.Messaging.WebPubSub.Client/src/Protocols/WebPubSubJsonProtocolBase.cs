@@ -76,8 +76,8 @@ namespace Azure.Messaging.WebPubSub.Clients
                 string group = null;
                 string @event = null;
                 SystemEventType systemEventType = SystemEventType.Connected;
-                ulong? ackId = null;
-                ulong? sequenceId = null;
+                long? ackId = null;
+                long? sequenceId = null;
                 bool? success = null;
                 string from = null;
                 FromType fromType = FromType.Server;
@@ -143,7 +143,7 @@ namespace Azure.Messaging.WebPubSub.Clients
                             {
                                 try
                                 {
-                                    ackId = reader.ReadAsUlong(AckIdPropertyName);
+                                    ackId = reader.ReadAsLongNonNegtive(AckIdPropertyName);
                                 }
                                 catch (FormatException)
                                 {
@@ -161,7 +161,7 @@ namespace Azure.Messaging.WebPubSub.Clients
                             {
                                 try
                                 {
-                                    sequenceId = reader.ReadAsUlong(SequenceIdPropertyName);
+                                    sequenceId = reader.ReadAsLongNonNegtive(SequenceIdPropertyName);
                                 }
                                 catch (FormatException)
                                 {

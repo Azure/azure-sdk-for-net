@@ -44,8 +44,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<WorkspaceIdentity> identity = default;
+            IDictionary<string, string> tags = default;
+            WorkspaceIdentity identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new WorkspaceUpdateParameters(Optional.ToDictionary(tags), identity.Value);
+            return new WorkspaceUpdateParameters(tags ?? new ChangeTrackingDictionary<string, string>(), identity);
         }
 
         internal partial class WorkspaceUpdateParametersConverter : JsonConverter<WorkspaceUpdateParameters>

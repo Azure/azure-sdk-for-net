@@ -7,13 +7,10 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Synapse;
 using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse.Samples
@@ -217,7 +214,7 @@ namespace Azure.ResourceManager.Synapse.Samples
                         KekIdentity = new KekIdentityProperties()
                         {
                             UserAssignedIdentityId = new ResourceIdentifier("/subscriptions/b64d7b94-73e7-4d36-94b2-7764ea3fd74a/resourcegroups/SynapseCI/providers/Microsoft.ManagedIdentity/userAssignedIdentities/uami1"),
-                            UseSystemAssignedIdentity = BinaryData.FromString("false"),
+                            UseSystemAssignedIdentity = BinaryData.FromString("\"false\""),
                         },
                     },
                 },

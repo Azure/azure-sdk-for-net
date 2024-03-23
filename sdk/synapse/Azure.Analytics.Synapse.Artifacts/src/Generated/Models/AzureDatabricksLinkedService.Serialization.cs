@@ -200,29 +200,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
             object domain = default;
-            Optional<SecretBase> accessToken = default;
-            Optional<object> authentication = default;
-            Optional<object> workspaceResourceId = default;
-            Optional<object> existingClusterId = default;
-            Optional<object> instancePoolId = default;
-            Optional<object> newClusterVersion = default;
-            Optional<object> newClusterNumOfWorker = default;
-            Optional<object> newClusterNodeType = default;
-            Optional<IDictionary<string, object>> newClusterSparkConf = default;
-            Optional<IDictionary<string, object>> newClusterSparkEnvVars = default;
-            Optional<IDictionary<string, object>> newClusterCustomTags = default;
-            Optional<object> newClusterLogDestination = default;
-            Optional<object> newClusterDriverNodeType = default;
-            Optional<object> newClusterInitScripts = default;
-            Optional<object> newClusterEnableElasticDisk = default;
-            Optional<object> encryptedCredential = default;
-            Optional<object> policyId = default;
-            Optional<CredentialReference> credential = default;
+            SecretBase accessToken = default;
+            object authentication = default;
+            object workspaceResourceId = default;
+            object existingClusterId = default;
+            object instancePoolId = default;
+            object newClusterVersion = default;
+            object newClusterNumOfWorker = default;
+            object newClusterNodeType = default;
+            IDictionary<string, object> newClusterSparkConf = default;
+            IDictionary<string, object> newClusterSparkEnvVars = default;
+            IDictionary<string, object> newClusterCustomTags = default;
+            object newClusterLogDestination = default;
+            object newClusterDriverNodeType = default;
+            object newClusterInitScripts = default;
+            object newClusterEnableElasticDisk = default;
+            object encryptedCredential = default;
+            object policyId = default;
+            CredentialReference credential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -499,7 +499,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDatabricksLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, domain, accessToken.Value, authentication.Value, workspaceResourceId.Value, existingClusterId.Value, instancePoolId.Value, newClusterVersion.Value, newClusterNumOfWorker.Value, newClusterNodeType.Value, Optional.ToDictionary(newClusterSparkConf), Optional.ToDictionary(newClusterSparkEnvVars), Optional.ToDictionary(newClusterCustomTags), newClusterLogDestination.Value, newClusterDriverNodeType.Value, newClusterInitScripts.Value, newClusterEnableElasticDisk.Value, encryptedCredential.Value, policyId.Value, credential.Value);
+            return new AzureDatabricksLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                domain,
+                accessToken,
+                authentication,
+                workspaceResourceId,
+                existingClusterId,
+                instancePoolId,
+                newClusterVersion,
+                newClusterNumOfWorker,
+                newClusterNodeType,
+                newClusterSparkConf ?? new ChangeTrackingDictionary<string, object>(),
+                newClusterSparkEnvVars ?? new ChangeTrackingDictionary<string, object>(),
+                newClusterCustomTags ?? new ChangeTrackingDictionary<string, object>(),
+                newClusterLogDestination,
+                newClusterDriverNodeType,
+                newClusterInitScripts,
+                newClusterEnableElasticDisk,
+                encryptedCredential,
+                policyId,
+                credential);
         }
 
         internal partial class AzureDatabricksLinkedServiceConverter : JsonConverter<AzureDatabricksLinkedService>

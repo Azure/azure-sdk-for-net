@@ -12,17 +12,15 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AppPlatformCustomDomainResource" /> and their operations.
-    /// Each <see cref="AppPlatformCustomDomainResource" /> in the collection will belong to the same instance of <see cref="AppPlatformAppResource" />.
-    /// To get an <see cref="AppPlatformCustomDomainCollection" /> instance call the GetAppPlatformCustomDomains method from an instance of <see cref="AppPlatformAppResource" />.
+    /// A class representing a collection of <see cref="AppPlatformCustomDomainResource"/> and their operations.
+    /// Each <see cref="AppPlatformCustomDomainResource"/> in the collection will belong to the same instance of <see cref="AppPlatformAppResource"/>.
+    /// To get an <see cref="AppPlatformCustomDomainCollection"/> instance call the GetAppPlatformCustomDomains method from an instance of <see cref="AppPlatformAppResource"/>.
     /// </summary>
     public partial class AppPlatformCustomDomainCollection : ArmCollection, IEnumerable<AppPlatformCustomDomainResource>, IAsyncEnumerable<AppPlatformCustomDomainResource>
     {
@@ -63,6 +61,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CustomDomains_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformCustomDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +111,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>CustomDomains_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformCustomDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +160,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>CustomDomains_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformCustomDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="domainName"> The name of the custom domain resource. </param>
@@ -182,6 +204,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CustomDomains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformCustomDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +250,18 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>CustomDomains_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformCustomDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppPlatformCustomDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppPlatformCustomDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppPlatformCustomDomainResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformCustomDomainCustomDomainsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -242,10 +280,18 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>CustomDomains_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformCustomDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppPlatformCustomDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppPlatformCustomDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppPlatformCustomDomainResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformCustomDomainCustomDomainsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -263,6 +309,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CustomDomains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformCustomDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +353,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>CustomDomains_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformCustomDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="domainName"> The name of the custom domain resource. </param>
@@ -333,6 +395,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CustomDomains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformCustomDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -370,6 +440,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CustomDomains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformCustomDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

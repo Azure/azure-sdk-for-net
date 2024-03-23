@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,12 +20,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> action = default;
-            Optional<string> location = default;
-            Optional<ContainerRegistryArtifactEventTarget> target = default;
-            Optional<ContainerRegistryEventConnectedRegistry> connectedRegistry = default;
+            string id = default;
+            DateTimeOffset? timestamp = default;
+            string action = default;
+            string location = default;
+            ContainerRegistryArtifactEventTarget target = default;
+            ContainerRegistryEventConnectedRegistry connectedRegistry = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -72,7 +71,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ContainerRegistryChartPushedEventData(id.Value, Optional.ToNullable(timestamp), action.Value, location.Value, target.Value, connectedRegistry.Value);
+            return new ContainerRegistryChartPushedEventData(
+                id,
+                timestamp,
+                action,
+                location,
+                target,
+                connectedRegistry);
         }
 
         internal partial class ContainerRegistryChartPushedEventDataConverter : JsonConverter<ContainerRegistryChartPushedEventData>

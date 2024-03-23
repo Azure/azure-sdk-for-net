@@ -12,18 +12,16 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Billing
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BillingPaymentMethodResource" /> and their operations.
-    /// Each <see cref="BillingPaymentMethodResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="BillingPaymentMethodCollection" /> instance call the GetBillingPaymentMethods method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="BillingPaymentMethodResource"/> and their operations.
+    /// Each <see cref="BillingPaymentMethodResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="BillingPaymentMethodCollection"/> instance call the GetBillingPaymentMethods method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class BillingPaymentMethodCollection : ArmCollection, IEnumerable<BillingPaymentMethodResource>, IAsyncEnumerable<BillingPaymentMethodResource>
     {
@@ -65,6 +63,14 @@ namespace Azure.ResourceManager.Billing
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByUser</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingPaymentMethodResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
@@ -101,6 +107,14 @@ namespace Azure.ResourceManager.Billing
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByUser</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingPaymentMethodResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,10 +153,18 @@ namespace Azure.ResourceManager.Billing
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_ListByUser</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingPaymentMethodResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingPaymentMethodResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BillingPaymentMethodResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BillingPaymentMethodResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingPaymentMethodPaymentMethodsRestClient.CreateListByUserRequest();
@@ -161,10 +183,18 @@ namespace Azure.ResourceManager.Billing
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_ListByUser</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingPaymentMethodResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingPaymentMethodResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BillingPaymentMethodResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BillingPaymentMethodResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingPaymentMethodPaymentMethodsRestClient.CreateListByUserRequest();
@@ -182,6 +212,14 @@ namespace Azure.ResourceManager.Billing
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByUser</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingPaymentMethodResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,6 +256,14 @@ namespace Azure.ResourceManager.Billing
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByUser</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingPaymentMethodResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
@@ -252,6 +298,14 @@ namespace Azure.ResourceManager.Billing
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByUser</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingPaymentMethodResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -289,6 +343,14 @@ namespace Azure.ResourceManager.Billing
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByUser</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingPaymentMethodResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

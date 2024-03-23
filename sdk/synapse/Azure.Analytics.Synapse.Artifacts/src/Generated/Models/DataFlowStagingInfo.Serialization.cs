@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkedServiceReference> linkedService = default;
-            Optional<object> folderPath = default;
+            LinkedServiceReference linkedService = default;
+            object folderPath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedService"u8))
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DataFlowStagingInfo(linkedService.Value, folderPath.Value);
+            return new DataFlowStagingInfo(linkedService, folderPath);
         }
 
         internal partial class DataFlowStagingInfoConverter : JsonConverter<DataFlowStagingInfo>

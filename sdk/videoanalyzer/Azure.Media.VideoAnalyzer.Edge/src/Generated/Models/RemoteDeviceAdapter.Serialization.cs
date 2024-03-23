@@ -37,8 +37,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             string name = default;
-            Optional<SystemData> systemData = default;
-            Optional<RemoteDeviceAdapterProperties> properties = default;
+            SystemData systemData = default;
+            RemoteDeviceAdapterProperties properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -65,7 +65,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new RemoteDeviceAdapter(name, systemData.Value, properties.Value);
+            return new RemoteDeviceAdapter(name, systemData, properties);
         }
     }
 }

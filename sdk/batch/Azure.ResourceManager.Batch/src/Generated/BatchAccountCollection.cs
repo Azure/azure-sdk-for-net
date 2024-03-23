@@ -12,19 +12,17 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Batch.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Batch
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BatchAccountResource" /> and their operations.
-    /// Each <see cref="BatchAccountResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="BatchAccountCollection" /> instance call the GetBatchAccounts method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="BatchAccountResource"/> and their operations.
+    /// Each <see cref="BatchAccountResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="BatchAccountCollection"/> instance call the GetBatchAccounts method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class BatchAccountCollection : ArmCollection, IEnumerable<BatchAccountResource>, IAsyncEnumerable<BatchAccountResource>
     {
@@ -65,6 +63,14 @@ namespace Azure.ResourceManager.Batch
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BatchAccount_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +113,14 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>BatchAccount_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -148,6 +162,14 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>BatchAccount_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> The name of the Batch account. </param>
@@ -184,6 +206,14 @@ namespace Azure.ResourceManager.Batch
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BatchAccount_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,10 +252,18 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>BatchAccount_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BatchAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BatchAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BatchAccountResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -244,10 +282,18 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>BatchAccount_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BatchAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BatchAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BatchAccountResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -265,6 +311,14 @@ namespace Azure.ResourceManager.Batch
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BatchAccount_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -301,6 +355,14 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>BatchAccount_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> The name of the Batch account. </param>
@@ -335,6 +397,14 @@ namespace Azure.ResourceManager.Batch
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BatchAccount_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -372,6 +442,14 @@ namespace Azure.ResourceManager.Batch
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BatchAccount_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

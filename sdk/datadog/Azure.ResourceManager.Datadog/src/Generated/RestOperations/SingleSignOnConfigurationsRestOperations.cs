@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Datadog.Models;
@@ -147,7 +146,7 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
         /// <param name="configurationName"> Configuration name. </param>
-        /// <param name="data"> The DatadogSingleSignOnResource to use. </param>
+        /// <param name="data"> The <see cref="DatadogSingleSignOnResourceData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/>, <paramref name="configurationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -176,7 +175,7 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
         /// <param name="configurationName"> Configuration name. </param>
-        /// <param name="data"> The DatadogSingleSignOnResource to use. </param>
+        /// <param name="data"> The <see cref="DatadogSingleSignOnResourceData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/>, <paramref name="configurationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>

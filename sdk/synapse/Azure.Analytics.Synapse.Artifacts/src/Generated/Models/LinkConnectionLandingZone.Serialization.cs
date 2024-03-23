@@ -47,10 +47,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkedServiceReference> linkedService = default;
-            Optional<string> fileSystem = default;
-            Optional<string> folderPath = default;
-            Optional<SecureString> sasToken = default;
+            LinkedServiceReference linkedService = default;
+            string fileSystem = default;
+            string folderPath = default;
+            SecureString sasToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedService"u8))
@@ -82,7 +82,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkConnectionLandingZone(linkedService.Value, fileSystem.Value, folderPath.Value, sasToken.Value);
+            return new LinkConnectionLandingZone(linkedService, fileSystem, folderPath, sasToken);
         }
 
         internal partial class LinkConnectionLandingZoneConverter : JsonConverter<LinkConnectionLandingZone>

@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.Resources;
 
@@ -22,13 +20,16 @@ namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
     /// A Class representing a ContainerApp along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerAppResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetContainerAppResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetContainerApp method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerAppResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetContainerApp method.
     /// </summary>
     public partial class ContainerAppResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerAppResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="containerAppName"> The containerAppName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string containerAppName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}";
@@ -39,12 +40,15 @@ namespace Azure.ResourceManager.AppContainers
         private readonly ContainerAppsRestOperations _containerAppRestClient;
         private readonly ContainerAppData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.App/containerApps";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerAppResource"/> class for mocking. </summary>
         protected ContainerAppResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ContainerAppResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerAppResource(ArmClient client, ContainerAppData data) : this(client, data.Id)
@@ -65,9 +69,6 @@ namespace Azure.ResourceManager.AppContainers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.App/containerApps";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An object representing collection of ContainerAppAuthConfigResources and their operations over a ContainerAppAuthConfigResource. </returns>
         public virtual ContainerAppAuthConfigCollection GetContainerAppAuthConfigs()
         {
-            return GetCachedClient(Client => new ContainerAppAuthConfigCollection(Client, Id));
+            return GetCachedClient(client => new ContainerAppAuthConfigCollection(client, Id));
         }
 
         /// <summary>
@@ -108,12 +109,20 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerAppsAuthConfigs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppAuthConfigResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="authConfigName"> Name of the Container App AuthConfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authConfigName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ContainerAppAuthConfigResource>> GetContainerAppAuthConfigAsync(string authConfigName, CancellationToken cancellationToken = default)
         {
@@ -131,12 +140,20 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerAppsAuthConfigs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppAuthConfigResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="authConfigName"> Name of the Container App AuthConfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authConfigName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ContainerAppAuthConfigResource> GetContainerAppAuthConfig(string authConfigName, CancellationToken cancellationToken = default)
         {
@@ -144,7 +161,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Gets an object representing a ContainerAppDetectorPropertyResource along with the instance operations that can be performed on it in the ContainerApp. </summary>
-        /// <returns> Returns a <see cref="ContainerAppDetectorPropertyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ContainerAppDetectorPropertyResource"/> object. </returns>
         public virtual ContainerAppDetectorPropertyResource GetContainerAppDetectorProperty()
         {
             return new ContainerAppDetectorPropertyResource(Client, Id.AppendChildResource("detectorProperties", "rootApi"));
@@ -154,7 +171,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An object representing collection of ContainerAppRevisionResources and their operations over a ContainerAppRevisionResource. </returns>
         public virtual ContainerAppRevisionCollection GetContainerAppRevisions()
         {
-            return GetCachedClient(Client => new ContainerAppRevisionCollection(Client, Id));
+            return GetCachedClient(client => new ContainerAppRevisionCollection(client, Id));
         }
 
         /// <summary>
@@ -168,12 +185,20 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerAppsRevisions_GetRevision</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppRevisionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="revisionName"> Name of the Container App Revision. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="revisionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ContainerAppRevisionResource>> GetContainerAppRevisionAsync(string revisionName, CancellationToken cancellationToken = default)
         {
@@ -191,12 +216,20 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerAppsRevisions_GetRevision</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppRevisionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="revisionName"> Name of the Container App Revision. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="revisionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ContainerAppRevisionResource> GetContainerAppRevision(string revisionName, CancellationToken cancellationToken = default)
         {
@@ -207,7 +240,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An object representing collection of ContainerAppDetectorPropertyRevisionResources and their operations over a ContainerAppDetectorPropertyRevisionResource. </returns>
         public virtual ContainerAppDetectorPropertyRevisionCollection GetContainerAppDetectorPropertyRevisions()
         {
-            return GetCachedClient(Client => new ContainerAppDetectorPropertyRevisionCollection(Client, Id));
+            return GetCachedClient(client => new ContainerAppDetectorPropertyRevisionCollection(client, Id));
         }
 
         /// <summary>
@@ -221,12 +254,20 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerAppsDiagnostics_GetRevision</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppDetectorPropertyRevisionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="revisionName"> Name of the Container App Revision. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="revisionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ContainerAppDetectorPropertyRevisionResource>> GetContainerAppDetectorPropertyRevisionAsync(string revisionName, CancellationToken cancellationToken = default)
         {
@@ -244,12 +285,20 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerAppsDiagnostics_GetRevision</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppDetectorPropertyRevisionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="revisionName"> Name of the Container App Revision. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="revisionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ContainerAppDetectorPropertyRevisionResource> GetContainerAppDetectorPropertyRevision(string revisionName, CancellationToken cancellationToken = default)
         {
@@ -260,7 +309,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An object representing collection of ContainerAppDetectorResources and their operations over a ContainerAppDetectorResource. </returns>
         public virtual ContainerAppDetectorCollection GetContainerAppDetectors()
         {
-            return GetCachedClient(Client => new ContainerAppDetectorCollection(Client, Id));
+            return GetCachedClient(client => new ContainerAppDetectorCollection(client, Id));
         }
 
         /// <summary>
@@ -274,12 +323,20 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerAppsDiagnostics_GetDetector</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppDetectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="detectorName"> Name of the Container App Detector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ContainerAppDetectorResource>> GetContainerAppDetectorAsync(string detectorName, CancellationToken cancellationToken = default)
         {
@@ -297,12 +354,20 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerAppsDiagnostics_GetDetector</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppDetectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="detectorName"> Name of the Container App Detector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ContainerAppDetectorResource> GetContainerAppDetector(string detectorName, CancellationToken cancellationToken = default)
         {
@@ -313,7 +378,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An object representing collection of ContainerAppSourceControlResources and their operations over a ContainerAppSourceControlResource. </returns>
         public virtual ContainerAppSourceControlCollection GetContainerAppSourceControls()
         {
-            return GetCachedClient(Client => new ContainerAppSourceControlCollection(Client, Id));
+            return GetCachedClient(client => new ContainerAppSourceControlCollection(client, Id));
         }
 
         /// <summary>
@@ -327,12 +392,20 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerAppsSourceControls_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppSourceControlResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sourceControlName"> Name of the Container App SourceControl. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ContainerAppSourceControlResource>> GetContainerAppSourceControlAsync(string sourceControlName, CancellationToken cancellationToken = default)
         {
@@ -350,12 +423,20 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerAppsSourceControls_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppSourceControlResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sourceControlName"> Name of the Container App SourceControl. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ContainerAppSourceControlResource> GetContainerAppSourceControl(string sourceControlName, CancellationToken cancellationToken = default)
         {
@@ -372,6 +453,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContainerApps_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -405,6 +494,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerApps_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -436,6 +533,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContainerApps_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -471,6 +576,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerApps_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -504,6 +617,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContainerApps_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -543,6 +664,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerApps_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -581,6 +710,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerApps_ListCustomHostNameAnalysis</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="customHostname"> Custom hostname. </param>
@@ -611,6 +748,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContainerApps_ListCustomHostNameAnalysis</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -643,14 +788,22 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerApps_ListSecrets</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerAppSecret" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerAppSecret"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppSecret> GetSecretsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppRestClient.CreateListSecretsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ContainerAppSecret.DeserializeContainerAppSecret, _containerAppClientDiagnostics, Pipeline, "ContainerAppResource.GetSecrets", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ContainerAppSecret.DeserializeContainerAppSecret(e), _containerAppClientDiagnostics, Pipeline, "ContainerAppResource.GetSecrets", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -664,14 +817,22 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerApps_ListSecrets</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerAppSecret" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerAppSecret"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppSecret> GetSecrets(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppRestClient.CreateListSecretsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ContainerAppSecret.DeserializeContainerAppSecret, _containerAppClientDiagnostics, Pipeline, "ContainerAppResource.GetSecrets", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ContainerAppSecret.DeserializeContainerAppSecret(e), _containerAppClientDiagnostics, Pipeline, "ContainerAppResource.GetSecrets", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -684,6 +845,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContainerApps_GetAuthToken</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -715,6 +884,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerApps_GetAuthToken</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -744,6 +921,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContainerApps_Start</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -779,6 +964,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerApps_Start</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -812,6 +1005,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContainerApps_Stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -847,6 +1048,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerApps_Stop</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -880,6 +1089,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContainerApps_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -935,6 +1152,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerApps_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -989,6 +1214,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerApps_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1038,6 +1271,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerApps_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1086,6 +1327,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContainerApps_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1138,6 +1387,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContainerApps_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

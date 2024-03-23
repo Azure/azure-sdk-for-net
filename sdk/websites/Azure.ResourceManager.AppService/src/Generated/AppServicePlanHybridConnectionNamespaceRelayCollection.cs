@@ -9,17 +9,15 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AppServicePlanHybridConnectionNamespaceRelayResource" /> and their operations.
-    /// Each <see cref="AppServicePlanHybridConnectionNamespaceRelayResource" /> in the collection will belong to the same instance of <see cref="AppServicePlanResource" />.
-    /// To get an <see cref="AppServicePlanHybridConnectionNamespaceRelayCollection" /> instance call the GetAppServicePlanHybridConnectionNamespaceRelays method from an instance of <see cref="AppServicePlanResource" />.
+    /// A class representing a collection of <see cref="AppServicePlanHybridConnectionNamespaceRelayResource"/> and their operations.
+    /// Each <see cref="AppServicePlanHybridConnectionNamespaceRelayResource"/> in the collection will belong to the same instance of <see cref="AppServicePlanResource"/>.
+    /// To get an <see cref="AppServicePlanHybridConnectionNamespaceRelayCollection"/> instance call the GetAppServicePlanHybridConnectionNamespaceRelays method from an instance of <see cref="AppServicePlanResource"/>.
     /// </summary>
     public partial class AppServicePlanHybridConnectionNamespaceRelayCollection : ArmCollection
     {
@@ -61,6 +59,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_GetHybridConnection</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServicePlanHybridConnectionNamespaceRelayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="namespaceName"> Name of the Service Bus namespace. </param>
@@ -99,6 +105,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_GetHybridConnection</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServicePlanHybridConnectionNamespaceRelayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,6 +153,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_GetHybridConnection</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServicePlanHybridConnectionNamespaceRelayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="namespaceName"> Name of the Service Bus namespace. </param>
@@ -176,6 +198,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_GetHybridConnection</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServicePlanHybridConnectionNamespaceRelayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="namespaceName"> Name of the Service Bus namespace. </param>
@@ -212,6 +242,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_GetHybridConnection</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServicePlanHybridConnectionNamespaceRelayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -251,6 +289,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_GetHybridConnection</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServicePlanHybridConnectionNamespaceRelayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

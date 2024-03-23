@@ -7,6 +7,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement.JobPlan
 {
@@ -50,7 +51,7 @@ namespace Azure.Storage.DataMovement.JobPlan
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(headerStream, nameof(headerStream));
 
-            string fileName = $"{id}.{DataMovementConstants.JobPlanFile.FileExtension}";
+            string fileName = $"{id}{DataMovementConstants.JobPlanFile.FileExtension}";
             string filePath = Path.Combine(checkpointerPath, fileName);
 
             JobPlanFile jobPlanFile = new(id, filePath);

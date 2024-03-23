@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Document.Models
 {
@@ -16,7 +15,7 @@ namespace Azure.AI.Translation.Document.Models
     /// </summary>
     internal partial class InnerTranslationError
     {
-        /// <summary> Initializes a new instance of InnerTranslationError. </summary>
+        /// <summary> Initializes a new instance of <see cref="InnerTranslationError"/>. </summary>
         /// <param name="code"> Gets code error string. </param>
         /// <param name="message"> Gets high level error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
@@ -29,7 +28,7 @@ namespace Azure.AI.Translation.Document.Models
             Message = message;
         }
 
-        /// <summary> Initializes a new instance of InnerTranslationError. </summary>
+        /// <summary> Initializes a new instance of <see cref="InnerTranslationError"/>. </summary>
         /// <param name="code"> Gets code error string. </param>
         /// <param name="message"> Gets high level error message. </param>
         /// <param name="target">

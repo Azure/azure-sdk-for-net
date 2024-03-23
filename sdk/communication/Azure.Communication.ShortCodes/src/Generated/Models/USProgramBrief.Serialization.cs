@@ -89,16 +89,16 @@ namespace Azure.Communication.ShortCodes.Models
                 return null;
             }
             Guid id = default;
-            Optional<ProgramBriefStatus> status = default;
-            Optional<string> number = default;
-            Optional<IList<ReviewNote>> reviewNotes = default;
-            Optional<IList<ShortCodeCost>> costs = default;
-            Optional<DateTimeOffset> submissionDate = default;
-            Optional<DateTimeOffset> statusUpdatedDate = default;
-            Optional<ProgramDetails> programDetails = default;
-            Optional<CompanyInformation> companyInformation = default;
-            Optional<MessageDetails> messageDetails = default;
-            Optional<TrafficDetails> trafficDetails = default;
+            ProgramBriefStatus? status = default;
+            string number = default;
+            IList<ReviewNote> reviewNotes = default;
+            IList<ShortCodeCost> costs = default;
+            DateTimeOffset? submissionDate = default;
+            DateTimeOffset? statusUpdatedDate = default;
+            ProgramDetails programDetails = default;
+            CompanyInformation companyInformation = default;
+            MessageDetails messageDetails = default;
+            TrafficDetails trafficDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -203,7 +203,18 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new USProgramBrief(id, Optional.ToNullable(status), number.Value, Optional.ToList(reviewNotes), Optional.ToList(costs), Optional.ToNullable(submissionDate), Optional.ToNullable(statusUpdatedDate), programDetails.Value, companyInformation.Value, messageDetails.Value, trafficDetails.Value);
+            return new USProgramBrief(
+                id,
+                status,
+                number,
+                reviewNotes ?? new ChangeTrackingList<ReviewNote>(),
+                costs ?? new ChangeTrackingList<ShortCodeCost>(),
+                submissionDate,
+                statusUpdatedDate,
+                programDetails,
+                companyInformation,
+                messageDetails,
+                trafficDetails);
         }
     }
 }

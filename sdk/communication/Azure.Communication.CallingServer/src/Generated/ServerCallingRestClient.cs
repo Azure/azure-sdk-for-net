@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -208,7 +207,7 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Redirect a call. </summary>
-        /// <param name="redirectCallRequest"> The RedirectCallRequest to use. </param>
+        /// <param name="redirectCallRequest"> The <see cref="RedirectCallRequestInternal"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="redirectCallRequest"/> is null. </exception>
         public async Task<Response> RedirectCallAsync(RedirectCallRequestInternal redirectCallRequest, CancellationToken cancellationToken = default)
@@ -230,7 +229,7 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Redirect a call. </summary>
-        /// <param name="redirectCallRequest"> The RedirectCallRequest to use. </param>
+        /// <param name="redirectCallRequest"> The <see cref="RedirectCallRequestInternal"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="redirectCallRequest"/> is null. </exception>
         public Response RedirectCall(RedirectCallRequestInternal redirectCallRequest, CancellationToken cancellationToken = default)

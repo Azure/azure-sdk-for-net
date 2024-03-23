@@ -12,18 +12,16 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MachineLearningDatastoreResource" /> and their operations.
-    /// Each <see cref="MachineLearningDatastoreResource" /> in the collection will belong to the same instance of <see cref="MachineLearningWorkspaceResource" />.
-    /// To get a <see cref="MachineLearningDatastoreCollection" /> instance call the GetMachineLearningDatastores method from an instance of <see cref="MachineLearningWorkspaceResource" />.
+    /// A class representing a collection of <see cref="MachineLearningDatastoreResource"/> and their operations.
+    /// Each <see cref="MachineLearningDatastoreResource"/> in the collection will belong to the same instance of <see cref="MachineLearningWorkspaceResource"/>.
+    /// To get a <see cref="MachineLearningDatastoreCollection"/> instance call the GetMachineLearningDatastores method from an instance of <see cref="MachineLearningWorkspaceResource"/>.
     /// </summary>
     public partial class MachineLearningDatastoreCollection : ArmCollection, IEnumerable<MachineLearningDatastoreResource>, IAsyncEnumerable<MachineLearningDatastoreResource>
     {
@@ -64,6 +62,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Datastores_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningDatastoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +113,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>Datastores_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningDatastoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -149,6 +163,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>Datastores_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningDatastoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Datastore name. </param>
@@ -185,6 +207,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Datastores_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningDatastoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,11 +253,19 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>Datastores_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningDatastoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningDatastoreResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MachineLearningDatastoreResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningDatastoreResource> GetAllAsync(MachineLearningDatastoreCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new MachineLearningDatastoreCollectionGetAllOptions();
@@ -248,11 +286,19 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>Datastores_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningDatastoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningDatastoreResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MachineLearningDatastoreResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningDatastoreResource> GetAll(MachineLearningDatastoreCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new MachineLearningDatastoreCollectionGetAllOptions();
@@ -272,6 +318,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Datastores_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningDatastoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -308,6 +362,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>Datastores_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningDatastoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Datastore name. </param>
@@ -342,6 +404,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Datastores_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningDatastoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -379,6 +449,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Datastores_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningDatastoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

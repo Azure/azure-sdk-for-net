@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.HybridCompute.Models;
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-12-27";
+            _apiVersion = apiVersion ?? "2023-10-03-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="machineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetworkProfile>> GetAsync(string subscriptionId, string resourceGroupName, string machineName, CancellationToken cancellationToken = default)
+        public async Task<Response<HybridComputeNetworkProfile>> GetAsync(string subscriptionId, string resourceGroupName, string machineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,9 +76,9 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 case 200:
                     {
-                        NetworkProfile value = default;
+                        HybridComputeNetworkProfile value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NetworkProfile.DeserializeNetworkProfile(document.RootElement);
+                        value = HybridComputeNetworkProfile.DeserializeHybridComputeNetworkProfile(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="machineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetworkProfile> Get(string subscriptionId, string resourceGroupName, string machineName, CancellationToken cancellationToken = default)
+        public Response<HybridComputeNetworkProfile> Get(string subscriptionId, string resourceGroupName, string machineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,9 +105,9 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 case 200:
                     {
-                        NetworkProfile value = default;
+                        HybridComputeNetworkProfile value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NetworkProfile.DeserializeNetworkProfile(document.RootElement);
+                        value = HybridComputeNetworkProfile.DeserializeHybridComputeNetworkProfile(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

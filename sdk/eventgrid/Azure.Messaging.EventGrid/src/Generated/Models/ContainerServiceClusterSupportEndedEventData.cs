@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerService.ClusterSupportEnded event. </summary>
     public partial class ContainerServiceClusterSupportEndedEventData : ContainerServiceClusterSupportEventData
     {
-        /// <summary> Initializes a new instance of ContainerServiceClusterSupportEndedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceClusterSupportEndedEventData"/>. </summary>
         internal ContainerServiceClusterSupportEndedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceClusterSupportEndedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceClusterSupportEndedEventData"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version of the ManagedCluster resource. </param>
         internal ContainerServiceClusterSupportEndedEventData(string kubernetesVersion) : base(kubernetesVersion)
         {

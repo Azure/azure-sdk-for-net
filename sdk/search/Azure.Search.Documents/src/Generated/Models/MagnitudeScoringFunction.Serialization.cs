@@ -41,7 +41,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string type = default;
             string fieldName = default;
             double boost = default;
-            Optional<ScoringFunctionInterpolation> interpolation = default;
+            ScoringFunctionInterpolation? interpolation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("magnitude"u8))
@@ -74,7 +74,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new MagnitudeScoringFunction(type, fieldName, boost, Optional.ToNullable(interpolation), magnitude);
+            return new MagnitudeScoringFunction(type, fieldName, boost, interpolation, magnitude);
         }
     }
 }

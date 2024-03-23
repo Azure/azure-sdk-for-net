@@ -6,20 +6,19 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Router Queue Details. </summary>
     public partial class AcsRouterQueueDetails
     {
-        /// <summary> Initializes a new instance of AcsRouterQueueDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterQueueDetails"/>. </summary>
         internal AcsRouterQueueDetails()
         {
             Labels = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AcsRouterQueueDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterQueueDetails"/>. </summary>
         /// <param name="id"> Router Queue Id. </param>
         /// <param name="name"> Router Queue Name. </param>
         /// <param name="labels"> Router Queue Labels. </param>

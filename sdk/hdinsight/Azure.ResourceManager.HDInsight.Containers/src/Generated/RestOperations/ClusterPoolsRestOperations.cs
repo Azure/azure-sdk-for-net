@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.HDInsight.Containers.Models;
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-06-01-preview";
+            _apiVersion = apiVersion ?? "2023-11-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -312,7 +311,6 @@ namespace Azure.ResourceManager.HDInsight.Containers
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -338,7 +336,6 @@ namespace Azure.ResourceManager.HDInsight.Containers
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -482,6 +479,85 @@ namespace Azure.ResourceManager.HDInsight.Containers
                         value = HDInsightClusterPoolListData.DeserializeHDInsightClusterPoolListData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUpgradeRequest(string subscriptionId, string resourceGroupName, string clusterPoolName, ClusterPoolUpgrade clusterPoolUpgradeRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HDInsight/clusterpools/", false);
+            uri.AppendPath(clusterPoolName, true);
+            uri.AppendPath("/upgrade", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(clusterPoolUpgradeRequest);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Upgrade a cluster pool. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="clusterPoolName"> The name of the cluster pool. </param>
+        /// <param name="clusterPoolUpgradeRequest"> Upgrade a cluster pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterPoolName"/> or <paramref name="clusterPoolUpgradeRequest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> UpgradeAsync(string subscriptionId, string resourceGroupName, string clusterPoolName, ClusterPoolUpgrade clusterPoolUpgradeRequest, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterPoolName, nameof(clusterPoolName));
+            Argument.AssertNotNull(clusterPoolUpgradeRequest, nameof(clusterPoolUpgradeRequest));
+
+            using var message = CreateUpgradeRequest(subscriptionId, resourceGroupName, clusterPoolName, clusterPoolUpgradeRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Upgrade a cluster pool. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="clusterPoolName"> The name of the cluster pool. </param>
+        /// <param name="clusterPoolUpgradeRequest"> Upgrade a cluster pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterPoolName"/> or <paramref name="clusterPoolUpgradeRequest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Upgrade(string subscriptionId, string resourceGroupName, string clusterPoolName, ClusterPoolUpgrade clusterPoolUpgradeRequest, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterPoolName, nameof(clusterPoolName));
+            Argument.AssertNotNull(clusterPoolUpgradeRequest, nameof(clusterPoolUpgradeRequest));
+
+            using var message = CreateUpgradeRequest(subscriptionId, resourceGroupName, clusterPoolName, clusterPoolUpgradeRequest);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
@@ -19,24 +18,24 @@ namespace Azure.Analytics.Synapse.Spark.Models
             {
                 return null;
             }
-            Optional<SparkBatchJobState> livyInfo = default;
-            Optional<string> name = default;
-            Optional<string> workspaceName = default;
-            Optional<string> sparkPoolName = default;
-            Optional<string> submitterName = default;
-            Optional<string> submitterId = default;
-            Optional<string> artifactId = default;
-            Optional<SparkJobType> jobType = default;
-            Optional<SparkBatchJobResultType> result = default;
-            Optional<SparkScheduler> schedulerInfo = default;
-            Optional<SparkServicePlugin> pluginInfo = default;
-            Optional<IReadOnlyList<SparkServiceError>> errorInfo = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            SparkBatchJobState livyInfo = default;
+            string name = default;
+            string workspaceName = default;
+            string sparkPoolName = default;
+            string submitterName = default;
+            string submitterId = default;
+            string artifactId = default;
+            SparkJobType? jobType = default;
+            SparkBatchJobResultType? result = default;
+            SparkScheduler schedulerInfo = default;
+            SparkServicePlugin pluginInfo = default;
+            IReadOnlyList<SparkServiceError> errorInfo = default;
+            IReadOnlyDictionary<string, string> tags = default;
             int id = default;
-            Optional<string> appId = default;
-            Optional<IReadOnlyDictionary<string, string>> appInfo = default;
-            Optional<LivyStates> state = default;
-            Optional<IReadOnlyList<string>> log = default;
+            string appId = default;
+            IReadOnlyDictionary<string, string> appInfo = default;
+            LivyStates? state = default;
+            IReadOnlyList<string> log = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("livyInfo"u8))
@@ -195,7 +194,25 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     continue;
                 }
             }
-            return new SparkBatchJob(livyInfo.Value, name.Value, workspaceName.Value, sparkPoolName.Value, submitterName.Value, submitterId.Value, artifactId.Value, Optional.ToNullable(jobType), Optional.ToNullable(result), schedulerInfo.Value, pluginInfo.Value, Optional.ToList(errorInfo), Optional.ToDictionary(tags), id, appId.Value, Optional.ToDictionary(appInfo), Optional.ToNullable(state), Optional.ToList(log));
+            return new SparkBatchJob(
+                livyInfo,
+                name,
+                workspaceName,
+                sparkPoolName,
+                submitterName,
+                submitterId,
+                artifactId,
+                jobType,
+                result,
+                schedulerInfo,
+                pluginInfo,
+                errorInfo ?? new ChangeTrackingList<SparkServiceError>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                id,
+                appId,
+                appInfo ?? new ChangeTrackingDictionary<string, string>(),
+                state,
+                log ?? new ChangeTrackingList<string>());
         }
     }
 }

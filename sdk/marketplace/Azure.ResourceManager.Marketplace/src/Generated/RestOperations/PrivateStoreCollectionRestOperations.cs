@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Marketplace.Models;
@@ -187,7 +186,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Create or update private store collection. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="collectionId"> The collection ID. </param>
-        /// <param name="info"> The PrivateStoreCollectionInfo to use. </param>
+        /// <param name="info"> The <see cref="PrivateStoreCollectionInfoData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public async Task<Response<PrivateStoreCollectionInfoData>> CreateOrUpdateAsync(Guid privateStoreId, Guid collectionId, PrivateStoreCollectionInfoData info, CancellationToken cancellationToken = default)
@@ -213,7 +212,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Create or update private store collection. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="collectionId"> The collection ID. </param>
-        /// <param name="info"> The PrivateStoreCollectionInfo to use. </param>
+        /// <param name="info"> The <see cref="PrivateStoreCollectionInfoData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public Response<PrivateStoreCollectionInfoData> CreateOrUpdate(Guid privateStoreId, Guid collectionId, PrivateStoreCollectionInfoData info, CancellationToken cancellationToken = default)
@@ -318,7 +317,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Delete Private store collection. This is a workaround. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="collectionId"> The collection ID. </param>
-        /// <param name="payload"> The PrivateStoreOperation to use. </param>
+        /// <param name="payload"> The <see cref="PrivateStoreOperation"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response> PostAsync(Guid privateStoreId, Guid collectionId, PrivateStoreOperation? payload = null, CancellationToken cancellationToken = default)
         {
@@ -336,7 +335,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Delete Private store collection. This is a workaround. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="collectionId"> The collection ID. </param>
-        /// <param name="payload"> The PrivateStoreOperation to use. </param>
+        /// <param name="payload"> The <see cref="PrivateStoreOperation"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response Post(Guid privateStoreId, Guid collectionId, PrivateStoreOperation? payload = null, CancellationToken cancellationToken = default)
         {
@@ -380,7 +379,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> transferring offers (copy or move) from source collection to target collection(s). </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="collectionId"> The collection ID. </param>
-        /// <param name="content"> The TransferOffersContent to use. </param>
+        /// <param name="content"> The <see cref="TransferOffersContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<TransferOffersResult>> TransferOffersAsync(Guid privateStoreId, Guid collectionId, TransferOffersContent content = null, CancellationToken cancellationToken = default)
         {
@@ -403,7 +402,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> transferring offers (copy or move) from source collection to target collection(s). </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="collectionId"> The collection ID. </param>
-        /// <param name="content"> The TransferOffersContent to use. </param>
+        /// <param name="content"> The <see cref="TransferOffersContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<TransferOffersResult> TransferOffers(Guid privateStoreId, Guid collectionId, TransferOffersContent content = null, CancellationToken cancellationToken = default)
         {

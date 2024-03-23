@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.AppConfiguration.Models;
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-05-01";
+            _apiVersion = apiVersion ?? "2023-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -230,7 +229,7 @@ namespace Azure.ResourceManager.AppConfiguration
             return message;
         }
 
-        /// <summary> Update the state of the specified private endpoint connection associated with the configuration store. </summary>
+        /// <summary> Update the state of the specified private endpoint connection associated with the configuration store. This operation cannot be used to create a private endpoint connection. Private endpoint connections must be created with the Network resource provider. </summary>
         /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
@@ -259,7 +258,7 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Update the state of the specified private endpoint connection associated with the configuration store. </summary>
+        /// <summary> Update the state of the specified private endpoint connection associated with the configuration store. This operation cannot be used to create a private endpoint connection. Private endpoint connections must be created with the Network resource provider. </summary>
         /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>

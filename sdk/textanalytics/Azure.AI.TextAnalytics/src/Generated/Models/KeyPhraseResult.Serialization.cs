@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -49,7 +48,7 @@ namespace Azure.AI.TextAnalytics.Models
             }
             IList<KeyPhraseResultDocumentsItem> documents = default;
             IList<DocumentError> errors = default;
-            Optional<TextDocumentBatchStatistics> statistics = default;
+            TextDocumentBatchStatistics statistics = default;
             string modelVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -88,7 +87,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new KeyPhraseResult(errors, statistics.Value, modelVersion, documents);
+            return new KeyPhraseResult(errors, statistics, modelVersion, documents);
         }
     }
 }

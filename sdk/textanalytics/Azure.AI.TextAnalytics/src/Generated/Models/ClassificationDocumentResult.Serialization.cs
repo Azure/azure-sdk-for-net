@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -50,7 +49,7 @@ namespace Azure.AI.TextAnalytics.Models
             IList<ClassificationResult> @class = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
-            Optional<TextDocumentStatistics> statistics = default;
+            TextDocumentStatistics? statistics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("class"u8))
@@ -88,7 +87,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new ClassificationDocumentResult(id, warnings, Optional.ToNullable(statistics), @class);
+            return new ClassificationDocumentResult(id, warnings, statistics, @class);
         }
     }
 }

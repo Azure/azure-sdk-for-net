@@ -52,10 +52,10 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<Uri> resourceUri = default;
-            Optional<string> deploymentId = default;
-            Optional<string> apiKey = default;
-            Optional<SearchIndexerDataIdentity> authIdentity = default;
+            Uri resourceUri = default;
+            string deploymentId = default;
+            string apiKey = default;
+            SearchIndexerDataIdentity authIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceUri"u8))
@@ -88,7 +88,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new AzureOpenAIParameters(resourceUri.Value, deploymentId.Value, apiKey.Value, authIdentity.Value);
+            return new AzureOpenAIParameters(resourceUri, deploymentId, apiKey, authIdentity);
         }
     }
 }

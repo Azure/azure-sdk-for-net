@@ -9,17 +9,15 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SiteSlotHybridConnectionNamespaceRelayResource" /> and their operations.
-    /// Each <see cref="SiteSlotHybridConnectionNamespaceRelayResource" /> in the collection will belong to the same instance of <see cref="WebSiteSlotResource" />.
-    /// To get a <see cref="SiteSlotHybridConnectionNamespaceRelayCollection" /> instance call the GetSiteSlotHybridConnectionNamespaceRelays method from an instance of <see cref="WebSiteSlotResource" />.
+    /// A class representing a collection of <see cref="SiteSlotHybridConnectionNamespaceRelayResource"/> and their operations.
+    /// Each <see cref="SiteSlotHybridConnectionNamespaceRelayResource"/> in the collection will belong to the same instance of <see cref="WebSiteSlotResource"/>.
+    /// To get a <see cref="SiteSlotHybridConnectionNamespaceRelayCollection"/> instance call the GetSiteSlotHybridConnectionNamespaceRelays method from an instance of <see cref="WebSiteSlotResource"/>.
     /// </summary>
     public partial class SiteSlotHybridConnectionNamespaceRelayCollection : ArmCollection
     {
@@ -60,6 +58,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_CreateOrUpdateHybridConnectionSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotHybridConnectionNamespaceRelayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -104,6 +110,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_CreateOrUpdateHybridConnectionSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotHybridConnectionNamespaceRelayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +161,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetHybridConnectionSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotHybridConnectionNamespaceRelayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="namespaceName"> The namespace for this hybrid connection. </param>
@@ -185,6 +207,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetHybridConnectionSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotHybridConnectionNamespaceRelayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,6 +255,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetHybridConnectionSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotHybridConnectionNamespaceRelayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="namespaceName"> The namespace for this hybrid connection. </param>
@@ -262,6 +300,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetHybridConnectionSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotHybridConnectionNamespaceRelayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="namespaceName"> The namespace for this hybrid connection. </param>
@@ -298,6 +344,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetHybridConnectionSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotHybridConnectionNamespaceRelayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -337,6 +391,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetHybridConnectionSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotHybridConnectionNamespaceRelayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

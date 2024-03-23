@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Redis.Models;
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Redis
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-04-01";
+            _apiVersion = apiVersion ?? "2023-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -59,8 +58,8 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> List all the private endpoint connections associated with the redis cache. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cacheName"> The name of the Redis cache. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is null. </exception>
@@ -88,8 +87,8 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> List all the private endpoint connections associated with the redis cache. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cacheName"> The name of the Redis cache. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is null. </exception>
@@ -139,8 +138,8 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> Gets the specified private endpoint connection associated with the redis cache. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cacheName"> The name of the Redis cache. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -172,8 +171,8 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> Gets the specified private endpoint connection associated with the redis cache. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cacheName"> The name of the Redis cache. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -231,8 +230,8 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> Update the state of specified private endpoint connection associated with the redis cache. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cacheName"> The name of the Redis cache. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="data"> The private endpoint connection properties. </param>
@@ -260,8 +259,8 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> Update the state of specified private endpoint connection associated with the redis cache. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cacheName"> The name of the Redis cache. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="data"> The private endpoint connection properties. </param>
@@ -311,8 +310,8 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> Deletes the specified private endpoint connection associated with the redis cache. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cacheName"> The name of the Redis cache. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -338,8 +337,8 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> Deletes the specified private endpoint connection associated with the redis cache. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cacheName"> The name of the Redis cache. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

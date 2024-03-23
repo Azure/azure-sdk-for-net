@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
-    public partial class VirtualMachineInstancePatch : IUtf8JsonSerializable
+    public partial class VirtualMachineInstancePatch : IUtf8JsonSerializable, IJsonModel<VirtualMachineInstancePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineInstancePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VirtualMachineInstancePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineInstancePatch)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -48,7 +59,159 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 writer.WriteObjectValue(InfrastructureProfile);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        VirtualMachineInstancePatch IJsonModel<VirtualMachineInstancePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineInstancePatch)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineInstancePatch(document.RootElement, options);
+        }
+
+        internal static VirtualMachineInstancePatch DeserializeVirtualMachineInstancePatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            HardwareProfileUpdate hardwareProfile = default;
+            StorageProfileUpdate storageProfile = default;
+            NetworkProfileUpdate networkProfile = default;
+            IList<AvailabilitySetListItem> availabilitySets = default;
+            InfrastructureProfileUpdate infrastructureProfile = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("hardwareProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            hardwareProfile = HardwareProfileUpdate.DeserializeHardwareProfileUpdate(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("storageProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            storageProfile = StorageProfileUpdate.DeserializeStorageProfileUpdate(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("networkProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            networkProfile = NetworkProfileUpdate.DeserializeNetworkProfileUpdate(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("availabilitySets"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<AvailabilitySetListItem> array = new List<AvailabilitySetListItem>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(AvailabilitySetListItem.DeserializeAvailabilitySetListItem(item, options));
+                            }
+                            availabilitySets = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("infrastructureProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            infrastructureProfile = InfrastructureProfileUpdate.DeserializeInfrastructureProfileUpdate(property0.Value, options);
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VirtualMachineInstancePatch(
+                hardwareProfile,
+                storageProfile,
+                networkProfile,
+                availabilitySets ?? new ChangeTrackingList<AvailabilitySetListItem>(),
+                infrastructureProfile,
+                serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<VirtualMachineInstancePatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineInstancePatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VirtualMachineInstancePatch IPersistableModel<VirtualMachineInstancePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVirtualMachineInstancePatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineInstancePatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VirtualMachineInstancePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

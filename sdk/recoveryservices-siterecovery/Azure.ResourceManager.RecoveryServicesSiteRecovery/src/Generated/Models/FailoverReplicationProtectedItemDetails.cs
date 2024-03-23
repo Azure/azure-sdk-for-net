@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,12 +14,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Failover details for a replication protected item. </summary>
     public partial class FailoverReplicationProtectedItemDetails
     {
-        /// <summary> Initializes a new instance of FailoverReplicationProtectedItemDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FailoverReplicationProtectedItemDetails"/>. </summary>
         internal FailoverReplicationProtectedItemDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of FailoverReplicationProtectedItemDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="FailoverReplicationProtectedItemDetails"/>. </summary>
         /// <param name="name"> The name. </param>
         /// <param name="friendlyName"> The friendly name. </param>
         /// <param name="testVmName"> The test Vm name. </param>
@@ -28,7 +61,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="subnet"> The network subnet. </param>
         /// <param name="recoveryPointId"> The recovery point Id. </param>
         /// <param name="recoveryPointOn"> The recovery point time. </param>
-        internal FailoverReplicationProtectedItemDetails(string name, string friendlyName, string testVmName, string testVmFriendlyName, string networkConnectionStatus, string networkFriendlyName, string subnet, ResourceIdentifier recoveryPointId, DateTimeOffset? recoveryPointOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FailoverReplicationProtectedItemDetails(string name, string friendlyName, string testVmName, string testVmFriendlyName, string networkConnectionStatus, string networkFriendlyName, string subnet, ResourceIdentifier recoveryPointId, DateTimeOffset? recoveryPointOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             FriendlyName = friendlyName;
@@ -39,6 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Subnet = subnet;
             RecoveryPointId = recoveryPointId;
             RecoveryPointOn = recoveryPointOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name. </summary>

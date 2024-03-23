@@ -9,23 +9,22 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ArcScVmm.Models;
 
 namespace Azure.ResourceManager.ArcScVmm
 {
     /// <summary>
     /// A Class representing a VirtualMachineInstance along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VirtualMachineInstanceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVirtualMachineInstanceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetVirtualMachineInstance method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VirtualMachineInstanceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVirtualMachineInstanceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetVirtualMachineInstance method.
     /// </summary>
     public partial class VirtualMachineInstanceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualMachineInstanceResource"/> instance. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceUri)
         {
             var resourceId = $"{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default";
@@ -36,12 +35,15 @@ namespace Azure.ResourceManager.ArcScVmm
         private readonly VirtualMachineInstancesRestOperations _virtualMachineInstanceRestClient;
         private readonly VirtualMachineInstanceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ScVmm/virtualMachineInstances";
+
         /// <summary> Initializes a new instance of the <see cref="VirtualMachineInstanceResource"/> class for mocking. </summary>
         protected VirtualMachineInstanceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VirtualMachineInstanceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualMachineInstanceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VirtualMachineInstanceResource(ArmClient client, VirtualMachineInstanceData data) : this(client, data.Id)
@@ -62,9 +64,6 @@ namespace Azure.ResourceManager.ArcScVmm
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ScVmm/virtualMachineInstances";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -88,14 +87,14 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary> Gets an object representing a VmInstanceHybridIdentityMetadataResource along with the instance operations that can be performed on it in the VirtualMachineInstance. </summary>
-        /// <returns> Returns a <see cref="VmInstanceHybridIdentityMetadataResource" /> object. </returns>
+        /// <returns> Returns a <see cref="VmInstanceHybridIdentityMetadataResource"/> object. </returns>
         public virtual VmInstanceHybridIdentityMetadataResource GetVmInstanceHybridIdentityMetadata()
         {
             return new VmInstanceHybridIdentityMetadataResource(Client, Id.AppendChildResource("hybridIdentityMetadata", "default"));
         }
 
         /// <summary> Gets an object representing a GuestAgentResource along with the instance operations that can be performed on it in the VirtualMachineInstance. </summary>
-        /// <returns> Returns a <see cref="GuestAgentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="GuestAgentResource"/> object. </returns>
         public virtual GuestAgentResource GetGuestAgent()
         {
             return new GuestAgentResource(Client, Id.AppendChildResource("guestAgents", "default"));
@@ -111,6 +110,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -144,6 +151,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VirtualMachineInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -175,6 +190,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineInstances_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,6 +235,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VirtualMachineInstances_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -247,6 +278,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineInstances_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,6 +325,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VirtualMachineInstances_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -323,6 +370,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineInstances_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -362,6 +417,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VirtualMachineInstances_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -400,6 +463,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VirtualMachineInstances_Stop</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -434,6 +505,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineInstances_Stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -470,6 +549,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VirtualMachineInstances_Start</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -503,6 +590,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineInstances_Start</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -538,6 +633,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VirtualMachineInstances_Restart</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -572,6 +675,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VirtualMachineInstances_Restart</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -605,6 +716,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineInstances_CreateCheckpoint</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -641,6 +760,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VirtualMachineInstances_CreateCheckpoint</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -675,6 +802,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineInstances_DeleteCheckpoint</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -711,6 +846,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VirtualMachineInstances_DeleteCheckpoint</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -746,6 +889,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VirtualMachineInstances_RestoreCheckpoint</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -780,6 +931,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineInstances_RestoreCheckpoint</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -6,14 +6,14 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
     /// <summary> Details of the returned POI including information such as the name, phone, url address, and classifications. </summary>
     public partial class PointOfInterest
     {
-        /// <summary> Initializes a new instance of PointOfInterest. </summary>
+        /// <summary> Initializes a new instance of <see cref="PointOfInterest"/>. </summary>
         internal PointOfInterest()
         {
             CategorySets = new ChangeTrackingList<PointOfInterestCategorySet>();
@@ -22,7 +22,7 @@ namespace Azure.Maps.Search.Models
             Brands = new ChangeTrackingList<BrandName>();
         }
 
-        /// <summary> Initializes a new instance of PointOfInterest. </summary>
+        /// <summary> Initializes a new instance of <see cref="PointOfInterest"/>. </summary>
         /// <param name="name"> Name of the POI property. </param>
         /// <param name="phone"> Telephone number property. </param>
         /// <param name="urlInternal"> Website URL property. </param>

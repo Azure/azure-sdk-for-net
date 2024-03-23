@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
@@ -19,10 +18,10 @@ namespace Azure.Security.KeyVault.Storage.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> sid = default;
-            Optional<SasDefinitionAttributes> attributes = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            string id = default;
+            string sid = default;
+            SasDefinitionAttributes attributes = default;
+            IReadOnlyDictionary<string, string> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -59,7 +58,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     continue;
                 }
             }
-            return new SasDefinitionItem(id.Value, sid.Value, attributes.Value, Optional.ToDictionary(tags));
+            return new SasDefinitionItem(id, sid, attributes, tags ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

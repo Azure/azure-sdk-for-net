@@ -15,26 +15,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents a registry value entity. </summary>
     public partial class SecurityInsightsRegistryValueEntity : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsRegistryValueEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsRegistryValueEntity"/>. </summary>
         public SecurityInsightsRegistryValueEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             Kind = SecurityInsightsEntityKind.RegistryValue;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsRegistryValueEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsRegistryValueEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The kind of the entity. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
         /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
         /// <param name="keyEntityId"> The registry key entity id. </param>
         /// <param name="valueData"> String formatted representation of the value data. </param>
         /// <param name="valueName"> The registry value name. </param>
         /// <param name="valueType"> Specifies the data types to use when storing values in the registry, or identifies the data type of a value in the registry. </param>
-        internal SecurityInsightsRegistryValueEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string keyEntityId, string valueData, string valueName, SecurityInsightsRegistryValueKind? valueType) : base(id, name, resourceType, systemData, kind)
+        internal SecurityInsightsRegistryValueEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string keyEntityId, string valueData, string valueName, SecurityInsightsRegistryValueKind? valueType) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

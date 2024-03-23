@@ -7,8 +7,8 @@ azure-arm: true
 csharp: true
 library-name: Chaos
 namespace: Azure.ResourceManager.Chaos
-# default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/eb29c07a0f08110c932b384d5dc41241dc0b03ab/specification/chaos/resource-manager/readme.md
+#tag: package-2024-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/f3cd6922dbe117d78b4f719bbf8b03db46b30808/specification/chaos/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -17,6 +17,33 @@ sample-gen:
 skip-csproj: true
 modelerfour:
     flatten-payloads: false
+use-model-reader-writer: true
+
+#mgmt-debug:
+#  show-serialized-names: true
+
+rename-mapping:
+  ActionStatus: ChaosExperimentRunActionStatus
+  BranchStatus: ChaosExperimentRunBranchStatus
+  StepStatus: ChaosExperimentRunStepStatus
+  TargetReference.id: -|arm-id
+  CapabilityTypePropertiesRuntimeProperties: ChaosCapabilityTypeRuntimeProperties
+  ExperimentExecutionDetailsPropertiesRunInformation: ChaosExperimentRunInformation
+
+prepend-rp-prefix:
+  - Capability
+  - CapabilityType
+  - Experiment
+  - ExperimentExecution
+  - Target
+  - TargetType
+  - ProvisioningState
+  - ContinuousAction
+  - DelayAction
+  - DiscreteAction
+  - KeyValuePair
+  - TargetReference
+  - TargetReferenceType
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -47,5 +74,8 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+directive:
+  - remove-operation: 'OperationStatuses_Get'
 
 ```

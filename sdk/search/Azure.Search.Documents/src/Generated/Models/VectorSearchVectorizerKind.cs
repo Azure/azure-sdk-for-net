@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The vectorization method to be used during query time. </summary>
-    public readonly partial struct VectorSearchVectorizerKind : IEquatable<VectorSearchVectorizerKind>
+    internal readonly partial struct VectorSearchVectorizerKind : IEquatable<VectorSearchVectorizerKind>
     {
         private readonly string _value;
 
@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string AzureOpenAIValue = "azureOpenAI";
         private const string CustomWebApiValue = "customWebApi";
 
-        /// <summary> Generate embeddings using an Azure Open AI service at query time. </summary>
+        /// <summary> Generate embeddings using an Azure OpenAI resource at query time. </summary>
         public static VectorSearchVectorizerKind AzureOpenAI { get; } = new VectorSearchVectorizerKind(AzureOpenAIValue);
         /// <summary> Generate embeddings using a custom web endpoint at query time. </summary>
         public static VectorSearchVectorizerKind CustomWebApi { get; } = new VectorSearchVectorizerKind(CustomWebApiValue);

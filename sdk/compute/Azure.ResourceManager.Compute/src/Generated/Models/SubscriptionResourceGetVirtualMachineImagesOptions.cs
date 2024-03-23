@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The SubscriptionResourceGetVirtualMachineImagesOptions. </summary>
     public partial class SubscriptionResourceGetVirtualMachineImagesOptions
     {
-        /// <summary> Initializes a new instance of SubscriptionResourceGetVirtualMachineImagesOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionResourceGetVirtualMachineImagesOptions"/>. </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
@@ -31,6 +31,11 @@ namespace Azure.ResourceManager.Compute.Models
             Skus = skus;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SubscriptionResourceGetVirtualMachineImagesOptions"/> for deserialization. </summary>
+        internal SubscriptionResourceGetVirtualMachineImagesOptions()
+        {
+        }
+
         /// <summary> The name of a supported Azure region. </summary>
         public AzureLocation Location { get; }
         /// <summary> A valid image publisher. </summary>
@@ -41,9 +46,9 @@ namespace Azure.ResourceManager.Compute.Models
         public string Skus { get; }
         /// <summary> The expand expression to apply on the operation. </summary>
         public string Expand { get; set; }
-        /// <summary> The Integer to use. </summary>
+        /// <summary> The top. </summary>
         public int? Top { get; set; }
-        /// <summary> The String to use. </summary>
+        /// <summary> The orderby. </summary>
         public string Orderby { get; set; }
     }
 }

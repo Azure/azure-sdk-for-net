@@ -19,14 +19,46 @@ namespace Azure.ResourceManager.Billing
     /// </summary>
     public partial class BillingSubscriptionData : ResourceData
     {
-        /// <summary> Initializes a new instance of BillingSubscriptionData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionData"/>. </summary>
         public BillingSubscriptionData()
         {
             BillingPolicies = new ChangeTrackingDictionary<string, string>();
             SuspensionReasons = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of BillingSubscriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -68,7 +100,8 @@ namespace Azure.ResourceManager.Billing
         /// <param name="termEndOn"> The end date of the term in UTC time. </param>
         /// <param name="subscriptionEnrollmentAccountStatus"> The current enrollment account status of the subscription. This field is available only for the Enterprise Agreement billing accounts. </param>
         /// <param name="enrollmentAccountStartOn"> The enrollment Account and the subscription association start date. This field is available only for the Enterprise Agreement billing accounts. </param>
-        internal BillingSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingSubscriptionAutoRenewState? autoRenew, string beneficiaryTenantId, string billingFrequency, ResourceIdentifier billingProfileId, IReadOnlyDictionary<string, string> billingPolicies, string billingProfileDisplayName, string billingProfileName, string consumptionCostCenter, string customerId, string customerDisplayName, string displayName, string enrollmentAccountId, string enrollmentAccountDisplayName, ResourceIdentifier invoiceSectionId, string invoiceSectionDisplayName, string invoiceSectionName, BillingAmount lastMonthCharges, BillingAmount monthToDateCharges, NextBillingCycleDetails nextBillingCycleDetails, string offerId, string productCategory, string productType, string productTypeId, DateTimeOffset? purchaseOn, long? quantity, CreatedSubscriptionReseller reseller, SubscriptionRenewalTermDetails renewalTermDetails, string skuDescription, string skuId, BillingSubscriptionStatus? status, string subscriptionId, IReadOnlyList<string> suspensionReasons, TimeSpan? termDuration, DateTimeOffset? termStartOn, DateTimeOffset? termEndOn, SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus, DateTimeOffset? enrollmentAccountStartOn) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BillingSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingSubscriptionAutoRenewState? autoRenew, string beneficiaryTenantId, string billingFrequency, ResourceIdentifier billingProfileId, IReadOnlyDictionary<string, string> billingPolicies, string billingProfileDisplayName, string billingProfileName, string consumptionCostCenter, string customerId, string customerDisplayName, string displayName, string enrollmentAccountId, string enrollmentAccountDisplayName, ResourceIdentifier invoiceSectionId, string invoiceSectionDisplayName, string invoiceSectionName, BillingAmount lastMonthCharges, BillingAmount monthToDateCharges, NextBillingCycleDetails nextBillingCycleDetails, string offerId, string productCategory, string productType, string productTypeId, DateTimeOffset? purchaseOn, long? quantity, CreatedSubscriptionReseller reseller, SubscriptionRenewalTermDetails renewalTermDetails, string skuDescription, string skuId, BillingSubscriptionStatus? status, string subscriptionId, IReadOnlyList<string> suspensionReasons, TimeSpan? termDuration, DateTimeOffset? termStartOn, DateTimeOffset? termEndOn, SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus, DateTimeOffset? enrollmentAccountStartOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AutoRenew = autoRenew;
             BeneficiaryTenantId = beneficiaryTenantId;
@@ -107,6 +140,7 @@ namespace Azure.ResourceManager.Billing
             TermEndOn = termEndOn;
             SubscriptionEnrollmentAccountStatus = subscriptionEnrollmentAccountStatus;
             EnrollmentAccountStartOn = enrollmentAccountStartOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates whether auto renewal is turned on or off for a subscription. </summary>

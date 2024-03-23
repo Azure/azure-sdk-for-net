@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Automation;
 using Azure.ResourceManager.Automation.Models;
 
 namespace Azure.ResourceManager.Automation.Samples
@@ -48,7 +45,7 @@ namespace Azure.ResourceManager.Automation.Samples
             {
                 Description = "my description of schedule goes here",
                 ExpireOn = DateTimeOffset.Parse("2017-04-01T17:28:57.2494819Z"),
-                Interval = BinaryData.FromString("1"),
+                Interval = BinaryData.FromString("\"1\""),
                 AdvancedSchedule = new AutomationAdvancedSchedule(),
             };
             ArmOperation<AutomationScheduleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, scheduleName, content);

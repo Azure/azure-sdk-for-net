@@ -44,7 +44,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             object text = default;
             ScriptType type = default;
-            Optional<IList<ScriptActivityParameter>> parameters = default;
+            IList<ScriptActivityParameter> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new ScriptActivityScriptBlock(text, type, Optional.ToList(parameters));
+            return new ScriptActivityScriptBlock(text, type, parameters ?? new ChangeTrackingList<ScriptActivityParameter>());
         }
 
         internal partial class ScriptActivityScriptBlockConverter : JsonConverter<ScriptActivityScriptBlock>

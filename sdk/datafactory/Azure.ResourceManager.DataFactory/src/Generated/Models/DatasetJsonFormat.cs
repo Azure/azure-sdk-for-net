@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The data stored in JSON format. </summary>
     public partial class DatasetJsonFormat : DatasetStorageFormat
     {
-        /// <summary> Initializes a new instance of DatasetJsonFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatasetJsonFormat"/>. </summary>
         public DatasetJsonFormat()
         {
             DatasetStorageFormatType = "JsonFormat";
         }
 
-        /// <summary> Initializes a new instance of DatasetJsonFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatasetJsonFormat"/>. </summary>
         /// <param name="datasetStorageFormatType"> Type of dataset storage format. </param>
         /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
         /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

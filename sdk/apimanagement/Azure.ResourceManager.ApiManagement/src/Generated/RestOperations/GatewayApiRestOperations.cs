@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ApiManagement.Models;
@@ -273,7 +272,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value 'managed'. </param>
         /// <param name="apiId"> API identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="associationContract"> The AssociationContract to use. </param>
+        /// <param name="associationContract"> The <see cref="AssociationContract"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="gatewayId"/> or <paramref name="apiId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="gatewayId"/> or <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -308,7 +307,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value 'managed'. </param>
         /// <param name="apiId"> API identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="associationContract"> The AssociationContract to use. </param>
+        /// <param name="associationContract"> The <see cref="AssociationContract"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="gatewayId"/> or <paramref name="apiId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="gatewayId"/> or <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>

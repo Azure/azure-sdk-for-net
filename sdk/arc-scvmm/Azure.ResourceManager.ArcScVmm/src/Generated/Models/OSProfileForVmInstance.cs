@@ -5,29 +5,66 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
     /// <summary> Defines the resource properties. </summary>
     public partial class OSProfileForVmInstance
     {
-        /// <summary> Initializes a new instance of OSProfileForVmInstance. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OSProfileForVmInstance"/>. </summary>
         public OSProfileForVmInstance()
         {
         }
 
-        /// <summary> Initializes a new instance of OSProfileForVmInstance. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSProfileForVmInstance"/>. </summary>
         /// <param name="adminPassword"> Admin password of the virtual machine. </param>
         /// <param name="computerName"> Gets or sets computer name. </param>
         /// <param name="osType"> Gets the type of the os. </param>
         /// <param name="osSku"> Gets os sku. </param>
         /// <param name="osVersion"> Gets os version. </param>
-        internal OSProfileForVmInstance(string adminPassword, string computerName, OSType? osType, string osSku, string osVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OSProfileForVmInstance(string adminPassword, string computerName, OSType? osType, string osSku, string osVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AdminPassword = adminPassword;
             ComputerName = computerName;
             OSType = osType;
             OSSku = osSku;
             OSVersion = osVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Admin password of the virtual machine. </summary>

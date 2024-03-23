@@ -6,21 +6,20 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobQueued event. </summary>
     public partial class AcsRouterJobQueuedEventData : AcsRouterJobEventData
     {
-        /// <summary> Initializes a new instance of AcsRouterJobQueuedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterJobQueuedEventData"/>. </summary>
         internal AcsRouterJobQueuedEventData()
         {
             AttachedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();
             RequestedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();
         }
 
-        /// <summary> Initializes a new instance of AcsRouterJobQueuedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterJobQueuedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>

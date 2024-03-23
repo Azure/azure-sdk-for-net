@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A copy activity QuickBooks server source. </summary>
     public partial class QuickBooksSource : TabularSource
     {
-        /// <summary> Initializes a new instance of QuickBooksSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuickBooksSource"/>. </summary>
         public QuickBooksSource()
         {
             CopySourceType = "QuickBooksSource";
         }
 
-        /// <summary> Initializes a new instance of QuickBooksSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuickBooksSource"/>. </summary>
         /// <param name="copySourceType"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>

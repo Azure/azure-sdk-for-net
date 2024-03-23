@@ -12,17 +12,15 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SecurityInsightsIncidentResource" /> and their operations.
-    /// Each <see cref="SecurityInsightsIncidentResource" /> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" />.
-    /// To get a <see cref="SecurityInsightsIncidentCollection" /> instance call the GetSecurityInsightsIncidents method from an instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" />.
+    /// A class representing a collection of <see cref="SecurityInsightsIncidentResource"/> and their operations.
+    /// Each <see cref="SecurityInsightsIncidentResource"/> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
+    /// To get a <see cref="SecurityInsightsIncidentCollection"/> instance call the GetSecurityInsightsIncidents method from an instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
     /// </summary>
     public partial class SecurityInsightsIncidentCollection : ArmCollection, IEnumerable<SecurityInsightsIncidentResource>, IAsyncEnumerable<SecurityInsightsIncidentResource>
     {
@@ -63,6 +61,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Incidents_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +111,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>Incidents_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +160,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>Incidents_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="incidentId"> Incident ID. </param>
@@ -182,6 +204,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Incidents_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,6 +250,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>Incidents_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
@@ -227,7 +265,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityInsightsIncidentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecurityInsightsIncidentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityInsightsIncidentResource> GetAllAsync(string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsIncidentIncidentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderBy, top, skipToken);
@@ -246,6 +284,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>Incidents_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
@@ -253,7 +299,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityInsightsIncidentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityInsightsIncidentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityInsightsIncidentResource> GetAll(string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsIncidentIncidentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderBy, top, skipToken);
@@ -271,6 +317,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Incidents_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -307,6 +361,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>Incidents_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="incidentId"> Incident ID. </param>
@@ -341,6 +403,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Incidents_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -378,6 +448,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Incidents_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.AppService.Models;
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get available application frameworks and their versions. </summary>
-        /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The <see cref="ProviderOSTypeSelected"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<ApplicationStackListResult>> GetAvailableStacksAsync(ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get available application frameworks and their versions. </summary>
-        /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The <see cref="ProviderOSTypeSelected"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<ApplicationStackListResult> GetAvailableStacks(ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
@@ -428,7 +427,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get available application frameworks and their versions. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The <see cref="ProviderOSTypeSelected"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -454,7 +453,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get available application frameworks and their versions. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The <see cref="ProviderOSTypeSelected"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -494,7 +493,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get available application frameworks and their versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The <see cref="ProviderOSTypeSelected"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ApplicationStackListResult>> GetAvailableStacksNextPageAsync(string nextLink, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
@@ -519,7 +518,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get available application frameworks and their versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The <see cref="ProviderOSTypeSelected"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ApplicationStackListResult> GetAvailableStacksNextPage(string nextLink, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
@@ -881,7 +880,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get available application frameworks and their versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The <see cref="ProviderOSTypeSelected"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -909,7 +908,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get available application frameworks and their versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The <see cref="ProviderOSTypeSelected"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>

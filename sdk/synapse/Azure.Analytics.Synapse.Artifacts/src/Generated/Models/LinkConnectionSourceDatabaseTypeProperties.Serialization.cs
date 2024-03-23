@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> resourceId = default;
-            Optional<string> principalId = default;
+            string resourceId = default;
+            string principalId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkConnectionSourceDatabaseTypeProperties(resourceId.Value, principalId.Value);
+            return new LinkConnectionSourceDatabaseTypeProperties(resourceId, principalId);
         }
 
         internal partial class LinkConnectionSourceDatabaseTypePropertiesConverter : JsonConverter<LinkConnectionSourceDatabaseTypeProperties>

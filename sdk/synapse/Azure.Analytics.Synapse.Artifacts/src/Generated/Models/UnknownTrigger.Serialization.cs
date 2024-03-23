@@ -53,9 +53,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = "Unknown";
-            Optional<string> description = default;
-            Optional<TriggerRuntimeState> runtimeState = default;
-            Optional<IList<object>> annotations = default;
+            string description = default;
+            TriggerRuntimeState? runtimeState = default;
+            IList<object> annotations = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new UnknownTrigger(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties);
+            return new UnknownTrigger(type, description, runtimeState, annotations ?? new ChangeTrackingList<object>(), additionalProperties);
         }
     }
 }

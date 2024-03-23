@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerService.Tests
                     }
                 },
                 DnsPrefix = DnsPrefix,
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
             };
             var lro = await resourceGroup.GetContainerServiceManagedClusters().CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterData);
             return lro.Value;

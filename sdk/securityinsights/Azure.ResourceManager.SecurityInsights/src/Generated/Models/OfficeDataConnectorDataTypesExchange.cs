@@ -5,19 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Exchange data type connection. </summary>
     internal partial class OfficeDataConnectorDataTypesExchange : DataConnectorDataTypeCommon
     {
-        /// <summary> Initializes a new instance of OfficeDataConnectorDataTypesExchange. </summary>
+        /// <summary> Initializes a new instance of <see cref="OfficeDataConnectorDataTypesExchange"/>. </summary>
         public OfficeDataConnectorDataTypesExchange()
         {
         }
 
-        /// <summary> Initializes a new instance of OfficeDataConnectorDataTypesExchange. </summary>
+        /// <summary> Initializes a new instance of <see cref="OfficeDataConnectorDataTypesExchange"/>. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        internal OfficeDataConnectorDataTypesExchange(SecurityInsightsDataTypeConnectionState? state) : base(state)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OfficeDataConnectorDataTypesExchange(SecurityInsightsDataTypeConnectionState? state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(state, serializedAdditionalRawData)
         {
         }
     }

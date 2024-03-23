@@ -5,23 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningDistributionConfiguration : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownDistributionConfiguration))]
+    public partial class MachineLearningDistributionConfiguration : IUtf8JsonSerializable, IJsonModel<MachineLearningDistributionConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningDistributionConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningDistributionConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDistributionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningDistributionConfiguration)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("distributionType"u8);
             writer.WriteStringValue(DistributionType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningDistributionConfiguration DeserializeMachineLearningDistributionConfiguration(JsonElement element)
+        MachineLearningDistributionConfiguration IJsonModel<MachineLearningDistributionConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDistributionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningDistributionConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningDistributionConfiguration(document.RootElement, options);
+        }
+
+        internal static MachineLearningDistributionConfiguration DeserializeMachineLearningDistributionConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,13 +70,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Mpi": return MpiDistributionConfiguration.DeserializeMpiDistributionConfiguration(element);
-                    case "PyTorch": return PyTorchDistributionConfiguration.DeserializePyTorchDistributionConfiguration(element);
-                    case "Ray": return RayDistributionConfiguration.DeserializeRayDistributionConfiguration(element);
-                    case "TensorFlow": return TensorFlowDistributionConfiguration.DeserializeTensorFlowDistributionConfiguration(element);
+                    case "Mpi": return MpiDistributionConfiguration.DeserializeMpiDistributionConfiguration(element, options);
+                    case "PyTorch": return PyTorchDistributionConfiguration.DeserializePyTorchDistributionConfiguration(element, options);
+                    case "Ray": return RayDistributionConfiguration.DeserializeRayDistributionConfiguration(element, options);
+                    case "TensorFlow": return TensorFlowDistributionConfiguration.DeserializeTensorFlowDistributionConfiguration(element, options);
                 }
             }
-            return UnknownDistributionConfiguration.DeserializeUnknownDistributionConfiguration(element);
+            return UnknownDistributionConfiguration.DeserializeUnknownDistributionConfiguration(element, options);
         }
+
+        BinaryData IPersistableModel<MachineLearningDistributionConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDistributionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningDistributionConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningDistributionConfiguration IPersistableModel<MachineLearningDistributionConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDistributionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningDistributionConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningDistributionConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningDistributionConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

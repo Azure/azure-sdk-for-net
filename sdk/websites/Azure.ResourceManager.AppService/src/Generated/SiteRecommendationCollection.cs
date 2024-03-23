@@ -9,17 +9,15 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SiteRecommendationResource" /> and their operations.
-    /// Each <see cref="SiteRecommendationResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
-    /// To get a <see cref="SiteRecommendationCollection" /> instance call the GetSiteRecommendations method from an instance of <see cref="WebSiteResource" />.
+    /// A class representing a collection of <see cref="SiteRecommendationResource"/> and their operations.
+    /// Each <see cref="SiteRecommendationResource"/> in the collection will belong to the same instance of <see cref="WebSiteResource"/>.
+    /// To get a <see cref="SiteRecommendationCollection"/> instance call the GetSiteRecommendations method from an instance of <see cref="WebSiteResource"/>.
     /// </summary>
     public partial class SiteRecommendationCollection : ArmCollection
     {
@@ -61,6 +59,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Recommendations_GetRuleDetailsByWebApp</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecommendationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the recommendation. </param>
@@ -99,6 +105,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Recommendations_GetRuleDetailsByWebApp</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecommendationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,6 +153,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Recommendations_GetRuleDetailsByWebApp</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecommendationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the recommendation. </param>
@@ -176,6 +198,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Recommendations_GetRuleDetailsByWebApp</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecommendationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the recommendation. </param>
@@ -212,6 +242,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Recommendations_GetRuleDetailsByWebApp</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecommendationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -251,6 +289,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Recommendations_GetRuleDetailsByWebApp</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecommendationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

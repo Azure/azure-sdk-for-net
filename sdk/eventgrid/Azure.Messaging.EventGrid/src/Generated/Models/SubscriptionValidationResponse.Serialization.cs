@@ -32,7 +32,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> validationResponse = default;
+            string validationResponse = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validationResponse"u8))
@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new SubscriptionValidationResponse(validationResponse.Value);
+            return new SubscriptionValidationResponse(validationResponse);
         }
 
         internal partial class SubscriptionValidationResponseConverter : JsonConverter<SubscriptionValidationResponse>

@@ -10,6 +10,10 @@
 
 ### Other Changes
 
+## 5.2.2 (2023-12-12)
+### Other Changes
+- This release contains bug fixes to improve quality.
+
 ## 5.2.1 (2023-09-25)
 ### Other Changes
 - This release contains bug fixes to improve quality.

@@ -3,6 +3,8 @@
 
 using System;
 using System.Diagnostics.Tracing;
+using System.Globalization;
+using System.IO.Pipes;
 using System.Runtime.CompilerServices;
 using Azure.Core.Diagnostics;
 using Azure.Messaging.EventHubs.Consumer;
@@ -106,7 +108,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="retryCount">The number of retries that were used for service communication.</param>
         /// <param name="durationSeconds">The total duration that the receive operation took to complete, in seconds.</param>
         ///
-        [Event(4, Level = EventLevel.Informational, Message = "Completed publishing events for Event Hub: {0} (Partition Id/Key: '{1}'), Operation Id: '{2}'.  Service Retry Count: {3}; Duration: '{4:0.00}' seconds")]
+        [Event(4, Level = EventLevel.Informational, Message = "Completed publishing events for Event Hub: {0} (Partition Id/Key: '{1}'), Operation Id: '{2}'.  Service Retry Count: {3}; Duration: '{4:0.00}' seconds.")]
         public virtual void EventPublishComplete(string eventHubName,
                                                  string partitionIdOrKey,
                                                  string operationId,
@@ -174,21 +176,25 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="startingSequenceNumber">The sequence number of the first event in the batch.</param>
         /// <param name="endingSequenceNumber">The sequence number of the last event in the batch.</param>
         /// <param name="durationSeconds">The total duration that the receive operation took to complete, in seconds.</param>
+        /// <param name="maximumBatchSize">The maximum number of events to include in the batch.</param>
+        /// <param name="maximumWaitTime">The maximum time to wait when no events are available, in seconds.</param>
         ///
-        [Event(7, Level = EventLevel.Informational, Message = "Completed receiving events for Event Hub: {0} (Consumer Group: '{1}', Partition Id: '{2}'); Operation Id: '{3}'.  Service Retry Count: {4}; Event Count: {5}; Starting sequence number: '{7}', Ending sequence number: '{8}'; Duration: '{6:0.00}' seconds")]
+        [Event(7, Level = EventLevel.Informational, Message = "Completed receiving events for Event Hub: {0} (Consumer Group: '{1}', Partition Id: '{2}'); Operation Id: '{3}'.  Service Retry Count: {4}; Event Count: {5}; Duration: '{6:0.00}' seconds; Starting sequence number: '{7}', Ending sequence number: '{8}'; Maximum batch size: '{9}'; Maximum wait time: '{10:0.00}' seconds.")]
         public virtual void EventReceiveComplete(string eventHubName,
                                                  string consumerGroup,
                                                  string partitionId,
                                                  string operationId,
                                                  int retryCount,
                                                  int eventCount,
+                                                 double durationSeconds,
                                                  string startingSequenceNumber,
                                                  string endingSequenceNumber,
-                                                 double durationSeconds)
+                                                 int maximumBatchSize,
+                                                 double maximumWaitTime)
         {
             if (IsEnabled())
             {
-                EventReceiveCompleteCore(7, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, operationId ?? string.Empty, retryCount, eventCount, durationSeconds, startingSequenceNumber ?? string.Empty, endingSequenceNumber ?? string.Empty);
+                EventReceiveCompleteCore(7, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, operationId ?? string.Empty, retryCount, eventCount, durationSeconds, startingSequenceNumber ?? string.Empty, endingSequenceNumber ?? string.Empty, maximumBatchSize, maximumWaitTime);
             }
         }
 
@@ -839,16 +845,18 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="identifier">A unique name used to identify the event processor.</param>
         /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
         /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="durationSeconds">The duration that the end-to-end stop operation took for the partition, in seconds.</param>
         ///
-        [Event(42, Level = EventLevel.Verbose, Message = "Completed stopping processing for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.")]
+        [Event(42, Level = EventLevel.Verbose, Message = "Completed stopping processing for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}. Duration: '{4:0.00}' seconds.")]
         public virtual void EventProcessorPartitionProcessingStopComplete(string partitionId,
                                                                           string identifier,
                                                                           string eventHubName,
-                                                                          string consumerGroup)
+                                                                          string consumerGroup,
+                                                                          double durationSeconds)
         {
             if (IsEnabled())
             {
-                WriteEvent(42, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty);
+                WriteEvent(42, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, durationSeconds);
             }
         }
 
@@ -2149,19 +2157,23 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
         /// <param name="startingPosition">The position in the event stream that reading will start from.</param>
         /// <param name="checkpointUsed"><c>true</c> if a checkpoint was used for the position; otherwise, <c>false</c>.</param>
+        /// <param name="lastModified">The date and time that the checkpoint was last modified.</param>
+        /// <param name="authorIdentifier">The author of the checkpoint used to determine this position.</param>
         ///
-        [Event(105, Level = EventLevel.Verbose, Message = "The processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3} is initializing partition '{0}' with starting position: [{4}]. Position chosen by {5}.")]
+        [Event(105, Level = EventLevel.Verbose, Message = "The processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3} is initializing partition '{0}' with starting position: [{4}]. Position chosen by {5} (AuthorIdentifier '{6}': LastModified: '{7}').")]
         public virtual void EventProcessorPartitionProcessingEventPositionDetermined(string partitionId,
                                                                                      string identifier,
                                                                                      string eventHubName,
                                                                                      string consumerGroup,
                                                                                      string startingPosition,
-                                                                                     bool checkpointUsed)
+                                                                                     bool checkpointUsed,
+                                                                                     DateTimeOffset? lastModified,
+                                                                                     string authorIdentifier)
         {
             if (IsEnabled())
             {
-                var selectionBasedOn = checkpointUsed ? "checkpoint" : "default";
-                WriteEvent(105, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, startingPosition ?? string.Empty, selectionBasedOn);
+                var selectionBasedOn = checkpointUsed ? $"checkpoint" : "default";
+                WriteEvent(105, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, startingPosition ?? string.Empty, selectionBasedOn, authorIdentifier ?? string.Empty, lastModified ?? default);
             }
         }
 
@@ -2520,20 +2532,20 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
         /// <param name="partitionId">The identifier of the partition that the handler was invoked for.</param>
         /// <param name="operationId">An artificial identifier for the publishing operation.</param>
-        /// <param name="backoffSeconds">The number of seconds that the back-off will delay.</param>
-        /// <param name="backoffCount">The message for the exception that occurred.</param>
+        /// <param name="backOffSeconds">The number of seconds that the back-off will delay.</param>
+        /// <param name="backOffCount">The message for the exception that occurred.</param>
         ///
         [Event(122, Level = EventLevel.Warning, Message = "The Event Hubs service is throttling the buffered producer instance with identifier '{0}' for Event Hub: {1}, Partition Id: '{2}', Operation Id: '{3}'.  To avoid overloading the service, publishing of this batch will delay for {4} seconds.  This batch has attempted a delay to avoid throttling {5} times.  This is non-fatal and publishing will continue to retry.")]
         public virtual void BufferedProducerThrottleDelay(string identifier,
                                                           string eventHubName,
                                                           string partitionId,
                                                           string operationId,
-                                                          double backoffSeconds,
-                                                          int backoffCount)
+                                                          double backOffSeconds,
+                                                          int backOffCount)
         {
             if (IsEnabled())
             {
-                WriteEvent(122, identifier ?? string.Empty, eventHubName ?? string.Empty, partitionId ?? string.Empty, operationId ?? string.Empty, backoffSeconds, backoffCount);
+                WriteEvent(122, identifier ?? string.Empty, eventHubName ?? string.Empty, partitionId ?? string.Empty, operationId ?? string.Empty, backOffSeconds, backOffCount);
             }
         }
 
@@ -2576,18 +2588,20 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
         /// <param name="operationId">An artificial identifier for the handler invocation.</param>
         /// <param name="durationSeconds">The total duration that the cycle took to complete, in seconds.</param>
+        /// <param name="eventCount">The number of events in the batch that was passed to the processing handler.</param>
         ///
-        [Event(124, Level = EventLevel.Verbose, Message = "Completed dispatching events to the processing handler for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2}, Consumer Group: {3}, and Operation Id: '{4}'.   Duration: '{5:0.00}' seconds.")]
+        [Event(124, Level = EventLevel.Verbose, Message = "Completed dispatching events to the processing handler for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2}, Consumer Group: {3}, and Operation Id: '{4}'.   Duration: '{5:0.00}' seconds, Event Count: '{6]'.")]
         public virtual void EventProcessorProcessingHandlerComplete(string partitionId,
                                                                     string identifier,
                                                                     string eventHubName,
                                                                     string consumerGroup,
                                                                     string operationId,
-                                                                    double durationSeconds)
+                                                                    double durationSeconds,
+                                                                    int eventCount)
         {
             if (IsEnabled())
             {
-                EventProcessorProcessingHandlerCompleteCore(124, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, operationId ?? string.Empty, durationSeconds);
+                EventProcessorProcessingHandlerCompleteCore(124, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, operationId ?? string.Empty, durationSeconds, eventCount);
             }
         }
 
@@ -2668,7 +2682,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="loadBalancingIntervalSeconds">The interval, in seconds, that should pass between load balancing cycles.</param>
         /// <param name="ownershipIntervalSeconds">The interval, in seconds, that partition ownership is reserved for..</param>
         ///
-        [Event(128, Level = EventLevel.Warning, Message = "The 'PartitionOwnershipExpirationInterval' and 'LoadBalancingUpdateInterval' are configured using intervals that may cause stability issues with partition ownership for the processor instance with identifier '{0}' for Event Hub: {1}.  It is recommended that the 'PartitionOwnershipExpirationInterval' be at least 3 times greater than the 'LoadBalancingUpdateInterval' and very strongly advised that it should be no less than twice as long.  When these intervals are too close together, ownership may expire before it is renewed during load balancing which will cause partitions to migrate.  Consider adjusting the intervals in the processor options if you experience issues.  Load Balancing Interval '{2:0:00}' seconds.  Partition Ownership Interval '{3:0:00}' seconds.  {4}")]
+        [Event(128, Level = EventLevel.Warning, Message = "The 'PartitionOwnershipExpirationInterval' and 'LoadBalancingUpdateInterval' are configured using intervals that may cause stability issues with partition ownership for the processor instance with identifier '{0}' for Event Hub: {1}.  It is recommended that the 'PartitionOwnershipExpirationInterval' be at least 3 times greater than the 'LoadBalancingUpdateInterval' and very strongly advised that it should be no less than twice as long.  When these intervals are too close together, ownership may expire before it is renewed during load balancing which will cause partitions to migrate.  Consider adjusting the intervals in the processor options if you experience issues.  Load Balancing Interval '{2:0.00}' seconds.  Partition Ownership Interval '{3:0.00}' seconds.  {4}")]
         public virtual void ProcessorLoadBalancingIntervalsTooCloseWarning(string identifier,
                                                                            string eventHubName,
                                                                            double loadBalancingIntervalSeconds,
@@ -2679,6 +2693,81 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                 WriteEvent(128, identifier ?? string.Empty, eventHubName ?? string.Empty, ownershipIntervalSeconds, loadBalancingIntervalSeconds, Resources.TroubleshootingGuideLink);
             }
         }
+
+        /// <summary>
+        ///   Indicates that one cycle of reading from a partition and processing events has completed.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the Event Hub partition being processed.</param>
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="eventCount">The number of events that were read and processed.</param>
+        /// <param name="startingSequenceNumber">The starting sequence number of the batch that was passed to the processing handler.</param>
+        /// <param name="endingSequenceNumber">The ending sequence number of the batch that was passed to the processing handler.</param>
+        /// <param name="formattedCycleStartTime">The UTC date/time, formatted as a string, that the processing cycle started.</param>
+        /// <param name="formattedCycleEndTime">The UTC date/time, formatted as a string, that the processing cycle was completed.</param>
+        /// <param name="durationSeconds">The total duration that this cycle took, in seconds.</param>
+        ///
+        [Event(129, Level = EventLevel.Verbose, Message = "A processing cycle for partition '{0}' using processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3} has completed.  Events read: '{4}'; Starting Sequence Number: '{5}', Ending Sequence Number: '{6}'; Cycle Started: {7}, Cycle Ended: {8}; Total duration to read and process: '{9:0.00}' seconds.")]
+        public virtual void EventProcessorPartitionProcessingCycleComplete(string partitionId,
+                                                                           string identifier,
+                                                                           string eventHubName,
+                                                                           string consumerGroup,
+                                                                           int eventCount,
+                                                                           string startingSequenceNumber,
+                                                                           string endingSequenceNumber,
+                                                                           string formattedCycleStartTime,
+                                                                           string formattedCycleEndTime,
+                                                                           double durationSeconds)
+        {
+            if (IsEnabled())
+            {
+                EventProcessorPartitionProcessingCycleCompleteCore(
+                    129,
+                    partitionId ?? string.Empty,
+                    identifier ?? string.Empty,
+                    eventHubName ?? string.Empty,
+                    consumerGroup ?? string.Empty,
+                    eventCount,
+                    startingSequenceNumber ?? string.Empty,
+                    endingSequenceNumber ?? string.Empty,
+                    formattedCycleStartTime ?? string.Empty,
+                    formattedCycleEndTime ?? string.Empty,
+                    durationSeconds);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has encountered an fatal error during load balancing
+        ///   and cannot recover.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(130, Level = EventLevel.Error, Message = "A fatal exception occurred during load balancing for processor instance with identifier '{0}' for Event Hub: {1} and Consumer Group: {2}.  The processor cannot recover and has stopped.  Error Message: '{3}'")]
+        public virtual void EventProcessorFatalTaskError(string identifier,
+                                                         string eventHubName,
+                                                         string consumerGroup,
+                                                         string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(130, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Gets the current value of <see cref="DateTimeOffset.UtcNow" /> formatted
+        ///   for use in logs.
+        /// </summary>
+        ///
+        /// <returns>The current UTC date/time stamp as a string, formatted for logging.</returns>
+        ///
+        public virtual string GetLogFormattedUtcNow() => DateTime.UtcNow.ToString("yyyy-mm-ddTHH:mm:ss.fffZ", CultureInfo.InvariantCulture);
 
         /// <summary>
         ///   Indicates that the receiving of events has completed.
@@ -2694,6 +2783,8 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="durationSeconds">The total duration that the receive operation took to complete, in seconds.</param>
         /// <param name="startingSequenceNumber">The sequence number of the first event in the batch.</param>
         /// <param name="endingSequenceNumber">The sequence number of the last event in the batch.</param>
+        /// <param name="maximumBatchSize">The maximum number of events to include in the batch.</param>
+        /// <param name="maximumWaitTime">The maximum time to wait when no events are available, in seconds.</param>
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -2706,7 +2797,9 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                                                      int eventCount,
                                                      double durationSeconds,
                                                      string startingSequenceNumber,
-                                                     string endingSequenceNumber)
+                                                     string endingSequenceNumber,
+                                                     int maximumBatchSize,
+                                                     double maximumWaitTime)
         {
             fixed (char* eventHubNamePtr = eventHubName)
             fixed (char* consumerGroupPtr = consumerGroup)
@@ -2715,7 +2808,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
             fixed (char* startingSequenceNumberPtr = startingSequenceNumber)
             fixed (char* endingSequenceNumberPtr = endingSequenceNumber)
             {
-                var eventPayload = stackalloc EventData[9];
+                var eventPayload = stackalloc EventData[11];
 
                 eventPayload[0].Size = (eventHubName.Length + 1) * sizeof(char);
                 eventPayload[0].DataPointer = (IntPtr)eventHubNamePtr;
@@ -2744,7 +2837,13 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                 eventPayload[8].Size = (endingSequenceNumber.Length + 1) * sizeof(char);
                 eventPayload[8].DataPointer = (IntPtr)endingSequenceNumberPtr;
 
-                WriteEventCore(eventId, 9, eventPayload);
+                eventPayload[9].Size = Unsafe.SizeOf<int>();
+                eventPayload[9].DataPointer = (IntPtr)Unsafe.AsPointer(ref maximumBatchSize);
+
+                eventPayload[10].Size = Unsafe.SizeOf<double>();
+                eventPayload[10].DataPointer = (IntPtr)Unsafe.AsPointer(ref maximumWaitTime);
+
+                WriteEventCore(eventId, 11, eventPayload);
             }
         }
 
@@ -3156,6 +3255,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
         /// <param name="operationId">An artificial identifier for the handler invocation.</param>
         /// <param name="durationSeconds">The total duration that the cycle took to complete, in seconds.</param>
+        /// <param name="eventCount">The number of events in the batch that was passed to the processing handler.</param>
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -3165,7 +3265,8 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                                                                         string eventHubName,
                                                                         string consumerGroup,
                                                                         string operationId,
-                                                                        double durationSeconds)
+                                                                        double durationSeconds,
+                                                                        int eventCount)
         {
             fixed (char* partitionIdPtr = partitionId)
             fixed (char* identifierPtr = identifier)
@@ -3173,7 +3274,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
             fixed (char* consumerGroupPtr = consumerGroup)
             fixed (char* operationIdPtr = operationId)
             {
-                var eventPayload = stackalloc EventData[6];
+                var eventPayload = stackalloc EventData[7];
 
                 eventPayload[0].Size = (partitionId.Length + 1) * sizeof(char);
                 eventPayload[0].DataPointer = (IntPtr)partitionIdPtr;
@@ -3193,7 +3294,10 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                 eventPayload[5].Size = Unsafe.SizeOf<double>();
                 eventPayload[5].DataPointer = (IntPtr)Unsafe.AsPointer(ref durationSeconds);
 
-                WriteEventCore(eventId, 6, eventPayload);
+                eventPayload[6].Size = Unsafe.SizeOf<int>();
+                eventPayload[6].DataPointer = (IntPtr)Unsafe.AsPointer(ref eventCount);
+
+                WriteEventCore(eventId, 7, eventPayload);
             }
         }
 
@@ -3236,6 +3340,81 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                 eventPayload[3].DataPointer = (IntPtr)Unsafe.AsPointer(ref durationSeconds);
 
                 WriteEventCore(eventId, 4, eventPayload);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that one cycle of reading from a partition and processing events has completed.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition being processed.</param>
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="eventCount">The number of events that were read and processed.</param>
+        /// <param name="startingSequenceNumber">The starting sequence number of the batch that was passed to the processing handler.</param>
+        /// <param name="endingSequenceNumber">The ending sequence number of the batch that was passed to the processing handler.</param>
+        /// <param name="formattedCycleStartTime">The UTC date/time, formatted as a string, that the processing cycle started.</param>
+        /// <param name="formattedCycleEndTime">The UTC date/time, formatted as a string, that the processing cycle was completed.</param>
+        /// <param name="durationSeconds">The total duration that this cycle took, in seconds.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void EventProcessorPartitionProcessingCycleCompleteCore(int eventId,
+                                                                               string partitionId,
+                                                                               string identifier,
+                                                                               string eventHubName,
+                                                                               string consumerGroup,
+                                                                               int eventCount,
+                                                                               string startingSequenceNumber,
+                                                                               string endingSequenceNumber,
+                                                                               string formattedCycleStartTime,
+                                                                               string formattedCycleEndTime,
+                                                                               double durationSeconds)
+        {
+            fixed (char* partitionIdPtr = partitionId)
+            fixed (char* identifierPtr = identifier)
+            fixed (char* eventHubNamePtr = eventHubName)
+            fixed (char* consumerGroupPtr = consumerGroup)
+            fixed (char* startingSequenceNumberIdPtr = startingSequenceNumber)
+            fixed (char* endingSequenceNumberIdPtr = endingSequenceNumber)
+            fixed (char* formattedCycleStartTimePtr = formattedCycleStartTime)
+            fixed (char* formattedCycleEndTimePtr = formattedCycleEndTime)
+            {
+                var eventPayload = stackalloc EventData[10];
+
+                eventPayload[0].Size = (partitionId.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)partitionIdPtr;
+
+                eventPayload[1].Size = (identifier.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)identifierPtr;
+
+                eventPayload[2].Size = (eventHubName.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)eventHubNamePtr;
+
+                eventPayload[3].Size = (consumerGroup.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)consumerGroupPtr;
+
+                eventPayload[4].Size = Unsafe.SizeOf<int>();
+                eventPayload[4].DataPointer = (IntPtr)Unsafe.AsPointer(ref eventCount);
+
+                eventPayload[5].Size = (startingSequenceNumber.Length + 1) * sizeof(char);
+                eventPayload[5].DataPointer = (IntPtr)startingSequenceNumberIdPtr;
+
+                eventPayload[6].Size = (endingSequenceNumber.Length + 1) * sizeof(char);
+                eventPayload[6].DataPointer = (IntPtr)endingSequenceNumberIdPtr;
+
+                eventPayload[7].Size = (formattedCycleStartTime.Length + 1) * sizeof(char);
+                eventPayload[7].DataPointer = (IntPtr)formattedCycleStartTimePtr;
+
+                eventPayload[8].Size = (formattedCycleEndTime.Length + 1) * sizeof(char);
+                eventPayload[8].DataPointer = (IntPtr)formattedCycleEndTimePtr;
+
+                eventPayload[9].Size = Unsafe.SizeOf<double>();
+                eventPayload[9].DataPointer = (IntPtr)Unsafe.AsPointer(ref durationSeconds);
+
+                WriteEventCore(eventId, 10, eventPayload);
             }
         }
 
@@ -3380,6 +3559,54 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                 eventPayload[5].DataPointer = (IntPtr)arg6Ptr;
 
                 WriteEventCore(eventId, 6, eventPayload);
+            }
+        }
+
+        /// <summary>
+        ///   Writes an event with four string arguments and a value type argument into a stack allocated
+        ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="arg1">The first argument.</param>
+        /// <param name="arg2">The second argument.</param>
+        /// <param name="arg3">The third argument.</param>
+        /// <param name="arg4">The fourth argument.</param>
+        /// <param name="arg5">The fifth argument.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void WriteEvent<TValue1>(int eventId,
+                                                string arg1,
+                                                string arg2,
+                                                string arg3,
+                                                string arg4,
+                                                TValue1 arg5)
+            where TValue1 : struct
+        {
+            fixed (char* arg1Ptr = arg1)
+            fixed (char* arg2Ptr = arg2)
+            fixed (char* arg3Ptr = arg3)
+            fixed (char* arg4Ptr = arg4)
+            {
+                var eventPayload = stackalloc EventData[5];
+
+                eventPayload[0].Size = (arg1.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)arg1Ptr;
+
+                eventPayload[1].Size = (arg2.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)arg2Ptr;
+
+                eventPayload[2].Size = (arg3.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)arg3Ptr;
+
+                eventPayload[3].Size = (arg4.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)arg4Ptr;
+
+                eventPayload[4].Size = Unsafe.SizeOf<TValue1>();
+                eventPayload[4].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg5);
+
+                WriteEventCore(eventId, 5, eventPayload);
             }
         }
 
@@ -3686,6 +3913,72 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                 eventPayload[5].DataPointer = (IntPtr)arg6Ptr;
 
                 WriteEventCore(eventId, 6, eventPayload);
+            }
+        }
+
+        /// <summary>
+        ///   Writes an event with two string arguments and two value type arguments into a stack allocated
+        ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="arg1">The first argument.</param>
+        /// <param name="arg2">The second argument.</param>
+        /// <param name="arg3">The third argument.</param>
+        /// <param name="arg4">The fourth argument.</param>
+        /// <param name="arg5">The fifth argument.</param>
+        /// <param name="arg6">The sixth argument.</param>
+        /// <param name="arg7">The seventh argument.</param>
+        /// <param name="arg8">The eighth argument.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void WriteEvent<TValue1>(int eventId,
+                                                         string arg1,
+                                                         string arg2,
+                                                         string arg3,
+                                                         string arg4,
+                                                         string arg5,
+                                                         string arg6,
+                                                         string arg7,
+                                                         TValue1 arg8)
+            where TValue1 : struct
+        {
+            fixed (char* arg1Ptr = arg1)
+            fixed (char* arg2Ptr = arg2)
+            fixed (char* arg3Ptr = arg3)
+            fixed (char* arg4Ptr = arg4)
+            fixed (char* arg5Ptr = arg5)
+            fixed (char* arg6Ptr = arg6)
+            fixed (char* arg7Ptr = arg7)
+            {
+                var eventPayload = stackalloc EventData[8];
+
+                eventPayload[0].Size = (arg1.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)arg1Ptr;
+
+                eventPayload[1].Size = (arg2.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)arg2Ptr;
+
+                eventPayload[2].Size = (arg3.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)arg3Ptr;
+
+                eventPayload[3].Size = (arg4.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)arg4Ptr;
+
+                eventPayload[4].Size = (arg5.Length + 1) * sizeof(char);
+                eventPayload[4].DataPointer = (IntPtr)arg5Ptr;
+
+                eventPayload[5].Size = (arg6.Length + 1) * sizeof(char);
+                eventPayload[5].DataPointer = (IntPtr)arg6Ptr;
+
+                eventPayload[6].Size = (arg7.Length + 1) * sizeof(char);
+                eventPayload[6].DataPointer = (IntPtr)arg7Ptr;
+
+                eventPayload[7].Size = Unsafe.SizeOf<TValue1>();
+                eventPayload[7].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg8);
+
+                WriteEventCore(eventId, 8, eventPayload);
             }
         }
     }

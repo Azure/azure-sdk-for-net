@@ -56,9 +56,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IList<DataFlowSourceSetting>> sourceSettings = default;
-            Optional<IDictionary<string, object>> parameters = default;
-            Optional<object> datasetParameters = default;
+            IList<DataFlowSourceSetting> sourceSettings = default;
+            IDictionary<string, object> parameters = default;
+            object datasetParameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceSettings"u8))
@@ -106,7 +106,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DataFlowDebugPackageDebugSettings(Optional.ToList(sourceSettings), Optional.ToDictionary(parameters), datasetParameters.Value);
+            return new DataFlowDebugPackageDebugSettings(sourceSettings ?? new ChangeTrackingList<DataFlowSourceSetting>(), parameters ?? new ChangeTrackingDictionary<string, object>(), datasetParameters);
         }
     }
 }

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Subscription.Models;
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.Subscription
         }
 
         /// <summary> Create or Update Subscription tenant policy for user's tenant. </summary>
-        /// <param name="content"> The TenantPolicyCreateOrUpdateContent to use. </param>
+        /// <param name="content"> The <see cref="TenantPolicyCreateOrUpdateContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public async Task<Response<TenantPolicyData>> AddUpdatePolicyForTenantAsync(TenantPolicyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
@@ -81,7 +80,7 @@ namespace Azure.ResourceManager.Subscription
         }
 
         /// <summary> Create or Update Subscription tenant policy for user's tenant. </summary>
-        /// <param name="content"> The TenantPolicyCreateOrUpdateContent to use. </param>
+        /// <param name="content"> The <see cref="TenantPolicyCreateOrUpdateContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public Response<TenantPolicyData> AddUpdatePolicyForTenant(TenantPolicyCreateOrUpdateContent content, CancellationToken cancellationToken = default)

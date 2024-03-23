@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<KqlScriptContent> content = default;
+            KqlScriptContent content = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("content"u8))
@@ -45,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new KqlScript(content.Value);
+            return new KqlScript(content);
         }
 
         internal partial class KqlScriptConverter : JsonConverter<KqlScript>

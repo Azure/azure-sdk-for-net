@@ -60,8 +60,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             DataFlowReferenceType type = default;
             string referenceName = default;
-            Optional<object> datasetParameters = default;
-            Optional<IDictionary<string, object>> parameters = default;
+            object datasetParameters = default;
+            IDictionary<string, object> parameters = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +109,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFlowReference(type, referenceName, datasetParameters.Value, Optional.ToDictionary(parameters), additionalProperties);
+            return new DataFlowReference(type, referenceName, datasetParameters, parameters ?? new ChangeTrackingDictionary<string, object>(), additionalProperties);
         }
 
         internal partial class DataFlowReferenceConverter : JsonConverter<DataFlowReference>

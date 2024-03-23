@@ -12,17 +12,15 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DnsResolver
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DnsResolverOutboundEndpointResource" /> and their operations.
-    /// Each <see cref="DnsResolverOutboundEndpointResource" /> in the collection will belong to the same instance of <see cref="DnsResolverResource" />.
-    /// To get a <see cref="DnsResolverOutboundEndpointCollection" /> instance call the GetDnsResolverOutboundEndpoints method from an instance of <see cref="DnsResolverResource" />.
+    /// A class representing a collection of <see cref="DnsResolverOutboundEndpointResource"/> and their operations.
+    /// Each <see cref="DnsResolverOutboundEndpointResource"/> in the collection will belong to the same instance of <see cref="DnsResolverResource"/>.
+    /// To get a <see cref="DnsResolverOutboundEndpointCollection"/> instance call the GetDnsResolverOutboundEndpoints method from an instance of <see cref="DnsResolverResource"/>.
     /// </summary>
     public partial class DnsResolverOutboundEndpointCollection : ArmCollection, IEnumerable<DnsResolverOutboundEndpointResource>, IAsyncEnumerable<DnsResolverOutboundEndpointResource>
     {
@@ -63,6 +61,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <item>
         /// <term>Operation Id</term>
         /// <description>OutboundEndpoints_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverOutboundEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +113,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>OutboundEndpoints_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverOutboundEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -150,6 +164,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>OutboundEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverOutboundEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
@@ -186,6 +208,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <item>
         /// <term>Operation Id</term>
         /// <description>OutboundEndpoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverOutboundEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -224,11 +254,19 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>OutboundEndpoints_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverOutboundEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DnsResolverOutboundEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DnsResolverOutboundEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DnsResolverOutboundEndpointResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsResolverOutboundEndpointOutboundEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
@@ -247,11 +285,19 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>OutboundEndpoints_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverOutboundEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DnsResolverOutboundEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DnsResolverOutboundEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DnsResolverOutboundEndpointResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsResolverOutboundEndpointOutboundEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
@@ -269,6 +315,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <item>
         /// <term>Operation Id</term>
         /// <description>OutboundEndpoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverOutboundEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -305,6 +359,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>OutboundEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverOutboundEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
@@ -339,6 +401,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <item>
         /// <term>Operation Id</term>
         /// <description>OutboundEndpoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverOutboundEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -376,6 +446,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <item>
         /// <term>Operation Id</term>
         /// <description>OutboundEndpoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverOutboundEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -40,7 +40,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> preserveZipFileNameAsFolder = default;
+            object preserveZipFileNameAsFolder = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -63,7 +63,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ZipDeflateReadSettings(type, additionalProperties, preserveZipFileNameAsFolder.Value);
+            return new ZipDeflateReadSettings(type, additionalProperties, preserveZipFileNameAsFolder);
         }
 
         internal partial class ZipDeflateReadSettingsConverter : JsonConverter<ZipDeflateReadSettings>

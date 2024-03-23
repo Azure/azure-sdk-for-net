@@ -5,23 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MonitorComputeIdentityBase : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownMonitorComputeIdentityBase))]
+    public partial class MonitorComputeIdentityBase : IUtf8JsonSerializable, IJsonModel<MonitorComputeIdentityBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorComputeIdentityBase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MonitorComputeIdentityBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorComputeIdentityBase>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonitorComputeIdentityBase)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("computeIdentityType"u8);
             writer.WriteStringValue(ComputeIdentityType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MonitorComputeIdentityBase DeserializeMonitorComputeIdentityBase(JsonElement element)
+        MonitorComputeIdentityBase IJsonModel<MonitorComputeIdentityBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorComputeIdentityBase>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonitorComputeIdentityBase)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitorComputeIdentityBase(document.RootElement, options);
+        }
+
+        internal static MonitorComputeIdentityBase DeserializeMonitorComputeIdentityBase(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,11 +70,42 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AmlToken": return AmlTokenComputeIdentity.DeserializeAmlTokenComputeIdentity(element);
-                    case "ManagedIdentity": return ManagedComputeIdentity.DeserializeManagedComputeIdentity(element);
+                    case "AmlToken": return AmlTokenComputeIdentity.DeserializeAmlTokenComputeIdentity(element, options);
+                    case "ManagedIdentity": return ManagedComputeIdentity.DeserializeManagedComputeIdentity(element, options);
                 }
             }
-            return UnknownMonitorComputeIdentityBase.DeserializeUnknownMonitorComputeIdentityBase(element);
+            return UnknownMonitorComputeIdentityBase.DeserializeUnknownMonitorComputeIdentityBase(element, options);
         }
+
+        BinaryData IPersistableModel<MonitorComputeIdentityBase>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorComputeIdentityBase>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MonitorComputeIdentityBase)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MonitorComputeIdentityBase IPersistableModel<MonitorComputeIdentityBase>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorComputeIdentityBase>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMonitorComputeIdentityBase(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MonitorComputeIdentityBase)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MonitorComputeIdentityBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

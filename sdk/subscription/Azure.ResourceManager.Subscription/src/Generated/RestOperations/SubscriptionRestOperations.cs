@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Subscription.Models;
@@ -269,7 +268,7 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary> Accept subscription ownership. </summary>
         /// <param name="subscriptionId"> Subscription Id. </param>
-        /// <param name="content"> The AcceptOwnershipContent to use. </param>
+        /// <param name="content"> The <see cref="AcceptOwnershipContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -291,7 +290,7 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary> Accept subscription ownership. </summary>
         /// <param name="subscriptionId"> Subscription Id. </param>
-        /// <param name="content"> The AcceptOwnershipContent to use. </param>
+        /// <param name="content"> The <see cref="AcceptOwnershipContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>

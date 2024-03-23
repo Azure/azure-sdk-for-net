@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,7 +13,6 @@ using Azure.Storage.Files.Shares;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Test;
 using Moq;
-using Moq.Protected;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
@@ -536,8 +534,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ShareFileStorageResource storageResource = new ShareFileStorageResource(mock.Object);
 
             // Act
-            StorageResourceProperties result = await storageResource.GetPropertiesInternalAsync();
-            Mock<StorageResourceProperties> properties = new Mock<StorageResourceProperties>(result);
+            StorageResourceItemProperties result = await storageResource.GetPropertiesInternalAsync();
+            Mock<StorageResourceItemProperties> properties = new Mock<StorageResourceItemProperties>(result);
 
             // Assert
             Assert.NotNull(result);

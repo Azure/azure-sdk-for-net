@@ -22,12 +22,32 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(EventHubsTransportType.AmqpTcp)]
         [TestCase(EventHubsTransportType.AmqpWebSockets)]
-        public void GetUriSchemeUnderstandsAmqpConnectionTypes(EventHubsTransportType transportType)
+        public void GetUriSchemeUsesTlsByDefault(EventHubsTransportType transportType)
         {
             var scheme = transportType.GetUriScheme();
 
             Assert.That(scheme, Is.Not.Null.And.Not.Empty);
-            Assert.That(transportType.GetUriScheme(), Contains.Substring("amqp"));
+            Assert.That(scheme, Is.EqualTo("amqps"));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="TransportTypeExtensions.GetUriScheme" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(EventHubsTransportType.AmqpTcp, true, "amqps")]
+        [TestCase(EventHubsTransportType.AmqpTcp, false, "amqp")]
+        [TestCase(EventHubsTransportType.AmqpWebSockets, true, "amqps")]
+        [TestCase(EventHubsTransportType.AmqpWebSockets, false, "amqp")]
+        public void GetUriSchemeRespectsTlsFlag(EventHubsTransportType transportType,
+                                                bool useTls,
+                                                string expectedScheme)
+        {
+            var scheme = transportType.GetUriScheme(useTls);
+
+            Assert.That(scheme, Is.Not.Null.And.Not.Empty);
+            Assert.That(scheme, Is.EqualTo(expectedScheme));
         }
 
         /// <summary>

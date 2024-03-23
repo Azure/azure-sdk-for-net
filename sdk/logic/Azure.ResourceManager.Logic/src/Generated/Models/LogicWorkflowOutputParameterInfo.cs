@@ -6,24 +6,26 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The workflow output parameter. </summary>
     public partial class LogicWorkflowOutputParameterInfo : LogicWorkflowParameterInfo
     {
-        /// <summary> Initializes a new instance of LogicWorkflowOutputParameterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowOutputParameterInfo"/>. </summary>
         public LogicWorkflowOutputParameterInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowOutputParameterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowOutputParameterInfo"/>. </summary>
         /// <param name="parameterType"> The type. </param>
         /// <param name="value"> The value. </param>
         /// <param name="metadata"> The metadata. </param>
         /// <param name="description"> The description. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="error"> Gets the error. </param>
-        internal LogicWorkflowOutputParameterInfo(LogicWorkflowParameterType? parameterType, BinaryData value, BinaryData metadata, string description, BinaryData error) : base(parameterType, value, metadata, description)
+        internal LogicWorkflowOutputParameterInfo(LogicWorkflowParameterType? parameterType, BinaryData value, BinaryData metadata, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, BinaryData error) : base(parameterType, value, metadata, description, serializedAdditionalRawData)
         {
             Error = error;
         }
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

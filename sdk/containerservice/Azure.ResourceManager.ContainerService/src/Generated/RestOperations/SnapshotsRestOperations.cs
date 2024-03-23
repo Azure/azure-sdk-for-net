@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ContainerService.Models;
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-11-02-preview";
+            _apiVersion = apiVersion ?? "2023-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> Gets a list of snapshots in the specified subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> Gets a list of snapshots in the specified subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> Lists snapshots in the specified subscription and resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -151,7 +150,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> Lists snapshots in the specified subscription and resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -198,7 +197,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> Gets a snapshot. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -229,7 +228,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> Gets a snapshot. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -284,7 +283,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> Creates or updates a snapshot. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="data"> The snapshot to create or update. </param>
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> Creates or updates a snapshot. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="data"> The snapshot to create or update. </param>
@@ -372,7 +371,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> Updates tags on a snapshot. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="containerServiceTagsObject"> Parameters supplied to the Update snapshot Tags operation. </param>
@@ -403,7 +402,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> Updates tags on a snapshot. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="containerServiceTagsObject"> Parameters supplied to the Update snapshot Tags operation. </param>
@@ -454,7 +453,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> Deletes a snapshot. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -479,7 +478,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> Deletes a snapshot. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -519,7 +518,7 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> Gets a list of snapshots in the specified subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -546,7 +545,7 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> Gets a list of snapshots in the specified subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -587,7 +586,7 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> Lists snapshots in the specified subscription and resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -616,7 +615,7 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> Lists snapshots in the specified subscription and resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>

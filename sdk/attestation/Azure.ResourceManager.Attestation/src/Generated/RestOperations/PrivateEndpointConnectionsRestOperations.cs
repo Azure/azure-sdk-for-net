@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Attestation.Models;
@@ -338,6 +337,7 @@ namespace Azure.ResourceManager.Attestation
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                 case 204:
                     return message.Response;
                 default:
@@ -365,6 +365,7 @@ namespace Azure.ResourceManager.Attestation
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                 case 204:
                     return message.Response;
                 default:

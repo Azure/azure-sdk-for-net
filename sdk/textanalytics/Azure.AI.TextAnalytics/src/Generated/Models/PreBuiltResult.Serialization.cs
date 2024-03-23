@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -41,7 +40,7 @@ namespace Azure.AI.TextAnalytics.Models
                 return null;
             }
             IList<DocumentError> errors = default;
-            Optional<TextDocumentBatchStatistics> statistics = default;
+            TextDocumentBatchStatistics statistics = default;
             string modelVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -70,7 +69,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new PreBuiltResult(errors, statistics.Value, modelVersion);
+            return new PreBuiltResult(errors, statistics, modelVersion);
         }
     }
 }

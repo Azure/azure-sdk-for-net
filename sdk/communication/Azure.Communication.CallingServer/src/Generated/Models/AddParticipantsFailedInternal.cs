@@ -6,21 +6,19 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The AddParticipantsFailedEvent. </summary>
     internal partial class AddParticipantsFailedInternal
     {
-        /// <summary> Initializes a new instance of AddParticipantsFailedInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddParticipantsFailedInternal"/>. </summary>
         internal AddParticipantsFailedInternal()
         {
             Participants = new ChangeTrackingList<CommunicationIdentifierModel>();
         }
 
-        /// <summary> Initializes a new instance of AddParticipantsFailedInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddParticipantsFailedInternal"/>. </summary>
         /// <param name="eventSource"></param>
         /// <param name="operationContext"></param>
         /// <param name="resultInformation"></param>

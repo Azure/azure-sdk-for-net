@@ -11,17 +11,15 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Quota
 {
     /// <summary>
-    /// A class representing a collection of <see cref="QuotaRequestDetailResource" /> and their operations.
-    /// Each <see cref="QuotaRequestDetailResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="QuotaRequestDetailCollection" /> instance call the GetQuotaRequestDetails method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="QuotaRequestDetailResource"/> and their operations.
+    /// Each <see cref="QuotaRequestDetailResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="QuotaRequestDetailCollection"/> instance call the GetQuotaRequestDetails method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class QuotaRequestDetailCollection : ArmCollection, IEnumerable<QuotaRequestDetailResource>, IAsyncEnumerable<QuotaRequestDetailResource>
     {
@@ -53,6 +51,14 @@ namespace Azure.ResourceManager.Quota
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaRequestDetailResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,6 +97,14 @@ namespace Azure.ResourceManager.Quota
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaRequestDetailResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="id"> Quota request ID. </param>
@@ -128,6 +142,14 @@ namespace Azure.ResourceManager.Quota
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaRequestDetailResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter">
@@ -142,7 +164,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skiptoken"> The **Skiptoken** parameter is used only if a previous operation returned a partial result. If a previous response contains a **nextLink** element, its value includes a **skiptoken** parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="QuotaRequestDetailResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="QuotaRequestDetailResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<QuotaRequestDetailResource> GetAllAsync(string filter = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _quotaRequestDetailQuotaRequestStatusRestClient.CreateListRequest(Id, filter, top, skiptoken);
@@ -161,6 +183,14 @@ namespace Azure.ResourceManager.Quota
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaRequestDetailResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter">
@@ -175,7 +205,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skiptoken"> The **Skiptoken** parameter is used only if a previous operation returned a partial result. If a previous response contains a **nextLink** element, its value includes a **skiptoken** parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="QuotaRequestDetailResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="QuotaRequestDetailResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<QuotaRequestDetailResource> GetAll(string filter = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _quotaRequestDetailQuotaRequestStatusRestClient.CreateListRequest(Id, filter, top, skiptoken);
@@ -193,6 +223,14 @@ namespace Azure.ResourceManager.Quota
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaRequestDetailResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -229,6 +267,14 @@ namespace Azure.ResourceManager.Quota
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaRequestDetailResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="id"> Quota request ID. </param>
@@ -263,6 +309,14 @@ namespace Azure.ResourceManager.Quota
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaRequestDetailResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,6 +354,14 @@ namespace Azure.ResourceManager.Quota
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaRequestDetailResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

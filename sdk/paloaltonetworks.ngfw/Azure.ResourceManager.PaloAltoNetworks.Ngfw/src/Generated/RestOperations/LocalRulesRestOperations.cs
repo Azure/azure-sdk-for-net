@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-29";
+            _apiVersion = apiVersion ?? "2023-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -398,7 +397,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="localRulestackName"> LocalRulestack resource name. </param>
         /// <param name="priority"> Local Rule priority. </param>
-        /// <param name="firewallName"> The String to use. </param>
+        /// <param name="firewallName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/> or <paramref name="priority"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
@@ -430,7 +429,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="localRulestackName"> LocalRulestack resource name. </param>
         /// <param name="priority"> Local Rule priority. </param>
-        /// <param name="firewallName"> The String to use. </param>
+        /// <param name="firewallName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/> or <paramref name="priority"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
@@ -489,7 +488,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="localRulestackName"> LocalRulestack resource name. </param>
         /// <param name="priority"> Local Rule priority. </param>
-        /// <param name="firewallName"> The String to use. </param>
+        /// <param name="firewallName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/> or <paramref name="priority"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
@@ -516,7 +515,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="localRulestackName"> LocalRulestack resource name. </param>
         /// <param name="priority"> Local Rule priority. </param>
-        /// <param name="firewallName"> The String to use. </param>
+        /// <param name="firewallName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/> or <paramref name="priority"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
@@ -570,7 +569,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="localRulestackName"> LocalRulestack resource name. </param>
         /// <param name="priority"> Local Rule priority. </param>
-        /// <param name="firewallName"> The String to use. </param>
+        /// <param name="firewallName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/> or <paramref name="priority"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
@@ -602,7 +601,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="localRulestackName"> LocalRulestack resource name. </param>
         /// <param name="priority"> Local Rule priority. </param>
-        /// <param name="firewallName"> The String to use. </param>
+        /// <param name="firewallName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/> or <paramref name="priority"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>

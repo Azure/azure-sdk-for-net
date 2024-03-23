@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformUserSourceInfo : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownUserSourceInfo))]
+    public partial class AppPlatformUserSourceInfo : IUtf8JsonSerializable, IJsonModel<AppPlatformUserSourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformUserSourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AppPlatformUserSourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformUserSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformUserSourceInfo)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UserSourceInfoType);
@@ -22,11 +33,40 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppPlatformUserSourceInfo DeserializeAppPlatformUserSourceInfo(JsonElement element)
+        AppPlatformUserSourceInfo IJsonModel<AppPlatformUserSourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformUserSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformUserSourceInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformUserSourceInfo(document.RootElement, options);
+        }
+
+        internal static AppPlatformUserSourceInfo DeserializeAppPlatformUserSourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,15 +75,46 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "BuildResult": return AppPlatformBuildResultUserSourceInfo.DeserializeAppPlatformBuildResultUserSourceInfo(element);
-                    case "Container": return AppPlatformCustomContainerUserSourceInfo.DeserializeAppPlatformCustomContainerUserSourceInfo(element);
-                    case "Jar": return JarUploadedUserSourceInfo.DeserializeJarUploadedUserSourceInfo(element);
-                    case "NetCoreZip": return NetCoreZipUploadedUserSourceInfo.DeserializeNetCoreZipUploadedUserSourceInfo(element);
-                    case "Source": return SourceUploadedUserSourceInfo.DeserializeSourceUploadedUserSourceInfo(element);
-                    case "UploadedUserSourceInfo": return AppPlatformUploadedUserSourceInfo.DeserializeAppPlatformUploadedUserSourceInfo(element);
+                    case "BuildResult": return AppPlatformBuildResultUserSourceInfo.DeserializeAppPlatformBuildResultUserSourceInfo(element, options);
+                    case "Container": return AppPlatformCustomContainerUserSourceInfo.DeserializeAppPlatformCustomContainerUserSourceInfo(element, options);
+                    case "Jar": return JarUploadedUserSourceInfo.DeserializeJarUploadedUserSourceInfo(element, options);
+                    case "NetCoreZip": return NetCoreZipUploadedUserSourceInfo.DeserializeNetCoreZipUploadedUserSourceInfo(element, options);
+                    case "Source": return SourceUploadedUserSourceInfo.DeserializeSourceUploadedUserSourceInfo(element, options);
+                    case "UploadedUserSourceInfo": return AppPlatformUploadedUserSourceInfo.DeserializeAppPlatformUploadedUserSourceInfo(element, options);
                 }
             }
-            return UnknownUserSourceInfo.DeserializeUnknownUserSourceInfo(element);
+            return UnknownUserSourceInfo.DeserializeUnknownUserSourceInfo(element, options);
         }
+
+        BinaryData IPersistableModel<AppPlatformUserSourceInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformUserSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformUserSourceInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AppPlatformUserSourceInfo IPersistableModel<AppPlatformUserSourceInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformUserSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppPlatformUserSourceInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformUserSourceInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppPlatformUserSourceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

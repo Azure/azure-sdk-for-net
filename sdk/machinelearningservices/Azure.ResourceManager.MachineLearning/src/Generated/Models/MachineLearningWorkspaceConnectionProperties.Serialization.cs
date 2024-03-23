@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningWorkspaceConnectionProperties : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownWorkspaceConnectionPropertiesV2))]
+    public partial class MachineLearningWorkspaceConnectionProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningWorkspaceConnectionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningWorkspaceConnectionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningWorkspaceConnectionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningWorkspaceConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceConnectionProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType.ToString());
@@ -44,11 +55,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningWorkspaceConnectionProperties DeserializeMachineLearningWorkspaceConnectionProperties(JsonElement element)
+        MachineLearningWorkspaceConnectionProperties IJsonModel<MachineLearningWorkspaceConnectionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningWorkspaceConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceConnectionProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningWorkspaceConnectionProperties(document.RootElement, options);
+        }
+
+        internal static MachineLearningWorkspaceConnectionProperties DeserializeMachineLearningWorkspaceConnectionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,18 +97,49 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AccessKey": return AccessKeyAuthTypeWorkspaceConnectionProperties.DeserializeAccessKeyAuthTypeWorkspaceConnectionProperties(element);
-                    case "ApiKey": return ApiKeyAuthWorkspaceConnectionProperties.DeserializeApiKeyAuthWorkspaceConnectionProperties(element);
-                    case "CustomKeys": return CustomKeysWorkspaceConnectionProperties.DeserializeCustomKeysWorkspaceConnectionProperties(element);
-                    case "ManagedIdentity": return MachineLearningManagedIdentityAuthTypeWorkspaceConnection.DeserializeMachineLearningManagedIdentityAuthTypeWorkspaceConnection(element);
-                    case "None": return MachineLearningNoneAuthTypeWorkspaceConnection.DeserializeMachineLearningNoneAuthTypeWorkspaceConnection(element);
-                    case "PAT": return MachineLearningPatAuthTypeWorkspaceConnection.DeserializeMachineLearningPatAuthTypeWorkspaceConnection(element);
-                    case "SAS": return MachineLearningSasAuthTypeWorkspaceConnection.DeserializeMachineLearningSasAuthTypeWorkspaceConnection(element);
-                    case "ServicePrincipal": return ServicePrincipalAuthTypeWorkspaceConnectionProperties.DeserializeServicePrincipalAuthTypeWorkspaceConnectionProperties(element);
-                    case "UsernamePassword": return MachineLearningUsernamePasswordAuthTypeWorkspaceConnection.DeserializeMachineLearningUsernamePasswordAuthTypeWorkspaceConnection(element);
+                    case "AccessKey": return AccessKeyAuthTypeWorkspaceConnectionProperties.DeserializeAccessKeyAuthTypeWorkspaceConnectionProperties(element, options);
+                    case "ApiKey": return ApiKeyAuthWorkspaceConnectionProperties.DeserializeApiKeyAuthWorkspaceConnectionProperties(element, options);
+                    case "CustomKeys": return CustomKeysWorkspaceConnectionProperties.DeserializeCustomKeysWorkspaceConnectionProperties(element, options);
+                    case "ManagedIdentity": return MachineLearningManagedIdentityAuthTypeWorkspaceConnection.DeserializeMachineLearningManagedIdentityAuthTypeWorkspaceConnection(element, options);
+                    case "None": return MachineLearningNoneAuthTypeWorkspaceConnection.DeserializeMachineLearningNoneAuthTypeWorkspaceConnection(element, options);
+                    case "PAT": return MachineLearningPatAuthTypeWorkspaceConnection.DeserializeMachineLearningPatAuthTypeWorkspaceConnection(element, options);
+                    case "SAS": return MachineLearningSasAuthTypeWorkspaceConnection.DeserializeMachineLearningSasAuthTypeWorkspaceConnection(element, options);
+                    case "ServicePrincipal": return ServicePrincipalAuthTypeWorkspaceConnectionProperties.DeserializeServicePrincipalAuthTypeWorkspaceConnectionProperties(element, options);
+                    case "UsernamePassword": return MachineLearningUsernamePasswordAuthTypeWorkspaceConnection.DeserializeMachineLearningUsernamePasswordAuthTypeWorkspaceConnection(element, options);
                 }
             }
-            return UnknownWorkspaceConnectionPropertiesV2.DeserializeUnknownWorkspaceConnectionPropertiesV2(element);
+            return UnknownWorkspaceConnectionPropertiesV2.DeserializeUnknownWorkspaceConnectionPropertiesV2(element, options);
         }
+
+        BinaryData IPersistableModel<MachineLearningWorkspaceConnectionProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningWorkspaceConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningWorkspaceConnectionProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningWorkspaceConnectionProperties IPersistableModel<MachineLearningWorkspaceConnectionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningWorkspaceConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningWorkspaceConnectionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningWorkspaceConnectionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningWorkspaceConnectionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

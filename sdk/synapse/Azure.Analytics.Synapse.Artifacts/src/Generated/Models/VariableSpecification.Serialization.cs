@@ -35,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             VariableType type = default;
-            Optional<object> defaultValue = default;
+            object defaultValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -53,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new VariableSpecification(type, defaultValue.Value);
+            return new VariableSpecification(type, defaultValue);
         }
 
         internal partial class VariableSpecificationConverter : JsonConverter<VariableSpecification>

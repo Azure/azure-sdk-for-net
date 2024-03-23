@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources.Models;
@@ -64,7 +63,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Creates or updates a Template Spec version. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
@@ -98,7 +97,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Creates or updates a Template Spec version. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
@@ -158,7 +157,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Updates Template Spec Version tags with specified values. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
@@ -191,7 +190,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Updates Template Spec Version tags with specified values. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
@@ -246,7 +245,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets a Template Spec version from a specific Template Spec. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
@@ -279,7 +278,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets a Template Spec version from a specific Template Spec. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
@@ -334,7 +333,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Deletes a specific version from a Template Spec. When operation completes, status code 200 returned without content. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
@@ -361,7 +360,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Deletes a specific version from a Template Spec. When operation completes, status code 200 returned without content. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
@@ -409,7 +408,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Lists all the Template Spec versions in the specified Template Spec. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -438,7 +437,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Lists all the Template Spec versions in the specified Template Spec. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -482,7 +481,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Lists all the Template Spec versions in the specified Template Spec. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -513,7 +512,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Lists all the Template Spec versions in the specified Template Spec. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -41,7 +41,7 @@ namespace Azure.Communication.MediaComposition
             string streamKey = default;
             LayoutResolution resolution = default;
             string streamUrl = default;
-            Optional<RtmpMode> mode = default;
+            RtmpMode? mode = default;
             MediaOutputType kind = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -75,7 +75,7 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new RtmpOutput(kind, streamKey, resolution, streamUrl, Optional.ToNullable(mode));
+            return new RtmpOutput(kind, streamKey, resolution, streamUrl, mode);
         }
     }
 }

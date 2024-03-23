@@ -159,28 +159,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
             object url = default;
-            Optional<object> enableServerCertificateValidation = default;
+            object enableServerCertificateValidation = default;
             RestServiceAuthenticationType authenticationType = default;
-            Optional<object> userName = default;
-            Optional<SecretBase> password = default;
-            Optional<object> authHeaders = default;
-            Optional<object> servicePrincipalId = default;
-            Optional<SecretBase> servicePrincipalKey = default;
-            Optional<object> tenant = default;
-            Optional<object> azureCloudType = default;
-            Optional<object> aadResourceId = default;
-            Optional<object> encryptedCredential = default;
-            Optional<CredentialReference> credential = default;
-            Optional<object> clientId = default;
-            Optional<SecretBase> clientSecret = default;
-            Optional<object> tokenEndpoint = default;
-            Optional<object> resource = default;
-            Optional<object> scope = default;
+            object userName = default;
+            SecretBase password = default;
+            object authHeaders = default;
+            object servicePrincipalId = default;
+            SecretBase servicePrincipalKey = default;
+            object tenant = default;
+            object azureCloudType = default;
+            object aadResourceId = default;
+            object encryptedCredential = default;
+            CredentialReference credential = default;
+            object clientId = default;
+            SecretBase clientSecret = default;
+            object tokenEndpoint = default;
+            object resource = default;
+            object scope = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -408,7 +408,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RestServiceLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, url, enableServerCertificateValidation.Value, authenticationType, userName.Value, password.Value, authHeaders.Value, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, azureCloudType.Value, aadResourceId.Value, encryptedCredential.Value, credential.Value, clientId.Value, clientSecret.Value, tokenEndpoint.Value, resource.Value, scope.Value);
+            return new RestServiceLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                url,
+                enableServerCertificateValidation,
+                authenticationType,
+                userName,
+                password,
+                authHeaders,
+                servicePrincipalId,
+                servicePrincipalKey,
+                tenant,
+                azureCloudType,
+                aadResourceId,
+                encryptedCredential,
+                credential,
+                clientId,
+                clientSecret,
+                tokenEndpoint,
+                resource,
+                scope);
         }
 
         internal partial class RestServiceLinkedServiceConverter : JsonConverter<RestServiceLinkedService>

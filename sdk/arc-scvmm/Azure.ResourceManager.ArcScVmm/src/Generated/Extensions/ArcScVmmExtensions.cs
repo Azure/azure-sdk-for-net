@@ -8,9 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.ArcScVmm.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ArcScVmm
@@ -18,239 +17,225 @@ namespace Azure.ResourceManager.ArcScVmm
     /// <summary> A class to add extension methods to Azure.ResourceManager.ArcScVmm. </summary>
     public static partial class ArcScVmmExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static MockableArcScVmmArmClient GetMockableArcScVmmArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ArmResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableArcScVmmArmClient(client0));
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableArcScVmmResourceGroupResource GetMockableArcScVmmResourceGroupResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ArmResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableArcScVmmResourceGroupResource(client, resource.Id));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MockableArcScVmmSubscriptionResource GetMockableArcScVmmSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MockableArcScVmmSubscriptionResource(client, resource.Id));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        /// <summary>
+        /// Gets an object representing a VirtualMachineInstanceResource along with the instance operations that can be performed on it in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmArmClient.GetVirtualMachineInstance(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="VirtualMachineInstanceResource"/> object. </returns>
+        public static VirtualMachineInstanceResource GetVirtualMachineInstance(this ArmClient client, ResourceIdentifier scope)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableArcScVmmArmClient(client).GetVirtualMachineInstance(scope);
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
-        {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region ScVmmServerResource
         /// <summary>
         /// Gets an object representing a <see cref="ScVmmServerResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ScVmmServerResource.CreateResourceIdentifier" /> to create a <see cref="ScVmmServerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmArmClient.GetScVmmServerResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScVmmServerResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ScVmmServerResource"/> object. </returns>
         public static ScVmmServerResource GetScVmmServerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ScVmmServerResource.ValidateResourceId(id);
-                return new ScVmmServerResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region ScVmmCloudResource
+            return GetMockableArcScVmmArmClient(client).GetScVmmServerResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="ScVmmCloudResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ScVmmCloudResource.CreateResourceIdentifier" /> to create a <see cref="ScVmmCloudResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmArmClient.GetScVmmCloudResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScVmmCloudResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ScVmmCloudResource"/> object. </returns>
         public static ScVmmCloudResource GetScVmmCloudResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ScVmmCloudResource.ValidateResourceId(id);
-                return new ScVmmCloudResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region ScVmmVirtualNetworkResource
+            return GetMockableArcScVmmArmClient(client).GetScVmmCloudResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="ScVmmVirtualNetworkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ScVmmVirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="ScVmmVirtualNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmArmClient.GetScVmmVirtualNetworkResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScVmmVirtualNetworkResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ScVmmVirtualNetworkResource"/> object. </returns>
         public static ScVmmVirtualNetworkResource GetScVmmVirtualNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ScVmmVirtualNetworkResource.ValidateResourceId(id);
-                return new ScVmmVirtualNetworkResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region ScVmmVirtualMachineTemplateResource
+            return GetMockableArcScVmmArmClient(client).GetScVmmVirtualNetworkResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="ScVmmVirtualMachineTemplateResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ScVmmVirtualMachineTemplateResource.CreateResourceIdentifier" /> to create a <see cref="ScVmmVirtualMachineTemplateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmArmClient.GetScVmmVirtualMachineTemplateResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScVmmVirtualMachineTemplateResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ScVmmVirtualMachineTemplateResource"/> object. </returns>
         public static ScVmmVirtualMachineTemplateResource GetScVmmVirtualMachineTemplateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ScVmmVirtualMachineTemplateResource.ValidateResourceId(id);
-                return new ScVmmVirtualMachineTemplateResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region ScVmmAvailabilitySetResource
+            return GetMockableArcScVmmArmClient(client).GetScVmmVirtualMachineTemplateResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="ScVmmAvailabilitySetResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ScVmmAvailabilitySetResource.CreateResourceIdentifier" /> to create a <see cref="ScVmmAvailabilitySetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmArmClient.GetScVmmAvailabilitySetResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScVmmAvailabilitySetResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ScVmmAvailabilitySetResource"/> object. </returns>
         public static ScVmmAvailabilitySetResource GetScVmmAvailabilitySetResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ScVmmAvailabilitySetResource.ValidateResourceId(id);
-                return new ScVmmAvailabilitySetResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region InventoryItemResource
+            return GetMockableArcScVmmArmClient(client).GetScVmmAvailabilitySetResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing an <see cref="InventoryItemResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="InventoryItemResource.CreateResourceIdentifier" /> to create an <see cref="InventoryItemResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmArmClient.GetInventoryItemResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InventoryItemResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="InventoryItemResource"/> object. </returns>
         public static InventoryItemResource GetInventoryItemResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                InventoryItemResource.ValidateResourceId(id);
-                return new InventoryItemResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region VirtualMachineInstanceResource
+            return GetMockableArcScVmmArmClient(client).GetInventoryItemResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="VirtualMachineInstanceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="VirtualMachineInstanceResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmArmClient.GetVirtualMachineInstanceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualMachineInstanceResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="VirtualMachineInstanceResource"/> object. </returns>
         public static VirtualMachineInstanceResource GetVirtualMachineInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VirtualMachineInstanceResource.ValidateResourceId(id);
-                return new VirtualMachineInstanceResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region VmInstanceHybridIdentityMetadataResource
+            return GetMockableArcScVmmArmClient(client).GetVirtualMachineInstanceResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="VmInstanceHybridIdentityMetadataResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="VmInstanceHybridIdentityMetadataResource.CreateResourceIdentifier" /> to create a <see cref="VmInstanceHybridIdentityMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmArmClient.GetVmInstanceHybridIdentityMetadataResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VmInstanceHybridIdentityMetadataResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="VmInstanceHybridIdentityMetadataResource"/> object. </returns>
         public static VmInstanceHybridIdentityMetadataResource GetVmInstanceHybridIdentityMetadataResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VmInstanceHybridIdentityMetadataResource.ValidateResourceId(id);
-                return new VmInstanceHybridIdentityMetadataResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region GuestAgentResource
+            return GetMockableArcScVmmArmClient(client).GetVmInstanceHybridIdentityMetadataResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="GuestAgentResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="GuestAgentResource.CreateResourceIdentifier" /> to create a <see cref="GuestAgentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmArmClient.GetGuestAgentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GuestAgentResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="GuestAgentResource"/> object. </returns>
         public static GuestAgentResource GetGuestAgentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                GuestAgentResource.ValidateResourceId(id);
-                return new GuestAgentResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        /// <summary> Gets an object representing a VirtualMachineInstanceResource along with the instance operations that can be performed on it in the ArmResource. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> Returns a <see cref="VirtualMachineInstanceResource" /> object. </returns>
-        public static VirtualMachineInstanceResource GetVirtualMachineInstance(this ArmClient client, ResourceIdentifier scope)
-        {
-            return GetArmResourceExtensionClient(client, scope).GetVirtualMachineInstance();
+            return GetMockableArcScVmmArmClient(client).GetGuestAgentResource(id);
         }
 
-        /// <summary> Gets a collection of ScVmmServerResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of ScVmmServerResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmServers()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of ScVmmServerResources and their operations over a ScVmmServerResource. </returns>
         public static ScVmmServerCollection GetScVmmServers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetScVmmServers();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmServers();
         }
 
         /// <summary>
@@ -264,17 +249,31 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VmmServers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmServerResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmServerAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="vmmServerName"> Name of the VMMServer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="vmmServerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vmmServerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmmServerName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ScVmmServerResource>> GetScVmmServerAsync(this ResourceGroupResource resourceGroupResource, string vmmServerName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetScVmmServers().GetAsync(vmmServerName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmServerAsync(vmmServerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -288,25 +287,48 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VmmServers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmServerResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmServer(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="vmmServerName"> Name of the VMMServer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="vmmServerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vmmServerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmmServerName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<ScVmmServerResource> GetScVmmServer(this ResourceGroupResource resourceGroupResource, string vmmServerName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetScVmmServers().Get(vmmServerName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmServer(vmmServerName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ScVmmCloudResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of ScVmmCloudResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmClouds()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of ScVmmCloudResources and their operations over a ScVmmCloudResource. </returns>
         public static ScVmmCloudCollection GetScVmmClouds(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetScVmmClouds();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmClouds();
         }
 
         /// <summary>
@@ -320,17 +342,31 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>Clouds_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmCloudResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmCloudAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cloudResourceName"> Name of the Cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="cloudResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudResourceName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ScVmmCloudResource>> GetScVmmCloudAsync(this ResourceGroupResource resourceGroupResource, string cloudResourceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetScVmmClouds().GetAsync(cloudResourceName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmCloudAsync(cloudResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -344,25 +380,48 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>Clouds_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmCloudResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmCloud(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cloudResourceName"> Name of the Cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="cloudResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudResourceName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<ScVmmCloudResource> GetScVmmCloud(this ResourceGroupResource resourceGroupResource, string cloudResourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetScVmmClouds().Get(cloudResourceName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmCloud(cloudResourceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ScVmmVirtualNetworkResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of ScVmmVirtualNetworkResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmVirtualNetworks()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of ScVmmVirtualNetworkResources and their operations over a ScVmmVirtualNetworkResource. </returns>
         public static ScVmmVirtualNetworkCollection GetScVmmVirtualNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetScVmmVirtualNetworks();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmVirtualNetworks();
         }
 
         /// <summary>
@@ -376,17 +435,31 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmVirtualNetworkResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmVirtualNetworkAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualNetworkName"> Name of the VirtualNetwork. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="virtualNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ScVmmVirtualNetworkResource>> GetScVmmVirtualNetworkAsync(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetScVmmVirtualNetworks().GetAsync(virtualNetworkName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmVirtualNetworkAsync(virtualNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -400,25 +473,48 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmVirtualNetworkResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmVirtualNetwork(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualNetworkName"> Name of the VirtualNetwork. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="virtualNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<ScVmmVirtualNetworkResource> GetScVmmVirtualNetwork(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetScVmmVirtualNetworks().Get(virtualNetworkName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmVirtualNetwork(virtualNetworkName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ScVmmVirtualMachineTemplateResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of ScVmmVirtualMachineTemplateResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmVirtualMachineTemplates()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of ScVmmVirtualMachineTemplateResources and their operations over a ScVmmVirtualMachineTemplateResource. </returns>
         public static ScVmmVirtualMachineTemplateCollection GetScVmmVirtualMachineTemplates(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetScVmmVirtualMachineTemplates();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmVirtualMachineTemplates();
         }
 
         /// <summary>
@@ -432,17 +528,31 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VirtualMachineTemplates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmVirtualMachineTemplateResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmVirtualMachineTemplateAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualMachineTemplateName"> Name of the VirtualMachineTemplate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="virtualMachineTemplateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ScVmmVirtualMachineTemplateResource>> GetScVmmVirtualMachineTemplateAsync(this ResourceGroupResource resourceGroupResource, string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetScVmmVirtualMachineTemplates().GetAsync(virtualMachineTemplateName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmVirtualMachineTemplateAsync(virtualMachineTemplateName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -456,25 +566,48 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VirtualMachineTemplates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmVirtualMachineTemplateResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmVirtualMachineTemplate(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualMachineTemplateName"> Name of the VirtualMachineTemplate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="virtualMachineTemplateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<ScVmmVirtualMachineTemplateResource> GetScVmmVirtualMachineTemplate(this ResourceGroupResource resourceGroupResource, string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetScVmmVirtualMachineTemplates().Get(virtualMachineTemplateName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmVirtualMachineTemplate(virtualMachineTemplateName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ScVmmAvailabilitySetResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of ScVmmAvailabilitySetResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmAvailabilitySets()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of ScVmmAvailabilitySetResources and their operations over a ScVmmAvailabilitySetResource. </returns>
         public static ScVmmAvailabilitySetCollection GetScVmmAvailabilitySets(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetScVmmAvailabilitySets();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmAvailabilitySets();
         }
 
         /// <summary>
@@ -488,17 +621,31 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>AvailabilitySets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmAvailabilitySetResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmAvailabilitySetAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="availabilitySetResourceName"> Name of the AvailabilitySet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="availabilitySetResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="availabilitySetResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="availabilitySetResourceName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ScVmmAvailabilitySetResource>> GetScVmmAvailabilitySetAsync(this ResourceGroupResource resourceGroupResource, string availabilitySetResourceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetScVmmAvailabilitySets().GetAsync(availabilitySetResourceName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmAvailabilitySetAsync(availabilitySetResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -512,17 +659,31 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>AvailabilitySets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmAvailabilitySetResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmAvailabilitySet(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="availabilitySetResourceName"> Name of the AvailabilitySet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="availabilitySetResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="availabilitySetResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="availabilitySetResourceName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<ScVmmAvailabilitySetResource> GetScVmmAvailabilitySet(this ResourceGroupResource resourceGroupResource, string availabilitySetResourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetScVmmAvailabilitySets().Get(availabilitySetResourceName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmAvailabilitySet(availabilitySetResourceName, cancellationToken);
         }
 
         /// <summary>
@@ -536,14 +697,29 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VmmServers_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmServerResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmSubscriptionResource.GetScVmmServers(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScVmmServerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ScVmmServerResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ScVmmServerResource> GetScVmmServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetScVmmServersAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmServersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -557,14 +733,29 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VmmServers_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmServerResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmSubscriptionResource.GetScVmmServers(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScVmmServerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ScVmmServerResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ScVmmServerResource> GetScVmmServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetScVmmServers(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmServers(cancellationToken);
         }
 
         /// <summary>
@@ -578,14 +769,29 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>Clouds_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmCloudResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmSubscriptionResource.GetScVmmClouds(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScVmmCloudResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ScVmmCloudResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ScVmmCloudResource> GetScVmmCloudsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetScVmmCloudsAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmCloudsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -599,14 +805,29 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>Clouds_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmCloudResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmSubscriptionResource.GetScVmmClouds(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScVmmCloudResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ScVmmCloudResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ScVmmCloudResource> GetScVmmClouds(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetScVmmClouds(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmClouds(cancellationToken);
         }
 
         /// <summary>
@@ -620,14 +841,29 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmVirtualNetworkResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmSubscriptionResource.GetScVmmVirtualNetworks(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScVmmVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ScVmmVirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ScVmmVirtualNetworkResource> GetScVmmVirtualNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetScVmmVirtualNetworksAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmVirtualNetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -641,14 +877,29 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmVirtualNetworkResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmSubscriptionResource.GetScVmmVirtualNetworks(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScVmmVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ScVmmVirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ScVmmVirtualNetworkResource> GetScVmmVirtualNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetScVmmVirtualNetworks(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmVirtualNetworks(cancellationToken);
         }
 
         /// <summary>
@@ -662,14 +913,29 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VirtualMachineTemplates_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmVirtualMachineTemplateResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmSubscriptionResource.GetScVmmVirtualMachineTemplates(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScVmmVirtualMachineTemplateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ScVmmVirtualMachineTemplateResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ScVmmVirtualMachineTemplateResource> GetScVmmVirtualMachineTemplatesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetScVmmVirtualMachineTemplatesAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmVirtualMachineTemplatesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -683,14 +949,29 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VirtualMachineTemplates_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmVirtualMachineTemplateResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmSubscriptionResource.GetScVmmVirtualMachineTemplates(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScVmmVirtualMachineTemplateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ScVmmVirtualMachineTemplateResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ScVmmVirtualMachineTemplateResource> GetScVmmVirtualMachineTemplates(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetScVmmVirtualMachineTemplates(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmVirtualMachineTemplates(cancellationToken);
         }
 
         /// <summary>
@@ -704,14 +985,29 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>AvailabilitySets_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmAvailabilitySetResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmSubscriptionResource.GetScVmmAvailabilitySets(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScVmmAvailabilitySetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ScVmmAvailabilitySetResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ScVmmAvailabilitySetResource> GetScVmmAvailabilitySetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetScVmmAvailabilitySetsAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmAvailabilitySetsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -725,14 +1021,29 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>AvailabilitySets_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmAvailabilitySetResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmSubscriptionResource.GetScVmmAvailabilitySets(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScVmmAvailabilitySetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ScVmmAvailabilitySetResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ScVmmAvailabilitySetResource> GetScVmmAvailabilitySets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetScVmmAvailabilitySets(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmAvailabilitySets(cancellationToken);
         }
     }
 }

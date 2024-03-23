@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -15,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Azure ML Update Resource management activity. </summary>
     public partial class AzureMLUpdateResourceActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of AzureMLUpdateResourceActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMLUpdateResourceActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="trainedModelName"> Name of the Trained Model module in the Web Service experiment to be updated. Type: string (or Expression with resultType string). </param>
         /// <param name="trainedModelLinkedServiceName"> Name of Azure Storage linked service holding the .ilearner file that will be uploaded by the update operation. </param>
@@ -34,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "AzureMLUpdateResource";
         }
 
-        /// <summary> Initializes a new instance of AzureMLUpdateResourceActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMLUpdateResourceActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -54,6 +53,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             TrainedModelLinkedServiceName = trainedModelLinkedServiceName;
             TrainedModelFilePath = trainedModelFilePath;
             ActivityType = activityType ?? "AzureMLUpdateResource";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureMLUpdateResourceActivity"/> for deserialization. </summary>
+        internal AzureMLUpdateResourceActivity()
+        {
         }
 
         /// <summary> Name of the Trained Model module in the Web Service experiment to be updated. Type: string (or Expression with resultType string). </summary>

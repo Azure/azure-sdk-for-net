@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,73 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Update protected item input properties. </summary>
     public partial class UpdateReplicationProtectedItemProperties
     {
-        /// <summary> Initializes a new instance of UpdateReplicationProtectedItemProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateReplicationProtectedItemProperties"/>. </summary>
         public UpdateReplicationProtectedItemProperties()
         {
             VmNics = new ChangeTrackingList<VmNicContentDetails>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateReplicationProtectedItemProperties"/>. </summary>
+        /// <param name="recoveryAzureVmName"> Target Azure VM name given by the user. </param>
+        /// <param name="recoveryAzureVmSize"> Target Azure VM size. </param>
+        /// <param name="selectedRecoveryAzureNetworkId"> Target Azure Network Id. </param>
+        /// <param name="selectedTfoAzureNetworkId"> The Azure Network Id for test failover. </param>
+        /// <param name="selectedSourceNicId"> The selected source nic Id which will be used as the primary nic during failover. </param>
+        /// <param name="enableRdpOnTargetOption"> The selected option to enable RDP\SSH on target vm after failover. String value of SrsDataContract.EnableRDPOnTargetOption enum. </param>
+        /// <param name="vmNics"> The list of VM nic details. </param>
+        /// <param name="licenseType"> License type. </param>
+        /// <param name="recoveryAvailabilitySetId"> The target availability set Id. </param>
+        /// <param name="providerSpecificDetails">
+        /// The provider specific input to update replication protected item.
+        /// Please note <see cref="UpdateReplicationProtectedItemProviderContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="A2AUpdateReplicationProtectedItemContent"/>, <see cref="HyperVReplicaAzureUpdateReplicationProtectedItemContent"/>, <see cref="InMageAzureV2UpdateReplicationProtectedItemContent"/> and <see cref="InMageRcmUpdateReplicationProtectedItemContent"/>.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateReplicationProtectedItemProperties(string recoveryAzureVmName, string recoveryAzureVmSize, ResourceIdentifier selectedRecoveryAzureNetworkId, ResourceIdentifier selectedTfoAzureNetworkId, string selectedSourceNicId, string enableRdpOnTargetOption, IList<VmNicContentDetails> vmNics, SiteRecoveryLicenseType? licenseType, ResourceIdentifier recoveryAvailabilitySetId, UpdateReplicationProtectedItemProviderContent providerSpecificDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            RecoveryAzureVmName = recoveryAzureVmName;
+            RecoveryAzureVmSize = recoveryAzureVmSize;
+            SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkId;
+            SelectedTfoAzureNetworkId = selectedTfoAzureNetworkId;
+            SelectedSourceNicId = selectedSourceNicId;
+            EnableRdpOnTargetOption = enableRdpOnTargetOption;
+            VmNics = vmNics;
+            LicenseType = licenseType;
+            RecoveryAvailabilitySetId = recoveryAvailabilitySetId;
+            ProviderSpecificDetails = providerSpecificDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Target Azure VM name given by the user. </summary>

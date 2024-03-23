@@ -53,7 +53,7 @@ namespace Azure.Core.Pipeline
 
             policies ??= Array.Empty<HttpPipelinePolicy>();
 
-            var all = new HttpPipelinePolicy[policies.Length + 1];
+            HttpPipelinePolicy[] all = new HttpPipelinePolicy[policies.Length + 1];
             all[policies.Length] = new HttpPipelineTransportPolicy(_transport,
                 ClientDiagnostics.CreateMessageSanitizer(new DiagnosticsOptions()));
             policies.CopyTo(all, 0);
@@ -92,15 +92,14 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <returns>The message.</returns>
         public HttpMessage CreateMessage()
-        {
-            return new HttpMessage(CreateRequest(), ResponseClassifier);
-        }
+            => new HttpMessage(CreateRequest(), ResponseClassifier);
 
         /// <summary>
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public HttpMessage CreateMessage(RequestContext? context) => CreateMessage(context, default);
+        public HttpMessage CreateMessage(RequestContext? context)
+            => CreateMessage(context, default);
 
         /// <summary>
         /// Creates a new <see cref="HttpMessage"/> instance.
@@ -110,7 +109,7 @@ namespace Azure.Core.Pipeline
         /// <returns>The message.</returns>
         public HttpMessage CreateMessage(RequestContext? context, ResponseClassifier? classifier = default)
         {
-            var message = CreateMessage();
+            HttpMessage message = CreateMessage();
             if (classifier != null)
             {
                 message.ResponseClassifier = classifier;
@@ -146,11 +145,11 @@ namespace Azure.Core.Pipeline
 
         private async ValueTask SendAsync(HttpMessage message)
         {
-            var length = _pipeline.Length + message.Policies!.Count;
-            var policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
+            int length = _pipeline.Length + message.Policies!.Count;
+            HttpPipelinePolicy[] policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
             try
             {
-                var pipeline = CreateRequestPipeline(policies, message.Policies);
+                ReadOnlyMemory<HttpPipelinePolicy> pipeline = CreateRequestPipeline(policies, message.Policies);
                 await pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1)).ConfigureAwait(false);
             }
             finally
@@ -176,11 +175,11 @@ namespace Azure.Core.Pipeline
             }
             else
             {
-                var length = _pipeline.Length + message.Policies.Count;
-                var policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
+                int length = _pipeline.Length + message.Policies.Count;
+                HttpPipelinePolicy[] policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
                 try
                 {
-                    var pipeline = CreateRequestPipeline(policies, message.Policies);
+                    ReadOnlyMemory<HttpPipelinePolicy> pipeline = CreateRequestPipeline(policies, message.Policies);
                     pipeline.Span[0].Process(message, pipeline.Slice(1));
                 }
                 finally
@@ -258,7 +257,7 @@ namespace Azure.Core.Pipeline
             }
 
             // Copy over client policies and splice in custom policies at designated indices
-            var pipeline = _pipeline.Span;
+            ReadOnlySpan<HttpPipelinePolicy> pipeline = _pipeline.Span;
             int transportIndex = pipeline.Length - 1;
 
             pipeline.Slice(0, _perCallIndex).CopyTo(policies);
@@ -291,7 +290,7 @@ namespace Azure.Core.Pipeline
             int count = 0;
             if (source != null)
             {
-                foreach (var policy in source)
+                foreach ((HttpPipelinePosition Position, HttpPipelinePolicy Policy) policy in source)
                 {
                     if (policy.Position == position)
                     {
@@ -328,7 +327,7 @@ namespace Azure.Core.Pipeline
                 if (parent != null)
                 {
                     Properties = new Dictionary<string, object?>(parent.Properties);
-                    foreach (var kvp in messageProperties)
+                    foreach (KeyValuePair<string, object?> kvp in messageProperties)
                     {
                         Properties[kvp.Key] = kvp.Value;
                     }

@@ -20,6 +20,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WritePropertyName("discoveryDuration"u8);
                 writer.WriteStringValue(DiscoveryDuration);
             }
+            writer.WritePropertyName("methodName"u8);
+            writer.WriteStringValue(MethodName);
             if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("@apiVersion"u8);
@@ -34,9 +36,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> discoveryDuration = default;
+            string discoveryDuration = default;
             string methodName = default;
-            Optional<string> apiVersion = default;
+            string apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("discoveryDuration"u8))
@@ -55,7 +57,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new OnvifDeviceDiscoverRequest(methodName, apiVersion.Value, discoveryDuration.Value);
+            return new OnvifDeviceDiscoverRequest(methodName, apiVersion, discoveryDuration);
         }
     }
 }

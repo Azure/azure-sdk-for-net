@@ -42,9 +42,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> partitionColumnName = default;
-            Optional<object> partitionUpperBound = default;
-            Optional<object> partitionLowerBound = default;
+            object partitionColumnName = default;
+            object partitionUpperBound = default;
+            object partitionLowerBound = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionColumnName"u8))
@@ -75,7 +75,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new TeradataPartitionSettings(partitionColumnName.Value, partitionUpperBound.Value, partitionLowerBound.Value);
+            return new TeradataPartitionSettings(partitionColumnName, partitionUpperBound, partitionLowerBound);
         }
 
         internal partial class TeradataPartitionSettingsConverter : JsonConverter<TeradataPartitionSettings>

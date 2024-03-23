@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Linked service for Salesforce Service Cloud. </summary>
     public partial class SalesforceServiceCloudLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of SalesforceServiceCloudLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SalesforceServiceCloudLinkedService"/>. </summary>
         public SalesforceServiceCloudLinkedService()
         {
             LinkedServiceType = "SalesforceServiceCloud";
         }
 
-        /// <summary> Initializes a new instance of SalesforceServiceCloudLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SalesforceServiceCloudLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="apiVersion"> The Salesforce API version used in ADF. Type: string (or Expression with resultType string). </param>
         /// <param name="extendedProperties"> Extended properties appended to the connection string. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal SalesforceServiceCloudLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> environmentUri, DataFactoryElement<string> username, DataFactorySecretBaseDefinition password, DataFactorySecretBaseDefinition securityToken, DataFactoryElement<string> apiVersion, DataFactoryElement<string> extendedProperties, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal SalesforceServiceCloudLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> environmentUri, DataFactoryElement<string> username, DataFactorySecret password, DataFactorySecret securityToken, DataFactoryElement<string> apiVersion, DataFactoryElement<string> extendedProperties, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             EnvironmentUri = environmentUri;
             Username = username;
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The username for Basic authentication of the Salesforce instance. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Username { get; set; }
         /// <summary> The password for Basic authentication of the Salesforce instance. </summary>
-        public DataFactorySecretBaseDefinition Password { get; set; }
+        public DataFactorySecret Password { get; set; }
         /// <summary> The security token is optional to remotely access Salesforce instance. </summary>
-        public DataFactorySecretBaseDefinition SecurityToken { get; set; }
+        public DataFactorySecret SecurityToken { get; set; }
         /// <summary> The Salesforce API version used in ADF. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ApiVersion { get; set; }
         /// <summary> Extended properties appended to the connection string. Type: string (or Expression with resultType string). </summary>

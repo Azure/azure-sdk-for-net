@@ -6,20 +6,20 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
     /// <summary> This object is returned from a successful Search Polygon call. </summary>
     public partial class PolygonResult
     {
-        /// <summary> Initializes a new instance of PolygonResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolygonResult"/>. </summary>
         internal PolygonResult()
         {
             Polygons = new ChangeTrackingList<PolygonObject>();
         }
 
-        /// <summary> Initializes a new instance of PolygonResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolygonResult"/>. </summary>
         /// <param name="polygons"> Results array. </param>
         internal PolygonResult(IReadOnlyList<PolygonObject> polygons)
         {

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> A2A cloud creation input. </summary>
     public partial class A2AContainerCreationContent : ReplicationProviderSpecificContainerCreationContent
     {
-        /// <summary> Initializes a new instance of A2AContainerCreationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AContainerCreationContent"/>. </summary>
         public A2AContainerCreationContent()
         {
             InstanceType = "A2A";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="A2AContainerCreationContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal A2AContainerCreationContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
+        {
+            InstanceType = instanceType ?? "A2A";
         }
     }
 }

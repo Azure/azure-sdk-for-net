@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.4 (Unreleased)
+## 1.2.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,34 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.5 (2024-01-15)
+
+### Features Added
+
+- Switch to use tag `package-dotnet-sdk` for autorest generation
+- Add `securityConnectorsDevOps` at `2023-09-01-preview`
+- Add `apiCollections` at `2023-11-15`
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
+### Breaking Changes
+
+- Removed IngestionSettings (deprecated)
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.36.0 to 1.37.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.10.0
+
+## 1.2.0-beta.4 (2023-11-30)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
 
 ## 1.2.0-beta.3 (2023-09-18)
 

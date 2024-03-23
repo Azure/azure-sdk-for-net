@@ -6,14 +6,14 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> A permission (a security descriptor) at the share level. </summary>
     internal partial class SharePermission
     {
-        /// <summary> Initializes a new instance of SharePermission. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharePermission"/>. </summary>
         /// <param name="permission"> The permission in the Security Descriptor Definition Language (SDDL). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> is null. </exception>
         public SharePermission(string permission)

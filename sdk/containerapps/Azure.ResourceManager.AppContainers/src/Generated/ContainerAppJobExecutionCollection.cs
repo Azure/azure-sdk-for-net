@@ -12,17 +12,15 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ContainerAppJobExecutionResource" /> and their operations.
-    /// Each <see cref="ContainerAppJobExecutionResource" /> in the collection will belong to the same instance of <see cref="ContainerAppJobResource" />.
-    /// To get a <see cref="ContainerAppJobExecutionCollection" /> instance call the GetContainerAppJobExecutions method from an instance of <see cref="ContainerAppJobResource" />.
+    /// A class representing a collection of <see cref="ContainerAppJobExecutionResource"/> and their operations.
+    /// Each <see cref="ContainerAppJobExecutionResource"/> in the collection will belong to the same instance of <see cref="ContainerAppJobResource"/>.
+    /// To get a <see cref="ContainerAppJobExecutionCollection"/> instance call the GetContainerAppJobExecutions method from an instance of <see cref="ContainerAppJobResource"/>.
     /// </summary>
     public partial class ContainerAppJobExecutionCollection : ArmCollection, IEnumerable<ContainerAppJobExecutionResource>, IAsyncEnumerable<ContainerAppJobExecutionResource>
     {
@@ -69,6 +67,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>JobExecution</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppJobExecutionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobExecutionName"> Job execution name. </param>
@@ -105,6 +111,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JobExecution</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppJobExecutionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -143,11 +157,19 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>JobsExecutions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppJobExecutionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerAppJobExecutionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerAppJobExecutionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppJobExecutionResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppJobExecutionJobsExecutionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
@@ -166,11 +188,19 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>JobsExecutions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppJobExecutionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerAppJobExecutionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerAppJobExecutionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppJobExecutionResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppJobExecutionJobsExecutionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
@@ -188,6 +218,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JobExecution</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppJobExecutionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -224,6 +262,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>JobExecution</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppJobExecutionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobExecutionName"> Job execution name. </param>
@@ -258,6 +304,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JobExecution</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppJobExecutionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,6 +349,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JobExecution</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppJobExecutionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

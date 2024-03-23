@@ -17,8 +17,8 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-
-# mgmt-debug: 
+use-model-reader-writer: true
+# mgmt-debug:
 #   show-serialized-names: true
 
 rename-mapping:

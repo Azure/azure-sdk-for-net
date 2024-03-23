@@ -8,49 +8,63 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary>
-    /// Contains the weight percentage and queue selectors to be applied if selected
-    /// for weighted distributions.
-    /// </summary>
+    /// <summary> Contains the weight percentage and queue selectors to be applied if selected for weighted distributions. </summary>
     public partial class QueueWeightedAllocation
     {
-        /// <summary> Initializes a new instance of QueueWeightedAllocation. </summary>
-        /// <param name="weight"> The percentage of this weight, expressed as a fraction of 1. </param>
-        /// <param name="queueSelectors">
-        /// A collection of queue selectors that will be applied if this allocation is
-        /// selected.
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueSelectors"/> is null. </exception>
-        internal QueueWeightedAllocation(double weight, IEnumerable<RouterQueueSelector> queueSelectors)
-        {
-            Argument.AssertNotNull(queueSelectors, nameof(queueSelectors));
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-            Weight = weight;
-            QueueSelectors = queueSelectors.ToList();
-        }
-
-        /// <summary> Initializes a new instance of QueueWeightedAllocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueueWeightedAllocation"/>. </summary>
         /// <param name="weight"> The percentage of this weight, expressed as a fraction of 1. </param>
-        /// <param name="queueSelectors">
-        /// A collection of queue selectors that will be applied if this allocation is
-        /// selected.
-        /// </param>
-        internal QueueWeightedAllocation(double weight, IReadOnlyList<RouterQueueSelector> queueSelectors)
+        /// <param name="queueSelectors"> A collection of queue selectors that will be applied if this allocation is selected. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueueWeightedAllocation(double weight, IReadOnlyList<RouterQueueSelector> queueSelectors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Weight = weight;
             QueueSelectors = queueSelectors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueueWeightedAllocation"/> for deserialization. </summary>
+        internal QueueWeightedAllocation()
+        {
         }
 
         /// <summary> The percentage of this weight, expressed as a fraction of 1. </summary>
         public double Weight { get; }
-        /// <summary>
-        /// A collection of queue selectors that will be applied if this allocation is
-        /// selected.
-        /// </summary>
+        /// <summary> A collection of queue selectors that will be applied if this allocation is selected. </summary>
         public IReadOnlyList<RouterQueueSelector> QueueSelectors { get; }
     }
 }

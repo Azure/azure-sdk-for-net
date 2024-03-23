@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             object resourceManagerEndpoint = default;
             object tempScriptPath = default;
-            Optional<object> distcpOptions = default;
+            object distcpOptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceManagerEndpoint"u8))
@@ -61,7 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DistcpSettings(resourceManagerEndpoint, tempScriptPath, distcpOptions.Value);
+            return new DistcpSettings(resourceManagerEndpoint, tempScriptPath, distcpOptions);
         }
 
         internal partial class DistcpSettingsConverter : JsonConverter<DistcpSettings>

@@ -9,10 +9,10 @@ using Azure.Communication.MediaComposition.Models;
 
 namespace Azure.Communication.MediaComposition
 {
-    /// <summary> The UnknownLayout. </summary>
+    /// <summary> Unknown version of Layout. </summary>
     internal partial class UnknownLayout : MediaCompositionLayout
     {
-        /// <summary> Initializes a new instance of UnknownLayout. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownLayout"/>. </summary>
         /// <param name="kind"> Kind of layout. </param>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="placeholderImageUri"> Set global placeholder image. </param>

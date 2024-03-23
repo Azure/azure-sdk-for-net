@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ArcScVmm;
 using Azure.ResourceManager.ArcScVmm.Models;
 
 namespace Azure.ResourceManager.ArcScVmm.Samples
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
 
             // invoke the operation
             string inventoryItemResourceName = "12345678-1234-1234-1234-123456789abc";
-            InventoryItemData data = new InventoryItemData(InventoryType.Cloud);
+            InventoryItemData data = new InventoryItemData(new CloudInventoryItem());
             ArmOperation<InventoryItemResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, inventoryItemResourceName, data);
             InventoryItemResource result = lro.Value;
 

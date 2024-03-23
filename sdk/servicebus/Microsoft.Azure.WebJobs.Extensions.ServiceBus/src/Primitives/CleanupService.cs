@@ -8,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus
 {
-    internal class CleanupService : IAsyncDisposable
+    internal class CleanupService : IAsyncDisposable, IDisposable
     {
         private readonly MessagingProvider _provider;
 
@@ -20,6 +20,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         public async ValueTask DisposeAsync()
         {
             await _provider.DisposeAsync().ConfigureAwait(false);
+        }
+
+        public void Dispose()
+        {
+#pragma warning disable AZC0102
+            _provider.DisposeAsync().GetAwaiter().GetResult();
+#pragma warning restore AZC0102
         }
     }
 }

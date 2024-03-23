@@ -37,8 +37,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             string name = default;
-            Optional<SystemData> systemData = default;
-            Optional<PipelineTopologyProperties> properties = default;
+            SystemData systemData = default;
+            PipelineTopologyProperties properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -65,7 +65,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new PipelineTopology(name, systemData.Value, properties.Value);
+            return new PipelineTopology(name, systemData, properties);
         }
     }
 }

@@ -56,13 +56,13 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> anomalyDetectionConfigurationId = default;
+            string anomalyDetectionConfigurationId = default;
             string name = default;
-            Optional<string> description = default;
+            string description = default;
             string metricId = default;
             MetricWholeSeriesDetectionCondition wholeMetricConfiguration = default;
-            Optional<IList<MetricSeriesGroupDetectionCondition>> dimensionGroupOverrideConfigurations = default;
-            Optional<IList<MetricSingleSeriesDetectionCondition>> seriesOverrideConfigurations = default;
+            IList<MetricSeriesGroupDetectionCondition> dimensionGroupOverrideConfigurations = default;
+            IList<MetricSingleSeriesDetectionCondition> seriesOverrideConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("anomalyDetectionConfigurationId"u8))
@@ -119,7 +119,14 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AnomalyDetectionConfiguration(anomalyDetectionConfigurationId.Value, name, description.Value, metricId, wholeMetricConfiguration, Optional.ToList(dimensionGroupOverrideConfigurations), Optional.ToList(seriesOverrideConfigurations));
+            return new AnomalyDetectionConfiguration(
+                anomalyDetectionConfigurationId,
+                name,
+                description,
+                metricId,
+                wholeMetricConfiguration,
+                dimensionGroupOverrideConfigurations ?? new ChangeTrackingList<MetricSeriesGroupDetectionCondition>(),
+                seriesOverrideConfigurations ?? new ChangeTrackingList<MetricSingleSeriesDetectionCondition>());
         }
     }
 }

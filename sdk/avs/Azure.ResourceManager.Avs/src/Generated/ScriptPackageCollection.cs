@@ -12,17 +12,15 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ScriptPackageResource" /> and their operations.
-    /// Each <see cref="ScriptPackageResource" /> in the collection will belong to the same instance of <see cref="AvsPrivateCloudResource" />.
-    /// To get a <see cref="ScriptPackageCollection" /> instance call the GetScriptPackages method from an instance of <see cref="AvsPrivateCloudResource" />.
+    /// A class representing a collection of <see cref="ScriptPackageResource"/> and their operations.
+    /// Each <see cref="ScriptPackageResource"/> in the collection will belong to the same instance of <see cref="AvsPrivateCloudResource"/>.
+    /// To get a <see cref="ScriptPackageCollection"/> instance call the GetScriptPackages method from an instance of <see cref="AvsPrivateCloudResource"/>.
     /// </summary>
     public partial class ScriptPackageCollection : ArmCollection, IEnumerable<ScriptPackageResource>, IAsyncEnumerable<ScriptPackageResource>
     {
@@ -64,6 +62,14 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>ScriptPackages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptPackageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scriptPackageName"> Name of the script package in the private cloud. </param>
@@ -100,6 +106,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScriptPackages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptPackageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +152,18 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>ScriptPackages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptPackageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScriptPackageResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ScriptPackageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScriptPackageResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptPackageRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -160,10 +182,18 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>ScriptPackages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptPackageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScriptPackageResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ScriptPackageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScriptPackageResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptPackageRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -181,6 +211,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScriptPackages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptPackageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +255,14 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>ScriptPackages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptPackageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scriptPackageName"> Name of the script package in the private cloud. </param>
@@ -251,6 +297,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScriptPackages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptPackageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,6 +342,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScriptPackages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptPackageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

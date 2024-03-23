@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
@@ -18,9 +17,9 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<string> content = default;
-            Optional<string> keywords = default;
+            string title = default;
+            string content = default;
+            string keywords = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("title"u8))
@@ -39,7 +38,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new QueryResultDocumentRerankerInput(title.Value, content.Value, keywords.Value);
+            return new QueryResultDocumentRerankerInput(title, content, keywords);
         }
     }
 }

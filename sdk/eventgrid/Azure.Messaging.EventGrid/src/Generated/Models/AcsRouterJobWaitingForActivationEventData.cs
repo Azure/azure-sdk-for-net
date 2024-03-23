@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobWaitingForActivation event. </summary>
     public partial class AcsRouterJobWaitingForActivationEventData : AcsRouterJobEventData
     {
-        /// <summary> Initializes a new instance of AcsRouterJobWaitingForActivationEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterJobWaitingForActivationEventData"/>. </summary>
         /// <param name="unavailableForMatching"> Router Job Waiting For Activation Unavailable For Matching. </param>
         internal AcsRouterJobWaitingForActivationEventData(bool unavailableForMatching)
         {
@@ -23,7 +22,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             UnavailableForMatching = unavailableForMatching;
         }
 
-        /// <summary> Initializes a new instance of AcsRouterJobWaitingForActivationEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterJobWaitingForActivationEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>

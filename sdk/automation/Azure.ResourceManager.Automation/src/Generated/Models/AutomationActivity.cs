@@ -14,14 +14,46 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the activity. </summary>
     public partial class AutomationActivity
     {
-        /// <summary> Initializes a new instance of AutomationActivity. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationActivity"/>. </summary>
         internal AutomationActivity()
         {
             ParameterSets = new ChangeTrackingList<AutomationActivityParameterSet>();
             OutputTypes = new ChangeTrackingList<AutomationActivityOutputType>();
         }
 
-        /// <summary> Initializes a new instance of AutomationActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationActivity"/>. </summary>
         /// <param name="id"> Gets or sets the id of the resource. </param>
         /// <param name="name"> Gets the name of the activity. </param>
         /// <param name="definition"> Gets or sets the user name of the activity. </param>
@@ -30,7 +62,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="createdOn"> Gets or sets the creation time. </param>
         /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
         /// <param name="description"> Gets or sets the description. </param>
-        internal AutomationActivity(ResourceIdentifier id, string name, string definition, IReadOnlyList<AutomationActivityParameterSet> parameterSets, IReadOnlyList<AutomationActivityOutputType> outputTypes, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationActivity(ResourceIdentifier id, string name, string definition, IReadOnlyList<AutomationActivityParameterSet> parameterSets, IReadOnlyList<AutomationActivityOutputType> outputTypes, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -40,6 +73,7 @@ namespace Azure.ResourceManager.Automation.Models
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the id of the resource. </summary>

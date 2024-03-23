@@ -5,23 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class AvsPrivateCloudAddonProperties : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownAddonProperties))]
+    public partial class AvsPrivateCloudAddonProperties : IUtf8JsonSerializable, IJsonModel<AvsPrivateCloudAddonProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsPrivateCloudAddonProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AvsPrivateCloudAddonProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudAddonProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AvsPrivateCloudAddonProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("addonType"u8);
             writer.WriteStringValue(AddonType.ToString());
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AvsPrivateCloudAddonProperties DeserializeAvsPrivateCloudAddonProperties(JsonElement element)
+        AvsPrivateCloudAddonProperties IJsonModel<AvsPrivateCloudAddonProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudAddonProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AvsPrivateCloudAddonProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAvsPrivateCloudAddonProperties(document.RootElement, options);
+        }
+
+        internal static AvsPrivateCloudAddonProperties DeserializeAvsPrivateCloudAddonProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,13 +75,44 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Arc": return AddonArcProperties.DeserializeAddonArcProperties(element);
-                    case "HCX": return AddonHcxProperties.DeserializeAddonHcxProperties(element);
-                    case "SRM": return AddonSrmProperties.DeserializeAddonSrmProperties(element);
-                    case "VR": return AddonVrProperties.DeserializeAddonVrProperties(element);
+                    case "Arc": return AddonArcProperties.DeserializeAddonArcProperties(element, options);
+                    case "HCX": return AddonHcxProperties.DeserializeAddonHcxProperties(element, options);
+                    case "SRM": return AddonSrmProperties.DeserializeAddonSrmProperties(element, options);
+                    case "VR": return AddonVrProperties.DeserializeAddonVrProperties(element, options);
                 }
             }
-            return UnknownAddonProperties.DeserializeUnknownAddonProperties(element);
+            return UnknownAddonProperties.DeserializeUnknownAddonProperties(element, options);
         }
+
+        BinaryData IPersistableModel<AvsPrivateCloudAddonProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudAddonProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AvsPrivateCloudAddonProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AvsPrivateCloudAddonProperties IPersistableModel<AvsPrivateCloudAddonProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudAddonProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAvsPrivateCloudAddonProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AvsPrivateCloudAddonProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AvsPrivateCloudAddonProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

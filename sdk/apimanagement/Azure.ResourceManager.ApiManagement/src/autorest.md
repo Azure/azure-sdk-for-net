@@ -17,7 +17,10 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 skip-serialization-format-xml: true
+# mgmt-debug:
+#   show-serialized-names: true
 
 list-exception:
 - /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/locations/{location}/deletedservices/{serviceName}

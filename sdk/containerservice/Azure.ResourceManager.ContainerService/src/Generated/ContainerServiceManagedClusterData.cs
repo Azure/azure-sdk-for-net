@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ContainerService.Models;
@@ -19,7 +20,39 @@ namespace Azure.ResourceManager.ContainerService
     /// </summary>
     public partial class ContainerServiceManagedClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ContainerServiceManagedClusterData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceManagedClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ContainerServiceManagedClusterData(AzureLocation location) : base(location)
         {
@@ -29,7 +62,7 @@ namespace Azure.ResourceManager.ContainerService
             PrivateLinkResources = new ChangeTrackingList<ContainerServicePrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceManagedClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceManagedClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,13 +71,12 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The managed cluster SKU. </param>
         /// <param name="extendedLocation"> The extended location of the Virtual Machine. </param>
-        /// <param name="identity"> The identity of the managed cluster, if configured. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="clusterIdentity"> The identity of the managed cluster, if configured. </param>
         /// <param name="provisioningState"> The current provisioning state. </param>
         /// <param name="powerState"> The Power State of the cluster. </param>
-        /// <param name="creationData"> CreationData to be used to specify the source Snapshot ID if the cluster will be created/upgraded using a snapshot. </param>
         /// <param name="maxAgentPools"> The max number of agent pools for the managed cluster. </param>
-        /// <param name="kubernetesVersion"> When you upgrade a supported AKS cluster, Kubernetes minor versions cannot be skipped. All upgrades must be performed sequentially by major version number. For example, upgrades between 1.14.x -&gt; 1.15.x or 1.15.x -&gt; 1.16.x are allowed, however 1.14.x -&gt; 1.16.x is not allowed. See [upgrading an AKS cluster](https://docs.microsoft.com/azure/aks/upgrade-cluster) for more details. </param>
-        /// <param name="currentKubernetesVersion"> The version of Kubernetes the Managed Cluster is running. </param>
+        /// <param name="kubernetesVersion"> Both patch version &lt;major.minor.patch&gt; (e.g. 1.20.13) and &lt;major.minor&gt; (e.g. 1.20) are supported. When &lt;major.minor&gt; is specified, the latest supported GA patch version is chosen automatically. Updating the cluster with the same &lt;major.minor&gt; once it has been created (e.g. 1.14.x -&gt; 1.14) will not trigger an upgrade, even if a newer patch version is available. When you upgrade a supported AKS cluster, Kubernetes minor versions cannot be skipped. All upgrades must be performed sequentially by major version number. For example, upgrades between 1.14.x -&gt; 1.15.x or 1.15.x -&gt; 1.16.x are allowed, however 1.14.x -&gt; 1.16.x is not allowed. See [upgrading an AKS cluster](https://docs.microsoft.com/azure/aks/upgrade-cluster) for more details. </param>
+        /// <param name="currentKubernetesVersion"> If kubernetesVersion was a fully specified version &lt;major.minor.patch&gt;, this field will be exactly equal to it. If kubernetesVersion was &lt;major.minor&gt;, this field will contain the full &lt;major.minor.patch&gt; version being used. </param>
         /// <param name="dnsPrefix"> This cannot be updated once the Managed Cluster has been created. </param>
         /// <param name="fqdnSubdomain"> This cannot be updated once the Managed Cluster has been created. </param>
         /// <param name="fqdn"> The FQDN of the master pool. </param>
@@ -58,13 +90,13 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="podIdentityProfile"> See [use AAD pod identity](https://docs.microsoft.com/azure/aks/use-azure-ad-pod-identity) for more details on AAD pod identity integration. </param>
         /// <param name="oidcIssuerProfile"> The OIDC issuer profile of the Managed Cluster. </param>
         /// <param name="nodeResourceGroup"> The name of the resource group containing agent pool nodes. </param>
-        /// <param name="nodeResourceGroupProfile"> The node resource group configuration profile. </param>
         /// <param name="enableRbac"> Whether to enable Kubernetes Role-Based Access Control. </param>
+        /// <param name="supportPlan"> The support plan for the Managed Cluster. If unspecified, the default is 'KubernetesOfficial'. </param>
         /// <param name="enablePodSecurityPolicy"> (DEPRECATED) Whether to enable Kubernetes pod security policy (preview). PodSecurityPolicy was deprecated in Kubernetes v1.21, and removed from Kubernetes in v1.25. Learn more at https://aka.ms/k8s/psp and https://aka.ms/aks/psp. </param>
-        /// <param name="enableNamespaceResources"> The default value is false. It can be enabled/disabled on creation and updating of the managed cluster. See [https://aka.ms/NamespaceARMResource](https://aka.ms/NamespaceARMResource) for more details on Namespace as a ARM Resource. </param>
         /// <param name="networkProfile"> The network configuration profile. </param>
         /// <param name="aadProfile"> The Azure Active Directory configuration. </param>
         /// <param name="autoUpgradeProfile"> The auto upgrade configuration. </param>
+        /// <param name="upgradeSettings"> Settings for upgrading a cluster. </param>
         /// <param name="autoScalerProfile"> Parameters to be applied to the cluster-autoscaler when enabled. </param>
         /// <param name="apiServerAccessProfile"> The access profile for managed cluster API server. </param>
         /// <param name="diskEncryptionSetId"> This is of the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{encryptionSetName}'. </param>
@@ -74,19 +106,19 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="httpProxyConfig"> Configurations for provisioning the cluster with HTTP proxy servers. </param>
         /// <param name="securityProfile"> Security profile for the managed cluster. </param>
         /// <param name="storageProfile"> Storage profile for the managed cluster. </param>
-        /// <param name="ingressProfile"> Ingress profile for the managed cluster. </param>
         /// <param name="publicNetworkAccess"> Allow or deny public network access for AKS. </param>
         /// <param name="workloadAutoScalerProfile"> Workload Auto-scaler profile for the managed cluster. </param>
-        /// <param name="azureMonitorProfile"> Prometheus addon profile for the container service cluster. </param>
-        /// <param name="guardrailsProfile"> The guardrails profile holds all the guardrails information for a given cluster. </param>
-        internal ContainerServiceManagedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedClusterSku sku, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, string provisioningState, ContainerServicePowerState powerState, ContainerServiceCreationData creationData, int? maxAgentPools, string kubernetesVersion, string currentKubernetesVersion, string dnsPrefix, string fqdnSubdomain, string fqdn, string privateFqdn, string azurePortalFqdn, IList<ManagedClusterAgentPoolProfile> agentPoolProfiles, ContainerServiceLinuxProfile linuxProfile, ManagedClusterWindowsProfile windowsProfile, ManagedClusterServicePrincipalProfile servicePrincipalProfile, IDictionary<string, ManagedClusterAddonProfile> addonProfiles, ManagedClusterPodIdentityProfile podIdentityProfile, ManagedClusterOidcIssuerProfile oidcIssuerProfile, string nodeResourceGroup, ManagedClusterNodeResourceGroupProfile nodeResourceGroupProfile, bool? enableRbac, bool? enablePodSecurityPolicy, bool? enableNamespaceResources, ContainerServiceNetworkProfile networkProfile, ManagedClusterAadProfile aadProfile, ManagedClusterAutoUpgradeProfile autoUpgradeProfile, ManagedClusterAutoScalerProfile autoScalerProfile, ManagedClusterApiServerAccessProfile apiServerAccessProfile, ResourceIdentifier diskEncryptionSetId, IDictionary<string, ContainerServiceUserAssignedIdentity> identityProfile, IList<ContainerServicePrivateLinkResourceData> privateLinkResources, bool? disableLocalAccounts, ManagedClusterHttpProxyConfig httpProxyConfig, ManagedClusterSecurityProfile securityProfile, ManagedClusterStorageProfile storageProfile, ManagedClusterIngressProfile ingressProfile, ContainerServicePublicNetworkAccess? publicNetworkAccess, ManagedClusterWorkloadAutoScalerProfile workloadAutoScalerProfile, ManagedClusterAzureMonitorProfile azureMonitorProfile, ManagedClusterGuardrailsProfile guardrailsProfile) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="azureMonitorProfile"> Azure Monitor addon profiles for monitoring the managed cluster. </param>
+        /// <param name="serviceMeshProfile"> Service mesh profile for a managed cluster. </param>
+        /// <param name="resourceId"> The resourceUID uniquely identifies ManagedClusters that reuse ARM ResourceIds (i.e: create, delete, create sequence). </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceManagedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedClusterSku sku, ExtendedLocation extendedLocation, ManagedClusterIdentity clusterIdentity, string provisioningState, ContainerServicePowerState powerState, int? maxAgentPools, string kubernetesVersion, string currentKubernetesVersion, string dnsPrefix, string fqdnSubdomain, string fqdn, string privateFqdn, string azurePortalFqdn, IList<ManagedClusterAgentPoolProfile> agentPoolProfiles, ContainerServiceLinuxProfile linuxProfile, ManagedClusterWindowsProfile windowsProfile, ManagedClusterServicePrincipalProfile servicePrincipalProfile, IDictionary<string, ManagedClusterAddonProfile> addonProfiles, ManagedClusterPodIdentityProfile podIdentityProfile, ManagedClusterOidcIssuerProfile oidcIssuerProfile, string nodeResourceGroup, bool? enableRbac, KubernetesSupportPlan? supportPlan, bool? enablePodSecurityPolicy, ContainerServiceNetworkProfile networkProfile, ManagedClusterAadProfile aadProfile, ManagedClusterAutoUpgradeProfile autoUpgradeProfile, ClusterUpgradeSettings upgradeSettings, ManagedClusterAutoScalerProfile autoScalerProfile, ManagedClusterApiServerAccessProfile apiServerAccessProfile, ResourceIdentifier diskEncryptionSetId, IDictionary<string, ContainerServiceUserAssignedIdentity> identityProfile, IList<ContainerServicePrivateLinkResourceData> privateLinkResources, bool? disableLocalAccounts, ManagedClusterHttpProxyConfig httpProxyConfig, ManagedClusterSecurityProfile securityProfile, ManagedClusterStorageProfile storageProfile, ContainerServicePublicNetworkAccess? publicNetworkAccess, ManagedClusterWorkloadAutoScalerProfile workloadAutoScalerProfile, ManagedClusterAzureMonitorProfile azureMonitorProfile, ServiceMeshProfile serviceMeshProfile, ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             ExtendedLocation = extendedLocation;
-            Identity = identity;
+            ClusterIdentity = clusterIdentity;
             ProvisioningState = provisioningState;
             PowerState = powerState;
-            CreationData = creationData;
             MaxAgentPools = maxAgentPools;
             KubernetesVersion = kubernetesVersion;
             CurrentKubernetesVersion = currentKubernetesVersion;
@@ -103,13 +135,13 @@ namespace Azure.ResourceManager.ContainerService
             PodIdentityProfile = podIdentityProfile;
             OidcIssuerProfile = oidcIssuerProfile;
             NodeResourceGroup = nodeResourceGroup;
-            NodeResourceGroupProfile = nodeResourceGroupProfile;
             EnableRbac = enableRbac;
+            SupportPlan = supportPlan;
             EnablePodSecurityPolicy = enablePodSecurityPolicy;
-            EnableNamespaceResources = enableNamespaceResources;
             NetworkProfile = networkProfile;
             AadProfile = aadProfile;
             AutoUpgradeProfile = autoUpgradeProfile;
+            UpgradeSettings = upgradeSettings;
             AutoScalerProfile = autoScalerProfile;
             ApiServerAccessProfile = apiServerAccessProfile;
             DiskEncryptionSetId = diskEncryptionSetId;
@@ -119,19 +151,25 @@ namespace Azure.ResourceManager.ContainerService
             HttpProxyConfig = httpProxyConfig;
             SecurityProfile = securityProfile;
             StorageProfile = storageProfile;
-            IngressProfile = ingressProfile;
             PublicNetworkAccess = publicNetworkAccess;
             WorkloadAutoScalerProfile = workloadAutoScalerProfile;
             AzureMonitorProfile = azureMonitorProfile;
-            GuardrailsProfile = guardrailsProfile;
+            ServiceMeshProfile = serviceMeshProfile;
+            ResourceId = resourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceManagedClusterData"/> for deserialization. </summary>
+        internal ContainerServiceManagedClusterData()
+        {
         }
 
         /// <summary> The managed cluster SKU. </summary>
         public ManagedClusterSku Sku { get; set; }
         /// <summary> The extended location of the Virtual Machine. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
-        /// <summary> The identity of the managed cluster, if configured. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> The identity of the managed cluster, if configured. </summary>
+        public ManagedClusterIdentity ClusterIdentity { get; set; }
         /// <summary> The current provisioning state. </summary>
         public string ProvisioningState { get; }
         /// <summary> The Power State of the cluster. </summary>
@@ -142,25 +180,11 @@ namespace Azure.ResourceManager.ContainerService
             get => PowerState?.Code;
         }
 
-        /// <summary> CreationData to be used to specify the source Snapshot ID if the cluster will be created/upgraded using a snapshot. </summary>
-        internal ContainerServiceCreationData CreationData { get; set; }
-        /// <summary> This is the ARM ID of the source object to be used to create the target object. </summary>
-        public ResourceIdentifier CreationDataSourceResourceId
-        {
-            get => CreationData is null ? default : CreationData.SourceResourceId;
-            set
-            {
-                if (CreationData is null)
-                    CreationData = new ContainerServiceCreationData();
-                CreationData.SourceResourceId = value;
-            }
-        }
-
         /// <summary> The max number of agent pools for the managed cluster. </summary>
         public int? MaxAgentPools { get; }
-        /// <summary> When you upgrade a supported AKS cluster, Kubernetes minor versions cannot be skipped. All upgrades must be performed sequentially by major version number. For example, upgrades between 1.14.x -&gt; 1.15.x or 1.15.x -&gt; 1.16.x are allowed, however 1.14.x -&gt; 1.16.x is not allowed. See [upgrading an AKS cluster](https://docs.microsoft.com/azure/aks/upgrade-cluster) for more details. </summary>
+        /// <summary> Both patch version &lt;major.minor.patch&gt; (e.g. 1.20.13) and &lt;major.minor&gt; (e.g. 1.20) are supported. When &lt;major.minor&gt; is specified, the latest supported GA patch version is chosen automatically. Updating the cluster with the same &lt;major.minor&gt; once it has been created (e.g. 1.14.x -&gt; 1.14) will not trigger an upgrade, even if a newer patch version is available. When you upgrade a supported AKS cluster, Kubernetes minor versions cannot be skipped. All upgrades must be performed sequentially by major version number. For example, upgrades between 1.14.x -&gt; 1.15.x or 1.15.x -&gt; 1.16.x are allowed, however 1.14.x -&gt; 1.16.x is not allowed. See [upgrading an AKS cluster](https://docs.microsoft.com/azure/aks/upgrade-cluster) for more details. </summary>
         public string KubernetesVersion { get; set; }
-        /// <summary> The version of Kubernetes the Managed Cluster is running. </summary>
+        /// <summary> If kubernetesVersion was a fully specified version &lt;major.minor.patch&gt;, this field will be exactly equal to it. If kubernetesVersion was &lt;major.minor&gt;, this field will contain the full &lt;major.minor.patch&gt; version being used. </summary>
         public string CurrentKubernetesVersion { get; }
         /// <summary> This cannot be updated once the Managed Cluster has been created. </summary>
         public string DnsPrefix { get; set; }
@@ -188,32 +212,32 @@ namespace Azure.ResourceManager.ContainerService
         public ManagedClusterOidcIssuerProfile OidcIssuerProfile { get; set; }
         /// <summary> The name of the resource group containing agent pool nodes. </summary>
         public string NodeResourceGroup { get; set; }
-        /// <summary> The node resource group configuration profile. </summary>
-        internal ManagedClusterNodeResourceGroupProfile NodeResourceGroupProfile { get; set; }
-        /// <summary> The restriction level applied to the cluster's node resource group. </summary>
-        public ManagedClusterNodeResourceGroupRestrictionLevel? NodeResourceGroupRestrictionLevel
-        {
-            get => NodeResourceGroupProfile is null ? default : NodeResourceGroupProfile.RestrictionLevel;
-            set
-            {
-                if (NodeResourceGroupProfile is null)
-                    NodeResourceGroupProfile = new ManagedClusterNodeResourceGroupProfile();
-                NodeResourceGroupProfile.RestrictionLevel = value;
-            }
-        }
-
         /// <summary> Whether to enable Kubernetes Role-Based Access Control. </summary>
         public bool? EnableRbac { get; set; }
+        /// <summary> The support plan for the Managed Cluster. If unspecified, the default is 'KubernetesOfficial'. </summary>
+        public KubernetesSupportPlan? SupportPlan { get; set; }
         /// <summary> (DEPRECATED) Whether to enable Kubernetes pod security policy (preview). PodSecurityPolicy was deprecated in Kubernetes v1.21, and removed from Kubernetes in v1.25. Learn more at https://aka.ms/k8s/psp and https://aka.ms/aks/psp. </summary>
         public bool? EnablePodSecurityPolicy { get; set; }
-        /// <summary> The default value is false. It can be enabled/disabled on creation and updating of the managed cluster. See [https://aka.ms/NamespaceARMResource](https://aka.ms/NamespaceARMResource) for more details on Namespace as a ARM Resource. </summary>
-        public bool? EnableNamespaceResources { get; set; }
         /// <summary> The network configuration profile. </summary>
         public ContainerServiceNetworkProfile NetworkProfile { get; set; }
         /// <summary> The Azure Active Directory configuration. </summary>
         public ManagedClusterAadProfile AadProfile { get; set; }
         /// <summary> The auto upgrade configuration. </summary>
         public ManagedClusterAutoUpgradeProfile AutoUpgradeProfile { get; set; }
+        /// <summary> Settings for upgrading a cluster. </summary>
+        internal ClusterUpgradeSettings UpgradeSettings { get; set; }
+        /// <summary> Settings for overrides. </summary>
+        public UpgradeOverrideSettings UpgradeOverrideSettings
+        {
+            get => UpgradeSettings is null ? default : UpgradeSettings.OverrideSettings;
+            set
+            {
+                if (UpgradeSettings is null)
+                    UpgradeSettings = new ClusterUpgradeSettings();
+                UpgradeSettings.OverrideSettings = value;
+            }
+        }
+
         /// <summary> Parameters to be applied to the cluster-autoscaler when enabled. </summary>
         public ManagedClusterAutoScalerProfile AutoScalerProfile { get; set; }
         /// <summary> The access profile for managed cluster API server. </summary>
@@ -232,27 +256,13 @@ namespace Azure.ResourceManager.ContainerService
         public ManagedClusterSecurityProfile SecurityProfile { get; set; }
         /// <summary> Storage profile for the managed cluster. </summary>
         public ManagedClusterStorageProfile StorageProfile { get; set; }
-        /// <summary> Ingress profile for the managed cluster. </summary>
-        internal ManagedClusterIngressProfile IngressProfile { get; set; }
-        /// <summary> Web App Routing settings for the ingress profile. </summary>
-        public ManagedClusterIngressProfileWebAppRouting IngressWebAppRouting
-        {
-            get => IngressProfile is null ? default : IngressProfile.WebAppRouting;
-            set
-            {
-                if (IngressProfile is null)
-                    IngressProfile = new ManagedClusterIngressProfile();
-                IngressProfile.WebAppRouting = value;
-            }
-        }
-
         /// <summary> Allow or deny public network access for AKS. </summary>
         public ContainerServicePublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> Workload Auto-scaler profile for the managed cluster. </summary>
         public ManagedClusterWorkloadAutoScalerProfile WorkloadAutoScalerProfile { get; set; }
-        /// <summary> Prometheus addon profile for the container service cluster. </summary>
+        /// <summary> Azure Monitor addon profiles for monitoring the managed cluster. </summary>
         internal ManagedClusterAzureMonitorProfile AzureMonitorProfile { get; set; }
-        /// <summary> Metrics profile for the prometheus service addon. </summary>
+        /// <summary> Metrics profile for the Azure Monitor managed service for Prometheus addon. Collect out-of-the-box Kubernetes infrastructure metrics to send to an Azure Monitor Workspace and configure additional scraping for custom targets. See aka.ms/AzureManagedPrometheus for an overview. </summary>
         public ManagedClusterMonitorProfileMetrics AzureMonitorMetrics
         {
             get => AzureMonitorProfile is null ? default : AzureMonitorProfile.Metrics;
@@ -264,7 +274,9 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
-        /// <summary> The guardrails profile holds all the guardrails information for a given cluster. </summary>
-        public ManagedClusterGuardrailsProfile GuardrailsProfile { get; set; }
+        /// <summary> Service mesh profile for a managed cluster. </summary>
+        public ServiceMeshProfile ServiceMeshProfile { get; set; }
+        /// <summary> The resourceUID uniquely identifies ManagedClusters that reuse ARM ResourceIds (i.e: create, delete, create sequence). </summary>
+        public ResourceIdentifier ResourceId { get; }
     }
 }

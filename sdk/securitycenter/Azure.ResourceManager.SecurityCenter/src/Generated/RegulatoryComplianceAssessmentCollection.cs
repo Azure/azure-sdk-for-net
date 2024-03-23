@@ -12,17 +12,15 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RegulatoryComplianceAssessmentResource" /> and their operations.
-    /// Each <see cref="RegulatoryComplianceAssessmentResource" /> in the collection will belong to the same instance of <see cref="RegulatoryComplianceControlResource" />.
-    /// To get a <see cref="RegulatoryComplianceAssessmentCollection" /> instance call the GetRegulatoryComplianceAssessments method from an instance of <see cref="RegulatoryComplianceControlResource" />.
+    /// A class representing a collection of <see cref="RegulatoryComplianceAssessmentResource"/> and their operations.
+    /// Each <see cref="RegulatoryComplianceAssessmentResource"/> in the collection will belong to the same instance of <see cref="RegulatoryComplianceControlResource"/>.
+    /// To get a <see cref="RegulatoryComplianceAssessmentCollection"/> instance call the GetRegulatoryComplianceAssessments method from an instance of <see cref="RegulatoryComplianceControlResource"/>.
     /// </summary>
     public partial class RegulatoryComplianceAssessmentCollection : ArmCollection, IEnumerable<RegulatoryComplianceAssessmentResource>, IAsyncEnumerable<RegulatoryComplianceAssessmentResource>
     {
@@ -64,6 +62,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>RegulatoryComplianceAssessments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RegulatoryComplianceAssessmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="regulatoryComplianceAssessmentName"> Name of the regulatory compliance assessment object. </param>
@@ -100,6 +106,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RegulatoryComplianceAssessments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RegulatoryComplianceAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,11 +152,19 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>RegulatoryComplianceAssessments_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RegulatoryComplianceAssessmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RegulatoryComplianceAssessmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RegulatoryComplianceAssessmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RegulatoryComplianceAssessmentResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _regulatoryComplianceAssessmentRestClient.CreateListRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, filter);
@@ -161,11 +183,19 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>RegulatoryComplianceAssessments_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RegulatoryComplianceAssessmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RegulatoryComplianceAssessmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RegulatoryComplianceAssessmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RegulatoryComplianceAssessmentResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _regulatoryComplianceAssessmentRestClient.CreateListRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, filter);
@@ -183,6 +213,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RegulatoryComplianceAssessments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RegulatoryComplianceAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,6 +257,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>RegulatoryComplianceAssessments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RegulatoryComplianceAssessmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="regulatoryComplianceAssessmentName"> Name of the regulatory compliance assessment object. </param>
@@ -253,6 +299,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RegulatoryComplianceAssessments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RegulatoryComplianceAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,6 +344,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RegulatoryComplianceAssessments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RegulatoryComplianceAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

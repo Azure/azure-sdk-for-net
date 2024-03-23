@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public RackSkusTests(bool isAsync) : base(isAsync) {}
 
         [Test]
+        [RecordedTest]
         public async Task RackSkus()
         {
             string subscriptionId = TestEnvironment.SubscriptionId;

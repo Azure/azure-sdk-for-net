@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ElasticSan;
 using Azure.ResourceManager.ElasticSan.Models;
 
 namespace Azure.ResourceManager.ElasticSan.Samples
@@ -122,7 +119,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // invoke the operation
             string snapshotName = "snapshotname";
-            ElasticSanSnapshotData data = new ElasticSanSnapshotData(new SnapshotCreationData(new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}")));
+            ElasticSanSnapshotData data = new ElasticSanSnapshotData(new SnapshotCreationInfo(new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}")));
             ArmOperation<ElasticSanSnapshotResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, data);
             ElasticSanSnapshotResource result = lro.Value;
 
@@ -160,7 +157,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // invoke the operation
             string snapshotName = "snapshotname";
-            ElasticSanSnapshotData data = new ElasticSanSnapshotData(new SnapshotCreationData(new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}")));
+            ElasticSanSnapshotData data = new ElasticSanSnapshotData(new SnapshotCreationInfo(new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}")));
             ArmOperation<ElasticSanSnapshotResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, data);
             ElasticSanSnapshotResource result = lro.Value;
 

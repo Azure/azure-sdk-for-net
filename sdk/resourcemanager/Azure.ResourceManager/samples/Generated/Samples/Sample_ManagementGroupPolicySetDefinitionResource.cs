@@ -8,11 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources.Samples
@@ -66,11 +63,11 @@ Parameters =
 {
 ["prefix"] = new ArmPolicyParameterValue()
 {
-Value = BinaryData.FromString("DeptA"),
+Value = BinaryData.FromString("\"DeptA\""),
 },
 ["suffix"] = new ArmPolicyParameterValue()
 {
-Value = BinaryData.FromString("-LC"),
+Value = BinaryData.FromString("\"-LC\""),
 },
 },
 PolicyDefinitionReferenceId = "Resource_Naming",
@@ -138,11 +135,11 @@ Parameters =
 {
 ["prefix"] = new ArmPolicyParameterValue()
 {
-Value = BinaryData.FromString("DeptA"),
+Value = BinaryData.FromString("\"DeptA\""),
 },
 ["suffix"] = new ArmPolicyParameterValue()
 {
-Value = BinaryData.FromString("-LC"),
+Value = BinaryData.FromString("\"-LC\""),
 },
 },
 PolicyDefinitionReferenceId = "Resource_Naming",

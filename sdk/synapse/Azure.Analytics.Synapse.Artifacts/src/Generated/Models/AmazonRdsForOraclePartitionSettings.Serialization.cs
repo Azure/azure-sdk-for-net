@@ -47,10 +47,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> partitionNames = default;
-            Optional<object> partitionColumnName = default;
-            Optional<object> partitionUpperBound = default;
-            Optional<object> partitionLowerBound = default;
+            object partitionNames = default;
+            object partitionColumnName = default;
+            object partitionUpperBound = default;
+            object partitionLowerBound = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionNames"u8))
@@ -90,7 +90,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new AmazonRdsForOraclePartitionSettings(partitionNames.Value, partitionColumnName.Value, partitionUpperBound.Value, partitionLowerBound.Value);
+            return new AmazonRdsForOraclePartitionSettings(partitionNames, partitionColumnName, partitionUpperBound, partitionLowerBound);
         }
 
         internal partial class AmazonRdsForOraclePartitionSettingsConverter : JsonConverter<AmazonRdsForOraclePartitionSettings>

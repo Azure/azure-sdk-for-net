@@ -5,14 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Unknown version of RouterRule. </summary>
     internal partial class UnknownRouterRule : RouterRule
     {
-        /// <summary> Initializes a new instance of UnknownRouterRule. </summary>
-        /// <param name="kind"> Discriminator. </param>
-        internal UnknownRouterRule(string kind) : base(kind)
+        /// <summary> Initializes a new instance of <see cref="UnknownRouterRule"/>. </summary>
+        /// <param name="kind"> The type discriminator describing a sub-type of RouterRule. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownRouterRule(RouterRuleKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownRouterRule"/> for deserialization. </summary>
+        internal UnknownRouterRule()
         {
         }
     }

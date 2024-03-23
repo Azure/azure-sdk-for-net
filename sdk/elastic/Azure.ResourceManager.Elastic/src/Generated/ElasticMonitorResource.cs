@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Elastic.Models;
 using Azure.ResourceManager.Resources;
 
@@ -22,13 +20,16 @@ namespace Azure.ResourceManager.Elastic
 {
     /// <summary>
     /// A Class representing an ElasticMonitorResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ElasticMonitorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetElasticMonitorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetElasticMonitorResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ElasticMonitorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetElasticMonitorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetElasticMonitorResource method.
     /// </summary>
     public partial class ElasticMonitorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ElasticMonitorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="monitorName"> The monitorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}";
@@ -49,12 +50,15 @@ namespace Azure.ResourceManager.Elastic
         private readonly VMCollectionRestOperations _vmCollectionRestClient;
         private readonly ElasticMonitorResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Elastic/monitors";
+
         /// <summary> Initializes a new instance of the <see cref="ElasticMonitorResource"/> class for mocking. </summary>
         protected ElasticMonitorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ElasticMonitorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ElasticMonitorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ElasticMonitorResource(ArmClient client, ElasticMonitorResourceData data) : this(client, data.Id)
@@ -86,9 +90,6 @@ namespace Azure.ResourceManager.Elastic
 #endif
         }
 
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Elastic/monitors";
-
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Elastic
         /// <returns> An object representing collection of MonitoringTagRuleResources and their operations over a MonitoringTagRuleResource. </returns>
         public virtual MonitoringTagRuleCollection GetMonitoringTagRules()
         {
-            return GetCachedClient(Client => new MonitoringTagRuleCollection(Client, Id));
+            return GetCachedClient(client => new MonitoringTagRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -128,12 +129,20 @@ namespace Azure.ResourceManager.Elastic
         /// <term>Operation Id</term>
         /// <description>TagRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MonitoringTagRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleSetName"> Tag Rule Set resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MonitoringTagRuleResource>> GetMonitoringTagRuleAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
@@ -151,12 +160,20 @@ namespace Azure.ResourceManager.Elastic
         /// <term>Operation Id</term>
         /// <description>TagRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MonitoringTagRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleSetName"> Tag Rule Set resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MonitoringTagRuleResource> GetMonitoringTagRule(string ruleSetName, CancellationToken cancellationToken = default)
         {
@@ -173,6 +190,14 @@ namespace Azure.ResourceManager.Elastic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -206,6 +231,14 @@ namespace Azure.ResourceManager.Elastic
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -237,6 +270,14 @@ namespace Azure.ResourceManager.Elastic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -272,6 +313,14 @@ namespace Azure.ResourceManager.Elastic
         /// <term>Operation Id</term>
         /// <description>Monitors_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -305,6 +354,14 @@ namespace Azure.ResourceManager.Elastic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -340,6 +397,14 @@ namespace Azure.ResourceManager.Elastic
         /// <term>Operation Id</term>
         /// <description>Monitors_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> Elastic resource model update parameters. </param>
@@ -374,15 +439,19 @@ namespace Azure.ResourceManager.Elastic
         /// <term>Operation Id</term>
         /// <description>MonitoredResources_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MonitoredResourceContent" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MonitoredResourceContent"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MonitoredResourceContent> GetMonitoredResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _monitoredResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _monitoredResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MonitoredResourceContent.DeserializeMonitoredResourceContent, _monitoredResourcesClientDiagnostics, Pipeline, "ElasticMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => MonitoredResourceContent.DeserializeMonitoredResourceContent(e), _monitoredResourcesClientDiagnostics, Pipeline, "ElasticMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -396,15 +465,19 @@ namespace Azure.ResourceManager.Elastic
         /// <term>Operation Id</term>
         /// <description>MonitoredResources_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MonitoredResourceContent" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MonitoredResourceContent"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MonitoredResourceContent> GetMonitoredResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _monitoredResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _monitoredResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MonitoredResourceContent.DeserializeMonitoredResourceContent, _monitoredResourcesClientDiagnostics, Pipeline, "ElasticMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => MonitoredResourceContent.DeserializeMonitoredResourceContent(e), _monitoredResourcesClientDiagnostics, Pipeline, "ElasticMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -417,6 +490,10 @@ namespace Azure.ResourceManager.Elastic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeploymentInfo_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -448,6 +525,10 @@ namespace Azure.ResourceManager.Elastic
         /// <term>Operation Id</term>
         /// <description>DeploymentInfo_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -478,15 +559,19 @@ namespace Azure.ResourceManager.Elastic
         /// <term>Operation Id</term>
         /// <description>VMHost_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VmResources" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VmResources"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VmResources> GetVMHostsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vmHostRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vmHostRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, VmResources.DeserializeVmResources, _vmHostClientDiagnostics, Pipeline, "ElasticMonitorResource.GetVMHosts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => VmResources.DeserializeVmResources(e), _vmHostClientDiagnostics, Pipeline, "ElasticMonitorResource.GetVMHosts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -500,15 +585,19 @@ namespace Azure.ResourceManager.Elastic
         /// <term>Operation Id</term>
         /// <description>VMHost_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VmResources" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VmResources"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VmResources> GetVMHosts(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vmHostRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vmHostRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, VmResources.DeserializeVmResources, _vmHostClientDiagnostics, Pipeline, "ElasticMonitorResource.GetVMHosts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => VmResources.DeserializeVmResources(e), _vmHostClientDiagnostics, Pipeline, "ElasticMonitorResource.GetVMHosts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -521,6 +610,10 @@ namespace Azure.ResourceManager.Elastic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VMIngestion_Details</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -552,6 +645,10 @@ namespace Azure.ResourceManager.Elastic
         /// <term>Operation Id</term>
         /// <description>VMIngestion_Details</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -581,6 +678,10 @@ namespace Azure.ResourceManager.Elastic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VMCollection_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -613,6 +714,10 @@ namespace Azure.ResourceManager.Elastic
         /// <term>Operation Id</term>
         /// <description>VMCollection_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="body"> VM resource Id. </param>
@@ -643,6 +748,14 @@ namespace Azure.ResourceManager.Elastic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -698,6 +811,14 @@ namespace Azure.ResourceManager.Elastic
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -752,6 +873,14 @@ namespace Azure.ResourceManager.Elastic
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -801,6 +930,14 @@ namespace Azure.ResourceManager.Elastic
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -849,6 +986,14 @@ namespace Azure.ResourceManager.Elastic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -901,6 +1046,14 @@ namespace Azure.ResourceManager.Elastic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

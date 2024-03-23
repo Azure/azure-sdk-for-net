@@ -25,6 +25,7 @@ use-core-datafactory-replacements: false
 modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true   # Mitigate the duplication schema 'ErrorResponse' issue
+use-model-reader-writer: true
 
 # mgmt-debug:
 #   show-serialized-names: true
@@ -437,6 +438,12 @@ list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/connectionPolicies/{connectionPolicyName}
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/rules/{ruleId}/baselines/{baselineName}
+
+suppress-abstract-base-class:
+- SynapseDatabaseData
+- SynapseDataConnectionData
+- SynapseIntegrationRuntimeProperties
+- SynapseIntegrationRuntimeStatus
 
 directive:
   - remove-operation: Get_IntegrationRuntimeStart

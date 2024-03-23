@@ -9,23 +9,25 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Automation.Models;
 
 namespace Azure.ResourceManager.Automation
 {
     /// <summary>
     /// A Class representing an AutomationWebhook along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AutomationWebhookResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAutomationWebhookResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource" /> using the GetAutomationWebhook method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AutomationWebhookResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAutomationWebhookResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource"/> using the GetAutomationWebhook method.
     /// </summary>
     public partial class AutomationWebhookResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AutomationWebhookResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="automationAccountName"> The automationAccountName. </param>
+        /// <param name="webhookName"> The webhookName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string automationAccountName, string webhookName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/webhooks/{webhookName}";
@@ -36,12 +38,15 @@ namespace Azure.ResourceManager.Automation
         private readonly WebhookRestOperations _automationWebhookWebhookRestClient;
         private readonly AutomationWebhookData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/webhooks";
+
         /// <summary> Initializes a new instance of the <see cref="AutomationWebhookResource"/> class for mocking. </summary>
         protected AutomationWebhookResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AutomationWebhookResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutomationWebhookResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AutomationWebhookResource(ArmClient client, AutomationWebhookData data) : this(client, data.Id)
@@ -62,9 +67,6 @@ namespace Azure.ResourceManager.Automation
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/webhooks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +100,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Webhook_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-10-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationWebhookResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +140,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Webhook_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-10-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationWebhookResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,6 +179,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Webhook_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-10-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationWebhookResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,6 +222,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Webhook_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-10-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationWebhookResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -230,6 +264,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Webhook_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-10-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationWebhookResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The update parameters for webhook. </param>
@@ -263,6 +305,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Webhook_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-10-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationWebhookResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

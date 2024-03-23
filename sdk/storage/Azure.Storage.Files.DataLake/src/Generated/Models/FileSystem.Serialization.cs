@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
@@ -18,9 +17,9 @@ namespace Azure.Storage.Files.DataLake.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> lastModified = default;
-            Optional<string> eTag = default;
+            string name = default;
+            string lastModified = default;
+            string eTag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -39,7 +38,7 @@ namespace Azure.Storage.Files.DataLake.Models
                     continue;
                 }
             }
-            return new FileSystem(name.Value, lastModified.Value, eTag.Value);
+            return new FileSystem(name, lastModified, eTag);
         }
     }
 }

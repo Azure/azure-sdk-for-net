@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Net.Http;
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
 using NUnit.Framework;
@@ -14,17 +13,32 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
     public class AuthenticationEventMetadataTests
     {
         [Test]
-        [TestCaseSource(nameof(TestScenarios))]
-        [Ignore("Test needs to be refactored to remove the secret, even though non-impactful.")]
-        public void TestRequestCreateInstance(object testObject, string message, bool success, string exceptionMessage)
+        [TestCaseSource(nameof(TestJsonPayloadScenarios))]
+        public void TestRequestPayloadStructureInstance(object testObject, string message, bool success, string exceptionMessage)
+        {
+            string payload = testObject.ToString();
+            if (success == false)
+            {
+                var ex = Assert.Throws<AuthenticationEventTriggerRequestValidationException>(() => AuthenticationEventMetadataLoader.GetEventMetadata(payload));
+                Assert.AreEqual(exceptionMessage, ex.Message);
+            }
+            else
+            {
+                Assert.DoesNotThrow(() => AuthenticationEventMetadataLoader.GetEventMetadata(payload));
+            }
+        }
+
+        [Test]
+        [TestCaseSource(nameof(TestAttributeScenarios))]
+        public void TestRequestAttributesCreateInstance(object testObject, string message, bool success, string exceptionMessage)
         {
             string payload = testObject.ToString();
             AuthenticationEventMetadata eventMetadata = AuthenticationEventMetadataLoader.GetEventMetadata(payload);
-            HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post,"<< REDACTED: FIX ME >>");
+            HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post,"https://localhost.net/");
 
             if (success == false)
             {
-                var ex = Assert.Throws<ValidationException>(() => eventMetadata.CreateEventRequestValidate(requestMessage, payload, string.Empty));
+                var ex = Assert.Throws<AuthenticationEventTriggerRequestValidationException>(() => eventMetadata.CreateEventRequestValidate(requestMessage, payload, string.Empty));
                 Assert.AreEqual(exceptionMessage, ex.Message);
             }
             else
@@ -33,7 +47,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
             }
         }
 
-        private static IEnumerable<object[]> TestScenarios()
+        private static IEnumerable<object[]> TestJsonPayloadScenarios()
+        {
+#region Invalid
+            yield return new TestCaseStructure()
+            {
+                Test = Payload.TokenIssuanceStart.RequestWithInvalidCharacter,
+                Message = "Testing request payload with invalid character passed and verifies it throws an error",
+                ExceptionMessage = "The JSON object contains a trailing comma at the end which is not supported in this mode. Change the reader options. LineNumber: 38 | BytePositionInLine: 6."
+            }.ToArray;
+#endregion
+
+#region Valid
+            yield return new TestCaseStructure()
+            {
+                Test = Payload.TokenIssuanceStart.ValidRequestPayload,
+                Message = "Testing valid full request payload",
+                Success = true,
+            }.ToArray;
+#endregion
+        }
+
+        private static IEnumerable<object[]> TestAttributeScenarios()
         {
 #region Invalid
             yield return new TestCaseStructure()
@@ -41,6 +76,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
                 Test = Payload.TokenIssuanceStart.RequestWithoutSourcePayload,
                 Message = "Testing request payload without source field passed and verifies it throws an error",
                 ExceptionMessage = "TokenIssuanceStartRequest: The Source field is required."
+            }.ToArray;
+            yield return new TestCaseStructure()
+            {
+                Test = Payload.TokenIssuanceStart.RequestWithoutODataTypePayload,
+                Message = "Testing request payload without ODataType field passed and verifies it throws an error",
+                ExceptionMessage = "TokenIssuanceStartRequest: The ODataType field is required."
             }.ToArray;
 #endregion
 

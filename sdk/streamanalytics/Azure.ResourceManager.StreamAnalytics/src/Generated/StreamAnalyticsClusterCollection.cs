@@ -12,18 +12,16 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.StreamAnalytics
 {
     /// <summary>
-    /// A class representing a collection of <see cref="StreamAnalyticsClusterResource" /> and their operations.
-    /// Each <see cref="StreamAnalyticsClusterResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="StreamAnalyticsClusterCollection" /> instance call the GetStreamAnalyticsClusters method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="StreamAnalyticsClusterResource"/> and their operations.
+    /// Each <see cref="StreamAnalyticsClusterResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="StreamAnalyticsClusterCollection"/> instance call the GetStreamAnalyticsClusters method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class StreamAnalyticsClusterCollection : ArmCollection, IEnumerable<StreamAnalyticsClusterResource>, IAsyncEnumerable<StreamAnalyticsClusterResource>
     {
@@ -64,6 +62,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamAnalyticsClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -108,6 +114,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Clusters_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamAnalyticsClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -151,6 +165,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamAnalyticsClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the cluster. </param>
@@ -187,6 +209,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamAnalyticsClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,10 +255,18 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Clusters_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamAnalyticsClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StreamAnalyticsClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StreamAnalyticsClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamAnalyticsClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamAnalyticsClusterClustersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -247,10 +285,18 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Clusters_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamAnalyticsClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StreamAnalyticsClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StreamAnalyticsClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamAnalyticsClusterResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamAnalyticsClusterClustersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -268,6 +314,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamAnalyticsClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,6 +358,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamAnalyticsClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the cluster. </param>
@@ -338,6 +400,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamAnalyticsClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -375,6 +445,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamAnalyticsClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

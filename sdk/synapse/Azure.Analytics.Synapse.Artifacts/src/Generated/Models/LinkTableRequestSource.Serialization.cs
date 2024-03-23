@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> tableName = default;
-            Optional<string> schemaName = default;
+            string tableName = default;
+            string schemaName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tableName"u8))
@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkTableRequestSource(tableName.Value, schemaName.Value);
+            return new LinkTableRequestSource(tableName, schemaName);
         }
 
         internal partial class LinkTableRequestSourceConverter : JsonConverter<LinkTableRequestSource>

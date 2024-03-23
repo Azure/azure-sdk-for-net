@@ -43,8 +43,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<DayOfWeek> day = default;
-            Optional<int> occurrence = default;
+            DayOfWeek? day = default;
+            int? occurrence = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RecurrenceScheduleOccurrence(Optional.ToNullable(day), Optional.ToNullable(occurrence), additionalProperties);
+            return new RecurrenceScheduleOccurrence(day, occurrence, additionalProperties);
         }
 
         internal partial class RecurrenceScheduleOccurrenceConverter : JsonConverter<RecurrenceScheduleOccurrence>

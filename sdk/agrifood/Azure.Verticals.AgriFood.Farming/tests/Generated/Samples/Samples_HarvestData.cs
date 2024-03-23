@@ -6,12 +6,11 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.Verticals.AgriFood.Farming;
 using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
@@ -22,8 +21,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetCascadeDeleteJobDetails_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+            HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -37,8 +37,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetCascadeDeleteJobDetails_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+            HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -52,8 +53,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetCascadeDeleteJobDetails_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+            HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -76,8 +78,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetCascadeDeleteJobDetails_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+            HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -100,8 +103,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetHarvestData_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+            HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.GetHarvestData("<partyId>", "<harvestDataId>", null);
 
@@ -113,8 +117,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetHarvestData_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+            HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.GetHarvestDataAsync("<partyId>", "<harvestDataId>", null);
 
@@ -126,8 +131,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetHarvestData_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+            HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.GetHarvestData("<partyId>", "<harvestDataId>", null);
 
@@ -182,8 +188,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetHarvestData_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+            HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.GetHarvestDataAsync("<partyId>", "<harvestDataId>", null);
 
@@ -238,8 +245,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+            HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdate("<partyId>", "<harvestDataId>", content);
@@ -252,8 +260,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdate_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+            HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateAsync("<partyId>", "<harvestDataId>", content);
@@ -266,8 +275,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+            HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -349,8 +359,9 @@ productName = "<productName>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdate_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+            HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -432,8 +443,9 @@ productName = "<productName>",
         [Ignore("Only validating compilation of examples")]
         public void Example_Delete_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+            HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<harvestDataId>");
 
@@ -444,8 +456,9 @@ productName = "<productName>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+            HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<harvestDataId>");
 
@@ -456,8 +469,9 @@ productName = "<productName>",
         [Ignore("Only validating compilation of examples")]
         public void Example_Delete_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+            HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<harvestDataId>");
 
@@ -468,8 +482,9 @@ productName = "<productName>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+            HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<harvestDataId>");
 
@@ -480,8 +495,9 @@ productName = "<productName>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetAllHarvestData_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+            HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
             foreach (BinaryData item in client.GetAllHarvestData(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -494,8 +510,9 @@ productName = "<productName>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetAllHarvestData_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+            HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
             await foreach (BinaryData item in client.GetAllHarvestDataAsync(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -508,8 +525,9 @@ productName = "<productName>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetAllHarvestData_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+            HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
             foreach (BinaryData item in client.GetAllHarvestData(123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<harvestDataIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -565,8 +583,9 @@ productName = "<productName>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetAllHarvestData_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+            HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
             await foreach (BinaryData item in client.GetAllHarvestDataAsync(123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<harvestDataIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -622,8 +641,9 @@ productName = "<productName>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetAllHarvestDataByPartyId_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+            HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
             foreach (BinaryData item in client.GetAllHarvestDataByPartyId("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -636,8 +656,9 @@ productName = "<productName>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetAllHarvestDataByPartyId_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+            HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
             await foreach (BinaryData item in client.GetAllHarvestDataByPartyIdAsync("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -650,8 +671,9 @@ productName = "<productName>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetAllHarvestDataByPartyId_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+            HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
             foreach (BinaryData item in client.GetAllHarvestDataByPartyId("<partyId>", 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -707,8 +729,9 @@ productName = "<productName>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetAllHarvestDataByPartyId_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+            HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
             await foreach (BinaryData item in client.GetAllHarvestDataByPartyIdAsync("<partyId>", 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -764,8 +787,9 @@ productName = "<productName>",
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateCascadeDeleteJob_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+            HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
             Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<harvestDataId>", null);
             BinaryData responseData = operation.Value;
@@ -780,8 +804,9 @@ productName = "<productName>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateCascadeDeleteJob_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+            HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
             Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<harvestDataId>", null);
             BinaryData responseData = operation.Value;
@@ -796,8 +821,9 @@ productName = "<productName>",
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateCascadeDeleteJob_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+            HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
             Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<harvestDataId>", null);
             BinaryData responseData = operation.Value;
@@ -821,8 +847,9 @@ productName = "<productName>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateCascadeDeleteJob_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
+            HarvestData client = new FarmBeatsClient(endpoint, credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
             Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<harvestDataId>", null);
             BinaryData responseData = operation.Value;

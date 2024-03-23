@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources.Models;
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Creates a deployment script. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="data"> Deployment script supplied to the operation. </param>
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Creates a deployment script. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="data"> Deployment script supplied to the operation. </param>
@@ -140,7 +139,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Updates deployment script tags with specified values. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="patch"> Deployment script resource with the tags to be updated. </param>
@@ -171,7 +170,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Updates deployment script tags with specified values. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="patch"> Deployment script resource with the tags to be updated. </param>
@@ -222,7 +221,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets a deployment script with a given name. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -253,7 +252,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets a deployment script with a given name. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -304,7 +303,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Deletes a deployment script. When operation completes, status code 200 returned without content. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -329,7 +328,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Deletes a deployment script. When operation completes, status code 200 returned without content. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -371,7 +370,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Lists all deployment scripts for a given subscription. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -396,7 +395,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Lists all deployment scripts for a given subscription. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -442,7 +441,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets deployment script logs for a given deployment script name. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -471,7 +470,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets deployment script logs for a given deployment script name. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -525,7 +524,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets deployment script logs for a given deployment script name. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="tail"> The number of lines to show from the tail of the deployment script log. Valid value is a positive number up to 1000. If 'tail' is not provided, all available logs are shown up to container instance log capacity of 4mb. </param>
@@ -557,7 +556,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets deployment script logs for a given deployment script name. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="tail"> The number of lines to show from the tail of the deployment script log. Valid value is a positive number up to 1000. If 'tail' is not provided, all available logs are shown up to container instance log capacity of 4mb. </param>
@@ -608,7 +607,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Lists deployments scripts. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -635,7 +634,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Lists deployments scripts. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -677,7 +676,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Lists all deployment scripts for a given subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -704,7 +703,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Lists all deployment scripts for a given subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -745,7 +744,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Lists deployments scripts. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -774,7 +773,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Lists deployments scripts. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>

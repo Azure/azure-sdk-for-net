@@ -6,7 +6,6 @@ namespace Azure.ResourceManager.SelfHelp.Tests
     using Azure.Core.TestFramework;
     using Azure.Core;
     using System.Threading.Tasks;
-    using Azure.ResourceManager.SelfHelp.Tests;
     using NUnit.Framework;
     using System;
     using Azure.ResourceManager.SelfHelp.Models;
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
             Dictionary<string, string> globalParameters = new Dictionary<string, string>();
             globalParameters.Add("startTime", "2020-07-01");
             ResourceType resourceType = new ResourceType("Microsoft.KeyVault/vaults");
-            var data = new SelfHelpDiagnosticData(scope, null, resourceType, null, globalParameters, insights, null, null, null);
+            var data = new SelfHelpDiagnosticData(scope, null, resourceType, null, globalParameters, insights, null, null, null, null);
 
             return data;
         }

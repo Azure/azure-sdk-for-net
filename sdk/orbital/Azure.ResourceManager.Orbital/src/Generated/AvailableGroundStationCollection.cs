@@ -10,19 +10,17 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Orbital.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Orbital
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AvailableGroundStationResource" /> and their operations.
-    /// Each <see cref="AvailableGroundStationResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get an <see cref="AvailableGroundStationCollection" /> instance call the GetAvailableGroundStations method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="AvailableGroundStationResource"/> and their operations.
+    /// Each <see cref="AvailableGroundStationResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get an <see cref="AvailableGroundStationCollection"/> instance call the GetAvailableGroundStations method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class AvailableGroundStationCollection : ArmCollection
     {
@@ -64,6 +62,14 @@ namespace Azure.ResourceManager.Orbital
         /// <term>Operation Id</term>
         /// <description>AvailableGroundStations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailableGroundStationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groundStationName"> Ground Station name. </param>
@@ -100,6 +106,14 @@ namespace Azure.ResourceManager.Orbital
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailableGroundStations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailableGroundStationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,11 +152,19 @@ namespace Azure.ResourceManager.Orbital
         /// <term>Operation Id</term>
         /// <description>AvailableGroundStations_ListByCapability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailableGroundStationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="capability"> Ground Station Capability. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvailableGroundStationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AvailableGroundStationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvailableGroundStationResource> GetAllAsync(GroundStationCapability capability, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _availableGroundStationRestClient.CreateListByCapabilityRequest(Id.SubscriptionId, capability);
@@ -161,11 +183,19 @@ namespace Azure.ResourceManager.Orbital
         /// <term>Operation Id</term>
         /// <description>AvailableGroundStations_ListByCapability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailableGroundStationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="capability"> Ground Station Capability. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailableGroundStationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AvailableGroundStationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvailableGroundStationResource> GetAll(GroundStationCapability capability, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _availableGroundStationRestClient.CreateListByCapabilityRequest(Id.SubscriptionId, capability);
@@ -183,6 +213,14 @@ namespace Azure.ResourceManager.Orbital
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailableGroundStations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailableGroundStationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,6 +257,14 @@ namespace Azure.ResourceManager.Orbital
         /// <term>Operation Id</term>
         /// <description>AvailableGroundStations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailableGroundStationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groundStationName"> Ground Station name. </param>
@@ -253,6 +299,14 @@ namespace Azure.ResourceManager.Orbital
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailableGroundStations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailableGroundStationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,6 +344,14 @@ namespace Azure.ResourceManager.Orbital
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailableGroundStations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailableGroundStationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

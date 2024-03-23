@@ -7,13 +7,15 @@ using System.Threading.Tasks;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Indexes;
 using NUnit.Framework;
+using Azure.Core.TestFramework;
 
-namespace Azure.Search.Documents.Tests.samples.VectorSearch
+namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 {
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_03_01_Preview), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2024_03_01_Preview)]
     public partial class VectorSearchUsingFieldBuilder : SearchTestBase
     {
         public VectorSearchUsingFieldBuilder(bool async, SearchClientOptions.ServiceVersion serviceVersion)
-            : base(async, SearchClientOptions.ServiceVersion.V2023_10_01_Preview, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -24,10 +26,10 @@ namespace Azure.Search.Documents.Tests.samples.VectorSearch
             try
             {
                 #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Index_UsingFieldBuilder
-                string vectorSearchProfile = "my-vector-profile";
+                string vectorSearchProfileName = "my-vector-profile";
                 string vectorSearchHnswConfig = "my-hsnw-vector-config";
 
-                string indexName = "MyDocument";
+                string indexName = "my-document";
 #if !SNIPPET
                 indexName = Recording.Random.GetName();
                 resources.IndexName = indexName;
@@ -40,11 +42,11 @@ namespace Azure.Search.Documents.Tests.samples.VectorSearch
                     {
                         Profiles =
                     {
-                        new VectorSearchProfile(vectorSearchProfile, vectorSearchHnswConfig)
+                        new VectorSearchProfile(vectorSearchProfileName, vectorSearchHnswConfig)
                     },
                         Algorithms =
                     {
-                        new HnswVectorSearchAlgorithmConfiguration(vectorSearchHnswConfig)
+                        new HnswAlgorithmConfiguration(vectorSearchHnswConfig)
                     }
                     },
                 };
@@ -87,7 +89,7 @@ namespace Azure.Search.Documents.Tests.samples.VectorSearch
             [SearchableField(AnalyzerName = "en.microsoft")]
             public string Description { get; set; }
 
-            [SearchableField(VectorSearchDimensions = "1536", VectorSearchProfile = "my-vector-profile")]
+            [VectorSearchField(VectorSearchDimensions = 1536, VectorSearchProfileName = "my-vector-profile")]
             public IReadOnlyList<float> DescriptionVector { get; set; }
         }
         #endregion

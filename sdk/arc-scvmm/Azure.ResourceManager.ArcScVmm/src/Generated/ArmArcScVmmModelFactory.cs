@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.ArcScVmm;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -18,7 +17,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmArcScVmmModelFactory
     {
-        /// <summary> Initializes a new instance of ScVmmServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcScVmm.ScVmmServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,10 +38,26 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ScVmmServerData(id, name, resourceType, systemData, tags, location, extendedLocation, credentials, fqdn, port, connectionStatus, errorMessage, uuid, version, provisioningState);
+            return new ScVmmServerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                credentials,
+                fqdn,
+                port,
+                connectionStatus,
+                errorMessage,
+                uuid,
+                version,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ScVmmCloudData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcScVmm.ScVmmCloudData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -63,20 +78,35 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             tags ??= new Dictionary<string, string>();
             storageQoSPolicies ??= new List<StorageQoSPolicy>();
 
-            return new ScVmmCloudData(id, name, resourceType, systemData, tags, location, extendedLocation, inventoryItemId, uuid, vmmServerId, cloudName, cloudCapacity, storageQoSPolicies?.ToList(), provisioningState);
+            return new ScVmmCloudData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                inventoryItemId,
+                uuid,
+                vmmServerId,
+                cloudName,
+                cloudCapacity,
+                storageQoSPolicies?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CloudCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CloudCapacity"/>. </summary>
         /// <param name="cpuCount"> CPUCount specifies the maximum number of CPUs that can be allocated in the cloud. </param>
         /// <param name="memoryMB"> MemoryMB specifies a memory usage limit in megabytes. </param>
         /// <param name="vmCount"> VMCount gives the max number of VMs that can be deployed in the cloud. </param>
         /// <returns> A new <see cref="Models.CloudCapacity"/> instance for mocking. </returns>
         public static CloudCapacity CloudCapacity(long? cpuCount = null, long? memoryMB = null, long? vmCount = null)
         {
-            return new CloudCapacity(cpuCount, memoryMB, vmCount);
+            return new CloudCapacity(cpuCount, memoryMB, vmCount, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of StorageQoSPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageQoSPolicy"/>. </summary>
         /// <param name="name"> The name of the policy. </param>
         /// <param name="id"> The ID of the QoS policy. </param>
         /// <param name="iopsMaximum"> The maximum IO operations per second. </param>
@@ -86,10 +116,17 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <returns> A new <see cref="Models.StorageQoSPolicy"/> instance for mocking. </returns>
         public static StorageQoSPolicy StorageQoSPolicy(string name = null, string id = null, long? iopsMaximum = null, long? iopsMinimum = null, long? bandwidthLimit = null, string policyId = null)
         {
-            return new StorageQoSPolicy(name, id, iopsMaximum, iopsMinimum, bandwidthLimit, policyId);
+            return new StorageQoSPolicy(
+                name,
+                id,
+                iopsMaximum,
+                iopsMinimum,
+                bandwidthLimit,
+                policyId,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ScVmmVirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcScVmm.ScVmmVirtualNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -107,10 +144,23 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ScVmmVirtualNetworkData(id, name, resourceType, systemData, tags, location, extendedLocation, inventoryItemId, uuid, vmmServerId, networkName, provisioningState);
+            return new ScVmmVirtualNetworkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                inventoryItemId,
+                uuid,
+                vmmServerId,
+                networkName,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ScVmmVirtualMachineTemplateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcScVmm.ScVmmVirtualMachineTemplateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -143,10 +193,36 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             networkInterfaces ??= new List<NetworkInterface>();
             disks ??= new List<VirtualDisk>();
 
-            return new ScVmmVirtualMachineTemplateData(id, name, resourceType, systemData, tags, location, extendedLocation, inventoryItemId, uuid, vmmServerId, osType, osName, computerName, memoryMB, cpuCount, limitCpuForMigration, dynamicMemoryEnabled, isCustomizable, dynamicMemoryMaxMB, dynamicMemoryMinMB, isHighlyAvailable, generation, networkInterfaces?.ToList(), disks?.ToList(), provisioningState);
+            return new ScVmmVirtualMachineTemplateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                inventoryItemId,
+                uuid,
+                vmmServerId,
+                osType,
+                osName,
+                computerName,
+                memoryMB,
+                cpuCount,
+                limitCpuForMigration,
+                dynamicMemoryEnabled,
+                isCustomizable,
+                dynamicMemoryMaxMB,
+                dynamicMemoryMinMB,
+                isHighlyAvailable,
+                generation,
+                networkInterfaces?.ToList(),
+                disks?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of NetworkInterface. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkInterface"/>. </summary>
         /// <param name="name"> Gets or sets the name of the network interface. </param>
         /// <param name="displayName"> Gets the display name of the network interface as shown in the vmmServer. This is the fallback label for a NIC when the name is not set. </param>
         /// <param name="ipv4Addresses"> Gets the nic ipv4 addresses. </param>
@@ -164,10 +240,22 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             ipv4Addresses ??= new List<string>();
             ipv6Addresses ??= new List<string>();
 
-            return new NetworkInterface(name, displayName, ipv4Addresses?.ToList(), ipv6Addresses?.ToList(), macAddress, virtualNetworkId, networkName, ipv4AddressType, ipv6AddressType, macAddressType, nicId);
+            return new NetworkInterface(
+                name,
+                displayName,
+                ipv4Addresses?.ToList(),
+                ipv6Addresses?.ToList(),
+                macAddress,
+                virtualNetworkId,
+                networkName,
+                ipv4AddressType,
+                ipv6AddressType,
+                macAddressType,
+                nicId,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of VirtualDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualDisk"/>. </summary>
         /// <param name="name"> Gets or sets the name of the disk. </param>
         /// <param name="displayName"> Gets the display name of the virtual disk as shown in the vmmServer. This is the fallback label for a disk when the name is not set. </param>
         /// <param name="diskId"> Gets or sets the disk id. </param>
@@ -185,10 +273,25 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <returns> A new <see cref="Models.VirtualDisk"/> instance for mocking. </returns>
         public static VirtualDisk VirtualDisk(string name = null, string displayName = null, string diskId = null, int? diskSizeGB = null, int? maxDiskSizeGB = null, int? bus = null, int? lun = null, string busType = null, string vhdType = null, string volumeType = null, string vhdFormatType = null, string templateDiskId = null, StorageQoSPolicyDetails storageQoSPolicy = null, CreateDiffDisk? createDiffDisk = null)
         {
-            return new VirtualDisk(name, displayName, diskId, diskSizeGB, maxDiskSizeGB, bus, lun, busType, vhdType, volumeType, vhdFormatType, templateDiskId, storageQoSPolicy, createDiffDisk);
+            return new VirtualDisk(
+                name,
+                displayName,
+                diskId,
+                diskSizeGB,
+                maxDiskSizeGB,
+                bus,
+                lun,
+                busType,
+                vhdType,
+                volumeType,
+                vhdFormatType,
+                templateDiskId,
+                storageQoSPolicy,
+                createDiffDisk,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ScVmmAvailabilitySetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcScVmm.ScVmmAvailabilitySetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -204,10 +307,63 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ScVmmAvailabilitySetData(id, name, resourceType, systemData, tags, location, extendedLocation, availabilitySetName, vmmServerId, provisioningState);
+            return new ScVmmAvailabilitySetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                availabilitySetName,
+                vmmServerId,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcScVmm.InventoryItemData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties">
+        /// Resource properties.
+        /// Please note <see cref="Models.InventoryItemProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.CloudInventoryItem"/>, <see cref="Models.VirtualMachineInventoryItem"/>, <see cref="Models.VirtualMachineTemplateInventoryItem"/> and <see cref="Models.VirtualNetworkInventoryItem"/>.
+        /// </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <returns> A new <see cref="ArcScVmm.InventoryItemData"/> instance for mocking. </returns>
+        public static InventoryItemData InventoryItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, InventoryItemProperties properties = null, string kind = null)
+        {
+            return new InventoryItemData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                kind,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.InventoryItemProperties"/>. </summary>
+        /// <param name="inventoryType"> They inventory type. </param>
+        /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
+        /// <param name="uuid"> Gets the UUID (which is assigned by VMM) for the inventory item. </param>
+        /// <param name="inventoryItemName"> Gets the Managed Object name in VMM for the inventory item. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.InventoryItemProperties"/> instance for mocking. </returns>
+        public static InventoryItemProperties InventoryItemProperties(string inventoryType = "Unknown", string managedResourceId = null, string uuid = null, string inventoryItemName = null, ProvisioningState? provisioningState = null)
+        {
+            return new UnknownInventoryItemProperties(
+                inventoryType,
+                managedResourceId,
+                uuid,
+                inventoryItemName,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArcScVmm.VirtualMachineInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -228,10 +384,24 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             networkInterfaces ??= new List<NetworkInterface>();
             storageDisks ??= new List<VirtualDisk>();
 
-            return new VirtualMachineInstanceData(id, name, resourceType, systemData, extendedLocation, availabilitySets?.ToList(), osProfile, hardwareProfile, networkInterfaces != null ? new NetworkProfile(networkInterfaces?.ToList()) : null, storageDisks != null ? new StorageProfile(storageDisks?.ToList()) : null, infrastructureProfile, powerState, provisioningState);
+            return new VirtualMachineInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                extendedLocation,
+                availabilitySets?.ToList(),
+                osProfile,
+                hardwareProfile,
+                networkInterfaces != null ? new NetworkProfile(networkInterfaces?.ToList(), serializedAdditionalRawData: null) : null,
+                storageDisks != null ? new StorageProfile(storageDisks?.ToList(), serializedAdditionalRawData: null) : null,
+                infrastructureProfile,
+                powerState,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of OSProfileForVmInstance. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OSProfileForVmInstance"/>. </summary>
         /// <param name="adminPassword"> Admin password of the virtual machine. </param>
         /// <param name="computerName"> Gets or sets computer name. </param>
         /// <param name="osType"> Gets the type of the os. </param>
@@ -240,10 +410,16 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <returns> A new <see cref="Models.OSProfileForVmInstance"/> instance for mocking. </returns>
         public static OSProfileForVmInstance OSProfileForVmInstance(string adminPassword = null, string computerName = null, OSType? osType = null, string osSku = null, string osVersion = null)
         {
-            return new OSProfileForVmInstance(adminPassword, computerName, osType, osSku, osVersion);
+            return new OSProfileForVmInstance(
+                adminPassword,
+                computerName,
+                osType,
+                osSku,
+                osVersion,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of HardwareProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HardwareProfile"/>. </summary>
         /// <param name="memoryMB"> MemoryMB is the size of a virtual machine's memory, in MB. </param>
         /// <param name="cpuCount"> Gets or sets the number of vCPUs for the vm. </param>
         /// <param name="limitCpuForMigration"> Gets or sets a value indicating whether to enable processor compatibility mode for live migration of VMs. </param>
@@ -254,10 +430,18 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <returns> A new <see cref="Models.HardwareProfile"/> instance for mocking. </returns>
         public static HardwareProfile HardwareProfile(int? memoryMB = null, int? cpuCount = null, LimitCpuForMigration? limitCpuForMigration = null, DynamicMemoryEnabled? dynamicMemoryEnabled = null, int? dynamicMemoryMaxMB = null, int? dynamicMemoryMinMB = null, IsHighlyAvailable? isHighlyAvailable = null)
         {
-            return new HardwareProfile(memoryMB, cpuCount, limitCpuForMigration, dynamicMemoryEnabled, dynamicMemoryMaxMB, dynamicMemoryMinMB, isHighlyAvailable);
+            return new HardwareProfile(
+                memoryMB,
+                cpuCount,
+                limitCpuForMigration,
+                dynamicMemoryEnabled,
+                dynamicMemoryMaxMB,
+                dynamicMemoryMinMB,
+                isHighlyAvailable,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of InfrastructureProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InfrastructureProfile"/>. </summary>
         /// <param name="inventoryItemId"> Gets or sets the inventory Item ID for the resource. </param>
         /// <param name="vmmServerId"> ARM Id of the vmmServer resource in which this resource resides. </param>
         /// <param name="cloudId"> ARM Id of the cloud resource to use for deploying the vm. </param>
@@ -274,10 +458,22 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         {
             checkpoints ??= new List<Checkpoint>();
 
-            return new InfrastructureProfile(inventoryItemId, vmmServerId, cloudId, templateId, vmName, uuid, lastRestoredVmCheckpoint, checkpoints?.ToList(), checkpointType, generation, biosGuid);
+            return new InfrastructureProfile(
+                inventoryItemId,
+                vmmServerId,
+                cloudId,
+                templateId,
+                vmName,
+                uuid,
+                lastRestoredVmCheckpoint,
+                checkpoints?.ToList(),
+                checkpointType,
+                generation,
+                biosGuid,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of VmInstanceHybridIdentityMetadataData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcScVmm.VmInstanceHybridIdentityMetadataData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -288,10 +484,18 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <returns> A new <see cref="ArcScVmm.VmInstanceHybridIdentityMetadataData"/> instance for mocking. </returns>
         public static VmInstanceHybridIdentityMetadataData VmInstanceHybridIdentityMetadataData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string resourceUid = null, string publicKey = null, ProvisioningState? provisioningState = null)
         {
-            return new VmInstanceHybridIdentityMetadataData(id, name, resourceType, systemData, resourceUid, publicKey, provisioningState);
+            return new VmInstanceHybridIdentityMetadataData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                resourceUid,
+                publicKey,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of GuestAgentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcScVmm.GuestAgentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -306,7 +510,113 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <returns> A new <see cref="ArcScVmm.GuestAgentData"/> instance for mocking. </returns>
         public static GuestAgentData GuestAgentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string uuid = null, GuestCredential credentials = null, string httpsProxy = null, ProvisioningAction? provisioningAction = null, string status = null, string customResourceName = null, ProvisioningState? provisioningState = null)
         {
-            return new GuestAgentData(id, name, resourceType, systemData, uuid, credentials, httpsProxy != null ? new HttpProxyConfiguration(httpsProxy) : null, provisioningAction, status, customResourceName, provisioningState);
+            return new GuestAgentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                uuid,
+                credentials,
+                httpsProxy != null ? new HttpProxyConfiguration(httpsProxy, serializedAdditionalRawData: null) : null,
+                provisioningAction,
+                status,
+                customResourceName,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CloudInventoryItem"/>. </summary>
+        /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
+        /// <param name="uuid"> Gets the UUID (which is assigned by VMM) for the inventory item. </param>
+        /// <param name="inventoryItemName"> Gets the Managed Object name in VMM for the inventory item. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.CloudInventoryItem"/> instance for mocking. </returns>
+        public static CloudInventoryItem CloudInventoryItem(string managedResourceId = null, string uuid = null, string inventoryItemName = null, ProvisioningState? provisioningState = null)
+        {
+            return new CloudInventoryItem(
+                InventoryType.Cloud,
+                managedResourceId,
+                uuid,
+                inventoryItemName,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualNetworkInventoryItem"/>. </summary>
+        /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
+        /// <param name="uuid"> Gets the UUID (which is assigned by VMM) for the inventory item. </param>
+        /// <param name="inventoryItemName"> Gets the Managed Object name in VMM for the inventory item. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.VirtualNetworkInventoryItem"/> instance for mocking. </returns>
+        public static VirtualNetworkInventoryItem VirtualNetworkInventoryItem(string managedResourceId = null, string uuid = null, string inventoryItemName = null, ProvisioningState? provisioningState = null)
+        {
+            return new VirtualNetworkInventoryItem(
+                InventoryType.VirtualNetwork,
+                managedResourceId,
+                uuid,
+                inventoryItemName,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineTemplateInventoryItem"/>. </summary>
+        /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
+        /// <param name="uuid"> Gets the UUID (which is assigned by VMM) for the inventory item. </param>
+        /// <param name="inventoryItemName"> Gets the Managed Object name in VMM for the inventory item. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="cpuCount"> Gets the desired number of vCPUs for the vm. </param>
+        /// <param name="memoryMB"> MemoryMB is the desired size of a virtual machine's memory, in MB. </param>
+        /// <param name="osType"> Gets the type of the os. </param>
+        /// <param name="osName"> Gets os name. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineTemplateInventoryItem"/> instance for mocking. </returns>
+        public static VirtualMachineTemplateInventoryItem VirtualMachineTemplateInventoryItem(string managedResourceId = null, string uuid = null, string inventoryItemName = null, ProvisioningState? provisioningState = null, int? cpuCount = null, int? memoryMB = null, OSType? osType = null, string osName = null)
+        {
+            return new VirtualMachineTemplateInventoryItem(
+                InventoryType.VirtualMachineTemplate,
+                managedResourceId,
+                uuid,
+                inventoryItemName,
+                provisioningState,
+                serializedAdditionalRawData: null,
+                cpuCount,
+                memoryMB,
+                osType,
+                osName);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineInventoryItem"/>. </summary>
+        /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
+        /// <param name="uuid"> Gets the UUID (which is assigned by VMM) for the inventory item. </param>
+        /// <param name="inventoryItemName"> Gets the Managed Object name in VMM for the inventory item. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="osType"> Gets the type of the os. </param>
+        /// <param name="osName"> Gets os name. </param>
+        /// <param name="osVersion"> Gets os version. </param>
+        /// <param name="powerState"> Gets the power state of the virtual machine. </param>
+        /// <param name="ipAddresses"> Gets or sets the nic ip addresses. </param>
+        /// <param name="cloud"> Cloud inventory resource details where the VM is present. </param>
+        /// <param name="biosGuid"> Gets the bios guid. </param>
+        /// <param name="managedMachineResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineInventoryItem"/> instance for mocking. </returns>
+        public static VirtualMachineInventoryItem VirtualMachineInventoryItem(string managedResourceId = null, string uuid = null, string inventoryItemName = null, ProvisioningState? provisioningState = null, OSType? osType = null, string osName = null, string osVersion = null, string powerState = null, IEnumerable<string> ipAddresses = null, InventoryItemDetails cloud = null, string biosGuid = null, ResourceIdentifier managedMachineResourceId = null)
+        {
+            ipAddresses ??= new List<string>();
+
+            return new VirtualMachineInventoryItem(
+                InventoryType.VirtualMachine,
+                managedResourceId,
+                uuid,
+                inventoryItemName,
+                provisioningState,
+                serializedAdditionalRawData: null,
+                osType,
+                osName,
+                osVersion,
+                powerState,
+                ipAddresses?.ToList(),
+                cloud,
+                biosGuid,
+                managedMachineResourceId);
         }
     }
 }

@@ -142,7 +142,7 @@ namespace Azure.Data.Tables.Sas
         public string PartitionKeyEnd { get; set; }
 
         /// <summary>
-        /// The optional end of the partition key values range being made available.
+        /// The optional end of the row key values range being made available.
         /// <see cref="RowKeyStart"/> must be specified if this value is set.
         /// </summary>
         public string RowKeyEnd { get; set; }
@@ -185,7 +185,7 @@ namespace Azure.Data.Tables.Sas
         /// <returns>
         /// An instance of <see cref="TableSasQueryParameters"/>.
         /// </returns>
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/data-tables")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/data-tables")]
         public TableSasQueryParameters ToSasQueryParameters(TableSharedKeyCredential sharedKeyCredential)
         {
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
@@ -240,7 +240,7 @@ namespace Azure.Data.Tables.Sas
         /// <returns>
         /// A URL encoded query string representing the SAS.
         /// </returns>
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/data-tables")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/data-tables")]
         public string Sign(TableSharedKeyCredential sharedKeyCredential) =>
             ToSasQueryParameters(sharedKeyCredential).ToString();
 

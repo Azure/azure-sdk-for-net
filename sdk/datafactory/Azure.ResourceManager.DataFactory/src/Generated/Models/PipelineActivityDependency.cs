@@ -8,14 +8,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Activity dependency information. </summary>
     public partial class PipelineActivityDependency
     {
-        /// <summary> Initializes a new instance of PipelineActivityDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineActivityDependency"/>. </summary>
         /// <param name="activity"> Activity name. </param>
         /// <param name="dependencyConditions"> Match-Condition for the dependency. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="activity"/> or <paramref name="dependencyConditions"/> is null. </exception>
@@ -29,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of PipelineActivityDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineActivityDependency"/>. </summary>
         /// <param name="activity"> Activity name. </param>
         /// <param name="dependencyConditions"> Match-Condition for the dependency. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -38,6 +37,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Activity = activity;
             DependencyConditions = dependencyConditions;
             AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PipelineActivityDependency"/> for deserialization. </summary>
+        internal PipelineActivityDependency()
+        {
         }
 
         /// <summary> Activity name. </summary>
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

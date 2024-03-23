@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.HealthcareApis.Models;
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-06-01";
+            _apiVersion = apiVersion ?? "2023-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Lists all the available workspaces under the specified subscription. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Lists all the available workspaces under the specified subscription. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Lists all the available workspaces under the specified resource group. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -151,7 +150,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Lists all the available workspaces under the specified resource group. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -198,7 +197,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Gets the properties of the specified workspace. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -229,7 +228,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Gets the properties of the specified workspace. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -284,7 +283,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Creates or updates a workspace resource with the specified parameters. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="data"> The parameters for creating or updating a healthcare workspace. </param>
@@ -312,7 +311,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Creates or updates a workspace resource with the specified parameters. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="data"> The parameters for creating or updating a healthcare workspace. </param>
@@ -364,7 +363,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Patch workspace details. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="patch"> The parameters for updating a specified workspace. </param>
@@ -391,7 +390,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Patch workspace details. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="patch"> The parameters for updating a specified workspace. </param>
@@ -438,7 +437,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Deletes a specified workspace. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -464,7 +463,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Deletes a specified workspace. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -505,7 +504,7 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary> Lists all the available workspaces under the specified subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -532,7 +531,7 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary> Lists all the available workspaces under the specified subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -573,7 +572,7 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary> Lists all the available workspaces under the specified resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -602,7 +601,7 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary> Lists all the available workspaces under the specified resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>

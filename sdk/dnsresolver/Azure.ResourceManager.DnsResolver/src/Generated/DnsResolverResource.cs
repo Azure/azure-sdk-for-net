@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Resources;
 
@@ -21,13 +19,16 @@ namespace Azure.ResourceManager.DnsResolver
 {
     /// <summary>
     /// A Class representing a DnsResolver along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DnsResolverResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDnsResolverResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDnsResolver method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DnsResolverResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDnsResolverResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDnsResolver method.
     /// </summary>
     public partial class DnsResolverResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DnsResolverResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="dnsResolverName"> The dnsResolverName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string dnsResolverName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}";
@@ -38,12 +39,15 @@ namespace Azure.ResourceManager.DnsResolver
         private readonly DnsResolversRestOperations _dnsResolverRestClient;
         private readonly DnsResolverData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/dnsResolvers";
+
         /// <summary> Initializes a new instance of the <see cref="DnsResolverResource"/> class for mocking. </summary>
         protected DnsResolverResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DnsResolverResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DnsResolverResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DnsResolverResource(ArmClient client, DnsResolverData data) : this(client, data.Id)
@@ -64,9 +68,6 @@ namespace Azure.ResourceManager.DnsResolver
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/dnsResolvers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <returns> An object representing collection of DnsResolverInboundEndpointResources and their operations over a DnsResolverInboundEndpointResource. </returns>
         public virtual DnsResolverInboundEndpointCollection GetDnsResolverInboundEndpoints()
         {
-            return GetCachedClient(Client => new DnsResolverInboundEndpointCollection(Client, Id));
+            return GetCachedClient(client => new DnsResolverInboundEndpointCollection(client, Id));
         }
 
         /// <summary>
@@ -107,12 +108,20 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>InboundEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverInboundEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="inboundEndpointName"> The name of the inbound endpoint for the DNS resolver. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inboundEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="inboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DnsResolverInboundEndpointResource>> GetDnsResolverInboundEndpointAsync(string inboundEndpointName, CancellationToken cancellationToken = default)
         {
@@ -130,12 +139,20 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>InboundEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverInboundEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="inboundEndpointName"> The name of the inbound endpoint for the DNS resolver. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inboundEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="inboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DnsResolverInboundEndpointResource> GetDnsResolverInboundEndpoint(string inboundEndpointName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +163,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <returns> An object representing collection of DnsResolverOutboundEndpointResources and their operations over a DnsResolverOutboundEndpointResource. </returns>
         public virtual DnsResolverOutboundEndpointCollection GetDnsResolverOutboundEndpoints()
         {
-            return GetCachedClient(Client => new DnsResolverOutboundEndpointCollection(Client, Id));
+            return GetCachedClient(client => new DnsResolverOutboundEndpointCollection(client, Id));
         }
 
         /// <summary>
@@ -160,12 +177,20 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>OutboundEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverOutboundEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DnsResolverOutboundEndpointResource>> GetDnsResolverOutboundEndpointAsync(string outboundEndpointName, CancellationToken cancellationToken = default)
         {
@@ -183,12 +208,20 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>OutboundEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverOutboundEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DnsResolverOutboundEndpointResource> GetDnsResolverOutboundEndpoint(string outboundEndpointName, CancellationToken cancellationToken = default)
         {
@@ -205,6 +238,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DnsResolvers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -238,6 +279,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>DnsResolvers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -269,6 +318,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DnsResolvers_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -305,6 +362,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>DnsResolvers_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -339,6 +404,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DnsResolvers_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -379,6 +452,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>DnsResolvers_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -417,6 +498,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DnsResolvers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -472,6 +561,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>DnsResolvers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -526,6 +623,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>DnsResolvers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -575,6 +680,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>DnsResolvers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -623,6 +736,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DnsResolvers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -675,6 +796,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DnsResolvers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

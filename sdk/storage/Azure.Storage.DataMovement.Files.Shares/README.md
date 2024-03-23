@@ -2,6 +2,12 @@
 
 > Server Version: 2020-04-08, 2020-02-10, 2019-12-12, 2019-07-07, and 2020-02-02
 
+## Project Status: Beta
+
+This product is in beta. Some features will be missing or have significant bugs. Please see [Known Issues](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement/KnownIssues.md) for detailed information.
+
+---
+
 Azure Storage is a Microsoft-managed service providing cloud storage that is
 highly available, secure, durable, scalable, and redundant. Azure Storage
 includes Azure Blobs (objects), Azure Data Lake Storage Gen2, Azure Files,
@@ -64,24 +70,100 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-This section demonstrates usage of Data Movement for interacting with blob storage.
+This section demonstrates usage of Data Movement for interacting with file shares.
 
+### Initializing File Share `StorageResource`
 
-### Initializing File Storage `StorageResource`
+Azure.Storage.DataMovement.Files.Shares exposes `ShareFilesStorageResourceProvider` to create `StorageResource` instances for files and directories. The resource provider should be initialized with a credential to properly authenticate the storage resources. The following demonstrates this using an `Azure.Core` token credential.
 
-***TODO***
+```C# Snippet:MakeProvider_TokenCredential_Shares
+ShareFilesStorageResourceProvider shares = new(tokenCredential);
+```
+
+To create a share `StorageResource`, use the methods `FromFile` or `FromDirectory`.
+
+```C# Snippet:ResourceConstruction_Shares
+StorageResource directory = shares.FromDirectory(
+    "http://myaccount.files.core.windows.net/share/path/to/directory");
+StorageResource rootDirectory = shares.FromDirectory(
+    "http://myaccount.files.core.windows.net/share");
+StorageResource file = shares.FromFile(
+    "http://myaccount.files.core.windows.net/share/path/to/file.txt");
+```
+
+Storage resources can also be initialized with the appropriate client object from Azure.Storage.Files.Shares. Since these resources will use the credential already present in the client object, no credential is required in the provider when using `FromClient()`. **However**, a `ShareFilesStorageResourceProvider` must still have a credential if it is to be used in `TransferManagerOptions` for resuming a transfer.
+
+```C# Snippet:ResourceConstruction_FromClients_Shares
+ShareFilesStorageResourceProvider shares = new();
+StorageResource shareDirectoryResource = shares.FromClient(directoryClient);
+StorageResource shareFileResource = shares.FromClient(fileClient);
+```
 
 ### Upload
 
-***TODO***
+An upload takes place between a local file `StorageResource` as source and file share `StorageResource` as destination.
+
+Upload a file.
+
+```C# Snippet:SimplefileUpload_Shares
+DataTransfer fileTransfer = await transferManager.StartTransferAsync(
+    sourceResource: files.FromFile(sourceLocalFile),
+    destinationResource: shares.FromFile(destinationFileUri));
+await fileTransfer.WaitForCompletionAsync();
+```
+
+Upload a directory.
+
+```C# Snippet:SimpleDirectoryUpload_Shares
+DataTransfer folderTransfer = await transferManager.StartTransferAsync(
+    sourceResource: files.FromFile(sourceLocalDirectory),
+    destinationResource: shares.FromDirectory(destinationFolderUri));
+await folderTransfer.WaitForCompletionAsync();
+```
 
 ### Download
 
-***TODO***
+A download takes place between a file share `StorageResource` as source and local file `StorageResource` as destination.
+
+Download a file.
+
+```C# Snippet:SimpleFileDownload_Shares
+DataTransfer fileTransfer = await transferManager.StartTransferAsync(
+    sourceResource: shares.FromFile(sourceFileUri),
+    destinationResource: files.FromFile(destinationLocalFile));
+await fileTransfer.WaitForCompletionAsync();
+```
+
+Download a Directory.
+
+```C# Snippet:SimpleDirectoryDownload_Shares
+DataTransfer directoryTransfer = await transferManager.StartTransferAsync(
+    sourceResource: shares.FromDirectory(sourceDirectoryUri),
+    destinationResource: files.FromDirectory(destinationLocalDirectory));
+await directoryTransfer.WaitForCompletionAsync();
+```
 
 ### File Copy
 
-***TODO***
+A copy takes place between two share `StorageResource` instances. Copying between two files or directories uses PUT from URL REST APIs, which do not transfer data through the machine running DataMovement.
+
+Copy a single file.
+
+```C# Snippet:s2sCopyFile_Shares
+DataTransfer fileTransfer = await transferManager.StartTransferAsync(
+    sourceResource: shares.FromFile(sourceFileUri),
+    destinationResource: shares.FromFile(destinationFileUri));
+await fileTransfer.WaitForCompletionAsync();
+```
+
+Copy a directory.
+
+```C# Snippet:s2sCopyDirectory_Shares
+DataTransfer directoryTransfer = await transferManager.StartTransferAsync(
+    sourceResource: shares.FromDirectory(sourceDirectoryUri),
+    destinationResource: shares.FromDirectory(destinationDirectoryUri));
+await directoryTransfer.WaitForCompletionAsync();
+```
 
 ## Troubleshooting
 
@@ -123,7 +205,7 @@ additional questions or comments.
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/src/RequestFailedException.cs
 [error_codes]: https://docs.microsoft.com/rest/api/storageservices/common-rest-api-error-codes
-[samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement.Blobs/samples
+[samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement.Files.Shares/samples
 [storage_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/

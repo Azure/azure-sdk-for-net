@@ -18,11 +18,16 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("algorithm"u8);
-            writer.WriteStringValue(Algorithm);
+            writer.WriteStringValue(AlgorithmConfigurationName);
             if (Optional.IsDefined(Vectorizer))
             {
                 writer.WritePropertyName("vectorizer"u8);
                 writer.WriteStringValue(Vectorizer);
+            }
+            if (Optional.IsDefined(CompressionConfigurationName))
+            {
+                writer.WritePropertyName("compression"u8);
+                writer.WriteStringValue(CompressionConfigurationName);
             }
             writer.WriteEndObject();
         }
@@ -35,7 +40,8 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string name = default;
             string algorithm = default;
-            Optional<string> vectorizer = default;
+            string vectorizer = default;
+            string compression = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -53,8 +59,13 @@ namespace Azure.Search.Documents.Indexes.Models
                     vectorizer = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("compression"u8))
+                {
+                    compression = property.Value.GetString();
+                    continue;
+                }
             }
-            return new VectorSearchProfile(name, algorithm, vectorizer.Value);
+            return new VectorSearchProfile(name, algorithm, vectorizer, compression);
         }
     }
 }

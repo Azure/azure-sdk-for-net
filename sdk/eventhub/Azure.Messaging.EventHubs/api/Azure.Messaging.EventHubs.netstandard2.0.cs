@@ -331,14 +331,17 @@ namespace Azure.Messaging.EventHubs.Primitives
         public abstract System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorPartitionOwnership>> ClaimOwnershipAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorPartitionOwnership> desiredOwnership, System.Threading.CancellationToken cancellationToken);
         public abstract System.Threading.Tasks.Task<Azure.Messaging.EventHubs.Primitives.EventProcessorCheckpoint> GetCheckpointAsync(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, System.Threading.CancellationToken cancellationToken);
         public abstract System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorPartitionOwnership>> ListOwnershipAsync(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, System.Threading.CancellationToken cancellationToken);
-        public abstract System.Threading.Tasks.Task UpdateCheckpointAsync(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, long offset, long? sequenceNumber, System.Threading.CancellationToken cancellationToken);
+        public virtual System.Threading.Tasks.Task UpdateCheckpointAsync(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, long offset, long? sequenceNumber, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task UpdateCheckpointAsync(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, string clientIdentifier, Azure.Messaging.EventHubs.Processor.CheckpointPosition startingPosition, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class EventProcessorCheckpoint
     {
         public EventProcessorCheckpoint() { }
+        public string ClientIdentifier { get { throw null; } set { } }
         public string ConsumerGroup { get { throw null; } set { } }
         public string EventHubName { get { throw null; } set { } }
         public string FullyQualifiedNamespace { get { throw null; } set { } }
+        public System.DateTimeOffset? LastModified { get { throw null; } set { } }
         public string PartitionId { get { throw null; } set { } }
         public Azure.Messaging.EventHubs.Consumer.EventPosition StartingPosition { get { throw null; } set { } }
     }
@@ -415,6 +418,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         public virtual System.Threading.Tasks.Task StopProcessingAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
+        protected virtual System.Threading.Tasks.Task UpdateCheckpointAsync(string partitionId, Azure.Messaging.EventHubs.Processor.CheckpointPosition startingPosition, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected virtual System.Threading.Tasks.Task UpdateCheckpointAsync(string partitionId, long offset, long? sequenceNumber, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected internal virtual System.Threading.Tasks.Task ValidateProcessingPreconditions(System.Threading.CancellationToken cancellationToken) { throw null; }
     }
@@ -476,11 +480,28 @@ namespace Azure.Messaging.EventHubs.Primitives
         protected override System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorPartitionOwnership>> ClaimOwnershipAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorPartitionOwnership> desiredOwnership, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected override System.Threading.Tasks.Task<Azure.Messaging.EventHubs.Primitives.EventProcessorCheckpoint> GetCheckpointAsync(string partitionId, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected override System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorPartitionOwnership>> ListOwnershipAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
+        protected override System.Threading.Tasks.Task UpdateCheckpointAsync(string partitionId, Azure.Messaging.EventHubs.Processor.CheckpointPosition startingPosition, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected override System.Threading.Tasks.Task UpdateCheckpointAsync(string partitionId, long offset, long? sequenceNumber, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
 }
 namespace Azure.Messaging.EventHubs.Processor
 {
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public partial struct CheckpointPosition : System.IEquatable<Azure.Messaging.EventHubs.Processor.CheckpointPosition>
+    {
+        private int _dummyPrimitive;
+        public CheckpointPosition(long sequenceNumber) { throw null; }
+        public long SequenceNumber { get { throw null; } }
+        public bool Equals(Azure.Messaging.EventHubs.Processor.CheckpointPosition other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        public static Azure.Messaging.EventHubs.Processor.CheckpointPosition FromEvent(Azure.Messaging.EventHubs.EventData eventData) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Messaging.EventHubs.Processor.CheckpointPosition left, Azure.Messaging.EventHubs.Processor.CheckpointPosition right) { throw null; }
+        public static bool operator !=(Azure.Messaging.EventHubs.Processor.CheckpointPosition left, Azure.Messaging.EventHubs.Processor.CheckpointPosition right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public enum LoadBalancingStrategy
     {
         Balanced = 0,

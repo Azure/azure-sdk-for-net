@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class ReportConfigDataset : IUtf8JsonSerializable
+    public partial class ReportConfigDataset : IUtf8JsonSerializable, IJsonModel<ReportConfigDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReportConfigDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ReportConfigDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ReportConfigDataset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ReportConfigDataset)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Granularity))
             {
@@ -62,21 +72,52 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ReportConfigDataset DeserializeReportConfigDataset(JsonElement element)
+        ReportConfigDataset IJsonModel<ReportConfigDataset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ReportConfigDataset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ReportConfigDataset)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeReportConfigDataset(document.RootElement, options);
+        }
+
+        internal static ReportConfigDataset DeserializeReportConfigDataset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ReportGranularityType> granularity = default;
-            Optional<ReportConfigDatasetConfiguration> configuration = default;
-            Optional<IDictionary<string, ReportConfigAggregation>> aggregation = default;
-            Optional<IList<ReportConfigGrouping>> grouping = default;
-            Optional<IList<ReportConfigSorting>> sorting = default;
-            Optional<ReportConfigFilter> filter = default;
+            ReportGranularityType? granularity = default;
+            ReportConfigDatasetConfiguration configuration = default;
+            IDictionary<string, ReportConfigAggregation> aggregation = default;
+            IList<ReportConfigGrouping> grouping = default;
+            IList<ReportConfigSorting> sorting = default;
+            ReportConfigFilter filter = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("granularity"u8))
@@ -94,7 +135,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    configuration = ReportConfigDatasetConfiguration.DeserializeReportConfigDatasetConfiguration(property.Value);
+                    configuration = ReportConfigDatasetConfiguration.DeserializeReportConfigDatasetConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("aggregation"u8))
@@ -106,7 +147,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     Dictionary<string, ReportConfigAggregation> dictionary = new Dictionary<string, ReportConfigAggregation>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ReportConfigAggregation.DeserializeReportConfigAggregation(property0.Value));
+                        dictionary.Add(property0.Name, ReportConfigAggregation.DeserializeReportConfigAggregation(property0.Value, options));
                     }
                     aggregation = dictionary;
                     continue;
@@ -120,7 +161,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<ReportConfigGrouping> array = new List<ReportConfigGrouping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportConfigGrouping.DeserializeReportConfigGrouping(item));
+                        array.Add(ReportConfigGrouping.DeserializeReportConfigGrouping(item, options));
                     }
                     grouping = array;
                     continue;
@@ -134,7 +175,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<ReportConfigSorting> array = new List<ReportConfigSorting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportConfigSorting.DeserializeReportConfigSorting(item));
+                        array.Add(ReportConfigSorting.DeserializeReportConfigSorting(item, options));
                     }
                     sorting = array;
                     continue;
@@ -145,11 +186,54 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    filter = ReportConfigFilter.DeserializeReportConfigFilter(property.Value);
+                    filter = ReportConfigFilter.DeserializeReportConfigFilter(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ReportConfigDataset(Optional.ToNullable(granularity), configuration.Value, Optional.ToDictionary(aggregation), Optional.ToList(grouping), Optional.ToList(sorting), filter.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ReportConfigDataset(
+                granularity,
+                configuration,
+                aggregation ?? new ChangeTrackingDictionary<string, ReportConfigAggregation>(),
+                grouping ?? new ChangeTrackingList<ReportConfigGrouping>(),
+                sorting ?? new ChangeTrackingList<ReportConfigSorting>(),
+                filter,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ReportConfigDataset>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReportConfigDataset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ReportConfigDataset)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ReportConfigDataset IPersistableModel<ReportConfigDataset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReportConfigDataset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeReportConfigDataset(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ReportConfigDataset)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ReportConfigDataset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

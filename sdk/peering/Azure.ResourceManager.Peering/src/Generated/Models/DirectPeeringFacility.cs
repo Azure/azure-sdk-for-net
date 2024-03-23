@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Peering.Models
 {
     /// <summary> The properties that define a direct peering facility. </summary>
     public partial class DirectPeeringFacility
     {
-        /// <summary> Initializes a new instance of DirectPeeringFacility. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DirectPeeringFacility"/>. </summary>
         public DirectPeeringFacility()
         {
         }
 
-        /// <summary> Initializes a new instance of DirectPeeringFacility. </summary>
+        /// <summary> Initializes a new instance of <see cref="DirectPeeringFacility"/>. </summary>
         /// <param name="address"> The address of the direct peering facility. </param>
         /// <param name="directPeeringType"> The type of the direct peering. </param>
         /// <param name="peeringDBFacilityId"> The PeeringDB.com ID of the facility. </param>
         /// <param name="peeringDBFacilityLink"> The PeeringDB.com URL of the facility. </param>
-        internal DirectPeeringFacility(string address, DirectPeeringType? directPeeringType, int? peeringDBFacilityId, string peeringDBFacilityLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DirectPeeringFacility(string address, DirectPeeringType? directPeeringType, int? peeringDBFacilityId, string peeringDBFacilityLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Address = address;
             DirectPeeringType = directPeeringType;
             PeeringDBFacilityId = peeringDBFacilityId;
             PeeringDBFacilityLink = peeringDBFacilityLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The address of the direct peering facility. </summary>

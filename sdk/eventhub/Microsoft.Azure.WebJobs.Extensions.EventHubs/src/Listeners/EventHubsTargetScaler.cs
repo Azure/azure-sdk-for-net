@@ -86,7 +86,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
         internal TargetScalerResult GetScaleResultInternal(TargetScalerContext context, long eventCount, int partitionCount)
         {
             int desiredConcurrency = GetDesiredConcurrencyInternal(context);
-            int desiredWorkerCount = (int)Math.Ceiling(eventCount / (decimal)desiredConcurrency);
+
+            int desiredWorkerCount;
+            try
+            {
+                checked
+                {
+                    desiredWorkerCount = (int)Math.Ceiling(eventCount / (decimal)desiredConcurrency);
+                }
+            }
+            catch (OverflowException)
+            {
+                desiredWorkerCount = int.MaxValue;
+            }
+
             int[] sortedValidWorkerCounts = GetSortedValidWorkerCountsForPartitionCount(partitionCount);
             int validatedTargetWorkerCount = GetValidWorkerCount(desiredWorkerCount, sortedValidWorkerCounts);
 

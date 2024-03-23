@@ -6,20 +6,19 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> List of repositories. </summary>
     internal partial class Repositories
     {
-        /// <summary> Initializes a new instance of Repositories. </summary>
+        /// <summary> Initializes a new instance of <see cref="Repositories"/>. </summary>
         internal Repositories()
         {
             RepositoriesValue = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of Repositories. </summary>
+        /// <summary> Initializes a new instance of <see cref="Repositories"/>. </summary>
         /// <param name="repositoriesValue"> Repository names. </param>
         /// <param name="link"></param>
         internal Repositories(IReadOnlyList<string> repositoriesValue, string link)

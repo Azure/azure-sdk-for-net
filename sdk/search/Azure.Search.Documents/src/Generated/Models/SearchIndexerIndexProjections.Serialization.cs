@@ -38,7 +38,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             IList<SearchIndexerIndexProjectionSelector> selectors = default;
-            Optional<SearchIndexerIndexProjectionsParameters> parameters = default;
+            SearchIndexerIndexProjectionsParameters parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("selectors"u8))
@@ -61,7 +61,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndexerIndexProjections(selectors, parameters.Value);
+            return new SearchIndexerIndexProjections(selectors, parameters);
         }
     }
 }

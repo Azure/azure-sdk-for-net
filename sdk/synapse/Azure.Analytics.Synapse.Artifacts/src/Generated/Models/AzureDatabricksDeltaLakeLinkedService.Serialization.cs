@@ -94,15 +94,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
             object domain = default;
             SecretBase accessToken = default;
-            Optional<object> clusterId = default;
-            Optional<object> encryptedCredential = default;
-            Optional<CredentialReference> credential = default;
+            object clusterId = default;
+            object encryptedCredential = default;
+            CredentialReference credential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -213,7 +213,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDatabricksDeltaLakeLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, domain, accessToken, clusterId.Value, encryptedCredential.Value, credential.Value);
+            return new AzureDatabricksDeltaLakeLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                domain,
+                accessToken,
+                clusterId,
+                encryptedCredential,
+                credential);
         }
 
         internal partial class AzureDatabricksDeltaLakeLinkedServiceConverter : JsonConverter<AzureDatabricksDeltaLakeLinkedService>

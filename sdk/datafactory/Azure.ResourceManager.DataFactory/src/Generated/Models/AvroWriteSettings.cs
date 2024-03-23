@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Avro write settings. </summary>
     public partial class AvroWriteSettings : FormatWriteSettings
     {
-        /// <summary> Initializes a new instance of AvroWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvroWriteSettings"/>. </summary>
         public AvroWriteSettings()
         {
             FormatWriteSettingsType = "AvroWriteSettings";
         }
 
-        /// <summary> Initializes a new instance of AvroWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvroWriteSettings"/>. </summary>
         /// <param name="formatWriteSettingsType"> The write setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="recordName"> Top level record name in write result, which is required in AVRO spec. </param>

@@ -11,6 +11,7 @@ using Azure.Core.Tests;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Processor.Diagnostics;
 using Moq;
 using Moq.Protected;
@@ -63,7 +64,7 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor.Object.Logger = mockLogger.Object;
 
             using var listener = new ClientDiagnosticListener(DiagnosticProperty.DiagnosticNamespace);
-            await InvokeUpdateCheckpointAsync(mockProcessor.Object, mockContext.Object.PartitionId, 65, 998, default);
+            await InvokeUpdateCheckpointAsync(mockProcessor.Object, mockContext.Object.PartitionId, 998, default);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -88,12 +89,11 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private static Task InvokeUpdateCheckpointAsync(EventProcessorClient target,
                                                         string partitionId,
-                                                        long offset,
-                                                        long? sequenceNumber,
+                                                        long sequenceNumber,
                                                         CancellationToken cancellationToken) =>
             (Task)
                 typeof(EventProcessorClient)
-                    .GetMethod("UpdateCheckpointAsync", BindingFlags.Instance | BindingFlags.NonPublic)
-                    .Invoke(target, new object[] { partitionId, offset, sequenceNumber, cancellationToken });
+                    .GetMethod("UpdateCheckpointAsync", BindingFlags.Instance | BindingFlags.NonPublic, null, new Type[] { typeof(string), typeof(CheckpointPosition), typeof(CancellationToken) }, null)
+                    .Invoke(target, new object[] { partitionId, new CheckpointPosition(sequenceNumber), cancellationToken });
     }
 }

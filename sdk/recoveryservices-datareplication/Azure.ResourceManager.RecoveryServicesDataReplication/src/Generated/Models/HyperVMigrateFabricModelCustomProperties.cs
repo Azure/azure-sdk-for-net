@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> HyperV migrate fabric model custom properties. </summary>
     public partial class HyperVMigrateFabricModelCustomProperties : FabricModelCustomProperties
     {
-        /// <summary> Initializes a new instance of HyperVMigrateFabricModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVMigrateFabricModelCustomProperties"/>. </summary>
         /// <param name="hyperVSiteId"> Gets or sets the ARM Id of the HyperV site. </param>
         /// <param name="migrationSolutionId"> Gets or sets the migration solution ARM Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hyperVSiteId"/> or <paramref name="migrationSolutionId"/> is null. </exception>
@@ -27,14 +28,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             InstanceType = "HyperVMigrate";
         }
 
-        /// <summary> Initializes a new instance of HyperVMigrateFabricModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVMigrateFabricModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="hyperVSiteId"> Gets or sets the ARM Id of the HyperV site. </param>
         /// <param name="fabricResourceId"> Gets or sets the fabric resource Id. </param>
         /// <param name="fabricContainerId"> Gets or sets the fabric container Id. </param>
         /// <param name="migrationSolutionId"> Gets or sets the migration solution ARM Id. </param>
         /// <param name="migrationHubUri"> Gets or sets the migration hub Uri. </param>
-        internal HyperVMigrateFabricModelCustomProperties(string instanceType, ResourceIdentifier hyperVSiteId, ResourceIdentifier fabricResourceId, string fabricContainerId, ResourceIdentifier migrationSolutionId, Uri migrationHubUri) : base(instanceType)
+        internal HyperVMigrateFabricModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier hyperVSiteId, ResourceIdentifier fabricResourceId, string fabricContainerId, ResourceIdentifier migrationSolutionId, Uri migrationHubUri) : base(instanceType, serializedAdditionalRawData)
         {
             HyperVSiteId = hyperVSiteId;
             FabricResourceId = fabricResourceId;
@@ -42,6 +44,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             MigrationSolutionId = migrationSolutionId;
             MigrationHubUri = migrationHubUri;
             InstanceType = instanceType ?? "HyperVMigrate";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HyperVMigrateFabricModelCustomProperties"/> for deserialization. </summary>
+        internal HyperVMigrateFabricModelCustomProperties()
+        {
         }
 
         /// <summary> Gets or sets the ARM Id of the HyperV site. </summary>

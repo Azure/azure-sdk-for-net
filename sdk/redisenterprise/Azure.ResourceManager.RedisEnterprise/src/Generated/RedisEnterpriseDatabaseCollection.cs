@@ -12,17 +12,15 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RedisEnterprise
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RedisEnterpriseDatabaseResource" /> and their operations.
-    /// Each <see cref="RedisEnterpriseDatabaseResource" /> in the collection will belong to the same instance of <see cref="RedisEnterpriseClusterResource" />.
-    /// To get a <see cref="RedisEnterpriseDatabaseCollection" /> instance call the GetRedisEnterpriseDatabases method from an instance of <see cref="RedisEnterpriseClusterResource" />.
+    /// A class representing a collection of <see cref="RedisEnterpriseDatabaseResource"/> and their operations.
+    /// Each <see cref="RedisEnterpriseDatabaseResource"/> in the collection will belong to the same instance of <see cref="RedisEnterpriseClusterResource"/>.
+    /// To get a <see cref="RedisEnterpriseDatabaseCollection"/> instance call the GetRedisEnterpriseDatabases method from an instance of <see cref="RedisEnterpriseClusterResource"/>.
     /// </summary>
     public partial class RedisEnterpriseDatabaseCollection : ArmCollection, IEnumerable<RedisEnterpriseDatabaseResource>, IAsyncEnumerable<RedisEnterpriseDatabaseResource>
     {
@@ -63,6 +61,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Databases_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +111,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <term>Operation Id</term>
         /// <description>Databases_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +160,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <term>Operation Id</term>
         /// <description>Databases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
@@ -182,6 +204,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Databases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +250,18 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <term>Operation Id</term>
         /// <description>Databases_ListByCluster</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RedisEnterpriseDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RedisEnterpriseDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RedisEnterpriseDatabaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisEnterpriseDatabaseDatabasesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -242,10 +280,18 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <term>Operation Id</term>
         /// <description>Databases_ListByCluster</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RedisEnterpriseDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RedisEnterpriseDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RedisEnterpriseDatabaseResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisEnterpriseDatabaseDatabasesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -263,6 +309,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Databases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +353,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <term>Operation Id</term>
         /// <description>Databases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
@@ -333,6 +395,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Databases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -370,6 +440,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Databases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

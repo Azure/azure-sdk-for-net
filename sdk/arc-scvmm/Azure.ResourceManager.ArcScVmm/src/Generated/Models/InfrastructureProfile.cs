@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,45 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> Specifies the vmmServer infrastructure specific settings for the virtual machine instance. </summary>
     public partial class InfrastructureProfile
     {
-        /// <summary> Initializes a new instance of InfrastructureProfile. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InfrastructureProfile"/>. </summary>
         public InfrastructureProfile()
         {
             Checkpoints = new ChangeTrackingList<Checkpoint>();
         }
 
-        /// <summary> Initializes a new instance of InfrastructureProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="InfrastructureProfile"/>. </summary>
         /// <param name="inventoryItemId"> Gets or sets the inventory Item ID for the resource. </param>
         /// <param name="vmmServerId"> ARM Id of the vmmServer resource in which this resource resides. </param>
         /// <param name="cloudId"> ARM Id of the cloud resource to use for deploying the vm. </param>
@@ -31,7 +64,8 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <param name="checkpointType"> Type of checkpoint supported for the vm. </param>
         /// <param name="generation"> Gets or sets the generation for the vm. </param>
         /// <param name="biosGuid"> Gets or sets the bios guid for the vm. </param>
-        internal InfrastructureProfile(string inventoryItemId, ResourceIdentifier vmmServerId, ResourceIdentifier cloudId, ResourceIdentifier templateId, string vmName, string uuid, Checkpoint lastRestoredVmCheckpoint, IList<Checkpoint> checkpoints, string checkpointType, int? generation, string biosGuid)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InfrastructureProfile(string inventoryItemId, ResourceIdentifier vmmServerId, ResourceIdentifier cloudId, ResourceIdentifier templateId, string vmName, string uuid, Checkpoint lastRestoredVmCheckpoint, IList<Checkpoint> checkpoints, string checkpointType, int? generation, string biosGuid, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InventoryItemId = inventoryItemId;
             VmmServerId = vmmServerId;
@@ -44,6 +78,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             CheckpointType = checkpointType;
             Generation = generation;
             BiosGuid = biosGuid;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the inventory Item ID for the resource. </summary>

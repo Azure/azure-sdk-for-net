@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -163,7 +162,7 @@ namespace Azure.DigitalTwins.Core
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/models", false);
-            if (dependenciesFor != null && Optional.IsCollectionDefined(dependenciesFor))
+            if (dependenciesFor != null && !(dependenciesFor is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in dependenciesFor)
                 {

@@ -43,8 +43,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> name = default;
-            Optional<object> type = default;
+            object name = default;
+            object type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DatasetSchemaDataElement(name.Value, type.Value, additionalProperties);
+            return new DatasetSchemaDataElement(name, type, additionalProperties);
         }
 
         internal partial class DatasetSchemaDataElementConverter : JsonConverter<DatasetSchemaDataElement>

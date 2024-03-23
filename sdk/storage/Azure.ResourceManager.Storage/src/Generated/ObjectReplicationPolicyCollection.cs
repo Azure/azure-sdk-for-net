@@ -12,17 +12,15 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Storage
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ObjectReplicationPolicyResource" /> and their operations.
-    /// Each <see cref="ObjectReplicationPolicyResource" /> in the collection will belong to the same instance of <see cref="StorageAccountResource" />.
-    /// To get an <see cref="ObjectReplicationPolicyCollection" /> instance call the GetObjectReplicationPolicies method from an instance of <see cref="StorageAccountResource" />.
+    /// A class representing a collection of <see cref="ObjectReplicationPolicyResource"/> and their operations.
+    /// Each <see cref="ObjectReplicationPolicyResource"/> in the collection will belong to the same instance of <see cref="StorageAccountResource"/>.
+    /// To get an <see cref="ObjectReplicationPolicyCollection"/> instance call the GetObjectReplicationPolicies method from an instance of <see cref="StorageAccountResource"/>.
     /// </summary>
     public partial class ObjectReplicationPolicyCollection : ArmCollection, IEnumerable<ObjectReplicationPolicyResource>, IAsyncEnumerable<ObjectReplicationPolicyResource>
     {
@@ -63,6 +61,14 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ObjectReplicationPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ObjectReplicationPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +111,14 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>ObjectReplicationPolicies_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ObjectReplicationPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +160,14 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>ObjectReplicationPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ObjectReplicationPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="objectReplicationPolicyId"> For the destination account, provide the value 'default'. Configure the policy on the destination account first. For the source account, provide the value of the policy ID that is returned when you download the policy that was defined on the destination account. The policy is downloaded as a JSON file. </param>
@@ -182,6 +204,14 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ObjectReplicationPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ObjectReplicationPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +250,18 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>ObjectReplicationPolicies_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ObjectReplicationPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ObjectReplicationPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ObjectReplicationPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ObjectReplicationPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _objectReplicationPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -241,10 +279,18 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>ObjectReplicationPolicies_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ObjectReplicationPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ObjectReplicationPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ObjectReplicationPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ObjectReplicationPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _objectReplicationPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -261,6 +307,14 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ObjectReplicationPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ObjectReplicationPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,6 +351,14 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>ObjectReplicationPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ObjectReplicationPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="objectReplicationPolicyId"> For the destination account, provide the value 'default'. Configure the policy on the destination account first. For the source account, provide the value of the policy ID that is returned when you download the policy that was defined on the destination account. The policy is downloaded as a JSON file. </param>
@@ -331,6 +393,14 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ObjectReplicationPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ObjectReplicationPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -368,6 +438,14 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ObjectReplicationPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ObjectReplicationPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

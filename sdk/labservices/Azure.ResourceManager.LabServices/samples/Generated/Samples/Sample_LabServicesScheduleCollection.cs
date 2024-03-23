@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.LabServices;
 using Azure.ResourceManager.LabServices.Models;
 
 namespace Azure.ResourceManager.LabServices.Samples
@@ -199,7 +196,7 @@ namespace Azure.ResourceManager.LabServices.Samples
                     Interval = 2,
                 },
                 TimeZoneId = "America/Los_Angeles",
-                Notes = BinaryData.FromString("Schedule 1 for students"),
+                Notes = BinaryData.FromString("\"Schedule 1 for students\""),
             };
             ArmOperation<LabServicesScheduleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, scheduleName, data);
             LabServicesScheduleResource result = lro.Value;

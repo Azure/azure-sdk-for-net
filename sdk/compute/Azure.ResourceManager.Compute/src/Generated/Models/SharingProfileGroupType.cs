@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> This property allows you to specify the type of sharing group. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Subscriptions** &lt;br&gt;&lt;br&gt; **AADTenants**. </summary>
+    /// <summary> This property allows you to specify the type of sharing group. Possible values are: **Subscriptions,** **AADTenants.**. </summary>
     public readonly partial struct SharingProfileGroupType : IEquatable<SharingProfileGroupType>
     {
         private readonly string _value;

@@ -12,17 +12,15 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Blueprint
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AssignmentOperationResource" /> and their operations.
-    /// Each <see cref="AssignmentOperationResource" /> in the collection will belong to the same instance of <see cref="AssignmentResource" />.
-    /// To get an <see cref="AssignmentOperationCollection" /> instance call the GetAssignmentOperations method from an instance of <see cref="AssignmentResource" />.
+    /// A class representing a collection of <see cref="AssignmentOperationResource"/> and their operations.
+    /// Each <see cref="AssignmentOperationResource"/> in the collection will belong to the same instance of <see cref="AssignmentResource"/>.
+    /// To get an <see cref="AssignmentOperationCollection"/> instance call the GetAssignmentOperations method from an instance of <see cref="AssignmentResource"/>.
     /// </summary>
     public partial class AssignmentOperationCollection : ArmCollection, IEnumerable<AssignmentOperationResource>, IAsyncEnumerable<AssignmentOperationResource>
     {
@@ -64,6 +62,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <term>Operation Id</term>
         /// <description>AssignmentOperations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AssignmentOperationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="assignmentOperationName"> Name of the blueprint assignment operation. </param>
@@ -100,6 +106,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AssignmentOperations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AssignmentOperationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +152,18 @@ namespace Azure.ResourceManager.Blueprint
         /// <term>Operation Id</term>
         /// <description>AssignmentOperations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AssignmentOperationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AssignmentOperationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AssignmentOperationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AssignmentOperationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _assignmentOperationRestClient.CreateListRequest(Id.Parent, Id.Name);
@@ -160,10 +182,18 @@ namespace Azure.ResourceManager.Blueprint
         /// <term>Operation Id</term>
         /// <description>AssignmentOperations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AssignmentOperationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AssignmentOperationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AssignmentOperationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AssignmentOperationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _assignmentOperationRestClient.CreateListRequest(Id.Parent, Id.Name);
@@ -181,6 +211,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AssignmentOperations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AssignmentOperationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +255,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <term>Operation Id</term>
         /// <description>AssignmentOperations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AssignmentOperationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="assignmentOperationName"> Name of the blueprint assignment operation. </param>
@@ -251,6 +297,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AssignmentOperations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AssignmentOperationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,6 +342,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AssignmentOperations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AssignmentOperationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

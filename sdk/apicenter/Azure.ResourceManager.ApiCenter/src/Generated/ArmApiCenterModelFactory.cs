@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ApiCenter;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiCenter.Models
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmApiCenterModelFactory
     {
-        /// <summary> Initializes a new instance of ApiCenterServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiCenter.ApiCenterServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,7 +29,24 @@ namespace Azure.ResourceManager.ApiCenter.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ApiCenterServiceData(id, name, resourceType, systemData, tags, location, identity, provisioningState);
+            return new ApiCenterServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApiCenterServicePatch"/>. </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.ApiCenterServicePatch"/> instance for mocking. </returns>
+        public static ApiCenterServicePatch ApiCenterServicePatch(ApiCenterProvisioningState? provisioningState = null)
+        {
+            return new ApiCenterServicePatch(provisioningState, serializedAdditionalRawData: null);
         }
     }
 }

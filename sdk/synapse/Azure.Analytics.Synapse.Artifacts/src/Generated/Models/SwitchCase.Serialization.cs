@@ -43,8 +43,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> value = default;
-            Optional<IList<Activity>> activities = default;
+            string value = default;
+            IList<Activity> activities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -67,7 +67,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SwitchCase(value.Value, Optional.ToList(activities));
+            return new SwitchCase(value, activities ?? new ChangeTrackingList<Activity>());
         }
 
         internal partial class SwitchCaseConverter : JsonConverter<SwitchCase>

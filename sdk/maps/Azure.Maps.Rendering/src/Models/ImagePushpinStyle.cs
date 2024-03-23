@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Text;
 using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Rendering
 {

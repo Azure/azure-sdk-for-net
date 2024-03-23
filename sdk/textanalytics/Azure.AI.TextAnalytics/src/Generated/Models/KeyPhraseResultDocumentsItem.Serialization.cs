@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -50,7 +49,7 @@ namespace Azure.AI.TextAnalytics.Models
             IList<string> keyPhrases = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
-            Optional<TextDocumentStatistics> statistics = default;
+            TextDocumentStatistics? statistics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyPhrases"u8))
@@ -88,7 +87,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new KeyPhraseResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), keyPhrases);
+            return new KeyPhraseResultDocumentsItem(id, warnings, statistics, keyPhrases);
         }
     }
 }

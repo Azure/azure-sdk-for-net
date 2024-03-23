@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
@@ -12,22 +14,56 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Describes the frontend configurations for the node type. </summary>
     public partial class NodeTypeFrontendConfiguration
     {
-        /// <summary> Initializes a new instance of NodeTypeFrontendConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NodeTypeFrontendConfiguration"/>. </summary>
         public NodeTypeFrontendConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of NodeTypeFrontendConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeTypeFrontendConfiguration"/>. </summary>
         /// <param name="ipAddressType"> The IP address type of this frontend configuration. If omitted the default value is IPv4. </param>
         /// <param name="loadBalancerBackendAddressPoolId"> The resource Id of the Load Balancer backend address pool that the VM instances of the node type are associated with. The format of the resource Id is '/subscriptions/&lt;subscriptionId&gt;/resourceGroups/&lt;resourceGroupName&gt;/providers/Microsoft.Network/loadBalancers/&lt;loadBalancerName&gt;/backendAddressPools/&lt;backendAddressPoolName&gt;'. </param>
         /// <param name="loadBalancerInboundNatPoolId"> The resource Id of the Load Balancer inbound NAT pool that the VM instances of the node type are associated with. The format of the resource Id is '/subscriptions/&lt;subscriptionId&gt;/resourceGroups/&lt;resourceGroupName&gt;/providers/Microsoft.Network/loadBalancers/&lt;loadBalancerName&gt;/inboundNatPools/&lt;inboundNatPoolName&gt;'. </param>
         /// <param name="applicationGatewayBackendAddressPoolId"> The resource Id of application gateway backend address pool. The format of the resource Id is '/subscriptions/&lt;subscriptionId&gt;/resourceGroups/&lt;resourceGroupName&gt;/providers/Microsoft.Network/applicationGateways/&lt;applicationGatewayName&gt;/backendAddressPools/&lt;backendAddressPoolName&gt;'. </param>
-        internal NodeTypeFrontendConfiguration(NodeTypeFrontendConfigurationIPAddressType? ipAddressType, ResourceIdentifier loadBalancerBackendAddressPoolId, ResourceIdentifier loadBalancerInboundNatPoolId, ResourceIdentifier applicationGatewayBackendAddressPoolId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NodeTypeFrontendConfiguration(NodeTypeFrontendConfigurationIPAddressType? ipAddressType, ResourceIdentifier loadBalancerBackendAddressPoolId, ResourceIdentifier loadBalancerInboundNatPoolId, ResourceIdentifier applicationGatewayBackendAddressPoolId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPAddressType = ipAddressType;
             LoadBalancerBackendAddressPoolId = loadBalancerBackendAddressPoolId;
             LoadBalancerInboundNatPoolId = loadBalancerInboundNatPoolId;
             ApplicationGatewayBackendAddressPoolId = applicationGatewayBackendAddressPoolId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The IP address type of this frontend configuration. If omitted the default value is IPv4. </summary>

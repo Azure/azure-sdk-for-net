@@ -17,6 +17,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            writer.WritePropertyName("methodName"u8);
+            writer.WriteStringValue(MethodName);
             if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("@apiVersion"u8);
@@ -47,7 +49,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             string name = default;
             string methodName = "MethodRequestEmptyBodyBase";
-            Optional<string> apiVersion = default;
+            string apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -66,7 +68,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new MethodRequestEmptyBodyBase(methodName, apiVersion.Value, name);
+            return new MethodRequestEmptyBodyBase(methodName, apiVersion, name);
         }
     }
 }

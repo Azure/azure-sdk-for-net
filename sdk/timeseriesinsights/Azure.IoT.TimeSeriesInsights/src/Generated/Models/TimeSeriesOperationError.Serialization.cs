@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -19,11 +18,11 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<string> target = default;
-            Optional<TimeSeriesOperationError> innerError = default;
-            Optional<IReadOnlyList<TimeSeriesOperationErrorDetails>> details = default;
+            string code = default;
+            string message = default;
+            string target = default;
+            TimeSeriesOperationError innerError = default;
+            IReadOnlyList<TimeSeriesOperationErrorDetails> details = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -69,7 +68,13 @@ namespace Azure.IoT.TimeSeriesInsights
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TimeSeriesOperationError(code.Value, message.Value, target.Value, innerError.Value, Optional.ToList(details), additionalProperties);
+            return new TimeSeriesOperationError(
+                code,
+                message,
+                target,
+                innerError,
+                details ?? new ChangeTrackingList<TimeSeriesOperationErrorDetails>(),
+                additionalProperties);
         }
     }
 }

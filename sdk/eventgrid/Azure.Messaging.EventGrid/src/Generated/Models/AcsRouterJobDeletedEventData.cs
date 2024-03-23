@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobDeleted event. </summary>
     public partial class AcsRouterJobDeletedEventData : AcsRouterJobEventData
     {
-        /// <summary> Initializes a new instance of AcsRouterJobDeletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterJobDeletedEventData"/>. </summary>
         internal AcsRouterJobDeletedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsRouterJobDeletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterJobDeletedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>

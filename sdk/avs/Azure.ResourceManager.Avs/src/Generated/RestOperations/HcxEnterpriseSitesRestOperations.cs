@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Avs.Models;
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Avs
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-05-01";
+            _apiVersion = apiVersion ?? "2023-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> List HCX Enterprise Sites in a private cloud. </summary>
+        /// <summary> List HCX on-premises key in a private cloud. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> List HCX Enterprise Sites in a private cloud. </summary>
+        /// <summary> List HCX on-premises key in a private cloud. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
@@ -138,7 +137,7 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> Get an HCX Enterprise Site by name in a private cloud. </summary>
+        /// <summary> Get an HCX on-premises key by name in a private cloud. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
@@ -171,7 +170,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> Get an HCX Enterprise Site by name in a private cloud. </summary>
+        /// <summary> Get an HCX on-premises key by name in a private cloud. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
@@ -230,7 +229,7 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> Create or update an HCX Enterprise Site in a private cloud. </summary>
+        /// <summary> Create or update an activation key for on-premises HCX site. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> The name of the private cloud. </param>
@@ -264,7 +263,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> Create or update an HCX Enterprise Site in a private cloud. </summary>
+        /// <summary> Create or update an activation key for on-premises HCX site. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> The name of the private cloud. </param>
@@ -320,7 +319,7 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> Delete an HCX Enterprise Site in a private cloud. </summary>
+        /// <summary> Delete HCX on-premises key in a private cloud. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
@@ -347,7 +346,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> Delete an HCX Enterprise Site in a private cloud. </summary>
+        /// <summary> Delete HCX on-premises key in a private cloud. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
@@ -388,7 +387,7 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> List HCX Enterprise Sites in a private cloud. </summary>
+        /// <summary> List HCX on-premises key in a private cloud. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -419,7 +418,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> List HCX Enterprise Sites in a private cloud. </summary>
+        /// <summary> List HCX on-premises key in a private cloud. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>

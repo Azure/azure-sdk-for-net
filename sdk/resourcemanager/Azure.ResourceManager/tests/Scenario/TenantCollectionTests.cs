@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests
@@ -11,7 +12,6 @@ namespace Azure.ResourceManager.Tests
         {
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task List()
         {
@@ -21,6 +21,14 @@ namespace Azure.ResourceManager.Tests
                 count++;
             }
             Assert.GreaterOrEqual(count, 1);
+        }
+
+        [RecordedTest]
+        public async Task CheckResourceName()
+        {
+            ResourceNameValidationContent content = new ResourceNameValidationContent("mysubs", "Microsoft.Resources/subscriptions");
+            var result = await Client.GetTenants().CheckResourceNameAsync(content);
+            Assert.AreEqual(result.Value.Status, ResourceNameValidationStatus.Allowed);
         }
     }
 }

@@ -8,14 +8,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Information about the extracted selection mark. </summary>
     internal partial class SelectionMark
     {
-        /// <summary> Initializes a new instance of SelectionMark. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelectionMark"/>. </summary>
         /// <param name="boundingBox"> Bounding box of the selection mark. </param>
         /// <param name="confidence"> Confidence value. </param>
         /// <param name="state"> State of the selection mark. </param>
@@ -29,7 +28,7 @@ namespace Azure.AI.FormRecognizer.Models
             State = state;
         }
 
-        /// <summary> Initializes a new instance of SelectionMark. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelectionMark"/>. </summary>
         /// <param name="boundingBox"> Bounding box of the selection mark. </param>
         /// <param name="confidence"> Confidence value. </param>
         /// <param name="state"> State of the selection mark. </param>

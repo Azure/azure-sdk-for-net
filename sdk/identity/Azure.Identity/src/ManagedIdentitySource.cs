@@ -51,6 +51,12 @@ namespace Azure.Identity
             {
                 if (response.Status == 200)
                 {
+                    // This avoids the json parsing if we have already been cancelled.
+                    // Also, this handles the sync case, where we don't have to check for cancellation.
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        throw new TaskCanceledException();
+                    }
                     using JsonDocument json = async
                     ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
                     : JsonDocument.Parse(response.ContentStream);
@@ -67,12 +73,12 @@ namespace Azure.Identity
                 exception = e;
             }
 
-            //This is a special case for Docker Desktop which responds with a 403 with a message that contains "A socket operation was attempted to an unreachable network"
+            //This is a special case for Docker Desktop which responds with a 403 with a message that contains "A socket operation was attempted to an unreachable network/host"
             // rather than just timing out, as expected.
             if (response.Status == 403)
             {
                 string message = response.Content.ToString();
-                if (message.Contains("A socket operation was attempted to an unreachable network"))
+                if (message.Contains("unreachable"))
                 {
                     throw new CredentialUnavailableException(UnexpectedResponse, new Exception(message));
                 }

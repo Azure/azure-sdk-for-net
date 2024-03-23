@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
@@ -12,16 +14,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Azure resource identifier. </summary>
     public partial class AzureResourceIdentifier : SecurityAlertResourceIdentifier
     {
-        /// <summary> Initializes a new instance of AzureResourceIdentifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureResourceIdentifier"/>. </summary>
         internal AzureResourceIdentifier()
         {
             ResourceIdentifierType = ResourceIdentifierType.AzureResource;
         }
 
-        /// <summary> Initializes a new instance of AzureResourceIdentifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureResourceIdentifier"/>. </summary>
         /// <param name="resourceIdentifierType"> There can be multiple identifiers of different type per alert, this field specify the identifier type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="azureResourceId"> ARM resource identifier for the cloud resource being alerted on. </param>
-        internal AzureResourceIdentifier(ResourceIdentifierType resourceIdentifierType, ResourceIdentifier azureResourceId) : base(resourceIdentifierType)
+        internal AzureResourceIdentifier(ResourceIdentifierType resourceIdentifierType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier azureResourceId) : base(resourceIdentifierType, serializedAdditionalRawData)
         {
             AzureResourceId = azureResourceId;
             ResourceIdentifierType = resourceIdentifierType;

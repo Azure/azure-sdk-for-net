@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 using Azure.Messaging.EventGrid.SystemEvents;
 
 namespace Azure.Messaging.EventGrid.Models
@@ -20,8 +19,8 @@ namespace Azure.Messaging.EventGrid.Models
                 return null;
             }
             string odataType = "Unknown";
-            Optional<MediaJobError> error = default;
-            Optional<string> label = default;
+            MediaJobError error = default;
+            string label = default;
             long progress = default;
             MediaJobState state = default;
             foreach (var property in element.EnumerateObject())
@@ -56,7 +55,7 @@ namespace Azure.Messaging.EventGrid.Models
                     continue;
                 }
             }
-            return new UnknownMediaJobOutput(odataType, error.Value, label.Value, progress, state);
+            return new UnknownMediaJobOutput(odataType, error, label, progress, state);
         }
     }
 }

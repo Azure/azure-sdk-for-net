@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.HealthcareApis.FhirResourceCreated event. </summary>
     public partial class HealthcareFhirResourceCreatedEventData
     {
-        /// <summary> Initializes a new instance of HealthcareFhirResourceCreatedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareFhirResourceCreatedEventData"/>. </summary>
         internal HealthcareFhirResourceCreatedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of HealthcareFhirResourceCreatedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareFhirResourceCreatedEventData"/>. </summary>
         /// <param name="fhirResourceType"> Type of HL7 FHIR resource. </param>
         /// <param name="fhirServiceHostName"> Domain name of FHIR account for this resource. </param>
         /// <param name="fhirResourceId"> Id of HL7 FHIR resource. </param>

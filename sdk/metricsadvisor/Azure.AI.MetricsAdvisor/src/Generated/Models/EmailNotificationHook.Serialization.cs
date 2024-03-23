@@ -54,11 +54,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
             }
             EmailHookParameter hookParameter = default;
             NotificationHookKind hookType = default;
-            Optional<string> hookId = default;
+            string hookId = default;
             string hookName = default;
-            Optional<string> description = default;
-            Optional<string> externalLink = default;
-            Optional<IList<string>> admins = default;
+            string description = default;
+            string externalLink = default;
+            IList<string> admins = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hookParameter"u8))
@@ -106,7 +106,14 @@ namespace Azure.AI.MetricsAdvisor.Administration
                     continue;
                 }
             }
-            return new EmailNotificationHook(hookType, hookId.Value, hookName, description.Value, externalLink.Value, Optional.ToList(admins), hookParameter);
+            return new EmailNotificationHook(
+                hookType,
+                hookId,
+                hookName,
+                description,
+                externalLink,
+                admins ?? new ChangeTrackingList<string>(),
+                hookParameter);
         }
     }
 }

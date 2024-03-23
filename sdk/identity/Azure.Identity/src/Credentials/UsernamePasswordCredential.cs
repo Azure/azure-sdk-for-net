@@ -30,6 +30,7 @@ namespace Azure.Identity
         internal string[] AdditionallyAllowedTenantIds { get; }
         internal MsalPublicClient Client { get; }
         internal string DefaultScope { get; }
+        internal TenantIdResolverBase TenantIdResolver { get; }
 
         /// <summary>
         /// Protected constructor for mocking
@@ -96,6 +97,7 @@ namespace Azure.Identity
             DefaultScope = AzureAuthorityHosts.GetDefaultScope(options?.AuthorityHost ?? AzureAuthorityHosts.GetDefault());
             Client = client ?? new MsalPublicClient(_pipeline, tenantId, clientId, null, options);
 
+            TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
         }
 
@@ -214,7 +216,17 @@ namespace Azure.Identity
                     var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, AdditionallyAllowedTenantIds);
                     try
                     {
-                        result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, _record, tenantId, requestContext.IsCaeEnabled, async, cancellationToken)
+                        result = await Client.AcquireTokenSilentAsync(
+                            requestContext.Scopes,
+                            requestContext.Claims,
+                            _record,
+                            tenantId,
+                            requestContext.IsCaeEnabled,
+#if PREVIEW_FEATURE_FLAG
+                            null,
+#endif
+                            async,
+                            cancellationToken)
                             .ConfigureAwait(false);
                         return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
                     }

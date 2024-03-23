@@ -36,3 +36,75 @@ function Get-ChangedFiles {
   }
   return $changedFiles
 }
+
+class ConflictedFile {
+  [string]$LeftSource = ""
+  [string]$RightSource = ""
+  [string]$Content = ""
+  [string]$Path = ""
+  [boolean]$IsConflicted = $false
+
+  ConflictedFile([string]$File = "") {
+    if (!(Test-Path $File)) {
+      throw "File $File does not exist, pass a valid file path to the constructor."
+    }
+
+    # Normally we would use Resolve-Path $file, but git only can handle relative paths using git show <commitsh>:<path>
+    # Therefore, just maintain whatever the path is given to us. Left() and Right() should therefore be called from the same
+    # directory as where we defined the relative path to the target file.
+    $this.Path = $File
+    $this.Content = Get-Content -Raw $File
+
+    $this.ParseContent($this.Content)
+  }
+
+  [array] Left(){
+    if ($this.IsConflicted) {
+      # we are forced to get this line by line and reassemble via join because of how powershell is interacting with
+      # git show --textconv commitsh:path
+      # powershell ignores the newlines with and without --textconv, which results in a json file without original spacing.
+      # by forcefully reading into the array line by line, the whitespace is preserved. we're relying on gits autoconverstion of clrf to lf
+      # to ensure that the line endings are consistent.
+      Write-Host "git show $($this.LeftSource):$($this.Path)"
+      $tempContent = git show ("$($this.LeftSource):$($this.Path)")
+      return $tempContent -split "`r?`n"
+    }
+    else {
+      return $this.Content
+    }
+  }
+
+  [array] Right(){
+    if ($this.IsConflicted) {
+      Write-Host "git show $($this.RightSource):$($this.Path)"
+      $tempContent =  git show ("$($this.RightSource):$($this.Path)")
+      return $tempContent -split "`r?`n"
+    }
+    else {
+      return $this.Content
+    }
+  }
+
+  [void] ParseContent([string]$IncomingContent) {
+    $lines = $IncomingContent -split "`r?`n"
+    $l = @()
+    $r = @()
+    
+    foreach($line in $lines) {
+      if ($line -match "^<<<<<<<\s*(.+)") {
+        $this.IsConflicted = $true
+        $this.LeftSource = $matches[1]
+        continue
+      }
+      elseif ($line -match "^>>>>>>>\s*(.+)") {
+        $this.IsConflicted = $true
+        $this.RightSource = $matches[1]
+        continue
+      }
+
+      if ($this.LeftSource -and $this.RightSource) {
+        break
+      }
+    }
+  }
+}

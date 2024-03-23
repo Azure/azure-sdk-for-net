@@ -80,16 +80,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> allowedGroups = default;
-            Optional<object> userScopeFilterUri = default;
-            Optional<object> dateFilterColumn = default;
-            Optional<object> startTime = default;
-            Optional<object> endTime = default;
-            Optional<object> outputColumns = default;
+            object allowedGroups = default;
+            object userScopeFilterUri = default;
+            object dateFilterColumn = default;
+            object startTime = default;
+            object endTime = default;
+            object outputColumns = default;
             string type = default;
-            Optional<object> sourceRetryCount = default;
-            Optional<object> sourceRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            object sourceRetryCount = default;
+            object sourceRetryWait = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -183,7 +183,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Office365Source(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, allowedGroups.Value, userScopeFilterUri.Value, dateFilterColumn.Value, startTime.Value, endTime.Value, outputColumns.Value);
+            return new Office365Source(
+                type,
+                sourceRetryCount,
+                sourceRetryWait,
+                maxConcurrentConnections,
+                additionalProperties,
+                allowedGroups,
+                userScopeFilterUri,
+                dateFilterColumn,
+                startTime,
+                endTime,
+                outputColumns);
         }
 
         internal partial class Office365SourceConverter : JsonConverter<Office365Source>

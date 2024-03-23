@@ -5,14 +5,72 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
     /// <summary> Virtual disk model. </summary>
     public partial class VirtualDiskUpdate
     {
-        /// <summary> Initializes a new instance of VirtualDiskUpdate. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualDiskUpdate"/>. </summary>
         public VirtualDiskUpdate()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualDiskUpdate"/>. </summary>
+        /// <param name="name"> Gets or sets the name of the disk. </param>
+        /// <param name="diskId"> Gets or sets the disk id. </param>
+        /// <param name="diskSizeGB"> Gets or sets the disk total size. </param>
+        /// <param name="bus"> Gets or sets the disk bus. </param>
+        /// <param name="lun"> Gets or sets the disk lun. </param>
+        /// <param name="busType"> Gets or sets the disk bus type. </param>
+        /// <param name="vhdType"> Gets or sets the disk vhd type. </param>
+        /// <param name="storageQoSPolicy"> The QoS policy for the disk. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualDiskUpdate(string name, string diskId, int? diskSizeGB, int? bus, int? lun, string busType, string vhdType, StorageQoSPolicyDetails storageQoSPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            DiskId = diskId;
+            DiskSizeGB = diskSizeGB;
+            Bus = bus;
+            Lun = lun;
+            BusType = busType;
+            VhdType = vhdType;
+            StorageQoSPolicy = storageQoSPolicy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the name of the disk. </summary>

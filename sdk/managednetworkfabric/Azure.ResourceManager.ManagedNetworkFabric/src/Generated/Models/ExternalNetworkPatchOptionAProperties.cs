@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
@@ -12,16 +14,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> option A properties object. </summary>
     public partial class ExternalNetworkPatchOptionAProperties : Layer3IPPrefixProperties
     {
-        /// <summary> Initializes a new instance of ExternalNetworkPatchOptionAProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExternalNetworkPatchOptionAProperties"/>. </summary>
         public ExternalNetworkPatchOptionAProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ExternalNetworkPatchOptionAProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExternalNetworkPatchOptionAProperties"/>. </summary>
         /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
         /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
         /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="mtu"> MTU to use for option A peering. </param>
         /// <param name="vlanId"> Vlan identifier. Example : 501. </param>
         /// <param name="fabricAsn"> Fabric ASN number. Example 65001. </param>
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
         /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
         /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
-        internal ExternalNetworkPatchOptionAProperties(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, int? mtu, int? vlanId, long? fabricAsn, long? peerAsn, BfdConfiguration bfdConfiguration, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId) : base(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix)
+        internal ExternalNetworkPatchOptionAProperties(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, IDictionary<string, BinaryData> serializedAdditionalRawData, int? mtu, int? vlanId, long? fabricAsn, long? peerAsn, BfdConfiguration bfdConfiguration, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId) : base(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, serializedAdditionalRawData)
         {
             Mtu = mtu;
             VlanId = vlanId;

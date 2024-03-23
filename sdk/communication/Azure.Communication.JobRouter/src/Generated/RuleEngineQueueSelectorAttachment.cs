@@ -6,74 +6,33 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Attaches queue selectors to a job when the RouterRule is resolved. </summary>
     public partial class RuleEngineQueueSelectorAttachment : QueueSelectorAttachment
     {
-        /// <summary> Initializes a new instance of RuleEngineQueueSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuleEngineQueueSelectorAttachment"/>. </summary>
+        /// <param name="kind"> The type discriminator describing a sub-type of QueueSelectorAttachment. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="rule">
-        /// A rule of one of the following types:
-        ///
-        /// StaticRule:  A rule
-        /// providing static rules that always return the same result, regardless of
-        /// input.
-        /// DirectMapRule:  A rule that return the same labels as the input
-        /// labels.
-        /// ExpressionRule: A rule providing inline expression
-        /// rules.
-        /// FunctionRule: A rule providing a binding to an HTTP Triggered Azure
-        /// Function.
-        /// WebhookRule: A rule providing a binding to a webserver following
-        /// OAuth2.0 authentication protocol.
+        /// A RouterRule that resolves a collection of queue selectors to attach.
+        /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="FunctionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="WebhookRouterRule"/>.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rule"/> is null. </exception>
-        internal RuleEngineQueueSelectorAttachment(RouterRule rule)
+        internal RuleEngineQueueSelectorAttachment(QueueSelectorAttachmentKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, RouterRule rule) : base(kind, serializedAdditionalRawData)
         {
-            Argument.AssertNotNull(rule, nameof(rule));
-
-            Kind = "rule-engine";
             Rule = rule;
         }
 
-        /// <summary> Initializes a new instance of RuleEngineQueueSelectorAttachment. </summary>
-        /// <param name="kind"> Discriminator. </param>
-        /// <param name="rule">
-        /// A rule of one of the following types:
-        ///
-        /// StaticRule:  A rule
-        /// providing static rules that always return the same result, regardless of
-        /// input.
-        /// DirectMapRule:  A rule that return the same labels as the input
-        /// labels.
-        /// ExpressionRule: A rule providing inline expression
-        /// rules.
-        /// FunctionRule: A rule providing a binding to an HTTP Triggered Azure
-        /// Function.
-        /// WebhookRule: A rule providing a binding to a webserver following
-        /// OAuth2.0 authentication protocol.
-        /// </param>
-        internal RuleEngineQueueSelectorAttachment(string kind, RouterRule rule) : base(kind)
+        /// <summary> Initializes a new instance of <see cref="RuleEngineQueueSelectorAttachment"/> for deserialization. </summary>
+        internal RuleEngineQueueSelectorAttachment()
         {
-            Rule = rule;
         }
 
         /// <summary>
-        /// A rule of one of the following types:
-        ///
-        /// StaticRule:  A rule
-        /// providing static rules that always return the same result, regardless of
-        /// input.
-        /// DirectMapRule:  A rule that return the same labels as the input
-        /// labels.
-        /// ExpressionRule: A rule providing inline expression
-        /// rules.
-        /// FunctionRule: A rule providing a binding to an HTTP Triggered Azure
-        /// Function.
-        /// WebhookRule: A rule providing a binding to a webserver following
-        /// OAuth2.0 authentication protocol.
+        /// A RouterRule that resolves a collection of queue selectors to attach.
         /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="FunctionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="WebhookRouterRule"/>.
         /// </summary>

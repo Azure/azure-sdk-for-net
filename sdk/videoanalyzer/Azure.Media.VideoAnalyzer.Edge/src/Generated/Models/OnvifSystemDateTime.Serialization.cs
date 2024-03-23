@@ -39,9 +39,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<OnvifSystemDateTimeType> type = default;
-            Optional<string> time = default;
-            Optional<string> timeZone = default;
+            OnvifSystemDateTimeType? type = default;
+            string time = default;
+            string timeZone = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -64,7 +64,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new OnvifSystemDateTime(Optional.ToNullable(type), time.Value, timeZone.Value);
+            return new OnvifSystemDateTime(type, time, timeZone);
         }
     }
 }

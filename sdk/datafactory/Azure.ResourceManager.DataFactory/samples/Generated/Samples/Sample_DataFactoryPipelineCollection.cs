@@ -8,11 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataFactory;
 using Azure.ResourceManager.DataFactory.Models;
 
 namespace Azure.ResourceManager.DataFactory.Samples
@@ -96,8 +93,8 @@ new DatasetReference(DatasetReferenceType.DatasetReference,"exampleDataset")
 {
 Parameters =
 {
-["MyFileName"] = BinaryData.FromString("examplecontainer.csv"),
-["MyFolderPath"] = BinaryData.FromString("examplecontainer"),
+["MyFileName"] = BinaryData.FromString("\"examplecontainer.csv\""),
+["MyFolderPath"] = BinaryData.FromString("\"examplecontainer\""),
 },
 }
 },
@@ -111,7 +108,7 @@ Parameters =
 {
 ["type"] = "Expression",
 ["value"] = "@item()"}),
-["MyFolderPath"] = BinaryData.FromString("examplecontainer"),
+["MyFolderPath"] = BinaryData.FromString("\"examplecontainer\""),
 },
 }
 },
@@ -138,7 +135,7 @@ IsSequential = true,
 ["type"] = "Expression",
 ["value"] = "@pipeline().parameters.JobId"}),
 },
-                ElapsedTimeMetricDuration = BinaryData.FromString("0.00:10:00"),
+                ElapsedTimeMetricDuration = BinaryData.FromString("\"0.00:10:00\""),
             };
             ArmOperation<DataFactoryPipelineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             DataFactoryPipelineResource result = lro.Value;
@@ -191,8 +188,8 @@ new DatasetReference(DatasetReferenceType.DatasetReference,"exampleDataset")
 {
 Parameters =
 {
-["MyFileName"] = BinaryData.FromString("examplecontainer.csv"),
-["MyFolderPath"] = BinaryData.FromString("examplecontainer"),
+["MyFileName"] = BinaryData.FromString("\"examplecontainer.csv\""),
+["MyFolderPath"] = BinaryData.FromString("\"examplecontainer\""),
 },
 }
 },
@@ -206,7 +203,7 @@ Parameters =
 {
 ["type"] = "Expression",
 ["value"] = "@item()"}),
-["MyFolderPath"] = BinaryData.FromString("examplecontainer"),
+["MyFolderPath"] = BinaryData.FromString("\"examplecontainer\""),
 },
 }
 },
@@ -221,7 +218,7 @@ IsSequential = true,
 {
 ["OutputBlobNameList"] = new EntityParameterSpecification(EntityParameterType.Array),
 },
-                ElapsedTimeMetricDuration = BinaryData.FromString("0.00:10:00"),
+                ElapsedTimeMetricDuration = BinaryData.FromString("\"0.00:10:00\""),
             };
             ArmOperation<DataFactoryPipelineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             DataFactoryPipelineResource result = lro.Value;

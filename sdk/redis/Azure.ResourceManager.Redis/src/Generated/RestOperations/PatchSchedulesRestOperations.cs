@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Redis.Models;
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Redis
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-04-01";
+            _apiVersion = apiVersion ?? "2023-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -59,8 +58,8 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> Gets all patch schedules in the specified redis cache (there is only one). </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cacheName"> The name of the Redis cache. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is null. </exception>
@@ -88,8 +87,8 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> Gets all patch schedules in the specified redis cache (there is only one). </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cacheName"> The name of the Redis cache. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is null. </exception>
@@ -143,8 +142,8 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> Create or replace the patching schedule for Redis cache. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the Redis cache. </param>
         /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="data"> Parameters to set the patching schedule for Redis cache. </param>
@@ -176,8 +175,8 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> Create or replace the patching schedule for Redis cache. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the Redis cache. </param>
         /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="data"> Parameters to set the patching schedule for Redis cache. </param>
@@ -231,8 +230,8 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> Deletes the patching schedule of a redis cache. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the redis cache. </param>
         /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -257,8 +256,8 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> Deletes the patching schedule of a redis cache. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the redis cache. </param>
         /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -305,8 +304,8 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> Gets the patching schedule of a redis cache. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the redis cache. </param>
         /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -337,8 +336,8 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> Gets the patching schedule of a redis cache. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the redis cache. </param>
         /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -384,8 +383,8 @@ namespace Azure.ResourceManager.Redis
 
         /// <summary> Gets all patch schedules in the specified redis cache (there is only one). </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cacheName"> The name of the Redis cache. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is null. </exception>
@@ -415,8 +414,8 @@ namespace Azure.ResourceManager.Redis
 
         /// <summary> Gets all patch schedules in the specified redis cache (there is only one). </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cacheName"> The name of the Redis cache. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is null. </exception>

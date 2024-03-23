@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.Amqp;
 using Azure.Core.Serialization;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp.Encoding;
@@ -184,8 +185,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueuedTimeUtcName));
                 Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.DeadLetterSourceName));
                 Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.MessageStateName));
+                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.PartitionIdName));
                 Assert.IsFalse(toSend.ApplicationProperties.ContainsKey(AmqpMessageConstants.DeadLetterReasonHeader));
                 Assert.IsFalse(toSend.ApplicationProperties.ContainsKey(AmqpMessageConstants.DeadLetterErrorDescriptionHeader));
+                Assert.IsFalse(toSend.ApplicationProperties.ContainsKey(MessagingClientDiagnostics.DiagnosticIdAttribute));
 
                 // delivery annotations only apply to a single hop so they are cleared
                 Assert.AreEqual(0, rawSend.DeliveryAnnotations.Count);
@@ -211,6 +214,55 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                     Assert.AreEqual(received.To, sentMessage.To);
                     Assert.AreEqual(received.TransactionPartitionKey, sentMessage.TransactionPartitionKey);
                 }
+            }
+        }
+
+        [Test]
+        public async Task TimeToLiveSetBasedOnAbsoluteExpiryTimeAndQueueDefault()
+        {
+            // Use a message Time To Live of greater than 49 days so that we can verify the TTL is recalculated correctly on the client based on
+            // the absolute expiry time. 49 days is the largest number of milliseconds that can be sent over AMQP, so the recalculation is a workaround.
+            // See https://github.com/Azure/azure-sdk-for-net/issues/40915 for more details.
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false,
+                             enableSession: false, defaultMessageTimeToLive: TimeSpan.FromDays(100)))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var sender = client.CreateSender(scope.QueueName);
+                var msg = new ServiceBusMessage();
+                await sender.SendMessageAsync(msg);
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+                var received = await receiver.ReceiveMessageAsync();
+
+                Assert.AreEqual(TimeSpan.FromDays(100), received.TimeToLive);
+                Assert.AreEqual(received.GetRawAmqpMessage().Properties.CreationTime + TimeSpan.FromDays(100),
+                    received.ExpiresAt);
+            }
+        }
+
+        [Test]
+        public async Task TimeToLiveSetBasedOnAbsoluteExpiryTimeAndMessageValue()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false,
+                             enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var sender = client.CreateSender(scope.QueueName);
+                // Use a message Time To Live of greater than 49 days so that we can verify the TTL is recalculated correctly on the client based on
+                // the absolute expiry time. 49 days is the largest number of milliseconds that can be sent over AMQP, so the recalculation is a workaround.
+                // See https://github.com/Azure/azure-sdk-for-net/issues/40915 for more details.
+                var msg = new ServiceBusMessage
+                {
+                    TimeToLive = TimeSpan.FromDays(100)
+                };
+                await sender.SendMessageAsync(msg);
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+                var received = await receiver.ReceiveMessageAsync();
+
+                Assert.AreEqual(TimeSpan.FromDays(100), received.TimeToLive);
+                Assert.AreEqual(received.GetRawAmqpMessage().Properties.CreationTime + TimeSpan.FromDays(100),
+                    received.ExpiresAt);
             }
         }
 

@@ -12,17 +12,15 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="HealthcareApisWorkspaceResource" />.
-    /// To get a <see cref="HealthcareApisWorkspacePrivateEndpointConnectionCollection" /> instance call the GetHealthcareApisWorkspacePrivateEndpointConnections method from an instance of <see cref="HealthcareApisWorkspaceResource" />.
+    /// A class representing a collection of <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="HealthcareApisWorkspaceResource"/>.
+    /// To get a <see cref="HealthcareApisWorkspacePrivateEndpointConnectionCollection"/> instance call the GetHealthcareApisWorkspacePrivateEndpointConnections method from an instance of <see cref="HealthcareApisWorkspaceResource"/>.
     /// </summary>
     public partial class HealthcareApisWorkspacePrivateEndpointConnectionCollection : ArmCollection, IEnumerable<HealthcareApisWorkspacePrivateEndpointConnectionResource>, IAsyncEnumerable<HealthcareApisWorkspacePrivateEndpointConnectionResource>
     {
@@ -63,6 +61,14 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkspacePrivateEndpointConnections_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +111,14 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <term>Operation Id</term>
         /// <description>WorkspacePrivateEndpointConnections_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +160,14 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <term>Operation Id</term>
         /// <description>WorkspacePrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
@@ -182,6 +204,14 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkspacePrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +250,18 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <term>Operation Id</term>
         /// <description>WorkspacePrivateEndpointConnections_ListByWorkspace</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HealthcareApisWorkspacePrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -241,10 +279,18 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <term>Operation Id</term>
         /// <description>WorkspacePrivateEndpointConnections_ListByWorkspace</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HealthcareApisWorkspacePrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -261,6 +307,14 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkspacePrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,6 +351,14 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <term>Operation Id</term>
         /// <description>WorkspacePrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
@@ -331,6 +393,14 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkspacePrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -368,6 +438,14 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkspacePrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

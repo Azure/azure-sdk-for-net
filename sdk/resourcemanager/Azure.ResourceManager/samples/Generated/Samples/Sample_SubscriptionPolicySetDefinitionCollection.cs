@@ -8,11 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources.Samples
@@ -56,7 +53,7 @@ namespace Azure.ResourceManager.Resources.Samples
 ["namePrefix"] = new ArmPolicyParameter()
 {
 ParameterType = ArmPolicyParameterType.String,
-DefaultValue = BinaryData.FromString("myPrefix"),
+DefaultValue = BinaryData.FromString("\"myPrefix\""),
 Metadata = new ParameterDefinitionsValueMetadata()
 {
 DisplayName = "Prefix to enforce on resource names",
@@ -81,11 +78,11 @@ Parameters =
 {
 ["prefix"] = new ArmPolicyParameterValue()
 {
-Value = BinaryData.FromString("[parameters('namePrefix')]"),
+Value = BinaryData.FromString("\"[parameters('namePrefix')]\""),
 },
 ["suffix"] = new ArmPolicyParameterValue()
 {
-Value = BinaryData.FromString("-LC"),
+Value = BinaryData.FromString("\"-LC\""),
 },
 },
 PolicyDefinitionReferenceId = "Resource_Naming",
@@ -156,11 +153,11 @@ Parameters =
 {
 ["prefix"] = new ArmPolicyParameterValue()
 {
-Value = BinaryData.FromString("DeptA"),
+Value = BinaryData.FromString("\"DeptA\""),
 },
 ["suffix"] = new ArmPolicyParameterValue()
 {
-Value = BinaryData.FromString("-LC"),
+Value = BinaryData.FromString("\"-LC\""),
 },
 },
 PolicyDefinitionReferenceId = "Resource_Naming",

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> Enums used to filters jobs by state. </summary>
+    /// <summary> Enums used to filters jobs by status. </summary>
     public readonly partial struct RouterJobStatusSelector : IEquatable<RouterJobStatusSelector>
     {
         private readonly string _value;

@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ArcScVmm.Models;
 using Azure.ResourceManager.Resources;
 
@@ -21,13 +19,16 @@ namespace Azure.ResourceManager.ArcScVmm
 {
     /// <summary>
     /// A Class representing a ScVmmCloud along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ScVmmCloudResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetScVmmCloudResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetScVmmCloud method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScVmmCloudResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetScVmmCloudResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetScVmmCloud method.
     /// </summary>
     public partial class ScVmmCloudResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ScVmmCloudResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="cloudResourceName"> The cloudResourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string cloudResourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudResourceName}";
@@ -38,12 +39,15 @@ namespace Azure.ResourceManager.ArcScVmm
         private readonly CloudsRestOperations _scVmmCloudCloudsRestClient;
         private readonly ScVmmCloudData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ScVmm/clouds";
+
         /// <summary> Initializes a new instance of the <see cref="ScVmmCloudResource"/> class for mocking. </summary>
         protected ScVmmCloudResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ScVmmCloudResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScVmmCloudResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ScVmmCloudResource(ArmClient client, ScVmmCloudData data) : this(client, data.Id)
@@ -64,9 +68,6 @@ namespace Azure.ResourceManager.ArcScVmm
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ScVmm/clouds";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -100,6 +101,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>Clouds_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmCloudResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +141,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>Clouds_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmCloudResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -163,6 +180,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clouds_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmCloudResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,6 +224,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>Clouds_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmCloudResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -233,6 +266,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clouds_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmCloudResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -272,6 +313,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>Clouds_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmCloudResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -309,6 +358,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clouds_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmCloudResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -364,6 +421,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>Clouds_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmCloudResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -418,6 +483,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>Clouds_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmCloudResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -467,6 +540,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>Clouds_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmCloudResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -515,6 +596,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clouds_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmCloudResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -567,6 +656,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clouds_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-07</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmCloudResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

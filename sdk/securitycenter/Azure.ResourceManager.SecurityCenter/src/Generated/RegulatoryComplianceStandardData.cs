@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityCenter.Models;
@@ -17,12 +19,44 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class RegulatoryComplianceStandardData : ResourceData
     {
-        /// <summary> Initializes a new instance of RegulatoryComplianceStandardData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RegulatoryComplianceStandardData"/>. </summary>
         public RegulatoryComplianceStandardData()
         {
         }
 
-        /// <summary> Initializes a new instance of RegulatoryComplianceStandardData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegulatoryComplianceStandardData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,13 +66,15 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="failedControls"> The number of supported regulatory compliance controls of the given standard with a failed state. </param>
         /// <param name="skippedControls"> The number of supported regulatory compliance controls of the given standard with a skipped state. </param>
         /// <param name="unsupportedControls"> The number of regulatory compliance controls of the given standard which are unsupported by automated assessments. </param>
-        internal RegulatoryComplianceStandardData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RegulatoryComplianceState? state, int? passedControls, int? failedControls, int? skippedControls, int? unsupportedControls) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RegulatoryComplianceStandardData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RegulatoryComplianceState? state, int? passedControls, int? failedControls, int? skippedControls, int? unsupportedControls, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             State = state;
             PassedControls = passedControls;
             FailedControls = failedControls;
             SkippedControls = skippedControls;
             UnsupportedControls = unsupportedControls;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Aggregative state based on the standard's supported controls states. </summary>

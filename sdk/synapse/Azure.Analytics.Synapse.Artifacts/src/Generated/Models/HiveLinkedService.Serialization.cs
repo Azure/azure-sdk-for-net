@@ -154,27 +154,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
             object host = default;
-            Optional<object> port = default;
-            Optional<HiveServerType> serverType = default;
-            Optional<HiveThriftTransportProtocol> thriftTransportProtocol = default;
+            object port = default;
+            HiveServerType? serverType = default;
+            HiveThriftTransportProtocol? thriftTransportProtocol = default;
             HiveAuthenticationType authenticationType = default;
-            Optional<object> serviceDiscoveryMode = default;
-            Optional<object> zooKeeperNameSpace = default;
-            Optional<object> useNativeQuery = default;
-            Optional<object> username = default;
-            Optional<SecretBase> password = default;
-            Optional<object> httpPath = default;
-            Optional<object> enableSsl = default;
-            Optional<object> trustedCertPath = default;
-            Optional<object> useSystemTrustStore = default;
-            Optional<object> allowHostNameCNMismatch = default;
-            Optional<object> allowSelfSignedServerCert = default;
-            Optional<object> encryptedCredential = default;
+            object serviceDiscoveryMode = default;
+            object zooKeeperNameSpace = default;
+            object useNativeQuery = default;
+            object username = default;
+            SecretBase password = default;
+            object httpPath = default;
+            object enableSsl = default;
+            object trustedCertPath = default;
+            object useSystemTrustStore = default;
+            object allowHostNameCNMismatch = default;
+            object allowSelfSignedServerCert = default;
+            object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -393,7 +393,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HiveLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, host, port.Value, Optional.ToNullable(serverType), Optional.ToNullable(thriftTransportProtocol), authenticationType, serviceDiscoveryMode.Value, zooKeeperNameSpace.Value, useNativeQuery.Value, username.Value, password.Value, httpPath.Value, enableSsl.Value, trustedCertPath.Value, useSystemTrustStore.Value, allowHostNameCNMismatch.Value, allowSelfSignedServerCert.Value, encryptedCredential.Value);
+            return new HiveLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                host,
+                port,
+                serverType,
+                thriftTransportProtocol,
+                authenticationType,
+                serviceDiscoveryMode,
+                zooKeeperNameSpace,
+                useNativeQuery,
+                username,
+                password,
+                httpPath,
+                enableSsl,
+                trustedCertPath,
+                useSystemTrustStore,
+                allowHostNameCNMismatch,
+                allowSelfSignedServerCert,
+                encryptedCredential);
         }
 
         internal partial class HiveLinkedServiceConverter : JsonConverter<HiveLinkedService>

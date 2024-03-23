@@ -55,11 +55,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> operationTimeout = default;
-            Optional<object> useTempFileRename = default;
+            object operationTimeout = default;
+            object useTempFileRename = default;
             string type = default;
-            Optional<object> maxConcurrentConnections = default;
-            Optional<object> copyBehavior = default;
+            object maxConcurrentConnections = default;
+            object copyBehavior = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SftpWriteSettings(type, maxConcurrentConnections.Value, copyBehavior.Value, additionalProperties, operationTimeout.Value, useTempFileRename.Value);
+            return new SftpWriteSettings(
+                type,
+                maxConcurrentConnections,
+                copyBehavior,
+                additionalProperties,
+                operationTimeout,
+                useTempFileRename);
         }
 
         internal partial class SftpWriteSettingsConverter : JsonConverter<SftpWriteSettings>

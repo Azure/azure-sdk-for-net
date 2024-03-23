@@ -7,14 +7,13 @@
 
 using System;
 using Azure.Communication.MediaComposition.Models;
-using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
     /// <summary> The DominantSpeaker. </summary>
     public partial class DominantSpeaker : MediaInput
     {
-        /// <summary> Initializes a new instance of DominantSpeaker. </summary>
+        /// <summary> Initializes a new instance of <see cref="DominantSpeaker"/>. </summary>
         /// <param name="call"> The id of the teams meeting or call. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="call"/> is null. </exception>
         public DominantSpeaker(string call)
@@ -25,7 +24,7 @@ namespace Azure.Communication.MediaComposition
             Kind = MediaInputType.DominantSpeaker;
         }
 
-        /// <summary> Initializes a new instance of DominantSpeaker. </summary>
+        /// <summary> Initializes a new instance of <see cref="DominantSpeaker"/>. </summary>
         /// <param name="kind"> Kind of media input. </param>
         /// <param name="placeholderImageUri"> Image url to be used if participant has no video stream. </param>
         /// <param name="call"> The id of the teams meeting or call. </param>

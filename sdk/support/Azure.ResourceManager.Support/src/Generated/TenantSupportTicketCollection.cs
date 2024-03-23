@@ -12,18 +12,16 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Support
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TenantSupportTicketResource" /> and their operations.
-    /// Each <see cref="TenantSupportTicketResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="TenantSupportTicketCollection" /> instance call the GetTenantSupportTickets method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="TenantSupportTicketResource"/> and their operations.
+    /// Each <see cref="TenantSupportTicketResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="TenantSupportTicketCollection"/> instance call the GetTenantSupportTickets method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class TenantSupportTicketCollection : ArmCollection, IEnumerable<TenantSupportTicketResource>, IAsyncEnumerable<TenantSupportTicketResource>
     {
@@ -64,6 +62,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SupportTicketsNoSubscription_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantSupportTicketResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +112,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>SupportTicketsNoSubscription_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantSupportTicketResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +161,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>SupportTicketsNoSubscription_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantSupportTicketResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="supportTicketName"> Support ticket name. </param>
@@ -183,6 +205,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SupportTicketsNoSubscription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantSupportTicketResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,12 +251,20 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>SupportTicketsNoSubscription_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantSupportTicketResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The number of values to return in the collection. Default is 25 and max is 100. </param>
         /// <param name="filter"> The filter to apply on the operation. We support 'odata v4.0' filter semantics. &lt;a target='_blank' href='https://docs.microsoft.com/odata/concepts/queryoptions-overview'&gt;Learn more&lt;/a&gt; &lt;br/&gt;&lt;i&gt;Status&lt;/i&gt; , &lt;i&gt;ServiceId&lt;/i&gt;, and &lt;i&gt;ProblemClassificationId&lt;/i&gt; filters can only be used with 'eq' operator. For &lt;i&gt;CreatedDate&lt;/i&gt; filter, the supported operators are 'gt' and 'ge'. When using both filters, combine them using the logical 'AND'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TenantSupportTicketResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="TenantSupportTicketResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TenantSupportTicketResource> GetAllAsync(int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantSupportTicketSupportTicketsNoSubscriptionRestClient.CreateListRequest(top, filter);
@@ -245,12 +283,20 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>SupportTicketsNoSubscription_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantSupportTicketResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The number of values to return in the collection. Default is 25 and max is 100. </param>
         /// <param name="filter"> The filter to apply on the operation. We support 'odata v4.0' filter semantics. &lt;a target='_blank' href='https://docs.microsoft.com/odata/concepts/queryoptions-overview'&gt;Learn more&lt;/a&gt; &lt;br/&gt;&lt;i&gt;Status&lt;/i&gt; , &lt;i&gt;ServiceId&lt;/i&gt;, and &lt;i&gt;ProblemClassificationId&lt;/i&gt; filters can only be used with 'eq' operator. For &lt;i&gt;CreatedDate&lt;/i&gt; filter, the supported operators are 'gt' and 'ge'. When using both filters, combine them using the logical 'AND'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TenantSupportTicketResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TenantSupportTicketResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TenantSupportTicketResource> GetAll(int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantSupportTicketSupportTicketsNoSubscriptionRestClient.CreateListRequest(top, filter);
@@ -268,6 +314,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SupportTicketsNoSubscription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantSupportTicketResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,6 +358,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>SupportTicketsNoSubscription_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantSupportTicketResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="supportTicketName"> Support ticket name. </param>
@@ -338,6 +400,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SupportTicketsNoSubscription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantSupportTicketResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -375,6 +445,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SupportTicketsNoSubscription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantSupportTicketResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

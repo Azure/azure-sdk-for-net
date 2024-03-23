@@ -69,12 +69,12 @@ namespace Azure.Search.Documents
         /// <summary>
         /// The @search.semanticPartialResponseReason key.
         /// </summary>
-        public static readonly JsonEncodedText SearchSemanticPartialResponseReasonKeyJson = JsonEncodedText.Encode("@search.semanticPartialResponseReason");
+        public static readonly JsonEncodedText SearchSemanticErrorReasonKeyJson = JsonEncodedText.Encode("@search.semanticPartialResponseReason");
 
         /// <summary>
         /// The @search.semanticPartialResponseType key.
         /// </summary>
-        public static readonly JsonEncodedText SearchSemanticPartialResponseTypeKeyJson = JsonEncodedText.Encode("@search.semanticPartialResponseType");
+        public static readonly JsonEncodedText SearchSemanticSearchResultsTypeKeyJson = JsonEncodedText.Encode("@search.semanticPartialResponseType");
 
         /// <summary>
         /// The @search.answers key.

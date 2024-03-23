@@ -63,12 +63,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<RecurrenceFrequency> frequency = default;
-            Optional<int> interval = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> timeZone = default;
-            Optional<RecurrenceSchedule> schedule = default;
+            RecurrenceFrequency? frequency = default;
+            int? interval = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string timeZone = default;
+            RecurrenceSchedule schedule = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ScheduleTriggerRecurrence(Optional.ToNullable(frequency), Optional.ToNullable(interval), Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeZone.Value, schedule.Value, additionalProperties);
+            return new ScheduleTriggerRecurrence(
+                frequency,
+                interval,
+                startTime,
+                endTime,
+                timeZone,
+                schedule,
+                additionalProperties);
         }
 
         internal partial class ScheduleTriggerRecurrenceConverter : JsonConverter<ScheduleTriggerRecurrence>

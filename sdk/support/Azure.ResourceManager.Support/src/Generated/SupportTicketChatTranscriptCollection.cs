@@ -12,17 +12,15 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Support
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SupportTicketChatTranscriptResource" /> and their operations.
-    /// Each <see cref="SupportTicketChatTranscriptResource" /> in the collection will belong to the same instance of <see cref="SubscriptionSupportTicketResource" />.
-    /// To get a <see cref="SupportTicketChatTranscriptCollection" /> instance call the GetSupportTicketChatTranscripts method from an instance of <see cref="SubscriptionSupportTicketResource" />.
+    /// A class representing a collection of <see cref="SupportTicketChatTranscriptResource"/> and their operations.
+    /// Each <see cref="SupportTicketChatTranscriptResource"/> in the collection will belong to the same instance of <see cref="SubscriptionSupportTicketResource"/>.
+    /// To get a <see cref="SupportTicketChatTranscriptCollection"/> instance call the GetSupportTicketChatTranscripts method from an instance of <see cref="SubscriptionSupportTicketResource"/>.
     /// </summary>
     public partial class SupportTicketChatTranscriptCollection : ArmCollection, IEnumerable<SupportTicketChatTranscriptResource>, IAsyncEnumerable<SupportTicketChatTranscriptResource>
     {
@@ -64,6 +62,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>ChatTranscripts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketChatTranscriptResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="chatTranscriptName"> ChatTranscript name. </param>
@@ -100,6 +106,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ChatTranscripts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketChatTranscriptResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +152,18 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>ChatTranscripts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketChatTranscriptResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SupportTicketChatTranscriptResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SupportTicketChatTranscriptResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SupportTicketChatTranscriptResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketChatTranscriptChatTranscriptsRestClient.CreateListRequest(Id.SubscriptionId, Id.Name);
@@ -160,10 +182,18 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>ChatTranscripts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketChatTranscriptResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SupportTicketChatTranscriptResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SupportTicketChatTranscriptResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SupportTicketChatTranscriptResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketChatTranscriptChatTranscriptsRestClient.CreateListRequest(Id.SubscriptionId, Id.Name);
@@ -181,6 +211,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ChatTranscripts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketChatTranscriptResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +255,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>ChatTranscripts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketChatTranscriptResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="chatTranscriptName"> ChatTranscript name. </param>
@@ -251,6 +297,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ChatTranscripts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketChatTranscriptResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,6 +342,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ChatTranscripts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketChatTranscriptResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -17,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// </summary>
     public partial class ScoringFunction
     {
-        /// <summary> Initializes a new instance of ScoringFunction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScoringFunction"/>. </summary>
         /// <param name="type"> Indicates the type of function to use. Valid values include magnitude, freshness, distance, and tag. The function type must be lower case. </param>
         /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
         /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>

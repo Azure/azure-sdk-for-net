@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Communication.MediaComposition;
-
 namespace Azure.Communication.MediaComposition.Models
 {
     /// <summary>
@@ -16,7 +14,7 @@ namespace Azure.Communication.MediaComposition.Models
     /// </summary>
     public abstract partial class MediaInput
     {
-        /// <summary> Initializes a new instance of MediaInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaInput"/>. </summary>
         /// <param name="kind"> Kind of media input. </param>
         /// <param name="placeholderImageUri"> Image url to be used if participant has no video stream. </param>
         internal MediaInput(MediaInputType kind, string placeholderImageUri)

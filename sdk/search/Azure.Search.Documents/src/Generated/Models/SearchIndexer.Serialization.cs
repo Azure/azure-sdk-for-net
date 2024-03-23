@@ -127,18 +127,18 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string name = default;
-            Optional<string> description = default;
+            string description = default;
             string dataSourceName = default;
-            Optional<string> skillsetName = default;
+            string skillsetName = default;
             string targetIndexName = default;
-            Optional<IndexingSchedule> schedule = default;
-            Optional<IndexingParameters> parameters = default;
-            Optional<IList<FieldMapping>> fieldMappings = default;
-            Optional<IList<FieldMapping>> outputFieldMappings = default;
-            Optional<bool?> disabled = default;
-            Optional<string> odataEtag = default;
-            Optional<SearchResourceEncryptionKey> encryptionKey = default;
-            Optional<SearchIndexerCache> cache = default;
+            IndexingSchedule schedule = default;
+            IndexingParameters parameters = default;
+            IList<FieldMapping> fieldMappings = default;
+            IList<FieldMapping> outputFieldMappings = default;
+            bool? disabled = default;
+            string odataEtag = default;
+            SearchResourceEncryptionKey encryptionKey = default;
+            SearchIndexerCache cache = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -250,7 +250,20 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndexer(name, description.Value, dataSourceName, skillsetName.Value, targetIndexName, schedule.Value, parameters.Value, Optional.ToList(fieldMappings), Optional.ToList(outputFieldMappings), Optional.ToNullable(disabled), odataEtag.Value, encryptionKey.Value, cache.Value);
+            return new SearchIndexer(
+                name,
+                description,
+                dataSourceName,
+                skillsetName,
+                targetIndexName,
+                schedule,
+                parameters,
+                fieldMappings ?? new ChangeTrackingList<FieldMapping>(),
+                outputFieldMappings ?? new ChangeTrackingList<FieldMapping>(),
+                disabled,
+                odataEtag,
+                encryptionKey,
+                cache);
         }
     }
 }

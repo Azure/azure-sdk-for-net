@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.AppPlatform.Models;
@@ -415,7 +414,7 @@ namespace Azure.ResourceManager.AppPlatform
             uri.AppendPath(appName, true);
             uri.AppendPath("/deployments", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (version != null && Optional.IsCollectionDefined(version))
+            if (version != null && !(version is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in version)
                 {
@@ -507,7 +506,7 @@ namespace Azure.ResourceManager.AppPlatform
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/deployments", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (version != null && Optional.IsCollectionDefined(version))
+            if (version != null && !(version is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in version)
                 {

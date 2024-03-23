@@ -26,12 +26,13 @@ namespace Azure.Communication.Identity
     }
     public partial class CommunicationIdentityClientOptions : Azure.Core.ClientOptions
     {
-        public CommunicationIdentityClientOptions(Azure.Communication.Identity.CommunicationIdentityClientOptions.ServiceVersion version = Azure.Communication.Identity.CommunicationIdentityClientOptions.ServiceVersion.V2022_10_01) { }
+        public CommunicationIdentityClientOptions(Azure.Communication.Identity.CommunicationIdentityClientOptions.ServiceVersion version = Azure.Communication.Identity.CommunicationIdentityClientOptions.ServiceVersion.V2023_10_01) { }
         public enum ServiceVersion
         {
             V2021_03_07 = 1,
             V2022_06_01 = 2,
             V2022_10_01 = 3,
+            V2023_10_01 = 4,
         }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -41,7 +42,10 @@ namespace Azure.Communication.Identity
         private readonly int _dummyPrimitive;
         public CommunicationTokenScope(string value) { throw null; }
         public static Azure.Communication.Identity.CommunicationTokenScope Chat { get { throw null; } }
+        public static Azure.Communication.Identity.CommunicationTokenScope ChatJoin { get { throw null; } }
+        public static Azure.Communication.Identity.CommunicationTokenScope ChatJoinLimited { get { throw null; } }
         public static Azure.Communication.Identity.CommunicationTokenScope VoIP { get { throw null; } }
+        public static Azure.Communication.Identity.CommunicationTokenScope VoIPJoin { get { throw null; } }
         public bool Equals(Azure.Communication.Identity.CommunicationTokenScope other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

@@ -12,18 +12,16 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HDInsight.Containers
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HDInsightClusterPoolResource" /> and their operations.
-    /// Each <see cref="HDInsightClusterPoolResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="HDInsightClusterPoolCollection" /> instance call the GetHDInsightClusterPools method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="HDInsightClusterPoolResource"/> and their operations.
+    /// Each <see cref="HDInsightClusterPoolResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="HDInsightClusterPoolCollection"/> instance call the GetHDInsightClusterPools method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class HDInsightClusterPoolCollection : ArmCollection, IEnumerable<HDInsightClusterPoolResource>, IAsyncEnumerable<HDInsightClusterPoolResource>
     {
@@ -64,6 +62,14 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ClusterPools_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +112,14 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <term>Operation Id</term>
         /// <description>ClusterPools_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +161,14 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <term>Operation Id</term>
         /// <description>ClusterPools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterPoolName"> The name of the cluster pool. </param>
@@ -183,6 +205,14 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ClusterPools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,10 +251,18 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <term>Operation Id</term>
         /// <description>ClusterPools_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HDInsightClusterPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HDInsightClusterPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HDInsightClusterPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hdInsightClusterPoolClusterPoolsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -243,10 +281,18 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <term>Operation Id</term>
         /// <description>ClusterPools_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HDInsightClusterPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HDInsightClusterPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HDInsightClusterPoolResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hdInsightClusterPoolClusterPoolsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -264,6 +310,14 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ClusterPools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,6 +354,14 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <term>Operation Id</term>
         /// <description>ClusterPools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterPoolName"> The name of the cluster pool. </param>
@@ -334,6 +396,14 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ClusterPools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -371,6 +441,14 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ClusterPools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

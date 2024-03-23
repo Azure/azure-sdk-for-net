@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.IotHub;
 using Azure.ResourceManager.IotHub.Models;
 
 namespace Azure.ResourceManager.IotHub.Samples
@@ -77,7 +74,7 @@ namespace Azure.ResourceManager.IotHub.Samples
             {
                 Properties = new IotHubCertificateProperties()
                 {
-                    Certificate = BinaryData.FromString("############################################"),
+                    Certificate = BinaryData.FromString("\"############################################\""),
                 },
             };
             ArmOperation<IotHubCertificateDescriptionResource> lro = await iotHubCertificateDescription.UpdateAsync(WaitUntil.Completed, data);
@@ -174,7 +171,7 @@ namespace Azure.ResourceManager.IotHub.Samples
             string ifMatch = "AAAAAAAADGk=";
             IotHubCertificateVerificationContent content = new IotHubCertificateVerificationContent()
             {
-                Certificate = BinaryData.FromString("#####################################"),
+                Certificate = BinaryData.FromString("\"#####################################\""),
             };
             IotHubCertificateDescriptionResource result = await iotHubCertificateDescription.VerifyAsync(ifMatch, content);
 

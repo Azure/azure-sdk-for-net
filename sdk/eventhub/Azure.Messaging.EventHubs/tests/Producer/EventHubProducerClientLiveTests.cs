@@ -208,7 +208,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ProducerCanSendAnEventBatcToASpecificPartition()
+        public async Task ProducerCanSendAnEventBatchToASpecificPartition()
         {
             await using EventHubScope scope = await EventHubScope.CreateAsync(4);
             await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, scope.EventHubName);

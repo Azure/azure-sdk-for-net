@@ -12,18 +12,16 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Automation.Models;
 
 namespace Azure.ResourceManager.Automation
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AutomationVariableResource" /> and their operations.
-    /// Each <see cref="AutomationVariableResource" /> in the collection will belong to the same instance of <see cref="AutomationAccountResource" />.
-    /// To get an <see cref="AutomationVariableCollection" /> instance call the GetAutomationVariables method from an instance of <see cref="AutomationAccountResource" />.
+    /// A class representing a collection of <see cref="AutomationVariableResource"/> and their operations.
+    /// Each <see cref="AutomationVariableResource"/> in the collection will belong to the same instance of <see cref="AutomationAccountResource"/>.
+    /// To get an <see cref="AutomationVariableCollection"/> instance call the GetAutomationVariables method from an instance of <see cref="AutomationAccountResource"/>.
     /// </summary>
     public partial class AutomationVariableCollection : ArmCollection, IEnumerable<AutomationVariableResource>, IAsyncEnumerable<AutomationVariableResource>
     {
@@ -64,6 +62,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Variable_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationVariableResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +112,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Variable_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationVariableResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +161,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Variable_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationVariableResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="variableName"> The name of variable. </param>
@@ -183,6 +205,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Variable_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationVariableResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,10 +251,18 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Variable_ListByAutomationAccount</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationVariableResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomationVariableResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutomationVariableResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationVariableResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationVariableVariableRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -243,10 +281,18 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Variable_ListByAutomationAccount</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationVariableResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomationVariableResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutomationVariableResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationVariableResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationVariableVariableRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -264,6 +310,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Variable_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationVariableResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,6 +354,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Variable_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationVariableResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="variableName"> The name of variable. </param>
@@ -334,6 +396,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Variable_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationVariableResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -371,6 +441,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Variable_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationVariableResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

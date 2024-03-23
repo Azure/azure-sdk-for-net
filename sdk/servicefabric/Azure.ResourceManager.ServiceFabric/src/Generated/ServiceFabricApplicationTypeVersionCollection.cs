@@ -12,17 +12,15 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ServiceFabricApplicationTypeVersionResource" /> and their operations.
-    /// Each <see cref="ServiceFabricApplicationTypeVersionResource" /> in the collection will belong to the same instance of <see cref="ServiceFabricApplicationTypeResource" />.
-    /// To get a <see cref="ServiceFabricApplicationTypeVersionCollection" /> instance call the GetServiceFabricApplicationTypeVersions method from an instance of <see cref="ServiceFabricApplicationTypeResource" />.
+    /// A class representing a collection of <see cref="ServiceFabricApplicationTypeVersionResource"/> and their operations.
+    /// Each <see cref="ServiceFabricApplicationTypeVersionResource"/> in the collection will belong to the same instance of <see cref="ServiceFabricApplicationTypeResource"/>.
+    /// To get a <see cref="ServiceFabricApplicationTypeVersionCollection"/> instance call the GetServiceFabricApplicationTypeVersions method from an instance of <see cref="ServiceFabricApplicationTypeResource"/>.
     /// </summary>
     public partial class ServiceFabricApplicationTypeVersionCollection : ArmCollection, IEnumerable<ServiceFabricApplicationTypeVersionResource>, IAsyncEnumerable<ServiceFabricApplicationTypeVersionResource>
     {
@@ -63,6 +61,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplicationTypeVersions_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricApplicationTypeVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +111,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <term>Operation Id</term>
         /// <description>ApplicationTypeVersions_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricApplicationTypeVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +160,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <term>Operation Id</term>
         /// <description>ApplicationTypeVersions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricApplicationTypeVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> The application type version. </param>
@@ -182,6 +204,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplicationTypeVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricApplicationTypeVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,14 +250,23 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <term>Operation Id</term>
         /// <description>ApplicationTypeVersions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricApplicationTypeVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceFabricApplicationTypeVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ServiceFabricApplicationTypeVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceFabricApplicationTypeVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ServiceFabricApplicationTypeVersionResource(Client, ServiceFabricApplicationTypeVersionData.DeserializeServiceFabricApplicationTypeVersionData(e)), _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, "ServiceFabricApplicationTypeVersionCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricApplicationTypeVersionResource(Client, ServiceFabricApplicationTypeVersionData.DeserializeServiceFabricApplicationTypeVersionData(e)), _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, "ServiceFabricApplicationTypeVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -241,14 +280,23 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <term>Operation Id</term>
         /// <description>ApplicationTypeVersions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricApplicationTypeVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceFabricApplicationTypeVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ServiceFabricApplicationTypeVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceFabricApplicationTypeVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ServiceFabricApplicationTypeVersionResource(Client, ServiceFabricApplicationTypeVersionData.DeserializeServiceFabricApplicationTypeVersionData(e)), _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, "ServiceFabricApplicationTypeVersionCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricApplicationTypeVersionResource(Client, ServiceFabricApplicationTypeVersionData.DeserializeServiceFabricApplicationTypeVersionData(e)), _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, "ServiceFabricApplicationTypeVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -261,6 +309,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplicationTypeVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricApplicationTypeVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,6 +353,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <term>Operation Id</term>
         /// <description>ApplicationTypeVersions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricApplicationTypeVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> The application type version. </param>
@@ -331,6 +395,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplicationTypeVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricApplicationTypeVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -368,6 +440,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplicationTypeVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricApplicationTypeVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

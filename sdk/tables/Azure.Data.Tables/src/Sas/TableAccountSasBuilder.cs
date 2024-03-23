@@ -161,7 +161,7 @@ namespace Azure.Data.Tables.Sas
         /// <returns>
         /// An instance of <see cref="TableAccountSasQueryParameters"/>.
         /// </returns>
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/data-tables")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/data-tables")]
         public TableAccountSasQueryParameters ToSasQueryParameters(TableSharedKeyCredential sharedKeyCredential)
         {
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
@@ -209,7 +209,7 @@ namespace Azure.Data.Tables.Sas
         /// <returns>
         /// A URL encoded query string representing the SAS.
         /// </returns>
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/data-tables")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/data-tables")]
         public string Sign(TableSharedKeyCredential sharedKeyCredential) =>
             ToSasQueryParameters(sharedKeyCredential).ToString();
 

@@ -12,7 +12,7 @@ namespace Azure.Maps.Routing.Models
     /// <summary> Summary object. </summary>
     public partial class RouteSummary
     {
-        /// <summary> Initializes a new instance of RouteSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteSummary"/>. </summary>
         internal RouteSummary()
         {
         }

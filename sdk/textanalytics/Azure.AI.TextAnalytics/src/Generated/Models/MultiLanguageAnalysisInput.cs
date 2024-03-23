@@ -6,17 +6,23 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The MultiLanguageAnalysisInput. </summary>
     internal partial class MultiLanguageAnalysisInput
     {
-        /// <summary> Initializes a new instance of MultiLanguageAnalysisInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultiLanguageAnalysisInput"/>. </summary>
         public MultiLanguageAnalysisInput()
         {
             Documents = new ChangeTrackingList<MultiLanguageInput>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MultiLanguageAnalysisInput"/>. </summary>
+        /// <param name="documents"></param>
+        internal MultiLanguageAnalysisInput(IList<MultiLanguageInput> documents)
+        {
+            Documents = documents;
         }
 
         /// <summary> Gets the documents. </summary>

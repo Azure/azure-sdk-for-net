@@ -104,14 +104,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
-            Optional<IList<object>> annotations = default;
-            Optional<DataFlowFolder> folder = default;
-            Optional<IList<DataFlowSource>> sources = default;
-            Optional<IList<DataFlowSink>> sinks = default;
-            Optional<IList<Transformation>> transformations = default;
-            Optional<string> script = default;
-            Optional<IList<string>> scriptLines = default;
+            string description = default;
+            IList<object> annotations = default;
+            DataFlowFolder folder = default;
+            IList<DataFlowSource> sources = default;
+            IList<DataFlowSink> sinks = default;
+            IList<Transformation> transformations = default;
+            string script = default;
+            IList<string> scriptLines = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -228,7 +228,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new MappingDataFlow(type, description.Value, Optional.ToList(annotations), folder.Value, Optional.ToList(sources), Optional.ToList(sinks), Optional.ToList(transformations), script.Value, Optional.ToList(scriptLines));
+            return new MappingDataFlow(
+                type,
+                description,
+                annotations ?? new ChangeTrackingList<object>(),
+                folder,
+                sources ?? new ChangeTrackingList<DataFlowSource>(),
+                sinks ?? new ChangeTrackingList<DataFlowSink>(),
+                transformations ?? new ChangeTrackingList<Transformation>(),
+                script,
+                scriptLines ?? new ChangeTrackingList<string>());
         }
 
         internal partial class MappingDataFlowConverter : JsonConverter<MappingDataFlow>

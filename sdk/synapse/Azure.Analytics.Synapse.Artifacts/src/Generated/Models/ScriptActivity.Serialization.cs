@@ -70,6 +70,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(ScriptBlockExecutionTimeout))
+            {
+                writer.WritePropertyName("scriptBlockExecutionTimeout"u8);
+                writer.WriteObjectValue(ScriptBlockExecutionTimeout);
+            }
             if (Optional.IsCollectionDefined(Scripts))
             {
                 writer.WritePropertyName("scripts"u8);
@@ -100,17 +105,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkedServiceReference> linkedServiceName = default;
-            Optional<ActivityPolicy> policy = default;
+            LinkedServiceReference linkedServiceName = default;
+            ActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<UserProperty>> userProperties = default;
-            Optional<IList<ScriptActivityScriptBlock>> scripts = default;
-            Optional<ScriptActivityTypePropertiesLogSettings> logSettings = default;
+            string description = default;
+            ActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
+            IList<ActivityDependency> dependsOn = default;
+            IList<UserProperty> userProperties = default;
+            object scriptBlockExecutionTimeout = default;
+            IList<ScriptActivityScriptBlock> scripts = default;
+            ScriptActivityTypePropertiesLogSettings logSettings = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -203,6 +209,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("scriptBlockExecutionTimeout"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            scriptBlockExecutionTimeout = property0.Value.GetObject();
+                            continue;
+                        }
                         if (property0.NameEquals("scripts"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -232,7 +247,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ScriptActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, Optional.ToList(scripts), logSettings.Value);
+            return new ScriptActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy,
+                scriptBlockExecutionTimeout,
+                scripts ?? new ChangeTrackingList<ScriptActivityScriptBlock>(),
+                logSettings);
         }
 
         internal partial class ScriptActivityConverter : JsonConverter<ScriptActivity>

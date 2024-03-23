@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -22,11 +21,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<string> target = default;
-            Optional<IReadOnlyList<ErrorResponse>> details = default;
-            Optional<IReadOnlyList<ErrorAdditionalInfo>> additionalInfo = default;
+            string code = default;
+            string message = default;
+            string target = default;
+            IReadOnlyList<ErrorResponse> details = default;
+            IReadOnlyList<ErrorAdditionalInfo> additionalInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -73,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new ErrorResponse(code.Value, message.Value, target.Value, Optional.ToList(details), Optional.ToList(additionalInfo));
+            return new ErrorResponse(code, message, target, details ?? new ChangeTrackingList<ErrorResponse>(), additionalInfo ?? new ChangeTrackingList<ErrorAdditionalInfo>());
         }
 
         internal partial class ErrorResponseConverter : JsonConverter<ErrorResponse>

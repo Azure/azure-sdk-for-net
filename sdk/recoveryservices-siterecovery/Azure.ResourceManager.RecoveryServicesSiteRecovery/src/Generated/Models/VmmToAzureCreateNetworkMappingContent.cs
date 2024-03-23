@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Create network mappings input properties/behavior specific to Vmm to Azure Network mapping. </summary>
     public partial class VmmToAzureCreateNetworkMappingContent : FabricSpecificCreateNetworkMappingContent
     {
-        /// <summary> Initializes a new instance of VmmToAzureCreateNetworkMappingContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmmToAzureCreateNetworkMappingContent"/>. </summary>
         public VmmToAzureCreateNetworkMappingContent()
         {
             InstanceType = "VmmToAzure";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VmmToAzureCreateNetworkMappingContent"/>. </summary>
+        /// <param name="instanceType"> The instance type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VmmToAzureCreateNetworkMappingContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
+        {
+            InstanceType = instanceType ?? "VmmToAzure";
         }
     }
 }

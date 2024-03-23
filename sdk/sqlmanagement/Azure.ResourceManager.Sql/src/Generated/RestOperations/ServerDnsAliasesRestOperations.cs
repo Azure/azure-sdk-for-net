@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Sql.Models;
@@ -391,7 +390,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server that the alias is pointing to. </param>
         /// <param name="dnsAliasName"> The name of the server dns alias. </param>
-        /// <param name="serverDnsAliasAcquisition"> The ServerDnsAliasAcquisition to use. </param>
+        /// <param name="serverDnsAliasAcquisition"> The <see cref="ServerDnsAliasAcquisition"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="dnsAliasName"/> or <paramref name="serverDnsAliasAcquisition"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -420,7 +419,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server that the alias is pointing to. </param>
         /// <param name="dnsAliasName"> The name of the server dns alias. </param>
-        /// <param name="serverDnsAliasAcquisition"> The ServerDnsAliasAcquisition to use. </param>
+        /// <param name="serverDnsAliasAcquisition"> The <see cref="ServerDnsAliasAcquisition"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="dnsAliasName"/> or <paramref name="serverDnsAliasAcquisition"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>

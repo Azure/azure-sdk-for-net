@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,13 +19,45 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseAttachedDatabaseConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseAttachedDatabaseConfigurationData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseAttachedDatabaseConfigurationData"/>. </summary>
         public SynapseAttachedDatabaseConfigurationData()
         {
             AttachedDatabaseNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SynapseAttachedDatabaseConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseAttachedDatabaseConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +69,8 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="attachedDatabaseNames"> The list of databases from the clusterResourceId which are currently attached to the kusto pool. </param>
         /// <param name="defaultPrincipalsModificationKind"> The default principals modification kind. </param>
         /// <param name="tableLevelSharingProperties"> Table level sharing specifications. </param>
-        internal SynapseAttachedDatabaseConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceProvisioningState? provisioningState, string databaseName, ResourceIdentifier kustoPoolResourceId, IReadOnlyList<string> attachedDatabaseNames, SynapseDefaultPrincipalsModificationKind? defaultPrincipalsModificationKind, SynapseTableLevelSharingProperties tableLevelSharingProperties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseAttachedDatabaseConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceProvisioningState? provisioningState, string databaseName, ResourceIdentifier kustoPoolResourceId, IReadOnlyList<string> attachedDatabaseNames, SynapseDefaultPrincipalsModificationKind? defaultPrincipalsModificationKind, SynapseTableLevelSharingProperties tableLevelSharingProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             ProvisioningState = provisioningState;
@@ -45,6 +79,7 @@ namespace Azure.ResourceManager.Synapse
             AttachedDatabaseNames = attachedDatabaseNames;
             DefaultPrincipalsModificationKind = defaultPrincipalsModificationKind;
             TableLevelSharingProperties = tableLevelSharingProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource location. </summary>

@@ -7,8 +7,8 @@ azure-arm: true
 csharp: true
 library-name: SelfHelp
 namespace: Azure.ResourceManager.SelfHelp
-require: https://github.com/Azure/azure-rest-api-specs/blob/2ced92ea3d86dbe78f1927a8c4c89767cb48e46a/specification/help/resource-manager/readme.md
-tag: package-2023-06-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/3eb9ec8e9c8f717c6b461c4c0f49a4662fb948fd/specification/help/resource-manager/readme.md
+tag: package-2023-09-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -20,6 +20,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 #mgmt-debug:
 #  show-serialized-names: true
@@ -56,6 +57,8 @@ acronym-mapping:
 
 list-exception:
 - /{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}
+- /{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}
+- /{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}
 
 rename-mapping:
   DiagnosticResource: SelfHelpDiagnostic
@@ -74,10 +77,29 @@ rename-mapping:
   Error: SelfHelpError
   DiagnosticInvocation: SelfHelpDiagnosticInvocation
   ImportanceLevel: SelfHelpImportanceLevel
-  ProvisioningState: SelfHelpProvisioningState
+  DiagnosticProvisioningState: SelfHelpProvisioningState
+  Filter: SelfHelpFilter
+  Confidence: SelfHelpConfidence
+  Section: SelfHelpSection
+  Video: SelfHelpVideo
+  Step: SelfHelpStep
+  Type: SelfHelpType
+  Name: SelfHelpName
+  RestartTroubleshooterResponse: RestartTroubleshooterResult
+  TroubleshooterResponse: TroubleshooterResult
+  ResponseOption: ResponseConfig
 
 override-operation-name:
-  Diagnostics_CheckNameAvailability: CheckSelfHelpNameAvailability
+  CheckNameAvailability_Post: CheckSelfHelpNameAvailability
   DiscoverySolution_List: GetSelfHelpDiscoverySolutions
 
+directive:
+  - from: help.json
+    where: $.definitions.MetricsBasedChart
+    transform: >
+      $.properties.timeSpanDuration['format'] = 'duration';
+  - from: help.json
+    where: $.definitions.Step.properties.type
+    transform: >
+      $["x-ms-client-name"] = 'StepType';
 ```

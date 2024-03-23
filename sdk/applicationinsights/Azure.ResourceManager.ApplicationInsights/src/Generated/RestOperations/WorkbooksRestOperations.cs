@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ApplicationInsights.Models;
@@ -49,7 +48,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Insights/workbooks", false);
             uri.AppendQuery("category", category.ToString(), true);
-            if (tags != null && Optional.IsCollectionDefined(tags))
+            if (tags != null && !(tags is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("tags", tags, ",", true);
             }
@@ -133,7 +132,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/workbooks", false);
             uri.AppendQuery("category", category.ToString(), true);
-            if (tags != null && Optional.IsCollectionDefined(tags))
+            if (tags != null && !(tags is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("tags", tags, ",", true);
             }

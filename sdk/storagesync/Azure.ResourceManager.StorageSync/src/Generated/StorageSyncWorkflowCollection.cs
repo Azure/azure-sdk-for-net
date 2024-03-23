@@ -12,17 +12,15 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StorageSync
 {
     /// <summary>
-    /// A class representing a collection of <see cref="StorageSyncWorkflowResource" /> and their operations.
-    /// Each <see cref="StorageSyncWorkflowResource" /> in the collection will belong to the same instance of <see cref="StorageSyncServiceResource" />.
-    /// To get a <see cref="StorageSyncWorkflowCollection" /> instance call the GetStorageSyncWorkflows method from an instance of <see cref="StorageSyncServiceResource" />.
+    /// A class representing a collection of <see cref="StorageSyncWorkflowResource"/> and their operations.
+    /// Each <see cref="StorageSyncWorkflowResource"/> in the collection will belong to the same instance of <see cref="StorageSyncServiceResource"/>.
+    /// To get a <see cref="StorageSyncWorkflowCollection"/> instance call the GetStorageSyncWorkflows method from an instance of <see cref="StorageSyncServiceResource"/>.
     /// </summary>
     public partial class StorageSyncWorkflowCollection : ArmCollection, IEnumerable<StorageSyncWorkflowResource>, IAsyncEnumerable<StorageSyncWorkflowResource>
     {
@@ -64,6 +62,14 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>Workflows_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncWorkflowResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workflowId"> workflow Id. </param>
@@ -100,6 +106,14 @@ namespace Azure.ResourceManager.StorageSync
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workflows_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncWorkflowResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +152,18 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>Workflows_ListByStorageSyncService</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncWorkflowResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageSyncWorkflowResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StorageSyncWorkflowResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageSyncWorkflowResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageSyncWorkflowWorkflowsRestClient.CreateListByStorageSyncServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -159,10 +181,18 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>Workflows_ListByStorageSyncService</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncWorkflowResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageSyncWorkflowResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StorageSyncWorkflowResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageSyncWorkflowResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageSyncWorkflowWorkflowsRestClient.CreateListByStorageSyncServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -179,6 +209,14 @@ namespace Azure.ResourceManager.StorageSync
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workflows_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncWorkflowResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,6 +253,14 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>Workflows_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncWorkflowResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workflowId"> workflow Id. </param>
@@ -249,6 +295,14 @@ namespace Azure.ResourceManager.StorageSync
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workflows_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncWorkflowResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,6 +340,14 @@ namespace Azure.ResourceManager.StorageSync
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workflows_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncWorkflowResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

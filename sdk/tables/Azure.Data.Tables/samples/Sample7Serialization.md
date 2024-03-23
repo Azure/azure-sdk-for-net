@@ -1,4 +1,4 @@
-# Transactional Batches
+# Customizing serialization
 
 This sample demonstrates the approaches available for customizing model serialization.
 

@@ -66,11 +66,11 @@ namespace Azure.Data.AppConfiguration
     }
     public partial class ConfigurationClientOptions : Azure.Core.ClientOptions
     {
-        public ConfigurationClientOptions(Azure.Data.AppConfiguration.ConfigurationClientOptions.ServiceVersion version = Azure.Data.AppConfiguration.ConfigurationClientOptions.ServiceVersion.V2022_11_01_Preview) { }
+        public ConfigurationClientOptions(Azure.Data.AppConfiguration.ConfigurationClientOptions.ServiceVersion version = Azure.Data.AppConfiguration.ConfigurationClientOptions.ServiceVersion.V2023_10_01) { }
         public enum ServiceVersion
         {
             V1_0 = 0,
-            V2022_11_01_Preview = 1,
+            V2023_10_01 = 1,
         }
     }
     public static partial class ConfigurationModelFactory
@@ -197,6 +197,7 @@ namespace Azure.Data.AppConfiguration
         public Azure.Data.AppConfiguration.SettingFields Fields { get { throw null; } set { } }
         public string KeyFilter { get { throw null; } set { } }
         public string LabelFilter { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.MatchConditions> MatchConditions { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

@@ -122,20 +122,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
             object dataLakeStoreUri = default;
-            Optional<object> servicePrincipalId = default;
-            Optional<SecretBase> servicePrincipalKey = default;
-            Optional<object> tenant = default;
-            Optional<object> azureCloudType = default;
-            Optional<object> accountName = default;
-            Optional<object> subscriptionId = default;
-            Optional<object> resourceGroupName = default;
-            Optional<object> encryptedCredential = default;
-            Optional<CredentialReference> credential = default;
+            object servicePrincipalId = default;
+            SecretBase servicePrincipalKey = default;
+            object tenant = default;
+            object azureCloudType = default;
+            object accountName = default;
+            object subscriptionId = default;
+            object resourceGroupName = default;
+            object encryptedCredential = default;
+            CredentialReference credential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -295,7 +295,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDataLakeStoreLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, dataLakeStoreUri, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, azureCloudType.Value, accountName.Value, subscriptionId.Value, resourceGroupName.Value, encryptedCredential.Value, credential.Value);
+            return new AzureDataLakeStoreLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                dataLakeStoreUri,
+                servicePrincipalId,
+                servicePrincipalKey,
+                tenant,
+                azureCloudType,
+                accountName,
+                subscriptionId,
+                resourceGroupName,
+                encryptedCredential,
+                credential);
         }
 
         internal partial class AzureDataLakeStoreLinkedServiceConverter : JsonConverter<AzureDataLakeStoreLinkedService>

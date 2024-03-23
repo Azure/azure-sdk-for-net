@@ -10,18 +10,16 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.TrafficManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TrafficManagerHeatMapResource" /> and their operations.
-    /// Each <see cref="TrafficManagerHeatMapResource" /> in the collection will belong to the same instance of <see cref="TrafficManagerProfileResource" />.
-    /// To get a <see cref="TrafficManagerHeatMapCollection" /> instance call the GetTrafficManagerHeatMaps method from an instance of <see cref="TrafficManagerProfileResource" />.
+    /// A class representing a collection of <see cref="TrafficManagerHeatMapResource"/> and their operations.
+    /// Each <see cref="TrafficManagerHeatMapResource"/> in the collection will belong to the same instance of <see cref="TrafficManagerProfileResource"/>.
+    /// To get a <see cref="TrafficManagerHeatMapCollection"/> instance call the GetTrafficManagerHeatMaps method from an instance of <see cref="TrafficManagerProfileResource"/>.
     /// </summary>
     public partial class TrafficManagerHeatMapCollection : ArmCollection
     {
@@ -63,6 +61,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// <term>Operation Id</term>
         /// <description>HeatMap_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerHeatMapResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="heatMapType"> The type of HeatMap for the Traffic Manager profile. </param>
@@ -97,6 +103,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HeatMap_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerHeatMapResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,6 +147,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// <term>Operation Id</term>
         /// <description>HeatMap_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerHeatMapResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="heatMapType"> The type of HeatMap for the Traffic Manager profile. </param>
@@ -166,6 +188,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// <term>Operation Id</term>
         /// <description>HeatMap_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerHeatMapResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="heatMapType"> The type of HeatMap for the Traffic Manager profile. </param>
@@ -198,6 +228,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HeatMap_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerHeatMapResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,6 +271,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HeatMap_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerHeatMapResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

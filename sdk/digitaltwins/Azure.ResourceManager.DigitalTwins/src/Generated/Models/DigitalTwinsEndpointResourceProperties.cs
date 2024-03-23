@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
@@ -16,12 +17,44 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     /// </summary>
     public abstract partial class DigitalTwinsEndpointResourceProperties
     {
-        /// <summary> Initializes a new instance of DigitalTwinsEndpointResourceProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsEndpointResourceProperties"/>. </summary>
         protected DigitalTwinsEndpointResourceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsEndpointResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsEndpointResourceProperties"/>. </summary>
         /// <param name="endpointType"> The type of Digital Twins endpoint. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="createdOn"> Time when the Endpoint was added to DigitalTwinsInstance. </param>
@@ -29,7 +62,8 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <param name="deadLetterSecret"> Dead letter storage secret for key-based authentication. Will be obfuscated during read. </param>
         /// <param name="deadLetterUri"> Dead letter storage URL for identity-based authentication. </param>
         /// <param name="identity"> Managed identity properties for the endpoint. </param>
-        internal DigitalTwinsEndpointResourceProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, DigitalTwinsManagedIdentityReference identity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DigitalTwinsEndpointResourceProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, DigitalTwinsManagedIdentityReference identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EndpointType = endpointType;
             ProvisioningState = provisioningState;
@@ -38,6 +72,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             DeadLetterSecret = deadLetterSecret;
             DeadLetterUri = deadLetterUri;
             Identity = identity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of Digital Twins endpoint. </summary>

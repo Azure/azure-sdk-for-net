@@ -12,18 +12,16 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetworkCloudRackSkuResource" /> and their operations.
-    /// Each <see cref="NetworkCloudRackSkuResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="NetworkCloudRackSkuCollection" /> instance call the GetNetworkCloudRackSkus method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="NetworkCloudRackSkuResource"/> and their operations.
+    /// Each <see cref="NetworkCloudRackSkuResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="NetworkCloudRackSkuCollection"/> instance call the GetNetworkCloudRackSkus method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class NetworkCloudRackSkuCollection : ArmCollection, IEnumerable<NetworkCloudRackSkuResource>, IAsyncEnumerable<NetworkCloudRackSkuResource>
     {
@@ -65,6 +63,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>RackSkus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudRackSkuResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="rackSkuName"> The name of the rack SKU. </param>
@@ -101,6 +107,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RackSkus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudRackSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,10 +153,18 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>RackSkus_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudRackSkuResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudRackSkuResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkCloudRackSkuResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkCloudRackSkuResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudRackSkuRackSkusRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -161,10 +183,18 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>RackSkus_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudRackSkuResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudRackSkuResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkCloudRackSkuResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkCloudRackSkuResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudRackSkuRackSkusRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -182,6 +212,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RackSkus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudRackSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,6 +256,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>RackSkus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudRackSkuResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="rackSkuName"> The name of the rack SKU. </param>
@@ -252,6 +298,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RackSkus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudRackSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -289,6 +343,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RackSkus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudRackSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

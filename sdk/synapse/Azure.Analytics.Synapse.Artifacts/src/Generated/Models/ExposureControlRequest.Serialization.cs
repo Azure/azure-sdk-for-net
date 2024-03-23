@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> featureName = default;
-            Optional<string> featureType = default;
+            string featureName = default;
+            string featureType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("featureName"u8))
@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new ExposureControlRequest(featureName.Value, featureType.Value);
+            return new ExposureControlRequest(featureName, featureType);
         }
 
         internal partial class ExposureControlRequestConverter : JsonConverter<ExposureControlRequest>

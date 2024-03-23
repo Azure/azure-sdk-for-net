@@ -43,8 +43,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = "Unknown";
-            Optional<object> serializer = default;
-            Optional<object> deserializer = default;
+            object serializer = default;
+            object deserializer = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -75,7 +75,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new UnknownDatasetStorageFormat(type, serializer.Value, deserializer.Value, additionalProperties);
+            return new UnknownDatasetStorageFormat(type, serializer, deserializer, additionalProperties);
         }
     }
 }

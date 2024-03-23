@@ -27,7 +27,7 @@ string classificationPolicyId = "static-priority";
 Response<ClassificationPolicy> classificationPolicy = await routerAdministration.CreateClassificationPolicyAsync(
     new CreateClassificationPolicyOptions(classificationPolicyId: classificationPolicyId)
     {
-        PrioritizationRule = new StaticRouterRule(new LabelValue(10))
+        PrioritizationRule = new StaticRouterRule(new RouterValue(10))
     });
 
 Console.WriteLine($"Classification policy successfully created with id: {classificationPolicy.Value.Id} and priority rule of type: {classificationPolicy.Value.PrioritizationRule.Kind}");
@@ -121,7 +121,7 @@ Response<RouterJob> job1 = await routerClient.CreateJobWithClassificationPolicyA
         QueueId = jobQueueId,
         Labels =
         {
-            ["Escalated"] = new LabelValue(false)
+            ["Escalated"] = new RouterValue(false)
         }
     });
 
@@ -136,7 +136,7 @@ Response<RouterJob> job2 = await routerClient.CreateJobWithClassificationPolicyA
         QueueId = jobQueueId,
         Labels =
         {
-            ["Escalated"] = new LabelValue(true)
+            ["Escalated"] = new RouterValue(true)
         }
     });
 
@@ -233,7 +233,7 @@ Response<RouterJob> job1 = await routerClient.CreateJobWithClassificationPolicyA
         QueueId = jobQueueId,
         Labels =
         {
-            ["Escalated"] = new LabelValue(false)
+            ["Escalated"] = new RouterValue(false)
         }
     });
 
@@ -248,7 +248,7 @@ Response<RouterJob> job2 = await routerClient.CreateJobWithClassificationPolicyA
         QueueId = jobQueueId,
         Labels =
         {
-            ["Escalated"] = new LabelValue(true)
+            ["Escalated"] = new RouterValue(true)
         }
     });
 

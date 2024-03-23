@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> blobContainerUri = default;
-            Optional<SecureString> sasToken = default;
+            string blobContainerUri = default;
+            SecureString sasToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blobContainerUri"u8))
@@ -56,7 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new IntegrationRuntimeCustomSetupScriptProperties(blobContainerUri.Value, sasToken.Value);
+            return new IntegrationRuntimeCustomSetupScriptProperties(blobContainerUri, sasToken);
         }
 
         internal partial class IntegrationRuntimeCustomSetupScriptPropertiesConverter : JsonConverter<IntegrationRuntimeCustomSetupScriptProperties>

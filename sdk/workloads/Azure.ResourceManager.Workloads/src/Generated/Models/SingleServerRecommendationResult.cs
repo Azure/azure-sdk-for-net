@@ -5,21 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> The recommended configuration for a single server SAP system. </summary>
     public partial class SingleServerRecommendationResult : SapSizingRecommendationResult
     {
-        /// <summary> Initializes a new instance of SingleServerRecommendationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SingleServerRecommendationResult"/>. </summary>
         internal SingleServerRecommendationResult()
         {
             DeploymentType = SapDeploymentType.SingleServer;
         }
 
-        /// <summary> Initializes a new instance of SingleServerRecommendationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SingleServerRecommendationResult"/>. </summary>
         /// <param name="deploymentType"> The type of SAP deployment, single server or Three tier. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vmSku"> The recommended VM SKU for single server. </param>
-        internal SingleServerRecommendationResult(SapDeploymentType deploymentType, string vmSku) : base(deploymentType)
+        internal SingleServerRecommendationResult(SapDeploymentType deploymentType, IDictionary<string, BinaryData> serializedAdditionalRawData, string vmSku) : base(deploymentType, serializedAdditionalRawData)
         {
             VmSku = vmSku;
             DeploymentType = deploymentType;

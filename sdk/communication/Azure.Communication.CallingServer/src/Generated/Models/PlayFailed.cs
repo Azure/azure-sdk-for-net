@@ -10,12 +10,12 @@ namespace Azure.Communication.CallingServer
     /// <summary> The PlayFailed. </summary>
     public partial class PlayFailed
     {
-        /// <summary> Initializes a new instance of PlayFailed. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlayFailed"/>. </summary>
         internal PlayFailed()
         {
         }
 
-        /// <summary> Initializes a new instance of PlayFailed. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlayFailed"/>. </summary>
         /// <param name="eventSource"></param>
         /// <param name="operationContext"></param>
         /// <param name="resultInformation"></param>

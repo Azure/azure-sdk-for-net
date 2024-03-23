@@ -9,22 +9,24 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Dynatrace
 {
     /// <summary>
     /// A Class representing a DynatraceSingleSignOn along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DynatraceSingleSignOnResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDynatraceSingleSignOnResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DynatraceMonitorResource" /> using the GetDynatraceSingleSignOn method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DynatraceSingleSignOnResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDynatraceSingleSignOnResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DynatraceMonitorResource"/> using the GetDynatraceSingleSignOn method.
     /// </summary>
     public partial class DynatraceSingleSignOnResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DynatraceSingleSignOnResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="monitorName"> The monitorName. </param>
+        /// <param name="configurationName"> The configurationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName, string configurationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/singleSignOnConfigurations/{configurationName}";
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.Dynatrace
         private readonly SingleSignOnRestOperations _dynatraceSingleSignOnSingleSignOnRestClient;
         private readonly DynatraceSingleSignOnData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Dynatrace.Observability/monitors/singleSignOnConfigurations";
+
         /// <summary> Initializes a new instance of the <see cref="DynatraceSingleSignOnResource"/> class for mocking. </summary>
         protected DynatraceSingleSignOnResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DynatraceSingleSignOnResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DynatraceSingleSignOnResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DynatraceSingleSignOnResource(ArmClient client, DynatraceSingleSignOnData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.Dynatrace
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Dynatrace.Observability/monitors/singleSignOnConfigurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +99,14 @@ namespace Azure.ResourceManager.Dynatrace
         /// <term>Operation Id</term>
         /// <description>SingleSignOn_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DynatraceSingleSignOnResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +139,14 @@ namespace Azure.ResourceManager.Dynatrace
         /// <term>Operation Id</term>
         /// <description>SingleSignOn_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DynatraceSingleSignOnResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,6 +178,14 @@ namespace Azure.ResourceManager.Dynatrace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SingleSignOn_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DynatraceSingleSignOnResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,6 +224,14 @@ namespace Azure.ResourceManager.Dynatrace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SingleSignOn_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DynatraceSingleSignOnResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

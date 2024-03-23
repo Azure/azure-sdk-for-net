@@ -12,18 +12,16 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ConfidentialLedger
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagedCcfResource" /> and their operations.
-    /// Each <see cref="ManagedCcfResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ManagedCcfCollection" /> instance call the GetManagedCcfs method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ManagedCcfResource"/> and their operations.
+    /// Each <see cref="ManagedCcfResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ManagedCcfCollection"/> instance call the GetManagedCcfs method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ManagedCcfCollection : ArmCollection, IEnumerable<ManagedCcfResource>, IAsyncEnumerable<ManagedCcfResource>
     {
@@ -64,6 +62,14 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedCCF_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-26-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedCcfResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +112,14 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <term>Operation Id</term>
         /// <description>ManagedCCF_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-26-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedCcfResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +161,14 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <term>Operation Id</term>
         /// <description>ManagedCCF_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-26-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedCcfResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="appName"> Name of the Managed CCF. </param>
@@ -183,6 +205,14 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedCCF_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-26-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedCcfResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,11 +251,19 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <term>Operation Id</term>
         /// <description>ManagedCCF_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-26-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedCcfResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq 'Public'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedCcfResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedCcfResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedCcfResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedCcfManagedCcfRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
@@ -244,11 +282,19 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <term>Operation Id</term>
         /// <description>ManagedCCF_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-26-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedCcfResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq 'Public'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedCcfResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedCcfResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedCcfResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedCcfManagedCcfRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
@@ -266,6 +312,14 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedCCF_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-26-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedCcfResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,6 +356,14 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <term>Operation Id</term>
         /// <description>ManagedCCF_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-26-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedCcfResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="appName"> Name of the Managed CCF. </param>
@@ -336,6 +398,14 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedCCF_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-26-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedCcfResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,6 +443,14 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedCCF_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-26-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedCcfResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

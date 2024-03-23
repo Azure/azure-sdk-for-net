@@ -6,14 +6,13 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterWorkerRegistered event. </summary>
     public partial class AcsRouterWorkerRegisteredEventData
     {
-        /// <summary> Initializes a new instance of AcsRouterWorkerRegisteredEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerRegisteredEventData"/>. </summary>
         internal AcsRouterWorkerRegisteredEventData()
         {
             QueueAssignments = new ChangeTrackingList<AcsRouterQueueDetails>();
@@ -22,7 +21,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AcsRouterWorkerRegisteredEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerRegisteredEventData"/>. </summary>
         /// <param name="workerId"> Router Worker Registered Worker Id. </param>
         /// <param name="queueAssignments"> Router Worker Registered Queue Info. </param>
         /// <param name="channelConfigurations"> Router Worker Registered Channel Configuration. </param>

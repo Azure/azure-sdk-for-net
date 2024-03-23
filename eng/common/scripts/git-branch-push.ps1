@@ -66,7 +66,7 @@ else
     exit $LASTEXITCODE
   }
 }
-# Checkout to $PRBranch, create new one if not exists.
+# Checkout to $PRBranch, create new one if it does not exist.
 git show-ref --verify --quiet refs/heads/$PRBranchName
 if ($LASTEXITCODE -eq 0) {
   Write-Host "git checkout $PRBranchName."

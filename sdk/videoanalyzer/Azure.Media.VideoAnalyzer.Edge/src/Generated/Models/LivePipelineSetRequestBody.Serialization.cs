@@ -27,6 +27,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
+            writer.WritePropertyName("methodName"u8);
+            writer.WriteStringValue(MethodName);
             if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("@apiVersion"u8);
@@ -42,10 +44,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             string name = default;
-            Optional<SystemData> systemData = default;
-            Optional<LivePipelineProperties> properties = default;
+            SystemData systemData = default;
+            LivePipelineProperties properties = default;
             string methodName = default;
-            Optional<string> apiVersion = default;
+            string apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -82,7 +84,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new LivePipelineSetRequestBody(methodName, apiVersion.Value, name, systemData.Value, properties.Value);
+            return new LivePipelineSetRequestBody(methodName, apiVersion, name, systemData, properties);
         }
     }
 }

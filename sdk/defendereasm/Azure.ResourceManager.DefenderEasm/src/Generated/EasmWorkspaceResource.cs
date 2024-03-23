@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DefenderEasm.Models;
 using Azure.ResourceManager.Resources;
 
@@ -21,13 +19,16 @@ namespace Azure.ResourceManager.DefenderEasm
 {
     /// <summary>
     /// A Class representing an EasmWorkspace along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EasmWorkspaceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEasmWorkspaceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetEasmWorkspace method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EasmWorkspaceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEasmWorkspaceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetEasmWorkspace method.
     /// </summary>
     public partial class EasmWorkspaceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EasmWorkspaceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Easm/workspaces/{workspaceName}";
@@ -40,12 +41,15 @@ namespace Azure.ResourceManager.DefenderEasm
         private readonly TasksRestOperations _tasksRestClient;
         private readonly EasmWorkspaceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Easm/workspaces";
+
         /// <summary> Initializes a new instance of the <see cref="EasmWorkspaceResource"/> class for mocking. </summary>
         protected EasmWorkspaceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EasmWorkspaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EasmWorkspaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EasmWorkspaceResource(ArmClient client, EasmWorkspaceData data) : this(client, data.Id)
@@ -68,9 +72,6 @@ namespace Azure.ResourceManager.DefenderEasm
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Easm/workspaces";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <returns> An object representing collection of EasmLabelResources and their operations over a EasmLabelResource. </returns>
         public virtual EasmLabelCollection GetEasmLabels()
         {
-            return GetCachedClient(Client => new EasmLabelCollection(Client, Id));
+            return GetCachedClient(client => new EasmLabelCollection(client, Id));
         }
 
         /// <summary>
@@ -111,12 +112,20 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <term>Operation Id</term>
         /// <description>Labels_GetByWorkspace</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EasmLabelResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="labelName"> The name of the Label. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="labelName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="labelName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="labelName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<EasmLabelResource>> GetEasmLabelAsync(string labelName, CancellationToken cancellationToken = default)
         {
@@ -134,12 +143,20 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <term>Operation Id</term>
         /// <description>Labels_GetByWorkspace</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EasmLabelResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="labelName"> The name of the Label. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="labelName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="labelName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="labelName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<EasmLabelResource> GetEasmLabel(string labelName, CancellationToken cancellationToken = default)
         {
@@ -156,6 +173,14 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EasmWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -189,6 +214,14 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EasmWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -220,6 +253,14 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EasmWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -255,6 +296,14 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <term>Operation Id</term>
         /// <description>Workspaces_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EasmWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -288,6 +337,14 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EasmWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,6 +380,14 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <term>Operation Id</term>
         /// <description>Workspaces_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EasmWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> Workspace patch details. </param>
@@ -356,6 +421,10 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tasks_GetByWorkspace</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -392,6 +461,10 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <term>Operation Id</term>
         /// <description>Tasks_GetByWorkspace</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="taskId"> The id of the Task. </param>
@@ -426,6 +499,14 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EasmWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -481,6 +562,14 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EasmWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -535,6 +624,14 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EasmWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -584,6 +681,14 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EasmWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -632,6 +737,14 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EasmWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -684,6 +797,14 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EasmWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

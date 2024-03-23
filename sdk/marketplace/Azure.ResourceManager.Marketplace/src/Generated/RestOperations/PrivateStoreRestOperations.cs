@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Marketplace.Models;
@@ -182,7 +181,7 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary> Changes private store properties. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
-        /// <param name="data"> The PrivateStore to use. </param>
+        /// <param name="data"> The <see cref="PrivateStoreData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(Guid privateStoreId, PrivateStoreData data, CancellationToken cancellationToken = default)
@@ -202,7 +201,7 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary> Changes private store properties. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
-        /// <param name="data"> The PrivateStore to use. </param>
+        /// <param name="data"> The <see cref="PrivateStoreData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public Response CreateOrUpdate(Guid privateStoreId, PrivateStoreData data, CancellationToken cancellationToken = default)
@@ -414,7 +413,7 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary> List of user's approved offers for the provided offers and subscriptions. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
-        /// <param name="content"> The QueryUserOffersContent to use. </param>
+        /// <param name="content"> The <see cref="QueryUserOffersContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<QueryOffers>> QueryUserOffersAsync(Guid privateStoreId, QueryUserOffersContent content = null, CancellationToken cancellationToken = default)
         {
@@ -436,7 +435,7 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary> List of user's approved offers for the provided offers and subscriptions. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
-        /// <param name="content"> The QueryUserOffersContent to use. </param>
+        /// <param name="content"> The <see cref="QueryUserOffersContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<QueryOffers> QueryUserOffers(Guid privateStoreId, QueryUserOffersContent content = null, CancellationToken cancellationToken = default)
         {
@@ -541,7 +540,7 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary> For a given subscriptions list, the API will return a map of collections and the related subscriptions from the supplied list. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
-        /// <param name="content"> The CollectionsToSubscriptionsMappingContent to use. </param>
+        /// <param name="content"> The <see cref="CollectionsToSubscriptionsMappingContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<CollectionsToSubscriptionsMappingResult>> CollectionsToSubscriptionsMappingAsync(Guid privateStoreId, CollectionsToSubscriptionsMappingContent content = null, CancellationToken cancellationToken = default)
         {
@@ -563,7 +562,7 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary> For a given subscriptions list, the API will return a map of collections and the related subscriptions from the supplied list. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
-        /// <param name="content"> The CollectionsToSubscriptionsMappingContent to use. </param>
+        /// <param name="content"> The <see cref="CollectionsToSubscriptionsMappingContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<CollectionsToSubscriptionsMappingResult> CollectionsToSubscriptionsMapping(Guid privateStoreId, CollectionsToSubscriptionsMappingContent content = null, CancellationToken cancellationToken = default)
         {
@@ -609,7 +608,7 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary> Get map of plans and related approved subscriptions. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
-        /// <param name="content"> The QueryApprovedPlansContent to use. </param>
+        /// <param name="content"> The <see cref="QueryApprovedPlansContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<QueryApprovedPlansResult>> QueryApprovedPlansAsync(Guid privateStoreId, QueryApprovedPlansContent content = null, CancellationToken cancellationToken = default)
         {
@@ -631,7 +630,7 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary> Get map of plans and related approved subscriptions. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
-        /// <param name="content"> The QueryApprovedPlansContent to use. </param>
+        /// <param name="content"> The <see cref="QueryApprovedPlansContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<QueryApprovedPlansResult> QueryApprovedPlans(Guid privateStoreId, QueryApprovedPlansContent content = null, CancellationToken cancellationToken = default)
         {
@@ -677,7 +676,7 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary> Perform an action on bulk collections. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
-        /// <param name="content"> The BulkCollectionsActionContent to use. </param>
+        /// <param name="content"> The <see cref="BulkCollectionsActionContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<BulkCollectionsActionResult>> BulkCollectionsActionAsync(Guid privateStoreId, BulkCollectionsActionContent content = null, CancellationToken cancellationToken = default)
         {
@@ -699,7 +698,7 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary> Perform an action on bulk collections. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
-        /// <param name="content"> The BulkCollectionsActionContent to use. </param>
+        /// <param name="content"> The <see cref="BulkCollectionsActionContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<BulkCollectionsActionResult> BulkCollectionsAction(Guid privateStoreId, BulkCollectionsActionContent content = null, CancellationToken cancellationToken = default)
         {
@@ -877,7 +876,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Create approval request. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
-        /// <param name="data"> The MarketplaceApprovalRequest to use. </param>
+        /// <param name="data"> The <see cref="MarketplaceApprovalRequestData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -905,7 +904,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Create approval request. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
-        /// <param name="data"> The MarketplaceApprovalRequest to use. </param>
+        /// <param name="data"> The <see cref="MarketplaceApprovalRequestData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -959,7 +958,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Get request statuses foreach plan, this api is used as a complex GET action. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
-        /// <param name="content"> The QueryApprovalRequestContent to use. </param>
+        /// <param name="content"> The <see cref="QueryApprovalRequestContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -986,7 +985,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Get request statuses foreach plan, this api is used as a complex GET action. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
-        /// <param name="content"> The QueryApprovalRequestContent to use. </param>
+        /// <param name="content"> The <see cref="QueryApprovalRequestContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1173,7 +1172,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Update the admin action, weather the request is approved or rejected and the approved plans. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="adminRequestApprovalId"> The admin request approval ID to get create or update. </param>
-        /// <param name="data"> The MarketplaceAdminApprovalRequest to use. </param>
+        /// <param name="data"> The <see cref="MarketplaceAdminApprovalRequestData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1201,7 +1200,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Update the admin action, weather the request is approved or rejected and the approved plans. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="adminRequestApprovalId"> The admin request approval ID to get create or update. </param>
-        /// <param name="data"> The MarketplaceAdminApprovalRequest to use. </param>
+        /// <param name="data"> The <see cref="MarketplaceAdminApprovalRequestData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1314,7 +1313,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Acknowledge notification for offer. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="offerId"> The offer ID to update or delete. </param>
-        /// <param name="content"> The AcknowledgeOfferNotificationContent to use. </param>
+        /// <param name="content"> The <see cref="AcknowledgeOfferNotificationContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1336,7 +1335,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Acknowledge notification for offer. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="offerId"> The offer ID to update or delete. </param>
-        /// <param name="content"> The AcknowledgeOfferNotificationContent to use. </param>
+        /// <param name="content"> The <see cref="AcknowledgeOfferNotificationContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1384,7 +1383,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Withdraw a user request approval on specific plan. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
-        /// <param name="content"> The WithdrawPlanContent to use. </param>
+        /// <param name="content"> The <see cref="WithdrawPlanContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1406,7 +1405,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Withdraw a user request approval on specific plan. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
-        /// <param name="content"> The WithdrawPlanContent to use. </param>
+        /// <param name="content"> The <see cref="WithdrawPlanContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1575,7 +1574,7 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary> List stop sell notifications for both stop sell offers and stop sell plans. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
-        /// <param name="stopSellSubscriptions"> The StopSellSubscriptions to use. </param>
+        /// <param name="stopSellSubscriptions"> The <see cref="StopSellSubscriptions"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<StopSellOffersPlansNotificationsList>> ListStopSellOffersPlansNotificationsAsync(Guid privateStoreId, StopSellSubscriptions stopSellSubscriptions = null, CancellationToken cancellationToken = default)
         {
@@ -1597,7 +1596,7 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary> List stop sell notifications for both stop sell offers and stop sell plans. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
-        /// <param name="stopSellSubscriptions"> The StopSellSubscriptions to use. </param>
+        /// <param name="stopSellSubscriptions"> The <see cref="StopSellSubscriptions"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<StopSellOffersPlansNotificationsList> ListStopSellOffersPlansNotifications(Guid privateStoreId, StopSellSubscriptions stopSellSubscriptions = null, CancellationToken cancellationToken = default)
         {

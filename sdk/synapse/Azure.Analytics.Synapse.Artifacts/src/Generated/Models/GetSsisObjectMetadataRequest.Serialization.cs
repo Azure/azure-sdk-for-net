@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> metadataPath = default;
+            string metadataPath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metadataPath"u8))
@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new GetSsisObjectMetadataRequest(metadataPath.Value);
+            return new GetSsisObjectMetadataRequest(metadataPath);
         }
 
         internal partial class GetSsisObjectMetadataRequestConverter : JsonConverter<GetSsisObjectMetadataRequest>

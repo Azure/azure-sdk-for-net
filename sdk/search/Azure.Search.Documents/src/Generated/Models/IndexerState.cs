@@ -6,14 +6,13 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents all of the state that defines and dictates the indexer's current execution. </summary>
     public partial class IndexerState
     {
-        /// <summary> Initializes a new instance of IndexerState. </summary>
+        /// <summary> Initializes a new instance of <see cref="IndexerState"/>. </summary>
         internal IndexerState()
         {
             ResetDocumentKeys = new ChangeTrackingList<string>();

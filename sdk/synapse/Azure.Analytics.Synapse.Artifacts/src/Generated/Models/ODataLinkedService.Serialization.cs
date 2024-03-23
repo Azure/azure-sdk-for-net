@@ -137,23 +137,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
             object url = default;
-            Optional<ODataAuthenticationType> authenticationType = default;
-            Optional<object> userName = default;
-            Optional<SecretBase> password = default;
-            Optional<object> tenant = default;
-            Optional<object> servicePrincipalId = default;
-            Optional<object> azureCloudType = default;
-            Optional<object> aadResourceId = default;
-            Optional<ODataAadServicePrincipalCredentialType> aadServicePrincipalCredentialType = default;
-            Optional<SecretBase> servicePrincipalKey = default;
-            Optional<SecretBase> servicePrincipalEmbeddedCert = default;
-            Optional<SecretBase> servicePrincipalEmbeddedCertPassword = default;
-            Optional<object> encryptedCredential = default;
+            ODataAuthenticationType? authenticationType = default;
+            object userName = default;
+            SecretBase password = default;
+            object tenant = default;
+            object servicePrincipalId = default;
+            object azureCloudType = default;
+            object aadResourceId = default;
+            ODataAadServicePrincipalCredentialType? aadServicePrincipalCredentialType = default;
+            SecretBase servicePrincipalKey = default;
+            SecretBase servicePrincipalEmbeddedCert = default;
+            SecretBase servicePrincipalEmbeddedCertPassword = default;
+            object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -340,7 +340,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ODataLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, url, Optional.ToNullable(authenticationType), userName.Value, password.Value, tenant.Value, servicePrincipalId.Value, azureCloudType.Value, aadResourceId.Value, Optional.ToNullable(aadServicePrincipalCredentialType), servicePrincipalKey.Value, servicePrincipalEmbeddedCert.Value, servicePrincipalEmbeddedCertPassword.Value, encryptedCredential.Value);
+            return new ODataLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                url,
+                authenticationType,
+                userName,
+                password,
+                tenant,
+                servicePrincipalId,
+                azureCloudType,
+                aadResourceId,
+                aadServicePrincipalCredentialType,
+                servicePrincipalKey,
+                servicePrincipalEmbeddedCert,
+                servicePrincipalEmbeddedCertPassword,
+                encryptedCredential);
         }
 
         internal partial class ODataLinkedServiceConverter : JsonConverter<ODataLinkedService>

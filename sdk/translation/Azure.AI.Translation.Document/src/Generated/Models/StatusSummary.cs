@@ -10,7 +10,7 @@ namespace Azure.AI.Translation.Document.Models
     /// <summary> The StatusSummary. </summary>
     internal partial class StatusSummary
     {
-        /// <summary> Initializes a new instance of StatusSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="StatusSummary"/>. </summary>
         /// <param name="total"> Total count. </param>
         /// <param name="failed"> Failed count. </param>
         /// <param name="success"> Number of Success. </param>

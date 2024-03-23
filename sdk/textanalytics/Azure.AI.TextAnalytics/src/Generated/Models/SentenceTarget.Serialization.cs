@@ -86,7 +86,13 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new SentenceTarget(sentiment, confidenceScores, offset, length, text, relations);
+            return new SentenceTarget(
+                sentiment,
+                confidenceScores,
+                offset,
+                length,
+                text,
+                relations);
         }
     }
 }

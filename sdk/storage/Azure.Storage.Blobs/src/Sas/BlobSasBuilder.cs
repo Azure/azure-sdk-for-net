@@ -338,7 +338,7 @@ namespace Azure.Storage.Sas
         /// The <see cref="BlobSasQueryParameters"/> used for authenticating
         /// requests.
         /// </returns>
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public BlobSasQueryParameters ToSasQueryParameters(StorageSharedKeyCredential sharedKeyCredential)
         {
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
@@ -403,7 +403,7 @@ namespace Azure.Storage.Sas
         /// <returns>
         /// The <see cref="BlobSasQueryParameters"/> used for authenticating requests.
         /// </returns>
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public BlobSasQueryParameters ToSasQueryParameters(UserDelegationKey userDelegationKey, string accountName)
         {
             userDelegationKey = userDelegationKey ?? throw Errors.ArgumentNull(nameof(userDelegationKey));

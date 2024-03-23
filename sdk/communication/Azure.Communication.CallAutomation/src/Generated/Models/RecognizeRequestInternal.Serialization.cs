@@ -34,10 +34,10 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
-            if (Optional.IsDefined(CallbackUri))
+            if (Optional.IsDefined(OperationCallbackUri))
             {
-                writer.WritePropertyName("callbackUri"u8);
-                writer.WriteStringValue(CallbackUri);
+                writer.WritePropertyName("operationCallbackUri"u8);
+                writer.WriteStringValue(OperationCallbackUri);
             }
             writer.WriteEndObject();
         }

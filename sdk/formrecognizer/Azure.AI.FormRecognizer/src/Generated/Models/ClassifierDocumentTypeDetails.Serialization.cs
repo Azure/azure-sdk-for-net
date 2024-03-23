@@ -34,8 +34,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 return null;
             }
-            Optional<BlobContentSource> azureBlobSource = default;
-            Optional<BlobFileListContentSource> azureBlobFileListSource = default;
+            BlobContentSource azureBlobSource = default;
+            BlobFileListContentSource azureBlobFileListSource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureBlobSource"u8))
@@ -57,7 +57,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new ClassifierDocumentTypeDetails(azureBlobSource.Value, azureBlobFileListSource.Value);
+            return new ClassifierDocumentTypeDetails(azureBlobSource, azureBlobFileListSource);
         }
     }
 }

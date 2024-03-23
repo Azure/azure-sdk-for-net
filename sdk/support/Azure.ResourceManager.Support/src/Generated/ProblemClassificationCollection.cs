@@ -12,17 +12,15 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Support
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ProblemClassificationResource" /> and their operations.
-    /// Each <see cref="ProblemClassificationResource" /> in the collection will belong to the same instance of <see cref="SupportAzureServiceResource" />.
-    /// To get a <see cref="ProblemClassificationCollection" /> instance call the GetProblemClassifications method from an instance of <see cref="SupportAzureServiceResource" />.
+    /// A class representing a collection of <see cref="ProblemClassificationResource"/> and their operations.
+    /// Each <see cref="ProblemClassificationResource"/> in the collection will belong to the same instance of <see cref="SupportAzureServiceResource"/>.
+    /// To get a <see cref="ProblemClassificationCollection"/> instance call the GetProblemClassifications method from an instance of <see cref="SupportAzureServiceResource"/>.
     /// </summary>
     public partial class ProblemClassificationCollection : ArmCollection, IEnumerable<ProblemClassificationResource>, IAsyncEnumerable<ProblemClassificationResource>
     {
@@ -64,6 +62,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>ProblemClassifications_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProblemClassificationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="problemClassificationName"> Name of problem classification. </param>
@@ -100,6 +106,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProblemClassifications_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProblemClassificationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +152,18 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>ProblemClassifications_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProblemClassificationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProblemClassificationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ProblemClassificationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProblemClassificationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _problemClassificationRestClient.CreateListRequest(Id.Name);
@@ -159,10 +181,18 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>ProblemClassifications_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProblemClassificationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProblemClassificationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ProblemClassificationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProblemClassificationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _problemClassificationRestClient.CreateListRequest(Id.Name);
@@ -179,6 +209,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProblemClassifications_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProblemClassificationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,6 +253,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>ProblemClassifications_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProblemClassificationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="problemClassificationName"> Name of problem classification. </param>
@@ -249,6 +295,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProblemClassifications_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProblemClassificationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,6 +340,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProblemClassifications_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProblemClassificationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

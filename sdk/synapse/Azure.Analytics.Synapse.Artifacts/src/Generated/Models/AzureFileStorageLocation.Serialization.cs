@@ -46,8 +46,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<object> folderPath = default;
-            Optional<object> fileName = default;
+            object folderPath = default;
+            object fileName = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -78,7 +78,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureFileStorageLocation(type, folderPath.Value, fileName.Value, additionalProperties);
+            return new AzureFileStorageLocation(type, folderPath, fileName, additionalProperties);
         }
 
         internal partial class AzureFileStorageLocationConverter : JsonConverter<AzureFileStorageLocation>

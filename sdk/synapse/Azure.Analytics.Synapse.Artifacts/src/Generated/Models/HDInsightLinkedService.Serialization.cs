@@ -112,18 +112,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
             object clusterUri = default;
-            Optional<object> userName = default;
-            Optional<SecretBase> password = default;
-            Optional<LinkedServiceReference> linkedServiceName = default;
-            Optional<LinkedServiceReference> hcatalogLinkedServiceName = default;
-            Optional<object> encryptedCredential = default;
-            Optional<object> isEspEnabled = default;
-            Optional<object> fileSystem = default;
+            object userName = default;
+            SecretBase password = default;
+            LinkedServiceReference linkedServiceName = default;
+            LinkedServiceReference hcatalogLinkedServiceName = default;
+            object encryptedCredential = default;
+            object isEspEnabled = default;
+            object fileSystem = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -265,7 +265,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, clusterUri, userName.Value, password.Value, linkedServiceName.Value, hcatalogLinkedServiceName.Value, encryptedCredential.Value, isEspEnabled.Value, fileSystem.Value);
+            return new HDInsightLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                clusterUri,
+                userName,
+                password,
+                linkedServiceName,
+                hcatalogLinkedServiceName,
+                encryptedCredential,
+                isEspEnabled,
+                fileSystem);
         }
 
         internal partial class HDInsightLinkedServiceConverter : JsonConverter<HDInsightLinkedService>

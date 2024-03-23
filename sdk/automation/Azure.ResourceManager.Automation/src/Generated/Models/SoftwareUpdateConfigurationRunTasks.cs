@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Software update configuration run tasks model. </summary>
     public partial class SoftwareUpdateConfigurationRunTasks
     {
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationRunTasks. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationRunTasks"/>. </summary>
         internal SoftwareUpdateConfigurationRunTasks()
         {
         }
 
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationRunTasks. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationRunTasks"/>. </summary>
         /// <param name="preTask"> Pre task properties. </param>
         /// <param name="postTask"> Post task properties. </param>
-        internal SoftwareUpdateConfigurationRunTasks(SoftwareUpdateConfigurationRunTaskProperties preTask, SoftwareUpdateConfigurationRunTaskProperties postTask)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SoftwareUpdateConfigurationRunTasks(SoftwareUpdateConfigurationRunTaskProperties preTask, SoftwareUpdateConfigurationRunTaskProperties postTask, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PreTask = preTask;
             PostTask = postTask;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Pre task properties. </summary>

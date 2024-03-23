@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
@@ -72,9 +74,17 @@ namespace Azure.Storage.DataMovement
             PathScanner scanner = new PathScanner(_uri.LocalPath);
             foreach (FileSystemInfo fileSystemInfo in scanner.Scan(false))
             {
-                // Skip over directories for now since directory creation is unnecessary.
-                if (!fileSystemInfo.Attributes.HasFlag(FileAttributes.Directory))
+                if (fileSystemInfo.Attributes.HasFlag(FileAttributes.Directory))
                 {
+                    // Directory - but check for the case where it returns the directory you're currently listing
+                    if (fileSystemInfo.FullName != _uri.LocalPath)
+                    {
+                        yield return new LocalDirectoryStorageResourceContainer(fileSystemInfo.FullName);
+                    }
+                }
+                else
+                {
+                    // File
                     yield return new LocalFileStorageResource(fileSystemInfo.FullName);
                 }
             }
@@ -88,6 +98,16 @@ namespace Azure.Storage.DataMovement
         protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
             return new LocalDestinationCheckpointData();
+        }
+
+        protected internal override Task CreateIfNotExistsAsync(CancellationToken cancellationToken = default)
+            => Task.CompletedTask;
+
+        protected internal override StorageResourceContainer GetChildStorageResourceContainer(string path)
+        {
+            UriBuilder uri = new UriBuilder(_uri);
+            uri.Path = Path.Combine(uri.Path, path);
+            return new LocalDirectoryStorageResourceContainer(uri.Uri);
         }
     }
 }

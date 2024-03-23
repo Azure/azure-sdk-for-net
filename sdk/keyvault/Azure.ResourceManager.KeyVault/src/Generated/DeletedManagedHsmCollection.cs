@@ -9,18 +9,16 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DeletedManagedHsmResource" /> and their operations.
-    /// Each <see cref="DeletedManagedHsmResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="DeletedManagedHsmCollection" /> instance call the GetDeletedManagedHsms method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="DeletedManagedHsmResource"/> and their operations.
+    /// Each <see cref="DeletedManagedHsmResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="DeletedManagedHsmCollection"/> instance call the GetDeletedManagedHsms method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class DeletedManagedHsmCollection : ArmCollection
     {
@@ -62,6 +60,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <term>Operation Id</term>
         /// <description>ManagedHsms_GetDeleted</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedManagedHsmResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the deleted managed HSM. </param>
@@ -99,6 +105,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedHsms_GetDeleted</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedManagedHsmResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +152,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <term>Operation Id</term>
         /// <description>ManagedHsms_GetDeleted</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedManagedHsmResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the deleted managed HSM. </param>
@@ -174,6 +196,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <term>Operation Id</term>
         /// <description>ManagedHsms_GetDeleted</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedManagedHsmResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the deleted managed HSM. </param>
@@ -209,6 +239,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedHsms_GetDeleted</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedManagedHsmResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -247,6 +285,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedHsms_GetDeleted</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedManagedHsmResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

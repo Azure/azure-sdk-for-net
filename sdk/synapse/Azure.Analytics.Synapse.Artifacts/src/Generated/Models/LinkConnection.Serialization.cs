@@ -47,10 +47,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkConnectionSourceDatabase> sourceDatabase = default;
-            Optional<LinkConnectionTargetDatabase> targetDatabase = default;
-            Optional<LinkConnectionLandingZone> landingZone = default;
-            Optional<LinkConnectionCompute> compute = default;
+            LinkConnectionSourceDatabase sourceDatabase = default;
+            LinkConnectionTargetDatabase targetDatabase = default;
+            LinkConnectionLandingZone landingZone = default;
+            LinkConnectionCompute compute = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceDatabase"u8))
@@ -90,7 +90,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkConnection(sourceDatabase.Value, targetDatabase.Value, landingZone.Value, compute.Value);
+            return new LinkConnection(sourceDatabase, targetDatabase, landingZone, compute);
         }
 
         internal partial class LinkConnectionConverter : JsonConverter<LinkConnection>

@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
-    public partial class InfrastructureProfile : IUtf8JsonSerializable
+    public partial class InfrastructureProfile : IUtf8JsonSerializable, IJsonModel<InfrastructureProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InfrastructureProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<InfrastructureProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InfrastructureProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InfrastructureProfile)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(InventoryItemId))
             {
@@ -46,6 +56,11 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
             }
+            if (options.Format != "W" && Optional.IsDefined(LastRestoredVmCheckpoint))
+            {
+                writer.WritePropertyName("lastRestoredVMCheckpoint"u8);
+                writer.WriteObjectValue(LastRestoredVmCheckpoint);
+            }
             if (Optional.IsCollectionDefined(Checkpoints))
             {
                 writer.WritePropertyName("checkpoints"u8);
@@ -71,26 +86,57 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 writer.WritePropertyName("biosGuid"u8);
                 writer.WriteStringValue(BiosGuid);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static InfrastructureProfile DeserializeInfrastructureProfile(JsonElement element)
+        InfrastructureProfile IJsonModel<InfrastructureProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InfrastructureProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InfrastructureProfile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInfrastructureProfile(document.RootElement, options);
+        }
+
+        internal static InfrastructureProfile DeserializeInfrastructureProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> inventoryItemId = default;
-            Optional<ResourceIdentifier> vmmServerId = default;
-            Optional<ResourceIdentifier> cloudId = default;
-            Optional<ResourceIdentifier> templateId = default;
-            Optional<string> vmName = default;
-            Optional<string> uuid = default;
-            Optional<Checkpoint> lastRestoredVmCheckpoint = default;
-            Optional<IList<Checkpoint>> checkpoints = default;
-            Optional<string> checkpointType = default;
-            Optional<int> generation = default;
-            Optional<string> biosGuid = default;
+            string inventoryItemId = default;
+            ResourceIdentifier vmmServerId = default;
+            ResourceIdentifier cloudId = default;
+            ResourceIdentifier templateId = default;
+            string vmName = default;
+            string uuid = default;
+            Checkpoint lastRestoredVmCheckpoint = default;
+            IList<Checkpoint> checkpoints = default;
+            string checkpointType = default;
+            int? generation = default;
+            string biosGuid = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inventoryItemId"u8))
@@ -141,7 +187,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     {
                         continue;
                     }
-                    lastRestoredVmCheckpoint = Checkpoint.DeserializeCheckpoint(property.Value);
+                    lastRestoredVmCheckpoint = Checkpoint.DeserializeCheckpoint(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("checkpoints"u8))
@@ -153,7 +199,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     List<Checkpoint> array = new List<Checkpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Checkpoint.DeserializeCheckpoint(item));
+                        array.Add(Checkpoint.DeserializeCheckpoint(item, options));
                     }
                     checkpoints = array;
                     continue;
@@ -177,8 +223,56 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     biosGuid = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InfrastructureProfile(inventoryItemId.Value, vmmServerId.Value, cloudId.Value, templateId.Value, vmName.Value, uuid.Value, lastRestoredVmCheckpoint.Value, Optional.ToList(checkpoints), checkpointType.Value, Optional.ToNullable(generation), biosGuid.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new InfrastructureProfile(
+                inventoryItemId,
+                vmmServerId,
+                cloudId,
+                templateId,
+                vmName,
+                uuid,
+                lastRestoredVmCheckpoint,
+                checkpoints ?? new ChangeTrackingList<Checkpoint>(),
+                checkpointType,
+                generation,
+                biosGuid,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<InfrastructureProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InfrastructureProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(InfrastructureProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        InfrastructureProfile IPersistableModel<InfrastructureProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InfrastructureProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeInfrastructureProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InfrastructureProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<InfrastructureProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

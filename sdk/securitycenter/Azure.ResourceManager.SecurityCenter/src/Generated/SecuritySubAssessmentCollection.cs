@@ -12,17 +12,15 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SecuritySubAssessmentResource" /> and their operations.
-    /// Each <see cref="SecuritySubAssessmentResource" /> in the collection will belong to the same instance of <see cref="SecurityAssessmentResource" />.
-    /// To get a <see cref="SecuritySubAssessmentCollection" /> instance call the GetSecuritySubAssessments method from an instance of <see cref="SecurityAssessmentResource" />.
+    /// A class representing a collection of <see cref="SecuritySubAssessmentResource"/> and their operations.
+    /// Each <see cref="SecuritySubAssessmentResource"/> in the collection will belong to the same instance of <see cref="SecurityAssessmentResource"/>.
+    /// To get a <see cref="SecuritySubAssessmentCollection"/> instance call the GetSecuritySubAssessments method from an instance of <see cref="SecurityAssessmentResource"/>.
     /// </summary>
     public partial class SecuritySubAssessmentCollection : ArmCollection, IEnumerable<SecuritySubAssessmentResource>, IAsyncEnumerable<SecuritySubAssessmentResource>
     {
@@ -64,6 +62,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>SubAssessments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecuritySubAssessmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="subAssessmentName"> The Sub-Assessment Key - Unique key for the sub-assessment type. </param>
@@ -100,6 +106,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SubAssessments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecuritySubAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +152,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>SubAssessments_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecuritySubAssessmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecuritySubAssessmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecuritySubAssessmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecuritySubAssessmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securitySubAssessmentSubAssessmentsRestClient.CreateListRequest(Id.Parent, Id.Name);
@@ -160,10 +182,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>SubAssessments_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecuritySubAssessmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecuritySubAssessmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecuritySubAssessmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecuritySubAssessmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securitySubAssessmentSubAssessmentsRestClient.CreateListRequest(Id.Parent, Id.Name);
@@ -181,6 +211,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SubAssessments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecuritySubAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +255,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>SubAssessments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecuritySubAssessmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="subAssessmentName"> The Sub-Assessment Key - Unique key for the sub-assessment type. </param>
@@ -251,6 +297,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SubAssessments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecuritySubAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,6 +342,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SubAssessments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecuritySubAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

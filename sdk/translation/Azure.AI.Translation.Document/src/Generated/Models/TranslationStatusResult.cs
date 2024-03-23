@@ -8,14 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.AI.Translation.Document.Models;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
     /// <summary> Translation job status response. </summary>
     public partial class TranslationStatusResult
     {
-        /// <summary> Initializes a new instance of TranslationStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranslationStatusResult"/>. </summary>
         /// <param name="id"> Id of the operation. </param>
         /// <param name="createdOn"> Operation created date time. </param>
         /// <param name="lastModified"> Date time in which the operation's status has been updated. </param>
@@ -34,7 +33,7 @@ namespace Azure.AI.Translation.Document
             Summary = summary;
         }
 
-        /// <summary> Initializes a new instance of TranslationStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranslationStatusResult"/>. </summary>
         /// <param name="id"> Id of the operation. </param>
         /// <param name="createdOn"> Operation created date time. </param>
         /// <param name="lastModified"> Date time in which the operation's status has been updated. </param>

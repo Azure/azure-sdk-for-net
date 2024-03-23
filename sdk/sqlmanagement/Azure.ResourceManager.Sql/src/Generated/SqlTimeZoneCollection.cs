@@ -12,18 +12,16 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SqlTimeZoneResource" /> and their operations.
-    /// Each <see cref="SqlTimeZoneResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="SqlTimeZoneCollection" /> instance call the GetSqlTimeZones method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="SqlTimeZoneResource"/> and their operations.
+    /// Each <see cref="SqlTimeZoneResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="SqlTimeZoneCollection"/> instance call the GetSqlTimeZones method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class SqlTimeZoneCollection : ArmCollection, IEnumerable<SqlTimeZoneResource>, IAsyncEnumerable<SqlTimeZoneResource>
     {
@@ -39,7 +37,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of the <see cref="SqlTimeZoneCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="locationName"> The String to use. </param>
+        /// <param name="locationName"> The <see cref="AzureLocation"/> to use. </param>
         internal SqlTimeZoneCollection(ArmClient client, ResourceIdentifier id, AzureLocation locationName) : base(client, id)
         {
             _locationName = locationName;
@@ -68,9 +66,17 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>TimeZones_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlTimeZoneResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="timeZoneId"> The String to use. </param>
+        /// <param name="timeZoneId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="timeZoneId"/> is null. </exception>
@@ -105,9 +111,17 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>TimeZones_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlTimeZoneResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="timeZoneId"> The String to use. </param>
+        /// <param name="timeZoneId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="timeZoneId"/> is null. </exception>
@@ -142,10 +156,18 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>TimeZones_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlTimeZoneResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlTimeZoneResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlTimeZoneResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlTimeZoneResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlTimeZoneTimeZonesRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_locationName));
@@ -164,10 +186,18 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>TimeZones_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlTimeZoneResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlTimeZoneResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlTimeZoneResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlTimeZoneResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlTimeZoneTimeZonesRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_locationName));
@@ -186,9 +216,17 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>TimeZones_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlTimeZoneResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="timeZoneId"> The String to use. </param>
+        /// <param name="timeZoneId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="timeZoneId"/> is null. </exception>
@@ -221,9 +259,17 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>TimeZones_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlTimeZoneResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="timeZoneId"> The String to use. </param>
+        /// <param name="timeZoneId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="timeZoneId"/> is null. </exception>
@@ -256,9 +302,17 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>TimeZones_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlTimeZoneResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="timeZoneId"> The String to use. </param>
+        /// <param name="timeZoneId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="timeZoneId"/> is null. </exception>
@@ -293,9 +347,17 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>TimeZones_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlTimeZoneResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="timeZoneId"> The String to use. </param>
+        /// <param name="timeZoneId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="timeZoneId"/> is null. </exception>

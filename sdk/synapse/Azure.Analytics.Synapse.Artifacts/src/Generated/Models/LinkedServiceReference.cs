@@ -7,15 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Analytics.Synapse.Artifacts;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Linked service reference type. </summary>
     public partial class LinkedServiceReference
     {
-        /// <summary> Initializes a new instance of LinkedServiceReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedServiceReference"/>. </summary>
         /// <param name="type"> Linked service reference type. </param>
         /// <param name="referenceName"> Reference LinkedService name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
@@ -28,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Parameters = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of LinkedServiceReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedServiceReference"/>. </summary>
         /// <param name="type"> Linked service reference type. </param>
         /// <param name="referenceName"> Reference LinkedService name. </param>
         /// <param name="parameters"> Arguments for LinkedService. </param>
