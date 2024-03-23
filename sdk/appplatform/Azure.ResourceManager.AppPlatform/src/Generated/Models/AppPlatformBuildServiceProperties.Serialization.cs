@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(ResourceRequests))
             {
                 writer.WritePropertyName("resourceRequests"u8);
-                writer.WriteObjectValue(ResourceRequests);
+                writer.WriteObjectValue<AppPlatformBuildServiceResourceRequirements>(ResourceRequests, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

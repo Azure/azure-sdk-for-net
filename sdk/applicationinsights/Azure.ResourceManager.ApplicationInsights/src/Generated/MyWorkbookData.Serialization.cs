@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue<MyWorkbookManagedIdentity>(Identity, options);
             }
             if (Optional.IsDefined(Id))
             {

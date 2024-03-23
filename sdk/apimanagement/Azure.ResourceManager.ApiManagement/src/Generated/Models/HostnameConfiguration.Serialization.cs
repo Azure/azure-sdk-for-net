@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
-                writer.WriteObjectValue(Certificate);
+                writer.WriteObjectValue<CertificateInformation>(Certificate, options);
             }
             if (Optional.IsDefined(CertificateSource))
             {

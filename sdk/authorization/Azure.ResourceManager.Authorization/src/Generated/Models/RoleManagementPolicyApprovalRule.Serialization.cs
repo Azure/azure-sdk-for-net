@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Authorization.Models
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("setting"u8);
-                writer.WriteObjectValue(Settings);
+                writer.WriteObjectValue<RoleManagementApprovalSettings>(Settings, options);
             }
             if (Optional.IsDefined(Id))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Authorization.Models
             if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
-                writer.WriteObjectValue(Target);
+                writer.WriteObjectValue<RoleManagementPolicyRuleTarget>(Target, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

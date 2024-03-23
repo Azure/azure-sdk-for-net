@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplicationInsightsComponentFeatureCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }

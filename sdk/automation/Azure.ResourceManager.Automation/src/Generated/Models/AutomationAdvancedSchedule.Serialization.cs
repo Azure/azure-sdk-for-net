@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in MonthlyOccurrences)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AutomationAdvancedScheduleMonthlyOccurrence>(item, options);
                 }
                 writer.WriteEndArray();
             }

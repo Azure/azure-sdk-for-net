@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
-                writer.WriteObjectValue(Authorization);
+                writer.WriteObjectValue<BackendAuthorizationHeaderCredentials>(Authorization, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

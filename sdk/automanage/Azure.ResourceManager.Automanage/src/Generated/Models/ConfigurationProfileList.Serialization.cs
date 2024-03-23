@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Automanage.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AutomanageConfigurationProfileData>(item, options);
                 }
                 writer.WriteEndArray();
             }

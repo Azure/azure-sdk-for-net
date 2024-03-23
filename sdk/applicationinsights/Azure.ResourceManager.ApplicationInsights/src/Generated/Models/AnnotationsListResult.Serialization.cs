@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<Annotation>(item, options);
                 }
                 writer.WriteEndArray();
             }

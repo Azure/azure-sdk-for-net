@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Authorization
             if (Optional.IsDefined(ExpandedProperties))
             {
                 writer.WritePropertyName("expandedProperties"u8);
-                writer.WriteObjectValue(ExpandedProperties);
+                writer.WriteObjectValue<RoleManagementExpandedProperties>(ExpandedProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
