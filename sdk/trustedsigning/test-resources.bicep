@@ -13,6 +13,17 @@ param profileName string
 @description('The identity validation id to be use for the certificate profile provisioning.')
 param identityValidationId string //'4931b0b1-c1d4-43a5-800e-259f7937220b'
 
+//Short name regions
+var shortLocation = {
+  eastus: 'eus'
+  southcentralus: 'scus'
+  northeurope: 'neu'
+  westcentralus: 'wcus'
+  westeurope: 'weu'
+  westus: 'wus'
+  westus2: 'wus2'
+}
+
 @description('Profile type for the certificate profile creation.')
 @allowed([
   'PublicTrust'
@@ -42,7 +53,7 @@ resource profile 'Microsoft.CodeSigning/codeSigningAccounts/certificateProfiles@
   }
 }
 
-output DEVSIGNING_REGION string = location
+output DEVSIGNING_REGION string = shortLocation[toLower(replace(location, ' ', ''))]
 output DEVSIGNING_ACCOUNT_NAME string = account.name
 output DEVSIGNING_PROFILE_NAME string = profile.name
 output DEVSIGNING_ENDPOINT string = account.properties.accountUri
