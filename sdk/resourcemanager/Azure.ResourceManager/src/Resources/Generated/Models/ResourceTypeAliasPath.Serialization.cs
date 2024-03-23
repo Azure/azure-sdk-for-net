@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Pattern))
             {
                 writer.WritePropertyName("pattern"u8);
-                writer.WriteObjectValue(Pattern);
+                writer.WriteObjectValue<ResourceTypeAliasPattern>(Pattern, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                writer.WriteObjectValue<ResourceTypeAliasPathMetadata>(Metadata, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

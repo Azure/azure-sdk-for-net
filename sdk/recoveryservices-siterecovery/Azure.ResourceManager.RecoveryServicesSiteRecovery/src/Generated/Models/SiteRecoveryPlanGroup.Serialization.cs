@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ReplicationProtectedItems)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RecoveryPlanProtectedItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in StartGroupActions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RecoveryPlanAction>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in EndGroupActions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RecoveryPlanAction>(item, options);
                 }
                 writer.WriteEndArray();
             }

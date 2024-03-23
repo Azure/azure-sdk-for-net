@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(PrimaryStagingStorageAccountCustomContent))
             {
                 writer.WritePropertyName("primaryStagingStorageAccountCustomInput"u8);
-                writer.WriteObjectValue(PrimaryStagingStorageAccountCustomContent);
+                writer.WriteObjectValue<StorageAccountCustomDetails>(PrimaryStagingStorageAccountCustomContent, options);
             }
             if (Optional.IsDefined(RecoveryResourceGroupCustomContent))
             {
                 writer.WritePropertyName("recoveryResourceGroupCustomInput"u8);
-                writer.WriteObjectValue(RecoveryResourceGroupCustomContent);
+                writer.WriteObjectValue<RecoveryResourceGroupCustomDetails>(RecoveryResourceGroupCustomContent, options);
             }
             if (Optional.IsDefined(RecoveryReplicaDiskAccountType))
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(DiskEncryptionInfo))
             {
                 writer.WritePropertyName("diskEncryptionInfo"u8);
-                writer.WriteObjectValue(DiskEncryptionInfo);
+                writer.WriteObjectValue<SiteRecoveryDiskEncryptionInfo>(DiskEncryptionInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

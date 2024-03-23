@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Permissions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<Permission>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RedisData>(item, options);
                 }
                 writer.WriteEndArray();
             }

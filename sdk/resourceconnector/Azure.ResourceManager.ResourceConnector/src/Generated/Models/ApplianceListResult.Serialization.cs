@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceConnectorApplianceData>(item, options);
                 }
                 writer.WriteEndArray();
             }

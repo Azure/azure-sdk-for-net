@@ -44,7 +44,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(DateFormatter))
             {
                 writer.WritePropertyName("dateFormatter"u8);
-                writer.WriteObjectValue(DateFormatter);
+                writer.WriteObjectValue<AtlasDateFormat>(DateFormatter, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -108,19 +108,19 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in AttributeDefs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AtlasAttributeDef>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(EndDef1))
             {
                 writer.WritePropertyName("endDef1"u8);
-                writer.WriteObjectValue(EndDef1);
+                writer.WriteObjectValue<AtlasRelationshipEndDef>(EndDef1, options);
             }
             if (Optional.IsDefined(EndDef2))
             {
                 writer.WritePropertyName("endDef2"u8);
-                writer.WriteObjectValue(EndDef2);
+                writer.WriteObjectValue<AtlasRelationshipEndDef>(EndDef2, options);
             }
             if (Optional.IsDefined(RelationshipCategory))
             {
@@ -410,7 +410,7 @@ namespace Azure.Analytics.Purview.DataMap
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AtlasRelationshipDef>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

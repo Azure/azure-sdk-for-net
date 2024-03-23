@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Quantum.Models
             if (Optional.IsDefined(Aad))
             {
                 writer.WritePropertyName("aad"u8);
-                writer.WriteObjectValue(Aad);
+                writer.WriteObjectValue<ProviderAadInfo>(Aad, options);
             }
             if (Optional.IsDefined(ManagedApplication))
             {
                 writer.WritePropertyName("managedApplication"u8);
-                writer.WriteObjectValue(ManagedApplication);
+                writer.WriteObjectValue<ProviderApplicationInfo>(ManagedApplication, options);
             }
             if (Optional.IsCollectionDefined(Targets))
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 writer.WriteStartArray();
                 foreach (var item in Targets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ProviderTargetDescription>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 writer.WriteStartArray();
                 foreach (var item in Skus)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ProviderSkuDescription>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 writer.WriteStartArray();
                 foreach (var item in QuotaDimensions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<QuantumQuotaDimension>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 writer.WriteStartArray();
                 foreach (var item in PricingDimensions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ProviderPricingDimension>(item, options);
                 }
                 writer.WriteEndArray();
             }
