@@ -30,7 +30,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WriteStartArray();
             foreach (var item in Patients)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<TrialMatcherPatientResult>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("modelVersion"u8);
@@ -161,7 +161,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<TrialMatcherResults>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

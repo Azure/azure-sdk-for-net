@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.FluidRelay
             if (options.Format != "W" && Optional.IsDefined(FluidRelayEndpoints))
             {
                 writer.WritePropertyName("fluidRelayEndpoints"u8);
-                writer.WriteObjectValue(FluidRelayEndpoints);
+                writer.WriteObjectValue<FluidRelayEndpoints>(FluidRelayEndpoints, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.FluidRelay
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<Models.EncryptionProperties>(Encryption, options);
             }
             if (Optional.IsDefined(StorageSku))
             {

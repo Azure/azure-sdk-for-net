@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             writer.WriteStartArray();
             foreach (var item in Stages)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ContainerServiceFleetUpdateStage>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

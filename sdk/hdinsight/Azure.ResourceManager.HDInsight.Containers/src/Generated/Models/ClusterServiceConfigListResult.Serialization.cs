@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ClusterServiceConfigResult>(item, options);
                 }
                 writer.WriteEndArray();
             }

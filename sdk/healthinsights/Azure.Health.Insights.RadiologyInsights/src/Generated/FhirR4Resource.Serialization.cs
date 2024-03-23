@@ -36,7 +36,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Meta))
             {
                 writer.WritePropertyName("meta"u8);
-                writer.WriteObjectValue(Meta);
+                writer.WriteObjectValue<FhirR4Meta>(Meta, options);
             }
             if (Optional.IsDefined(ImplicitRules))
             {
@@ -176,7 +176,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<FhirR4Resource>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

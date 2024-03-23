@@ -81,12 +81,12 @@ namespace Azure.ResourceManager.HDInsight.Containers
             if (Optional.IsDefined(ComputeProfile))
             {
                 writer.WritePropertyName("computeProfile"u8);
-                writer.WriteObjectValue(ComputeProfile);
+                writer.WriteObjectValue<ComputeProfile>(ComputeProfile, options);
             }
             if (Optional.IsDefined(ClusterProfile))
             {
                 writer.WritePropertyName("clusterProfile"u8);
-                writer.WriteObjectValue(ClusterProfile);
+                writer.WriteObjectValue<ClusterProfile>(ClusterProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {

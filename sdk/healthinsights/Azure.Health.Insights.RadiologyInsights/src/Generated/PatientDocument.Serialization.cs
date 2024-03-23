@@ -51,7 +51,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Authors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentAuthor>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -63,10 +63,10 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(AdministrativeMetadata))
             {
                 writer.WritePropertyName("administrativeMetadata"u8);
-                writer.WriteObjectValue(AdministrativeMetadata);
+                writer.WriteObjectValue<DocumentAdministrativeMetadata>(AdministrativeMetadata, options);
             }
             writer.WritePropertyName("content"u8);
-            writer.WriteObjectValue(Content);
+            writer.WriteObjectValue<DocumentContent>(Content, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -250,7 +250,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<PatientDocument>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }
