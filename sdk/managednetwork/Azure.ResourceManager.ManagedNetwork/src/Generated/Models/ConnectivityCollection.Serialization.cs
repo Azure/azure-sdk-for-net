@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Groups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedNetworkGroupData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Peerings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedNetworkPeeringPolicyData>(item, options);
                 }
                 writer.WriteEndArray();
             }

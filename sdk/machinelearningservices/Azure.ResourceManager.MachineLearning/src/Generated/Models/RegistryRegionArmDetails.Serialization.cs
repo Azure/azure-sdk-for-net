@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in AcrDetails)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<RegistryAcrDetails>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in StorageAccountDetails)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<StorageAccountDetails>(item, options);
                     }
                     writer.WriteEndArray();
                 }

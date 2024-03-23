@@ -22,7 +22,7 @@ namespace Azure.Maps.Routing.Models
                 writer.WriteStartArray();
                 foreach (var item in BatchItems)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BatchRequestItem>(item);
                 }
                 writer.WriteEndArray();
             }

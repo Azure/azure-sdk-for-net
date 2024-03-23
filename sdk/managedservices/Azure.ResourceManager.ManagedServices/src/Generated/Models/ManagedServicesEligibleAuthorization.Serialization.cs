@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             if (Optional.IsDefined(JustInTimeAccessPolicy))
             {
                 writer.WritePropertyName("justInTimeAccessPolicy"u8);
-                writer.WriteObjectValue(JustInTimeAccessPolicy);
+                writer.WriteObjectValue<ManagedServicesJustInTimeAccessPolicy>(JustInTimeAccessPolicy, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

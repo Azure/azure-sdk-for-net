@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         writer.WriteStartArray();
                         foreach (var item0 in item.Value)
                         {
-                            writer.WriteObjectValue(item0);
+                            writer.WriteObjectValue<ColumnTransformer>(item0, options);
                         }
                         writer.WriteEndArray();
                     }

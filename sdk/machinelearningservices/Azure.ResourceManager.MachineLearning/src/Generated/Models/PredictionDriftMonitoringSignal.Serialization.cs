@@ -30,15 +30,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartArray();
             foreach (var item in MetricThresholds)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<PredictionDriftMetricThresholdBase>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("modelType"u8);
             writer.WriteStringValue(ModelType.ToString());
             writer.WritePropertyName("productionData"u8);
-            writer.WriteObjectValue(ProductionData);
+            writer.WriteObjectValue<MonitoringInputDataBase>(ProductionData, options);
             writer.WritePropertyName("referenceData"u8);
-            writer.WriteObjectValue(ReferenceData);
+            writer.WriteObjectValue<MonitoringInputDataBase>(ReferenceData, options);
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);

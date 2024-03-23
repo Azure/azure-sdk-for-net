@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.KeyVault
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            writer.WriteObjectValue<Models.KeyVaultProperties>(Properties, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);

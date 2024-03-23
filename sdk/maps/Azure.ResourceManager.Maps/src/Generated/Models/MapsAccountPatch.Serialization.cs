@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Maps.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<MapsSku>(Sku, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -76,14 +76,14 @@ namespace Azure.ResourceManager.Maps.Models
                 writer.WriteStartArray();
                 foreach (var item in LinkedResources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MapsLinkedResource>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Cors))
             {
                 writer.WritePropertyName("cors"u8);
-                writer.WriteObjectValue(Cors);
+                writer.WriteObjectValue<CorsRules>(Cors, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

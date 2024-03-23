@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartArray();
             foreach (var item in MetricThresholds)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<GenerationTokenStatisticsMetricThreshold>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(ProductionData))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ProductionData != null)
                 {
                     writer.WritePropertyName("productionData"u8);
-                    writer.WriteObjectValue(ProductionData);
+                    writer.WriteObjectValue<MonitoringInputDataBase>(ProductionData, options);
                 }
                 else
                 {

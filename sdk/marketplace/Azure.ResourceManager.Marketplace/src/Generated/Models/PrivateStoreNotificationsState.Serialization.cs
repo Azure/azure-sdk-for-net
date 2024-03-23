@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in StopSellNotifications)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StopSellNotifications>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in NewNotifications)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NewPlanNotification>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in ApprovalRequests)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RequestApprovalsDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }

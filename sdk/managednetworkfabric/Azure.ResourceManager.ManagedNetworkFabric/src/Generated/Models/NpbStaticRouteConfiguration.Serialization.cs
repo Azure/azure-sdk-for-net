@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(BfdConfiguration))
             {
                 writer.WritePropertyName("bfdConfiguration"u8);
-                writer.WriteObjectValue(BfdConfiguration);
+                writer.WriteObjectValue<BfdConfiguration>(BfdConfiguration, options);
             }
             if (Optional.IsCollectionDefined(IPv4Routes))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in IPv4Routes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StaticRouteProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in IPv6Routes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StaticRouteProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }

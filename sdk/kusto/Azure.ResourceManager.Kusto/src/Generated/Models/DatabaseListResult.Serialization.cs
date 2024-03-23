@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KustoDatabaseData>(item, options);
                 }
                 writer.WriteEndArray();
             }

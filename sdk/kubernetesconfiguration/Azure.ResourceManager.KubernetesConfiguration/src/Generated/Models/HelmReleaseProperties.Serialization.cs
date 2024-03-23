@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (HelmChartRef != null)
                 {
                     writer.WritePropertyName("helmChartRef"u8);
-                    writer.WriteObjectValue(HelmChartRef);
+                    writer.WriteObjectValue<KubernetesObjectReference>(HelmChartRef, options);
                 }
                 else
                 {

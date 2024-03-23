@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineLearningPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
