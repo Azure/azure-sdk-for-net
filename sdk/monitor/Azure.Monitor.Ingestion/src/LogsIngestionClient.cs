@@ -106,14 +106,10 @@ namespace Azure.Monitor.Ingestion
             ArrayBufferWriter<byte> arrayBuffer = new ArrayBufferWriter<byte>(SingleUploadThreshold);
             Utf8JsonWriter writer = new Utf8JsonWriter(arrayBuffer);
             writer.WriteStartArray();
-            int entryCount = 0;
             List<object> currentLogList = new List<object>();
-            var logEntriesList = logEntries.ToList();
-            int logEntriesCount = logEntriesList.Count;
-            foreach (var log in logEntriesList)
+            foreach (var log in logEntries)
             {
                 BinaryData entry;
-                bool isLastEntry = (entryCount + 1 == logEntriesCount);
                 // If log is already BinaryData, no need to serialize it
                 if (log is BinaryData d)
                     entry = d;
@@ -125,8 +121,8 @@ namespace Azure.Monitor.Ingestion
                     entry = options.Serializer.Serialize(log);
 
                 var memory = entry.ToMemory();
-                // if single log is > 1 Mb send to be gzipped by itself
-                if (memory.Length > SingleUploadThreshold)
+                // if single log (as an array) is >= 1 Mb send to be gzipped by itself
+                if ((memory.Length + 2) >= SingleUploadThreshold)
                 {
                     // Create tempArrayBufferWriter (unsized to store log) and tempWriter for individual log
                     ArrayBufferWriter<byte> tempArrayBuffer = new ArrayBufferWriter<byte>();
@@ -136,9 +132,11 @@ namespace Azure.Monitor.Ingestion
                     tempWriter.WriteEndArray();
                     tempWriter.Flush();
                     yield return new BatchedLogs(new List<object> { log }, BinaryData.FromBytes(tempArrayBuffer.WrittenMemory));
+                    continue;
                 }
-                // if adding this entry makes stream > 1 Mb send current stream now
-                else if ((writer.BytesPending + memory.Length + 1) >= SingleUploadThreshold)
+
+                // if adding this entry (and array end) would make stream > 1 Mb send current stream now
+                if ((writer.BytesCommitted + writer.BytesPending + memory.Length + 2) > SingleUploadThreshold)
                 {
                     writer.WriteEndArray();
                     writer.Flush();
@@ -151,33 +149,19 @@ namespace Azure.Monitor.Ingestion
                     writer.WriteStartArray();
                     // reset log list
                     currentLogList = new List<object>();
-                    // add current log to memory and currentLogList
-                    WriteMemory(writer, memory);
-                    currentLogList.Add(log);
-
-                    // if this is the last log, send batch now
-                    if (isLastEntry)
-                    {
-                        writer.WriteEndArray();
-                        writer.Flush();
-                        yield return new BatchedLogs(currentLogList, BinaryData.FromBytes(arrayBuffer.WrittenMemory));
-                    }
                 }
-                else
-                {
-                    // Add entry to existing stream and update logList
-                    WriteMemory(writer, memory);
-                    currentLogList.Add(log);
 
-                    // if this is the last log, send batch now
-                    if (isLastEntry)
-                    {
-                        writer.WriteEndArray();
-                        writer.Flush();
-                        yield return new BatchedLogs(currentLogList, BinaryData.FromBytes(arrayBuffer.WrittenMemory));
-                    }
-                }
-                entryCount++;
+                // Add entry to stream and update logList
+                WriteMemory(writer, memory);
+                currentLogList.Add(log);
+            }
+
+            // no more logs, send existing stream and LogList if anything
+            if (currentLogList.Count > 0)
+            {
+                writer.WriteEndArray();
+                writer.Flush();
+                yield return new BatchedLogs(currentLogList, BinaryData.FromBytes(arrayBuffer.WrittenMemory));
             }
         }
 
