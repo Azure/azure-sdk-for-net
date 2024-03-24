@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ApplicationConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SpringBootAppApplicationConfigurationsItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Miscs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SpringBootAppMiscsItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Instances)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SpringBootAppInstancesItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SpringBootSiteError>(item, options);
                 }
                 writer.WriteEndArray();
             }

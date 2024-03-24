@@ -29,27 +29,27 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(CiemDiscovery))
             {
                 writer.WritePropertyName("ciemDiscovery"u8);
-                writer.WriteObjectValue(CiemDiscovery);
+                writer.WriteObjectValue<DefenderCspmGcpOfferingCiemDiscovery>(CiemDiscovery, options);
             }
             if (Optional.IsDefined(VmScanners))
             {
                 writer.WritePropertyName("vmScanners"u8);
-                writer.WriteObjectValue(VmScanners);
+                writer.WriteObjectValue<DefenderCspmGcpOfferingVmScanners>(VmScanners, options);
             }
             if (Optional.IsDefined(DataSensitivityDiscovery))
             {
                 writer.WritePropertyName("dataSensitivityDiscovery"u8);
-                writer.WriteObjectValue(DataSensitivityDiscovery);
+                writer.WriteObjectValue<DefenderCspmGcpOfferingDataSensitivityDiscovery>(DataSensitivityDiscovery, options);
             }
             if (Optional.IsDefined(MdcContainersImageAssessment))
             {
                 writer.WritePropertyName("mdcContainersImageAssessment"u8);
-                writer.WriteObjectValue(MdcContainersImageAssessment);
+                writer.WriteObjectValue<DefenderCspmGcpOfferingMdcContainersImageAssessment>(MdcContainersImageAssessment, options);
             }
             if (Optional.IsDefined(MdcContainersAgentlessDiscoveryK8S))
             {
                 writer.WritePropertyName("mdcContainersAgentlessDiscoveryK8s"u8);
-                writer.WriteObjectValue(MdcContainersAgentlessDiscoveryK8S);
+                writer.WriteObjectValue<DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S>(MdcContainersAgentlessDiscoveryK8S, options);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());

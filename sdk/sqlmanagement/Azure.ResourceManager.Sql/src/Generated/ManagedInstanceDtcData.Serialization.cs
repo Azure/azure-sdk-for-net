@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(SecuritySettings))
             {
                 writer.WritePropertyName("securitySettings"u8);
-                writer.WriteObjectValue(SecuritySettings);
+                writer.WriteObjectValue<ManagedInstanceDtcSecuritySettings>(SecuritySettings, options);
             }
             if (Optional.IsCollectionDefined(ExternalDnsSuffixSearchList))
             {

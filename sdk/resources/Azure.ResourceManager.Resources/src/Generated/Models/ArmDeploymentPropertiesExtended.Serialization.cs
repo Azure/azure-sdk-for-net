@@ -76,14 +76,14 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Dependencies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ArmDependency>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(TemplateLink))
             {
                 writer.WritePropertyName("templateLink"u8);
-                writer.WriteObjectValue(TemplateLink);
+                writer.WriteObjectValue<ArmDeploymentTemplateLink>(TemplateLink, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Parameters))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsDefined(ParametersLink))
             {
                 writer.WritePropertyName("parametersLink"u8);
-                writer.WriteObjectValue(ParametersLink);
+                writer.WriteObjectValue<ArmDeploymentParametersLink>(ParametersLink, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Mode))
             {
@@ -110,12 +110,12 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsDefined(DebugSetting))
             {
                 writer.WritePropertyName("debugSetting"u8);
-                writer.WriteObjectValue(DebugSetting);
+                writer.WriteObjectValue<DebugSetting>(DebugSetting, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ErrorDeployment))
             {
                 writer.WritePropertyName("onErrorDeployment"u8);
-                writer.WriteObjectValue(ErrorDeployment);
+                writer.WriteObjectValue<ErrorDeploymentExtended>(ErrorDeployment, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TemplateHash))
             {

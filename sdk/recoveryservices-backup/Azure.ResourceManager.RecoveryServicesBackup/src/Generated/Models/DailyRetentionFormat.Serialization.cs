@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in DaysOfTheMonth)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BackupDay>(item, options);
                 }
                 writer.WriteEndArray();
             }

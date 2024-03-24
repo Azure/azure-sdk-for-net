@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<NodeTypeSupportedSku>(Sku, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity);
+                writer.WriteObjectValue<NodeTypeSkuCapacity>(Capacity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

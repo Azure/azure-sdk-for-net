@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BasicArmDependency>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (TextWeights != null)
                 {
                     writer.WritePropertyName("text"u8);
-                    writer.WriteObjectValue(TextWeights);
+                    writer.WriteObjectValue<TextWeights>(TextWeights);
                 }
                 else
                 {
@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Functions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScoringFunction>(item);
                 }
                 writer.WriteEndArray();
             }

@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(PerformanceLevel))
             {
                 writer.WritePropertyName("performanceLevel"u8);
-                writer.WriteObjectValue(PerformanceLevel);
+                writer.WriteObjectValue<PerformanceLevelCapability>(PerformanceLevel, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<SqlSku>(Sku, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedLicenseTypes))
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedLicenseTypes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LicenseTypeCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(IncludedMaxSize))
             {
                 writer.WritePropertyName("includedMaxSize"u8);
-                writer.WriteObjectValue(IncludedMaxSize);
+                writer.WriteObjectValue<MaxSizeCapability>(IncludedMaxSize, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedMaxSizes))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedMaxSizes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MaxSizeRangeCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedPerDatabaseMaxSizes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MaxSizeRangeCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedPerDatabaseMaxPerformanceLevels)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedMaintenanceConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MaintenanceConfigurationCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SignalRData>(item, options);
                 }
                 writer.WriteEndArray();
             }

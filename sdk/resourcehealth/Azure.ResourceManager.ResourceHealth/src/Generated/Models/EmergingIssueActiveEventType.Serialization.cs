@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WriteStartArray();
                 foreach (var item in Impacts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EmergingIssueImpact>(item, options);
                 }
                 writer.WriteEndArray();
             }

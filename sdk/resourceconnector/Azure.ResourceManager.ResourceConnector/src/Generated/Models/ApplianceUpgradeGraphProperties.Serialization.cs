@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplianceSupportedVersion>(item, options);
                 }
                 writer.WriteEndArray();
             }

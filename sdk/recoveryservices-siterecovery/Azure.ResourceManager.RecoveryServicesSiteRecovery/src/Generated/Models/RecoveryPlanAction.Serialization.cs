@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             writer.WriteEndArray();
             writer.WritePropertyName("customDetails"u8);
-            writer.WriteObjectValue(CustomDetails);
+            writer.WriteObjectValue<RecoveryPlanActionDetails>(CustomDetails, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
