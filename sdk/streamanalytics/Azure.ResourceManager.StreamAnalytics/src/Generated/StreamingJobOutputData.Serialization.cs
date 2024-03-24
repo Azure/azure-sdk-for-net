@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             if (Optional.IsDefined(Datasource))
             {
                 writer.WritePropertyName("datasource"u8);
-                writer.WriteObjectValue(Datasource);
+                writer.WriteObjectValue<StreamingJobOutputDataSource>(Datasource, options);
             }
             if (Optional.IsDefined(TimeFrame))
             {
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.StreamAnalytics
             if (Optional.IsDefined(Serialization))
             {
                 writer.WritePropertyName("serialization"u8);
-                writer.WriteObjectValue(Serialization);
+                writer.WriteObjectValue<StreamAnalyticsDataSerialization>(Serialization, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Diagnostics))
             {
                 writer.WritePropertyName("diagnostics"u8);
-                writer.WriteObjectValue(Diagnostics);
+                writer.WriteObjectValue<StreamingJobDiagnostics>(Diagnostics, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -80,14 +80,14 @@ namespace Azure.ResourceManager.StreamAnalytics
                 writer.WriteStartArray();
                 foreach (var item in LastOutputEventTimestamps)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LastOutputEventTimestamp>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(WatermarkSettings))
             {
                 writer.WritePropertyName("watermarkSettings"u8);
-                writer.WriteObjectValue(WatermarkSettings);
+                writer.WriteObjectValue<StreamingJobOutputWatermarkProperties>(WatermarkSettings, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

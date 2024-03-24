@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            writer.WriteObjectValue<AutoScaleVCoreSku>(Sku, options);
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             if (Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
-                writer.WriteObjectValue(SystemData);
+                writer.WriteObjectValue<SystemData>(SystemData, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();

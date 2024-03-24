@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             if (Optional.IsDefined(HelmOperatorProperties))
             {
                 writer.WritePropertyName("helmOperatorProperties"u8);
-                writer.WriteObjectValue(HelmOperatorProperties);
+                writer.WriteObjectValue<HelmOperatorProperties>(HelmOperatorProperties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
             {
                 writer.WritePropertyName("complianceStatus"u8);
-                writer.WriteObjectValue(ComplianceStatus);
+                writer.WriteObjectValue<KubernetesConfigurationComplianceStatus>(ComplianceStatus, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

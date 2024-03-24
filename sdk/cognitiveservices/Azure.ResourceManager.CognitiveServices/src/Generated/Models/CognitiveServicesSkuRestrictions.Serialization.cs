@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(RestrictionInfo))
             {
                 writer.WritePropertyName("restrictionInfo"u8);
-                writer.WriteObjectValue(RestrictionInfo);
+                writer.WriteObjectValue<CognitiveServicesSkuRestrictionInfo>(RestrictionInfo, options);
             }
             if (Optional.IsDefined(ReasonCode))
             {

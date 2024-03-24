@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in Destinations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkTapPatchableParametersDestinationsItem>(item, options);
                 }
                 writer.WriteEndArray();
             }

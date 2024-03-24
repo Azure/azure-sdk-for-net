@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Quota))
             {
                 writer.WritePropertyName("quota"u8);
-                writer.WriteObjectValue(Quota);
+                writer.WriteObjectValue<CommitmentQuota>(Quota, options);
             }
             if (Optional.IsDefined(Cost))
             {
                 writer.WritePropertyName("cost"u8);
-                writer.WriteObjectValue(Cost);
+                writer.WriteObjectValue<CommitmentCost>(Cost, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

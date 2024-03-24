@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(ThroughputPolicy))
             {
                 writer.WritePropertyName("throughputPolicy"u8);
-                writer.WriteObjectValue(ThroughputPolicy);
+                writer.WriteObjectValue<ThroughputPolicyResourceInfo>(ThroughputPolicy, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

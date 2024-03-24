@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in Threads)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ProcessThreadInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in Modules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ProcessModuleInfoData>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<ManagedEnvironmentStorageProperties>(Properties, options);
             }
             if (options.Format != "W")
             {

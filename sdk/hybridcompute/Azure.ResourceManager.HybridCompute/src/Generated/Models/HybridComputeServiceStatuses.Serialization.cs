@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(ExtensionService))
             {
                 writer.WritePropertyName("extensionService"u8);
-                writer.WriteObjectValue(ExtensionService);
+                writer.WriteObjectValue<HybridComputeServiceStatus>(ExtensionService, options);
             }
             if (Optional.IsDefined(GuestConfigurationService))
             {
                 writer.WritePropertyName("guestConfigurationService"u8);
-                writer.WriteObjectValue(GuestConfigurationService);
+                writer.WriteObjectValue<HybridComputeServiceStatus>(GuestConfigurationService, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

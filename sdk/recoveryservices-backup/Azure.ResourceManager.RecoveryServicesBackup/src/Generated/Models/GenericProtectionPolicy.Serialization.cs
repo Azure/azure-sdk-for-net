@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in SubProtectionPolicy)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SubProtectionPolicy>(item, options);
                 }
                 writer.WriteEndArray();
             }

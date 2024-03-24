@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(SelectedConfigurations))
             {
                 writer.WritePropertyName("selectedConfigurations"u8);
-                writer.WriteObjectValue(SelectedConfigurations);
+                writer.WriteObjectValue<HDInsightAzureMonitorSelectedConfigurations>(SelectedConfigurations, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties);
+                writer.WriteObjectValue<CognitiveServicesKeyVaultProperties>(KeyVaultProperties, options);
             }
             if (Optional.IsDefined(KeySource))
             {

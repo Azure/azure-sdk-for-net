@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties);
+                writer.WriteObjectValue<EncryptionScopeKeyVaultProperties>(KeyVaultProperties, options);
             }
             if (Optional.IsDefined(RequireInfrastructureEncryption))
             {

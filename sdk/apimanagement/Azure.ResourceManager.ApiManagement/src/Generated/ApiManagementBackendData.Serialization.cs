@@ -68,22 +68,22 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<BackendProperties>(Properties, options);
             }
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                writer.WriteObjectValue<BackendCredentialsContract>(Credentials, options);
             }
             if (Optional.IsDefined(Proxy))
             {
                 writer.WritePropertyName("proxy"u8);
-                writer.WriteObjectValue(Proxy);
+                writer.WriteObjectValue<BackendProxyContract>(Proxy, options);
             }
             if (Optional.IsDefined(Tls))
             {
                 writer.WritePropertyName("tls"u8);
-                writer.WriteObjectValue(Tls);
+                writer.WriteObjectValue<BackendTlsProperties>(Tls, options);
             }
             if (Optional.IsDefined(Uri))
             {

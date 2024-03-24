@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue<DevTestLabUserIdentity>(Identity, options);
             }
             if (Optional.IsDefined(SecretStore))
             {
                 writer.WritePropertyName("secretStore"u8);
-                writer.WriteObjectValue(SecretStore);
+                writer.WriteObjectValue<DevTestLabUserSecretStore>(SecretStore, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {

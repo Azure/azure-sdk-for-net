@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.FrontDoor
             if (Optional.IsDefined(ExperimentEndpointA))
             {
                 writer.WritePropertyName("endpointA"u8);
-                writer.WriteObjectValue(ExperimentEndpointA);
+                writer.WriteObjectValue<FrontDoorExperimentEndpointProperties>(ExperimentEndpointA, options);
             }
             if (Optional.IsDefined(ExperimentEndpointB))
             {
                 writer.WritePropertyName("endpointB"u8);
-                writer.WriteObjectValue(ExperimentEndpointB);
+                writer.WriteObjectValue<FrontDoorExperimentEndpointProperties>(ExperimentEndpointB, options);
             }
             if (Optional.IsDefined(EnabledState))
             {

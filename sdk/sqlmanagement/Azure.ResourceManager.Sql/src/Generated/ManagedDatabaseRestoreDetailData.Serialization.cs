@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in FullBackupSets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedDatabaseRestoreDetailBackupSetProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in DiffBackupSets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedDatabaseRestoreDetailBackupSetProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in LogBackupSets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedDatabaseRestoreDetailBackupSetProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in UnrestorableFileList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedDatabaseRestoreDetailUnrestorableFileProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }

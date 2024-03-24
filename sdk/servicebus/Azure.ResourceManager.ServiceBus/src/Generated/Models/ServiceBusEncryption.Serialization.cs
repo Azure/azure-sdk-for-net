@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 writer.WriteStartArray();
                 foreach (var item in KeyVaultProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ServiceBusKeyVaultProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }

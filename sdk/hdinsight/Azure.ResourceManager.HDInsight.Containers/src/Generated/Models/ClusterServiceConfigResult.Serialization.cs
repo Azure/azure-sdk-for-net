@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 foreach (var item in DefaultKeys)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ClusterServiceConfigValueEntity>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

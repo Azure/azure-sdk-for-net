@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Storage
                 writer.WriteStartArray();
                 foreach (var item in SignedIdentifiers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StorageSignedIdentifier>(item, options);
                 }
                 writer.WriteEndArray();
             }

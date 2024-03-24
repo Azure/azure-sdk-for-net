@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(AddressSpace))
             {
                 writer.WritePropertyName("addressSpace"u8);
-                writer.WriteObjectValue(AddressSpace);
+                writer.WriteObjectValue<AddressSpace>(AddressSpace, options);
             }
             if (Optional.IsDefined(DhcpOptions))
             {
                 writer.WritePropertyName("dhcpOptions"u8);
-                writer.WriteObjectValue(DhcpOptions);
+                writer.WriteObjectValue<DhcpOptions>(DhcpOptions, options);
             }
             if (Optional.IsDefined(FlowTimeoutInMinutes))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Subnets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SubnetData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkPeerings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VirtualNetworkPeeringData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -134,12 +134,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(BgpCommunities))
             {
                 writer.WritePropertyName("bgpCommunities"u8);
-                writer.WriteObjectValue(BgpCommunities);
+                writer.WriteObjectValue<VirtualNetworkBgpCommunities>(BgpCommunities, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<VirtualNetworkEncryption>(Encryption, options);
             }
             if (Optional.IsCollectionDefined(IPAllocations))
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in FlowLogs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FlowLogData>(item, options);
                 }
                 writer.WriteEndArray();
             }

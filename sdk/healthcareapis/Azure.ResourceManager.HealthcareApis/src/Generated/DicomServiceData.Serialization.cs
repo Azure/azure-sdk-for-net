@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.HealthcareApis
             if (Optional.IsDefined(AuthenticationConfiguration))
             {
                 writer.WritePropertyName("authenticationConfiguration"u8);
-                writer.WriteObjectValue(AuthenticationConfiguration);
+                writer.WriteObjectValue<DicomServiceAuthenticationConfiguration>(AuthenticationConfiguration, options);
             }
             if (Optional.IsDefined(CorsConfiguration))
             {
                 writer.WritePropertyName("corsConfiguration"u8);
-                writer.WriteObjectValue(CorsConfiguration);
+                writer.WriteObjectValue<DicomServiceCorsConfiguration>(CorsConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ServiceUri))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HealthcareApisPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.HealthcareApis
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<Encryption>(Encryption, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

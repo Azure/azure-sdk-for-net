@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.LabServices.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                writer.WriteObjectValue<LabServicesUsageName>(Name, options);
             }
             if (Optional.IsDefined(Id))
             {

@@ -37,29 +37,29 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 writer.WriteStartArray();
                 foreach (var item in AccessPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HealthcareApisServiceAccessPolicyEntry>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(CosmosDbConfiguration))
             {
                 writer.WritePropertyName("cosmosDbConfiguration"u8);
-                writer.WriteObjectValue(CosmosDbConfiguration);
+                writer.WriteObjectValue<HealthcareApisServiceCosmosDbConfiguration>(CosmosDbConfiguration, options);
             }
             if (Optional.IsDefined(AuthenticationConfiguration))
             {
                 writer.WritePropertyName("authenticationConfiguration"u8);
-                writer.WriteObjectValue(AuthenticationConfiguration);
+                writer.WriteObjectValue<HealthcareApisServiceAuthenticationConfiguration>(AuthenticationConfiguration, options);
             }
             if (Optional.IsDefined(CorsConfiguration))
             {
                 writer.WritePropertyName("corsConfiguration"u8);
-                writer.WriteObjectValue(CorsConfiguration);
+                writer.WriteObjectValue<HealthcareApisServiceCorsConfiguration>(CorsConfiguration, options);
             }
             if (Optional.IsDefined(ExportConfiguration))
             {
                 writer.WritePropertyName("exportConfiguration"u8);
-                writer.WriteObjectValue(ExportConfiguration);
+                writer.WriteObjectValue<ServiceExportConfigurationInfo>(ExportConfiguration, options);
             }
             if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HealthcareApisPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             if (Optional.IsDefined(AcrConfiguration))
             {
                 writer.WritePropertyName("acrConfiguration"u8);
-                writer.WriteObjectValue(AcrConfiguration);
+                writer.WriteObjectValue<HealthcareApisServiceAcrConfiguration>(AcrConfiguration, options);
             }
             if (Optional.IsDefined(ImportConfiguration))
             {
                 writer.WritePropertyName("importConfiguration"u8);
-                writer.WriteObjectValue(ImportConfiguration);
+                writer.WriteObjectValue<HealthcareApisServiceImportConfiguration>(ImportConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(IrDetails))
             {
                 writer.WritePropertyName("irDetails"u8);
-                writer.WriteObjectValue(IrDetails);
+                writer.WriteObjectValue<InMageRcmSyncDetails>(IrDetails, options);
             }
             if (Optional.IsDefined(ResyncDetails))
             {
                 writer.WritePropertyName("resyncDetails"u8);
-                writer.WriteObjectValue(ResyncDetails);
+                writer.WriteObjectValue<InMageRcmSyncDetails>(ResyncDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

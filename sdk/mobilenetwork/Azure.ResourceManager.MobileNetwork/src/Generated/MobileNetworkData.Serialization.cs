@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MobileNetwork
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue<MobileNetworkManagedServiceIdentity>(Identity, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -74,14 +74,14 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("publicLandMobileNetworkIdentifier"u8);
-            writer.WriteObjectValue(PublicLandMobileNetworkIdentifier);
+            writer.WriteObjectValue<MobileNetworkPlmnId>(PublicLandMobileNetworkIdentifier, options);
             if (Optional.IsCollectionDefined(PublicLandMobileNetworks))
             {
                 writer.WritePropertyName("publicLandMobileNetworks"u8);
                 writer.WriteStartArray();
                 foreach (var item in PublicLandMobileNetworks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PublicLandMobileNetwork>(item, options);
                 }
                 writer.WriteEndArray();
             }

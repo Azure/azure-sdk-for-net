@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedProviders)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VirtualWanSecurityProvider>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Analysis.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<AnalysisResourceSku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Analysis.Models
             if (Optional.IsDefined(AsAdministrators))
             {
                 writer.WritePropertyName("asAdministrators"u8);
-                writer.WriteObjectValue(AsAdministrators);
+                writer.WriteObjectValue<ServerAdministrators>(AsAdministrators, options);
             }
             if (Optional.IsDefined(BackupBlobContainerUri))
             {
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.Analysis.Models
             if (Optional.IsDefined(GatewayDetails))
             {
                 writer.WritePropertyName("gatewayDetails"u8);
-                writer.WriteObjectValue(GatewayDetails);
+                writer.WriteObjectValue<AnalysisGatewayDetails>(GatewayDetails, options);
             }
             if (Optional.IsDefined(IPV4FirewallSettings))
             {
                 writer.WritePropertyName("ipV4FirewallSettings"u8);
-                writer.WriteObjectValue(IPV4FirewallSettings);
+                writer.WriteObjectValue<AnalysisIPv4FirewallSettings>(IPV4FirewallSettings, options);
             }
             if (Optional.IsDefined(QuerypoolConnectionMode))
             {

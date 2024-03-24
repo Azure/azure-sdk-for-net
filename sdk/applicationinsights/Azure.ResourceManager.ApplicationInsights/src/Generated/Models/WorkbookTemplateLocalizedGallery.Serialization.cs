@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Galleries)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WorkbookTemplateGallery>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in HyperVHosts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HyperVHostDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }

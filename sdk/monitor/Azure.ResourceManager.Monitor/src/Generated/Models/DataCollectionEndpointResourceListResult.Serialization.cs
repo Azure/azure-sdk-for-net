@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DataCollectionEndpointData>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))

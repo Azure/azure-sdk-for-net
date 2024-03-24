@@ -27,23 +27,23 @@ namespace Azure.Health.Insights.RadiologyInsights
 
             writer.WriteStartObject();
             writer.WritePropertyName("modality"u8);
-            writer.WriteObjectValue(Modality);
+            writer.WriteObjectValue<FhirR4CodeableConcept>(Modality, options);
             writer.WritePropertyName("anatomy"u8);
-            writer.WriteObjectValue(Anatomy);
+            writer.WriteObjectValue<FhirR4CodeableConcept>(Anatomy, options);
             if (Optional.IsDefined(Laterality))
             {
                 writer.WritePropertyName("laterality"u8);
-                writer.WriteObjectValue(Laterality);
+                writer.WriteObjectValue<FhirR4CodeableConcept>(Laterality, options);
             }
             if (Optional.IsDefined(Contrast))
             {
                 writer.WritePropertyName("contrast"u8);
-                writer.WriteObjectValue(Contrast);
+                writer.WriteObjectValue<RadiologyCodeWithTypes>(Contrast, options);
             }
             if (Optional.IsDefined(View))
             {
                 writer.WritePropertyName("view"u8);
-                writer.WriteObjectValue(View);
+                writer.WriteObjectValue<RadiologyCodeWithTypes>(View, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -187,7 +187,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ImagingProcedure>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

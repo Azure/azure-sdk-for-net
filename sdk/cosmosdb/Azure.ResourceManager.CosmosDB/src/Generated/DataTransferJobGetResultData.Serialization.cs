@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.CosmosDB
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                writer.WriteObjectValue<DataTransferDataSourceSink>(Source, options);
             }
             if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination);
+                writer.WriteObjectValue<DataTransferDataSourceSink>(Destination, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CosmosDB
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<ErrorResponse>(Error, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Duration))
             {

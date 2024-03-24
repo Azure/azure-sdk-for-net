@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (options.Format != "W" && Optional.IsDefined(PolicyDetails))
             {
                 writer.WritePropertyName("policyDetails"u8);
-                writer.WriteObjectValue(PolicyDetails);
+                writer.WriteObjectValue<PolicyDetails>(PolicyDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
-                writer.WriteObjectValue(CreatedBy);
+                writer.WriteObjectValue<TrackedResourceModificationDetails>(CreatedBy, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
-                writer.WriteObjectValue(LastModifiedBy);
+                writer.WriteObjectValue<TrackedResourceModificationDetails>(LastModifiedBy, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastUpdateOn))
             {

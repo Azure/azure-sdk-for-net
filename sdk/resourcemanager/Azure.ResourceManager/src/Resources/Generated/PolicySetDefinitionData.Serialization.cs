@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Resources
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ArmPolicyParameter>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in PolicyDefinitions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PolicyDefinitionReference>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in PolicyDefinitionGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PolicyDefinitionGroup>(item, options);
                 }
                 writer.WriteEndArray();
             }

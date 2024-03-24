@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SecurityInsightsAutomationRuleData>(item, options);
                 }
                 writer.WriteEndArray();
             }

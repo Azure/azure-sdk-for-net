@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 if (KeyVaultProperties != null)
                 {
                     writer.WritePropertyName("keyVaultProperties"u8);
-                    writer.WriteObjectValue(KeyVaultProperties);
+                    writer.WriteObjectValue<AppConfigurationKeyVaultProperties>(KeyVaultProperties, options);
                 }
                 else
                 {

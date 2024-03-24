@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(ServiceSpecification))
             {
                 writer.WritePropertyName("serviceSpecification"u8);
-                writer.WriteObjectValue(ServiceSpecification);
+                writer.WriteObjectValue<ServiceSpecification>(ServiceSpecification, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

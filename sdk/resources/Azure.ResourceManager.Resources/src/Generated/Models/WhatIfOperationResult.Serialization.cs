@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Changes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WhatIfChange>(item, options);
                 }
                 writer.WriteEndArray();
             }

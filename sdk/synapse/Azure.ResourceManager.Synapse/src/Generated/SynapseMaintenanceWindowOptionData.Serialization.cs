@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Synapse
                 writer.WriteStartArray();
                 foreach (var item in MaintenanceWindowCycles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SynapseMaintenanceWindowTimeRange>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(ScheduleAvailabilityRequest))
             {
                 writer.WritePropertyName("scheduleAvailabilityRequest"u8);
-                writer.WriteObjectValue(ScheduleAvailabilityRequest);
+                writer.WriteObjectValue<ScheduleAvailabilityContent>(ScheduleAvailabilityRequest, options);
             }
             if (Optional.IsDefined(TransportAvailabilityRequest))
             {
                 writer.WritePropertyName("transportAvailabilityRequest"u8);
-                writer.WriteObjectValue(TransportAvailabilityRequest);
+                writer.WriteObjectValue<TransportAvailabilityRequest>(TransportAvailabilityRequest, options);
             }
             if (Optional.IsDefined(DataCenterAddressRequest))
             {
                 writer.WritePropertyName("datacenterAddressRequest"u8);
-                writer.WriteObjectValue(DataCenterAddressRequest);
+                writer.WriteObjectValue<DataCenterAddressContent>(DataCenterAddressRequest, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Logic.Models
                 foreach (var item in AccessPolicies)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<OpenAuthenticationAccessPolicy>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

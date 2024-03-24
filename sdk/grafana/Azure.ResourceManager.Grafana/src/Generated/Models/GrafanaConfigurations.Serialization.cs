@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Grafana.Models
             if (Optional.IsDefined(Smtp))
             {
                 writer.WritePropertyName("smtp"u8);
-                writer.WriteObjectValue(Smtp);
+                writer.WriteObjectValue<Smtp>(Smtp, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

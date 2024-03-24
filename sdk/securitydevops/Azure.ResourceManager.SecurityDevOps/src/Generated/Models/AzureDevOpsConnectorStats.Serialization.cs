@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<AzureDevOpsConnectorStatsProperties>(Properties, options);
             }
             if (options.Format != "W")
             {

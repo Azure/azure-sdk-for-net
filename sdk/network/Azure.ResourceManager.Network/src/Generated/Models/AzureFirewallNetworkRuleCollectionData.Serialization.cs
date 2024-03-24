@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteObjectValue(Action);
+                writer.WriteObjectValue<AzureFirewallRCAction>(Action, options);
             }
             if (Optional.IsCollectionDefined(Rules))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AzureFirewallNetworkRule>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(UefiSettings))
             {
                 writer.WritePropertyName("uefiSettings"u8);
-                writer.WriteObjectValue(UefiSettings);
+                writer.WriteObjectValue<UefiSettings>(UefiSettings, options);
             }
             if (Optional.IsDefined(EncryptionAtHost))
             {
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(EncryptionIdentity))
             {
                 writer.WritePropertyName("encryptionIdentity"u8);
-                writer.WriteObjectValue(EncryptionIdentity);
+                writer.WriteObjectValue<EncryptionIdentity>(EncryptionIdentity, options);
             }
             if (Optional.IsDefined(ProxyAgentSettings))
             {
                 writer.WritePropertyName("proxyAgentSettings"u8);
-                writer.WriteObjectValue(ProxyAgentSettings);
+                writer.WriteObjectValue<ProxyAgentSettings>(ProxyAgentSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

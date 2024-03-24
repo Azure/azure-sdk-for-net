@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ClusterPoolAvailableUpgrade>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))

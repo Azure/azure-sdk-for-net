@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(BlobFileSystemConfiguration))
             {
                 writer.WritePropertyName("azureBlobFileSystemConfiguration"u8);
-                writer.WriteObjectValue(BlobFileSystemConfiguration);
+                writer.WriteObjectValue<BatchBlobFileSystemConfiguration>(BlobFileSystemConfiguration, options);
             }
             if (Optional.IsDefined(NfsMountConfiguration))
             {
                 writer.WritePropertyName("nfsMountConfiguration"u8);
-                writer.WriteObjectValue(NfsMountConfiguration);
+                writer.WriteObjectValue<BatchNfsMountConfiguration>(NfsMountConfiguration, options);
             }
             if (Optional.IsDefined(CifsMountConfiguration))
             {
                 writer.WritePropertyName("cifsMountConfiguration"u8);
-                writer.WriteObjectValue(CifsMountConfiguration);
+                writer.WriteObjectValue<BatchCifsMountConfiguration>(CifsMountConfiguration, options);
             }
             if (Optional.IsDefined(FileShareConfiguration))
             {
                 writer.WritePropertyName("azureFileShareConfiguration"u8);
-                writer.WriteObjectValue(FileShareConfiguration);
+                writer.WriteObjectValue<BatchFileShareConfiguration>(FileShareConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

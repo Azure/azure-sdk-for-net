@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in ThresholdRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ThresholdCustomAlertRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in TimeWindowRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TimeWindowCustomAlertRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in AllowlistRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AllowlistCustomAlertRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in DenylistRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DenylistCustomAlertRule>(item, options);
                 }
                 writer.WriteEndArray();
             }

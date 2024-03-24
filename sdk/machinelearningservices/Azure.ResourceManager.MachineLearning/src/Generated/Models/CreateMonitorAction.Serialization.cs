@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("monitorDefinition"u8);
-            writer.WriteObjectValue(MonitorDefinition);
+            writer.WriteObjectValue<MonitorDefinition>(MonitorDefinition, options);
             writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)

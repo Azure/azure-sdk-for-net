@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in BgpCommunities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BgpCommunity>(item, options);
                 }
                 writer.WriteEndArray();
             }
