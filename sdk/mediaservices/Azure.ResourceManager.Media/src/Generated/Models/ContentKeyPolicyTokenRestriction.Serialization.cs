@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Media.Models
             if (PrimaryVerificationKey != null)
             {
                 writer.WritePropertyName("primaryVerificationKey"u8);
-                writer.WriteObjectValue(PrimaryVerificationKey);
+                writer.WriteObjectValue<ContentKeyPolicyRestrictionTokenKey>(PrimaryVerificationKey, options);
             }
             else
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in AlternateVerificationKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContentKeyPolicyRestrictionTokenKey>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in RequiredClaims)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContentKeyPolicyTokenClaim>(item, options);
                 }
                 writer.WriteEndArray();
             }

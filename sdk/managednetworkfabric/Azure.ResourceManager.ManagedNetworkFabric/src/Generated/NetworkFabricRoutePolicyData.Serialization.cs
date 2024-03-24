@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStartArray();
                 foreach (var item in Statements)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RoutePolicyStatementProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }

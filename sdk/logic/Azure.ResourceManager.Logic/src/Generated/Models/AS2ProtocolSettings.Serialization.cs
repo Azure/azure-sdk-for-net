@@ -27,19 +27,19 @@ namespace Azure.ResourceManager.Logic.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("messageConnectionSettings"u8);
-            writer.WriteObjectValue(MessageConnectionSettings);
+            writer.WriteObjectValue<AS2MessageConnectionSettings>(MessageConnectionSettings, options);
             writer.WritePropertyName("acknowledgementConnectionSettings"u8);
-            writer.WriteObjectValue(AcknowledgementConnectionSettings);
+            writer.WriteObjectValue<AS2AcknowledgementConnectionSettings>(AcknowledgementConnectionSettings, options);
             writer.WritePropertyName("mdnSettings"u8);
-            writer.WriteObjectValue(MdnSettings);
+            writer.WriteObjectValue<AS2MdnSettings>(MdnSettings, options);
             writer.WritePropertyName("securitySettings"u8);
-            writer.WriteObjectValue(SecuritySettings);
+            writer.WriteObjectValue<AS2SecuritySettings>(SecuritySettings, options);
             writer.WritePropertyName("validationSettings"u8);
-            writer.WriteObjectValue(ValidationSettings);
+            writer.WriteObjectValue<AS2ValidationSettings>(ValidationSettings, options);
             writer.WritePropertyName("envelopeSettings"u8);
-            writer.WriteObjectValue(EnvelopeSettings);
+            writer.WriteObjectValue<AS2EnvelopeSettings>(EnvelopeSettings, options);
             writer.WritePropertyName("errorSettings"u8);
-            writer.WriteObjectValue(ErrorSettings);
+            writer.WriteObjectValue<AS2ErrorSettings>(ErrorSettings, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

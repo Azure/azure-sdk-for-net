@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SbomComponentResult>(item, options);
                 }
                 writer.WriteEndArray();
             }

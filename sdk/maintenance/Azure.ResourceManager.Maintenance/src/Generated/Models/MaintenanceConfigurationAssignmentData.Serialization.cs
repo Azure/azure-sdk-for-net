@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                writer.WriteObjectValue<MaintenanceConfigurationAssignmentFilter>(Filter, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

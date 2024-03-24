@@ -21,7 +21,7 @@ namespace Azure.Maps.Search.Models
             writer.WriteStartArray();
             foreach (var item in Geometries)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<GeoJsonGeometry>(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("type"u8);

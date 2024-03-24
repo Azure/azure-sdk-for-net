@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStartArray();
                 foreach (var item in IPCommunityRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IPCommunityRule>(item, options);
                 }
                 writer.WriteEndArray();
             }

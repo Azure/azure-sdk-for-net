@@ -128,7 +128,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<UnknownProcedureRecommendation>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

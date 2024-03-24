@@ -40,20 +40,20 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
-                writer.WriteObjectValue(Filters);
+                writer.WriteObjectValue<FilteringOperations>(Filters, options);
             }
             writer.WritePropertyName("codecs"u8);
             writer.WriteStartArray();
             foreach (var item in Codecs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MediaCodecBase>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("formats"u8);
             writer.WriteStartArray();
             foreach (var item in Formats)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MediaFormatBase>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("@odata.type"u8);

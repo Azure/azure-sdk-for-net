@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (options.Format != "W" && Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics);
+                writer.WriteObjectValue<DatabaseStatistics>(Statistics, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LeaderClusterResourceId))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (options.Format != "W" && Optional.IsDefined(TableLevelSharingProperties))
             {
                 writer.WritePropertyName("tableLevelSharingProperties"u8);
-                writer.WriteObjectValue(TableLevelSharingProperties);
+                writer.WriteObjectValue<KustoDatabaseTableLevelSharingProperties>(TableLevelSharingProperties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OriginalDatabaseName))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (options.Format != "W" && Optional.IsDefined(SuspensionDetails))
             {
                 writer.WritePropertyName("suspensionDetails"u8);
-                writer.WriteObjectValue(SuspensionDetails);
+                writer.WriteObjectValue<SuspensionDetails>(SuspensionDetails, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

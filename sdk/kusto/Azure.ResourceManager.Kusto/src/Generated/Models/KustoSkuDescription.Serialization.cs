@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStartArray();
                 foreach (var item in LocationInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KustoSkuLocationInfoItem>(item, options);
                 }
                 writer.WriteEndArray();
             }

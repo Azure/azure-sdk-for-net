@@ -27,14 +27,14 @@ namespace Azure.Health.Insights.RadiologyInsights
 
             writer.WriteStartObject();
             writer.WritePropertyName("orderType"u8);
-            writer.WriteObjectValue(OrderType);
+            writer.WriteObjectValue<FhirR4CodeableConcept>(OrderType, options);
             if (Optional.IsCollectionDefined(PresentBodyParts))
             {
                 writer.WritePropertyName("presentBodyParts"u8);
                 writer.WriteStartArray();
                 foreach (var item in PresentBodyParts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FhirR4CodeableConcept>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -44,7 +44,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in PresentBodyPartMeasurements)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FhirR4CodeableConcept>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -56,7 +56,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Extension)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FhirR4Extension>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -217,7 +217,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<LimitedOrderDiscrepancyInference>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

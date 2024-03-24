@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Defaults != null)
                 {
                     writer.WritePropertyName("defaults"u8);
-                    writer.WriteObjectValue(Defaults);
+                    writer.WriteObjectValue<BatchEndpointDefaults>(Defaults, options);
                 }
                 else
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Keys != null)
                 {
                     writer.WritePropertyName("keys"u8);
-                    writer.WriteObjectValue(Keys);
+                    writer.WriteObjectValue<MachineLearningEndpointAuthKeys>(Keys, options);
                 }
                 else
                 {

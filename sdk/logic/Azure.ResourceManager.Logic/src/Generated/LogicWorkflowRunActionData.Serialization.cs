@@ -90,17 +90,17 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(Correlation))
             {
                 writer.WritePropertyName("correlation"u8);
-                writer.WriteObjectValue(Correlation);
+                writer.WriteObjectValue<LogicWorkflowRunActionCorrelation>(Correlation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(InputsLink))
             {
                 writer.WritePropertyName("inputsLink"u8);
-                writer.WriteObjectValue(InputsLink);
+                writer.WriteObjectValue<LogicContentLink>(InputsLink, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OutputsLink))
             {
                 writer.WritePropertyName("outputsLink"u8);
-                writer.WriteObjectValue(OutputsLink);
+                writer.WriteObjectValue<LogicContentLink>(OutputsLink, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TrackedProperties))
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Logic
                 writer.WriteStartArray();
                 foreach (var item in RetryHistory)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LogicWorkRetryHistory>(item, options);
                 }
                 writer.WriteEndArray();
             }
