@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Analysis.Models
             writer.WriteStartArray();
             foreach (var item in AnalysisResources)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<AnalysisServerData>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

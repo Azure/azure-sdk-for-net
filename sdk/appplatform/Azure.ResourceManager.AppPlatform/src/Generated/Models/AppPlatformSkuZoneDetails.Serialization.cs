@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AppPlatformSkuCapabilities>(item, options);
                 }
                 writer.WriteEndArray();
             }

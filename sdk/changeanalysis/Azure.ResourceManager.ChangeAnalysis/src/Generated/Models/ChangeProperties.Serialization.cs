@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 writer.WriteStartArray();
                 foreach (var item in PropertyChanges)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PropertyChange>(item, options);
                 }
                 writer.WriteEndArray();
             }

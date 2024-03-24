@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CommitmentTier>(item, options);
                 }
                 writer.WriteEndArray();
             }

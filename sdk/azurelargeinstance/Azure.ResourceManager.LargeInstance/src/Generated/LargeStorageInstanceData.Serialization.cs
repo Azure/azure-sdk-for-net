@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.LargeInstance
             if (Optional.IsDefined(StorageProperties))
             {
                 writer.WritePropertyName("storageProperties"u8);
-                writer.WriteObjectValue(StorageProperties);
+                writer.WriteObjectValue<LargeInstanceStorageProperties>(StorageProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

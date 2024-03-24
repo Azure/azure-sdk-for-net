@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<CognitiveServicesPrivateLinkResourceProperties>(Properties, options);
             }
             if (options.Format != "W")
             {

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity);
+                writer.WriteObjectValue<AppPlatformSkuCapacity>(Capacity, options);
             }
             if (Optional.IsCollectionDefined(Locations))
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in LocationInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AppPlatformSkuLocationInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Restrictions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AppPlatformSkuRestrictions>(item, options);
                 }
                 writer.WriteEndArray();
             }

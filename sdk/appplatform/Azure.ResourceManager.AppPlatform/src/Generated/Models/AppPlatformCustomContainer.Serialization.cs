@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(ImageRegistryCredential))
             {
                 writer.WritePropertyName("imageRegistryCredential"u8);
-                writer.WriteObjectValue(ImageRegistryCredential);
+                writer.WriteObjectValue<AppPlatformImageRegistryCredential>(ImageRegistryCredential, options);
             }
             if (Optional.IsDefined(LanguageFramework))
             {

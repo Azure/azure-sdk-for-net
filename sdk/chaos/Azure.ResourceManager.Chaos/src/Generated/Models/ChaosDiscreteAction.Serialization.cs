@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Chaos.Models
             writer.WriteStartArray();
             foreach (var item in Parameters)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ChaosKeyValuePair>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("selectorId"u8);

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in GitReposValidationResult)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AppPlatformConfigurationServiceGitReposValidationMessages>(item, options);
                 }
                 writer.WriteEndArray();
             }

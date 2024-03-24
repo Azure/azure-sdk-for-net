@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(ResourceRequests))
             {
                 writer.WritePropertyName("resourceRequests"u8);
-                writer.WriteObjectValue(ResourceRequests);
+                writer.WriteObjectValue<AppPlatformDeploymentResourceRequirements>(ResourceRequests, options);
             }
             if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(LivenessProbe))
             {
                 writer.WritePropertyName("livenessProbe"u8);
-                writer.WriteObjectValue(LivenessProbe);
+                writer.WriteObjectValue<AppInstanceProbe>(LivenessProbe, options);
             }
             if (Optional.IsDefined(ReadinessProbe))
             {
                 writer.WritePropertyName("readinessProbe"u8);
-                writer.WriteObjectValue(ReadinessProbe);
+                writer.WriteObjectValue<AppInstanceProbe>(ReadinessProbe, options);
             }
             if (Optional.IsDefined(StartupProbe))
             {
                 writer.WritePropertyName("startupProbe"u8);
-                writer.WriteObjectValue(StartupProbe);
+                writer.WriteObjectValue<AppInstanceProbe>(StartupProbe, options);
             }
             if (Optional.IsDefined(TerminationGracePeriodInSeconds))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(ContainerProbeSettings))
             {
                 writer.WritePropertyName("containerProbeSettings"u8);
-                writer.WriteObjectValue(ContainerProbeSettings);
+                writer.WriteObjectValue<ContainerProbeSettings>(ContainerProbeSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

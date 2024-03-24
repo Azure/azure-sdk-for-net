@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Authorization
                 writer.WriteStartArray();
                 foreach (var item in Permissions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DenyAssignmentPermission>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Authorization
                 writer.WriteStartArray();
                 foreach (var item in Principals)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RoleManagementPrincipal>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Authorization
                 writer.WriteStartArray();
                 foreach (var item in ExcludePrincipals)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RoleManagementPrincipal>(item, options);
                 }
                 writer.WriteEndArray();
             }
