@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class MongoDBCollectionResourceInfo : IUtf8JsonSerializable
+    public partial class MongoDBCollectionResourceInfo : IUtf8JsonSerializable, IJsonModel<MongoDBCollectionResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBCollectionResourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MongoDBCollectionResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBCollectionResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MongoDBCollectionResourceInfo)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(CollectionName);
@@ -44,19 +54,62 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("analyticalStorageTtl"u8);
                 writer.WriteNumberValue(AnalyticalStorageTtl.Value);
             }
+            if (Optional.IsDefined(RestoreParameters))
+            {
+                writer.WritePropertyName("restoreParameters"u8);
+                writer.WriteObjectValue(RestoreParameters);
+            }
+            if (Optional.IsDefined(CreateMode))
+            {
+                writer.WritePropertyName("createMode"u8);
+                writer.WriteStringValue(CreateMode.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MongoDBCollectionResourceInfo DeserializeMongoDBCollectionResourceInfo(JsonElement element)
+        MongoDBCollectionResourceInfo IJsonModel<MongoDBCollectionResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBCollectionResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MongoDBCollectionResourceInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMongoDBCollectionResourceInfo(document.RootElement, options);
+        }
+
+        internal static MongoDBCollectionResourceInfo DeserializeMongoDBCollectionResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string id = default;
-            Optional<IDictionary<string, string>> shardKey = default;
-            Optional<IList<MongoDBIndex>> indexes = default;
-            Optional<int> analyticalStorageTtl = default;
+            IDictionary<string, string> shardKey = default;
+            IList<MongoDBIndex> indexes = default;
+            int? analyticalStorageTtl = default;
+            ResourceRestoreParameters restoreParameters = default;
+            CosmosDBAccountCreateMode? createMode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -68,7 +121,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -83,13 +135,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MongoDBIndex> array = new List<MongoDBIndex>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MongoDBIndex.DeserializeMongoDBIndex(item));
+                        array.Add(MongoDBIndex.DeserializeMongoDBIndex(item, options));
                     }
                     indexes = array;
                     continue;
@@ -98,14 +149,74 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     analyticalStorageTtl = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("restoreParameters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    restoreParameters = ResourceRestoreParameters.DeserializeResourceRestoreParameters(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("createMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createMode = new CosmosDBAccountCreateMode(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MongoDBCollectionResourceInfo(id, Optional.ToDictionary(shardKey), Optional.ToList(indexes), Optional.ToNullable(analyticalStorageTtl));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MongoDBCollectionResourceInfo(
+                id,
+                shardKey ?? new ChangeTrackingDictionary<string, string>(),
+                indexes ?? new ChangeTrackingList<MongoDBIndex>(),
+                analyticalStorageTtl,
+                restoreParameters,
+                createMode,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MongoDBCollectionResourceInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBCollectionResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MongoDBCollectionResourceInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MongoDBCollectionResourceInfo IPersistableModel<MongoDBCollectionResourceInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBCollectionResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMongoDBCollectionResourceInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MongoDBCollectionResourceInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MongoDBCollectionResourceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

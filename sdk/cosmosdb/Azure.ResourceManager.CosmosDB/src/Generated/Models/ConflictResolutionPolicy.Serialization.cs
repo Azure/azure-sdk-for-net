@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ConflictResolutionPolicy : IUtf8JsonSerializable
+    public partial class ConflictResolutionPolicy : IUtf8JsonSerializable, IJsonModel<ConflictResolutionPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConflictResolutionPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConflictResolutionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConflictResolutionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConflictResolutionPolicy)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Mode))
             {
@@ -30,25 +41,55 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("conflictResolutionProcedure"u8);
                 writer.WriteStringValue(ConflictResolutionProcedure);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConflictResolutionPolicy DeserializeConflictResolutionPolicy(JsonElement element)
+        ConflictResolutionPolicy IJsonModel<ConflictResolutionPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConflictResolutionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConflictResolutionPolicy)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConflictResolutionPolicy(document.RootElement, options);
+        }
+
+        internal static ConflictResolutionPolicy DeserializeConflictResolutionPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ConflictResolutionMode> mode = default;
-            Optional<string> conflictResolutionPath = default;
-            Optional<string> conflictResolutionProcedure = default;
+            ConflictResolutionMode? mode = default;
+            string conflictResolutionPath = default;
+            string conflictResolutionProcedure = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mode = new ConflictResolutionMode(property.Value.GetString());
@@ -64,8 +105,44 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     conflictResolutionProcedure = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConflictResolutionPolicy(Optional.ToNullable(mode), conflictResolutionPath.Value, conflictResolutionProcedure.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConflictResolutionPolicy(mode, conflictResolutionPath, conflictResolutionProcedure, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConflictResolutionPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConflictResolutionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConflictResolutionPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConflictResolutionPolicy IPersistableModel<ConflictResolutionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConflictResolutionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConflictResolutionPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConflictResolutionPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConflictResolutionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

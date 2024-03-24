@@ -5,28 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBTableResourceInfo : IUtf8JsonSerializable
+    public partial class CosmosDBTableResourceInfo : IUtf8JsonSerializable, IJsonModel<CosmosDBTableResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBTableResourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CosmosDBTableResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBTableResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CosmosDBTableResourceInfo)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(TableName);
+            if (Optional.IsDefined(RestoreParameters))
+            {
+                writer.WritePropertyName("restoreParameters"u8);
+                writer.WriteObjectValue(RestoreParameters);
+            }
+            if (Optional.IsDefined(CreateMode))
+            {
+                writer.WritePropertyName("createMode"u8);
+                writer.WriteStringValue(CreateMode.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CosmosDBTableResourceInfo DeserializeCosmosDBTableResourceInfo(JsonElement element)
+        CosmosDBTableResourceInfo IJsonModel<CosmosDBTableResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBTableResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CosmosDBTableResourceInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDBTableResourceInfo(document.RootElement, options);
+        }
+
+        internal static CosmosDBTableResourceInfo DeserializeCosmosDBTableResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string id = default;
+            ResourceRestoreParameters restoreParameters = default;
+            CosmosDBAccountCreateMode? createMode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -34,8 +88,62 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     id = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("restoreParameters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    restoreParameters = ResourceRestoreParameters.DeserializeResourceRestoreParameters(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("createMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createMode = new CosmosDBAccountCreateMode(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CosmosDBTableResourceInfo(id);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CosmosDBTableResourceInfo(id, restoreParameters, createMode, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CosmosDBTableResourceInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBTableResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CosmosDBTableResourceInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CosmosDBTableResourceInfo IPersistableModel<CosmosDBTableResourceInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBTableResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCosmosDBTableResourceInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CosmosDBTableResourceInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CosmosDBTableResourceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

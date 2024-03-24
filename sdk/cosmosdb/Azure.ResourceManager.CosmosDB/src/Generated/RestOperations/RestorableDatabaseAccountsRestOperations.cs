@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.CosmosDB.Models;
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-11-15";
+            _apiVersion = apiVersion ?? "2024-02-15-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -56,7 +55,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        /// <summary> Lists all the restorable Azure Cosmos DB database accounts available under the subscription and in a region.  This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read&apos; permission. </summary>
+        /// <summary> Lists all the restorable Azure Cosmos DB database accounts available under the subscription and in a region.  This call requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read' permission. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Lists all the restorable Azure Cosmos DB database accounts available under the subscription and in a region.  This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read&apos; permission. </summary>
+        /// <summary> Lists all the restorable Azure Cosmos DB database accounts available under the subscription and in a region.  This call requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read' permission. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        /// <summary> Lists all the restorable Azure Cosmos DB database accounts available under the subscription. This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read&apos; permission. </summary>
+        /// <summary> Lists all the restorable Azure Cosmos DB database accounts available under the subscription. This call requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read' permission. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -150,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Lists all the restorable Azure Cosmos DB database accounts available under the subscription. This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read&apos; permission. </summary>
+        /// <summary> Lists all the restorable Azure Cosmos DB database accounts available under the subscription. This call requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read' permission. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -195,7 +194,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        /// <summary> Retrieves the properties of an existing Azure Cosmos DB restorable database account.  This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*&apos; permission. </summary>
+        /// <summary> Retrieves the properties of an existing Azure Cosmos DB restorable database account.  This call requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*' permission. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
@@ -224,7 +223,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Retrieves the properties of an existing Azure Cosmos DB restorable database account.  This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*&apos; permission. </summary>
+        /// <summary> Retrieves the properties of an existing Azure Cosmos DB restorable database account.  This call requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*' permission. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,25 +14,59 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The definition of a metric. </summary>
     public partial class CosmosDBMetricDefinition
     {
-        /// <summary> Initializes a new instance of CosmosDBMetricDefinition. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBMetricDefinition"/>. </summary>
         internal CosmosDBMetricDefinition()
         {
             MetricAvailabilities = new ChangeTrackingList<CosmosDBMetricAvailability>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBMetricDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBMetricDefinition"/>. </summary>
         /// <param name="metricAvailabilities"> The list of metric availabilities for the account. </param>
         /// <param name="primaryAggregationType"> The primary aggregation type of the metric. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="resourceId"> The resource uri of the database. </param>
         /// <param name="name"> The name information for the metric. </param>
-        internal CosmosDBMetricDefinition(IReadOnlyList<CosmosDBMetricAvailability> metricAvailabilities, CosmosDBMetricPrimaryAggregationType? primaryAggregationType, CosmosDBMetricUnitType? unit, ResourceIdentifier resourceId, CosmosDBMetricName name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBMetricDefinition(IReadOnlyList<CosmosDBMetricAvailability> metricAvailabilities, CosmosDBMetricPrimaryAggregationType? primaryAggregationType, CosmosDBMetricUnitType? unit, ResourceIdentifier resourceId, CosmosDBMetricName name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MetricAvailabilities = metricAvailabilities;
             PrimaryAggregationType = primaryAggregationType;
             Unit = unit;
             ResourceId = resourceId;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of metric availabilities for the account. </summary>

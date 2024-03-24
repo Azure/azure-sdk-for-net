@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.CosmosDB.Models;
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-11-15";
+            _apiVersion = apiVersion ?? "2024-02-15-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        /// <summary> Show the event feed of all mutations done on all the Azure Cosmos DB Tables. This helps in scenario where table was accidentally deleted. This API requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read&apos; permission. </summary>
+        /// <summary> Show the event feed of all mutations done on all the Azure Cosmos DB Tables. This helps in scenario where table was accidentally deleted. This API requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read' permission. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Show the event feed of all mutations done on all the Azure Cosmos DB Tables. This helps in scenario where table was accidentally deleted. This API requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read&apos; permission. </summary>
+        /// <summary> Show the event feed of all mutations done on all the Azure Cosmos DB Tables. This helps in scenario where table was accidentally deleted. This API requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read' permission. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>

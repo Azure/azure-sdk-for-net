@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,44 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class CosmosDBServiceData : ResourceData
     {
-        /// <summary> Initializes a new instance of CosmosDBServiceData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBServiceData"/>. </summary>
         public CosmosDBServiceData()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,9 +66,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// Please note <see cref="CosmosDBServiceProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DataTransferServiceProperties"/>, <see cref="GraphApiComputeServiceProperties"/>, <see cref="MaterializedViewsBuilderServiceProperties"/> and <see cref="SqlDedicatedGatewayServiceProperties"/>.
         /// </param>
-        internal CosmosDBServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CosmosDBServiceProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CosmosDBServiceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

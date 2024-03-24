@@ -5,41 +5,132 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    internal partial class MongoDBUserDefinitionListResult
+    internal partial class MongoDBUserDefinitionListResult : IUtf8JsonSerializable, IJsonModel<MongoDBUserDefinitionListResult>
     {
-        internal static MongoDBUserDefinitionListResult DeserializeMongoDBUserDefinitionListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBUserDefinitionListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MongoDBUserDefinitionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBUserDefinitionListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MongoDBUserDefinitionListResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MongoDBUserDefinitionListResult IJsonModel<MongoDBUserDefinitionListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBUserDefinitionListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MongoDBUserDefinitionListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMongoDBUserDefinitionListResult(document.RootElement, options);
+        }
+
+        internal static MongoDBUserDefinitionListResult DeserializeMongoDBUserDefinitionListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<MongoDBUserDefinitionData>> value = default;
+            IReadOnlyList<MongoDBUserDefinitionData> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MongoDBUserDefinitionData> array = new List<MongoDBUserDefinitionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MongoDBUserDefinitionData.DeserializeMongoDBUserDefinitionData(item));
+                        array.Add(MongoDBUserDefinitionData.DeserializeMongoDBUserDefinitionData(item, options));
                     }
                     value = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MongoDBUserDefinitionListResult(Optional.ToList(value));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MongoDBUserDefinitionListResult(value ?? new ChangeTrackingList<MongoDBUserDefinitionData>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MongoDBUserDefinitionListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBUserDefinitionListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MongoDBUserDefinitionListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MongoDBUserDefinitionListResult IPersistableModel<MongoDBUserDefinitionListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBUserDefinitionListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMongoDBUserDefinitionListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MongoDBUserDefinitionListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MongoDBUserDefinitionListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

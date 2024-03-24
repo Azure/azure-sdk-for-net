@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.CosmosDB.Models;
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-11-15";
+            _apiVersion = apiVersion ?? "2024-02-15-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -235,7 +234,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
-        /// <param name="data"> The CosmosDBPrivateEndpointConnection to use. </param>
+        /// <param name="data"> The <see cref="CosmosDBPrivateEndpointConnectionData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -264,7 +263,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
-        /// <param name="data"> The CosmosDBPrivateEndpointConnection to use. </param>
+        /// <param name="data"> The <see cref="CosmosDBPrivateEndpointConnectionData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>

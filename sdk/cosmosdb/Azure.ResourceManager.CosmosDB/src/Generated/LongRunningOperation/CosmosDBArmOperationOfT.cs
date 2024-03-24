@@ -8,10 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
@@ -31,10 +29,10 @@ namespace Azure.ResourceManager.CosmosDB
             _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
         }
 
-        internal CosmosDBArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        internal CosmosDBArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
         {
-            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
-            _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "CosmosDBArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
+            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
+            _operation = new OperationInternal<T>(nextLinkOperation, clientDiagnostics, response, "CosmosDBArmOperation", fallbackStrategy: new SequentialDelayStrategy());
         }
 
         /// <inheritdoc />

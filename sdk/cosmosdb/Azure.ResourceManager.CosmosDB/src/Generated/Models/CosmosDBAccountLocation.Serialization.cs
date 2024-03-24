@@ -5,20 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBAccountLocation : IUtf8JsonSerializable
+    public partial class CosmosDBAccountLocation : IUtf8JsonSerializable, IJsonModel<CosmosDBAccountLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBAccountLocation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CosmosDBAccountLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBAccountLocation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CosmosDBAccountLocation)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
             if (Optional.IsDefined(LocationName))
             {
                 writer.WritePropertyName("locationName"u8);
                 writer.WriteStringValue(LocationName.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DocumentEndpoint))
+            {
+                writer.WritePropertyName("documentEndpoint"u8);
+                writer.WriteStringValue(DocumentEndpoint);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
             }
             if (Optional.IsDefined(FailoverPriority))
             {
@@ -30,21 +56,52 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("isZoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CosmosDBAccountLocation DeserializeCosmosDBAccountLocation(JsonElement element)
+        CosmosDBAccountLocation IJsonModel<CosmosDBAccountLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBAccountLocation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CosmosDBAccountLocation)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDBAccountLocation(document.RootElement, options);
+        }
+
+        internal static CosmosDBAccountLocation DeserializeCosmosDBAccountLocation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<AzureLocation> locationName = default;
-            Optional<string> documentEndpoint = default;
-            Optional<string> provisioningState = default;
-            Optional<int> failoverPriority = default;
-            Optional<bool> isZoneRedundant = default;
+            string id = default;
+            AzureLocation? locationName = default;
+            string documentEndpoint = default;
+            string provisioningState = default;
+            int? failoverPriority = default;
+            bool? isZoneRedundant = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -56,7 +113,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     locationName = new AzureLocation(property.Value.GetString());
@@ -76,7 +132,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     failoverPriority = property.Value.GetInt32();
@@ -86,14 +141,56 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isZoneRedundant = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CosmosDBAccountLocation(id.Value, Optional.ToNullable(locationName), documentEndpoint.Value, provisioningState.Value, Optional.ToNullable(failoverPriority), Optional.ToNullable(isZoneRedundant));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CosmosDBAccountLocation(
+                id,
+                locationName,
+                documentEndpoint,
+                provisioningState,
+                failoverPriority,
+                isZoneRedundant,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CosmosDBAccountLocation>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBAccountLocation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CosmosDBAccountLocation)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CosmosDBAccountLocation IPersistableModel<CosmosDBAccountLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBAccountLocation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCosmosDBAccountLocation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CosmosDBAccountLocation)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CosmosDBAccountLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
