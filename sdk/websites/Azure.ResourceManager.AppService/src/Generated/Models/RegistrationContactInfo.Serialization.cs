@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(AddressMailing))
             {
                 writer.WritePropertyName("addressMailing"u8);
-                writer.WriteObjectValue(AddressMailing);
+                writer.WriteObjectValue<RegistrationAddressInfo>(AddressMailing, options);
             }
             writer.WritePropertyName("email"u8);
             writer.WriteStringValue(Email);

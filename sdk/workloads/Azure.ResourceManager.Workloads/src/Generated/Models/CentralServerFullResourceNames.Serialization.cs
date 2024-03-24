@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualMachines)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VirtualMachineResourceNames>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(LoadBalancer))
             {
                 writer.WritePropertyName("loadBalancer"u8);
-                writer.WriteObjectValue(LoadBalancer);
+                writer.WriteObjectValue<LoadBalancerResourceNames>(LoadBalancer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

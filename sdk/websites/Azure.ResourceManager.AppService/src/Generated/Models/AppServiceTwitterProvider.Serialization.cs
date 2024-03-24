@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
-                writer.WriteObjectValue(Registration);
+                writer.WriteObjectValue<TwitterRegistration>(Registration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

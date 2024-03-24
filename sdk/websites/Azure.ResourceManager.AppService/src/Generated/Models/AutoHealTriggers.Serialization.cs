@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Requests))
             {
                 writer.WritePropertyName("requests"u8);
-                writer.WriteObjectValue(Requests);
+                writer.WriteObjectValue<RequestsBasedTrigger>(Requests, options);
             }
             if (Optional.IsDefined(PrivateBytesInKB))
             {
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in StatusCodes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StatusCodesBasedTrigger>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SlowRequests))
             {
                 writer.WritePropertyName("slowRequests"u8);
-                writer.WriteObjectValue(SlowRequests);
+                writer.WriteObjectValue<SlowRequestsBasedTrigger>(SlowRequests, options);
             }
             if (Optional.IsCollectionDefined(SlowRequestsWithPath))
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in SlowRequestsWithPath)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SlowRequestsBasedTrigger>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in StatusCodesRange)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StatusCodesRangeBasedTrigger>(item, options);
                 }
                 writer.WriteEndArray();
             }

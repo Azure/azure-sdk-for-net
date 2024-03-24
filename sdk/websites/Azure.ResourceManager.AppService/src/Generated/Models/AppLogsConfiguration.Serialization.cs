@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(LogAnalyticsConfiguration))
             {
                 writer.WritePropertyName("logAnalyticsConfiguration"u8);
-                writer.WriteObjectValue(LogAnalyticsConfiguration);
+                writer.WriteObjectValue<LogAnalyticsConfiguration>(LogAnalyticsConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

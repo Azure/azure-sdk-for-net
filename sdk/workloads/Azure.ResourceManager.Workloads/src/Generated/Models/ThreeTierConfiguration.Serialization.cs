@@ -29,28 +29,28 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
-                writer.WriteObjectValue(NetworkConfiguration);
+                writer.WriteObjectValue<NetworkConfiguration>(NetworkConfiguration, options);
             }
             writer.WritePropertyName("centralServer"u8);
-            writer.WriteObjectValue(CentralServer);
+            writer.WriteObjectValue<CentralServerConfiguration>(CentralServer, options);
             writer.WritePropertyName("applicationServer"u8);
-            writer.WriteObjectValue(ApplicationServer);
+            writer.WriteObjectValue<ApplicationServerConfiguration>(ApplicationServer, options);
             writer.WritePropertyName("databaseServer"u8);
-            writer.WriteObjectValue(DatabaseServer);
+            writer.WriteObjectValue<DatabaseConfiguration>(DatabaseServer, options);
             if (Optional.IsDefined(HighAvailabilityConfig))
             {
                 writer.WritePropertyName("highAvailabilityConfig"u8);
-                writer.WriteObjectValue(HighAvailabilityConfig);
+                writer.WriteObjectValue<HighAvailabilityConfiguration>(HighAvailabilityConfig, options);
             }
             if (Optional.IsDefined(StorageConfiguration))
             {
                 writer.WritePropertyName("storageConfiguration"u8);
-                writer.WriteObjectValue(StorageConfiguration);
+                writer.WriteObjectValue<SapStorageConfiguration>(StorageConfiguration, options);
             }
             if (Optional.IsDefined(CustomResourceNames))
             {
                 writer.WritePropertyName("customResourceNames"u8);
-                writer.WriteObjectValue(CustomResourceNames);
+                writer.WriteObjectValue<ThreeTierCustomResourceNames>(CustomResourceNames, options);
             }
             writer.WritePropertyName("deploymentType"u8);
             writer.WriteStringValue(DeploymentType.ToString());

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(BuildProperties))
             {
                 writer.WritePropertyName("buildProperties"u8);
-                writer.WriteObjectValue(BuildProperties);
+                writer.WriteObjectValue<StaticSiteBuildProperties>(BuildProperties, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResponseMessageEnvelopeRemotePrivateEndpointConnection>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(TemplateProperties))
             {
                 writer.WritePropertyName("templateProperties"u8);
-                writer.WriteObjectValue(TemplateProperties);
+                writer.WriteObjectValue<StaticSiteTemplate>(TemplateProperties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ContentDistributionEndpoint))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProvidedFunctionApps)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StaticSiteUserProvidedFunctionAppData>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in Routes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AppServiceVirtualNetworkRoute>(item, options);
                 }
                 writer.WriteEndArray();
             }
