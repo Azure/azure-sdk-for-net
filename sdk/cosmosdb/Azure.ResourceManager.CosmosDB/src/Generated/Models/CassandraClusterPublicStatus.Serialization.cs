@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -41,16 +43,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("connectionErrors"u8);
                 writer.WriteStartArray();
                 foreach (var item in ConnectionErrors)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Errors))
-            {
-                writer.WritePropertyName("errors"u8);
-                writer.WriteStartArray();
-                foreach (var item in Errors)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -107,7 +99,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             ETag? eTag = default;
             CassandraReaperStatus reaperStatus = default;
             IReadOnlyList<CassandraConnectionError> connectionErrors = default;
-            IReadOnlyList<CassandraError> errors = default;
             IReadOnlyList<CassandraClusterPublicStatusDataCentersItem> dataCenters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -145,20 +136,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     connectionErrors = array;
                     continue;
                 }
-                if (property.NameEquals("errors"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<CassandraError> array = new List<CassandraError>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(CassandraError.DeserializeCassandraError(item, options));
-                    }
-                    errors = array;
-                    continue;
-                }
                 if (property.NameEquals("dataCenters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -179,13 +156,94 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraClusterPublicStatus(
-                eTag,
-                reaperStatus,
-                connectionErrors ?? new ChangeTrackingList<CassandraConnectionError>(),
-                errors ?? new ChangeTrackingList<CassandraError>(),
-                dataCenters ?? new ChangeTrackingList<CassandraClusterPublicStatusDataCentersItem>(),
-                serializedAdditionalRawData);
+            return new CassandraClusterPublicStatus(eTag, reaperStatus, connectionErrors ?? new ChangeTrackingList<CassandraConnectionError>(), dataCenters ?? new ChangeTrackingList<CassandraClusterPublicStatusDataCentersItem>(), serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
+            if (Optional.IsDefined(ETag) || hasPropertyOverride)
+            {
+                builder.Append("  eTag: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ETag.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReaperStatus), out propertyOverride);
+            if (Optional.IsDefined(ReaperStatus) || hasPropertyOverride)
+            {
+                builder.Append("  reaperStatus: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, ReaperStatus, options, 2, false, "  reaperStatus: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionErrors), out propertyOverride);
+            if (Optional.IsCollectionDefined(ConnectionErrors) || hasPropertyOverride)
+            {
+                if (ConnectionErrors.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  connectionErrors: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in ConnectionErrors)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  connectionErrors: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataCenters), out propertyOverride);
+            if (Optional.IsCollectionDefined(DataCenters) || hasPropertyOverride)
+            {
+                if (DataCenters.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  dataCenters: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in DataCenters)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  dataCenters: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<CassandraClusterPublicStatus>.Write(ModelReaderWriterOptions options)
@@ -196,6 +254,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CassandraClusterPublicStatus)} does not support writing '{options.Format}' format.");
             }

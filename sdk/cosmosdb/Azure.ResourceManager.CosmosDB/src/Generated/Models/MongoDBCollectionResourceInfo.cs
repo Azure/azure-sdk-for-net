@@ -62,17 +62,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="shardKey"> A key-value pair of shard keys to be applied for the request. </param>
         /// <param name="indexes"> List of index keys. </param>
         /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
-        /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
-        /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MongoDBCollectionResourceInfo(string collectionName, IDictionary<string, string> shardKey, IList<MongoDBIndex> indexes, int? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoDBCollectionResourceInfo(string collectionName, IDictionary<string, string> shardKey, IList<MongoDBIndex> indexes, int? analyticalStorageTtl, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CollectionName = collectionName;
             ShardKey = shardKey;
             Indexes = indexes;
             AnalyticalStorageTtl = analyticalStorageTtl;
-            RestoreParameters = restoreParameters;
-            CreateMode = createMode;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -82,16 +78,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Name of the Cosmos DB MongoDB collection. </summary>
+        [WirePath("id")]
         public string CollectionName { get; set; }
         /// <summary> A key-value pair of shard keys to be applied for the request. </summary>
+        [WirePath("shardKey")]
         public IDictionary<string, string> ShardKey { get; }
         /// <summary> List of index keys. </summary>
+        [WirePath("indexes")]
         public IList<MongoDBIndex> Indexes { get; }
         /// <summary> Analytical TTL. </summary>
+        [WirePath("analyticalStorageTtl")]
         public int? AnalyticalStorageTtl { get; set; }
-        /// <summary> Parameters to indicate the information about the restore. </summary>
-        public ResourceRestoreParameters RestoreParameters { get; set; }
-        /// <summary> Enum to indicate the mode of resource creation. </summary>
-        public CosmosDBAccountCreateMode? CreateMode { get; set; }
     }
 }

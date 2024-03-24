@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -35,16 +36,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("operationType"u8);
                 writer.WriteStringValue(OperationType.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(CanUndelete))
-            {
-                writer.WritePropertyName("canUndelete"u8);
-                writer.WriteStringValue(CanUndelete);
-            }
-            if (options.Format != "W" && Optional.IsDefined(CanUndeleteReason))
-            {
-                writer.WritePropertyName("canUndeleteReason"u8);
-                writer.WriteStringValue(CanUndeleteReason);
             }
             if (options.Format != "W" && Optional.IsDefined(EventTimestamp))
             {
@@ -101,8 +92,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             string rid = default;
             CosmosDBOperationType? operationType = default;
-            string canUndelete = default;
-            string canUndeleteReason = default;
             string eventTimestamp = default;
             string ownerId = default;
             string ownerResourceId = default;
@@ -122,16 +111,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         continue;
                     }
                     operationType = new CosmosDBOperationType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("canUndelete"u8))
-                {
-                    canUndelete = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("canUndeleteReason"u8))
-                {
-                    canUndeleteReason = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("eventTimestamp"u8))
@@ -158,12 +137,127 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new ExtendedRestorableGremlinDatabaseResourceInfo(
                 rid,
                 operationType,
-                canUndelete,
-                canUndeleteReason,
                 eventTimestamp,
                 ownerId,
                 ownerResourceId,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Rid), out propertyOverride);
+            if (Optional.IsDefined(Rid) || hasPropertyOverride)
+            {
+                builder.Append("  _rid: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Rid.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Rid}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Rid}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OperationType), out propertyOverride);
+            if (Optional.IsDefined(OperationType) || hasPropertyOverride)
+            {
+                builder.Append("  operationType: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{OperationType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EventTimestamp), out propertyOverride);
+            if (Optional.IsDefined(EventTimestamp) || hasPropertyOverride)
+            {
+                builder.Append("  eventTimestamp: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (EventTimestamp.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EventTimestamp}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EventTimestamp}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseName), out propertyOverride);
+            if (Optional.IsDefined(DatabaseName) || hasPropertyOverride)
+            {
+                builder.Append("  ownerId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DatabaseName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DatabaseName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DatabaseName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseId), out propertyOverride);
+            if (Optional.IsDefined(DatabaseId) || hasPropertyOverride)
+            {
+                builder.Append("  ownerResourceId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DatabaseId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DatabaseId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DatabaseId}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ExtendedRestorableGremlinDatabaseResourceInfo>.Write(ModelReaderWriterOptions options)
@@ -174,6 +268,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ExtendedRestorableGremlinDatabaseResourceInfo)} does not support writing '{options.Format}' format.");
             }

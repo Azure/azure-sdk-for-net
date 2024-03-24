@@ -63,10 +63,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="uniqueKeyPolicy"> The unique key policy configuration for specifying uniqueness constraints on documents in the collection in the Azure Cosmos DB service. </param>
         /// <param name="conflictResolutionPolicy"> The conflict resolution policy for the graph. </param>
         /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
-        /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
-        /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GremlinGraphResourceInfo(string graphName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, long? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GremlinGraphResourceInfo(string graphName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, long? analyticalStorageTtl, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GraphName = graphName;
             IndexingPolicy = indexingPolicy;
@@ -75,8 +73,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             UniqueKeyPolicy = uniqueKeyPolicy;
             ConflictResolutionPolicy = conflictResolutionPolicy;
             AnalyticalStorageTtl = analyticalStorageTtl;
-            RestoreParameters = restoreParameters;
-            CreateMode = createMode;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -86,16 +82,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Name of the Cosmos DB Gremlin graph. </summary>
+        [WirePath("id")]
         public string GraphName { get; set; }
         /// <summary> The configuration of the indexing policy. By default, the indexing is automatic for all document paths within the graph. </summary>
+        [WirePath("indexingPolicy")]
         public CosmosDBIndexingPolicy IndexingPolicy { get; set; }
         /// <summary> The configuration of the partition key to be used for partitioning data into multiple partitions. </summary>
+        [WirePath("partitionKey")]
         public CosmosDBContainerPartitionKey PartitionKey { get; set; }
         /// <summary> Default time to live. </summary>
+        [WirePath("defaultTtl")]
         public int? DefaultTtl { get; set; }
         /// <summary> The unique key policy configuration for specifying uniqueness constraints on documents in the collection in the Azure Cosmos DB service. </summary>
         internal CosmosDBUniqueKeyPolicy UniqueKeyPolicy { get; set; }
         /// <summary> List of unique keys on that enforces uniqueness constraint on documents in the collection in the Azure Cosmos DB service. </summary>
+        [WirePath("uniqueKeyPolicy.uniqueKeys")]
         public IList<CosmosDBUniqueKey> UniqueKeys
         {
             get
@@ -107,12 +108,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The conflict resolution policy for the graph. </summary>
+        [WirePath("conflictResolutionPolicy")]
         public ConflictResolutionPolicy ConflictResolutionPolicy { get; set; }
         /// <summary> Analytical TTL. </summary>
+        [WirePath("analyticalStorageTtl")]
         public long? AnalyticalStorageTtl { get; set; }
-        /// <summary> Parameters to indicate the information about the restore. </summary>
-        public ResourceRestoreParameters RestoreParameters { get; set; }
-        /// <summary> Enum to indicate the mode of resource creation. </summary>
-        public CosmosDBAccountCreateMode? CreateMode { get; set; }
     }
 }

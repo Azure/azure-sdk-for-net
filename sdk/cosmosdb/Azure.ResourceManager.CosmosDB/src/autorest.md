@@ -6,24 +6,19 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
 azure-arm: true
+generate-model-factory: false
 csharp: true
 library-name: CosmosDB
 namespace: Azure.ResourceManager.CosmosDB
-require: https://github.com/Azure/azure-rest-api-specs/blob/b4506c0467cf68eeb9b0e966a3db1c9bedcd84c7/specification/cosmos-db/resource-manager/readme.md
-#tag: package-preview-2024-02
+require: https://github.com/Azure/azure-rest-api-specs/blob/50e7b9b2c1527ee2342032595541b2ffd12ae10d/specification/cosmos-db/resource-manager/readme.md
+tag: package-2022-11
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
-sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
-  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-  lenient-model-deduplication: true
 use-model-reader-writer: true
-
-# mgmt-debug:
-#   show-serialized-names: true
+enable-bicep-serialization: true
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/throughputSettings/default: CassandraKeyspaceThroughputSetting
@@ -35,7 +30,6 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/collections/{collectionName}/throughputSettings/default: MongoDBCollectionThroughputSetting
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/throughputSettings/default: CosmosDBSqlDatabaseThroughputSetting
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default: CosmosDBSqlContainerThroughputSetting
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/views/{viewName}/throughputSettings/default: CassandraViewThroughputSetting
 operation-id-mappings:
   CassandraKeyspaceThroughputSetting:
       accountName: Microsoft.DocumentDB/databaseAccounts
@@ -93,7 +87,7 @@ format-by-name-rules:
   'partitionId': 'uuid'
   'instanceId': 'uuid'
 
-acronym-mapping:
+rename-rules:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -125,7 +119,6 @@ override-operation-name:
   RestorableMongodbCollections_List: GetRestorableMongoDBCollections
   RestorableMongodbResources_List: GetAllRestorableMongoDBResourceData
   RestorableSqlResources_List: GetAllRestorableSqlResourceData
-  MongoClusters_CheckNameAvailability: CheckMongoClusterNameAailability
 
 rename-mapping:
   MongoRoleDefinitionGetResults: MongoDBRoleDefinition
@@ -135,10 +128,13 @@ rename-mapping:
   Role: MongoDBRole
   Role.db: DBName
   MongoRoleDefinitionGetResults.properties.type: RoleDefinitionType
+  PrivilegeResourceInfo: PrivilegeResourceInfoResource
   MongoRoleDefinitionListResult: MongoDBRoleDefinitionListResult
   MongoUserDefinitionListResult: MongoDBUserDefinitionListResult
+  SqlRoleDefinitionResource: CosmosDBSqlRoleDefinitionResourceInfo
   CassandraKeyspacePropertiesOptions: CassandraKeyspacePropertiesConfig
   CassandraTablePropertiesOptions: CassandraTablePropertiesConfig
+  CosmosTablePropertiesOptions: CosmosDBTablePropertiesConfig
   CreateUpdateOptions: CosmosDBCreateUpdateConfig
   GremlinDatabasePropertiesOptions: GremlinDatabasePropertiesConfig
   GremlinGraphPropertiesOptions: GremlinGraphPropertiesConfig
@@ -152,6 +148,7 @@ rename-mapping:
   CassandraKeyspaceResource: CassandraKeyspaceResourceInfo
   CassandraTablePropertiesResource: ExtendedCassandraTableResourceInfo
   CassandraTableResource: CassandraTableResourceInfo
+  CosmosTablePropertiesResource: ExtendedCosmosTableResourceInfo
   ClientEncryptionKeyGetPropertiesResource: CosmosDBSqlClientEncryptionKeyProperties
   ClientEncryptionKeyResource: CosmosDBSqlClientEncryptionKeyResourceInfo
   ClientEncryptionPolicy: CosmosDBClientEncryptionPolicy
@@ -179,9 +176,11 @@ rename-mapping:
   CosmosDBSqlContainerPropertiesResource: ExtendedCosmosDBSqlContainerResourceInfo
   SqlContainerResource: CosmosDBSqlContainerResourceInfo
   SqlDatabaseResource: CosmosDBSqlDatabaseResourceInfo
+  SqlStoredProcedurePropertiesResource: ExtendedCosmosDBSqlStoredProcedureResourceInfo
   SqlStoredProcedureResource: CosmosDBSqlStoredProcedureResourceInfo
   SqlTriggerResource: CosmosDBSqlTriggerResourceInfo
   CosmosDBSqlTriggerPropertiesResource: ExtendedCosmosDBSqlTriggerResourceInfo
+  SqlUserDefinedFunctionPropertiesResource: ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo
   SqlUserDefinedFunctionResource: CosmosDBSqlUserDefinedFunctionResourceInfo
   TableResource: CosmosDBTableResourceInfo
   ThroughputPolicyResource: ThroughputPolicyResourceInfo
@@ -201,7 +200,6 @@ rename-mapping:
   ClusterResource: CassandraCluster
   ClusterKey: CassandraClusterKey
   ClusterResourceProperties: CassandraClusterProperties
-  ClusterType: CassandraClusterType
   DataCenterResource: CassandraDataCenter
   DataCenterResourceProperties: CassandraDataCenterProperties
   ListDataCenters: CassandraDataCenterListResult
@@ -232,7 +230,7 @@ rename-mapping:
   ClusterResourceProperties.cassandraAuditLoggingEnabled: IsCassandraAuditLoggingEnabled
   ClusterResourceProperties.deallocated : IsDeallocated
   ClusterResourceProperties.repairEnabled: IsRepairEnabled
-  CommandPostBody.readWrite: AllowWrite
+  CommandPostBody.readwrite: AllowWrite
   IndexingPolicy.automatic: IsAutomatic
   ManagedCassandraReaperStatus.healthy: IsHealthy
   MongoIndexOptions.unique: IsUnique
@@ -301,15 +299,7 @@ rename-mapping:
   PrivilegeResource: MongoDBPrivilegeResourceInfo
   PrivilegeResource.db: DBName
   MinimalTlsVersion: CosmosDBMinimalTlsVersion
-  BackupResource: CassandraClusterBackupResourceInfo
-  BackupSchedule: CassandraClusterBackupSchedule
-  BackupState: CassandraClusterBackupState
-  CheckNameAvailabilityRequest: CheckCosmosDBNameAvailabilityContent
-  CheckNameAvailabilityResponse: CheckCosmosDBNameAvailabilityResponse
-  CheckNameAvailabilityReason: CosmosDBNameUnavailableReason
-  NodeGroupProperties.diskSizeGB: DiskSizeInGB
   IpAddressOrRange: CosmosDBIPAddressOrRange
-  CommandPublicResource: CassandraClusterCommand
 
 prepend-rp-prefix:
 - UniqueKey
@@ -324,6 +314,7 @@ prepend-rp-prefix:
 - MetricAvailability
 - LocationProperties
 - LocationListResult
+- IPAddressOrRange
 - DataType
 - IndexingPolicy
 - ExcludedPath
@@ -336,23 +327,16 @@ prepend-rp-prefix:
 - FailoverPolicies
 - FailoverPolicy
 - BackupInformation
+- ContainerPartitionKey
 - CompositePath
 - PartitionKind
 - PercentileMetric
 - PublicNetworkAccess
 - SpatialType
 - ContainerPartitionKey
-- FirewallRule
-- Status
-- ProvisioningState
-- Type
-- ConnectionString
-
-models-to-treat-empty-string-as-null:
-  - CosmosDBAccountData
 
 suppress-abstract-base-class:
-- CosmosDBServiceProperties
+    - CosmosDBServiceProperties
 
 directive:
 # The notebook is offline due to security issues
@@ -392,7 +376,6 @@ directive:
     $.MetricDefinition.properties.resourceUri['x-ms-client-name'] = 'ResourceId';
     $.MetricDefinition.properties.resourceUri['x-ms-format'] = 'arm-id';
     $.VirtualNetworkRule.properties.id['x-ms-format'] = 'arm-id';
-    $.DatabaseAccountConnectionString.properties.type['x-ms-client-name'] = 'KeyType';
 # add a missing response code for long running operation. an issue was filed on swagger: https://github.com/Azure/azure-rest-api-specs/issues/16508
 - from: swagger-document
   where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/notebookWorkspaces/{notebookWorkspaceName}'].put
@@ -426,25 +409,6 @@ directive:
   transform: >
     $.restoreLocationParameter['x-ms-format'] = 'azure-location';
     $.instanceIdParameter['format'] = 'uuid';
-# Managed Cassandra
-- from: managedCassandra.json
-  where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/invokeCommandAsync']
-  transform: >
-    for (var path in $)
-    {
-        delete $[path];
-    }
-- from: managedCassandra.json
-  where: $.definitions.CommandPostBody
-  transform: >
-    $.properties.arguments['additionalProperties'] = {
-        'type':'string'
-    };
-- from: managedCassandra.json
-  where: $.definitions
-  transform: >
-    $.CommandPublicResource.properties.cassandraStopStart["x-ms-client-name"] = "shouldStopCassandraBeforeStart";
-    $.CommandPublicResource.properties.readWrite["x-ms-client-name"] = "isReadWrite";
 # Below is a workaround for ADO 6196
 - remove-operation:
   - DatabaseAccounts_GetReadOnlyKeys

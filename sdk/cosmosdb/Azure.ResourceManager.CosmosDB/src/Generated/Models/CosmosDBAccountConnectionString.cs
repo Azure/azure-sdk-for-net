@@ -53,25 +53,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="CosmosDBAccountConnectionString"/>. </summary>
         /// <param name="connectionString"> Value of the connection string. </param>
         /// <param name="description"> Description of the connection string. </param>
-        /// <param name="keyKind"> Kind of the connection string key. </param>
-        /// <param name="keyType"> Type of the connection string. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBAccountConnectionString(string connectionString, string description, CosmosDBKind? keyKind, CosmosDBType? keyType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CosmosDBAccountConnectionString(string connectionString, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectionString = connectionString;
             Description = description;
-            KeyKind = keyKind;
-            KeyType = keyType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Value of the connection string. </summary>
+        [WirePath("connectionString")]
         public string ConnectionString { get; }
         /// <summary> Description of the connection string. </summary>
+        [WirePath("description")]
         public string Description { get; }
-        /// <summary> Kind of the connection string key. </summary>
-        public CosmosDBKind? KeyKind { get; }
-        /// <summary> Type of the connection string. </summary>
-        public CosmosDBType? KeyType { get; }
     }
 }

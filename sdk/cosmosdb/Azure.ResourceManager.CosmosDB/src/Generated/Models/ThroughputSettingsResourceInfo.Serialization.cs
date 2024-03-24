@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -45,16 +46,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("offerReplacePending"u8);
                 writer.WriteStringValue(OfferReplacePending);
-            }
-            if (options.Format != "W" && Optional.IsDefined(InstantMaximumThroughput))
-            {
-                writer.WritePropertyName("instantMaximumThroughput"u8);
-                writer.WriteStringValue(InstantMaximumThroughput);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SoftAllowedMaximumThroughput))
-            {
-                writer.WritePropertyName("softAllowedMaximumThroughput"u8);
-                writer.WriteStringValue(SoftAllowedMaximumThroughput);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,8 +89,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             AutoscaleSettingsResourceInfo autoscaleSettings = default;
             string minimumThroughput = default;
             string offerReplacePending = default;
-            string instantMaximumThroughput = default;
-            string softAllowedMaximumThroughput = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,30 +121,100 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     offerReplacePending = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instantMaximumThroughput"u8))
-                {
-                    instantMaximumThroughput = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("softAllowedMaximumThroughput"u8))
-                {
-                    softAllowedMaximumThroughput = property.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThroughputSettingsResourceInfo(
-                throughput,
-                autoscaleSettings,
-                minimumThroughput,
-                offerReplacePending,
-                instantMaximumThroughput,
-                softAllowedMaximumThroughput,
-                serializedAdditionalRawData);
+            return new ThroughputSettingsResourceInfo(throughput, autoscaleSettings, minimumThroughput, offerReplacePending, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Throughput), out propertyOverride);
+            if (Optional.IsDefined(Throughput) || hasPropertyOverride)
+            {
+                builder.Append("  throughput: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{Throughput.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AutoscaleSettings), out propertyOverride);
+            if (Optional.IsDefined(AutoscaleSettings) || hasPropertyOverride)
+            {
+                builder.Append("  autoscaleSettings: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, AutoscaleSettings, options, 2, false, "  autoscaleSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinimumThroughput), out propertyOverride);
+            if (Optional.IsDefined(MinimumThroughput) || hasPropertyOverride)
+            {
+                builder.Append("  minimumThroughput: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (MinimumThroughput.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MinimumThroughput}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MinimumThroughput}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OfferReplacePending), out propertyOverride);
+            if (Optional.IsDefined(OfferReplacePending) || hasPropertyOverride)
+            {
+                builder.Append("  offerReplacePending: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (OfferReplacePending.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{OfferReplacePending}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{OfferReplacePending}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ThroughputSettingsResourceInfo>.Write(ModelReaderWriterOptions options)
@@ -166,6 +225,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ThroughputSettingsResourceInfo)} does not support writing '{options.Format}' format.");
             }

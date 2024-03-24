@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBCreateUpdateConfig"/>. </summary>
         /// <param name="throughput"> Request Units per second. For example, "throughput": 10000. </param>
-        /// <param name="autoscaleSettings"> Specifies the Autoscale settings. Note: Either throughput or autoscaleSettings is required, but not both. </param>
+        /// <param name="autoscaleSettings"> Specifies the Autoscale settings. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CosmosDBCreateUpdateConfig(int? throughput, AutoscaleSettings autoscaleSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,10 +62,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Request Units per second. For example, "throughput": 10000. </summary>
+        [WirePath("throughput")]
         public int? Throughput { get; set; }
-        /// <summary> Specifies the Autoscale settings. Note: Either throughput or autoscaleSettings is required, but not both. </summary>
+        /// <summary> Specifies the Autoscale settings. </summary>
         internal AutoscaleSettings AutoscaleSettings { get; set; }
         /// <summary> Represents maximum throughput, the resource can scale up to. </summary>
+        [WirePath("autoscaleSettings.maxThroughput")]
         public int? AutoscaleMaxThroughput
         {
             get => AutoscaleSettings is null ? default : AutoscaleSettings.MaxThroughput;

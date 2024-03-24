@@ -57,14 +57,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBTableResourceInfo"/>. </summary>
         /// <param name="tableName"> Name of the Cosmos DB table. </param>
-        /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
-        /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBTableResourceInfo(string tableName, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CosmosDBTableResourceInfo(string tableName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TableName = tableName;
-            RestoreParameters = restoreParameters;
-            CreateMode = createMode;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -74,10 +70,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Name of the Cosmos DB table. </summary>
+        [WirePath("id")]
         public string TableName { get; set; }
-        /// <summary> Parameters to indicate the information about the restore. </summary>
-        public ResourceRestoreParameters RestoreParameters { get; set; }
-        /// <summary> Enum to indicate the mode of resource creation. </summary>
-        public CosmosDBAccountCreateMode? CreateMode { get; set; }
     }
 }
