@@ -12,6 +12,7 @@
 
     <!-- Client in this context is any library that is following the new Azure SDK guidelines -->
     <IsClientLibrary Condition="'$(IsClientLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.'))">true</IsClientLibrary>
+    <IsFunctionsLibrary Condition="'$(IsFunctionsLibrary)' == '' and $(MSBuildProjectName.StartsWith('Microsoft.Azure.WebJobs.Extensions.'))">true</IsFunctionsLibrary>
 
     <IsTestProject Condition="'$(IsTestProject)' == '' and $(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
     <IsSamplesProject Condition="'$(IsSamplesProject)' == '' and $(MSBuildProjectName.EndsWith('.Samples'))">true</IsSamplesProject>
@@ -66,6 +67,14 @@
     <NoWarn>
       $(NoWarn);
       MSB3245; <!-- Do not warn if a package reference is unavailable -->
+    </NoWarn>
+
+    <!--
+      Experimental Azure SDK features
+    -->
+    <NoWarn>
+      $(NoWarn);
+      AZPROVISION001; <!-- BicepModelReaderWriterOptions -->
     </NoWarn>
 
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -125,8 +134,8 @@
     <IsPackable>false</IsPackable>
     <!-- List newest targets first so that recordings are made with latest, running tests from editor runs latest, etc. -->
     <RequiredTargetFrameworks>net7.0;net6.0</RequiredTargetFrameworks>
-    <!-- Also test net461 on Windows. -->
-    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">$(RequiredTargetFrameworks);net461</RequiredTargetFrameworks>
+    <!-- Also test net462 on Windows. net461 is out of support as of 4/2022 and is not supported in version 4.4.x and beyond of NUnit3TestAdapter. -->
+    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">$(RequiredTargetFrameworks);net462</RequiredTargetFrameworks>
     <!-- But only build snippets for the latest. -->
     <RequiredTargetFrameworks Condition="'$(BuildSnippets)' == 'true'">net7.0</RequiredTargetFrameworks>
   </PropertyGroup>

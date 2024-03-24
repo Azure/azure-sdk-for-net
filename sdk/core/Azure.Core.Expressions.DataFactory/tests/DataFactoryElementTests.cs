@@ -37,7 +37,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
 
             public override int GetHashCode()
             {
-#if NET461_OR_GREATER
+#if NET462
                 return X.GetHashCode() ^ Y.GetHashCode();
 #else
                 return HashCode.Combine(X, Y);
@@ -53,13 +53,17 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         private const string DoubleJson = "1.1";
         private const string StringJson = "\"a\"";
         private const string ExpressionJson = $"{{\"type\":\"Expression\",\"value\":\"{ExpressionValue}\"}}";
-        private const string SecureStringJson = $"{{\"type\":\"SecureString\",\"value\":\"{SecureStringValue}\"}}";
-        private static readonly string SecureStringJsonNonString = $"{{\"type\":\"SecureString\",\"value\":\"{SecureStringValueNonString}\"}}";
-        private const string KeyVaultSecretReferenceJson = $"{{\"type\":\"AzureKeyVaultSecretReference\",\"value\":\"{KeyVaultSecretReferenceValue}\"}}";
+        private const string SecretStringJson = $"{{\"value\":\"{SecretStringValue}\",\"type\":\"SecureString\"}}";
+        private const string UnknownTypeJson = "{\"type\":\"Unknown\"}";
+        private const string OtherTypeJson = $"{{\"type\":\"{OtherSecretType}\"}}";
+        private const string KeyVaultSecretReferenceJson = """{"store":{"type":"LinkedServiceReference","referenceName":"referenceNameValue"},"secretName":"secretNameValue","secretVersion":"secretVersionValue","type":"AzureKeyVaultSecret"}""";
         private const string NullJson = "null";
         private const string DictionaryJson = "{\"key1\":\"value1\",\"key2\":\"value2\"}";
+        private const string BinaryDataDictionaryJson = """{"key1":{"A":1,"B":true},"key2":{"C":0,"D":"foo"},"key3":null}""";
 
         private const int IntValue = 1;
+        private static readonly BinaryData BinaryDataValue1 = new BinaryData(new TestModel{ A = 1, B = true });
+        private static readonly BinaryData BinaryDataValue2 = new BinaryData(new { C = 0, D = "foo" });
         private static readonly TimeSpan TimeSpanValue = TimeSpan.FromSeconds(5);
         private static readonly DateTimeOffset DateTimeOffsetValue = DateTimeOffset.UtcNow;
         private static readonly Uri UriValue = new Uri("https://example.com");
@@ -68,15 +72,23 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             { "key1", "value1" },
             { "key2", "value2" }
         };
+
+        private static readonly Dictionary<string, BinaryData?> BinaryDataDictionaryValue = new()
+        {
+            { "key1", BinaryDataValue1 },
+            { "key2", BinaryDataValue2 },
+            { "key3", null }
+        };
         private static readonly List<string> ListOfStringValue = new List<string> { "a", "b" };
         private static readonly IList<string> EmptyListOfStringValue = new List<string>();
         private const bool BoolValue = true;
         private const double DoubleValue = 1.1;
         private const string StringValue = "a";
         private const string ExpressionValue = "@{myExpression}";
-        private const string SecureStringValue = "somestring";
-        private const int SecureStringValueNonString = 1;
-        private const string KeyVaultSecretReferenceValue = "@Microsoft.KeyVault(SecretUri=https://myvault.vault.azure.net/secrets/mysecret/)";
+        private const string SecretStringValue = "somestring";
+        private const string OtherSecretType = "someothertype";
+        private const string UnknownSecretType = "Unknown";
+        private const string KeyVaultSecretName = "secretNameValue";
 
         private static string TimeSpanJson = $"\"{TimeSpanValue.ToString()}\"";
         private static string DateTimeOffsetJson = $"\"{TypeFormatters.ToString(DateTimeOffsetValue, "O")}\"";
@@ -120,6 +132,16 @@ namespace Azure.Core.Expressions.DataFactory.Tests
 
             dfe = ListOfStringValue;
             AssertListOfStringDfe(dfe);
+        }
+
+        [Test]
+        public void CreateFromBinaryDataLiteral()
+        {
+            var dfe = DataFactoryElement<BinaryData>.FromLiteral(BinaryDataValue1);
+            AssertBinaryDataDfe(dfe);
+
+            dfe = BinaryDataValue1;
+            AssertBinaryDataDfe(dfe);
         }
 
         [Test]
@@ -263,6 +285,26 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         }
 
         [Test]
+        public void CreateFromBinaryDataDictionaryLiteral()
+        {
+            var dfe = DataFactoryElement<IDictionary<string, BinaryData?>?>.FromLiteral(BinaryDataDictionaryValue);
+            AssertDfe(dfe, BinaryDataDictionaryValue);
+
+            dfe = BinaryDataDictionaryValue;
+            AssertDfe(dfe, BinaryDataDictionaryValue);
+        }
+
+        [Test]
+        public void ImplicitCastFromBinaryDataDictionaryLiteral()
+        {
+            DataFactoryElement<IDictionary<string, BinaryData?>?> dfe = BinaryDataDictionaryValue;
+            AssertDfe(dfe, BinaryDataDictionaryValue);
+
+            dfe = BinaryDataDictionaryValue;
+            AssertDfe(dfe, BinaryDataDictionaryValue);
+        }
+
+        [Test]
         public void CreateFromListOfTLiteral()
         {
             var literal = new List<TestModel>
@@ -295,99 +337,9 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void CreateFromMaskedStringLiteral()
         {
-            var dfe = DataFactoryElement<string?>.FromMaskedString(SecureStringValue);
-            AssertStringDfe(dfe, SecureStringValue, DataFactoryElementKind.MaskedString);;
-            Assert.AreEqual(SecureStringValue, dfe.ToString());
-        }
-
-        [Test]
-        public void CreateFromMaskedStringBool()
-        {
-            var dfe = DataFactoryElement<bool>.FromMaskedString(false);
-            Assert.AreEqual(DataFactoryElementKind.MaskedString, dfe.Kind);
-            Assert.AreEqual("False", dfe.ToString());
-        }
-
-        [Test]
-        public void CreateFromMaskedStringBoolNullable()
-        {
-            var dfe = DataFactoryElement<bool?>.FromMaskedString(false);
-            Assert.AreEqual(DataFactoryElementKind.MaskedString, dfe.Kind);
-            Assert.AreEqual("False", dfe.ToString());
-        }
-
-        [Test]
-        public void CreateFromMaskedStringInt()
-        {
-            var dfe = DataFactoryElement<int>.FromMaskedString(4);
-            Assert.AreEqual(DataFactoryElementKind.MaskedString, dfe.Kind);
-            Assert.AreEqual("4", dfe.ToString());
-        }
-
-        [Test]
-        public void CreateFromMaskedStringIntNullable()
-        {
-            var dfe = DataFactoryElement<int?>.FromMaskedString(new DataFactoryMaskedString(4));
-            Assert.AreEqual(DataFactoryElementKind.MaskedString, dfe.Kind);
-            Assert.AreEqual("4", dfe.ToString());
-        }
-
-        [Test]
-        public void CreateFromMaskedStringDouble()
-        {
-            var dfe = DataFactoryElement<double>.FromMaskedString(new DataFactoryMaskedString(4.1));
-            Assert.AreEqual(DataFactoryElementKind.MaskedString, dfe.Kind);
-            Assert.AreEqual("4.1", dfe.ToString());
-        }
-
-        [Test]
-        public void CreateFromMaskedStringDoubleNullable()
-        {
-            var dfe = DataFactoryElement<double?>.FromMaskedString(new DataFactoryMaskedString(4.1));
-            Assert.AreEqual(DataFactoryElementKind.MaskedString, dfe.Kind);
-            Assert.AreEqual("4.1", dfe.ToString());
-        }
-
-        [Test]
-        public void CreateFromMaskedStringTimeSpan()
-        {
-            var dfe = DataFactoryElement<TimeSpan>.FromMaskedString(new DataFactoryMaskedString(TimeSpan.FromSeconds(1)));
-            Assert.AreEqual(DataFactoryElementKind.MaskedString, dfe.Kind);
-            Assert.AreEqual(TimeSpan.FromSeconds(1).ToString(), dfe.ToString());
-        }
-
-        [Test]
-        public void CreateFromMaskedStringTimeSpanNullable()
-        {
-            var dfe = DataFactoryElement<TimeSpan?>.FromMaskedString(new DataFactoryMaskedString(TimeSpan.FromSeconds(1)));
-            Assert.AreEqual(DataFactoryElementKind.MaskedString, dfe.Kind);
-            Assert.AreEqual(TimeSpan.FromSeconds(1).ToString(), dfe.ToString());
-        }
-
-        [Test]
-        public void CreateFromMaskedStringDateTimeOffset()
-        {
-            var now = DateTimeOffset.UtcNow;
-            var dfe = DataFactoryElement<DateTimeOffset>.FromMaskedString(new DataFactoryMaskedString(now));
-            Assert.AreEqual(DataFactoryElementKind.MaskedString, dfe.Kind);
-            Assert.AreEqual(now.ToString(), dfe.ToString());
-        }
-
-        [Test]
-        public void CreateFromMaskedStringDateTimeOffsetNullable()
-        {
-            var now = DateTimeOffset.UtcNow;
-            var dfe = DataFactoryElement<DateTimeOffset?>.FromMaskedString(new DataFactoryMaskedString(now));
-            Assert.AreEqual(DataFactoryElementKind.MaskedString, dfe.Kind);
-            Assert.AreEqual(now.ToString(), dfe.ToString());
-        }
-
-        [Test]
-        public void CreateFromMaskedStringUri()
-        {
-            var dfe = DataFactoryElement<Uri>.FromMaskedString(new DataFactoryMaskedString(UriValue));
-            Assert.AreEqual(DataFactoryElementKind.MaskedString, dfe.Kind);
-            Assert.AreEqual(UriValue.AbsoluteUri, dfe.ToString());
+            var dfe = DataFactoryElement<string?>.FromSecretString(SecretStringValue);
+            AssertStringDfe(dfe, SecretStringValue, DataFactoryElementKind.SecretString);;
+            Assert.AreEqual(SecretStringValue, dfe.ToString());
         }
 
         [Test]
@@ -410,7 +362,10 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void CreateFromKeyVaultReference()
         {
-            var dfe = DataFactoryElement<string?>.FromKeyVaultSecretReference(KeyVaultSecretReferenceValue);
+            var store = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,
+                "referenceName");
+            var keyVaultReference = new DataFactoryKeyVaultSecret(store, KeyVaultSecretName);
+            var dfe = DataFactoryElement<string?>.FromKeyVaultSecret(keyVaultReference);
             AssertKeyVaultReferenceDfe(dfe);
         }
 
@@ -533,6 +488,24 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         }
 
         [Test]
+        public void SerializationOfBinaryDataDictionaryValue()
+        {
+            var dfe = DataFactoryElement<IDictionary<string, BinaryData?>>.FromLiteral(BinaryDataDictionaryValue);
+            var actual = GetSerializedString(dfe);
+            Assert.AreEqual(BinaryDataDictionaryJson, actual);
+            Assert.AreEqual("System.Collections.Generic.Dictionary`2[System.String,System.BinaryData]", dfe.ToString());
+        }
+
+        [Test]
+        public void SerializationOfNullableBinaryDataDictionaryValue()
+        {
+            var dfe = DataFactoryElement<IDictionary<string, BinaryData>?>.FromLiteral(null);
+            var actual = GetSerializedString(dfe);
+            Assert.AreEqual("null", actual);
+            Assert.AreEqual(null, dfe.ToString());
+        }
+
+        [Test]
         public void SerializationOfUriValue()
         {
             var dfe = DataFactoryElement<Uri>.FromLiteral(UriValue);
@@ -555,6 +528,30 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             var dfe = DataFactoryElement<string?>.FromLiteral(null);
             var actual = GetSerializedString(dfe);
             Assert.AreEqual("null", actual);
+        }
+
+        [Test]
+        public void SerializationOfBinaryDataValue()
+        {
+            var dfe = DataFactoryElement<BinaryData>.FromLiteral(BinaryDataValue1);
+            var actual = GetSerializedString(dfe);
+            Assert.AreEqual(BinaryDataValue1.ToString(), actual);
+        }
+
+        [Test]
+        public void BinaryDataCanHandleNonObjectsValues()
+        {
+            var docString = JsonDocument.Parse(StringJson);
+            var dfeString = DataFactoryElementJsonConverter.Deserialize<BinaryData>(docString.RootElement)!;
+            Assert.AreEqual(StringJson, JsonSerializer.Serialize(dfeString));
+
+            var docBool = JsonDocument.Parse(BoolJson);
+            var dfeBool = DataFactoryElementJsonConverter.Deserialize<BinaryData>(docBool.RootElement)!;
+            Assert.AreEqual(BoolJson, JsonSerializer.Serialize(dfeBool));
+
+            var docInt = JsonDocument.Parse(IntJson);
+            var dfeInt = DataFactoryElementJsonConverter.Deserialize<BinaryData>(docInt.RootElement)!;
+            Assert.AreEqual(IntJson, JsonSerializer.Serialize(dfeInt));
         }
 
         [Test]
@@ -583,7 +580,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         {
             var dfe = DataFactoryElement<double>.FromLiteral(DoubleValue);
             var actual = GetSerializedString(dfe);
-#if NET461_OR_GREATER
+#if NET462
             Assert.AreEqual("1.1000000000000001", actual);
 #else
             Assert.AreEqual(DoubleJson, actual);
@@ -615,28 +612,44 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         }
 
         [Test]
-        public void SerializationOfSecureString()
+        public void SerializationOfSecretString()
         {
-            var dfe = DataFactoryElement<string>.FromMaskedString(SecureStringValue);
+            var dfe = DataFactoryElement<string>.FromSecretString(SecretStringValue);
             var actual = GetSerializedString(dfe);
-            Assert.AreEqual(SecureStringJson, actual);
-            Assert.AreEqual(SecureStringValue, dfe.ToString());
+            Assert.AreEqual(SecretStringJson, actual);
+            Assert.AreEqual(SecretStringValue, dfe.ToString());
         }
 
         [Test]
-        public void SerializationOfSecureStringLiteralNonString()
+        public void SerializationOfUnknownType()
         {
-            var dfe = DataFactoryElement<int>.FromMaskedString(new DataFactoryMaskedString(SecureStringValueNonString));
-
+            var dfe = DataFactoryElement<string>.FromSecretBase(new UnknownSecret(null));
             var actual = GetSerializedString(dfe);
-            Assert.AreEqual(SecureStringJsonNonString, actual);
-            Assert.AreEqual(SecureStringValueNonString.ToString(), dfe.ToString());
+            Assert.AreEqual(UnknownTypeJson, actual);
+            Assert.IsNull(dfe.ToString());
+            Assert.AreEqual(new DataFactoryElementKind(UnknownSecretType), dfe.Kind);
+        }
+
+        [Test]
+        public void SerializationOfOtherType()
+        {
+            var dfe = DataFactoryElement<string>.FromSecretBase(new UnknownSecret(OtherSecretType));
+            var actual = GetSerializedString(dfe);
+            Assert.AreEqual(OtherTypeJson, actual);
+            Assert.IsNull(dfe.ToString());
+            Assert.AreEqual(new DataFactoryElementKind(OtherSecretType), dfe.Kind);
         }
 
         [Test]
         public void SerializationOfKeyVaultReference()
         {
-            var dfe = DataFactoryElement<int>.FromKeyVaultSecretReference(KeyVaultSecretReferenceValue);
+            var store = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,
+                "referenceNameValue");
+            var keyVaultReference = new DataFactoryKeyVaultSecret(store, "secretNameValue")
+            {
+                SecretVersion = "secretVersionValue"
+            };
+            var dfe = DataFactoryElement<string>.FromKeyVaultSecret(keyVaultReference);
             var actual = GetSerializedString(dfe);
             Assert.AreEqual(KeyVaultSecretReferenceJson, actual);
         }
@@ -794,6 +807,16 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         }
 
         [Test]
+        public void DeserializationOfBinaryDataValue()
+        {
+            var dfe = DataFactoryElement<BinaryData?>.FromLiteral(BinaryDataValue1);
+            var actual = GetSerializedString(dfe);
+            var doc = JsonDocument.Parse(actual);
+            dfe = DataFactoryElementJsonConverter.Deserialize<BinaryData?>(doc.RootElement);
+            AssertBinaryDataDfe(dfe!);
+        }
+
+        [Test]
         public void DeserializationOfListOfT()
         {
             var elements = new List<TestModel>
@@ -837,7 +860,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             var serialized = GetSerializedString(dfe);
             dfe = JsonSerializer.Deserialize<DataFactoryElement<IList<TestModel>>>(serialized)!;
             Assert.AreEqual(DataFactoryElementKind.Expression, dfe.Kind);
-            Assert.AreEqual("some expression", dfe.StringValue);
+            Assert.AreEqual("some expression", dfe.ExpressionString);
         }
 
         [Test]
@@ -864,7 +887,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             Assert.AreEqual("some expression", dfe.ToString());
         }
 
-        private static void AssertStringDfe(DataFactoryElement<string?> dfe, string expectedValue, DataFactoryElementKind expectedKind)
+        private static void AssertStringDfe(DataFactoryElement<string?> dfe, string? expectedValue, DataFactoryElementKind expectedKind)
         {
             Assert.AreEqual(expectedKind, dfe.Kind);
             Assert.AreEqual(expectedValue, dfe.ToString());
@@ -945,6 +968,13 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         }
 
         [Test]
+        public void DeserializationOfKeyBinaryDataValuePairs()
+        {
+            var dfe = JsonSerializer.Deserialize<DataFactoryElement<IDictionary<string, BinaryData?>?>>(BinaryDataDictionaryJson)!;
+            AssertBinaryDataDictionaryDfe(dfe);
+        }
+
+        [Test]
         public void RoundTripDictionaryWithExtraProperties()
         {
             DataFactoryElement<IDictionary<string, string>> input = new Dictionary<string, string>
@@ -970,6 +1000,16 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             Assert.AreEqual("System.Collections.Generic.Dictionary`2[System.String,System.String]", dfe.ToString());
         }
 
+        private static void AssertBinaryDataDictionaryDfe(DataFactoryElement<IDictionary<string, BinaryData?>?> dfe)
+        {
+            Assert.AreEqual(DataFactoryElementKind.Literal, dfe.Kind);
+            Assert.AreEqual(3, dfe.Literal!.Count);
+            Assert.AreEqual("""{"A":1,"B":true}""", dfe.Literal["key1"]!.ToString());
+            Assert.AreEqual("""{"C":0,"D":"foo"}""", dfe.Literal["key2"]!.ToString());
+            Assert.AreEqual(NullJson, dfe.Literal["key3"]!.ToString());
+            Assert.AreEqual("System.Collections.Generic.Dictionary`2[System.String,System.BinaryData]", dfe.ToString());
+        }
+
         private static void AssertListOfStringDfe(DataFactoryElement<IList<string>> dfe)
         {
             Assert.AreEqual(DataFactoryElementKind.Literal, dfe.Kind);
@@ -977,6 +1017,14 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             Assert.AreEqual("a", dfe.Literal[0]);
             Assert.AreEqual("b", dfe.Literal[1]);
             Assert.AreEqual("System.Collections.Generic.List`1[System.String]", dfe.ToString());
+        }
+
+        private static void AssertBinaryDataDfe(DataFactoryElement<BinaryData> dfe)
+        {
+            var model = dfe.Literal!.ToObjectFromJson<TestModel>();
+            Assert.IsNotNull(model);
+            Assert.AreEqual(1, model.A);
+            Assert.IsTrue(model.B);
         }
 
         [Test]
@@ -996,12 +1044,30 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         }
 
         [Test]
-        public void DeserializationOfSecureString()
+        public void DeserializationOfSecretString()
         {
-            var doc = JsonDocument.Parse(SecureStringJson);
+            var doc = JsonDocument.Parse(SecretStringJson);
             var dfe = DataFactoryElementJsonConverter.Deserialize<string>(doc.RootElement)!;
-            Assert.AreEqual(SecureStringValue, dfe.StringValue);
-            AssertStringDfe(dfe, SecureStringValue, DataFactoryElementKind.MaskedString);
+            Assert.AreEqual(SecretStringValue, dfe.ToString());
+            AssertStringDfe(dfe, SecretStringValue, DataFactoryElementKind.SecretString);
+        }
+
+        [Test]
+        public void DeserializationOfUnknownType()
+        {
+            var doc = JsonDocument.Parse(UnknownTypeJson);
+            var dfe = DataFactoryElementJsonConverter.Deserialize<string>(doc.RootElement)!;
+            // the value is not retained for unknown Type
+            AssertStringDfe(dfe, null, new DataFactoryElementKind("Unknown"));
+        }
+
+        [Test]
+        public void DeserializationOfOtherType()
+        {
+            var doc = JsonDocument.Parse(OtherTypeJson);
+            var dfe = DataFactoryElementJsonConverter.Deserialize<string>(doc.RootElement)!;
+            // the value is not retained for unknown Type
+            AssertStringDfe(dfe, null, new DataFactoryElementKind(OtherSecretType));
         }
 
         private static void AssertExpressionDfe(DataFactoryElement<string?> dfe)
@@ -1013,9 +1079,9 @@ namespace Azure.Core.Expressions.DataFactory.Tests
 
         private static void AssertKeyVaultReferenceDfe(DataFactoryElement<string?> dfe)
         {
-            Assert.AreEqual(DataFactoryElementKind.KeyVaultSecretReference, dfe.Kind);
+            Assert.AreEqual(DataFactoryElementKind.KeyVaultSecret, dfe.Kind);
             Assert.Throws<InvalidOperationException>(() => { var x = dfe.Literal; });
-            Assert.AreEqual(KeyVaultSecretReferenceValue, dfe.ToString());
+            Assert.AreEqual(KeyVaultSecretName, dfe.ToString());
         }
 
         private string GetSerializedString<T>(DataFactoryElement<T> payload)
@@ -1058,7 +1124,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         {
             var dfe = JsonSerializer.Deserialize<DataFactoryElement<double>>(DoubleJson);
             var actual = GetSerializedString(dfe!);
-#if NET461_OR_GREATER
+#if NET462
             Assert.AreEqual("1.1000000000000001", actual);
 #else
             Assert.AreEqual(DoubleJson, actual);

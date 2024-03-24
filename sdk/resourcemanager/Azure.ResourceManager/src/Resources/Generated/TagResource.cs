@@ -9,23 +9,22 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A Class representing a TagResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TagResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTagResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetTagResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TagResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTagResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetTagResource method.
     /// </summary>
     public partial class TagResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TagResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope)
         {
             var resourceId = $"{scope}/providers/Microsoft.Resources/tags/default";
@@ -36,12 +35,15 @@ namespace Azure.ResourceManager.Resources
         private readonly TagsRestOperations _tagResourceTagsRestClient;
         private readonly TagResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/tags";
+
         /// <summary> Initializes a new instance of the <see cref="TagResource"/> class for mocking. </summary>
         protected TagResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TagResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TagResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TagResource(ArmClient client, TagResourceData data) : this(client, data.Id)
@@ -62,9 +64,6 @@ namespace Azure.ResourceManager.Resources
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/tags";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +97,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Tags_GetAtScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TagResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +136,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tags_GetAtScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TagResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -162,6 +177,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Tags_DeleteAtScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TagResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -173,7 +196,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _tagResourceTagsRestClient.DeleteAtScopeAsync(Id.Parent, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation(_tagResourceTagsClientDiagnostics, Pipeline, _tagResourceTagsRestClient.CreateDeleteAtScopeRequest(Id.Parent).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation(_tagResourceTagsClientDiagnostics, Pipeline, _tagResourceTagsRestClient.CreateDeleteAtScopeRequest(Id.Parent).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -196,6 +219,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Tags_DeleteAtScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TagResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -207,7 +238,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _tagResourceTagsRestClient.DeleteAtScope(Id.Parent, cancellationToken);
-                var operation = new ResourcesArmOperation(_tagResourceTagsClientDiagnostics, Pipeline, _tagResourceTagsRestClient.CreateDeleteAtScopeRequest(Id.Parent).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation(_tagResourceTagsClientDiagnostics, Pipeline, _tagResourceTagsRestClient.CreateDeleteAtScopeRequest(Id.Parent).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -220,7 +251,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The &apos;replace&apos; option replaces the entire set of existing tags with a new set. The &apos;merge&apos; option allows adding tags with new names and updating the values of tags with existing names. The &apos;delete&apos; option allows selectively deleting tags based on given names or name/value pairs.
+        /// This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The 'replace' option replaces the entire set of existing tags with a new set. The 'merge' option allows adding tags with new names and updating the values of tags with existing names. The 'delete' option allows selectively deleting tags based on given names or name/value pairs.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -230,10 +261,18 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Tags_UpdateAtScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TagResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The TagResourcePatch to use. </param>
+        /// <param name="patch"> The <see cref="TagResourcePatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<TagResource>> UpdateAsync(WaitUntil waitUntil, TagResourcePatch patch, CancellationToken cancellationToken = default)
@@ -245,7 +284,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _tagResourceTagsRestClient.UpdateAtScopeAsync(Id.Parent, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<TagResource>(new TagResourceOperationSource(Client), _tagResourceTagsClientDiagnostics, Pipeline, _tagResourceTagsRestClient.CreateUpdateAtScopeRequest(Id.Parent, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<TagResource>(new TagResourceOperationSource(Client), _tagResourceTagsClientDiagnostics, Pipeline, _tagResourceTagsRestClient.CreateUpdateAtScopeRequest(Id.Parent, patch).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -258,7 +297,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The &apos;replace&apos; option replaces the entire set of existing tags with a new set. The &apos;merge&apos; option allows adding tags with new names and updating the values of tags with existing names. The &apos;delete&apos; option allows selectively deleting tags based on given names or name/value pairs.
+        /// This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The 'replace' option replaces the entire set of existing tags with a new set. The 'merge' option allows adding tags with new names and updating the values of tags with existing names. The 'delete' option allows selectively deleting tags based on given names or name/value pairs.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -268,10 +307,18 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Tags_UpdateAtScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TagResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The TagResourcePatch to use. </param>
+        /// <param name="patch"> The <see cref="TagResourcePatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<TagResource> Update(WaitUntil waitUntil, TagResourcePatch patch, CancellationToken cancellationToken = default)
@@ -283,7 +330,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _tagResourceTagsRestClient.UpdateAtScope(Id.Parent, patch, cancellationToken);
-                var operation = new ResourcesArmOperation<TagResource>(new TagResourceOperationSource(Client), _tagResourceTagsClientDiagnostics, Pipeline, _tagResourceTagsRestClient.CreateUpdateAtScopeRequest(Id.Parent, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<TagResource>(new TagResourceOperationSource(Client), _tagResourceTagsClientDiagnostics, Pipeline, _tagResourceTagsRestClient.CreateUpdateAtScopeRequest(Id.Parent, patch).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -306,10 +353,18 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Tags_CreateOrUpdateAtScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TagResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The TagResource to use. </param>
+        /// <param name="data"> The <see cref="TagResourceData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<TagResource>> CreateOrUpdateAsync(WaitUntil waitUntil, TagResourceData data, CancellationToken cancellationToken = default)
@@ -321,7 +376,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _tagResourceTagsRestClient.CreateOrUpdateAtScopeAsync(Id.Parent, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<TagResource>(new TagResourceOperationSource(Client), _tagResourceTagsClientDiagnostics, Pipeline, _tagResourceTagsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<TagResource>(new TagResourceOperationSource(Client), _tagResourceTagsClientDiagnostics, Pipeline, _tagResourceTagsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent, data).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -344,10 +399,18 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Tags_CreateOrUpdateAtScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TagResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The TagResource to use. </param>
+        /// <param name="data"> The <see cref="TagResourceData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<TagResource> CreateOrUpdate(WaitUntil waitUntil, TagResourceData data, CancellationToken cancellationToken = default)
@@ -359,7 +422,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _tagResourceTagsRestClient.CreateOrUpdateAtScope(Id.Parent, data, cancellationToken);
-                var operation = new ResourcesArmOperation<TagResource>(new TagResourceOperationSource(Client), _tagResourceTagsClientDiagnostics, Pipeline, _tagResourceTagsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<TagResource>(new TagResourceOperationSource(Client), _tagResourceTagsClientDiagnostics, Pipeline, _tagResourceTagsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent, data).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

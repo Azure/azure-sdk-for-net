@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests

@@ -28,6 +28,8 @@ namespace Azure.Core.Expressions.DataFactory
                    typeToConvert == typeof(DataFactoryElement<Uri>) ||
                    typeToConvert == typeof(DataFactoryElement<IList<string>>) ||
                    typeToConvert == typeof(DataFactoryElement<IDictionary<string, string>>) ||
+                   typeToConvert == typeof(DataFactoryElement<IDictionary<string, BinaryData>>) ||
+                   typeToConvert == typeof(DataFactoryElement<BinaryData>) ||
                    TryGetGenericDataFactoryList(typeToConvert, out _);
         }
 
@@ -52,6 +54,10 @@ namespace Azure.Core.Expressions.DataFactory
                 return Deserialize<IList<string>>(document.RootElement);
             if (typeToConvert == typeof(DataFactoryElement<IDictionary<string, string>>))
                 return Deserialize<IDictionary<string, string>>(document.RootElement);
+            if (typeToConvert == typeof(DataFactoryElement<IDictionary<string, BinaryData>>))
+                return Deserialize<IDictionary<string, BinaryData>>(document.RootElement);
+            if (typeToConvert == typeof(DataFactoryElement<BinaryData>))
+                return Deserialize<BinaryData>(document.RootElement);
             if (TryGetGenericDataFactoryList(typeToConvert, out Type? genericListType))
             {
                 var methodInfo = GetGenericSerializationMethod(genericListType!, nameof(DeserializeGenericList));
@@ -109,6 +115,12 @@ namespace Azure.Core.Expressions.DataFactory
                     break;
                 case DataFactoryElement<IDictionary<string, string?>?> keyValuePairElement:
                     Serialize(writer, keyValuePairElement);
+                    break;
+                case DataFactoryElement<IDictionary<string, BinaryData?>?> keyValuePairElement:
+                    Serialize(writer, keyValuePairElement);
+                    break;
+                case DataFactoryElement<BinaryData?> binaryDataElement:
+                    Serialize(writer, binaryDataElement);
                     break;
                 default:
                 {
@@ -190,14 +202,41 @@ namespace Azure.Core.Expressions.DataFactory
                         }
                         writer.WriteEndObject();
                         break;
+                    case IDictionary<string, BinaryData?> dictionary:
+                        writer.WriteStartObject();
+                        foreach (KeyValuePair<string, BinaryData?> pair in dictionary)
+                        {
+                            writer.WritePropertyName(pair.Key);
+                            if (pair.Value != null)
+                            {
+                                using JsonDocument document = JsonDocument.Parse(pair.Value.ToString());
+                                document.RootElement.WriteTo(writer);
+                            }
+                            else
+                            {
+                                writer.WriteNullValue();
+                            }
+                        }
+                        writer.WriteEndObject();
+                        break;
+                    case BinaryData binaryData:
+                        using (JsonDocument document = JsonDocument.Parse(binaryData.ToString()))
+                        {
+                            document.RootElement.WriteTo(writer);
+                        }
+                        break;
                     default:
                         writer.WriteObjectValue(element.Literal!);
                         break;
                 }
             }
+            else if (element.Kind == DataFactoryElementKind.Expression)
+            {
+                SerializeExpression(writer, element.ExpressionString!);
+            }
             else
             {
-                SerializeObject(writer, element.Kind!, element.StringValue!);
+                writer.WriteObjectValue(element.Secret!);
             }
         }
 
@@ -219,23 +258,27 @@ namespace Azure.Core.Expressions.DataFactory
                 }
                 writer.WriteEndArray();
             }
+            else if (element.Kind == DataFactoryElementKind.Expression)
+            {
+                SerializeExpression(writer, element.ExpressionString!);
+            }
             else
             {
-                SerializeObject(writer, element.Kind, element.StringValue!);
+                writer.WriteObjectValue(element.Secret!);
             }
         }
 
-        private static void SerializeObject(Utf8JsonWriter writer, DataFactoryElementKind kind, string value)
+        private static void SerializeExpression(Utf8JsonWriter writer, string value)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type");
-            writer.WriteStringValue(kind.ToString());
+            writer.WriteStringValue("Expression");
             writer.WritePropertyName("value");
             writer.WriteStringValue(value);
             writer.WriteEndObject();
         }
 
-        private static DataFactoryElement<IList<T?>> DeserializeGenericList<T>(JsonElement json)
+        private static DataFactoryElement<IList<T?>?> DeserializeGenericList<T>(JsonElement json)
         {
             if (json.ValueKind == JsonValueKind.Array)
             {
@@ -245,10 +288,11 @@ namespace Azure.Core.Expressions.DataFactory
                     list.Add(item.ValueKind == JsonValueKind.Null ? default : JsonSerializer.Deserialize<T>(item.GetRawText()!));
                 }
 
-                return new DataFactoryElement<IList<T?>>(list);
+                return new DataFactoryElement<IList<T?>?>(list);
             }
 
-            if (json.ValueKind == JsonValueKind.Object && TryGetReservedElement(json, out DataFactoryElement<IList<T?>>? element))
+            // Expression, SecretString, and AzureKeyVaultReference handling
+            if (TryGetNonLiteral(json, out DataFactoryElement<IList<T?>?>? element))
             {
                 return element!;
             }
@@ -265,17 +309,30 @@ namespace Azure.Core.Expressions.DataFactory
                 return null;
             }
 
-            if (TryGetReservedElement(json, out DataFactoryElement<T?>? element))
+            // Expression, SecretString, and AzureKeyVaultReference handling
+            if (TryGetNonLiteral(json, out DataFactoryElement<T?>? element))
             {
                 return element;
             }
 
+            // Literal handling
             if (json.ValueKind == JsonValueKind.Object && typeof(T) == typeof(IDictionary<string, string>))
             {
                 var dictionary = new Dictionary<string, string>();
                 foreach (var item in json.EnumerateObject())
                 {
                     dictionary.Add(item.Name, item.Value.GetString()!);
+                }
+
+                return new DataFactoryElement<T?>((T)(object)dictionary);
+            }
+
+            if (json.ValueKind == JsonValueKind.Object && typeof(T) == typeof(IDictionary<string, BinaryData>))
+            {
+                var dictionary = new Dictionary<string, BinaryData>();
+                foreach (var item in json.EnumerateObject())
+                {
+                    dictionary.Add(item.Name, BinaryData.FromString(item.Value.GetRawText()));
                 }
 
                 return new DataFactoryElement<T?>((T)(object)dictionary);
@@ -307,6 +364,11 @@ namespace Azure.Core.Expressions.DataFactory
                 return new DataFactoryElement<T?>((T)(object)new Uri(json.GetString()!));
             }
 
+            if (typeof(T) == typeof(BinaryData))
+            {
+                return new DataFactoryElement<T?>((T)(object)BinaryData.FromString(json.GetRawText()!));
+            }
+
             var obj = json.GetObject();
             if (obj is not null)
                 value = (T)obj;
@@ -314,34 +376,25 @@ namespace Azure.Core.Expressions.DataFactory
             return new DataFactoryElement<T?>(value);
         }
 
-        private static bool TryGetReservedElement<T>(JsonElement json, out DataFactoryElement<T>? element)
+        private static bool TryGetNonLiteral<T>(JsonElement json, out DataFactoryElement<T?>? element)
         {
-            string? type = null;
-            string? value = null;
-            int propertyCount = 0;
             element = null;
-
-            if (json.ValueKind != JsonValueKind.Object)
+            if (json.ValueKind == JsonValueKind.Object && json.TryGetProperty("type", out JsonElement typeValue))
             {
-                return false;
-            }
-
-            foreach (var property in json.EnumerateObject())
-            {
-                propertyCount++;
-                if (property.NameEquals("type") && property.Value.ValueKind == JsonValueKind.String)
+                if (typeValue.ValueEquals("Expression"))
                 {
-                    type = property.Value.GetString();
+                    if (json.EnumerateObject().Count() != 2)
+                    {
+                        // Expression should only have two properties: type and value
+                        return false;
+                    }
+                    var expressionValue = json.GetProperty("value").GetString();
+                    element = new DataFactoryElement<T?>(expressionValue, DataFactoryElementKind.Expression);
                 }
-                else if (property.NameEquals("value") && property.Value.ValueKind == JsonValueKind.String)
+                else
                 {
-                    value = property.Value.GetString();
+                    element = DataFactoryElement<T?>.FromSecretBase(DataFactorySecret.DeserializeDataFactorySecretBaseDefinition(json)!);
                 }
-            }
-
-            if (type != null && value != null && propertyCount == 2)
-            {
-                element = new DataFactoryElement<T>(value, new DataFactoryElementKind(type));
             }
 
             return element != null;

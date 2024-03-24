@@ -49,13 +49,17 @@ When a secure string is used, the value is return masked with '*' characters whe
 
 ```json
 "folderpath": {
-  "type": "AzureKeyVaultSecretReference",
-  "value": "@Microsoft.KeyVault(SecretUri=https://myvault.vault.azure.net/secrets/mysecret/)"
+  "type": "AzureKeyVaultSecret",
+  "store": {
+    "type": "LinkedServiceReference",
+    "referenceName": "someReferenceName"
+  },
+  "secretName": "someSecretName",
+  "secretVersion": "someSecretVersion"
 }
 ```
 
 A Key Vault Reference can be used to specify a Key Vault where the value of the property is stored. 
-
 
 ### DataFactoryElement<T>
 
@@ -76,16 +80,19 @@ blobDataSet.FolderPath = "foo/bar";
 blobDataSet.FolderPath = DataFactoryElement<string>.FromExpression("foo/bar-@{pipeline().TriggerTime}");
 ```
 
-#### Secure String
+#### Secret String
 
-```C# Snippet:DataFactoryElementSecureString
-blobDataSet.FolderPath = DataFactoryElement<string>.FromMaskedString("some/secret/path");
+```C# Snippet:DataFactoryElementSecretString
+blobDataSet.FolderPath = DataFactoryElement<string>.FromSecretString("some/secret/path");
 ```
 
 #### Key Vault Secret Reference
 
 ```C# Snippet:DataFactoryElementKeyVaultSecretReference
-blobDataSet.FolderPath = DataFactoryElement<string>.FromKeyVaultSecretReference("@Microsoft.KeyVault(SecretUri=https://myvault.vault.azure.net/secrets/mysecret/)");
+var store = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,
+    "referenceName");
+var keyVaultReference = new DataFactoryKeyVaultSecret(store, "secretName");
+blobDataSet.FolderPath = DataFactoryElement<string>.FromKeyVaultSecret(keyVaultReference);
 ```
 
 In each case the library will be able to serialize and deserialize all scenarios appropriately allowing you to seamlessly use either according to your application's needs.

@@ -23,17 +23,20 @@ namespace Azure.Core.Expressions.DataFactory.Samples
 
             Assert.AreEqual("foo/bar-@{pipeline().TriggerTime}", blobDataSet.FolderPath.ToString());
 
-            #region Snippet:DataFactoryElementSecureString
-            blobDataSet.FolderPath = DataFactoryElement<string>.FromMaskedString("some/secret/path");
+            #region Snippet:DataFactoryElementSecretString
+            blobDataSet.FolderPath = DataFactoryElement<string>.FromSecretString("some/secret/path");
             #endregion
 
             Assert.AreEqual("some/secret/path", blobDataSet.FolderPath.ToString());
 
             #region Snippet:DataFactoryElementKeyVaultSecretReference
-            blobDataSet.FolderPath = DataFactoryElement<string>.FromKeyVaultSecretReference("@Microsoft.KeyVault(SecretUri=https://myvault.vault.azure.net/secrets/mysecret/)");
+            var store = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,
+                "referenceName");
+            var keyVaultReference = new DataFactoryKeyVaultSecret(store, "secretName");
+            blobDataSet.FolderPath = DataFactoryElement<string>.FromKeyVaultSecret(keyVaultReference);
             #endregion
 
-            Assert.AreEqual("@Microsoft.KeyVault(SecretUri=https://myvault.vault.azure.net/secrets/mysecret/)", blobDataSet.FolderPath.ToString());
+            Assert.AreEqual("secretName", blobDataSet.FolderPath.ToString());
         }
 
         private class BlobDataSet

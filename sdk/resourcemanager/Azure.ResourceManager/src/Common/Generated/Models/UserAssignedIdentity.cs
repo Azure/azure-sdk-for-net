@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Models
     [PropertyReferenceType]
     public partial class UserAssignedIdentity
     {
-        /// <summary> Initializes a new instance of UserAssignedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserAssignedIdentity"/>. </summary>
         [InitializationConstructor]
         public UserAssignedIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of UserAssignedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserAssignedIdentity"/>. </summary>
         /// <param name="principalId"> The principal ID of the assigned identity. </param>
         /// <param name="clientId"> The client ID of the assigned identity. </param>
         [SerializationConstructor]
@@ -31,8 +31,10 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> The principal ID of the assigned identity. </summary>
+        [WirePath("principalId")]
         public Guid? PrincipalId { get; }
         /// <summary> The client ID of the assigned identity. </summary>
+        [WirePath("clientId")]
         public Guid? ClientId { get; }
     }
 }

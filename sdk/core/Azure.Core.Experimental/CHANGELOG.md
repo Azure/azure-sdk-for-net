@@ -1,6 +1,6 @@
 # Release History
 
-## 0.1.0-preview.27 (Unreleased)
+## 0.1.0-preview.33 (Unreleased)
 
 ### Features Added
 
@@ -10,11 +10,64 @@
 
 ### Other Changes
 
+## 0.1.0-preview.32 (2024-01-11)
+
+### Features Added
+
+- Added types `PopTokenRequestContext`, `PopTokenAuthenticationPolicy`, and `ISupportsProofOfPossession` to support Proof of Possession tokens.
+
+## 0.1.0-preview.31 (2023-11-10)
+
+### Breaking Changes
+
+- `Variant.As<T>` now allows returning `null` for reference types with no value.
+- If a `Variant` is assigned a value that is a `Variant`, the left-hand `Variant` operand will now store the value that the right-hand `Variant` operand represents instead of storing the value as the `Variant` itself.
+
+## 0.1.0-preview.30 (2023-09-07)
+
+### Breaking Changes
+
+- Changed default location of `cloudmachine.json` passed to `CloudMachine` constructor.
+- Renamed `Azure.Value` to `Azure.Variant`.
+- Added cast operators to/from string to `Variant`.
+- Added `Variant.Null` and `variant.IsNull` APIs to `Variant`.
+- Added `ToString` implementation to `Variant`.
+
+## 0.1.0-preview.29 (2023-08-07)
+
+### Features Added
+
+- Added SchemaValidator and LruCache types for use with Azure.Data.SchemaRegistry preview library.
+- Added CloudMachine and ProvisionableTemplateAttribute types for use with CloudMachine.
+
+## 0.1.0-preview.28 (2023-07-11)
+
+### Breaking Changes
+
+- Removed `DynamicData` type.
+
+## 0.1.0-preview.27 (2023-05-09)
+
+### Features Added
+
+- Added support for `== null` and value equality for primitives to `DynamicData`.
+- Added support for `Length` property on `DynamicData` arrays.
+- Made name mappings from PascalCase in C# to camelCase in JSON the default for `DynamicData`.
+- Added implicit casts to primitives supported by `JsonElement` and explicit casts for supported reference types.
+
+### Breaking Changes
+
+- Made `MutableJsonDocument` and `MutableJsonElement` internal.
+- Moved `ToDynamicFromJson()` extension method on `BinaryData` to the `Azure` namespace.
+- Removed `DynamicJsonOptions`, `DynamicDataNameMapping` and the `BinaryData` extensions that took parameters of those types.
+- Removed `DynamicDataProperty`.
+
 ## 0.1.0-preview.26 (2023-04-10)
 
 ### Features Added
 
 - Added basic debugger support for DynamicData
+
 ### Breaking Changes
 
 - Removed `DynamicJson` type, and moved its functionality into `DynamicData`.

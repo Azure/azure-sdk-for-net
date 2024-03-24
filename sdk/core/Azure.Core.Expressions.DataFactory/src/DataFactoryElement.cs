@@ -22,7 +22,8 @@ namespace Azure.Core.Expressions.DataFactory
     {
         private readonly T? _literal;
         private readonly DataFactoryElementKind _kind;
-        internal string? StringValue { get; }
+        internal DataFactorySecret? Secret { get; }
+        internal string? ExpressionString { get; }
 
         internal DataFactoryElement(T? literal)
         {
@@ -49,16 +50,36 @@ namespace Azure.Core.Expressions.DataFactory
             }
         }
 
-        internal DataFactoryElement(string stringValue, DataFactoryElementKind kind)
+        internal DataFactoryElement(string? expressionString, DataFactoryElementKind kind)
         {
             _kind = kind;
-            StringValue = stringValue;
+            ExpressionString = expressionString;
+        }
+
+        internal DataFactoryElement(DataFactorySecret secret, DataFactoryElementKind kind)
+        {
+            _kind = kind;
+            Secret = secret;
         }
 
         /// <inheritdoc/>
         public override string? ToString()
         {
-            return _kind == DataFactoryElementKind.Literal ? _literal?.ToString() : StringValue;
+            if (_kind == DataFactoryElementKind.Literal)
+            {
+                return _literal?.ToString();
+            }
+            if (_kind == DataFactoryElementKind.SecretString)
+            {
+                return ((DataFactorySecretString)Secret!).Value;
+            }
+            if (_kind == DataFactoryElementKind.KeyVaultSecret)
+            {
+                // TODO should this include the version and the Reference name?
+                return ((DataFactoryKeyVaultSecret)Secret!).SecretName.ToString();
+            }
+
+            return ExpressionString;
         }
 
         /// <summary>
@@ -81,23 +102,34 @@ namespace Azure.Core.Expressions.DataFactory
         /// <summary>
         /// Creates a new instance of <see cref="DataFactoryElement{T}"/> using the KeyVaultSecretReference value.
         /// </summary>
-        /// <param name="keyVaultSecretReference"> The key vault secret reference value. </param>
+        /// <param name="secret"> The key vault secret reference value. </param>
 #pragma warning disable CA1000 // Do not declare static members on generic types
-        public static DataFactoryElement<string?> FromKeyVaultSecretReference(string keyVaultSecretReference)
+        public static DataFactoryElement<string?> FromKeyVaultSecret(DataFactoryKeyVaultSecret secret)
 #pragma warning restore CA1000 // Do not declare static members on generic types
         {
-            return new DataFactoryElement<string?>(keyVaultSecretReference, DataFactoryElementKind.KeyVaultSecretReference);
+            return new DataFactoryElement<string?>(secret, DataFactoryElementKind.KeyVaultSecret);
         }
 
         /// <summary>
         /// Creates a new instance of <see cref="DataFactoryElement{T}"/> using the KeyVaultSecretReference value.
         /// </summary>
-        /// <param name="maskedString"> The unmasked string value. </param>
+        /// <param name="secretString"> The unmasked string value. </param>
 #pragma warning disable CA1000 // Do not declare static members on generic types
-        public static DataFactoryElement<string?> FromMaskedString(DataFactoryMaskedString maskedString)
+        public static DataFactoryElement<string?> FromSecretString(DataFactorySecretString secretString)
 #pragma warning restore CA1000 // Do not declare static members on generic types
         {
-            return new DataFactoryElement<string?>(maskedString.Value, DataFactoryElementKind.MaskedString);
+            return new DataFactoryElement<string?>(secretString, DataFactoryElementKind.SecretString);
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="DataFactoryElement{T}"/> using the KeyVaultSecretReference value.
+        /// </summary>
+        /// <param name="secret"> The unmasked string value. </param>
+#pragma warning disable CA1000 // Do not declare static members on generic types
+        internal static DataFactoryElement<T?> FromSecretBase(DataFactorySecret secret)
+#pragma warning restore CA1000 // Do not declare static members on generic types
+        {
+            return new DataFactoryElement<T?>(secret, new DataFactoryElementKind(secret.SecretBaseType!));
         }
 
         /// <summary>

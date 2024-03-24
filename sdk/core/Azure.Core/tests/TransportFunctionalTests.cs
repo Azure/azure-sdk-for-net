@@ -571,8 +571,8 @@ namespace Azure.Core.Tests
 
             await ExecuteRequest(request, transport);
 
-            // for NET461, HttpClient will include zero content-length for DELETEs
-#if NET461
+            // for NET462, HttpClient will include zero content-length for DELETEs
+#if NET462
             if (transport is HttpClientTransport &&
                 method == RequestMethod.Delete)
             {
@@ -759,7 +759,7 @@ namespace Azure.Core.Tests
             }
         }
 
-#if NET461 // GlobalProxySelection.Select not supported on netcoreapp
+#if NET462 // GlobalProxySelection.Select not supported on netcoreapp
         [NonParallelizable]
         [Test]
         public async Task DefaultProxySettingsArePreserved()
@@ -987,7 +987,14 @@ namespace Azure.Core.Tests
                 var transport = GetTransport();
                 Request request = transport.CreateRequest();
                 request.Uri.Reset(testServer.Address);
-                Response response = await ExecuteRequest(request, transport);
+                HttpMessage messsage = new(request, ResponseClassifier.Shared);
+
+                // This test is explicitly testing the behavior of a response that
+                // holds a live network stream, so we set BufferResponse to false.
+                messsage.BufferResponse = false;
+
+                await ProcessAsync(messsage, transport);
+                Response response = messsage.Response;
 
                 tcs.SetResult(null);
 

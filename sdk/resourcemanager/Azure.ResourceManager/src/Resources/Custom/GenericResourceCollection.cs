@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Resources
                 var apiVersion = GetApiVersion(new ResourceIdentifier(resourceId), cancellationToken);
                 var response = _resourcesRestClient.GetById(resourceId, apiVersion, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GenericResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Resources
                 var apiVersion = await GetApiVersionAsync(new ResourceIdentifier(resourceId), cancellationToken).ConfigureAwait(false);
                 var response = await _resourcesRestClient.GetByIdAsync(resourceId, apiVersion, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GenericResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -238,7 +238,8 @@ namespace Azure.ResourceManager.Resources
             {
                 throw new ArgumentException("Only resource id in a subscription is supported", nameof(resourceId));
             }
-            string version = GetProviderCollectionForSubscription(subscription).GetApiVersion(resourceId.ResourceType, cancellationToken);
+            ResourceProviderCollection collection = new ResourceProviderCollection(Client, subscription);
+            string version = collection.GetApiVersion(resourceId.ResourceType, cancellationToken);
             if (version is null)
             {
                 throw new InvalidOperationException($"An invalid resource id was given {resourceId}");
@@ -253,15 +254,13 @@ namespace Azure.ResourceManager.Resources
             {
                 throw new ArgumentException("Only resource id in a subscription is supported", nameof(resourceId));
             }
-            string version = await GetProviderCollectionForSubscription(subscription).GetApiVersionAsync(resourceId.ResourceType, cancellationToken).ConfigureAwait(false);
+            ResourceProviderCollection collection = new ResourceProviderCollection(Client, subscription);
+            string version = await collection.GetApiVersionAsync(resourceId.ResourceType, cancellationToken).ConfigureAwait(false);
             if (version is null)
             {
                 throw new InvalidOperationException($"An invalid resource id was given {resourceId}");
             }
             return version;
         }
-
-        private ResourceProviderCollection GetProviderCollectionForSubscription(ResourceIdentifier subscriptionId)
-            => GetCachedClient((client) => { return new ResourceProviderCollection(client, subscriptionId); });
     }
 }

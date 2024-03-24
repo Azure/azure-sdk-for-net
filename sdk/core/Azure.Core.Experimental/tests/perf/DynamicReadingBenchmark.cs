@@ -3,7 +3,6 @@
 
 using System;
 using System.Dynamic;
-using Azure.Core.Dynamic;
 using BenchmarkDotNet.Attributes;
 using Newtonsoft.Json.Linq;
 

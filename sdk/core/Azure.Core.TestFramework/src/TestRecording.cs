@@ -3,12 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -202,6 +198,18 @@ namespace Azure.Core.TestFramework
         private readonly RecordedTestBase _recordedTestBase;
 
         public string RecordingId { get; private set; }
+
+        /// <summary>
+        /// Determines if the ClientRequestId that is sent as part of a request while in Record mode
+        /// should use the default Guid format. The default Guid format contains hyphens.
+        /// </summary>
+        public bool UseDefaultGuidFormatForClientRequestId
+        {
+            get
+            {
+               return _recordedTestBase.UseDefaultGuidFormatForClientRequestId;
+            }
+        }
 
         /// <summary>
         /// Gets the moment in time that this test is being run.  This is useful

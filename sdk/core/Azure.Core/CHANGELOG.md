@@ -1,6 +1,6 @@
 # Release History
 
-## 1.32.0-beta.1 (Unreleased)
+## 1.39.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,84 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.38.0 (2024-02-26)
+
+### Features Added
+
+- Add `GetRehydrationToken` to `Operation` for rehydration purpose.
+
+### Other Changes
+
+- Additional Azure data centers are now included in `AzureLocation`.  The following were added:
+  - China East 3
+  - China North 3
+  - Israel Central
+  - Italy North
+  - Poland Central
+  - Sweden South
+
+## 1.37.0 (2024-01-11)
+
+### Bugs Fixed
+
+- Fixed exponential retry behavior so that delay milliseconds greater than `Int32.MaxValue` do not trigger an exception.
+- Fixed `DelayStrategy` behavior to no longer shift the delay to be used over by one attempt. Previously, the first delay would be what should have been used for the second, and the second was what should have been used for the third, etc. Note, this would only be observed when using `DelayStrategy` outside of a `RetryPolicy` or `RetryOptions`.
+- Do not add the `error.type` attribute twice when tracing is enabled.
+- Do not suppress nested activities when they occur in the context of Consumer/Server activities (e.g. `BlobClient.Download` is no longer suppressed under `EventHubs.Process`).
+
+### Other Changes
+- Remove targets for .NET Core 2.1 and .NET 5 since they are out of support. Azure.Core is no longer compatible with .NET Core 2.1 after removal of target. The remaining targets are unchanged.
+
+## 1.36.0 (2023-11-10)
+
+### Features Added
+
+- Added `RequiresUnreferencedCode` attribute to `RequestContent.Create(object)` overloads that use reflection to serialize the input object.  This provides support for native AOT compilation when Azure.Core is used for diagnostics.
+- Use System.Text.Json source generation to deserialize the error response in `RequestFailedException` on `net6.0` and above targets.
+
+### Breaking Changes
+
+- Updated tracing attributes names to conform to OpenTelemetry semantic conventions version 1.23.0.
+- Suppress client activity creation by Azure clients if it happens in scope of another activity created by an Azure client.
+- Changed how `ActivitySource` name is constructed for clients that use single-worded activity names (without dot).  We now append provided activity name as is to the client namespace name. Previously, the provided activity name was omitted and the `ActivitySource` name matched the provided client namespace.
+- Distributed tracing with `ActivitySource` for HTTP and REST-based client libraries is declared stable. [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) is no longer required for most of the newly released libraries. Tracing for messaging libraries remains experimental.
+- Added nullable annotation to `ResourceIdentifier.TryParse` parameter `input`.
+
+## 1.35.0 (2023-09-07)
+
+### Features Added
+
+- Expand the set of supported `DynamicData` property types to included heterogeneous arrays of allowed types.
+
+### Breaking Changes
+
+- Added the nullability annotation to `NullableResponse<T>.Value` to indicate that it is a nullable type.
+
+## 1.34.0 (2023-07-11)
+
+### Features Added
+
+- Added `IsCaeEnabled` property to `TokenRequestContext` to enabled per-request support for Continuous Access Evaluation
+- Updated dependency on System.Diagnostics.DiagnosticSource
+- Added `ContentLengthLong` property to `ResponseHeaders`
+
+## 1.33.0 (2023-06-16)
+
+### Features Added
+
+- Added `BinaryData.ToDynamicFromJson()` extension method to enable dynamic access to JSON.  See the [aka.ms/azsdk/net/dynamiccontent](https://aka.ms/azsdk/net/dynamiccontent) for further details.
+
+### Other Changes
+
+- Client redirects are now disabled by default and can be enabled by setting providing a custom transport in `ClientOptions'. Client Authors can also enable redirects by setting `HttpPipelineTransportOptions.IsClientRedirectEnabled` to `true` on the transport options passed to `HttpPipelineBuilder.Build`.
+
+## 1.32.0 (2023-05-09)
+
+### Features Added
+
+- Added the `GetRawResponse` method to `RequestFailedException`.
+- Added overloads of `Operation<T>.WaitForCompletion` and `Operation.WaitForCompletionResponse` that take a `DelayStrategy`.
 
 ## 1.31.0 (2023-04-10)
 
@@ -28,13 +106,13 @@
 
 ### Bugs Fixed
 
-- Fixed the issue with empty header names and values, caused by `ArrayBackedPropertyBag` keeping reference to the array after returning it to array pool [in (https://github.com/Azure/azure-sdk-for-net/pull/34800)  `Dispose` method]. 
+- Fixed the issue with empty header names and values, caused by `ArrayBackedPropertyBag` keeping reference to the array after returning it to array pool [in `Dispose` method](https://github.com/Azure/azure-sdk-for-net/pull/34800).
 
 ## 1.29.0 (2023-03-02)
 
 ### Features Added
 
-- `ActivitySource` activities that are used when using the [experimental OpenTelemetry support](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/) will include the `az.schema_url` tag indicating the OpenTelemetry schema version. They will also include the attribute names specified [here](https://github.com/Azure/azure-sdk/blob/main/docs/tracing/distributed-tracing-conventions.yml). 
+- `ActivitySource` activities that are used when using the [experimental OpenTelemetry support](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/) will include the `az.schema_url` tag indicating the OpenTelemetry schema version. They will also include the attribute names specified [here](https://github.com/Azure/azure-sdk/blob/main/docs/tracing/distributed-tracing-conventions.yml).
 - "West US 3", "Sweden Central" and "Qatar Central" locations are added to `Azure.Core.AzureLocation`
 
 ### Improvements

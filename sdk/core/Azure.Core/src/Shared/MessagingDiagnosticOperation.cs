@@ -36,7 +36,7 @@ namespace Azure.Core.Shared
             return _operation == other._operation;
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return obj is MessagingDiagnosticOperation other && Equals(other);
         }
