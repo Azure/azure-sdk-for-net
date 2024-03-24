@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(ScheduleBasedConfig))
             {
                 writer.WritePropertyName("scheduleBasedConfig"u8);
-                writer.WriteObjectValue(ScheduleBasedConfig);
+                writer.WriteObjectValue<ScheduleBasedConfig>(ScheduleBasedConfig, options);
             }
             if (Optional.IsDefined(LoadBasedConfig))
             {
                 writer.WritePropertyName("loadBasedConfig"u8);
-                writer.WriteObjectValue(LoadBasedConfig);
+                writer.WriteObjectValue<LoadBasedConfig>(LoadBasedConfig, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

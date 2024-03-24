@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WriteStartArray();
                 foreach (var item in AdditionalEnforcedPermissions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TopicTypeAdditionalEnforcedPermission>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WriteStartArray();
             foreach (var item in ConfigurationFilters)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ConfigurationFilters>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(CustomerSubscriptionDetails))
             {
                 writer.WritePropertyName("customerSubscriptionDetails"u8);
-                writer.WriteObjectValue(CustomerSubscriptionDetails);
+                writer.WriteObjectValue<CustomerSubscriptionDetails>(CustomerSubscriptionDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

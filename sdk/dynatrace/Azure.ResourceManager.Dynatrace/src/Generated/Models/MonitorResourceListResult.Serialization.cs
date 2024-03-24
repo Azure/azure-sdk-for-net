@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DynatraceMonitorData>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))

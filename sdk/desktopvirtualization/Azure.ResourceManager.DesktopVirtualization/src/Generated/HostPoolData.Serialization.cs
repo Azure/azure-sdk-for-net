@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<DesktopVirtualizationSku>(Sku, options);
             }
             if (Optional.IsDefined(Plan))
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(RegistrationInfo))
             {
                 writer.WritePropertyName("registrationInfo"u8);
-                writer.WriteObjectValue(RegistrationInfo);
+                writer.WriteObjectValue<HostPoolRegistrationInfo>(RegistrationInfo, options);
             }
             if (Optional.IsDefined(VmTemplate))
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(AgentUpdate))
             {
                 writer.WritePropertyName("agentUpdate"u8);
-                writer.WriteObjectValue(AgentUpdate);
+                writer.WriteObjectValue<SessionHostAgentUpdateProperties>(AgentUpdate, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DesktopVirtualizationPrivateEndpointConnection>(item, options);
                 }
                 writer.WriteEndArray();
             }
