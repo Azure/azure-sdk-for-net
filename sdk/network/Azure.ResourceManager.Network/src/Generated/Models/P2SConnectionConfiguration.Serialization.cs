@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(VpnClientAddressPool))
             {
                 writer.WritePropertyName("vpnClientAddressPool"u8);
-                writer.WriteObjectValue(VpnClientAddressPool);
+                writer.WriteObjectValue<AddressSpace>(VpnClientAddressPool, options);
             }
             if (Optional.IsDefined(RoutingConfiguration))
             {
                 writer.WritePropertyName("routingConfiguration"u8);
-                writer.WriteObjectValue(RoutingConfiguration);
+                writer.WriteObjectValue<RoutingConfiguration>(RoutingConfiguration, options);
             }
             if (Optional.IsDefined(EnableInternetSecurity))
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in PreviousConfigurationPolicyGroupAssociations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VpnServerConfigurationPolicyGroupData>(item, options);
                 }
                 writer.WriteEndArray();
             }

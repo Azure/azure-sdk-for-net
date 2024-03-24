@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetworkCloud
 
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation);
+            writer.WriteObjectValue<ExtendedLocation>(ExtendedLocation, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in AdditionalEgressEndpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EgressEndpoint>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in EnabledEgressEndpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EgressEndpoint>(item, options);
                 }
                 writer.WriteEndArray();
             }

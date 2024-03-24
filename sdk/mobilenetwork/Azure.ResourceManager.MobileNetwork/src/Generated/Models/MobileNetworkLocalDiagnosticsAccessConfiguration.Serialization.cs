@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(HttpsServerCertificate))
             {
                 writer.WritePropertyName("httpsServerCertificate"u8);
-                writer.WriteObjectValue(HttpsServerCertificate);
+                writer.WriteObjectValue<MobileNetworkHttpsServerCertificate>(HttpsServerCertificate, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

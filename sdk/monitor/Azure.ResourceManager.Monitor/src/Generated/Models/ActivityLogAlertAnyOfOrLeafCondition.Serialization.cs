@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in AnyOf)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AlertRuleLeafCondition>(item, options);
                 }
                 writer.WriteEndArray();
             }

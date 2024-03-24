@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in RuleCollections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FirewallPolicyRuleCollectionInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -29,12 +29,12 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
-                writer.WriteObjectValue(Message);
+                writer.WriteObjectValue<ChatResponseMessage>(Message, options);
             }
             if (LogProbabilityInfo != null)
             {
                 writer.WritePropertyName("logprobs"u8);
-                writer.WriteObjectValue(LogProbabilityInfo);
+                writer.WriteObjectValue<ChatChoiceLogProbabilityInfo>(LogProbabilityInfo, options);
             }
             else
             {
@@ -54,22 +54,22 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(FinishDetails))
             {
                 writer.WritePropertyName("finish_details"u8);
-                writer.WriteObjectValue(FinishDetails);
+                writer.WriteObjectValue<ChatFinishDetails>(FinishDetails, options);
             }
             if (Optional.IsDefined(InternalStreamingDeltaMessage))
             {
                 writer.WritePropertyName("delta"u8);
-                writer.WriteObjectValue(InternalStreamingDeltaMessage);
+                writer.WriteObjectValue<ChatResponseMessage>(InternalStreamingDeltaMessage, options);
             }
             if (Optional.IsDefined(ContentFilterResults))
             {
                 writer.WritePropertyName("content_filter_results"u8);
-                writer.WriteObjectValue(ContentFilterResults);
+                writer.WriteObjectValue<ContentFilterResultsForChoice>(ContentFilterResults, options);
             }
             if (Optional.IsDefined(Enhancements))
             {
                 writer.WritePropertyName("enhancements"u8);
-                writer.WriteObjectValue(Enhancements);
+                writer.WriteObjectValue<AzureChatEnhancements>(Enhancements, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -252,7 +252,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ChatChoice>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

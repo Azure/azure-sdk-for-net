@@ -73,7 +73,7 @@ namespace Azure.AI.OpenAI.Assistants
                 writer.WriteStartArray();
                 foreach (var item in Tools)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ToolDefinition>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -291,7 +291,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<UpdateAssistantOptions>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
-                writer.WriteObjectValue(Profile);
+                writer.WriteObjectValue<NetworkConfigurationDiagnosticProfile>(Profile, options);
             }
             if (Optional.IsDefined(NetworkSecurityGroupResult))
             {
                 writer.WritePropertyName("networkSecurityGroupResult"u8);
-                writer.WriteObjectValue(NetworkSecurityGroupResult);
+                writer.WriteObjectValue<NetworkSecurityGroupResult>(NetworkSecurityGroupResult, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

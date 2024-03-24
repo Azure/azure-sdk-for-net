@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Peering
                 writer.WriteStartArray();
                 foreach (var item in PeerContactDetail)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PeerAsnContactDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }

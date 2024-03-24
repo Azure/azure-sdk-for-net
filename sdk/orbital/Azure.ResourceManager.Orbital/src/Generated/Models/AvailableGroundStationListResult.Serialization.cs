@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Orbital.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AvailableGroundStationData>(item, options);
                 }
                 writer.WriteEndArray();
             }

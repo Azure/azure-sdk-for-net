@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<PostgreSqlFlexibleServerSku>(Sku, options);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue<PostgreSqlFlexibleServerUserAssignedIdentity>(Identity, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -108,37 +108,37 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             if (Optional.IsDefined(Storage))
             {
                 writer.WritePropertyName("storage"u8);
-                writer.WriteObjectValue(Storage);
+                writer.WriteObjectValue<PostgreSqlFlexibleServerStorage>(Storage, options);
             }
             if (Optional.IsDefined(AuthConfig))
             {
                 writer.WritePropertyName("authConfig"u8);
-                writer.WriteObjectValue(AuthConfig);
+                writer.WriteObjectValue<PostgreSqlFlexibleServerAuthConfig>(AuthConfig, options);
             }
             if (Optional.IsDefined(DataEncryption))
             {
                 writer.WritePropertyName("dataEncryption"u8);
-                writer.WriteObjectValue(DataEncryption);
+                writer.WriteObjectValue<PostgreSqlFlexibleServerDataEncryption>(DataEncryption, options);
             }
             if (Optional.IsDefined(Backup))
             {
                 writer.WritePropertyName("backup"u8);
-                writer.WriteObjectValue(Backup);
+                writer.WriteObjectValue<PostgreSqlFlexibleServerBackupProperties>(Backup, options);
             }
             if (Optional.IsDefined(Network))
             {
                 writer.WritePropertyName("network"u8);
-                writer.WriteObjectValue(Network);
+                writer.WriteObjectValue<PostgreSqlFlexibleServerNetwork>(Network, options);
             }
             if (Optional.IsDefined(HighAvailability))
             {
                 writer.WritePropertyName("highAvailability"u8);
-                writer.WriteObjectValue(HighAvailability);
+                writer.WriteObjectValue<PostgreSqlFlexibleServerHighAvailability>(HighAvailability, options);
             }
             if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
-                writer.WriteObjectValue(MaintenanceWindow);
+                writer.WriteObjectValue<PostgreSqlFlexibleServerMaintenanceWindow>(MaintenanceWindow, options);
             }
             if (Optional.IsDefined(SourceServerResourceId))
             {

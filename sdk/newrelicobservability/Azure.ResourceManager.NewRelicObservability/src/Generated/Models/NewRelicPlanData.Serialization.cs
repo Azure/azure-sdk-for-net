@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             if (Optional.IsDefined(PlanData))
             {
                 writer.WritePropertyName("planData"u8);
-                writer.WriteObjectValue(PlanData);
+                writer.WriteObjectValue<NewRelicPlanDetails>(PlanData, options);
             }
             if (Optional.IsDefined(OrgCreationSource))
             {

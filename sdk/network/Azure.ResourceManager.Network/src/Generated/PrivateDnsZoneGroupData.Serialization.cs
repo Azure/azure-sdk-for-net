@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in PrivateDnsZoneConfigs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PrivateDnsZoneConfig>(item, options);
                 }
                 writer.WriteEndArray();
             }
