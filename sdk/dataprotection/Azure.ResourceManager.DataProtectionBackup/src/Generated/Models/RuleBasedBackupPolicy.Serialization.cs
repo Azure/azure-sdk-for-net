@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartArray();
             foreach (var item in PolicyRules)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DataProtectionBasePolicyRule>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("datasourceTypes"u8);

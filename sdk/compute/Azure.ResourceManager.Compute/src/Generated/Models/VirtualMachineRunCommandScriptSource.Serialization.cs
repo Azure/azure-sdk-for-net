@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ScriptUriManagedIdentity))
             {
                 writer.WritePropertyName("scriptUriManagedIdentity"u8);
-                writer.WriteObjectValue(ScriptUriManagedIdentity);
+                writer.WriteObjectValue<RunCommandManagedIdentity>(ScriptUriManagedIdentity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

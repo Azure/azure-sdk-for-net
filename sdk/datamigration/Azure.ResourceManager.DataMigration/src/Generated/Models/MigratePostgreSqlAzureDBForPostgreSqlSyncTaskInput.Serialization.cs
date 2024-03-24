@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartArray();
             foreach (var item in SelectedDatabases)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("targetConnectionInfo"u8);
-            writer.WriteObjectValue(TargetConnectionInfo);
+            writer.WriteObjectValue<PostgreSqlConnectionInfo>(TargetConnectionInfo, options);
             writer.WritePropertyName("sourceConnectionInfo"u8);
-            writer.WriteObjectValue(SourceConnectionInfo);
+            writer.WriteObjectValue<PostgreSqlConnectionInfo>(SourceConnectionInfo, options);
             if (Optional.IsDefined(EncryptedKeyForSecureFields))
             {
                 writer.WritePropertyName("encryptedKeyForSecureFields"u8);

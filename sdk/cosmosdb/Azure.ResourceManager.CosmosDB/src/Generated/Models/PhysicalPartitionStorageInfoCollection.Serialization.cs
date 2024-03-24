@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in PhysicalPartitionStorageInfoCollectionValue)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PhysicalPartitionStorageInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

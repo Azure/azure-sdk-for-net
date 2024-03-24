@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in IncludedPaths)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CosmosDBIncludedPath>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in ExcludedPaths)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CosmosDBExcludedPath>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     writer.WriteStartArray();
                     foreach (var item0 in item)
                     {
-                        writer.WriteObjectValue(item0);
+                        writer.WriteObjectValue<CosmosDBCompositePath>(item0, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in SpatialIndexes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SpatialSpec>(item, options);
                 }
                 writer.WriteEndArray();
             }

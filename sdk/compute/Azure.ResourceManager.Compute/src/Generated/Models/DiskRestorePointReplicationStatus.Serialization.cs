@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<InstanceViewStatus>(Status, options);
             }
             if (Optional.IsDefined(CompletionPercent))
             {

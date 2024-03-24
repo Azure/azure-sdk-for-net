@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataLakeStore
             if (options.Format != "W" && Optional.IsDefined(EncryptionConfig))
             {
                 writer.WritePropertyName("encryptionConfig"u8);
-                writer.WriteObjectValue(EncryptionConfig);
+                writer.WriteObjectValue<DataLakeStoreAccountEncryptionConfig>(EncryptionConfig, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EncryptionState))
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 writer.WriteStartArray();
                 foreach (var item in FirewallRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataLakeStoreFirewallRuleData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataLakeStoreVirtualNetworkRuleData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 writer.WriteStartArray();
                 foreach (var item in TrustedIdProviders)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataLakeStoreTrustedIdProviderData>(item, options);
                 }
                 writer.WriteEndArray();
             }

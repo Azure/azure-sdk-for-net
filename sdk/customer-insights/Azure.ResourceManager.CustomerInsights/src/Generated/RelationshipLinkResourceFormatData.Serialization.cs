@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in Mappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RelationshipLinkFieldMapping>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in ProfilePropertyReferences)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ParticipantProfilePropertyReference>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in RelatedProfilePropertyReferences)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ParticipantProfilePropertyReference>(item, options);
                 }
                 writer.WriteEndArray();
             }

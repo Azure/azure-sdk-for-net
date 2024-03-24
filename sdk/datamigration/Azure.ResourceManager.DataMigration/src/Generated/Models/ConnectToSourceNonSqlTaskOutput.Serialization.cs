@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (options.Format != "W" && Optional.IsDefined(ServerProperties))
             {
                 writer.WritePropertyName("serverProperties"u8);
-                writer.WriteObjectValue(ServerProperties);
+                writer.WriteObjectValue<ServerProperties>(ServerProperties, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Databases))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReportableException>(item, options);
                 }
                 writer.WriteEndArray();
             }

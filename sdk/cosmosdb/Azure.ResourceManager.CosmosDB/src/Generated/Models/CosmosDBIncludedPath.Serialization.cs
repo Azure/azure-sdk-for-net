@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Indexes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CosmosDBPathIndexes>(item, options);
                 }
                 writer.WriteEndArray();
             }

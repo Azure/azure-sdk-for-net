@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(SourceSqlConnection))
             {
                 writer.WritePropertyName("sourceSqlConnection"u8);
-                writer.WriteObjectValue(SourceSqlConnection);
+                writer.WriteObjectValue<SqlConnectionInformation>(SourceSqlConnection, options);
             }
             if (Optional.IsDefined(SourceDatabaseName))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (options.Format != "W" && Optional.IsDefined(MigrationFailureError))
             {
                 writer.WritePropertyName("migrationFailureError"u8);
-                writer.WriteObjectValue(MigrationFailureError);
+                writer.WriteObjectValue<ErrorInfo>(MigrationFailureError, options);
             }
             if (Optional.IsDefined(TargetDatabaseCollation))
             {

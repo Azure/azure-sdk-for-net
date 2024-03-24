@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WriteStartArray();
                 foreach (var item in Roles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MongoDBRole>(item, options);
                 }
                 writer.WriteEndArray();
             }

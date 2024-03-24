@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<DataBoxEdgeSku>(Sku, options);
             }
             if (Optional.IsDefined(ETag))
             {
@@ -161,17 +161,17 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (options.Format != "W" && Optional.IsDefined(ResourceMoveDetails))
             {
                 writer.WritePropertyName("resourceMoveDetails"u8);
-                writer.WriteObjectValue(ResourceMoveDetails);
+                writer.WriteObjectValue<DataBoxEdgeResourceMoveDetails>(ResourceMoveDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EdgeProfile))
             {
                 writer.WritePropertyName("edgeProfile"u8);
-                writer.WriteObjectValue(EdgeProfile);
+                writer.WriteObjectValue<EdgeProfile>(EdgeProfile, options);
             }
             if (Optional.IsDefined(DataResidency))
             {
                 writer.WritePropertyName("dataResidency"u8);
-                writer.WriteObjectValue(DataResidency);
+                writer.WriteObjectValue<DataResidency>(DataResidency, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

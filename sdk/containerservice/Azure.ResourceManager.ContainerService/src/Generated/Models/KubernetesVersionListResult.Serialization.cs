@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KubernetesVersion>(item, options);
                 }
                 writer.WriteEndArray();
             }

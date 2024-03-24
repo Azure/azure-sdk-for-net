@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(SourceLocation))
             {
                 writer.WritePropertyName("sourceLocation"u8);
-                writer.WriteObjectValue(SourceLocation);
+                writer.WriteObjectValue<SourceLocation>(SourceLocation, options);
             }
             if (Optional.IsDefined(TargetLocation))
             {
                 writer.WritePropertyName("targetLocation"u8);
-                writer.WriteObjectValue(TargetLocation);
+                writer.WriteObjectValue<TargetLocation>(TargetLocation, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

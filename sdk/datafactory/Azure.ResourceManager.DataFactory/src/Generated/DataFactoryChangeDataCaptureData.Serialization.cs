@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                writer.WriteObjectValue<ChangeDataCaptureFolder>(Folder, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -69,18 +69,18 @@ namespace Azure.ResourceManager.DataFactory
             writer.WriteStartArray();
             foreach (var item in SourceConnectionsInfo)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MapperSourceConnectionsInfo>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("targetConnectionsInfo"u8);
             writer.WriteStartArray();
             foreach (var item in TargetConnectionsInfo)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MapperTargetConnectionsInfo>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("policy"u8);
-            writer.WriteObjectValue(Policy);
+            writer.WriteObjectValue<MapperPolicy>(Policy, options);
             if (Optional.IsDefined(AllowVnetOverride))
             {
                 writer.WritePropertyName("allowVNetOverride"u8);

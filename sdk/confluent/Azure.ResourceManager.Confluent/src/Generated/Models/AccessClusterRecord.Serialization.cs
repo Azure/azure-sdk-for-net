@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                writer.WriteObjectValue<MetadataEntity>(Metadata, options);
             }
             if (Optional.IsDefined(DisplayName))
             {
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(Spec))
             {
                 writer.WritePropertyName("spec"u8);
-                writer.WriteObjectValue(Spec);
+                writer.WriteObjectValue<ClusterSpecEntity>(Spec, options);
             }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<ClusterStatusEntity>(Status, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

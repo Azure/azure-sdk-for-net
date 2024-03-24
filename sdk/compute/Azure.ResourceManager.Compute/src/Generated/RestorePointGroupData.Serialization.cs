@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                writer.WriteObjectValue<RestorePointGroupSource>(Source, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in RestorePoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RestorePointData>(item, options);
                 }
                 writer.WriteEndArray();
             }

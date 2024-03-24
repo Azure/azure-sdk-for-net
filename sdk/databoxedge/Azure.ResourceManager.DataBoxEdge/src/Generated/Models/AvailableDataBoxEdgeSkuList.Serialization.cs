@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AvailableDataBoxEdgeSku>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                writer.WriteObjectValue<PipelineActivityPolicy>(Policy, options);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivityDependency>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivityUserProperty>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,14 +89,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Scripts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScriptActivityScriptBlock>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(LogSettings))
             {
                 writer.WritePropertyName("logSettings"u8);
-                writer.WriteObjectValue(LogSettings);
+                writer.WriteObjectValue<ScriptActivityTypeLogSettings>(LogSettings, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)

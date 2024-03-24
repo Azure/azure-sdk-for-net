@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in HttpHeaders)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerAppHttpHeaderInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

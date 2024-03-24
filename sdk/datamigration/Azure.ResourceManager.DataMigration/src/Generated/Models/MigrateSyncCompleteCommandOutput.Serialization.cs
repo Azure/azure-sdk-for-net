@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReportableException>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -57,14 +57,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReportableException>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(MigrationEligibility))
             {
                 writer.WritePropertyName("migrationEligibility"u8);
-                writer.WriteObjectValue(MigrationEligibility);
+                writer.WriteObjectValue<MigrationEligibilityInfo>(MigrationEligibility, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Id))
             {

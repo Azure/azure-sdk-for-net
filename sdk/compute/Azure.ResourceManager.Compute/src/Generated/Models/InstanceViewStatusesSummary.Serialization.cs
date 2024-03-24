@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in StatusesSummary)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StatusCodeCount>(item, options);
                 }
                 writer.WriteEndArray();
             }
