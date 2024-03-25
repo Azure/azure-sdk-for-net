@@ -727,7 +727,7 @@ namespace Azure.Communication.PhoneNumbers
             scope.Start();
             try
             {
-                var response = await InternalClient.OperatorInformationSearchAsync(phoneNumbers, cancellationToken).ConfigureAwait(false);
+                var response = await InternalClient.OperatorInformationSearchAsync(phoneNumbers, null, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -754,7 +754,7 @@ namespace Azure.Communication.PhoneNumbers
             scope.Start();
             try
             {
-                var response = InternalClient.OperatorInformationSearch(phoneNumbers, cancellationToken);
+                var response = InternalClient.OperatorInformationSearch(phoneNumbers, null, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -775,7 +775,7 @@ namespace Azure.Communication.PhoneNumbers
             scope.Start();
             try
             {
-                var response = await InternalClient.OperatorInformationSearchAsync(phoneNumbers, cancellationToken).ConfigureAwait(false);
+                var response = await InternalClient.OperatorInformationSearchAsync(phoneNumbers, null,cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -796,7 +796,7 @@ namespace Azure.Communication.PhoneNumbers
             scope.Start();
             try
             {
-                var response = InternalClient.OperatorInformationSearch(phoneNumbers, cancellationToken);
+                var response = InternalClient.OperatorInformationSearch(phoneNumbers, null, cancellationToken);
                 return response;
             }
             catch (Exception e)
