@@ -6,6 +6,7 @@
 
 - Added experimental Bicep serialization.
 - Added GetIfExists methods.
+- Added mocking types.
 
 ## 1.3.0 (2023-04-11)
 
