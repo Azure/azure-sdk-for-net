@@ -118,12 +118,14 @@ namespace Azure.Communication.Chat.Tests
             Assert.AreEqual(RetentionPolicyKind.ThreadCreationDate, newDataRetentionPolicy?.Kind);
             Assert.AreEqual(40, newDataRetentionPolicy?.DeleteThreadAfterDays);
 
-            var updateOptionsWithNullRetentionPolicy = new UpdateChatThreadPropertiesOptions();
-            updateOptionsWithNullRetentionPolicy.RetentionPolicy = null;
+            var updateOptionsWithNoneRetentionPolicy = new UpdateChatThreadPropertiesOptions();
+            updateOptionsWithNoneRetentionPolicy.RetentionPolicy = new NoneRetentionPolicy();
 
-            await chatThreadClient.UpdatePropertiesAsync(updateOptionsWithNullRetentionPolicy);
+            await chatThreadClient.UpdatePropertiesAsync(updateOptionsWithNoneRetentionPolicy);
             var updateResponseWithNullRetentionPolicy = await chatThreadClient.GetPropertiesAsync();
-            Assert.IsNull(updateResponseWithNullRetentionPolicy.Value.RetentionPolicy);
+            var noneDataRetentionPolicy = updateResponseWithNewRetentionPolicy.Value.RetentionPolicy as NoneRetentionPolicy;
+            Assert.IsNotNull(noneDataRetentionPolicy);
+            Assert.AreEqual(RetentionPolicyKind.None, noneDataRetentionPolicy?.Kind);
 
             var participants = new List<ChatParticipant>
             {

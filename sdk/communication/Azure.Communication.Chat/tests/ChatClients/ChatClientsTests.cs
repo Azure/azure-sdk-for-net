@@ -26,6 +26,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         private const string AddParticipantsdWithErrorsApiResponsePayload = "{\"invalidParticipants\":[{\"code\":\"404\",\"message\":\"Not found\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345677\"},{\"code\":\"401\",\"message\":\"Authentication failed\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345678\"},{\"code\":\"403\",\"message\":\"Permissions check failed\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345679\"}]}";
 
         private const string CreateChatThreadSuccessApiResponsePayload = "{\"chatThread\":{\"id\":\"19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2\",\"topic\":\"Topic for testing success\",\"createdOn\":\"2021-02-25T22:34:48Z\",\"createdByCommunicationIdentifier\":{\"rawId\":\"8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c\",\"communicationUser\":{\"id\":\"8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c\"}},\"metadata\": {\"MetaKey1\":\"MetaValue1\",\"MetaKey2\": \"MetaValue2\"}, \"retentionPolicy\":{ \"kind\":\"threadCreationDate\", \"deleteThreadAfterDays\":40 }}}";
+        private const string CreateChatThreadNoneRetentionSuccessApiResponsePayload = "{\"chatThread\":{\"id\":\"19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2\",\"topic\":\"Topic for testing success\",\"createdOn\":\"2021-02-25T22:34:48Z\",\"createdByCommunicationIdentifier\":{\"rawId\":\"8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c\",\"communicationUser\":{\"id\":\"8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c\"}},\"metadata\": {\"MetaKey1\":\"MetaValue1\",\"MetaKey2\": \"MetaValue2\"}, \"retentionPolicy\":{ \"kind\":\"none\"}}}";
 
         private const string GetThreadApiResponsePayload = "{\"id\":\"19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2\",\"topic\":\"Test Thread\",\"createdOn\":\"2021-02-26T00:46:08Z\",\"createdByCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\",\"communicationUser\":{\"id\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\"}}}";
 
@@ -1350,12 +1351,12 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         }
 
         [Test]
-        public void CreateChatThreadWithUnknownRetentionPolicyShouldSucceed()
+        public void CreateChatThreadWithNoneRetentionPolicyShouldSucceed()
         {
             //act
-            var chatClient = CreateMockChatClient(201, CreateChatThreadSuccessApiResponsePayload);
+            var chatClient = CreateMockChatClient(201, CreateChatThreadNoneRetentionSuccessApiResponsePayload);
             var chatParticipant = new ChatParticipant(new CommunicationUserIdentifier("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c"));
-            CreateChatThreadResult createChatThreadResult = chatClient.CreateChatThread(new CreateChatThreadOptions("new topic") { RetentionPolicy = new UnknownChatRetentionPolicy(RetentionPolicyKind.ThreadCreationDate) });
+            CreateChatThreadResult createChatThreadResult = chatClient.CreateChatThread(new CreateChatThreadOptions("new topic") { RetentionPolicy = new NoneRetentionPolicy() });
 
             //assert
             var chatThread = createChatThreadResult.ChatThread;
@@ -1363,10 +1364,9 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             Assert.AreEqual("Topic for testing success", chatThread.Topic);
             Assert.AreEqual("19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2", chatThread.Id);
 
-            var threadCreationDateRetentionPolicy = chatThread.RetentionPolicy as ThreadCreationDateRetentionPolicy;
+            var noneRetentionPolicy = chatThread.RetentionPolicy as NoneRetentionPolicy;
 
-            Assert.IsNotNull(threadCreationDateRetentionPolicy);
-            Assert.AreEqual(40, threadCreationDateRetentionPolicy?.DeleteThreadAfterDays);
+            Assert.IsNotNull(noneRetentionPolicy);
         }
 
         [Test]
