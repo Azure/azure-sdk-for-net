@@ -1,7 +1,7 @@
 # Release History
 
 ## 1.1.0 (2024-04-15)
-General Availability version of PSTN dial-out capability feature
+General Availability version of PSTN dial-out capability feature.
 
 ## 1.1.0-beta.1 (2023-09-19)
 
