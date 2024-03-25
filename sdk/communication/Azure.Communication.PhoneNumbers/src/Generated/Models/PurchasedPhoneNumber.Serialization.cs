@@ -22,13 +22,13 @@ namespace Azure.Communication.PhoneNumbers
             string phoneNumber = default;
             string countryCode = default;
             PhoneNumberType phoneNumberType = default;
-            PhoneNumberCapabilities capabilities = default;
+            PurchasedPhoneNumberCapabilities capabilities = default;
             PhoneNumberAssignmentType assignmentType = default;
             DateTimeOffset purchaseDate = default;
             PhoneNumberCost cost = default;
-            Optional<string> operatorId = default;
-            Optional<string> operatorName = default;
-            Optional<PhoneNumberSource> phoneNumberSource = default;
+            string operatorId = default;
+            string operatorName = default;
+            PhoneNumberSource? phoneNumberSource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -53,7 +53,7 @@ namespace Azure.Communication.PhoneNumbers
                 }
                 if (property.NameEquals("capabilities"u8))
                 {
-                    capabilities = PhoneNumberCapabilities.DeserializePhoneNumberCapabilities(property.Value);
+                    capabilities = PurchasedPhoneNumberCapabilities.DeserializePurchasedPhoneNumberCapabilities(property.Value);
                     continue;
                 }
                 if (property.NameEquals("assignmentType"u8))
@@ -91,7 +91,18 @@ namespace Azure.Communication.PhoneNumbers
                     continue;
                 }
             }
-            return new PurchasedPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, capabilities, assignmentType, purchaseDate, cost, operatorId.Value, operatorName.Value, Optional.ToNullable(phoneNumberSource));
+            return new PurchasedPhoneNumber(
+                id,
+                phoneNumber,
+                countryCode,
+                phoneNumberType,
+                capabilities,
+                assignmentType,
+                purchaseDate,
+                cost,
+                operatorId,
+                operatorName,
+                phoneNumberSource);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

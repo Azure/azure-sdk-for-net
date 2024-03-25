@@ -15,8 +15,6 @@ namespace Azure.Communication.PhoneNumbers
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PhoneNumbers))
-            {
             writer.WritePropertyName("phoneNumbers"u8);
             writer.WriteStartArray();
             foreach (var item in PhoneNumbers)

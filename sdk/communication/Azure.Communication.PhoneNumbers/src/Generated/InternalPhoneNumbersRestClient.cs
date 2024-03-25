@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,7 +31,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="endpoint"> The communication resource, for example https://resourcename.communication.azure.com. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public InternalPhoneNumbersRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2023-10-01-preview")
+        public InternalPhoneNumbersRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2024-01-31-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -38,7 +39,7 @@ namespace Azure.Communication.PhoneNumbers
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateListAreaCodesRequest(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, int? skip, int? maxPageSize, PhoneNumberAssignmentType? assignmentType, string locality, string administrativeDivision, string acceptLanguage)
+        internal HttpMessage CreateListAreaCodesRequest(string countryCode, PhoneNumberType phoneNumberType, int? skip, int? maxPageSize, PhoneNumberAssignmentType? assignmentType, string locality, string administrativeDivision, string acceptLanguage)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -46,7 +47,7 @@ namespace Azure.Communication.PhoneNumbers
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/availablePhoneNumbers/countries/", false);
-            uri.AppendPath(twoLetterIsoCountryName, true);
+            uri.AppendPath(countryCode, true);
             uri.AppendPath("/areaCodes", false);
             uri.AppendQuery("phoneNumberType", phoneNumberType.ToString(), true);
             if (skip != null)
@@ -105,7 +106,7 @@ namespace Azure.Communication.PhoneNumbers
             return message;
         }
 
-        internal HttpMessage CreateListAvailableLocalitiesRequest(string twoLetterIsoCountryName, int? skip, int? maxPageSize, string administrativeDivision, string acceptLanguage)
+        internal HttpMessage CreateListAvailableLocalitiesRequest(string countryCode, int? skip, int? maxPageSize, string administrativeDivision, string acceptLanguage)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -113,7 +114,7 @@ namespace Azure.Communication.PhoneNumbers
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/availablePhoneNumbers/countries/", false);
-            uri.AppendPath(twoLetterIsoCountryName, true);
+            uri.AppendPath(countryCode, true);
             uri.AppendPath("/localities", false);
             if (skip != null)
             {
@@ -137,7 +138,7 @@ namespace Azure.Communication.PhoneNumbers
             return message;
         }
 
-        internal HttpMessage CreateListOfferingsRequest(string twoLetterIsoCountryName, int? skip, int? maxPageSize, PhoneNumberType? phoneNumberType, PhoneNumberAssignmentType? assignmentType, string acceptLanguage)
+        internal HttpMessage CreateListOfferingsRequest(string countryCode, int? skip, int? maxPageSize, PhoneNumberType? phoneNumberType, PhoneNumberAssignmentType? assignmentType, string acceptLanguage)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -145,7 +146,7 @@ namespace Azure.Communication.PhoneNumbers
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/availablePhoneNumbers/countries/", false);
-            uri.AppendPath(twoLetterIsoCountryName, true);
+            uri.AppendPath(countryCode, true);
             uri.AppendPath("/offerings", false);
             if (skip != null)
             {
@@ -173,7 +174,7 @@ namespace Azure.Communication.PhoneNumbers
             return message;
         }
 
-        internal HttpMessage CreateSearchAvailablePhoneNumbersRequest(string twoLetterIsoCountryName, PhoneNumberSearchRequest body)
+        internal HttpMessage CreateSearchAvailablePhoneNumbersRequest(string countryCode, PhoneNumberSearchRequest body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -181,7 +182,7 @@ namespace Azure.Communication.PhoneNumbers
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/availablePhoneNumbers/countries/", false);
-            uri.AppendPath(twoLetterIsoCountryName, true);
+            uri.AppendPath(countryCode, true);
             uri.AppendPath("/:search", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -194,22 +195,22 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Search for available phone numbers to purchase. </summary>
-        /// <param name="twoLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
+        /// <param name="countryCode"> The ISO 3166-2 country code, e.g. US. </param>
         /// <param name="body"> The phone number search request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> or <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PhoneNumbersSearchAvailablePhoneNumbersHeaders>> SearchAvailablePhoneNumbersAsync(string twoLetterIsoCountryName, PhoneNumberSearchRequest body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> or <paramref name="body"/> is null. </exception>
+        public async Task<ResponseWithHeaders<PhoneNumbersSearchAvailablePhoneNumbersHeaders>> SearchAvailablePhoneNumbersAsync(string countryCode, PhoneNumberSearchRequest body, CancellationToken cancellationToken = default)
         {
-            if (twoLetterIsoCountryName == null)
+            if (countryCode == null)
             {
-                throw new ArgumentNullException(nameof(twoLetterIsoCountryName));
+                throw new ArgumentNullException(nameof(countryCode));
             }
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateSearchAvailablePhoneNumbersRequest(twoLetterIsoCountryName, body);
+            using var message = CreateSearchAvailablePhoneNumbersRequest(countryCode, body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PhoneNumbersSearchAvailablePhoneNumbersHeaders(message.Response);
             switch (message.Response.Status)
@@ -222,28 +223,112 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Search for available phone numbers to purchase. </summary>
-        /// <param name="twoLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
+        /// <param name="countryCode"> The ISO 3166-2 country code, e.g. US. </param>
         /// <param name="body"> The phone number search request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> or <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<PhoneNumbersSearchAvailablePhoneNumbersHeaders> SearchAvailablePhoneNumbers(string twoLetterIsoCountryName, PhoneNumberSearchRequest body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> or <paramref name="body"/> is null. </exception>
+        public ResponseWithHeaders<PhoneNumbersSearchAvailablePhoneNumbersHeaders> SearchAvailablePhoneNumbers(string countryCode, PhoneNumberSearchRequest body, CancellationToken cancellationToken = default)
         {
-            if (twoLetterIsoCountryName == null)
+            if (countryCode == null)
             {
-                throw new ArgumentNullException(nameof(twoLetterIsoCountryName));
+                throw new ArgumentNullException(nameof(countryCode));
             }
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateSearchAvailablePhoneNumbersRequest(twoLetterIsoCountryName, body);
+            using var message = CreateSearchAvailablePhoneNumbersRequest(countryCode, body);
             _pipeline.Send(message, cancellationToken);
             var headers = new PhoneNumbersSearchAvailablePhoneNumbersHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateBrowseAvailableNumbersRequest(string countryCode, PhoneNumbersBrowseRequest phoneNumbersBrowseRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/availablePhoneNumbers/countries/", false);
+            uri.AppendPath(countryCode, true);
+            uri.AppendPath("/:browse", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(phoneNumbersBrowseRequest);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Searches for available phone numbers to purchase. Note that this does not reserves the numbers in the response. </summary>
+        /// <param name="countryCode"> The ISO 3166-2 country code, e.g. US. </param>
+        /// <param name="phoneNumbersBrowseRequest"> The <see cref="PhoneNumbersBrowseRequest"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> or <paramref name="phoneNumbersBrowseRequest"/> is null. </exception>
+        public async Task<Response<PhoneNumbersBrowseResult>> BrowseAvailableNumbersAsync(string countryCode, PhoneNumbersBrowseRequest phoneNumbersBrowseRequest, CancellationToken cancellationToken = default)
+        {
+            if (countryCode == null)
+            {
+                throw new ArgumentNullException(nameof(countryCode));
+            }
+            if (phoneNumbersBrowseRequest == null)
+            {
+                throw new ArgumentNullException(nameof(phoneNumbersBrowseRequest));
+            }
+
+            using var message = CreateBrowseAvailableNumbersRequest(countryCode, phoneNumbersBrowseRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        PhoneNumbersBrowseResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = PhoneNumbersBrowseResult.DeserializePhoneNumbersBrowseResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Searches for available phone numbers to purchase. Note that this does not reserves the numbers in the response. </summary>
+        /// <param name="countryCode"> The ISO 3166-2 country code, e.g. US. </param>
+        /// <param name="phoneNumbersBrowseRequest"> The <see cref="PhoneNumbersBrowseRequest"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> or <paramref name="phoneNumbersBrowseRequest"/> is null. </exception>
+        public Response<PhoneNumbersBrowseResult> BrowseAvailableNumbers(string countryCode, PhoneNumbersBrowseRequest phoneNumbersBrowseRequest, CancellationToken cancellationToken = default)
+        {
+            if (countryCode == null)
+            {
+                throw new ArgumentNullException(nameof(countryCode));
+            }
+            if (phoneNumbersBrowseRequest == null)
+            {
+                throw new ArgumentNullException(nameof(phoneNumbersBrowseRequest));
+            }
+
+            using var message = CreateBrowseAvailableNumbersRequest(countryCode, phoneNumbersBrowseRequest);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        PhoneNumbersBrowseResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = PhoneNumbersBrowseResult.DeserializePhoneNumbersBrowseResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -377,7 +462,359 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
-        internal HttpMessage CreateUpdateCapabilitiesRequest(string phoneNumber, PhoneNumberCapabilityType? calling, PhoneNumberCapabilityType? sms)
+        internal HttpMessage CreateGetReservationsRequest(int? skip, int? top)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/availablePhoneNumbers/reservations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("top", top.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Get all reservations. </summary>
+        /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
+        /// <param name="top"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<PhoneNumbersReservations>> GetReservationsAsync(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetReservationsRequest(skip, top);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        PhoneNumbersReservations value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = PhoneNumbersReservations.DeserializePhoneNumbersReservations(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get all reservations. </summary>
+        /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
+        /// <param name="top"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<PhoneNumbersReservations> GetReservations(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetReservationsRequest(skip, top);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        PhoneNumbersReservations value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = PhoneNumbersReservations.DeserializePhoneNumbersReservations(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateCreateOrUpdateReservationRequest(string reservationId, IDictionary<string, AvailablePhoneNumber> phoneNumbers)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/availablePhoneNumbers/reservations/", false);
+            uri.AppendPath(reservationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
+            var model = new PhoneNumbersReservation(phoneNumbers);
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Creates or updates a reservation by its ID. </summary>
+        /// <param name="reservationId"> The id of the reservation. </param>
+        /// <param name="phoneNumbers"> Dictionary of &lt;AvailablePhoneNumber&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> or <paramref name="phoneNumbers"/> is null. </exception>
+        public async Task<Response<PhoneNumbersReservation>> CreateOrUpdateReservationAsync(string reservationId, IDictionary<string, AvailablePhoneNumber> phoneNumbers, CancellationToken cancellationToken = default)
+        {
+            if (reservationId == null)
+            {
+                throw new ArgumentNullException(nameof(reservationId));
+            }
+            if (phoneNumbers == null)
+            {
+                throw new ArgumentNullException(nameof(phoneNumbers));
+            }
+
+            using var message = CreateCreateOrUpdateReservationRequest(reservationId, phoneNumbers);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 201:
+                    {
+                        PhoneNumbersReservation value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = PhoneNumbersReservation.DeserializePhoneNumbersReservation(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Creates or updates a reservation by its ID. </summary>
+        /// <param name="reservationId"> The id of the reservation. </param>
+        /// <param name="phoneNumbers"> Dictionary of &lt;AvailablePhoneNumber&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> or <paramref name="phoneNumbers"/> is null. </exception>
+        public Response<PhoneNumbersReservation> CreateOrUpdateReservation(string reservationId, IDictionary<string, AvailablePhoneNumber> phoneNumbers, CancellationToken cancellationToken = default)
+        {
+            if (reservationId == null)
+            {
+                throw new ArgumentNullException(nameof(reservationId));
+            }
+            if (phoneNumbers == null)
+            {
+                throw new ArgumentNullException(nameof(phoneNumbers));
+            }
+
+            using var message = CreateCreateOrUpdateReservationRequest(reservationId, phoneNumbers);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 201:
+                    {
+                        PhoneNumbersReservation value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = PhoneNumbersReservation.DeserializePhoneNumbersReservation(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetReservationRequest(string reservationId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/availablePhoneNumbers/reservations/", false);
+            uri.AppendPath(reservationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Gets a reservation by its ID. </summary>
+        /// <param name="reservationId"> The id of the reservation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> is null. </exception>
+        public async Task<Response<PhoneNumbersReservation>> GetReservationAsync(string reservationId, CancellationToken cancellationToken = default)
+        {
+            if (reservationId == null)
+            {
+                throw new ArgumentNullException(nameof(reservationId));
+            }
+
+            using var message = CreateGetReservationRequest(reservationId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        PhoneNumbersReservation value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = PhoneNumbersReservation.DeserializePhoneNumbersReservation(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets a reservation by its ID. </summary>
+        /// <param name="reservationId"> The id of the reservation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> is null. </exception>
+        public Response<PhoneNumbersReservation> GetReservation(string reservationId, CancellationToken cancellationToken = default)
+        {
+            if (reservationId == null)
+            {
+                throw new ArgumentNullException(nameof(reservationId));
+            }
+
+            using var message = CreateGetReservationRequest(reservationId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        PhoneNumbersReservation value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = PhoneNumbersReservation.DeserializePhoneNumbersReservation(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDeleteReservationRequest(string reservationId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/availablePhoneNumbers/reservations/", false);
+            uri.AppendPath(reservationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Deletes a reservation by its ID. Any phone number in the reservation will be released and made available for others to purchase. </summary>
+        /// <param name="reservationId"> The id of the reservation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> is null. </exception>
+        public async Task<Response> DeleteReservationAsync(string reservationId, CancellationToken cancellationToken = default)
+        {
+            if (reservationId == null)
+            {
+                throw new ArgumentNullException(nameof(reservationId));
+            }
+
+            using var message = CreateDeleteReservationRequest(reservationId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Deletes a reservation by its ID. Any phone number in the reservation will be released and made available for others to purchase. </summary>
+        /// <param name="reservationId"> The id of the reservation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> is null. </exception>
+        public Response DeleteReservation(string reservationId, CancellationToken cancellationToken = default)
+        {
+            if (reservationId == null)
+            {
+                throw new ArgumentNullException(nameof(reservationId));
+            }
+
+            using var message = CreateDeleteReservationRequest(reservationId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateStartReservationPurchaseRequest(string reservationId, bool? consentToNotResellNumbers)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/availablePhoneNumbers/reservations/", false);
+            uri.AppendPath(reservationId, true);
+            uri.AppendPath("/:purchase", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var model = new PhoneNumbersReservationPurchaseRequest()
+            {
+                ConsentToNotResellNumbers = consentToNotResellNumbers
+            };
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Starts the purchase of all phone numbers in the reservation. This is a long running operation. </summary>
+        /// <param name="reservationId"> The id of the reservation. </param>
+        /// <param name="consentToNotResellNumbers"> The consent to not resell numbers. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> is null. </exception>
+        public async Task<ResponseWithHeaders<InternalPhoneNumbersStartReservationPurchaseHeaders>> StartReservationPurchaseAsync(string reservationId, bool? consentToNotResellNumbers = null, CancellationToken cancellationToken = default)
+        {
+            if (reservationId == null)
+            {
+                throw new ArgumentNullException(nameof(reservationId));
+            }
+
+            using var message = CreateStartReservationPurchaseRequest(reservationId, consentToNotResellNumbers);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new InternalPhoneNumbersStartReservationPurchaseHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Starts the purchase of all phone numbers in the reservation. This is a long running operation. </summary>
+        /// <param name="reservationId"> The id of the reservation. </param>
+        /// <param name="consentToNotResellNumbers"> The consent to not resell numbers. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> is null. </exception>
+        public ResponseWithHeaders<InternalPhoneNumbersStartReservationPurchaseHeaders> StartReservationPurchase(string reservationId, bool? consentToNotResellNumbers = null, CancellationToken cancellationToken = default)
+        {
+            if (reservationId == null)
+            {
+                throw new ArgumentNullException(nameof(reservationId));
+            }
+
+            using var message = CreateStartReservationPurchaseRequest(reservationId, consentToNotResellNumbers);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new InternalPhoneNumbersStartReservationPurchaseHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUpdateCapabilitiesRequest(string phoneNumber, PhoneNumberCapabilityType? calling, PhoneNumberCapabilityType? sms, string tenDLCCampaignBriefId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -394,7 +831,8 @@ namespace Azure.Communication.PhoneNumbers
             var model = new PhoneNumberCapabilitiesRequest()
             {
                 Calling = calling,
-                Sms = sms
+                Sms = sms,
+                TenDLCCampaignBriefId = tenDLCCampaignBriefId
             };
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue<PhoneNumberCapabilitiesRequest>(model);
@@ -403,19 +841,20 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Updates the capabilities of a phone number. </summary>
-        /// <param name="phoneNumber"> The phone number id in E.164 format. The leading plus can be either + or encoded as %2B, e.g. +11234567890. </param>
+        /// <param name="phoneNumber"> The purchased phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
         /// <param name="calling"> Capability value for calling. </param>
         /// <param name="sms"> Capability value for SMS. </param>
+        /// <param name="tenDLCCampaignBriefId"> Campaign Brief Id to attach to a number. For adding SMS to local numbers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PhoneNumbersUpdateCapabilitiesHeaders>> UpdateCapabilitiesAsync(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PhoneNumbersUpdateCapabilitiesHeaders>> UpdateCapabilitiesAsync(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, string tenDLCCampaignBriefId = null, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
             {
                 throw new ArgumentNullException(nameof(phoneNumber));
             }
 
-            using var message = CreateUpdateCapabilitiesRequest(phoneNumber, calling, sms);
+            using var message = CreateUpdateCapabilitiesRequest(phoneNumber, calling, sms, tenDLCCampaignBriefId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PhoneNumbersUpdateCapabilitiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -428,19 +867,20 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Updates the capabilities of a phone number. </summary>
-        /// <param name="phoneNumber"> The phone number id in E.164 format. The leading plus can be either + or encoded as %2B, e.g. +11234567890. </param>
+        /// <param name="phoneNumber"> The purchased phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
         /// <param name="calling"> Capability value for calling. </param>
         /// <param name="sms"> Capability value for SMS. </param>
+        /// <param name="tenDLCCampaignBriefId"> Campaign Brief Id to attach to a number. For adding SMS to local numbers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public ResponseWithHeaders<PhoneNumbersUpdateCapabilitiesHeaders> UpdateCapabilities(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PhoneNumbersUpdateCapabilitiesHeaders> UpdateCapabilities(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, string tenDLCCampaignBriefId = null, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
             {
                 throw new ArgumentNullException(nameof(phoneNumber));
             }
 
-            using var message = CreateUpdateCapabilitiesRequest(phoneNumber, calling, sms);
+            using var message = CreateUpdateCapabilitiesRequest(phoneNumber, calling, sms, tenDLCCampaignBriefId);
             _pipeline.Send(message, cancellationToken);
             var headers = new PhoneNumbersUpdateCapabilitiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -537,7 +977,7 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Releases a purchased phone number. </summary>
-        /// <param name="phoneNumber"> Phone number to be released, e.g. +11234567890. </param>
+        /// <param name="phoneNumber"> The purchased phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
         public async Task<ResponseWithHeaders<PhoneNumbersReleasePhoneNumberHeaders>> ReleasePhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
@@ -560,7 +1000,7 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Releases a purchased phone number. </summary>
-        /// <param name="phoneNumber"> Phone number to be released, e.g. +11234567890. </param>
+        /// <param name="phoneNumber"> The purchased phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
         public ResponseWithHeaders<PhoneNumbersReleasePhoneNumberHeaders> ReleasePhoneNumber(string phoneNumber, CancellationToken cancellationToken = default)
@@ -604,7 +1044,7 @@ namespace Azure.Communication.PhoneNumbers
             return message;
         }
 
-        internal HttpMessage CreateOperatorInformationSearchRequest(IEnumerable<string> phoneNumbers)
+        internal HttpMessage CreateOperatorInformationSearchRequest(IEnumerable<string> phoneNumbers, OperatorInformationOptions options)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -616,15 +1056,10 @@ namespace Azure.Communication.PhoneNumbers
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            OperatorInformationRequest operatorInformationRequest = new OperatorInformationRequest();
-            if (phoneNumbers != null)
+            var model = new OperatorInformationRequest(phoneNumbers.ToList())
             {
-                foreach (var value in phoneNumbers)
-                {
-                    operatorInformationRequest.PhoneNumbers.Add(value);
-                }
-            }
-            var model = operatorInformationRequest;
+                Options = options
+            };
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue<OperatorInformationRequest>(model);
             request.Content = content;
@@ -633,10 +1068,17 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Searches for operator information for a given list of phone numbers. </summary>
         /// <param name="phoneNumbers"> Phone number(s) whose operator information is being requested. </param>
+        /// <param name="options"> Represents options to modify a search request for operator information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<OperatorInformationResult>> OperatorInformationSearchAsync(IEnumerable<string> phoneNumbers = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="phoneNumbers"/> is null. </exception>
+        public async Task<Response<OperatorInformationResult>> OperatorInformationSearchAsync(IEnumerable<string> phoneNumbers, OperatorInformationOptions options = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateOperatorInformationSearchRequest(phoneNumbers);
+            if (phoneNumbers == null)
+            {
+                throw new ArgumentNullException(nameof(phoneNumbers));
+            }
+
+            using var message = CreateOperatorInformationSearchRequest(phoneNumbers, options);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -654,10 +1096,17 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Searches for operator information for a given list of phone numbers. </summary>
         /// <param name="phoneNumbers"> Phone number(s) whose operator information is being requested. </param>
+        /// <param name="options"> Represents options to modify a search request for operator information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<OperatorInformationResult> OperatorInformationSearch(IEnumerable<string> phoneNumbers = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="phoneNumbers"/> is null. </exception>
+        public Response<OperatorInformationResult> OperatorInformationSearch(IEnumerable<string> phoneNumbers, OperatorInformationOptions options = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateOperatorInformationSearchRequest(phoneNumbers);
+            if (phoneNumbers == null)
+            {
+                throw new ArgumentNullException(nameof(phoneNumbers));
+            }
+
+            using var message = CreateOperatorInformationSearchRequest(phoneNumbers, options);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -673,7 +1122,7 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
-        internal HttpMessage CreateListAreaCodesNextPageRequest(string nextLink, string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, int? skip, int? maxPageSize, PhoneNumberAssignmentType? assignmentType, string locality, string administrativeDivision, string acceptLanguage)
+        internal HttpMessage CreateListAreaCodesNextPageRequest(string nextLink, string countryCode, PhoneNumberType phoneNumberType, int? skip, int? maxPageSize, PhoneNumberAssignmentType? assignmentType, string locality, string administrativeDivision, string acceptLanguage)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -707,7 +1156,7 @@ namespace Azure.Communication.PhoneNumbers
             return message;
         }
 
-        internal HttpMessage CreateListAvailableLocalitiesNextPageRequest(string nextLink, string twoLetterIsoCountryName, int? skip, int? maxPageSize, string administrativeDivision, string acceptLanguage)
+        internal HttpMessage CreateListAvailableLocalitiesNextPageRequest(string nextLink, string countryCode, int? skip, int? maxPageSize, string administrativeDivision, string acceptLanguage)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -724,7 +1173,7 @@ namespace Azure.Communication.PhoneNumbers
             return message;
         }
 
-        internal HttpMessage CreateListOfferingsNextPageRequest(string nextLink, string twoLetterIsoCountryName, int? skip, int? maxPageSize, PhoneNumberType? phoneNumberType, PhoneNumberAssignmentType? assignmentType, string acceptLanguage)
+        internal HttpMessage CreateListOfferingsNextPageRequest(string nextLink, string countryCode, int? skip, int? maxPageSize, PhoneNumberType? phoneNumberType, PhoneNumberAssignmentType? assignmentType, string acceptLanguage)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -739,6 +1188,77 @@ namespace Azure.Communication.PhoneNumbers
             }
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal HttpMessage CreateGetReservationsNextPageRequest(string nextLink, int? skip, int? top)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Get all reservations. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
+        /// <param name="top"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        public async Task<Response<PhoneNumbersReservations>> GetReservationsNextPageAsync(string nextLink, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+
+            using var message = CreateGetReservationsNextPageRequest(nextLink, skip, top);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        PhoneNumbersReservations value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = PhoneNumbersReservations.DeserializePhoneNumbersReservations(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get all reservations. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
+        /// <param name="top"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        public Response<PhoneNumbersReservations> GetReservationsNextPage(string nextLink, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+
+            using var message = CreateGetReservationsNextPageRequest(nextLink, skip, top);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        PhoneNumbersReservations value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = PhoneNumbersReservations.DeserializePhoneNumbersReservations(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
         }
 
         internal HttpMessage CreateListPhoneNumbersNextPageRequest(string nextLink, int? skip, int? top)
