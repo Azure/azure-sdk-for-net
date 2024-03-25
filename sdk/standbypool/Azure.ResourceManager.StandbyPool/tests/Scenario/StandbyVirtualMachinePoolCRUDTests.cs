@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
         protected long increasedMaxReadyCapacity = 3;
 
         public StandbyVirtualMachinePoolCRUDTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Playback)
+            : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 
