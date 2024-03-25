@@ -10,12 +10,9 @@
 
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)ChangeTrackingDictionary.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)LightweightPkcs8Decoder.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)PemReader.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)Utf8JsonRequestContent.cs" LinkBase="Shared" />
   </ItemGroup>
 
   <ItemGroup>
