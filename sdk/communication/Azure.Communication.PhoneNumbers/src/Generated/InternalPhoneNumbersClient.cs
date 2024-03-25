@@ -31,17 +31,11 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The communication resource, for example https://resourcename.communication.azure.com. </param>
-        /// <param name="phoneNumberType"> Filter by numberType, e.g. Geographic, TollFree. </param>
-        /// <param name="searchId"> The search Id. </param>
-        /// <param name="assignmentType"> Filter by assignmentType, e.g. Person, Application. </param>
-        /// <param name="locality"> The name of locality or town in which to search for the area code. This is required if the number type is Geographic. </param>
-        /// <param name="administrativeDivision"> The name of the state or province in which to search for the area code. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/>, <paramref name="searchId"/> or <paramref name="apiVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal InternalPhoneNumbersClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, PhoneNumberType phoneNumberType, string searchId, PhoneNumberAssignmentType? assignmentType = null, string locality = null, string administrativeDivision = null, string apiVersion = "2024-01-31-preview")
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
+        internal InternalPhoneNumbersClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2024-01-31-preview")
         {
-            RestClient = new InternalPhoneNumbersRestClient(clientDiagnostics, pipeline, endpoint, phoneNumberType, searchId, assignmentType, locality, administrativeDivision, apiVersion);
+            RestClient = new InternalPhoneNumbersRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -85,14 +79,15 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Gets a phone number search result by search id. </summary>
+        /// <param name="searchId"> The search Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PhoneNumberSearchResult>> GetSearchResultAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PhoneNumberSearchResult>> GetSearchResultAsync(string searchId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.GetSearchResult");
             scope.Start();
             try
             {
-                return await RestClient.GetSearchResultAsync(cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetSearchResultAsync(searchId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -102,14 +97,15 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Gets a phone number search result by search id. </summary>
+        /// <param name="searchId"> The search Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PhoneNumberSearchResult> GetSearchResult(CancellationToken cancellationToken = default)
+        public virtual Response<PhoneNumberSearchResult> GetSearchResult(string searchId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.GetSearchResult");
             scope.Start();
             try
             {
-                return RestClient.GetSearchResult(cancellationToken);
+                return RestClient.GetSearchResult(searchId, cancellationToken);
             }
             catch (Exception e)
             {
@@ -304,33 +300,41 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Gets the list of available area codes. </summary>
         /// <param name="countryCode"> The ISO 3166-2 country code, e.g. US. </param>
+        /// <param name="phoneNumberType"> Filter by numberType, e.g. Geographic, TollFree. </param>
         /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
         /// <param name="maxPageSize"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
+        /// <param name="assignmentType"> Filter by assignmentType, e.g. Person, Application. </param>
+        /// <param name="locality"> The name of locality or town in which to search for the area code. This is required if the number type is Geographic. </param>
+        /// <param name="administrativeDivision"> The name of the state or province in which to search for the area code. </param>
         /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. 'en-US'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> is null. </exception>
-        public virtual AsyncPageable<PhoneNumberAreaCode> ListAreaCodesAsync(string countryCode, int? skip = null, int? maxPageSize = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PhoneNumberAreaCode> ListAreaCodesAsync(string countryCode, PhoneNumberType phoneNumberType, int? skip = null, int? maxPageSize = null, PhoneNumberAssignmentType? assignmentType = null, string locality = null, string administrativeDivision = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(countryCode, nameof(countryCode));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListAreaCodesRequest(countryCode, skip, maxPageSize, acceptLanguage);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListAreaCodesNextPageRequest(nextLink, countryCode, skip, maxPageSize, acceptLanguage);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListAreaCodesRequest(countryCode, phoneNumberType, skip, maxPageSize, assignmentType, locality, administrativeDivision, acceptLanguage);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListAreaCodesNextPageRequest(nextLink, countryCode, phoneNumberType, skip, maxPageSize, assignmentType, locality, administrativeDivision, acceptLanguage);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PhoneNumberAreaCode.DeserializePhoneNumberAreaCode, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListAreaCodes", "areaCodes", "nextLink", cancellationToken);
         }
 
         /// <summary> Gets the list of available area codes. </summary>
         /// <param name="countryCode"> The ISO 3166-2 country code, e.g. US. </param>
+        /// <param name="phoneNumberType"> Filter by numberType, e.g. Geographic, TollFree. </param>
         /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
         /// <param name="maxPageSize"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
+        /// <param name="assignmentType"> Filter by assignmentType, e.g. Person, Application. </param>
+        /// <param name="locality"> The name of locality or town in which to search for the area code. This is required if the number type is Geographic. </param>
+        /// <param name="administrativeDivision"> The name of the state or province in which to search for the area code. </param>
         /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. 'en-US'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> is null. </exception>
-        public virtual Pageable<PhoneNumberAreaCode> ListAreaCodes(string countryCode, int? skip = null, int? maxPageSize = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<PhoneNumberAreaCode> ListAreaCodes(string countryCode, PhoneNumberType phoneNumberType, int? skip = null, int? maxPageSize = null, PhoneNumberAssignmentType? assignmentType = null, string locality = null, string administrativeDivision = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(countryCode, nameof(countryCode));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListAreaCodesRequest(countryCode, skip, maxPageSize, acceptLanguage);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListAreaCodesNextPageRequest(nextLink, countryCode, skip, maxPageSize, acceptLanguage);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListAreaCodesRequest(countryCode, phoneNumberType, skip, maxPageSize, assignmentType, locality, administrativeDivision, acceptLanguage);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListAreaCodesNextPageRequest(nextLink, countryCode, phoneNumberType, skip, maxPageSize, assignmentType, locality, administrativeDivision, acceptLanguage);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PhoneNumberAreaCode.DeserializePhoneNumberAreaCode, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListAreaCodes", "areaCodes", "nextLink", cancellationToken);
         }
 
@@ -362,15 +366,16 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="countryCode"> The ISO 3166-2 country code, e.g. US. </param>
         /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
         /// <param name="maxPageSize"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
+        /// <param name="administrativeDivision"> The name of the state or province in which to search for the area code. </param>
         /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. 'en-US'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> is null. </exception>
-        public virtual AsyncPageable<PhoneNumberLocality> ListAvailableLocalitiesAsync(string countryCode, int? skip = null, int? maxPageSize = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PhoneNumberLocality> ListAvailableLocalitiesAsync(string countryCode, int? skip = null, int? maxPageSize = null, string administrativeDivision = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(countryCode, nameof(countryCode));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListAvailableLocalitiesRequest(countryCode, skip, maxPageSize, acceptLanguage);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListAvailableLocalitiesNextPageRequest(nextLink, countryCode, skip, maxPageSize, acceptLanguage);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListAvailableLocalitiesRequest(countryCode, skip, maxPageSize, administrativeDivision, acceptLanguage);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListAvailableLocalitiesNextPageRequest(nextLink, countryCode, skip, maxPageSize, administrativeDivision, acceptLanguage);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PhoneNumberLocality.DeserializePhoneNumberLocality, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListAvailableLocalities", "phoneNumberLocalities", "nextLink", cancellationToken);
         }
 
@@ -378,15 +383,16 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="countryCode"> The ISO 3166-2 country code, e.g. US. </param>
         /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
         /// <param name="maxPageSize"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
+        /// <param name="administrativeDivision"> The name of the state or province in which to search for the area code. </param>
         /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. 'en-US'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> is null. </exception>
-        public virtual Pageable<PhoneNumberLocality> ListAvailableLocalities(string countryCode, int? skip = null, int? maxPageSize = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<PhoneNumberLocality> ListAvailableLocalities(string countryCode, int? skip = null, int? maxPageSize = null, string administrativeDivision = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(countryCode, nameof(countryCode));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListAvailableLocalitiesRequest(countryCode, skip, maxPageSize, acceptLanguage);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListAvailableLocalitiesNextPageRequest(nextLink, countryCode, skip, maxPageSize, acceptLanguage);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListAvailableLocalitiesRequest(countryCode, skip, maxPageSize, administrativeDivision, acceptLanguage);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListAvailableLocalitiesNextPageRequest(nextLink, countryCode, skip, maxPageSize, administrativeDivision, acceptLanguage);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PhoneNumberLocality.DeserializePhoneNumberLocality, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListAvailableLocalities", "phoneNumberLocalities", "nextLink", cancellationToken);
         }
 
@@ -394,15 +400,17 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="countryCode"> The ISO 3166-2 country code, e.g. US. </param>
         /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
         /// <param name="maxPageSize"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
+        /// <param name="phoneNumberType"> Filter by numberType, e.g. Geographic, TollFree. </param>
+        /// <param name="assignmentType"> Filter by assignmentType, e.g. Person, Application. </param>
         /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. 'en-US'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> is null. </exception>
-        public virtual AsyncPageable<PhoneNumberOffering> ListOfferingsAsync(string countryCode, int? skip = null, int? maxPageSize = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PhoneNumberOffering> ListOfferingsAsync(string countryCode, int? skip = null, int? maxPageSize = null, PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? assignmentType = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(countryCode, nameof(countryCode));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListOfferingsRequest(countryCode, skip, maxPageSize, acceptLanguage);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListOfferingsNextPageRequest(nextLink, countryCode, skip, maxPageSize, acceptLanguage);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListOfferingsRequest(countryCode, skip, maxPageSize, phoneNumberType, assignmentType, acceptLanguage);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListOfferingsNextPageRequest(nextLink, countryCode, skip, maxPageSize, phoneNumberType, assignmentType, acceptLanguage);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PhoneNumberOffering.DeserializePhoneNumberOffering, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListOfferings", "phoneNumberOfferings", "nextLink", cancellationToken);
         }
 
@@ -410,15 +418,17 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="countryCode"> The ISO 3166-2 country code, e.g. US. </param>
         /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
         /// <param name="maxPageSize"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
+        /// <param name="phoneNumberType"> Filter by numberType, e.g. Geographic, TollFree. </param>
+        /// <param name="assignmentType"> Filter by assignmentType, e.g. Person, Application. </param>
         /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. 'en-US'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> is null. </exception>
-        public virtual Pageable<PhoneNumberOffering> ListOfferings(string countryCode, int? skip = null, int? maxPageSize = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<PhoneNumberOffering> ListOfferings(string countryCode, int? skip = null, int? maxPageSize = null, PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? assignmentType = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(countryCode, nameof(countryCode));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListOfferingsRequest(countryCode, skip, maxPageSize, acceptLanguage);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListOfferingsNextPageRequest(nextLink, countryCode, skip, maxPageSize, acceptLanguage);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListOfferingsRequest(countryCode, skip, maxPageSize, phoneNumberType, assignmentType, acceptLanguage);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListOfferingsNextPageRequest(nextLink, countryCode, skip, maxPageSize, phoneNumberType, assignmentType, acceptLanguage);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PhoneNumberOffering.DeserializePhoneNumberOffering, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListOfferings", "phoneNumberOfferings", "nextLink", cancellationToken);
         }
 
