@@ -3,11 +3,10 @@
 
 #region Snippet:Azure_Communication_Sms_Tests_UsingStatements
 using System;
-/*@@*/
-using System.IO;
 //@@ using Azure.Communication.Sms;
 #endregion Snippet:Azure_Communication_Sms_Tests_UsingStatements
 
+using System.IO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NUnit.Framework;
