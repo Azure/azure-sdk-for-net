@@ -65,21 +65,21 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="partitionIds"> Current number of shards on the Event Hub. </param>
         /// <param name="createdOn"> Exact time the Event Hub was created. </param>
         /// <param name="updatedOn"> The exact time the message was updated. </param>
+        /// <param name="messageRetentionInDays"> Number of days to retain the events for this Event Hub, value should be 1 to 7 days. </param>
         /// <param name="partitionCount"> Number of partitions created for the Event Hub, allowed values are from 1 to 32 partitions. </param>
         /// <param name="status"> Enumerates the possible values for the status of the Event Hub. </param>
         /// <param name="captureDescription"> Properties of capture description. </param>
-        /// <param name="retentionDescription"> Event Hub retention settings. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> partitionIds, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, long? partitionCount, EventHubEntityStatus? status, CaptureDescription captureDescription, RetentionDescription retentionDescription, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal EventHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> partitionIds, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, long? messageRetentionInDays, long? partitionCount, EventHubEntityStatus? status, CaptureDescription captureDescription, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PartitionIds = partitionIds;
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
+            MessageRetentionInDays = messageRetentionInDays;
             PartitionCount = partitionCount;
             Status = status;
             CaptureDescription = captureDescription;
-            RetentionDescription = retentionDescription;
             Location = location;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -93,6 +93,9 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> The exact time the message was updated. </summary>
         [WirePath("properties.updatedAt")]
         public DateTimeOffset? UpdatedOn { get; }
+        /// <summary> Number of days to retain the events for this Event Hub, value should be 1 to 7 days. </summary>
+        [WirePath("properties.messageRetentionInDays")]
+        public long? MessageRetentionInDays { get; set; }
         /// <summary> Number of partitions created for the Event Hub, allowed values are from 1 to 32 partitions. </summary>
         [WirePath("properties.partitionCount")]
         public long? PartitionCount { get; set; }
@@ -102,9 +105,6 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Properties of capture description. </summary>
         [WirePath("properties.captureDescription")]
         public CaptureDescription CaptureDescription { get; set; }
-        /// <summary> Event Hub retention settings. </summary>
-        [WirePath("properties.retentionDescription")]
-        public RetentionDescription RetentionDescription { get; set; }
         /// <summary> The geo-location where the resource lives. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }

@@ -110,25 +110,6 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource.CreateResourceIdentifier" /> to create an <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEventHubsArmClient.GetEventHubsDisasterRecoveryAuthorizationRuleResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/> object. </returns>
-        public static EventHubsDisasterRecoveryAuthorizationRuleResource GetEventHubsDisasterRecoveryAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableEventHubsArmClient(client).GetEventHubsDisasterRecoveryAuthorizationRuleResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing an <see cref="EventHubAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="EventHubAuthorizationRuleResource.CreateResourceIdentifier" /> to create an <see cref="EventHubAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -145,6 +126,25 @@ namespace Azure.ResourceManager.EventHubs
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableEventHubsArmClient(client).GetEventHubAuthorizationRuleResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource.CreateResourceIdentifier" /> to create an <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableEventHubsArmClient.GetEventHubsDisasterRecoveryAuthorizationRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/> object. </returns>
+        public static EventHubsDisasterRecoveryAuthorizationRuleResource GetEventHubsDisasterRecoveryAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableEventHubsArmClient(client).GetEventHubsDisasterRecoveryAuthorizationRuleResource(id);
         }
 
         /// <summary>
@@ -167,25 +167,6 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EventHubsDisasterRecoveryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EventHubsDisasterRecoveryResource.CreateResourceIdentifier" /> to create an <see cref="EventHubsDisasterRecoveryResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEventHubsArmClient.GetEventHubsDisasterRecoveryResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EventHubsDisasterRecoveryResource"/> object. </returns>
-        public static EventHubsDisasterRecoveryResource GetEventHubsDisasterRecoveryResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableEventHubsArmClient(client).GetEventHubsDisasterRecoveryResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing an <see cref="EventHubResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="EventHubResource.CreateResourceIdentifier" /> to create an <see cref="EventHubResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -202,6 +183,25 @@ namespace Azure.ResourceManager.EventHubs
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableEventHubsArmClient(client).GetEventHubResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="EventHubsDisasterRecoveryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EventHubsDisasterRecoveryResource.CreateResourceIdentifier" /> to create an <see cref="EventHubsDisasterRecoveryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableEventHubsArmClient.GetEventHubsDisasterRecoveryResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EventHubsDisasterRecoveryResource"/> object. </returns>
+        public static EventHubsDisasterRecoveryResource GetEventHubsDisasterRecoveryResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableEventHubsArmClient(client).GetEventHubsDisasterRecoveryResource(id);
         }
 
         /// <summary>
@@ -243,25 +243,6 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EventHubsApplicationGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EventHubsApplicationGroupResource.CreateResourceIdentifier" /> to create an <see cref="EventHubsApplicationGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEventHubsArmClient.GetEventHubsApplicationGroupResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EventHubsApplicationGroupResource"/> object. </returns>
-        public static EventHubsApplicationGroupResource GetEventHubsApplicationGroupResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableEventHubsArmClient(client).GetEventHubsApplicationGroupResource(id);
-        }
-
-        /// <summary>
         /// Gets a collection of EventHubsClusterResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
@@ -291,7 +272,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -329,7 +310,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -384,7 +365,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -422,7 +403,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -460,7 +441,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -496,7 +477,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -532,7 +513,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -568,7 +549,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -604,7 +585,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -640,7 +621,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -676,7 +657,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -712,7 +693,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

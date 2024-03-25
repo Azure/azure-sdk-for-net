@@ -90,11 +90,6 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(SupportsScaling))
-            {
-                writer.WritePropertyName("supportsScaling"u8);
-                writer.WriteBooleanValue(SupportsScaling.Value);
-            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -145,7 +140,6 @@ namespace Azure.ResourceManager.EventHubs
             DateTimeOffset? updatedAt = default;
             string metricId = default;
             string status = default;
-            bool? supportsScaling = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -239,15 +233,6 @@ namespace Azure.ResourceManager.EventHubs
                             status = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("supportsScaling"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            supportsScaling = property0.Value.GetBoolean();
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -269,7 +254,6 @@ namespace Azure.ResourceManager.EventHubs
                 updatedAt,
                 metricId,
                 status,
-                supportsScaling,
                 serializedAdditionalRawData);
         }
 
@@ -468,21 +452,6 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         builder.AppendLine($"'{Status}'");
                     }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportsScaling), out propertyOverride);
-            if (Optional.IsDefined(SupportsScaling) || hasPropertyOverride)
-            {
-                builder.Append("    supportsScaling: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    var boolValue = SupportsScaling.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
                 }
             }
 

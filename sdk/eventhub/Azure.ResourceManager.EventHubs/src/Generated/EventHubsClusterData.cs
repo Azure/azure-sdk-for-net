@@ -69,16 +69,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="updatedOn"> The UTC time when the Event Hubs Cluster was last updated. </param>
         /// <param name="metricId"> The metric ID of the cluster resource. Provided by the service and not modifiable by the user. </param>
         /// <param name="status"> Status of the Cluster resource. </param>
-        /// <param name="supportsScaling"> A value that indicates whether Scaling is Supported. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubsClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EventHubsClusterSku sku, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string metricId, string status, bool? supportsScaling, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal EventHubsClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EventHubsClusterSku sku, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string metricId, string status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
             MetricId = metricId;
             Status = status;
-            SupportsScaling = supportsScaling;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -102,8 +100,5 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Status of the Cluster resource. </summary>
         [WirePath("properties.status")]
         public string Status { get; }
-        /// <summary> A value that indicates whether Scaling is Supported. </summary>
-        [WirePath("properties.supportsScaling")]
-        public bool? SupportsScaling { get; set; }
     }
 }

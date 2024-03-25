@@ -83,18 +83,6 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource.CreateResourceIdentifier" /> to create an <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/> object. </returns>
-        public virtual EventHubsDisasterRecoveryAuthorizationRuleResource GetEventHubsDisasterRecoveryAuthorizationRuleResource(ResourceIdentifier id)
-        {
-            EventHubsDisasterRecoveryAuthorizationRuleResource.ValidateResourceId(id);
-            return new EventHubsDisasterRecoveryAuthorizationRuleResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing an <see cref="EventHubAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="EventHubAuthorizationRuleResource.CreateResourceIdentifier" /> to create an <see cref="EventHubAuthorizationRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -104,6 +92,18 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         {
             EventHubAuthorizationRuleResource.ValidateResourceId(id);
             return new EventHubAuthorizationRuleResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource.CreateResourceIdentifier" /> to create an <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/> object. </returns>
+        public virtual EventHubsDisasterRecoveryAuthorizationRuleResource GetEventHubsDisasterRecoveryAuthorizationRuleResource(ResourceIdentifier id)
+        {
+            EventHubsDisasterRecoveryAuthorizationRuleResource.ValidateResourceId(id);
+            return new EventHubsDisasterRecoveryAuthorizationRuleResource(Client, id);
         }
 
         /// <summary>
@@ -119,18 +119,6 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EventHubsDisasterRecoveryResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EventHubsDisasterRecoveryResource.CreateResourceIdentifier" /> to create an <see cref="EventHubsDisasterRecoveryResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EventHubsDisasterRecoveryResource"/> object. </returns>
-        public virtual EventHubsDisasterRecoveryResource GetEventHubsDisasterRecoveryResource(ResourceIdentifier id)
-        {
-            EventHubsDisasterRecoveryResource.ValidateResourceId(id);
-            return new EventHubsDisasterRecoveryResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing an <see cref="EventHubResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="EventHubResource.CreateResourceIdentifier" /> to create an <see cref="EventHubResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -140,6 +128,18 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         {
             EventHubResource.ValidateResourceId(id);
             return new EventHubResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="EventHubsDisasterRecoveryResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EventHubsDisasterRecoveryResource.CreateResourceIdentifier" /> to create an <see cref="EventHubsDisasterRecoveryResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EventHubsDisasterRecoveryResource"/> object. </returns>
+        public virtual EventHubsDisasterRecoveryResource GetEventHubsDisasterRecoveryResource(ResourceIdentifier id)
+        {
+            EventHubsDisasterRecoveryResource.ValidateResourceId(id);
+            return new EventHubsDisasterRecoveryResource(Client, id);
         }
 
         /// <summary>
@@ -164,18 +164,6 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         {
             EventHubsSchemaGroupResource.ValidateResourceId(id);
             return new EventHubsSchemaGroupResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="EventHubsApplicationGroupResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EventHubsApplicationGroupResource.CreateResourceIdentifier" /> to create an <see cref="EventHubsApplicationGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EventHubsApplicationGroupResource"/> object. </returns>
-        public virtual EventHubsApplicationGroupResource GetEventHubsApplicationGroupResource(ResourceIdentifier id)
-        {
-            EventHubsApplicationGroupResource.ValidateResourceId(id);
-            return new EventHubsApplicationGroupResource(Client, id);
         }
     }
 }

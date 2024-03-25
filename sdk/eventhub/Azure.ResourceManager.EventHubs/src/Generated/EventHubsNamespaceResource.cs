@@ -40,10 +40,6 @@ namespace Azure.ResourceManager.EventHubs
         private readonly NamespacesRestOperations _eventHubsNamespaceNamespacesRestClient;
         private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
         private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
-        private readonly ClientDiagnostics _networkSecurityPerimeterConfigurationClientDiagnostics;
-        private readonly NetworkSecurityPerimeterConfigurationRestOperations _networkSecurityPerimeterConfigurationRestClient;
-        private readonly ClientDiagnostics _networkSecurityPerimeterConfigurationsClientDiagnostics;
-        private readonly NetworkSecurityPerimeterConfigurationsRestOperations _networkSecurityPerimeterConfigurationsRestClient;
         private readonly ClientDiagnostics _disasterRecoveryConfigsClientDiagnostics;
         private readonly DisasterRecoveryConfigsRestOperations _disasterRecoveryConfigsRestClient;
         private readonly EventHubsNamespaceData _data;
@@ -75,10 +71,6 @@ namespace Azure.ResourceManager.EventHubs
             _eventHubsNamespaceNamespacesRestClient = new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubsNamespaceNamespacesApiVersion);
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _networkSecurityPerimeterConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _networkSecurityPerimeterConfigurationRestClient = new NetworkSecurityPerimeterConfigurationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _networkSecurityPerimeterConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _networkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _disasterRecoveryConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _disasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
@@ -134,7 +126,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -165,7 +157,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -203,7 +195,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -234,7 +226,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -250,75 +242,6 @@ namespace Azure.ResourceManager.EventHubs
         public virtual Response<EventHubsPrivateEndpointConnectionResource> GetEventHubsPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             return GetEventHubsPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of EventHubsDisasterRecoveryResources in the EventHubsNamespace. </summary>
-        /// <returns> An object representing collection of EventHubsDisasterRecoveryResources and their operations over a EventHubsDisasterRecoveryResource. </returns>
-        public virtual EventHubsDisasterRecoveryCollection GetEventHubsDisasterRecoveries()
-        {
-            return GetCachedClient(client => new EventHubsDisasterRecoveryCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieves Alias(Disaster Recovery configuration) for primary or secondary namespace
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DisasterRecoveryConfigs_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsDisasterRecoveryResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="alias"> The Disaster Recovery configuration name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<EventHubsDisasterRecoveryResource>> GetEventHubsDisasterRecoveryAsync(string @alias, CancellationToken cancellationToken = default)
-        {
-            return await GetEventHubsDisasterRecoveries().GetAsync(@alias, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieves Alias(Disaster Recovery configuration) for primary or secondary namespace
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DisasterRecoveryConfigs_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsDisasterRecoveryResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="alias"> The Disaster Recovery configuration name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<EventHubsDisasterRecoveryResource> GetEventHubsDisasterRecovery(string @alias, CancellationToken cancellationToken = default)
-        {
-            return GetEventHubsDisasterRecoveries().Get(@alias, cancellationToken);
         }
 
         /// <summary> Gets a collection of EventHubResources in the EventHubsNamespace. </summary>
@@ -341,7 +264,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -372,7 +295,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -388,6 +311,75 @@ namespace Azure.ResourceManager.EventHubs
         public virtual Response<EventHubResource> GetEventHub(string eventHubName, CancellationToken cancellationToken = default)
         {
             return GetEventHubs().Get(eventHubName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of EventHubsDisasterRecoveryResources in the EventHubsNamespace. </summary>
+        /// <returns> An object representing collection of EventHubsDisasterRecoveryResources and their operations over a EventHubsDisasterRecoveryResource. </returns>
+        public virtual EventHubsDisasterRecoveryCollection GetEventHubsDisasterRecoveries()
+        {
+            return GetCachedClient(client => new EventHubsDisasterRecoveryCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Retrieves Alias(Disaster Recovery configuration) for primary or secondary namespace
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DisasterRecoveryConfigs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsDisasterRecoveryResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="alias"> The Disaster Recovery configuration name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EventHubsDisasterRecoveryResource>> GetEventHubsDisasterRecoveryAsync(string @alias, CancellationToken cancellationToken = default)
+        {
+            return await GetEventHubsDisasterRecoveries().GetAsync(@alias, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves Alias(Disaster Recovery configuration) for primary or secondary namespace
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DisasterRecoveryConfigs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsDisasterRecoveryResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="alias"> The Disaster Recovery configuration name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EventHubsDisasterRecoveryResource> GetEventHubsDisasterRecovery(string @alias, CancellationToken cancellationToken = default)
+        {
+            return GetEventHubsDisasterRecoveries().Get(@alias, cancellationToken);
         }
 
         /// <summary> Gets a collection of EventHubsSchemaGroupResources in the EventHubsNamespace. </summary>
@@ -409,7 +401,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -439,7 +431,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -457,75 +449,6 @@ namespace Azure.ResourceManager.EventHubs
             return GetEventHubsSchemaGroups().Get(schemaGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EventHubsApplicationGroupResources in the EventHubsNamespace. </summary>
-        /// <returns> An object representing collection of EventHubsApplicationGroupResources and their operations over a EventHubsApplicationGroupResource. </returns>
-        public virtual EventHubsApplicationGroupCollection GetEventHubsApplicationGroups()
-        {
-            return GetCachedClient(client => new EventHubsApplicationGroupCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets an ApplicationGroup for a Namespace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/applicationGroups/{applicationGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGroup_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsApplicationGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="applicationGroupName"> The Application Group name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<EventHubsApplicationGroupResource>> GetEventHubsApplicationGroupAsync(string applicationGroupName, CancellationToken cancellationToken = default)
-        {
-            return await GetEventHubsApplicationGroups().GetAsync(applicationGroupName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an ApplicationGroup for a Namespace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/applicationGroups/{applicationGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGroup_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsApplicationGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="applicationGroupName"> The Application Group name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<EventHubsApplicationGroupResource> GetEventHubsApplicationGroup(string applicationGroupName, CancellationToken cancellationToken = default)
-        {
-            return GetEventHubsApplicationGroups().Get(applicationGroupName, cancellationToken);
-        }
-
         /// <summary>
         /// Gets the description of the specified namespace.
         /// <list type="bullet">
@@ -539,7 +462,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -579,7 +502,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -619,7 +542,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -661,7 +584,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -703,7 +626,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -745,7 +668,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -787,7 +710,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -812,7 +735,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -822,142 +745,6 @@ namespace Azure.ResourceManager.EventHubs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => EventHubsPrivateLinkResourceData.DeserializeEventHubsPrivateLinkResourceData(e), _privateLinkResourcesClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetPrivateLinkResources", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets list of current NetworkSecurityPerimeterConfiguration for Namespace
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkSecurityPerimeterConfigurations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterConfiguration_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventHubsNetworkSecurityPerimeterConfiguration"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventHubsNetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfigurationsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkSecurityPerimeterConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => EventHubsNetworkSecurityPerimeterConfiguration.DeserializeEventHubsNetworkSecurityPerimeterConfiguration(e), _networkSecurityPerimeterConfigurationClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetNetworkSecurityPerimeterConfigurations", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets list of current NetworkSecurityPerimeterConfiguration for Namespace
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkSecurityPerimeterConfigurations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterConfiguration_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventHubsNetworkSecurityPerimeterConfiguration"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventHubsNetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfigurations(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkSecurityPerimeterConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => EventHubsNetworkSecurityPerimeterConfiguration.DeserializeEventHubsNetworkSecurityPerimeterConfiguration(e), _networkSecurityPerimeterConfigurationClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetNetworkSecurityPerimeterConfigurations", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Refreshes any information about the association.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkSecurityPerimeterConfigurations/{resourceAssociationName}/reconcile</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterConfigurations_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resourceAssociationName"> The ResourceAssociation Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceAssociationName"/> is null. </exception>
-        public virtual async Task<ArmOperation> CreateOrUpdateNetworkSecurityPerimeterConfigurationAsync(WaitUntil waitUntil, string resourceAssociationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceAssociationName, nameof(resourceAssociationName));
-
-            using var scope = _networkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("EventHubsNamespaceResource.CreateOrUpdateNetworkSecurityPerimeterConfiguration");
-            scope.Start();
-            try
-            {
-                var response = await _networkSecurityPerimeterConfigurationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceAssociationName, cancellationToken).ConfigureAwait(false);
-                var operation = new EventHubsArmOperation(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, _networkSecurityPerimeterConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceAssociationName).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Refreshes any information about the association.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkSecurityPerimeterConfigurations/{resourceAssociationName}/reconcile</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterConfigurations_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resourceAssociationName"> The ResourceAssociation Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceAssociationName"/> is null. </exception>
-        public virtual ArmOperation CreateOrUpdateNetworkSecurityPerimeterConfiguration(WaitUntil waitUntil, string resourceAssociationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceAssociationName, nameof(resourceAssociationName));
-
-            using var scope = _networkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("EventHubsNamespaceResource.CreateOrUpdateNetworkSecurityPerimeterConfiguration");
-            scope.Start();
-            try
-            {
-                var response = _networkSecurityPerimeterConfigurationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceAssociationName, cancellationToken);
-                var operation = new EventHubsArmOperation(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, _networkSecurityPerimeterConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceAssociationName).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary>
@@ -973,7 +760,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1011,7 +798,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1049,7 +836,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1111,7 +898,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1173,7 +960,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1230,7 +1017,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1287,7 +1074,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1347,7 +1134,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

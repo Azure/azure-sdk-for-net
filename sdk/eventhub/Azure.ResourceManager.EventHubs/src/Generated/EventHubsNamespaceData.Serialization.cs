@@ -75,11 +75,6 @@ namespace Azure.ResourceManager.EventHubs
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinimumTlsVersion))
-            {
-                writer.WritePropertyName("minimumTlsVersion"u8);
-                writer.WriteStringValue(MinimumTlsVersion.Value.ToString());
-            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -119,11 +114,6 @@ namespace Azure.ResourceManager.EventHubs
             {
                 writer.WritePropertyName("isAutoInflateEnabled"u8);
                 writer.WriteBooleanValue(IsAutoInflateEnabled.Value);
-            }
-            if (Optional.IsDefined(PublicNetworkAccess))
-            {
-                writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             if (Optional.IsDefined(MaximumThroughputUnits))
             {
@@ -212,7 +202,6 @@ namespace Azure.ResourceManager.EventHubs
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            EventHubsTlsVersion? minimumTlsVersion = default;
             string provisioningState = default;
             string status = default;
             DateTimeOffset? createdAt = default;
@@ -221,7 +210,6 @@ namespace Azure.ResourceManager.EventHubs
             ResourceIdentifier clusterArmId = default;
             string metricId = default;
             bool? isAutoInflateEnabled = default;
-            EventHubsPublicNetworkAccess? publicNetworkAccess = default;
             int? maximumThroughputUnits = default;
             bool? kafkaEnabled = default;
             bool? zoneRedundant = default;
@@ -303,15 +291,6 @@ namespace Azure.ResourceManager.EventHubs
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("minimumTlsVersion"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            minimumTlsVersion = new EventHubsTlsVersion(property0.Value.GetString());
-                            continue;
-                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
@@ -366,15 +345,6 @@ namespace Azure.ResourceManager.EventHubs
                                 continue;
                             }
                             isAutoInflateEnabled = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("publicNetworkAccess"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            publicNetworkAccess = new EventHubsPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("maximumThroughputUnits"u8))
@@ -459,7 +429,6 @@ namespace Azure.ResourceManager.EventHubs
                 location,
                 sku,
                 identity,
-                minimumTlsVersion,
                 provisioningState,
                 status,
                 createdAt,
@@ -468,7 +437,6 @@ namespace Azure.ResourceManager.EventHubs
                 clusterArmId,
                 metricId,
                 isAutoInflateEnabled,
-                publicNetworkAccess,
                 maximumThroughputUnits,
                 kafkaEnabled,
                 zoneRedundant,
@@ -617,20 +585,6 @@ namespace Azure.ResourceManager.EventHubs
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinimumTlsVersion), out propertyOverride);
-            if (Optional.IsDefined(MinimumTlsVersion) || hasPropertyOverride)
-            {
-                builder.Append("    minimumTlsVersion: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{MinimumTlsVersion.Value.ToString()}'");
-                }
-            }
-
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
             if (Optional.IsDefined(ProvisioningState) || hasPropertyOverride)
             {
@@ -775,20 +729,6 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     var boolValue = IsAutoInflateEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetworkAccess), out propertyOverride);
-            if (Optional.IsDefined(PublicNetworkAccess) || hasPropertyOverride)
-            {
-                builder.Append("    publicNetworkAccess: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{PublicNetworkAccess.Value.ToString()}'");
                 }
             }
 

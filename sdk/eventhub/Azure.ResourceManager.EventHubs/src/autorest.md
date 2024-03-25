@@ -7,18 +7,15 @@ azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.EventHubs
 output-folder: $(this-folder)/Generated
-require: https://github.com/Azure/azure-rest-api-specs/blob/969e0846e56a0869203bcc52773415c71115f59e/specification/eventhub/resource-manager/readme.md
-# tag: package-2022-10-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/8fb0263a6adbb529a9a7bf3e56110f3abdd55c72/specification/eventhub/resource-manager/readme.md
+tag: package-2021-11
 clear-output-folder: true
-sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
-  clear-output-folder: true
 skip-csproj: true
+use-model-reader-writer: true
 enable-bicep-serialization: true
 
 modelerfour:
   flatten-payloads: false
-use-model-reader-writer: true
 
 request-path-to-resource-name:
     /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}: EventHubsDisasterRecovery
@@ -26,7 +23,6 @@ request-path-to-resource-name:
     /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/authorizationRules/{authorizationRuleName}: EventHubAuthorizationRule
     /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}: EventHubsNamespaceAuthorizationRule
     /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/consumergroups/{consumerGroupName}: EventHubsConsumerGroup
-    /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/applicationGroups/{applicationGroupName}: EventHubsApplicationGroup
 override-operation-name:
     Namespaces_CheckNameAvailability: CheckEventHubsNamespaceNameAvailability
     DisasterRecoveryConfigs_CheckNameAvailability: CheckEventHubsDisasterRecoveryNameAvailability
@@ -38,7 +34,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-acronym-mapping:
+rename-rules:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -61,22 +57,6 @@ acronym-mapping:
   URI: Uri
   Etag: ETag|etag
 
-prepend-rp-prefix:
-  - TlsVersion
-  - PublicNetworkAccess
-  - ProvisioningIssueProperties
-  - ProvisioningIssue
-  - MetricId
-  - NetworkSecurityPerimeter
-  - NetworkSecurityPerimeterConfiguration
-  - NetworkSecurityPerimeterConfigurationPropertiesProfile
-  - NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation
-  - NetworkSecurityPerimeterConfigurationProvisioningState
-  - NspAccessRule
-  - NspAccessRuleDirection
-  - NspAccessRuleProperties
-  - ResourceAssociationAccessMode
-
 rename-mapping:
   SchemaType: EventHubsSchemaType
   SchemaCompatibility: EventHubsSchemaCompatibility
@@ -84,13 +64,6 @@ rename-mapping:
   UnavailableReason: EventHubsNameUnavailableReason
 
 directive:
-    - from: ApplicationGroups.json
-      where: $.definitions
-      transform: >
-        $.ApplicationGroupPolicy['x-ms-client-name'] = 'EventHubsApplicationGroupPolicy';
-        $.ApplicationGroupListResult['x-ms-client-name'] = 'EventHubsApplicationGroupListResult';
-        $.ThrottlingPolicy['x-ms-client-name'] = 'EventHubsThrottlingPolicy';
-        $.ApplicationGroup['x-ms-client-name'] = 'EventHubsApplicationGroup';
     - from: AuthorizationRules.json
       where: $.definitions
       transform: >
@@ -126,7 +99,6 @@ directive:
         $.Eventhub.properties.properties.properties.status['x-ms-enum'].name = 'EventHubEntityStatus';
         $.Destination['x-ms-client-name'] = 'EventHubDestination';
         $.Destination.properties.properties.properties.storageAccountResourceId['x-ms-format'] = 'arm-id';
-        delete $.Eventhub.properties.properties.properties.messageRetentionInDays;
     - from: namespaces-preview.json
       where: $.definitions
       transform: >
@@ -138,8 +110,6 @@ directive:
         $.ConnectionState.properties.status['x-ms-enum'].name = 'EventHubsPrivateLinkConnectionStatus';
         $.Encryption['x-ms-client-name'] = 'EventHubsEncryption';
         $.KeyVaultProperties['x-ms-client-name'] = 'EventHubsKeyVaultProperties';
-        $.KeyVaultProperties['x-ms-client-name'] = 'EventHubsKeyVaultProperties';
-        $.NetworkSecurityPerimeterConfiguration.allOf[0]['$ref'] = '../../../common/v1/definitions.json#/definitions/TrackedResource';
     - from: CheckNameAvailability.json
       where: $.definitions
       transform: >
