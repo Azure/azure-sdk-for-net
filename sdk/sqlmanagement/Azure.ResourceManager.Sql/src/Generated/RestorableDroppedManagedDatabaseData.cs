@@ -83,12 +83,16 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The name of the database. </summary>
+        [WirePath("properties.databaseName")]
         public string DatabaseName { get; }
         /// <summary> The creation date of the database (ISO8601 format). </summary>
+        [WirePath("properties.creationDate")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The deletion date of the database (ISO8601 format). </summary>
+        [WirePath("properties.deletionDate")]
         public DateTimeOffset? DeletedOn { get; }
         /// <summary> The earliest restore date of the database (ISO8601 format). </summary>
+        [WirePath("properties.earliestRestoreDate")]
         public DateTimeOffset? EarliestRestoreOn { get; }
     }
 }

@@ -72,18 +72,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>
+        [WirePath("_rid")]
         public string Rid { get; }
         /// <summary> The operation type of this collection event. </summary>
+        [WirePath("operationType")]
         public CosmosDBOperationType? OperationType { get; }
         /// <summary> A state of this collection to identify if this container is restorable in same account. </summary>
+        [WirePath("canUndelete")]
         public string CanUndelete { get; }
         /// <summary> The reason why this collection can not be restored in same account. </summary>
+        [WirePath("canUndeleteReason")]
         public string CanUndeleteReason { get; }
         /// <summary> The time when this collection event happened. </summary>
+        [WirePath("eventTimestamp")]
         public string EventTimestamp { get; }
         /// <summary> The name of this MongoDB collection. </summary>
+        [WirePath("ownerId")]
         public string CollectionName { get; }
         /// <summary> The resource ID of this MongoDB collection. </summary>
+        [WirePath("ownerResourceId")]
         public string CollectionId { get; }
     }
 }

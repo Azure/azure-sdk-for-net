@@ -33,7 +33,7 @@ namespace Azure.AI.Translation.Text
                 foreach (var item in Translation)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<TranslationLanguage>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -44,7 +44,7 @@ namespace Azure.AI.Translation.Text
                 foreach (var item in Transliteration)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<TransliterationLanguage>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -55,7 +55,7 @@ namespace Azure.AI.Translation.Text
                 foreach (var item in Dictionary)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<SourceDictionaryLanguage>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -198,7 +198,7 @@ namespace Azure.AI.Translation.Text
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<GetLanguagesResult>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

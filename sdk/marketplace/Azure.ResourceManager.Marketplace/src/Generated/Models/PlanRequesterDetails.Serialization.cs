@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in Requesters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PlanRequesterInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

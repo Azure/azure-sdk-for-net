@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStartArray();
                 foreach (var item in NicInfoList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NicInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

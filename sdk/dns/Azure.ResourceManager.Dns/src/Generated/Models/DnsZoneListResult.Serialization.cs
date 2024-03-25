@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Dns.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DnsZoneData>(item, options);
                 }
                 writer.WriteEndArray();
             }

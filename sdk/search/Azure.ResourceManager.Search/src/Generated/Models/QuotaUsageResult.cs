@@ -69,14 +69,19 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> The resource id of the quota usage sku endpoint for Microsoft.Search provider. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
         /// <summary> The unit of measurement for the search sku. </summary>
+        [WirePath("unit")]
         public string Unit { get; }
         /// <summary> The currently used up value for the particular search sku. </summary>
+        [WirePath("currentValue")]
         public int? CurrentValue { get; }
         /// <summary> The quota limit for the particular search sku. </summary>
+        [WirePath("limit")]
         public int? Limit { get; }
         /// <summary> The name of the sku supported by Azure Cognitive Search. </summary>
+        [WirePath("name")]
         public QuotaUsageResultName Name { get; }
     }
 }

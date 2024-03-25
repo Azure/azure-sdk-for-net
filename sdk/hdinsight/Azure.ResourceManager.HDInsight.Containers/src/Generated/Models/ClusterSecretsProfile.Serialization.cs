@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in Secrets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ClusterSecretReference>(item, options);
                 }
                 writer.WriteEndArray();
             }

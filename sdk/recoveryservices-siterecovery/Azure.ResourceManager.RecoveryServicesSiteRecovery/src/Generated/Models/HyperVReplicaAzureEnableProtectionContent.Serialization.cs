@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in DisksToIncludeForManagedDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HyperVReplicaAzureDiskDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }

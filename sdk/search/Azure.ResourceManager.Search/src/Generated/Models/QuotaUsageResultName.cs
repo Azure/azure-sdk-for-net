@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> The sku name supported by Azure Cognitive Search. </summary>
+        [WirePath("value")]
         public string Value { get; }
         /// <summary> The localized string value for the sku supported by Azure Cognitive Search. </summary>
+        [WirePath("localizedValue")]
         public string LocalizedValue { get; }
     }
 }

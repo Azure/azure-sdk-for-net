@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(HiddenPropertyPaths))
             {
                 writer.WritePropertyName("hiddenPropertyPaths"u8);
-                writer.WriteObjectValue(HiddenPropertyPaths);
+                writer.WriteObjectValue<LoggingHiddenPropertyPaths>(HiddenPropertyPaths, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

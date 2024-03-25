@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (MappingFunction != null)
                 {
                     writer.WritePropertyName("mappingFunction"u8);
-                    writer.WriteObjectValue(MappingFunction);
+                    writer.WriteObjectValue<FieldMappingFunction>(MappingFunction);
                 }
                 else
                 {

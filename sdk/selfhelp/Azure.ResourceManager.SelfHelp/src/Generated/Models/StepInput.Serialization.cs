@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             if (Optional.IsDefined(ResponseValidationProperties))
             {
                 writer.WritePropertyName("responseValidationProperties"u8);
-                writer.WriteObjectValue(ResponseValidationProperties);
+                writer.WriteObjectValue<ResponseValidationProperties>(ResponseValidationProperties, options);
             }
             if (Optional.IsCollectionDefined(ResponseOptions))
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in ResponseOptions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResponseConfig>(item, options);
                 }
                 writer.WriteEndArray();
             }

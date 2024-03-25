@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DetectedChangeData>(item, options);
                 }
                 writer.WriteEndArray();
             }

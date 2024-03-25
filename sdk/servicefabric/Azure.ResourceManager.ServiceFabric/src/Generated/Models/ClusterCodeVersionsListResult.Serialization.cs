@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ClusterCodeVersionsResult>(item, options);
                 }
                 writer.WriteEndArray();
             }

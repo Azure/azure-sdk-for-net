@@ -30,7 +30,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             writer.WriteStartArray();
             foreach (var item in Blocks)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DetectedTextBlock>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -138,7 +138,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ReadResult>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (Optional.IsDefined(AzureContainerInfo))
             {
                 writer.WritePropertyName("azureContainerInfo"u8);
-                writer.WriteObjectValue(AzureContainerInfo);
+                writer.WriteObjectValue<DataBoxEdgeStorageContainerInfo>(AzureContainerInfo, options);
             }
             writer.WritePropertyName("accessProtocol"u8);
             writer.WriteStringValue(AccessProtocol.ToString());
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in UserAccessRights)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UserAccessRight>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in ClientAccessRights)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ClientAccessRight>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(RefreshDetails))
             {
                 writer.WritePropertyName("refreshDetails"u8);
-                writer.WriteObjectValue(RefreshDetails);
+                writer.WriteObjectValue<DataBoxEdgeRefreshDetails>(RefreshDetails, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ShareMappings))
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in ShareMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataBoxEdgeMountPointMap>(item, options);
                 }
                 writer.WriteEndArray();
             }

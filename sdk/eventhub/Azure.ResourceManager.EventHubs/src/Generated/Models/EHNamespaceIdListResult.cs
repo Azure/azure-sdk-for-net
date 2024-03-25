@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Result of the List Namespace IDs operation. </summary>
+        [WirePath("value")]
         public IReadOnlyList<SubResource> Value { get; }
     }
 }

@@ -245,7 +245,10 @@ namespace Azure.Storage.DataMovement
         /// If the transfer requires client-side encryption, necessary
         /// operations will occur here.
         /// </summary>
-        protected internal override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
+        protected internal override Task CompleteTransferAsync(
+            bool overwrite,
+            StorageResourceCompleteTransferOptions completeTransferOptions = default,
+            CancellationToken cancellationToken = default)
         {
             if (File.Exists(_uri.LocalPath))
             {

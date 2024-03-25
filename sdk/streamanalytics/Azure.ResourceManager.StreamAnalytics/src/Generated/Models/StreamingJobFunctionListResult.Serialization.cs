@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StreamingJobFunctionData>(item, options);
                 }
                 writer.WriteEndArray();
             }

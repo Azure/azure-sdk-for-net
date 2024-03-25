@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (options.Format != "W" && Optional.IsDefined(CustomDomainVerificationFailureInfo))
             {
                 writer.WritePropertyName("customDomainVerificationFailureInfo"u8);
-                writer.WriteObjectValue(CustomDomainVerificationFailureInfo);
+                writer.WriteObjectValue<ContainerAppCustomDomainVerificationFailureInfo>(CustomDomainVerificationFailureInfo, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HasConflictOnManagedEnvironment))
             {

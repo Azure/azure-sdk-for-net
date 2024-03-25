@@ -29,19 +29,19 @@ namespace Azure.AI.Translation.Text
             if (Optional.IsDefined(DetectedLanguage))
             {
                 writer.WritePropertyName("detectedLanguage"u8);
-                writer.WriteObjectValue(DetectedLanguage);
+                writer.WriteObjectValue<DetectedLanguage>(DetectedLanguage, options);
             }
             writer.WritePropertyName("translations"u8);
             writer.WriteStartArray();
             foreach (var item in Translations)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<Translation>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(SourceText))
             {
                 writer.WritePropertyName("sourceText"u8);
-                writer.WriteObjectValue(SourceText);
+                writer.WriteObjectValue<SourceText>(SourceText, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -168,7 +168,7 @@ namespace Azure.AI.Translation.Text
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<TranslatedTextItem>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

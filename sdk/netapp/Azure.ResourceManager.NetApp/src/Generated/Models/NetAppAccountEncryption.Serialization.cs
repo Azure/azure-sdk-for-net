@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties);
+                writer.WriteObjectValue<NetAppKeyVaultProperties>(KeyVaultProperties, options);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue<NetAppEncryptionIdentity>(Identity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

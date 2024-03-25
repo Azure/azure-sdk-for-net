@@ -72,18 +72,25 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Data size of the column. </summary>
+        [WirePath("dataSize")]
         public string DataSize { get; }
         /// <summary> Data type of the column. </summary>
+        [WirePath("dataType")]
         public string DataType { get; }
         /// <summary> Error id of the column. </summary>
+        [WirePath("errorId")]
         public string ErrorId { get; }
         /// <summary> If there is error in the table. </summary>
+        [WirePath("hasError")]
         public bool? HasError { get; }
         /// <summary> If it is the primary key of the table. </summary>
+        [WirePath("isPrimaryKey")]
         public bool? IsPrimaryKey { get; }
         /// <summary> Name of the column. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Quoted name of the column. </summary>
+        [WirePath("quotedName")]
         public string QuotedName { get; }
     }
 }

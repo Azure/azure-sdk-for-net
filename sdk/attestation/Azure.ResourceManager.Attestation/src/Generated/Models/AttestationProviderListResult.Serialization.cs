@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AttestationProviderData>(item, options);
                 }
                 writer.WriteEndArray();
             }

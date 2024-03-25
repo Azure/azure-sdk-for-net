@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Advisor
                 writer.WriteStartArray();
                 foreach (var item in SupportedValues)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MetadataSupportedValueDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }

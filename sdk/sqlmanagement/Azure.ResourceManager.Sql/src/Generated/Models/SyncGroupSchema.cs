@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> List of tables in sync group schema. </summary>
+        [WirePath("tables")]
         public IList<SyncGroupSchemaTable> Tables { get; }
         /// <summary> Name of master sync member where the schema is from. </summary>
+        [WirePath("masterSyncMemberName")]
         public string MasterSyncMemberName { get; set; }
     }
 }

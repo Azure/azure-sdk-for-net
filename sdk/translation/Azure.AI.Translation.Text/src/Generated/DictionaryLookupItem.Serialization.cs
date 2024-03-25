@@ -34,7 +34,7 @@ namespace Azure.AI.Translation.Text
             writer.WriteStartArray();
             foreach (var item in Translations)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DictionaryTranslation>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -154,7 +154,7 @@ namespace Azure.AI.Translation.Text
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<DictionaryLookupItem>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

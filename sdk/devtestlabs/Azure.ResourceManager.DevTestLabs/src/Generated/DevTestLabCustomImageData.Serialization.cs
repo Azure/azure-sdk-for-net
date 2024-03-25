@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(Vm))
             {
                 writer.WritePropertyName("vm"u8);
-                writer.WriteObjectValue(Vm);
+                writer.WriteObjectValue<DevTestLabCustomImageVm>(Vm, options);
             }
             if (Optional.IsDefined(Vhd))
             {
                 writer.WritePropertyName("vhd"u8);
-                writer.WriteObjectValue(Vhd);
+                writer.WriteObjectValue<DevTestLabCustomImageVhd>(Vhd, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WriteStartArray();
                 foreach (var item in DataDiskStorageInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DevTestLabDataDiskStorageTypeInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(CustomImagePlan))
             {
                 writer.WritePropertyName("customImagePlan"u8);
-                writer.WriteObjectValue(CustomImagePlan);
+                writer.WriteObjectValue<DevTestLabCustomImagePlan>(CustomImagePlan, options);
             }
             if (Optional.IsDefined(IsPlanAuthorized))
             {

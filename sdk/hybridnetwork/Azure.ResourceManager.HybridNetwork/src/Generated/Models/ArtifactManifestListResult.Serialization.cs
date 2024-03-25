@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ArtifactManifestData>(item, options);
                 }
                 writer.WriteEndArray();
             }

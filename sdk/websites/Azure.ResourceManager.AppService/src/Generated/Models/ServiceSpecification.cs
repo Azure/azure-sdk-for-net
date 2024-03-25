@@ -64,8 +64,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Gets the metric specifications. </summary>
+        [WirePath("metricSpecifications")]
         public IReadOnlyList<MetricSpecification> MetricSpecifications { get; }
         /// <summary> Gets the log specifications. </summary>
+        [WirePath("logSpecifications")]
         public IReadOnlyList<LogSpecification> LogSpecifications { get; }
     }
 }

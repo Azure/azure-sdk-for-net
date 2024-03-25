@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in Tasks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataReplicationTask>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataReplicationErrorInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("customProperties"u8);
-            writer.WriteObjectValue(CustomProperties);
+            writer.WriteObjectValue<WorkflowModelCustomProperties>(CustomProperties, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

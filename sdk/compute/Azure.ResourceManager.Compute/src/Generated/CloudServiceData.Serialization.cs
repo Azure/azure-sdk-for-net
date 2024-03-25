@@ -106,22 +106,22 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(RoleProfile))
             {
                 writer.WritePropertyName("roleProfile"u8);
-                writer.WriteObjectValue(RoleProfile);
+                writer.WriteObjectValue<CloudServiceRoleProfile>(RoleProfile, options);
             }
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile);
+                writer.WriteObjectValue<CloudServiceOSProfile>(OSProfile, options);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue<CloudServiceNetworkProfile>(NetworkProfile, options);
             }
             if (Optional.IsDefined(ExtensionProfile))
             {
                 writer.WritePropertyName("extensionProfile"u8);
-                writer.WriteObjectValue(ExtensionProfile);
+                writer.WriteObjectValue<CloudServiceExtensionProfile>(ExtensionProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

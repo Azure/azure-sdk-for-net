@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(ClientGroupInfo))
             {
                 writer.WritePropertyName("clientGroupInfo"u8);
-                writer.WriteObjectValue(ClientGroupInfo);
+                writer.WriteObjectValue<ClientGroupInfo>(ClientGroupInfo, options);
             }
             if (Optional.IsCollectionDefined(ConfigurationOverride))
             {

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                writer.WriteObjectValue<ConfluentListMetadata>(Metadata, options);
             }
             if (Optional.IsCollectionDefined(Data))
             {

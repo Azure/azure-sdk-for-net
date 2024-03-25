@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScVmmVirtualMachineTemplateData>(item, options);
                 }
                 writer.WriteEndArray();
             }

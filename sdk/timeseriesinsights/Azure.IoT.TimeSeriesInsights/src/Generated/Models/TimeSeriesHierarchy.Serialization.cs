@@ -23,7 +23,7 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            writer.WriteObjectValue<TimeSeriesHierarchySource>(Source);
             writer.WriteEndObject();
         }
 

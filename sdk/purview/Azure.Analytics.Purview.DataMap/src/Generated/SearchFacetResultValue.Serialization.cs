@@ -32,7 +32,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in EntityType)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SearchFacetItemValue>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in AssetType)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SearchFacetItemValue>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Classification)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SearchFacetItemValue>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Term)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SearchFacetItemValue>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in ContactId)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SearchFacetItemValue>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +82,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in ContactType)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SearchFacetItemValue>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +92,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Label)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SearchFacetItemValue>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +102,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in GlossaryType)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SearchFacetItemValue>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in TermStatus)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SearchFacetItemValue>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +122,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in TermTemplate)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SearchFacetItemValue>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -381,7 +381,7 @@ namespace Azure.Analytics.Purview.DataMap
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<SearchFacetResultValue>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

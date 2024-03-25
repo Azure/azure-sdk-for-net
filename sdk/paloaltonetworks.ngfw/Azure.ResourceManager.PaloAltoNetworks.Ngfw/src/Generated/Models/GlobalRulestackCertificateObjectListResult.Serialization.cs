@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<GlobalRulestackCertificateObjectData>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))

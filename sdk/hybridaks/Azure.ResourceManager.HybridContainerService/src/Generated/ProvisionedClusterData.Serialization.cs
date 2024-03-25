@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.HybridContainerService
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<ProvisionedClusterProperties>(Properties, options);
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation);
+                writer.WriteObjectValue<HybridContainerServiceExtendedLocation>(ExtendedLocation, options);
             }
             if (options.Format != "W")
             {

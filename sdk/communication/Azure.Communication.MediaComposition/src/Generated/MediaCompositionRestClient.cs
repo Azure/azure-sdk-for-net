@@ -143,7 +143,7 @@ namespace Azure.Communication.MediaComposition
             }
             var model = mediaComposition;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue<MediaComposition>(model);
             request.Content = content;
             return message;
         }
@@ -247,7 +247,7 @@ namespace Azure.Communication.MediaComposition
             }
             var model = mediaComposition;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue<MediaComposition>(model);
             request.Content = content;
             return message;
         }

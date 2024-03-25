@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("specification"u8);
-            writer.WriteObjectValue(Specification);
+            writer.WriteObjectValue<CustomRolloutSpecification>(Specification, options);
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<CustomRolloutStatus>(Status, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

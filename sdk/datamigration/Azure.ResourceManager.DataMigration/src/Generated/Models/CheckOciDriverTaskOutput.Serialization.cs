@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(InstalledDriver))
             {
                 writer.WritePropertyName("installedDriver"u8);
-                writer.WriteObjectValue(InstalledDriver);
+                writer.WriteObjectValue<OracleOciDriverInfo>(InstalledDriver, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ValidationErrors))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReportableException>(item, options);
                 }
                 writer.WriteEndArray();
             }

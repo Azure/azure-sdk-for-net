@@ -30,12 +30,26 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStringValue(DBServerHost);
             writer.WritePropertyName("dbName"u8);
             writer.WriteStringValue(DBName);
-            writer.WritePropertyName("dbUserName"u8);
-            writer.WriteStringValue(DBUserName);
-            writer.WritePropertyName("dbPasswordSecretName"u8);
-            writer.WriteStringValue(DBPasswordSecretName);
-            writer.WritePropertyName("keyVaultId"u8);
-            writer.WriteStringValue(KeyVaultId);
+            if (Optional.IsDefined(DBConnectionAuthenticationMode))
+            {
+                writer.WritePropertyName("dbConnectionAuthenticationMode"u8);
+                writer.WriteStringValue(DBConnectionAuthenticationMode.Value.ToString());
+            }
+            if (Optional.IsDefined(DBUserName))
+            {
+                writer.WritePropertyName("dbUserName"u8);
+                writer.WriteStringValue(DBUserName);
+            }
+            if (Optional.IsDefined(DBPasswordSecretName))
+            {
+                writer.WritePropertyName("dbPasswordSecretName"u8);
+                writer.WriteStringValue(DBPasswordSecretName);
+            }
+            if (Optional.IsDefined(KeyVaultId))
+            {
+                writer.WritePropertyName("keyVaultId"u8);
+                writer.WriteStringValue(KeyVaultId);
+            }
             if (Optional.IsDefined(ThriftUriString))
             {
                 writer.WritePropertyName("thriftUrl"u8);
@@ -81,6 +95,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             string dbServerHost = default;
             string dbName = default;
+            DBConnectionAuthenticationMode? dbConnectionAuthenticationMode = default;
             string dbUserName = default;
             string dbPasswordSecretName = default;
             string keyVaultId = default;
@@ -97,6 +112,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 if (property.NameEquals("dbName"u8))
                 {
                     dbName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dbConnectionAuthenticationMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dbConnectionAuthenticationMode = new DBConnectionAuthenticationMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dbUserName"u8))
@@ -128,6 +152,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             return new SparkMetastoreSpec(
                 dbServerHost,
                 dbName,
+                dbConnectionAuthenticationMode,
                 dbUserName,
                 dbPasswordSecretName,
                 keyVaultId,

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StreamAnalyticsClusterData>(item, options);
                 }
                 writer.WriteEndArray();
             }

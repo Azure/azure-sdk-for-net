@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <summary> Describes the properties of a Shared Private Link Resource managed by the Azure Cognitive Search service. </summary>
+        [WirePath("properties")]
         public SharedSearchServicePrivateLinkResourceProperties Properties { get; set; }
     }
 }

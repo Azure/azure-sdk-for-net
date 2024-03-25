@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(FabricSpecificSettings))
             {
                 writer.WritePropertyName("fabricSpecificSettings"u8);
-                writer.WriteObjectValue(FabricSpecificSettings);
+                writer.WriteObjectValue<NetworkMappingFabricSpecificSettings>(FabricSpecificSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

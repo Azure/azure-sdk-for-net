@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> Value corresponding to a single IPv4 address (eg., 123.1.2.3) or an IP range in CIDR format (eg., 123.1.2.3/24) to be allowed. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

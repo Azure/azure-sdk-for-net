@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in Assessments)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<Assessment>(item, options);
                 }
                 writer.WriteEndArray();
             }

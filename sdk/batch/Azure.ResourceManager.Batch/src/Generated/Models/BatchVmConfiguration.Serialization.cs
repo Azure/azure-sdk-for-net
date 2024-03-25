@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.Batch.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("imageReference"u8);
-            writer.WriteObjectValue(ImageReference);
+            writer.WriteObjectValue<BatchImageReference>(ImageReference, options);
             writer.WritePropertyName("nodeAgentSkuId"u8);
             writer.WriteStringValue(NodeAgentSkuId);
             if (Optional.IsDefined(WindowsConfiguration))
             {
                 writer.WritePropertyName("windowsConfiguration"u8);
-                writer.WriteObjectValue(WindowsConfiguration);
+                writer.WriteObjectValue<WindowsConfiguration>(WindowsConfiguration, options);
             }
             if (Optional.IsCollectionDefined(DataDisks))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BatchVmDataDisk>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -54,17 +54,17 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(ContainerConfiguration))
             {
                 writer.WritePropertyName("containerConfiguration"u8);
-                writer.WriteObjectValue(ContainerConfiguration);
+                writer.WriteObjectValue<BatchVmContainerConfiguration>(ContainerConfiguration, options);
             }
             if (Optional.IsDefined(DiskEncryptionConfiguration))
             {
                 writer.WritePropertyName("diskEncryptionConfiguration"u8);
-                writer.WriteObjectValue(DiskEncryptionConfiguration);
+                writer.WriteObjectValue<DiskEncryptionConfiguration>(DiskEncryptionConfiguration, options);
             }
             if (Optional.IsDefined(NodePlacementConfiguration))
             {
                 writer.WritePropertyName("nodePlacementConfiguration"u8);
-                writer.WriteObjectValue(NodePlacementConfiguration);
+                writer.WriteObjectValue<NodePlacementConfiguration>(NodePlacementConfiguration, options);
             }
             if (Optional.IsCollectionDefined(Extensions))
             {
@@ -72,19 +72,19 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BatchVmExtension>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OSDisk))
             {
                 writer.WritePropertyName("osDisk"u8);
-                writer.WriteObjectValue(OSDisk);
+                writer.WriteObjectValue<BatchOSDisk>(OSDisk, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                writer.WriteObjectValue<BatchSecurityProfile>(SecurityProfile, options);
             }
             if (Optional.IsDefined(ServiceArtifactReference))
             {

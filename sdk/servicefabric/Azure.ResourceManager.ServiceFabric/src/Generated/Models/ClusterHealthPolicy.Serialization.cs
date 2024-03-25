@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 foreach (var item in ApplicationHealthPolicies)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ApplicationHealthPolicy>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

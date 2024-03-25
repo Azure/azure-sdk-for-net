@@ -17,11 +17,11 @@ namespace Azure.IoT.TimeSeriesInsights
         {
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
-            writer.WriteObjectValue(Value);
+            writer.WriteObjectValue<TimeSeriesExpression>(Value);
             if (Optional.IsDefined(Interpolation))
             {
                 writer.WritePropertyName("interpolation"u8);
-                writer.WriteObjectValue(Interpolation);
+                writer.WriteObjectValue<TimeSeriesInterpolation>(Interpolation);
             }
             if (Optional.IsCollectionDefined(Categories))
             {
@@ -29,18 +29,18 @@ namespace Azure.IoT.TimeSeriesInsights
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TimeSeriesAggregateCategory>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("defaultCategory"u8);
-            writer.WriteObjectValue(DefaultCategory);
+            writer.WriteObjectValue<TimeSeriesDefaultCategory>(DefaultCategory);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                writer.WriteObjectValue<TimeSeriesExpression>(Filter);
             }
             writer.WriteEndObject();
         }

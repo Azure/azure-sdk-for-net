@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> Describes what response the data plane API of a Search service would send for requests that failed authentication. </summary>
+        [WirePath("aadAuthFailureMode")]
         public SearchAadAuthFailureMode? AadAuthFailureMode { get; set; }
     }
 }

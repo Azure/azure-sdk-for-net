@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            writer.WriteObjectValue<ClusterJobProperties>(Properties, options);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);

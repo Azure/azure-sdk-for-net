@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataLakeStoreAccountBasicData>(item, options);
                 }
                 writer.WriteEndArray();
             }

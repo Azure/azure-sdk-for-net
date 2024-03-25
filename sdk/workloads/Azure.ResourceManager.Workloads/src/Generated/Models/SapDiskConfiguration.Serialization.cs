@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(RecommendedConfiguration))
             {
                 writer.WritePropertyName("recommendedConfiguration"u8);
-                writer.WriteObjectValue(RecommendedConfiguration);
+                writer.WriteObjectValue<DiskVolumeConfiguration>(RecommendedConfiguration, options);
             }
             if (Optional.IsCollectionDefined(SupportedConfigurations))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SupportedConfigurationsDiskDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }

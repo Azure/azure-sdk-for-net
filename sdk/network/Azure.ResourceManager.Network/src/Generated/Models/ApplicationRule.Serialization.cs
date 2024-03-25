@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Protocols)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FirewallPolicyRuleApplicationProtocol>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in HttpHeadersToInsert)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FirewallPolicyHttpHeaderToInsert>(item, options);
                 }
                 writer.WriteEndArray();
             }

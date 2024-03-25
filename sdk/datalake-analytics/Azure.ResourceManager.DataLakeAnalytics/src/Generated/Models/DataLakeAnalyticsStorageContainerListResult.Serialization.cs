@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataLakeAnalyticsStorageContainerData>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -75,18 +75,25 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Identity used for BYOS. </summary>
+        [WirePath("identity")]
         public MyWorkbookManagedIdentity Identity { get; set; }
         /// <summary> Azure resource Id. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
         /// <summary> Azure resource name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Azure resource type. </summary>
+        [WirePath("type")]
         public string ResourceType { get; set; }
         /// <summary> Resource location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> Resource etag. </summary>
+        [WirePath("etag")]
         public IDictionary<string, string> ETag { get; }
     }
 }

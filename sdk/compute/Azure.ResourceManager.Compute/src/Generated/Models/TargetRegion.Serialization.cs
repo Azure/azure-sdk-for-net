@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<EncryptionImages>(Encryption, options);
             }
             if (Optional.IsDefined(IsExcludedFromLatest))
             {

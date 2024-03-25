@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in BgpAdvertisements)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BgpAdvertisement>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in BgpPeers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ServiceLoadBalancerBgpPeer>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in IPAddressPools)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IPAddressPool>(item, options);
                 }
                 writer.WriteEndArray();
             }

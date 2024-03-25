@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Hci
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation);
+                writer.WriteObjectValue<ArcVmExtendedLocation>(ExtendedLocation, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -63,32 +63,32 @@ namespace Azure.ResourceManager.Hci
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile);
+                writer.WriteObjectValue<VirtualMachineInstancePropertiesHardwareProfile>(HardwareProfile, options);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue<VirtualMachineInstancePropertiesNetworkProfile>(NetworkProfile, options);
             }
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile);
+                writer.WriteObjectValue<VirtualMachineInstancePropertiesOSProfile>(OSProfile, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                writer.WriteObjectValue<VirtualMachineInstancePropertiesSecurityProfile>(SecurityProfile, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                writer.WriteObjectValue<VirtualMachineInstancePropertiesStorageProfile>(StorageProfile, options);
             }
             if (Optional.IsDefined(HttpProxyConfig))
             {
                 writer.WritePropertyName("httpProxyConfig"u8);
-                writer.WriteObjectValue(HttpProxyConfig);
+                writer.WriteObjectValue<HttpProxyConfiguration>(HttpProxyConfig, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -98,17 +98,17 @@ namespace Azure.ResourceManager.Hci
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                writer.WriteObjectValue<VirtualMachineInstanceView>(InstanceView, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<VirtualMachineInstanceStatus>(Status, options);
             }
             if (Optional.IsDefined(GuestAgentInstallStatus))
             {
                 writer.WritePropertyName("guestAgentInstallStatus"u8);
-                writer.WriteObjectValue(GuestAgentInstallStatus);
+                writer.WriteObjectValue<GuestAgentInstallStatus>(GuestAgentInstallStatus, options);
             }
             if (options.Format != "W" && Optional.IsDefined(VmId))
             {

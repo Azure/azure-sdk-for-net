@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Properties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CanonicalProfileDefinitionPropertiesItem>(item, options);
                 }
                 writer.WriteEndArray();
             }

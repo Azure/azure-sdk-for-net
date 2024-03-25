@@ -52,14 +52,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in RestoreFileSpecs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RestoreFileSpecs>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(TargetDetails))
             {
                 writer.WritePropertyName("targetDetails"u8);
-                writer.WriteObjectValue(TargetDetails);
+                writer.WriteObjectValue<TargetAfsRestoreInfo>(TargetDetails, options);
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);

@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("canary"u8);
-            writer.WriteObjectValue(Canary);
+            writer.WriteObjectValue<TrafficRegions>(Canary, options);
             if (Optional.IsDefined(ProviderRegistration))
             {
                 writer.WritePropertyName("providerRegistration"u8);
-                writer.WriteObjectValue(ProviderRegistration);
+                writer.WriteObjectValue<ProviderRegistrationData>(ProviderRegistration, options);
             }
             if (Optional.IsCollectionDefined(ResourceTypeRegistrations))
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceTypeRegistrations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceTypeRegistrationData>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -76,12 +76,16 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Public Certificate byte array. </summary>
+        [WirePath("properties.blob")]
         public byte[] Blob { get; set; }
         /// <summary> Public Certificate Location. </summary>
+        [WirePath("properties.publicCertificateLocation")]
         public PublicCertificateLocation? PublicCertificateLocation { get; set; }
         /// <summary> Certificate Thumbprint. </summary>
+        [WirePath("properties.thumbprint")]
         public string ThumbprintString { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

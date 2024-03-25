@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceMoveChangeHistory)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceMoveChangeHistory>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(ClientAuthentication))
             {
                 writer.WritePropertyName("clientAuthentication"u8);
-                writer.WriteObjectValue(ClientAuthentication);
+                writer.WriteObjectValue<PartnerClientAuthentication>(ClientAuthentication, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

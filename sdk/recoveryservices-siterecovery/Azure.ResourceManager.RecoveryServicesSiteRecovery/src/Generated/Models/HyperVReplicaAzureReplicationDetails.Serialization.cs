@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in AzureVmDiskDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryVmDiskDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(InitialReplicationDetails))
             {
                 writer.WritePropertyName("initialReplicationDetails"u8);
-                writer.WriteObjectValue(InitialReplicationDetails);
+                writer.WriteObjectValue<InitialReplicationDetails>(InitialReplicationDetails, options);
             }
             if (Optional.IsCollectionDefined(VmNics))
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VmNicDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(OSDetails))
             {
                 writer.WritePropertyName("oSDetails"u8);
-                writer.WriteObjectValue(OSDetails);
+                writer.WriteObjectValue<SiteRecoveryOSDetails>(OSDetails, options);
             }
             if (Optional.IsDefined(SourceVmRamSizeInMB))
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedManagedDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HyperVReplicaAzureManagedDiskDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in AllAvailableOSUpgradeConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OSUpgradeSupportedVersions>(item, options);
                 }
                 writer.WriteEndArray();
             }

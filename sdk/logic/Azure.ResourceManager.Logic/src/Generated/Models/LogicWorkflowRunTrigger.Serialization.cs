@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (options.Format != "W" && Optional.IsDefined(InputsLink))
             {
                 writer.WritePropertyName("inputsLink"u8);
-                writer.WriteObjectValue(InputsLink);
+                writer.WriteObjectValue<LogicContentLink>(InputsLink, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Outputs))
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (options.Format != "W" && Optional.IsDefined(OutputsLink))
             {
                 writer.WritePropertyName("outputsLink"u8);
-                writer.WriteObjectValue(OutputsLink);
+                writer.WriteObjectValue<LogicContentLink>(OutputsLink, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ScheduledOn))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Correlation))
             {
                 writer.WritePropertyName("correlation"u8);
-                writer.WriteObjectValue(Correlation);
+                writer.WriteObjectValue<Correlation>(Correlation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Code))
             {

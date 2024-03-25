@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Server Id. </summary>
+        [WirePath("serverId")]
         public ResourceIdentifier ServerId { get; set; }
     }
 }

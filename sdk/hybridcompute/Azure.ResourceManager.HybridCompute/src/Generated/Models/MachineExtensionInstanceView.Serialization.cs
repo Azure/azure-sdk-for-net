@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<MachineExtensionInstanceViewStatus>(Status, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

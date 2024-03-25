@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProcessServers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryProcessServer>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in MasterTargetServers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MasterTargetServer>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in RunAsAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryRunAsAccount>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(AgentVersionDetails))
             {
                 writer.WritePropertyName("agentVersionDetails"u8);
-                writer.WriteObjectValue(AgentVersionDetails);
+                writer.WriteObjectValue<SiteRecoveryVersionDetails>(AgentVersionDetails, options);
             }
             if (Optional.IsCollectionDefined(SwitchProviderBlockingErrorDetails))
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in SwitchProviderBlockingErrorDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InMageFabricSwitchProviderBlockingErrorDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }

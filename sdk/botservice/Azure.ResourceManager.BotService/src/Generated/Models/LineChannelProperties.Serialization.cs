@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStartArray();
             foreach (var item in LineRegistrations)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<LineRegistration>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(CallbackUri))

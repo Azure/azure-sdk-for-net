@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RoleAssignmentResourceFormatData>(item, options);
                 }
                 writer.WriteEndArray();
             }

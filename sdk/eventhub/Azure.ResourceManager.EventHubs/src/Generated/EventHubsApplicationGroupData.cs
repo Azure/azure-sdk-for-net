@@ -81,16 +81,20 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Determines if Application Group is allowed to create connection with namespace or not. Once the isEnabled is set to false, all the existing connections of application group gets dropped and no new connections will be allowed. </summary>
+        [WirePath("properties.isEnabled")]
         public bool? IsEnabled { get; set; }
         /// <summary> The Unique identifier for application group.Supports SAS(SASKeyName=KeyName) or AAD(AADAppID=Guid). </summary>
+        [WirePath("properties.clientAppGroupIdentifier")]
         public string ClientAppGroupIdentifier { get; set; }
         /// <summary>
         /// List of group policies that define the behavior of application group. The policies can support resource governance scenarios such as limiting ingress or egress traffic.
         /// Please note <see cref="EventHubsApplicationGroupPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="EventHubsThrottlingPolicy"/>.
         /// </summary>
+        [WirePath("properties.policies")]
         public IList<EventHubsApplicationGroupPolicy> Policies { get; }
         /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
     }
 }

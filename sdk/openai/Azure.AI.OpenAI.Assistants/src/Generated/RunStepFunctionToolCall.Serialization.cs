@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI.Assistants
 
             writer.WriteStartObject();
             writer.WritePropertyName("function"u8);
-            writer.WriteObjectValue(InternalDetails);
+            writer.WriteObjectValue<InternalRunStepFunctionToolCallDetails>(InternalDetails, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("id"u8);
@@ -144,7 +144,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<RunStepFunctionToolCall>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

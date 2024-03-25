@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WriteStartArray();
                 foreach (var item in Aggregates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BillingBenefitsSavingsPlanUtilizationAggregate>(item, options);
                 }
                 writer.WriteEndArray();
             }

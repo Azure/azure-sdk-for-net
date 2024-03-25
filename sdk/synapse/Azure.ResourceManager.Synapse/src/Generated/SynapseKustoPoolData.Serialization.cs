@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Synapse
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            writer.WriteObjectValue<SynapseDataSourceSku>(Sku, options);
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(OptimizedAutoscale))
             {
                 writer.WritePropertyName("optimizedAutoscale"u8);
-                writer.WriteObjectValue(OptimizedAutoscale);
+                writer.WriteObjectValue<SynapseOptimizedAutoscale>(OptimizedAutoscale, options);
             }
             if (Optional.IsDefined(EnableStreamingIngest))
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Synapse
             if (options.Format != "W" && Optional.IsDefined(LanguageExtensions))
             {
                 writer.WritePropertyName("languageExtensions"u8);
-                writer.WriteObjectValue(LanguageExtensions);
+                writer.WriteObjectValue<SynapseLanguageExtensionsList>(LanguageExtensions, options);
             }
             if (Optional.IsDefined(WorkspaceUid))
             {

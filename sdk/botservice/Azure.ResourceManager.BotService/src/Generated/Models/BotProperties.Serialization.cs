@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BotServicePrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }

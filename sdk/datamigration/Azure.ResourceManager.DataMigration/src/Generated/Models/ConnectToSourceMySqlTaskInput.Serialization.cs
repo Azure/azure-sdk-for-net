@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("sourceConnectionInfo"u8);
-            writer.WriteObjectValue(SourceConnectionInfo);
+            writer.WriteObjectValue<MySqlConnectionInfo>(SourceConnectionInfo, options);
             if (Optional.IsDefined(TargetPlatform))
             {
                 writer.WritePropertyName("targetPlatform"u8);

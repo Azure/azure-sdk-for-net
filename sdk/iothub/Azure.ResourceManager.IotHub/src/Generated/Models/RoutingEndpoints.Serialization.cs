@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceBusQueues)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RoutingServiceBusQueueEndpointProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceBusTopics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RoutingServiceBusTopicEndpointProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in EventHubs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RoutingEventHubProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageContainers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RoutingStorageContainerProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in CosmosDBSqlContainers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RoutingCosmosDBSqlApiProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }

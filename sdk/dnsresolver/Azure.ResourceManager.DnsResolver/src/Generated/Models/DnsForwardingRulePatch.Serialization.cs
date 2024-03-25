@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetDnsServers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TargetDnsServer>(item, options);
                 }
                 writer.WriteEndArray();
             }

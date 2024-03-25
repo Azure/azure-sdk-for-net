@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ListOfCopyProgressDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CopyProgressDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }

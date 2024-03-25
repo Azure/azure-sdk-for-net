@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Workflow))
             {
                 writer.WritePropertyName("workflow"u8);
-                writer.WriteObjectValue(Workflow);
+                writer.WriteObjectValue<FlowEndpoints>(Workflow, options);
             }
             if (Optional.IsDefined(Connector))
             {
                 writer.WritePropertyName("connector"u8);
-                writer.WriteObjectValue(Connector);
+                writer.WriteObjectValue<FlowEndpoints>(Connector, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

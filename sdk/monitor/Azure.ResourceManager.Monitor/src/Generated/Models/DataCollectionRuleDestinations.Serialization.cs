@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in LogAnalytics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LogAnalyticsDestination>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in MonitoringAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitoringAccountDestination>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(AzureMonitorMetrics))
             {
                 writer.WritePropertyName("azureMonitorMetrics"u8);
-                writer.WriteObjectValue(AzureMonitorMetrics);
+                writer.WriteObjectValue<DestinationsSpecAzureMonitorMetrics>(AzureMonitorMetrics, options);
             }
             if (Optional.IsCollectionDefined(EventHubs))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in EventHubs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataCollectionRuleEventHubDestination>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in EventHubsDirect)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataCollectionRuleEventHubDirectDestination>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageBlobsDirect)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataCollectionRuleStorageBlobDestination>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageTablesDirect)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataCollectionRuleStorageTableDestination>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataCollectionRuleStorageBlobDestination>(item, options);
                 }
                 writer.WriteEndArray();
             }

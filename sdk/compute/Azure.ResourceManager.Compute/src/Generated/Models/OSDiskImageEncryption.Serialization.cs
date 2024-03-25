@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                writer.WriteObjectValue<OSDiskImageSecurityProfile>(SecurityProfile, options);
             }
             if (Optional.IsDefined(DiskEncryptionSetId))
             {

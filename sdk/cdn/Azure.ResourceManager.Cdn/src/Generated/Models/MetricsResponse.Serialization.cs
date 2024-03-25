@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Series)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MetricsResponseSeriesItem>(item, options);
                 }
                 writer.WriteEndArray();
             }

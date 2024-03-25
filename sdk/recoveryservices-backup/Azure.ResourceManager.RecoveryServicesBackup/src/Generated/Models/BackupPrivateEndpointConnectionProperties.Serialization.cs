@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState);
+                writer.WriteObjectValue<RecoveryServicesBackupPrivateLinkServiceConnectionState>(PrivateLinkServiceConnectionState, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

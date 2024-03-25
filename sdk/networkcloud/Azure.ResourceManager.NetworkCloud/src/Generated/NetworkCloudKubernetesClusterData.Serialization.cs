@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetworkCloud
 
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation);
+            writer.WriteObjectValue<ExtendedLocation>(ExtendedLocation, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.NetworkCloud
             if (Optional.IsDefined(AadConfiguration))
             {
                 writer.WritePropertyName("aadConfiguration"u8);
-                writer.WriteObjectValue(AadConfiguration);
+                writer.WriteObjectValue<NetworkCloudAadConfiguration>(AadConfiguration, options);
             }
             if (Optional.IsDefined(AdministratorConfiguration))
             {
                 writer.WritePropertyName("administratorConfiguration"u8);
-                writer.WriteObjectValue(AdministratorConfiguration);
+                writer.WriteObjectValue<AdministratorConfiguration>(AdministratorConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AttachedNetworkIds))
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in AvailableUpgrades)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AvailableUpgrade>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStringValue(ControlPlaneKubernetesVersion);
             }
             writer.WritePropertyName("controlPlaneNodeConfiguration"u8);
-            writer.WriteObjectValue(ControlPlaneNodeConfiguration);
+            writer.WriteObjectValue<ControlPlaneNodeConfiguration>(ControlPlaneNodeConfiguration, options);
             if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
             {
                 writer.WritePropertyName("detailedStatus"u8);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in FeatureStatuses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FeatureStatus>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartArray();
             foreach (var item in InitialAgentPoolConfigurations)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<InitialAgentPoolConfiguration>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("kubernetesVersion"u8);
@@ -149,17 +149,17 @@ namespace Azure.ResourceManager.NetworkCloud
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration);
+                writer.WriteObjectValue<ManagedResourceGroupConfiguration>(ManagedResourceGroupConfiguration, options);
             }
             writer.WritePropertyName("networkConfiguration"u8);
-            writer.WriteObjectValue(NetworkConfiguration);
+            writer.WriteObjectValue<KubernetesClusterNetworkConfiguration>(NetworkConfiguration, options);
             if (options.Format != "W" && Optional.IsCollectionDefined(Nodes))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KubernetesClusterNode>(item, options);
                 }
                 writer.WriteEndArray();
             }

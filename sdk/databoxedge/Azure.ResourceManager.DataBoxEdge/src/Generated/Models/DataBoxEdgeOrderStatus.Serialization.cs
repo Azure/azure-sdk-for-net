@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W" && Optional.IsDefined(TrackingInformation))
             {
                 writer.WritePropertyName("trackingInformation"u8);
-                writer.WriteObjectValue(TrackingInformation);
+                writer.WriteObjectValue<DataBoxEdgeTrackingInfo>(TrackingInformation, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalOrderDetails))
             {

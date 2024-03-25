@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Hci
                 writer.WriteStartArray();
                 foreach (var item in PerNodeExtensionDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PerNodeExtensionState>(item, options);
                 }
                 writer.WriteEndArray();
             }
