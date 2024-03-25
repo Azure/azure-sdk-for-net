@@ -11,7 +11,9 @@ using System.Linq;
 namespace Azure.Security.CodeTransparency.Receipt
 {
     /// <summary>
-    /// DidWeb class to resolve didweb url and to extract the service certificate.
+    /// DidWebReference class encapsulates the logic to fetch the DID document and
+    /// the public key for a given CcfReceipt issued by the Code Transparency Service.
+    /// Reference: https://w3c-ccg.github.io/did-method-web/ .
     /// </summary>
     public class DidWebReference
     {
@@ -23,22 +25,22 @@ namespace Azure.Security.CodeTransparency.Receipt
         /// </summary>
         public readonly Uri DidDocUrl;
         /// <summary>
-        /// Key reference in the DID document.
+        /// Public key reference in the DID document.
         /// </summary>
         public readonly string KeyId;
 
         /// <summary>
-        /// Construct a new reference pointing to the public key in the remote DID document.
+        /// Construct a DidWebReference from the URL pointing to the DID document and the public key id.
         /// </summary>
-        /// <param name="uri"></param>
-        /// <param name="id"></param>
+        /// <param name="uri">URL that resolves to a DID JSON document.</param>
+        /// <param name="id">ID of the public key in the DID document under assertion methods.</param>
         public DidWebReference(Uri uri, string id){
             DidDocUrl = uri;
             KeyId = id;
         }
 
         /// <summary>
-        /// Construct a DID document reference using the values in the receipt headers.
+        /// Construct a DidWebReference from the issuer and key id header values in the provided CcfReceipt.
         /// </summary>
         /// <param name="receipt">CCF SCITT receipt.</param>
         public DidWebReference(CcfReceipt receipt)
@@ -49,7 +51,9 @@ namespace Azure.Security.CodeTransparency.Receipt
         }
 
         /// <summary>
-        /// Fetch the certificate from the remote location.
+        /// Fetch the certificate of this DidWebReference.
+        /// If the resolver function is not provided then the default
+        /// implementation will be used to fetch the DID document.
         /// </summary>
         /// <param name="resolver"></param>
         /// <returns></returns>
@@ -61,8 +65,10 @@ namespace Azure.Security.CodeTransparency.Receipt
         }
 
         /// <summary>
-        /// Default implementation of the receipt DID fetcher using the client implementation.
-        /// Here the assumption is that the DID was issued by the same service.
+        /// Default implementation of the DidDocument fetcher which
+        /// expects the DidWebReference to point to the Code Transparency Service.
+        /// A new CodeTransparencyClient instance will be created and used to fetch
+        /// the DID document.
         /// </summary>
         public static Func<DidWebReference, DidDocument> defaultResolver(CodeTransparencyClientOptions clientOptions = null)
         {
@@ -75,7 +81,7 @@ namespace Azure.Security.CodeTransparency.Receipt
         }
 
         /// <summary>
-        /// Resolve did web url
+        /// Convert a did:web issuer string to a URL that can be used to fetch the DID document.
         /// Reference: https://w3c-ccg.github.io/did-method-web/#read-resolve
         /// </summary>
         /// <param name="issuer">issuer name/url</param>
@@ -113,7 +119,7 @@ namespace Azure.Security.CodeTransparency.Receipt
         }
 
         /// <summary>
-        /// Extract and parse service certificate from the did web doc.
+        /// Find the certificate in the given DidDocument object under assertion methods. Convert it to X509Certificate2.
         /// </summary>
         /// <param name="doc">DidDocument object.</param>
         /// <param name="keyId">Key id to map the right service certificate from the did web doc</param>
@@ -152,13 +158,13 @@ namespace Azure.Security.CodeTransparency.Receipt
         }
 
         /// <summary>
-        /// Get the service certificate from the JwkAssertionMethod object.
+        /// Get the service certificate from the JwkAssertionMethod object. Uses the x5c field to get the cert chain.
         /// </summary>
         /// <param name="method"></param>
         /// <returns>Service certificate.</returns>
         public static X509Certificate2 JwkToCert(DidDocumentKey method)
         {
-            // FIXME: create a cert from the serialized JWK values
+            // TODO: create a cert from the serialized JWK values
             if (method.PublicKeyJwk.X5c != null && method.PublicKeyJwk.X5c.Count > 0)
             {
                 byte[] cert = Convert.FromBase64String(method.PublicKeyJwk.X5c[0]);

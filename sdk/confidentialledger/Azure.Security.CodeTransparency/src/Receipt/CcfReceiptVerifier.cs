@@ -9,7 +9,15 @@ using System.Collections.Generic;
 namespace Azure.Security.CodeTransparency.Receipt
 {
     /// <summary>
-    /// Verifier to be used to validate CCF SCITT receipts.
+    /// CcfReceiptVerifier class contains the methods to verify the CCF SCITT receipt
+    /// integrity and the inclusion in the Code Transparency Service. The verification
+    /// requires the receipt, the COSE_Sign1 envelope and the service certificate. The
+    /// COSE_Sign1 envelope is the payload that was submitted to the Code Transparency
+    /// Service. The receipt is a cryptographic proof issued by the Code Transparency
+    /// Service after the successful submission of the signature. The service certificate
+    /// is the public key of the Code Transparency Service that was used to endorse the
+    /// receipt.
+    /// The receipt can also be embedded in the COSE_Sign1 envelope.
     /// </summary>
     public class CcfReceiptVerifier
     {
@@ -66,7 +74,7 @@ namespace Azure.Security.CodeTransparency.Receipt
 
         /// <summary>
         /// Verify the receipt integrity against the COSE_Sign1 envelope
-        /// and check if receipt was endorsed by the service cert.
+        /// and check if receipt was endorsed by the given service certificate.
         /// In the case of receipts being embedded in the signature then verify
         /// all of them.
         /// </summary>

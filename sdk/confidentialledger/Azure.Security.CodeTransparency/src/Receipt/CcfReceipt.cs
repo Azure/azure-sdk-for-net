@@ -13,8 +13,9 @@ using System.Collections.Generic;
 namespace Azure.Security.CodeTransparency.Receipt
 {
     /// <summary>
-    /// CCF Receipt class which enables encoding, decoding and verification of receipts issued from the Code Transparency Service.
+    /// CcfReceipt class which enables encoding, decoding and verification of receipts issued from the Code Transparency Service.
     /// This class encapsulates the representation and the available operations of CBOR encoded CCF SCITT receipts.
+    /// This is a reference implementation for a proposed draft IETF specification: https://datatracker.ietf.org/doc/draft-birkholz-scitt-receipts/03/ .
     /// </summary>
     public class CcfReceipt
     {
@@ -291,7 +292,7 @@ namespace Azure.Security.CodeTransparency.Receipt
             public LeafInfo LeafInfo { get; set; }
 
             /// <summary>
-            /// Reference: https://datatracker.ietf.org/doc/draft-birkholz-scitt-receipts/ section 6.2.2.1.  Verifying an Inclusion Proof
+            /// Reference: https://datatracker.ietf.org/doc/draft-birkholz-scitt-receipts/03/ section 6.2.2.1.  Verifying an Inclusion Proof
             /// </summary>
             /// <param name="leafHash">Computed leaf hash bytes.</param>
             /// <returns>Computed byte array.</returns>
@@ -341,7 +342,7 @@ namespace Azure.Security.CodeTransparency.Receipt
             /// Countersign_structure of the signed envelope, using the CBOR
             /// encoding described in Section 6, or a bytestring of size HASH_SIZE
             /// filled with zeroes for auxiliary ledger entries.
-            /// Reference: https://datatracker.ietf.org/doc/draft-birkholz-scitt-receipts/ section 5.3. Encoding Signed Envelopes into Tree Leaves.
+            /// Reference: https://datatracker.ietf.org/doc/draft-birkholz-scitt-receipts/03/ section 5.3. Encoding Signed Envelopes into Tree Leaves.
             /// </summary>
             /// <param name="dataHash">Computed dataHash byte array.</param>
             /// <returns>Leaf byte array.</returns>
@@ -362,7 +363,7 @@ namespace Azure.Security.CodeTransparency.Receipt
 
         /// <summary>
         /// SignProtected is also called protected headers or just protected in other specifications.
-        /// Reference: https://datatracker.ietf.org/doc/draft-birkholz-scitt-receipts/ section 4.1  Countersigner Header Parameters.
+        /// Reference: https://datatracker.ietf.org/doc/draft-birkholz-scitt-receipts/03/ section 4.1  Countersigner Header Parameters.
         /// </summary>
         public class SignProtected
         {
@@ -440,7 +441,7 @@ namespace Azure.Security.CodeTransparency.Receipt
         ///		signature: bstr
         ///	  ]
         /// ]
-        /// Reference: https://datatracker.ietf.org/doc/draft-birkholz-scitt-receipts/ section 4. COSE_Sign1 Countersigning.
+        /// Reference: https://datatracker.ietf.org/doc/draft-birkholz-scitt-receipts/03/ section 4. COSE_Sign1 Countersigning.
         /// </summary>
         public class CounterSignStruct
         {
@@ -491,7 +492,7 @@ namespace Azure.Security.CodeTransparency.Receipt
 
             /// <summary>
             /// Build CounterSignStruct used as a source for the countersignature.
-            /// Reference: https://datatracker.ietf.org/doc/draft-birkholz-scitt-receipts/ section 4. COSE_Sign1 Countersigning
+            /// Reference: https://datatracker.ietf.org/doc/draft-birkholz-scitt-receipts/03/ section 4. COSE_Sign1 Countersigning
             /// </summary>
             /// <param name="receipt">Receipt object.</param>
             /// <param name="coseSign1Message">CoseSign1Message object.</param>
@@ -522,7 +523,7 @@ namespace Azure.Security.CodeTransparency.Receipt
 
         /// <summary>
         /// Verify the certificate chain established by the node certificate embedded in the receipt and the fixed service certificate in the service parameters.
-        /// Reference: https://datatracker.ietf.org/doc/draft-birkholz-scitt-receipts/ section 6.5.5  Verifying certificate chain.
+        /// Reference: https://datatracker.ietf.org/doc/draft-birkholz-scitt-receipts/03/ section 6.5.5  Verifying certificate chain.
         /// </summary>
         /// <param name="nodeCert">Node certificate.</param>
         /// <param name="parentCert">Service certificate.</param>
