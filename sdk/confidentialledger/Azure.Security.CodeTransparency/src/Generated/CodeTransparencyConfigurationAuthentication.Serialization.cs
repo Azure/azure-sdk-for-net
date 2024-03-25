@@ -31,7 +31,7 @@ namespace Azure.Security.CodeTransparency
             if (Optional.IsDefined(Jwt))
             {
                 writer.WritePropertyName("jwt"u8);
-                writer.WriteObjectValue(Jwt);
+                writer.WriteObjectValue<CodeTransparencyConfigurationAuthenticationJwt>(Jwt, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -143,7 +143,7 @@ namespace Azure.Security.CodeTransparency
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<CodeTransparencyConfigurationAuthentication>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

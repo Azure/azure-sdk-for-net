@@ -29,12 +29,12 @@ namespace Azure.Security.CodeTransparency
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                writer.WriteObjectValue<CodeTransparencyConfigurationPolicy>(Policy, options);
             }
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication);
+                writer.WriteObjectValue<CodeTransparencyConfigurationAuthentication>(Authentication, options);
             }
             if (Optional.IsDefined(ServiceIdentifier))
             {
@@ -161,7 +161,7 @@ namespace Azure.Security.CodeTransparency
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<CodeTransparencyConfiguration>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }
