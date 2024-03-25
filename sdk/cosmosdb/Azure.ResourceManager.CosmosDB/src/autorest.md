@@ -17,6 +17,8 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+enable-bicep-serialization: true
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/throughputSettings/default: CassandraKeyspaceThroughputSetting

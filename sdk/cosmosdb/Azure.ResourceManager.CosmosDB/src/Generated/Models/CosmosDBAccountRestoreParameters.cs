@@ -13,6 +13,38 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Parameters to indicate the information about the restore. </summary>
     public partial class CosmosDBAccountRestoreParameters
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="CosmosDBAccountRestoreParameters"/>. </summary>
         public CosmosDBAccountRestoreParameters()
         {
@@ -28,7 +60,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="databasesToRestore"> List of specific databases available for restore. </param>
         /// <param name="gremlinDatabasesToRestore"> List of specific gremlin databases available for restore. </param>
         /// <param name="tablesToRestore"> List of specific tables available for restore. </param>
-        internal CosmosDBAccountRestoreParameters(CosmosDBAccountRestoreMode? restoreMode, string restoreSource, DateTimeOffset? restoreTimestampInUtc, IList<DatabaseRestoreResourceInfo> databasesToRestore, IList<GremlinDatabaseRestoreResourceInfo> gremlinDatabasesToRestore, IList<string> tablesToRestore)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBAccountRestoreParameters(CosmosDBAccountRestoreMode? restoreMode, string restoreSource, DateTimeOffset? restoreTimestampInUtc, IList<DatabaseRestoreResourceInfo> databasesToRestore, IList<GremlinDatabaseRestoreResourceInfo> gremlinDatabasesToRestore, IList<string> tablesToRestore, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RestoreMode = restoreMode;
             RestoreSource = restoreSource;
@@ -36,19 +69,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
             DatabasesToRestore = databasesToRestore;
             GremlinDatabasesToRestore = gremlinDatabasesToRestore;
             TablesToRestore = tablesToRestore;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Describes the mode of the restore. </summary>
+        [WirePath("restoreMode")]
         public CosmosDBAccountRestoreMode? RestoreMode { get; set; }
         /// <summary> The id of the restorable database account from which the restore has to be initiated. For example: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{restorableDatabaseAccountName}. </summary>
+        [WirePath("restoreSource")]
         public string RestoreSource { get; set; }
         /// <summary> Time to which the account has to be restored (ISO-8601 format). </summary>
+        [WirePath("restoreTimestampInUtc")]
         public DateTimeOffset? RestoreTimestampInUtc { get; set; }
         /// <summary> List of specific databases available for restore. </summary>
+        [WirePath("databasesToRestore")]
         public IList<DatabaseRestoreResourceInfo> DatabasesToRestore { get; }
         /// <summary> List of specific gremlin databases available for restore. </summary>
+        [WirePath("gremlinDatabasesToRestore")]
         public IList<GremlinDatabaseRestoreResourceInfo> GremlinDatabasesToRestore { get; }
         /// <summary> List of specific tables available for restore. </summary>
+        [WirePath("tablesToRestore")]
         public IList<string> TablesToRestore { get; }
     }
 }

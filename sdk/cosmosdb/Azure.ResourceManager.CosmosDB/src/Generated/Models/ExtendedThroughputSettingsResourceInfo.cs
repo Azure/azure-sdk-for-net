@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The ExtendedThroughputSettingsResourceInfo. </summary>
@@ -20,10 +23,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="autoscaleSettings"> Cosmos DB resource for autoscale settings. Either throughput is required or autoscaleSettings is required, but not both. </param>
         /// <param name="minimumThroughput"> The minimum throughput of the resource. </param>
         /// <param name="offerReplacePending"> The throughput replace is pending. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal ExtendedThroughputSettingsResourceInfo(int? throughput, AutoscaleSettingsResourceInfo autoscaleSettings, string minimumThroughput, string offerReplacePending, string rid, float? timestamp, ETag? etag) : base(throughput, autoscaleSettings, minimumThroughput, offerReplacePending)
+        internal ExtendedThroughputSettingsResourceInfo(int? throughput, AutoscaleSettingsResourceInfo autoscaleSettings, string minimumThroughput, string offerReplacePending, IDictionary<string, BinaryData> serializedAdditionalRawData, string rid, float? timestamp, ETag? etag) : base(throughput, autoscaleSettings, minimumThroughput, offerReplacePending, serializedAdditionalRawData)
         {
             Rid = rid;
             Timestamp = timestamp;
@@ -31,10 +35,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>
+        [WirePath("_rid")]
         public string Rid { get; }
         /// <summary> A system generated property that denotes the last updated timestamp of the resource. </summary>
+        [WirePath("_ts")]
         public float? Timestamp { get; }
         /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
+        [WirePath("_etag")]
         public ETag? ETag { get; }
     }
 }

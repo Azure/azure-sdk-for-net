@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -12,6 +13,38 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB location metadata. </summary>
     public partial class CosmosDBLocationProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="CosmosDBLocationProperties"/>. </summary>
         public CosmosDBLocationProperties()
         {
@@ -22,18 +55,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="doesSupportAvailabilityZone"> Flag indicating whether the location supports availability zones or not. </param>
         /// <param name="isResidencyRestricted"> Flag indicating whether the location is residency sensitive. </param>
         /// <param name="backupStorageRedundancies"> The properties of available backup storage redundancies. </param>
-        internal CosmosDBLocationProperties(bool? doesSupportAvailabilityZone, bool? isResidencyRestricted, IReadOnlyList<CosmosDBBackupStorageRedundancy> backupStorageRedundancies)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBLocationProperties(bool? doesSupportAvailabilityZone, bool? isResidencyRestricted, IReadOnlyList<CosmosDBBackupStorageRedundancy> backupStorageRedundancies, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DoesSupportAvailabilityZone = doesSupportAvailabilityZone;
             IsResidencyRestricted = isResidencyRestricted;
             BackupStorageRedundancies = backupStorageRedundancies;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Flag indicating whether the location supports availability zones or not. </summary>
+        [WirePath("supportsAvailabilityZone")]
         public bool? DoesSupportAvailabilityZone { get; }
         /// <summary> Flag indicating whether the location is residency sensitive. </summary>
+        [WirePath("isResidencyRestricted")]
         public bool? IsResidencyRestricted { get; }
         /// <summary> The properties of available backup storage redundancies. </summary>
+        [WirePath("backupStorageRedundancies")]
         public IReadOnlyList<CosmosDBBackupStorageRedundancy> BackupStorageRedundancies { get; }
     }
 }

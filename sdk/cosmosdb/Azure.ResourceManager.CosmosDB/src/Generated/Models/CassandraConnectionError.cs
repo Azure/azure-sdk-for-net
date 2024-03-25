@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The CassandraConnectionError. </summary>
     public partial class CassandraConnectionError
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="CassandraConnectionError"/>. </summary>
         internal CassandraConnectionError()
         {
@@ -21,24 +56,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="ipTo"> The IP that the connection attempted to reach. </param>
         /// <param name="port"> The TCP port the connection was attempted on. </param>
         /// <param name="exception"> Detailed error message about the failed connection. </param>
-        internal CassandraConnectionError(CassandraConnectionState? connectionState, string ipFrom, string ipTo, int? port, string exception)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CassandraConnectionError(CassandraConnectionState? connectionState, string ipFrom, string ipTo, int? port, string exception, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectionState = connectionState;
             IPFrom = ipFrom;
             IPTo = ipTo;
             Port = port;
             Exception = exception;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The kind of connection error that occurred. </summary>
+        [WirePath("connectionState")]
         public CassandraConnectionState? ConnectionState { get; }
         /// <summary> The IP of host that originated the failed connection. </summary>
+        [WirePath("iPFrom")]
         public string IPFrom { get; }
         /// <summary> The IP that the connection attempted to reach. </summary>
+        [WirePath("iPTo")]
         public string IPTo { get; }
         /// <summary> The TCP port the connection was attempted on. </summary>
+        [WirePath("port")]
         public int? Port { get; }
         /// <summary> Detailed error message about the failed connection. </summary>
+        [WirePath("exception")]
         public string Exception { get; }
     }
 }

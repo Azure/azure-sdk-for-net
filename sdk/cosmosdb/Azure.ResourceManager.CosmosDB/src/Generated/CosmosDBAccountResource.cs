@@ -1413,7 +1413,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CosmosDBAccountConnectionString> GetConnectionStringsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBAccountDatabaseAccountsRestClient.CreateListConnectionStringsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CosmosDBAccountConnectionString.DeserializeCosmosDBAccountConnectionString, _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetConnectionStrings", "connectionStrings", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBAccountConnectionString.DeserializeCosmosDBAccountConnectionString(e), _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetConnectionStrings", "connectionStrings", null, cancellationToken);
         }
 
         /// <summary>
@@ -1442,7 +1442,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CosmosDBAccountConnectionString> GetConnectionStrings(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBAccountDatabaseAccountsRestClient.CreateListConnectionStringsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CosmosDBAccountConnectionString.DeserializeCosmosDBAccountConnectionString, _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetConnectionStrings", "connectionStrings", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBAccountConnectionString.DeserializeCosmosDBAccountConnectionString(e), _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetConnectionStrings", "connectionStrings", null, cancellationToken);
         }
 
         /// <summary>
@@ -1827,7 +1827,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBAccountDatabaseAccountsRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric, _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetrics", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(e), _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetrics", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1860,7 +1860,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBAccountDatabaseAccountsRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric, _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetrics", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(e), _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetrics", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1890,7 +1890,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CosmosDBBaseUsage> GetUsagesAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBAccountDatabaseAccountsRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage, _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsages", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage(e), _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1920,7 +1920,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CosmosDBBaseUsage> GetUsages(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBAccountDatabaseAccountsRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage, _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsages", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage(e), _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1949,7 +1949,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CosmosDBMetricDefinition> GetMetricDefinitionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBAccountDatabaseAccountsRestClient.CreateListMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CosmosDBMetricDefinition.DeserializeCosmosDBMetricDefinition, _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricDefinitions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBMetricDefinition.DeserializeCosmosDBMetricDefinition(e), _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricDefinitions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1978,7 +1978,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CosmosDBMetricDefinition> GetMetricDefinitions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBAccountDatabaseAccountsRestClient.CreateListMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CosmosDBMetricDefinition.DeserializeCosmosDBMetricDefinition, _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricDefinitions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBMetricDefinition.DeserializeCosmosDBMetricDefinition(e), _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricDefinitions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2010,7 +2010,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric, _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsDatabases", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(e), _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2042,7 +2042,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric, _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsDatabases", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(e), _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2073,7 +2073,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage, _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesDatabases", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage(e), _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2104,7 +2104,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage, _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesDatabases", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage(e), _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2134,7 +2134,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseRestClient.CreateListMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CosmosDBMetricDefinition.DeserializeCosmosDBMetricDefinition, _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricDefinitionsDatabases", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBMetricDefinition.DeserializeCosmosDBMetricDefinition(e), _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricDefinitionsDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2164,7 +2164,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseRestClient.CreateListMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CosmosDBMetricDefinition.DeserializeCosmosDBMetricDefinition, _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricDefinitionsDatabases", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBMetricDefinition.DeserializeCosmosDBMetricDefinition(e), _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricDefinitionsDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2198,7 +2198,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric, _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollections", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(e), _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollections", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2232,7 +2232,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric, _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollections", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(e), _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollections", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2265,7 +2265,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage, _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesCollections", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage(e), _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesCollections", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2298,7 +2298,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage, _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesCollections", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage(e), _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesCollections", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2330,7 +2330,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionRestClient.CreateListMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CosmosDBMetricDefinition.DeserializeCosmosDBMetricDefinition, _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricDefinitionsCollections", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBMetricDefinition.DeserializeCosmosDBMetricDefinition(e), _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricDefinitionsCollections", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2362,7 +2362,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionRestClient.CreateListMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CosmosDBMetricDefinition.DeserializeCosmosDBMetricDefinition, _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricDefinitionsCollections", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBMetricDefinition.DeserializeCosmosDBMetricDefinition(e), _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricDefinitionsCollections", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2398,7 +2398,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionRegionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric, _collectionRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollectionRegions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(e), _collectionRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollectionRegions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2434,7 +2434,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionRegionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric, _collectionRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollectionRegions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(e), _collectionRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollectionRegions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2466,7 +2466,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseAccountRegionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric, _databaseAccountRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsDatabaseAccountRegions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(e), _databaseAccountRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsDatabaseAccountRegions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2498,7 +2498,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseAccountRegionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric, _databaseAccountRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsDatabaseAccountRegions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(e), _databaseAccountRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsDatabaseAccountRegions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2532,7 +2532,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _percentileSourceTargetRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceRegion, targetRegion, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric, _percentileSourceTargetClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPercentileSourceTargets", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric(e), _percentileSourceTargetClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPercentileSourceTargets", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2566,7 +2566,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _percentileSourceTargetRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceRegion, targetRegion, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric, _percentileSourceTargetClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPercentileSourceTargets", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric(e), _percentileSourceTargetClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPercentileSourceTargets", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2598,7 +2598,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _percentileTargetRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, targetRegion, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric, _percentileTargetClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPercentileTargets", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric(e), _percentileTargetClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPercentileTargets", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2630,7 +2630,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _percentileTargetRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, targetRegion, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric, _percentileTargetClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPercentileTargets", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric(e), _percentileTargetClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPercentileTargets", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2659,7 +2659,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _percentileRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric, _percentileClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPercentiles", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric(e), _percentileClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPercentiles", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2688,7 +2688,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _percentileRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric, _percentileClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPercentiles", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric(e), _percentileClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPercentiles", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2724,7 +2724,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionPartitionRegionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PartitionMetric.DeserializePartitionMetric, _collectionPartitionRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollectionPartitionRegions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PartitionMetric.DeserializePartitionMetric(e), _collectionPartitionRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollectionPartitionRegions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2760,7 +2760,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionPartitionRegionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PartitionMetric.DeserializePartitionMetric, _collectionPartitionRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollectionPartitionRegions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PartitionMetric.DeserializePartitionMetric(e), _collectionPartitionRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollectionPartitionRegions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2794,7 +2794,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionPartitionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PartitionMetric.DeserializePartitionMetric, _collectionPartitionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollectionPartitions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PartitionMetric.DeserializePartitionMetric(e), _collectionPartitionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollectionPartitions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2828,7 +2828,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionPartitionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PartitionMetric.DeserializePartitionMetric, _collectionPartitionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollectionPartitions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PartitionMetric.DeserializePartitionMetric(e), _collectionPartitionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollectionPartitions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2861,7 +2861,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionPartitionRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PartitionUsage.DeserializePartitionUsage, _collectionPartitionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesCollectionPartitions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PartitionUsage.DeserializePartitionUsage(e), _collectionPartitionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesCollectionPartitions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2894,7 +2894,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionPartitionRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PartitionUsage.DeserializePartitionUsage, _collectionPartitionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesCollectionPartitions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PartitionUsage.DeserializePartitionUsage(e), _collectionPartitionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesCollectionPartitions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2930,7 +2930,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _partitionKeyRangeIdRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, partitionKeyRangeId, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PartitionMetric.DeserializePartitionMetric, _partitionKeyRangeIdClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPartitionKeyRangeIds", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PartitionMetric.DeserializePartitionMetric(e), _partitionKeyRangeIdClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPartitionKeyRangeIds", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2966,7 +2966,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _partitionKeyRangeIdRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, partitionKeyRangeId, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PartitionMetric.DeserializePartitionMetric, _partitionKeyRangeIdClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPartitionKeyRangeIds", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PartitionMetric.DeserializePartitionMetric(e), _partitionKeyRangeIdClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPartitionKeyRangeIds", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -3004,7 +3004,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _partitionKeyRangeIdRegionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, partitionKeyRangeId, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PartitionMetric.DeserializePartitionMetric, _partitionKeyRangeIdRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPartitionKeyRangeIdRegions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PartitionMetric.DeserializePartitionMetric(e), _partitionKeyRangeIdRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPartitionKeyRangeIdRegions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -3042,7 +3042,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _partitionKeyRangeIdRegionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, partitionKeyRangeId, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PartitionMetric.DeserializePartitionMetric, _partitionKeyRangeIdRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPartitionKeyRangeIdRegions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PartitionMetric.DeserializePartitionMetric(e), _partitionKeyRangeIdRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPartitionKeyRangeIdRegions", "value", null, cancellationToken);
         }
 
         /// <summary>

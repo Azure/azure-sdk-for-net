@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -22,24 +23,30 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBTablePropertiesResource"/>. </summary>
         /// <param name="tableName"> Name of the Cosmos DB table. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
-        internal CosmosDBTablePropertiesResource(string tableName, string rid, float? timestamp, ETag? etag) : base(tableName)
+        internal CosmosDBTablePropertiesResource(string tableName, IDictionary<string, BinaryData> serializedAdditionalRawData, string rid, float? timestamp, ETag? etag) : base(tableName, serializedAdditionalRawData)
         {
-            Argument.AssertNotNull(tableName, nameof(tableName));
-
             Rid = rid;
             Timestamp = timestamp;
             ETag = etag;
         }
 
+        /// <summary> Initializes a new instance of <see cref="CosmosDBTablePropertiesResource"/> for deserialization. </summary>
+        internal CosmosDBTablePropertiesResource()
+        {
+        }
+
         /// <summary> A system generated property. A unique identifier. </summary>
+        [WirePath("_rid")]
         public string Rid { get; }
         /// <summary> A system generated property that denotes the last updated timestamp of the resource. </summary>
+        [WirePath("_ts")]
         public float? Timestamp { get; }
         /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
+        [WirePath("_etag")]
         public ETag? ETag { get; }
     }
 }

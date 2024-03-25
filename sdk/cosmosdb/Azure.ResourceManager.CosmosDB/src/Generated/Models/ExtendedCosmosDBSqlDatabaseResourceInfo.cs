@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -22,16 +23,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlDatabaseResourceInfo"/>. </summary>
         /// <param name="databaseName"> Name of the Cosmos DB SQL database. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="colls"> A system generated property that specified the addressable path of the collections resource. </param>
         /// <param name="users"> A system generated property that specifies the addressable path of the users resource. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
-        internal ExtendedCosmosDBSqlDatabaseResourceInfo(string databaseName, string colls, string users, string rid, float? timestamp, ETag? etag) : base(databaseName)
+        internal ExtendedCosmosDBSqlDatabaseResourceInfo(string databaseName, IDictionary<string, BinaryData> serializedAdditionalRawData, string colls, string users, string rid, float? timestamp, ETag? etag) : base(databaseName, serializedAdditionalRawData)
         {
-            Argument.AssertNotNull(databaseName, nameof(databaseName));
-
             Colls = colls;
             Users = users;
             Rid = rid;
@@ -39,15 +38,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
             ETag = etag;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlDatabaseResourceInfo"/> for deserialization. </summary>
+        internal ExtendedCosmosDBSqlDatabaseResourceInfo()
+        {
+        }
+
         /// <summary> A system generated property that specified the addressable path of the collections resource. </summary>
+        [WirePath("_colls")]
         public string Colls { get; set; }
         /// <summary> A system generated property that specifies the addressable path of the users resource. </summary>
+        [WirePath("_users")]
         public string Users { get; set; }
         /// <summary> A system generated property. A unique identifier. </summary>
+        [WirePath("_rid")]
         public string Rid { get; }
         /// <summary> A system generated property that denotes the last updated timestamp of the resource. </summary>
+        [WirePath("_ts")]
         public float? Timestamp { get; }
         /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
+        [WirePath("_etag")]
         public ETag? ETag { get; }
     }
 }
