@@ -8,7 +8,9 @@
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> The minimum desired capabilities for the browse operation request. </summary>
+#pragma warning disable AZC0030 // Improper model name suffix
     public partial class PhoneNumberBrowseCapabilitiesRequest
+#pragma warning restore AZC0030 // Improper model name suffix
     {
         /// <summary> Initializes a new instance of <see cref="PhoneNumberBrowseCapabilitiesRequest"/>. </summary>
         public PhoneNumberBrowseCapabilitiesRequest()
