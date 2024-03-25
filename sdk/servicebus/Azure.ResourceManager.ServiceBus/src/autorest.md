@@ -6,18 +6,13 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.ServiceBus
-require: https://github.com/Azure/azure-rest-api-specs/blob/f69c52dd603c79a8b29ba51483e3aa7fe1b56212/specification/servicebus/resource-manager/readme.md
-tag: package-2022-10-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/c2d2b523575031790b8672640ea762bdf9ad4964/specification/servicebus/resource-manager/readme.md
+tag: package-2021-11
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
-sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
-  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-use-model-reader-writer: true
-enable-bicep-serialization: true
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/AuthorizationRules/{authorizationRuleName}: ServiceBusNamespaceAuthorizationRule
@@ -35,7 +30,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-acronym-mapping:
+rename-rules:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -70,8 +65,6 @@ rename-mapping:
   ServiceBusNamespace.properties.zoneRedundant: IsZoneRedundant
   ServiceBusNetworkRuleSet.properties.trustedServiceAccessEnabled: IsTrustedServiceAccessEnabled
   ServiceBusNameAvailabilityResult.nameAvailable: IsNameAvailable
-  PublicNetworkAccess: ServiceBusPublicNetworkAccess
-  TlsVersion: ServiceBusMinimumTlsVersion
 
 directive:
     - from: swagger-document
