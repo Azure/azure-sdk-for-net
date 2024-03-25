@@ -668,7 +668,8 @@
 # ServiceOwners:                                                   @bastionsuppgithub
 
 # ServiceLabel: %Network - CDN
-# ServiceOwners:                                                   @cdnfdsuppgithub @ptnan7 @t-bzhan
+# ServiceOwners:                                                   @cdnfdsuppgithub
+/sdk/cdn/                                                          @ptnan7
 
 # ServiceLabel: %Network - DDOS Protection
 # ServiceOwners:                                                   @ddossuppgithub
@@ -680,7 +681,7 @@
 # ServiceOwners:                                                   @fwsuppgithub
 
 # ServiceLabel: %Network - Front Door
-# ServiceOwners:                                                   @cdnfdsuppgithub @ptnan7 @t-bzhan
+# ServiceOwners:                                                   @cdnfdsuppgithub
 
 # ServiceLabel: %Network - Virtual Network
 # ServiceOwners:                                                   @vnetsuppgithub

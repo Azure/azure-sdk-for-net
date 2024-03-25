@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Cdn.Tests
@@ -21,11 +23,12 @@ namespace Azure.ResourceManager.Cdn.Tests
         public async Task CanMigrateResultTest()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
-            var classic = new Resources.Models.WritableSubResource();
-            CanMigrateContent canMigrateContent = new(classic);
-            var output = await rg.CanMigrateProfileAsync(WaitUntil.Completed, canMigrateContent);
-            Assert.IsNotNull(output);
+            ResourceGroupResource rg = await subscription.GetResourceGroupAsync("cdn-sdk-test");
+            var content = new CanMigrateContent(new WritableSubResource()
+            {
+                Id = new ResourceIdentifier("/subscriptions/27cafca8-b9a4-4264-b399-45d0c9cca1ab/resourceGroups/cdn-sdk-test/providers/Microsoft.Network/frontdoors/cdn-sdk-test"),
+            });
+            await rg.CanMigrateProfileAsync(WaitUntil.Completed, content);
         }
     }
 }
