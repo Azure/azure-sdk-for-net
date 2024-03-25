@@ -7,10 +7,10 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 
 ``` yaml
 public-clients: true
-tag: package-phonenumber-2023-10-01-preview
+tag: package-preview-2024-01
 model-namespace: false
 require:
-    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/bd44f2d98fdc14c674b542cc64ce7df33ddfaf76/specification/communication/data-plane/PhoneNumbers/readme.md
+    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/9cdbbefb7f5c024d0c54977669018ec310100ffa/specification/communication/data-plane/PhoneNumbers/readme.md
 title: Phone numbers
 payload-flattening-threshold: 3
 generation1-convenience-client: true
@@ -49,17 +49,3 @@ directive:
     $["format"] = "";
 ```
 
-# Removed Models
-``` yaml
-directive:
-  - remove-operation-match: /.*Reservation.*/i
-  - remove-operation: PhoneNumbers_BrowseAvailableNumbers
-  - remove-model: PhoneNumbersReservation
-  - remove-model: PhoneNumbersReservations
-  - remove-model: PhoneNumbersBrowseRequest
-  - remove-model: PhoneNumbersBrowseResult
-  - remove-model: PhoneNumberBrowseCapabilitiesRequest
-  - remove-model: PhoneNumbersReservationPurchaseRequest
-  - remove-model: Error
-  - remove-model: AvailablePhoneNumber
-  - remove-model: AvailablePhoneNumberCost

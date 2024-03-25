@@ -26,8 +26,8 @@ namespace Azure.Communication.PhoneNumbers
             PhoneNumberCapabilities capabilities = default;
             PhoneNumberCost cost = default;
             DateTimeOffset searchExpiresBy = default;
-            Optional<int> errorCode = default;
-            Optional<ErrorMessage> error = default;
+            int? errorCode = default;
+            ErrorMessage? error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("searchId"u8))
