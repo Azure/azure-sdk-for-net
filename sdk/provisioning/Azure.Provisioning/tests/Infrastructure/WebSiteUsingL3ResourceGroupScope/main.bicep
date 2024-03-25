@@ -23,8 +23,8 @@ resource appServicePlan_PxkuWnuWL 'Microsoft.Web/serverfarms@2021-02-01' = {
   }
 }
 
-resource keyVault_GLHqcGjrx 'Microsoft.KeyVault/vaults@2022-07-01' = {
-  name: toLower(take(concat('kv', uniqueString(resourceGroup().id)), 24))
+resource keyVault_wv66C4HPm 'Microsoft.KeyVault/vaults@2022-07-01' = {
+  name: toLower(take('kv${uniqueString(resourceGroup().id)}', 24))
   location: location
   tags: {
     'key': 'value'
@@ -39,8 +39,8 @@ resource keyVault_GLHqcGjrx 'Microsoft.KeyVault/vaults@2022-07-01' = {
   }
 }
 
-resource keyVaultAddAccessPolicy_7TZqao49e 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' = {
-  parent: keyVault_GLHqcGjrx
+resource keyVaultAddAccessPolicy_o5MspwSXj 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' = {
+  parent: keyVault_wv66C4HPm
   name: 'add'
   location: location
   properties: {
@@ -59,8 +59,8 @@ resource keyVaultAddAccessPolicy_7TZqao49e 'Microsoft.KeyVault/vaults/accessPoli
   }
 }
 
-resource keyVaultSecret_oru652GQm 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
-  parent: keyVault_GLHqcGjrx
+resource keyVaultSecret_hGC2pnnGh 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
+  parent: keyVault_wv66C4HPm
   name: 'sqlAdminPassword'
   location: location
   properties: {
@@ -68,8 +68,8 @@ resource keyVaultSecret_oru652GQm 'Microsoft.KeyVault/vaults/secrets@2022-07-01'
   }
 }
 
-resource keyVaultSecret_Y0cNQsqRD 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
-  parent: keyVault_GLHqcGjrx
+resource keyVaultSecret_1FOMdqlt9 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
+  parent: keyVault_wv66C4HPm
   name: 'appUserPassword'
   location: location
   properties: {
@@ -77,12 +77,12 @@ resource keyVaultSecret_Y0cNQsqRD 'Microsoft.KeyVault/vaults/secrets@2022-07-01'
   }
 }
 
-resource keyVaultSecret_zxjawLUWb 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
-  parent: keyVault_GLHqcGjrx
+resource keyVaultSecret_U6mjHf1cW 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
+  parent: keyVault_wv66C4HPm
   name: 'connectionString'
   location: location
   properties: {
-    value: 'Server=${sqlServer_9wIHMU1zj.properties.fullyQualifiedDomainName}; Database=${sqlDatabase_6rAKZufXn.name}; User=appUser; Password=${appUserPassword}'
+    value: 'Server=${sqlServer_YFcCarAEq.properties.fullyQualifiedDomainName}; Database=${sqlDatabase_kBJgqdio1.name}; User=appUser; Password=${appUserPassword}'
   }
 }
 
@@ -139,8 +139,8 @@ resource webSiteConfigLogs_GwVSHGFxS 'Microsoft.Web/sites/config@2021-02-01' = {
   }
 }
 
-resource sqlServer_9wIHMU1zj 'Microsoft.Sql/servers@2020-11-01-preview' = {
-  name: toLower(take(concat('sqlserver', uniqueString(resourceGroup().id)), 24))
+resource sqlServer_YFcCarAEq 'Microsoft.Sql/servers@2020-11-01-preview' = {
+  name: toLower(take('sqlserver${uniqueString(resourceGroup().id)}', 24))
   location: location
   properties: {
     administratorLogin: 'sqladmin'
@@ -151,16 +151,16 @@ resource sqlServer_9wIHMU1zj 'Microsoft.Sql/servers@2020-11-01-preview' = {
   }
 }
 
-resource sqlDatabase_6rAKZufXn 'Microsoft.Sql/servers/databases@2020-11-01-preview' = {
-  parent: sqlServer_9wIHMU1zj
+resource sqlDatabase_kBJgqdio1 'Microsoft.Sql/servers/databases@2020-11-01-preview' = {
+  parent: sqlServer_YFcCarAEq
   name: 'db'
   location: location
   properties: {
   }
 }
 
-resource sqlFirewallRule_S9t9pYi6A 'Microsoft.Sql/servers/firewallRules@2020-11-01-preview' = {
-  parent: sqlServer_9wIHMU1zj
+resource sqlFirewallRule_eQtj5OOfp 'Microsoft.Sql/servers/firewallRules@2020-11-01-preview' = {
+  parent: sqlServer_YFcCarAEq
   name: 'firewallRule'
   properties: {
     startIpAddress: '0.0.0.1'
@@ -197,7 +197,7 @@ SCRIPT_END
       }
       {
         name: 'DBSERVER'
-        value: sqlServer_9wIHMU1zj.properties.fullyQualifiedDomainName
+        value: sqlServer_YFcCarAEq.properties.fullyQualifiedDomainName
       }
       {
         name: 'DBNAME'
@@ -250,6 +250,6 @@ resource applicationSettingsResource_EFVSysO15 'Microsoft.Web/sites/config@2021-
   }
 }
 
-output vaultUri string = keyVault_GLHqcGjrx.properties.vaultUri
+output vaultUri string = keyVault_wv66C4HPm.properties.vaultUri
 output SERVICE_API_IDENTITY_PRINCIPAL_ID string = webSite_IGuzwfciS.identity.principalId
-output sqlServerName string = sqlServer_9wIHMU1zj.properties.fullyQualifiedDomainName
+output sqlServerName string = sqlServer_YFcCarAEq.properties.fullyQualifiedDomainName
