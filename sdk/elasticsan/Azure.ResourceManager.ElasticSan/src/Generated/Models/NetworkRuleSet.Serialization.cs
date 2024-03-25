@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ElasticSanVirtualNetworkRule>(item, options);
                 }
                 writer.WriteEndArray();
             }

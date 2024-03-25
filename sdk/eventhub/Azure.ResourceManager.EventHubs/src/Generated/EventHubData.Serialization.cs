@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.EventHubs
             if (Optional.IsDefined(CaptureDescription))
             {
                 writer.WritePropertyName("captureDescription"u8);
-                writer.WriteObjectValue(CaptureDescription);
+                writer.WriteObjectValue<CaptureDescription>(CaptureDescription, options);
             }
             if (Optional.IsDefined(RetentionDescription))
             {
                 writer.WritePropertyName("retentionDescription"u8);
-                writer.WriteObjectValue(RetentionDescription);
+                writer.WriteObjectValue<RetentionDescription>(RetentionDescription, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

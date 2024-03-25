@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedHsmGeoReplicatedRegion>(item, options);
                 }
                 writer.WriteEndArray();
             }

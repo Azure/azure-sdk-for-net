@@ -33,17 +33,17 @@ namespace Azure.AI.Translation.Text
             if (Optional.IsDefined(Transliteration))
             {
                 writer.WritePropertyName("transliteration"u8);
-                writer.WriteObjectValue(Transliteration);
+                writer.WriteObjectValue<TransliteratedText>(Transliteration, options);
             }
             if (Optional.IsDefined(Alignment))
             {
                 writer.WritePropertyName("alignment"u8);
-                writer.WriteObjectValue(Alignment);
+                writer.WriteObjectValue<TranslatedTextAlignment>(Alignment, options);
             }
             if (Optional.IsDefined(SentLen))
             {
                 writer.WritePropertyName("sentLen"u8);
-                writer.WriteObjectValue(SentLen);
+                writer.WriteObjectValue<SentenceLength>(SentLen, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -187,7 +187,7 @@ namespace Azure.AI.Translation.Text
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<Translation>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

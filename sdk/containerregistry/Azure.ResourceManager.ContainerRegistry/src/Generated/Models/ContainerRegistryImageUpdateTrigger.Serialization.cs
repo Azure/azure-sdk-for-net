@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in Images)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerRegistryImageDescriptor>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.Storage
             if (options.Format != "W" && Optional.IsDefined(ImmutabilityPolicy))
             {
                 writer.WritePropertyName("immutabilityPolicy"u8);
-                writer.WriteObjectValue(ImmutabilityPolicy);
+                writer.WriteObjectValue<BlobContainerImmutabilityPolicy>(ImmutabilityPolicy, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LegalHold))
             {
                 writer.WritePropertyName("legalHold"u8);
-                writer.WriteObjectValue(LegalHold);
+                writer.WriteObjectValue<LegalHoldProperties>(LegalHold, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HasLegalHold))
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(ImmutableStorageWithVersioning))
             {
                 writer.WritePropertyName("immutableStorageWithVersioning"u8);
-                writer.WriteObjectValue(ImmutableStorageWithVersioning);
+                writer.WriteObjectValue<ImmutableStorageWithVersioning>(ImmutableStorageWithVersioning, options);
             }
             if (Optional.IsDefined(EnableNfsV3RootSquash))
             {

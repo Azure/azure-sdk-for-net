@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in GroupMembers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ServerTrustGroupServerInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

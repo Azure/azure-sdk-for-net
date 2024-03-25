@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             if (Optional.IsDefined(ProvisioningInfo))
             {
                 writer.WritePropertyName("provisioningInfo"u8);
-                writer.WriteObjectValue(ProvisioningInfo);
+                writer.WriteObjectValue<ErrorResponse>(ProvisioningInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

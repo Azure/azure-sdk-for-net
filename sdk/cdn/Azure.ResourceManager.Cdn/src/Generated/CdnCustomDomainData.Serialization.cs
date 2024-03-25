@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Cdn
                 if (CustomDomainHttpsContent != null)
                 {
                     writer.WritePropertyName("customHttpsParameters"u8);
-                    writer.WriteObjectValue(CustomDomainHttpsContent);
+                    writer.WriteObjectValue<CustomDomainHttpsContent>(CustomDomainHttpsContent, options);
                 }
                 else
                 {

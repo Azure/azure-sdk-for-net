@@ -143,7 +143,7 @@ namespace Azure.Data.Tables
             request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
             request.Headers.Add("Content-Type", "application/json;odata=nometadata");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(tableProperties);
+            content.JsonWriter.WriteObjectValue<TableProperties>(tableProperties);
             request.Content = content;
             return message;
         }
@@ -783,7 +783,7 @@ namespace Azure.Data.Tables
                         content.JsonWriter.WriteNullValue();
                         continue;
                     }
-                    content.JsonWriter.WriteObjectValue(item.Value);
+                    content.JsonWriter.WriteObjectValue<object>(item.Value);
                 }
                 content.JsonWriter.WriteEndObject();
                 request.Content = content;
@@ -908,7 +908,7 @@ namespace Azure.Data.Tables
                         content.JsonWriter.WriteNullValue();
                         continue;
                     }
-                    content.JsonWriter.WriteObjectValue(item.Value);
+                    content.JsonWriter.WriteObjectValue<object>(item.Value);
                 }
                 content.JsonWriter.WriteEndObject();
                 request.Content = content;
@@ -1138,7 +1138,7 @@ namespace Azure.Data.Tables
                         content.JsonWriter.WriteNullValue();
                         continue;
                     }
-                    content.JsonWriter.WriteObjectValue(item.Value);
+                    content.JsonWriter.WriteObjectValue<object>(item.Value);
                 }
                 content.JsonWriter.WriteEndObject();
                 request.Content = content;

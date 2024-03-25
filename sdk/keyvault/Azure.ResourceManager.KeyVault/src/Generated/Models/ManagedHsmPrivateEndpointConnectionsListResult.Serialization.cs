@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedHsmPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }

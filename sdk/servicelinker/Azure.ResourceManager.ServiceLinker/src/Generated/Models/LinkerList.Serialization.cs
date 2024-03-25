@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LinkerResourceData>(item, options);
                 }
                 writer.WriteEndArray();
             }

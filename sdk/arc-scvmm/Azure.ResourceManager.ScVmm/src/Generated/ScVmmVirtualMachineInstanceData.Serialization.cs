@@ -59,34 +59,34 @@ namespace Azure.ResourceManager.ScVmm
                 writer.WriteStartArray();
                 foreach (var item in AvailabilitySets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScVmmAvailabilitySetItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile);
+                writer.WriteObjectValue<OSProfileForVmInstance>(OSProfile, options);
             }
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile);
+                writer.WriteObjectValue<ScVmmHardwareProfile>(HardwareProfile, options);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue<ScVmmNetworkProfile>(NetworkProfile, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                writer.WriteObjectValue<ScVmmStorageProfile>(StorageProfile, options);
             }
             if (Optional.IsDefined(InfrastructureProfile))
             {
                 writer.WritePropertyName("infrastructureProfile"u8);
-                writer.WriteObjectValue(InfrastructureProfile);
+                writer.WriteObjectValue<ScVmmInfrastructureProfile>(InfrastructureProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PowerState))
             {

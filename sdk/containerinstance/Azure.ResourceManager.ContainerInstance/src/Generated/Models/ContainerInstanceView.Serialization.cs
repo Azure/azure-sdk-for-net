@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (options.Format != "W" && Optional.IsDefined(CurrentState))
             {
                 writer.WritePropertyName("currentState"u8);
-                writer.WriteObjectValue(CurrentState);
+                writer.WriteObjectValue<ContainerState>(CurrentState, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PreviousState))
             {
                 writer.WritePropertyName("previousState"u8);
-                writer.WriteObjectValue(PreviousState);
+                writer.WriteObjectValue<ContainerState>(PreviousState, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Events))
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerEvent>(item, options);
                 }
                 writer.WriteEndArray();
             }

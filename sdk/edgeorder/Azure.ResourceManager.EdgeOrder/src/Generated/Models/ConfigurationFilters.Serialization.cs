@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("hierarchyInformation"u8);
-            writer.WriteObjectValue(HierarchyInformation);
+            writer.WriteObjectValue<HierarchyInformation>(HierarchyInformation, options);
             if (Optional.IsCollectionDefined(FilterableProperty))
             {
                 writer.WritePropertyName("filterableProperty"u8);
                 writer.WriteStartArray();
                 foreach (var item in FilterableProperty)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FilterableProperty>(item, options);
                 }
                 writer.WriteEndArray();
             }

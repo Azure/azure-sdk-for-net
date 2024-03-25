@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(WindowsParameters))
             {
                 writer.WritePropertyName("windowsParameters"u8);
-                writer.WriteObjectValue(WindowsParameters);
+                writer.WriteObjectValue<HybridComputeWindowsParameters>(WindowsParameters, options);
             }
             if (Optional.IsDefined(LinuxParameters))
             {
                 writer.WritePropertyName("linuxParameters"u8);
-                writer.WriteObjectValue(LinuxParameters);
+                writer.WriteObjectValue<HybridComputeLinuxParameters>(LinuxParameters, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in EvaluatedNetworkSecurityGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EvaluatedNetworkSecurityGroup>(item, options);
                 }
                 writer.WriteEndArray();
             }

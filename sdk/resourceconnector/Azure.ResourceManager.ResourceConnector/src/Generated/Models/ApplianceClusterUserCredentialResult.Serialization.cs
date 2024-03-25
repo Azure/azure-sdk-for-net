@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             if (options.Format != "W" && Optional.IsDefined(HybridConnectionConfig))
             {
                 writer.WritePropertyName("hybridConnectionConfig"u8);
-                writer.WriteObjectValue(HybridConnectionConfig);
+                writer.WriteObjectValue<HybridConnectionConfig>(HybridConnectionConfig, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Kubeconfigs))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 writer.WriteStartArray();
                 foreach (var item in Kubeconfigs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplianceCredentialKubeconfig>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (AlertNotificationSetting != null)
                 {
                     writer.WritePropertyName("alertNotificationSetting"u8);
-                    writer.WriteObjectValue(AlertNotificationSetting);
+                    writer.WriteObjectValue<MonitoringAlertNotificationSettingsBase>(AlertNotificationSetting, options);
                 }
                 else
                 {
@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("computeConfiguration"u8);
-            writer.WriteObjectValue(ComputeConfiguration);
+            writer.WriteObjectValue<MonitorComputeConfigurationBase>(ComputeConfiguration, options);
             if (Optional.IsDefined(MonitoringTarget))
             {
                 if (MonitoringTarget != null)
                 {
                     writer.WritePropertyName("monitoringTarget"u8);
-                    writer.WriteObjectValue(MonitoringTarget);
+                    writer.WriteObjectValue<MonitoringTarget>(MonitoringTarget, options);
                 }
                 else
                 {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             foreach (var item in Signals)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<MonitoringSignalBase>(item.Value, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

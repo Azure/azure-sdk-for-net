@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in Backends)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FrontDoorBackend>(item, options);
                 }
                 writer.WriteEndArray();
             }

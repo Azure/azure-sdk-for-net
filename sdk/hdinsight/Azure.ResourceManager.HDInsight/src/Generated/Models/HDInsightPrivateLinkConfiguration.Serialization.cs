@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartArray();
             foreach (var item in IPConfigurations)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<HDInsightIPConfiguration>(item, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ScVmm.Models
             if (Optional.IsDefined(Cloud))
             {
                 writer.WritePropertyName("cloud"u8);
-                writer.WriteObjectValue(Cloud);
+                writer.WriteObjectValue<ScVmmInventoryItemDetails>(Cloud, options);
             }
             if (options.Format != "W" && Optional.IsDefined(BiosGuid))
             {

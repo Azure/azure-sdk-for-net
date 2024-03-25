@@ -24,7 +24,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WritePropertyName("anomalyDetectorDirection"u8);
             writer.WriteStringValue(AnomalyDetectorDirection.ToString());
             writer.WritePropertyName("suppressCondition"u8);
-            writer.WriteObjectValue(SuppressCondition);
+            writer.WriteObjectValue<SuppressCondition>(SuppressCondition);
             writer.WriteEndObject();
         }
 

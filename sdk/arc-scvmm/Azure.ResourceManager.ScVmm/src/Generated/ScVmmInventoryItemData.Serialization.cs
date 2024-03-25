@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ScVmm
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            writer.WriteObjectValue<ScVmmInventoryItemProperties>(Properties, options);
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);

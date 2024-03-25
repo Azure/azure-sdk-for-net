@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in MetricAvailabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceMetricAvailability>(item, options);
                 }
                 writer.WriteEndArray();
             }

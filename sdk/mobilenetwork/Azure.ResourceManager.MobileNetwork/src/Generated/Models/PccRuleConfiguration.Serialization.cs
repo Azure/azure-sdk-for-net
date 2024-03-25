@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(RuleQosPolicy))
             {
                 writer.WritePropertyName("ruleQosPolicy"u8);
-                writer.WriteObjectValue(RuleQosPolicy);
+                writer.WriteObjectValue<PccRuleQosPolicy>(RuleQosPolicy, options);
             }
             if (Optional.IsDefined(TrafficControl))
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartArray();
             foreach (var item in ServiceDataFlowTemplates)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MobileNetworkServiceDataFlowTemplate>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ScVmm
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScVmmNetworkInterface>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ScVmm
                 writer.WriteStartArray();
                 foreach (var item in Disks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScVmmVirtualDisk>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(AzureFile))
             {
                 writer.WritePropertyName("azureFile"u8);
-                writer.WriteObjectValue(AzureFile);
+                writer.WriteObjectValue<ContainerInstanceAzureFileVolume>(AzureFile, options);
             }
             if (Optional.IsDefined(EmptyDir))
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(GitRepo))
             {
                 writer.WritePropertyName("gitRepo"u8);
-                writer.WriteObjectValue(GitRepo);
+                writer.WriteObjectValue<ContainerInstanceGitRepoVolume>(GitRepo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

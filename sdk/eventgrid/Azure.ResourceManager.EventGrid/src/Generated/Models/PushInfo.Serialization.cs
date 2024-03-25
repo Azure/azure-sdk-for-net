@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(DeadLetterDestinationWithResourceIdentity))
             {
                 writer.WritePropertyName("deadLetterDestinationWithResourceIdentity"u8);
-                writer.WriteObjectValue(DeadLetterDestinationWithResourceIdentity);
+                writer.WriteObjectValue<DeadLetterWithResourceIdentity>(DeadLetterDestinationWithResourceIdentity, options);
             }
             if (Optional.IsDefined(DeliveryWithResourceIdentity))
             {
                 writer.WritePropertyName("deliveryWithResourceIdentity"u8);
-                writer.WriteObjectValue(DeliveryWithResourceIdentity);
+                writer.WriteObjectValue<DeliveryWithResourceIdentity>(DeliveryWithResourceIdentity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (InferenceConfiguration != null)
                 {
                     writer.WritePropertyName("inferenceConfiguration"u8);
-                    writer.WriteObjectValue(InferenceConfiguration);
+                    writer.WriteObjectValue<OnlineInferenceConfiguration>(InferenceConfiguration, options);
                 }
                 else
                 {

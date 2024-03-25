@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UserAssignedIdentityData>(item, options);
                 }
                 writer.WriteEndArray();
             }

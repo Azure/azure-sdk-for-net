@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OperationalInsightsManagementGroup>(item, options);
                 }
                 writer.WriteEndArray();
             }

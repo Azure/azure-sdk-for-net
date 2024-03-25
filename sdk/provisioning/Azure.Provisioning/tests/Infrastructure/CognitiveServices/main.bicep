@@ -27,8 +27,8 @@ resource cognitiveServicesAccountDeployment_WYhBFVWTN 'Microsoft.CognitiveServic
   }
   properties: {
     model: {
-      name: 'text-embedding-3-large'
       format: 'OpenAI'
+      name: 'text-embedding-3-large'
       version: '1'
     }
   }

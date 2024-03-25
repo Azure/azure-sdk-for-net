@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
-                writer.WriteObjectValue(Settings);
+                writer.WriteObjectValue<LogFilesDataSourceSettings>(Settings, options);
             }
             if (Optional.IsDefined(Name))
             {

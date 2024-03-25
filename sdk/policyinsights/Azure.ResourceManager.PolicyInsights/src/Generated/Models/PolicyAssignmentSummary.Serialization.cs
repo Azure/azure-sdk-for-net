@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (Optional.IsDefined(Results))
             {
                 writer.WritePropertyName("results"u8);
-                writer.WriteObjectValue(Results);
+                writer.WriteObjectValue<PolicySummaryResults>(Results, options);
             }
             if (Optional.IsCollectionDefined(PolicyDefinitions))
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in PolicyDefinitions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PolicyDefinitionSummary>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in PolicyGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PolicyGroupSummary>(item, options);
                 }
                 writer.WriteEndArray();
             }

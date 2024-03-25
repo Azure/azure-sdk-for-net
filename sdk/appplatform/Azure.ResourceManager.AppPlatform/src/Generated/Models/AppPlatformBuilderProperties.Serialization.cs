@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(Stack))
             {
                 writer.WritePropertyName("stack"u8);
-                writer.WriteObjectValue(Stack);
+                writer.WriteObjectValue<AppPlatformClusterStackProperties>(Stack, options);
             }
             if (Optional.IsCollectionDefined(BuildpackGroups))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in BuildpackGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BuildpacksGroupProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }

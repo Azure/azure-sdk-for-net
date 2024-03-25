@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in RuleGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedRuleGroupDefinition>(item, options);
                 }
                 writer.WriteEndArray();
             }

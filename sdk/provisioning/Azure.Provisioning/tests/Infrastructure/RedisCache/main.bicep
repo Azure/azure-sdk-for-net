@@ -24,8 +24,8 @@ resource keyVault_5t0GshPLB 'Microsoft.KeyVault/vaults@2022-07-01' = {
   properties: {
     tenantId: tenant().tenantId
     sku: {
-      name: 'standard'
       family: 'A'
+      name: 'standard'
     }
     enableRbacAuthorization: true
   }

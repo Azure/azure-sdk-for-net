@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(SampleUtterance))
             {
                 writer.WritePropertyName("sampleUtterance"u8);
-                writer.WriteObjectValue(SampleUtterance);
+                writer.WriteObjectValue<SampleUtterance>(SampleUtterance, options);
             }
             if (Optional.IsDefined(Score))
             {

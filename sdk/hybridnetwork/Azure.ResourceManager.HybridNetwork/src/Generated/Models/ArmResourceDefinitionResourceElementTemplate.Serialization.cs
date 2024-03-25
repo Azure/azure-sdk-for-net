@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(ArtifactProfile))
             {
                 writer.WritePropertyName("artifactProfile"u8);
-                writer.WriteObjectValue(ArtifactProfile);
+                writer.WriteObjectValue<NSDArtifactProfile>(ArtifactProfile, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

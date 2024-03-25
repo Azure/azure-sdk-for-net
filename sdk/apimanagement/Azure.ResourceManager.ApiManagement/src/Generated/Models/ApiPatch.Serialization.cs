@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(AuthenticationSettings))
             {
                 writer.WritePropertyName("authenticationSettings"u8);
-                writer.WriteObjectValue(AuthenticationSettings);
+                writer.WriteObjectValue<AuthenticationSettingsContract>(AuthenticationSettings, options);
             }
             if (Optional.IsDefined(SubscriptionKeyParameterNames))
             {
                 writer.WritePropertyName("subscriptionKeyParameterNames"u8);
-                writer.WriteObjectValue(SubscriptionKeyParameterNames);
+                writer.WriteObjectValue<SubscriptionKeyParameterNamesContract>(SubscriptionKeyParameterNames, options);
             }
             if (Optional.IsDefined(ApiType))
             {
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Contact))
             {
                 writer.WritePropertyName("contact"u8);
-                writer.WriteObjectValue(Contact);
+                writer.WriteObjectValue<ApiContactInformation>(Contact, options);
             }
             if (Optional.IsDefined(License))
             {
                 writer.WritePropertyName("license"u8);
-                writer.WriteObjectValue(License);
+                writer.WriteObjectValue<ApiLicenseInformation>(License, options);
             }
             if (Optional.IsDefined(DisplayName))
             {

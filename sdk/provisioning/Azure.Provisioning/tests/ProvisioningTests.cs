@@ -45,7 +45,6 @@ using UserAssignedIdentity = Azure.Provisioning.ManagedServiceIdentities.UserAss
 namespace Azure.Provisioning.Tests
 {
     [AsyncOnly]
-    [Ignore("Ignoring for now until we can rebuild the ARM libraries in main.")]
     public class ProvisioningTests : ManagementRecordedTestBase<ProvisioningTestEnvironment>
     {
         public ProvisioningTests(bool async) : base(async)
@@ -55,6 +54,7 @@ namespace Azure.Provisioning.Tests
         private static readonly string _infrastructureRoot = Path.Combine(GetGitRoot(), "sdk", "provisioning", "Azure.Provisioning", "tests", "Infrastructure");
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/42921")]
         public async Task WebSiteUsingL1()
         {
             var infra = new TestInfrastructure();
@@ -464,6 +464,7 @@ namespace Azure.Provisioning.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/42921")]
         public async Task WebSiteUsingL2()
         {
             var infra = new TestInfrastructure();
@@ -486,6 +487,7 @@ namespace Azure.Provisioning.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/42921")]
         public async Task WebSiteUsingL3()
         {
             var infra = new TestInfrastructure();
@@ -510,6 +512,7 @@ namespace Azure.Provisioning.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/42921")]
         public async Task WebSiteUsingL3SpecificSubscription()
         {
             var infra = new TestInfrastructure();
@@ -533,6 +536,7 @@ namespace Azure.Provisioning.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/42921")]
         public async Task WebSiteUsingL3ResourceGroupScope()
         {
             var infra = new TestInfrastructure(scope: ConstructScope.ResourceGroup, configuration: new Configuration { UseInteractiveMode = true });
@@ -721,6 +725,7 @@ namespace Azure.Provisioning.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/42921")]
         public async Task OutputsSpanningModules()
         {
             var infra = new TestInfrastructure();

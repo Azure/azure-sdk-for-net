@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetAppBackupPolicyData>(item, options);
                 }
                 writer.WriteEndArray();
             }

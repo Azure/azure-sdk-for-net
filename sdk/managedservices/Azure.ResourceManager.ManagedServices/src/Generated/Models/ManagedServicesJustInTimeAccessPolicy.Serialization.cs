@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 writer.WriteStartArray();
                 foreach (var item in ManagedByTenantApprovers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedServicesEligibleApprover>(item, options);
                 }
                 writer.WriteEndArray();
             }

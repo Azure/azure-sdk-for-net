@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(ContentLinkDefinition))
             {
                 writer.WritePropertyName("contentLinkDefinition"u8);
-                writer.WriteObjectValue(ContentLinkDefinition);
+                writer.WriteObjectValue<LogicContentLink>(ContentLinkDefinition, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

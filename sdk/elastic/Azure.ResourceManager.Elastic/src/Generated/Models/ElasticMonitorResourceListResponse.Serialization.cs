@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ElasticMonitorResourceData>(item, options);
                 }
                 writer.WriteEndArray();
             }

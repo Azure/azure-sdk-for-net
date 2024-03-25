@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScVmmNetworkInterfaceUpdate>(item, options);
                 }
                 writer.WriteEndArray();
             }

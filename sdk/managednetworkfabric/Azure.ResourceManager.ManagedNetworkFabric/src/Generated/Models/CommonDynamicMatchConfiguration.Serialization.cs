@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in IPGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MatchConfigurationIPGroupProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in VlanGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VlanGroupProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in PortGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PortGroupProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }

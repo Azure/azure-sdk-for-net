@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Databases)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AppServiceDatabaseBackupSetting>(item, options);
                 }
                 writer.WriteEndArray();
             }

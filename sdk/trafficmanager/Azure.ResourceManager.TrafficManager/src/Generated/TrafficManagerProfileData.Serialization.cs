@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.TrafficManager
             if (Optional.IsDefined(DnsConfig))
             {
                 writer.WritePropertyName("dnsConfig"u8);
-                writer.WriteObjectValue(DnsConfig);
+                writer.WriteObjectValue<TrafficManagerDnsConfig>(DnsConfig, options);
             }
             if (Optional.IsDefined(MonitorConfig))
             {
                 writer.WritePropertyName("monitorConfig"u8);
-                writer.WriteObjectValue(MonitorConfig);
+                writer.WriteObjectValue<TrafficManagerMonitorConfig>(MonitorConfig, options);
             }
             if (Optional.IsCollectionDefined(Endpoints))
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.TrafficManager
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TrafficManagerEndpointData>(item, options);
                 }
                 writer.WriteEndArray();
             }

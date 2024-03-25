@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<AutomationSku>(Sku, options);
             }
             if (Optional.IsDefined(LastModifiedBy))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<AutomationEncryptionProperties>(Encryption, options);
             }
             if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Automation
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AutomationPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }

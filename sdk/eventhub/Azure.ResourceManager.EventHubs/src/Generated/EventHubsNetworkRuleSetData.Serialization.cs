@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EventHubsNetworkRuleSetVirtualNetworkRules>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EventHubsNetworkRuleSetIPRules>(item, options);
                 }
                 writer.WriteEndArray();
             }

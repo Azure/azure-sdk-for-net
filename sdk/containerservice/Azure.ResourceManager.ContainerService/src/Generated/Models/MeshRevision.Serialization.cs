@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in CompatibleWith)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CompatibleVersions>(item, options);
                 }
                 writer.WriteEndArray();
             }

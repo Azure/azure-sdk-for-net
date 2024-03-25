@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EventHubs
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<EventHubsClusterSku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {

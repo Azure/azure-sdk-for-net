@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DeletedAppConfigurationStoreData>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             if (Optional.IsDefined(RecentlyResolved))
             {
                 writer.WritePropertyName("recentlyResolved"u8);
-                writer.WriteObjectValue(RecentlyResolved);
+                writer.WriteObjectValue<ResourceHealthAvailabilityStateRecentlyResolved>(RecentlyResolved, options);
             }
             if (Optional.IsCollectionDefined(RecommendedActions))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WriteStartArray();
                 foreach (var item in RecommendedActions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceHealthRecommendedAction>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceImpactingEvents)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ServiceImpactingEvent>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(Recipients))
             {
                 writer.WritePropertyName("recipients"u8);
-                writer.WriteObjectValue(Recipients);
+                writer.WriteObjectValue<RecipientsContractProperties>(Recipients, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

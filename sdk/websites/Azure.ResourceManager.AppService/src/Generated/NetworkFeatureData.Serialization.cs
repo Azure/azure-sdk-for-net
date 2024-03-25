@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppService
             if (options.Format != "W" && Optional.IsDefined(VirtualNetworkConnection))
             {
                 writer.WritePropertyName("virtualNetworkConnection"u8);
-                writer.WriteObjectValue(VirtualNetworkConnection);
+                writer.WriteObjectValue<AppServiceVirtualNetworkProperties>(VirtualNetworkConnection, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(HybridConnections))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in HybridConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RelayServiceConnectionEntityData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in HybridConnectionsV2)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HybridConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }

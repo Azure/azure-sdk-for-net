@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CognitiveServicesPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Redis
             writer.WriteStartArray();
             foreach (var item in ScheduleEntries)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<RedisPatchScheduleSetting>(item, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

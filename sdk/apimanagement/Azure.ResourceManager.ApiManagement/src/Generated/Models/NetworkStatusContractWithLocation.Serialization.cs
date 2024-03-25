@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(NetworkStatus))
             {
                 writer.WritePropertyName("networkStatus"u8);
-                writer.WriteObjectValue(NetworkStatus);
+                writer.WriteObjectValue<NetworkStatusContract>(NetworkStatus, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

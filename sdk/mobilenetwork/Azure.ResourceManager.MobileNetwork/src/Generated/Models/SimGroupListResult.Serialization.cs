@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MobileNetworkSimGroupData>(item, options);
                 }
                 writer.WriteEndArray();
             }

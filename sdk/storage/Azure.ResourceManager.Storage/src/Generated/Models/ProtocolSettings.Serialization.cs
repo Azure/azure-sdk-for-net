@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(SmbSetting))
             {
                 writer.WritePropertyName("smb"u8);
-                writer.WriteObjectValue(SmbSetting);
+                writer.WriteObjectValue<SmbSetting>(SmbSetting, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

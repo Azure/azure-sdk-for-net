@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HealthcareApis
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<HealthcareApisServiceProperties>(Properties, options);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToSerialString());

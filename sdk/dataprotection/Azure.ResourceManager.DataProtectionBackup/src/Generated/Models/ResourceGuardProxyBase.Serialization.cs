@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceGuardOperationDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceGuardOperationDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }

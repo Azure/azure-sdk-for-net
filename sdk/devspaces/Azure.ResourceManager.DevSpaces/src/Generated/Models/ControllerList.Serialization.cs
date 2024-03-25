@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ControllerData>(item, options);
                 }
                 writer.WriteEndArray();
             }

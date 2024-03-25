@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ElasticSan
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            writer.WriteObjectValue<ElasticSanSku>(Sku, options);
             if (Optional.IsCollectionDefined(AvailabilityZones))
             {
                 writer.WritePropertyName("availabilityZones"u8);
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ElasticSan
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ElasticSanPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }

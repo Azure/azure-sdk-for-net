@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in JitApprovers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<JitApprover>(item, options);
                 }
                 writer.WriteEndArray();
             }

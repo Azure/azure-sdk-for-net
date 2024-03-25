@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HealthBotData>(item, options);
                 }
                 writer.WriteEndArray();
             }

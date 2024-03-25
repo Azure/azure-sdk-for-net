@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetworkCloud
 
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation);
+            writer.WriteObjectValue<ExtendedLocation>(ExtendedLocation, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("sshPublicKey"u8);
-            writer.WriteObjectValue(SshPublicKey);
+            writer.WriteObjectValue<NetworkCloudSshPublicKey>(SshPublicKey, options);
             if (options.Format != "W" && Optional.IsDefined(VirtualMachineAccessId))
             {
                 writer.WritePropertyName("virtualMachineAccessId"u8);

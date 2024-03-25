@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(HostingEnvironmentProfile))
             {
                 writer.WritePropertyName("hostingEnvironmentProfile"u8);
-                writer.WriteObjectValue(HostingEnvironmentProfile);
+                writer.WriteObjectValue<HostingEnvironmentProfile>(HostingEnvironmentProfile, options);
             }
             if (Optional.IsDefined(KeyVaultId))
             {

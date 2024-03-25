@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(HighAvailabilitySoftwareConfiguration))
             {
                 writer.WritePropertyName("highAvailabilitySoftwareConfiguration"u8);
-                writer.WriteObjectValue(HighAvailabilitySoftwareConfiguration);
+                writer.WriteObjectValue<HighAvailabilitySoftwareConfiguration>(HighAvailabilitySoftwareConfiguration, options);
             }
             writer.WritePropertyName("softwareInstallationType"u8);
             writer.WriteStringValue(SoftwareInstallationType.ToString());

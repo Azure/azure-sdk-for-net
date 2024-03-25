@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                writer.WriteObjectValue<VaultUsageNameInfo>(Name, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

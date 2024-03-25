@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(ProviderAuthentication))
             {
                 writer.WritePropertyName("providerAuthentication"u8);
-                writer.WriteObjectValue(ProviderAuthentication);
+                writer.WriteObjectValue<ResourceProviderAuthentication>(ProviderAuthentication, options);
             }
             if (Optional.IsCollectionDefined(ProviderAuthorizations))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ProviderAuthorizations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceProviderAuthorization>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(FeaturesRule))
             {
                 writer.WritePropertyName("featuresRule"u8);
-                writer.WriteObjectValue(FeaturesRule);
+                writer.WriteObjectValue<FeaturesRule>(FeaturesRule, options);
             }
             if (Optional.IsDefined(RequestHeaderOptions))
             {
                 writer.WritePropertyName("requestHeaderOptions"u8);
-                writer.WriteObjectValue(RequestHeaderOptions);
+                writer.WriteObjectValue<RequestHeaderOptions>(RequestHeaderOptions, options);
             }
             if (Optional.IsCollectionDefined(ResourceTypes))
             {
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceTypes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ProviderResourceType>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Management))
             {
                 writer.WritePropertyName("management"u8);
-                writer.WriteObjectValue(Management);
+                writer.WriteObjectValue<ResourceProviderManagement>(Management, options);
             }
             if (Optional.IsCollectionDefined(Capabilities))
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceProviderCapabilities>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -119,14 +119,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in GlobalNotificationEndpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceProviderEndpoint>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ReRegisterSubscriptionMetadata))
             {
                 writer.WritePropertyName("reRegisterSubscriptionMetadata"u8);
-                writer.WriteObjectValue(ReRegisterSubscriptionMetadata);
+                writer.WriteObjectValue<ReRegisterSubscriptionMetadata>(ReRegisterSubscriptionMetadata, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

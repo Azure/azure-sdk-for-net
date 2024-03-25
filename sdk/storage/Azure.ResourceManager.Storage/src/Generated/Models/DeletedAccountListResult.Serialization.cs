@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DeletedAccountData>(item, options);
                 }
                 writer.WriteEndArray();
             }

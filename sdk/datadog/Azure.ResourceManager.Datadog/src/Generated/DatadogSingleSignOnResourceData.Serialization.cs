@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Datadog
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<DatadogSingleSignOnProperties>(Properties, options);
             }
             if (options.Format != "W")
             {

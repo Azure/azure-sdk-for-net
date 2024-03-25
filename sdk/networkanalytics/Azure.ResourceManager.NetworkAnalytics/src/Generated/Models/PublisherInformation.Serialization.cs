@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in DataProducts)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DataProductInformation>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

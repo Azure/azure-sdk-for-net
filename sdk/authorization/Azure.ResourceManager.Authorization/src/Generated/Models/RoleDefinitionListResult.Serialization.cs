@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AuthorizationRoleDefinitionData>(item, options);
                 }
                 writer.WriteEndArray();
             }

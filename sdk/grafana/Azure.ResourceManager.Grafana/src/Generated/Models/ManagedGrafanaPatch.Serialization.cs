@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Grafana.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<ManagedGrafanaSku>(Sku, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Grafana.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<ManagedGrafanaPatchProperties>(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

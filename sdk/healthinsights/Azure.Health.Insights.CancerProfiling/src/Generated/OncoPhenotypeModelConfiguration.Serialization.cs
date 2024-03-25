@@ -190,7 +190,7 @@ namespace Azure.Health.Insights.CancerProfiling
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<OncoPhenotypeModelConfiguration>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

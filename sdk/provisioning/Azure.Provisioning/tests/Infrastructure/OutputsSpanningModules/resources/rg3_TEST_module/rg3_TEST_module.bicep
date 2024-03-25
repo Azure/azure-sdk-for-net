@@ -2,6 +2,9 @@
 resource webSite_Y34mQ7HgU 'Microsoft.Web/sites@2021-02-01' = {
   name: 'frontEnd-TEST'
   location: 'westus'
+  identity: {
+    type: 'SystemAssigned'
+  }
   kind: 'app,linux'
   properties: {
     serverFarmId: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1-TEST/providers/Microsoft.Web/serverfarms/appServicePlan-TEST'

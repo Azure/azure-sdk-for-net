@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OperationalizationClusterData>(item, options);
                 }
                 writer.WriteEndArray();
             }

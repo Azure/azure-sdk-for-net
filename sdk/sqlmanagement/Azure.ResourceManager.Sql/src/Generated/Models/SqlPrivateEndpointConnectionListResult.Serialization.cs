@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SqlPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }

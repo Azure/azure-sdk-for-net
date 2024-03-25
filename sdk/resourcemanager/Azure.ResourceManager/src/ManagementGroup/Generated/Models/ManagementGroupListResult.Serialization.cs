@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagementGroupData>(item, options);
                 }
                 writer.WriteEndArray();
             }

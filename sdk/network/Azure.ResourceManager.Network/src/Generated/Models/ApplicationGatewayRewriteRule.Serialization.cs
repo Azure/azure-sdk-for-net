@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Conditions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplicationGatewayRewriteRuleCondition>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ActionSet))
             {
                 writer.WritePropertyName("actionSet"u8);
-                writer.WriteObjectValue(ActionSet);
+                writer.WriteObjectValue<ApplicationGatewayRewriteRuleActionSet>(ActionSet, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

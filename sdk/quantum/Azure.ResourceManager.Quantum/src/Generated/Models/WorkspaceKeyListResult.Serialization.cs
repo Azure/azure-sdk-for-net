@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Quantum.Models
             if (Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
-                writer.WriteObjectValue(PrimaryKey);
+                writer.WriteObjectValue<WorkspaceApiKey>(PrimaryKey, options);
             }
             if (Optional.IsDefined(SecondaryKey))
             {
                 writer.WritePropertyName("secondaryKey"u8);
-                writer.WriteObjectValue(SecondaryKey);
+                writer.WriteObjectValue<WorkspaceApiKey>(SecondaryKey, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PrimaryConnectionString))
             {

@@ -30,7 +30,7 @@ namespace Azure.AI.Translation.Text
             writer.WriteStartArray();
             foreach (var item in ToScripts)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<CommonScriptModel>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("code"u8);
@@ -176,7 +176,7 @@ namespace Azure.AI.Translation.Text
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<TransliterableScript>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

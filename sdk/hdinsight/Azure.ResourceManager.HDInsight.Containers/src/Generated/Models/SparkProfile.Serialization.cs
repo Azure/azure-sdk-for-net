@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(MetastoreSpec))
             {
                 writer.WritePropertyName("metastoreSpec"u8);
-                writer.WriteObjectValue(MetastoreSpec);
+                writer.WriteObjectValue<SparkMetastoreSpec>(MetastoreSpec, options);
             }
             if (Optional.IsDefined(UserPluginsSpec))
             {
                 writer.WritePropertyName("userPluginsSpec"u8);
-                writer.WriteObjectValue(UserPluginsSpec);
+                writer.WriteObjectValue<SparkUserPluginListResult>(UserPluginsSpec, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

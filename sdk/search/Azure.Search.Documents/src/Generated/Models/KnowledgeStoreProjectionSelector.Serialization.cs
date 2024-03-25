@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InputFieldMappingEntry>(item);
                 }
                 writer.WriteEndArray();
             }

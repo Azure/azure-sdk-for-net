@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in LinkedTemplates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LinkedTemplateArtifact>(item, options);
                 }
                 writer.WriteEndArray();
             }

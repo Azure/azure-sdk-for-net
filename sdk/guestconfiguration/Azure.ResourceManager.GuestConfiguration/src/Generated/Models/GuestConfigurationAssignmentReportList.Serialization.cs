@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GuestConfigurationAssignmentReport>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             if (Optional.IsDefined(ErrorResponse))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(ErrorResponse);
+                writer.WriteObjectValue<ErrorResponse>(ErrorResponse, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

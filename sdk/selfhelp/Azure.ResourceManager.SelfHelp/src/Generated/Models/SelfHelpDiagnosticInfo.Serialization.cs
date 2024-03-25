@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Insights)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SelfHelpDiagnosticInsight>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<SelfHelpError>(Error, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

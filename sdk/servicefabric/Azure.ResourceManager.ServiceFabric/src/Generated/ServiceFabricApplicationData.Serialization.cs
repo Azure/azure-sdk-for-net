@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ServiceFabric
             if (Optional.IsDefined(UpgradePolicy))
             {
                 writer.WritePropertyName("upgradePolicy"u8);
-                writer.WriteObjectValue(UpgradePolicy);
+                writer.WriteObjectValue<ApplicationUpgradePolicy>(UpgradePolicy, options);
             }
             if (Optional.IsDefined(MinimumNodes))
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WriteStartArray();
                 foreach (var item in Metrics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplicationMetricDescription>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WriteStartArray();
                 foreach (var item in ManagedIdentities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplicationUserAssignedIdentity>(item, options);
                 }
                 writer.WriteEndArray();
             }

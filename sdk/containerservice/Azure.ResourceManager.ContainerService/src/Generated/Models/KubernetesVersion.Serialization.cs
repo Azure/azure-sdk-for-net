@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
-                writer.WriteObjectValue(Capabilities);
+                writer.WriteObjectValue<KubernetesVersionCapabilities>(Capabilities, options);
             }
             if (Optional.IsDefined(IsPreview))
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 foreach (var item in PatchVersions)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<KubernetesPatchVersion>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

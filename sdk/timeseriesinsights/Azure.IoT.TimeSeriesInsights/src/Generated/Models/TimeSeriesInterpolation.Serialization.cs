@@ -23,7 +23,7 @@ namespace Azure.IoT.TimeSeriesInsights
             if (Optional.IsDefined(Boundary))
             {
                 writer.WritePropertyName("boundary"u8);
-                writer.WriteObjectValue(Boundary);
+                writer.WriteObjectValue<InterpolationBoundary>(Boundary);
             }
             writer.WriteEndObject();
         }

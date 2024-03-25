@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(ManagedOutboundIPProfile))
             {
                 writer.WritePropertyName("managedOutboundIPProfile"u8);
-                writer.WriteObjectValue(ManagedOutboundIPProfile);
+                writer.WriteObjectValue<ManagedClusterManagedOutboundIPProfile>(ManagedOutboundIPProfile, options);
             }
             if (Optional.IsCollectionDefined(EffectiveOutboundIPs))
             {

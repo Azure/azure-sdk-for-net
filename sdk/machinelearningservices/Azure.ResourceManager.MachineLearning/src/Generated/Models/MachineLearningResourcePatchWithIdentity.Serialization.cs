@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue<MachineLearningPartialManagedServiceIdentity>(Identity, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {

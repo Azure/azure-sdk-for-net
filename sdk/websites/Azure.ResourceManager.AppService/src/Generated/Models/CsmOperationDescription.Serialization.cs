@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Display))
             {
                 writer.WritePropertyName("display"u8);
-                writer.WriteObjectValue(Display);
+                writer.WriteObjectValue<CsmOperationDisplay>(Display, options);
             }
             if (Optional.IsDefined(Origin))
             {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<CsmOperationDescriptionProperties>(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

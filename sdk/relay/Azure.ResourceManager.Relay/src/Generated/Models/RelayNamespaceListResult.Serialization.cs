@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Relay.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RelayNamespaceData>(item, options);
                 }
                 writer.WriteEndArray();
             }

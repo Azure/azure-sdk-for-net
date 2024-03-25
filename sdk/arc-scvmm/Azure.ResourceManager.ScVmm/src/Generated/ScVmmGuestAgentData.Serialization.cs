@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.ScVmm
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                writer.WriteObjectValue<ScVmmGuestCredential>(Credentials, options);
             }
             if (Optional.IsDefined(HttpProxyConfig))
             {
                 writer.WritePropertyName("httpProxyConfig"u8);
-                writer.WriteObjectValue(HttpProxyConfig);
+                writer.WriteObjectValue<ScVmmHttpProxyConfiguration>(HttpProxyConfig, options);
             }
             if (Optional.IsDefined(ProvisioningAction))
             {

@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.ScVmm.Models
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile);
+                writer.WriteObjectValue<ScVmmHardwareProfileUpdate>(HardwareProfile, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                writer.WriteObjectValue<ScVmmStorageProfileUpdate>(StorageProfile, options);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue<ScVmmNetworkProfileUpdate>(NetworkProfile, options);
             }
             if (Optional.IsCollectionDefined(AvailabilitySets))
             {
@@ -49,14 +49,14 @@ namespace Azure.ResourceManager.ScVmm.Models
                 writer.WriteStartArray();
                 foreach (var item in AvailabilitySets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScVmmAvailabilitySetItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(InfrastructureProfile))
             {
                 writer.WritePropertyName("infrastructureProfile"u8);
-                writer.WriteObjectValue(InfrastructureProfile);
+                writer.WriteObjectValue<ScVmmInfrastructureProfileUpdate>(InfrastructureProfile, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
