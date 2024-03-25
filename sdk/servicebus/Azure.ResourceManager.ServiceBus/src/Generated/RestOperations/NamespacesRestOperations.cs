@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -194,7 +195,7 @@ namespace Azure.ResourceManager.ServiceBus
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ServiceBusNamespaceData>(data);
+            content.JsonWriter.WriteObjectValue<ServiceBusNamespaceData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -428,7 +429,7 @@ namespace Azure.ResourceManager.ServiceBus
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ServiceBusNamespacePatch>(patch);
+            content.JsonWriter.WriteObjectValue<ServiceBusNamespacePatch>(patch, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -521,7 +522,7 @@ namespace Azure.ResourceManager.ServiceBus
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ServiceBusNetworkRuleSetData>(data);
+            content.JsonWriter.WriteObjectValue<ServiceBusNetworkRuleSetData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -766,7 +767,7 @@ namespace Azure.ResourceManager.ServiceBus
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue<ServiceBusNameAvailabilityContent>(content);
+            content0.JsonWriter.WriteObjectValue<ServiceBusNameAvailabilityContent>(content, new ModelReaderWriterOptions("W"));
             request.Content = content0;
             _userAgent.Apply(message);
             return message;

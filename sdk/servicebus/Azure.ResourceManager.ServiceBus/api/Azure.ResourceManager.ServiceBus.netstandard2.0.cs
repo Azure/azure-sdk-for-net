@@ -226,11 +226,8 @@ namespace Azure.ResourceManager.ServiceBus
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public bool? IsZoneRedundant { get { throw null; } set { } }
         public string MetricId { get { throw null; } }
-        public Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion? MinimumTlsVersion { get { throw null; } set { } }
-        public int? PremiumMessagingPartitions { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public string ServiceBusEndpoint { get { throw null; } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusSku Sku { get { throw null; } set { } }
         public string Status { get { throw null; } }
@@ -709,7 +706,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData ServiceBusAuthorizationRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessRight> rights = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryData ServiceBusDisasterRecoveryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ServiceBus.Models.ServiceBusDisasterRecoveryProvisioningState? provisioningState = default(Azure.ResourceManager.ServiceBus.Models.ServiceBusDisasterRecoveryProvisioningState?), long? pendingReplicationOperationsCount = default(long?), string partnerNamespace = null, string alternateName = null, Azure.ResourceManager.ServiceBus.Models.ServiceBusDisasterRecoveryRole? role = default(Azure.ResourceManager.ServiceBus.Models.ServiceBusDisasterRecoveryRole?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityResult ServiceBusNameAvailabilityResult(string message = null, bool? isNameAvailable = default(bool?), Azure.ResourceManager.ServiceBus.Models.ServiceBusNameUnavailableReason? reason = default(Azure.ResourceManager.ServiceBus.Models.ServiceBusNameUnavailableReason?)) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData ServiceBusNamespaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ServiceBus.Models.ServiceBusSku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion? minimumTlsVersion = default(Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion?), string provisioningState = null, string status = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string serviceBusEndpoint = null, string metricId = null, bool? isZoneRedundant = default(bool?), Azure.ResourceManager.ServiceBus.Models.ServiceBusEncryption encryption = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData> privateEndpointConnections = null, bool? disableLocalAuth = default(bool?), string alternateName = null, Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccess?), int? premiumMessagingPartitions = default(int?)) { throw null; }
+        public static Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData ServiceBusNamespaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ServiceBus.Models.ServiceBusSku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string provisioningState = null, string status = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string serviceBusEndpoint = null, string metricId = null, bool? isZoneRedundant = default(bool?), Azure.ResourceManager.ServiceBus.Models.ServiceBusEncryption encryption = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData> privateEndpointConnections = null, bool? disableLocalAuth = default(bool?), string alternateName = null) { throw null; }
         public static Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespacePatch ServiceBusNamespacePatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ServiceBus.Models.ServiceBusSku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string provisioningState = null, string status = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string serviceBusEndpoint = null, string metricId = null, Azure.ResourceManager.ServiceBus.Models.ServiceBusEncryption encryption = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData> privateEndpointConnections = null, bool? disableLocalAuth = default(bool?), string alternateName = null) { throw null; }
         public static Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetData ServiceBusNetworkRuleSetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? isTrustedServiceAccessEnabled = default(bool?), Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetDefaultAction? defaultAction = default(Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetDefaultAction?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetVirtualNetworkRules> virtualNetworkRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetIPRules> ipRules = null, Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccessFlag? publicNetworkAccess = default(Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccessFlag?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData ServiceBusPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateEndpointConnectionProvisioningState?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
@@ -902,25 +899,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
         Deleting = 7,
         Renaming = 8,
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ServiceBusMinimumTlsVersion : System.IEquatable<Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ServiceBusMinimumTlsVersion(string value) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion Tls1_0 { get { throw null; } }
-        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion Tls1_1 { get { throw null; } }
-        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion Tls1_2 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion left, Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion left, Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ServiceBusNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityContent>
     {
         public ServiceBusNameAvailabilityContent(string name) { }
@@ -1094,25 +1072,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
         Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkServiceConnectionState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkServiceConnectionState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkServiceConnectionState>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkServiceConnectionState>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ServiceBusPublicNetworkAccess : System.IEquatable<Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccess>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ServiceBusPublicNetworkAccess(string value) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccess Disabled { get { throw null; } }
-        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccess Enabled { get { throw null; } }
-        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccess SecuredByPerimeter { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccess left, Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccess right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccess (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccess left, Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccess right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ServiceBusPublicNetworkAccessFlag : System.IEquatable<Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccessFlag>
