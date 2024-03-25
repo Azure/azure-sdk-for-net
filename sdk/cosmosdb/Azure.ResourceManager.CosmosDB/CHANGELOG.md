@@ -3,6 +3,7 @@
 ## 1.4.0-beta.6 (2024-03-26)
 
 ### Features Added
+
 - Updated Microsoft.DocumentDB RP API version to `2024-02-15-preview`
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Add support for 'restoreWithTtlDisabled' in RestoreParameter to disable ttl on restored account
