@@ -5,74 +5,31 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    internal partial class AutoscaleSettings : IUtf8JsonSerializable, IJsonModel<AutoscaleSettings>
+    internal partial class AutoscaleSettings : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoscaleSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
-
-        void IJsonModel<AutoscaleSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoscaleSettings>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(AutoscaleSettings)} does not support writing '{format}' format.");
-            }
-
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxThroughput))
             {
                 writer.WritePropertyName("maxThroughput"u8);
                 writer.WriteNumberValue(MaxThroughput.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
             writer.WriteEndObject();
         }
 
-        AutoscaleSettings IJsonModel<AutoscaleSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        internal static AutoscaleSettings DeserializeAutoscaleSettings(JsonElement element)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoscaleSettings>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(AutoscaleSettings)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAutoscaleSettings(document.RootElement, options);
-        }
-
-        internal static AutoscaleSettings DeserializeAutoscaleSettings(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= new ModelReaderWriterOptions("W");
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int? maxThroughput = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxThroughput"u8))
@@ -84,75 +41,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     maxThroughput = property.Value.GetInt32();
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoscaleSettings(maxThroughput, serializedAdditionalRawData);
+            return new AutoscaleSettings(maxThroughput);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxThroughput), out propertyOverride);
-            if (Optional.IsDefined(MaxThroughput) || hasPropertyOverride)
-            {
-                builder.Append("  maxThroughput: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"{MaxThroughput.Value}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<AutoscaleSettings>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoscaleSettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(AutoscaleSettings)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AutoscaleSettings IPersistableModel<AutoscaleSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoscaleSettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAutoscaleSettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AutoscaleSettings)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AutoscaleSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

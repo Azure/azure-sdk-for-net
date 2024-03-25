@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
@@ -19,38 +18,6 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class CassandraTableData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="CassandraTableData"/>. </summary>
         /// <param name="location"> The location. </param>
         public CassandraTableData(AzureLocation location) : base(location)
@@ -66,29 +33,15 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> The location. </param>
         /// <param name="resource"></param>
         /// <param name="options"></param>
-        /// <param name="identity"> Identity for the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraTableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedCassandraTableResourceInfo resource, CassandraTablePropertiesConfig options, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal CassandraTableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedCassandraTableResourceInfo resource, CassandraTablePropertiesConfig options) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Options = options;
-            Identity = identity;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CassandraTableData"/> for deserialization. </summary>
-        internal CassandraTableData()
-        {
         }
 
         /// <summary> Gets or sets the resource. </summary>
-        [WirePath("properties.resource")]
         public ExtendedCassandraTableResourceInfo Resource { get; set; }
         /// <summary> Gets or sets the options. </summary>
-        [WirePath("properties.options")]
         public CassandraTablePropertiesConfig Options { get; set; }
-        /// <summary> Identity for the resource. </summary>
-        [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; set; }
     }
 }

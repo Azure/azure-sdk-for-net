@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -23,30 +22,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of <see cref="ExtendedCassandraKeyspaceResourceInfo"/>. </summary>
         /// <param name="keyspaceName"> Name of the Cosmos DB Cassandra keyspace. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal ExtendedCassandraKeyspaceResourceInfo(string keyspaceName, IDictionary<string, BinaryData> serializedAdditionalRawData, string rid, float? timestamp, ETag? etag) : base(keyspaceName, serializedAdditionalRawData)
+        /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> is null. </exception>
+        internal ExtendedCassandraKeyspaceResourceInfo(string keyspaceName, string rid, float? timestamp, ETag? etag) : base(keyspaceName)
         {
+            Argument.AssertNotNull(keyspaceName, nameof(keyspaceName));
+
             Rid = rid;
             Timestamp = timestamp;
             ETag = etag;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExtendedCassandraKeyspaceResourceInfo"/> for deserialization. </summary>
-        internal ExtendedCassandraKeyspaceResourceInfo()
-        {
-        }
-
         /// <summary> A system generated property. A unique identifier. </summary>
-        [WirePath("_rid")]
         public string Rid { get; }
         /// <summary> A system generated property that denotes the last updated timestamp of the resource. </summary>
-        [WirePath("_ts")]
         public float? Timestamp { get; }
         /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
-        [WirePath("_etag")]
         public ETag? ETag { get; }
     }
 }

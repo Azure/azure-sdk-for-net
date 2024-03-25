@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> An array that contains all of the locations for the service. </summary>
-        [WirePath("locations")]
         public IReadOnlyList<DataTransferRegionalService> Locations { get; }
     }
 }

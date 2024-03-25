@@ -5,11 +5,7 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
@@ -17,39 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    public partial class MongoDBRoleDefinitionData : IUtf8JsonSerializable, IJsonModel<MongoDBRoleDefinitionData>
+    public partial class MongoDBRoleDefinitionData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBRoleDefinitionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
-
-        void IJsonModel<MongoDBRoleDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MongoDBRoleDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(MongoDBRoleDefinitionData)} does not support writing '{format}' format.");
-            }
-
             writer.WriteStartObject();
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
-            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(RoleName))
@@ -88,40 +56,11 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
             writer.WriteEndObject();
         }
 
-        MongoDBRoleDefinitionData IJsonModel<MongoDBRoleDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        internal static MongoDBRoleDefinitionData DeserializeMongoDBRoleDefinitionData(JsonElement element)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MongoDBRoleDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(MongoDBRoleDefinitionData)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMongoDBRoleDefinitionData(document.RootElement, options);
-        }
-
-        internal static MongoDBRoleDefinitionData DeserializeMongoDBRoleDefinitionData(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= new ModelReaderWriterOptions("W");
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -135,8 +74,6 @@ namespace Azure.ResourceManager.CosmosDB
             string databaseName = default;
             IList<MongoDBPrivilege> privileges = default;
             IList<MongoDBRole> roles = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -196,7 +133,7 @@ namespace Azure.ResourceManager.CosmosDB
                             List<MongoDBPrivilege> array = new List<MongoDBPrivilege>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MongoDBPrivilege.DeserializeMongoDBPrivilege(item, options));
+                                array.Add(MongoDBPrivilege.DeserializeMongoDBPrivilege(item));
                             }
                             privileges = array;
                             continue;
@@ -210,7 +147,7 @@ namespace Azure.ResourceManager.CosmosDB
                             List<MongoDBRole> array = new List<MongoDBRole>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MongoDBRole.DeserializeMongoDBRole(item, options));
+                                array.Add(MongoDBRole.DeserializeMongoDBRole(item));
                             }
                             roles = array;
                             continue;
@@ -218,12 +155,7 @@ namespace Azure.ResourceManager.CosmosDB
                     }
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MongoDBRoleDefinitionData(
                 id,
                 name,
@@ -233,211 +165,7 @@ namespace Azure.ResourceManager.CosmosDB
                 type0,
                 databaseName,
                 privileges ?? new ChangeTrackingList<MongoDBPrivilege>(),
-                roles ?? new ChangeTrackingList<MongoDBRole>(),
-                serializedAdditionalRawData);
+                roles ?? new ChangeTrackingList<MongoDBRole>());
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoleName), out propertyOverride);
-            if (Optional.IsDefined(RoleName) || hasPropertyOverride)
-            {
-                builder.Append("    roleName: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (RoleName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{RoleName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{RoleName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoleDefinitionType), out propertyOverride);
-            if (Optional.IsDefined(RoleDefinitionType) || hasPropertyOverride)
-            {
-                builder.Append("    type: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{RoleDefinitionType.Value.ToSerialString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseName), out propertyOverride);
-            if (Optional.IsDefined(DatabaseName) || hasPropertyOverride)
-            {
-                builder.Append("    databaseName: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (DatabaseName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DatabaseName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DatabaseName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Privileges), out propertyOverride);
-            if (Optional.IsCollectionDefined(Privileges) || hasPropertyOverride)
-            {
-                if (Privileges.Any() || hasPropertyOverride)
-                {
-                    builder.Append("    privileges: ");
-                    if (hasPropertyOverride)
-                    {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
-                        builder.AppendLine("[");
-                        foreach (var item in Privileges)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    privileges: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Roles), out propertyOverride);
-            if (Optional.IsCollectionDefined(Roles) || hasPropertyOverride)
-            {
-                if (Roles.Any() || hasPropertyOverride)
-                {
-                    builder.Append("    roles: ");
-                    if (hasPropertyOverride)
-                    {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
-                        builder.AppendLine("[");
-                        foreach (var item in Roles)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    roles: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<MongoDBRoleDefinitionData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MongoDBRoleDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(MongoDBRoleDefinitionData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MongoDBRoleDefinitionData IPersistableModel<MongoDBRoleDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MongoDBRoleDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeMongoDBRoleDefinitionData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MongoDBRoleDefinitionData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MongoDBRoleDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

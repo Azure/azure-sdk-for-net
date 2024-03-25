@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.CosmosDB.Models;
-using Azure.ResourceManager.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.CosmosDB.Tests
@@ -166,7 +165,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var updateOptions = new CosmosDBSqlContainerCreateOrUpdateContent(container.Id, _containerName, container.Data.ResourceType, null,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                AzureLocation.WestUS, container.Data.Resource, new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 }, default(ManagedServiceIdentity), null);
+                AzureLocation.WestUS, container.Data.Resource, new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 });
 
             container = (await SqlContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, _containerName, updateOptions)).Value;
             backupInfo = (await container.RetrieveContinuousBackupInformationAsync(WaitUntil.Completed, new ContinuousBackupRestoreLocation { Location = AzureLocation.WestUS })).Value;
@@ -196,7 +195,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var sqlDatabaseCreateUpdateOptions = new CosmosDBSqlContainerCreateOrUpdateContent(AzureLocation.WestUS,
                 new Models.CosmosDBSqlContainerResourceInfo(name)
                 {
-                    PartitionKey = new CosmosDBContainerPartitionKey(new List<string> { "/address/zipCode" }, null, null, false, null)
+                    PartitionKey = new CosmosDBContainerPartitionKey(new List<string> { "/address/zipCode" }, null, null, false)
                     {
                         Kind = new CosmosDBPartitionKind("Hash")
                     },
@@ -227,8 +226,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                                     new List<CosmosDBSpatialType>
                                     {
                                         new CosmosDBSpatialType("Point")
-                                    }, null),
-                        }, null)
+                                    }
+                            ),
+                        }
+                    )
                 })
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
@@ -251,14 +252,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             var locations = new List<CosmosDBAccountLocation>()
             {
-                new CosmosDBAccountLocation(id: null, locationName: AzureLocation.WestUS, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false, null)
+                new CosmosDBAccountLocation(id: null, locationName: AzureLocation.WestUS, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false)
             };
 
             var createOptions = new CosmosDBAccountCreateOrUpdateContent(AzureLocation.WestUS, locations)
             {
                 Kind = CosmosDBAccountKind.GlobalDocumentDB,
-                ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds, null),
-                IPRules = { new CosmosDBIPAddressOrRange("23.43.231.120", null) },
+                ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds),
+                IPRules = { new CosmosDBIPAddressOrRange("23.43.231.120") },
                 IsVirtualNetworkFilterEnabled = true,
                 EnableAutomaticFailover = false,
                 ConnectorOffer = ConnectorOffer.Small,

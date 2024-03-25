@@ -5,11 +5,7 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
@@ -17,25 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    public partial class CassandraTableData : IUtf8JsonSerializable, IJsonModel<CassandraTableData>
+    public partial class CassandraTableData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraTableData>)this).Write(writer, new ModelReaderWriterOptions("W"));
-
-        void IJsonModel<CassandraTableData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CassandraTableData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(CassandraTableData)} does not support writing '{format}' format.");
-            }
-
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
-            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -49,26 +31,6 @@ namespace Azure.ResourceManager.CosmosDB
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
-            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Resource))
@@ -82,45 +44,15 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WriteObjectValue(Options);
             }
             writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
             writer.WriteEndObject();
         }
 
-        CassandraTableData IJsonModel<CassandraTableData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        internal static CassandraTableData DeserializeCassandraTableData(JsonElement element)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CassandraTableData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(CassandraTableData)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCassandraTableData(document.RootElement, options);
-        }
-
-        internal static CassandraTableData DeserializeCassandraTableData(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= new ModelReaderWriterOptions("W");
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -128,21 +60,9 @@ namespace Azure.ResourceManager.CosmosDB
             ResourceType type = default;
             SystemData systemData = default;
             ExtendedCassandraTableResourceInfo resource = default;
-            CassandraTablePropertiesConfig options0 = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            CassandraTablePropertiesConfig options = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
-                    continue;
-                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -201,7 +121,7 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            resource = ExtendedCassandraTableResourceInfo.DeserializeExtendedCassandraTableResourceInfo(property0.Value, options);
+                            resource = ExtendedCassandraTableResourceInfo.DeserializeExtendedCassandraTableResourceInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("options"u8))
@@ -210,18 +130,13 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            options0 = CassandraTablePropertiesConfig.DeserializeCassandraTablePropertiesConfig(property0.Value, options);
+                            options = CassandraTablePropertiesConfig.DeserializeCassandraTablePropertiesConfig(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CassandraTableData(
                 id,
                 name,
@@ -230,199 +145,7 @@ namespace Azure.ResourceManager.CosmosDB
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 resource,
-                options0,
-                identity,
-                serializedAdditionalRawData);
+                options);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            builder.Append("  location: ");
-            if (hasPropertyOverride)
-            {
-                builder.AppendLine($"{propertyOverride}");
-            }
-            else
-            {
-                builder.AppendLine($"'{Location.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
-            if (Optional.IsCollectionDefined(Tags) || hasPropertyOverride)
-            {
-                if (Tags.Any() || hasPropertyOverride)
-                {
-                    builder.Append("  tags: ");
-                    if (hasPropertyOverride)
-                    {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
-                        builder.AppendLine("{");
-                        foreach (var item in Tags)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identity), out propertyOverride);
-            if (Optional.IsDefined(Identity) || hasPropertyOverride)
-            {
-                builder.Append("  identity: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    BicepSerializationHelpers.AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Resource), out propertyOverride);
-            if (Optional.IsDefined(Resource) || hasPropertyOverride)
-            {
-                builder.Append("    resource: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    BicepSerializationHelpers.AppendChildObject(builder, Resource, options, 4, false, "    resource: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Options), out propertyOverride);
-            if (Optional.IsDefined(Options) || hasPropertyOverride)
-            {
-                builder.Append("    options: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    BicepSerializationHelpers.AppendChildObject(builder, Options, options, 4, false, "    options: ");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<CassandraTableData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CassandraTableData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(CassandraTableData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CassandraTableData IPersistableModel<CassandraTableData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CassandraTableData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCassandraTableData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CassandraTableData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CassandraTableData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

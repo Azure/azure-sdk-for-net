@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The object representing periodic mode backup policy. </summary>
@@ -22,16 +19,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="PeriodicModeBackupPolicy"/>. </summary>
         /// <param name="backupPolicyType"> Describes the mode of backups. </param>
         /// <param name="migrationState"> The object representing the state of the migration between the backup policies. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="periodicModeProperties"> Configuration values for periodic mode backup. </param>
-        internal PeriodicModeBackupPolicy(BackupPolicyType backupPolicyType, BackupPolicyMigrationState migrationState, IDictionary<string, BinaryData> serializedAdditionalRawData, PeriodicModeProperties periodicModeProperties) : base(backupPolicyType, migrationState, serializedAdditionalRawData)
+        internal PeriodicModeBackupPolicy(BackupPolicyType backupPolicyType, BackupPolicyMigrationState migrationState, PeriodicModeProperties periodicModeProperties) : base(backupPolicyType, migrationState)
         {
             PeriodicModeProperties = periodicModeProperties;
             BackupPolicyType = backupPolicyType;
         }
 
         /// <summary> Configuration values for periodic mode backup. </summary>
-        [WirePath("periodicModeProperties")]
         public PeriodicModeProperties PeriodicModeProperties { get; set; }
     }
 }
