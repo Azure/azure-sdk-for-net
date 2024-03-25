@@ -4,22 +4,28 @@
 using System;
 using System.Threading;
 using System.Timers;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using OpenTelemetry;
-using OpenTelemetry.Extensions.PersistentStorage.Abstractions;
+using OpenTelemetry.PersistentStorage.Abstractions;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     internal class TransmitFromStorageHandler : IDisposable
     {
         private readonly ApplicationInsightsRestClient _applicationInsightsRestClient;
+        private readonly ConnectionVars _connectionVars;
         internal PersistentBlobProvider _blobProvider;
         private readonly TransmissionStateManager _transmissionStateManager;
         private readonly System.Timers.Timer _transmitFromStorageTimer;
+        private readonly bool _isAadEnabled;
         private bool _disposed;
 
-        internal TransmitFromStorageHandler(ApplicationInsightsRestClient applicationInsightsRestClient, PersistentBlobProvider blobProvider, TransmissionStateManager transmissionStateManager)
+        internal TransmitFromStorageHandler(ApplicationInsightsRestClient applicationInsightsRestClient, PersistentBlobProvider blobProvider, TransmissionStateManager transmissionStateManager, ConnectionVars connectionVars, bool isAadEnabled)
         {
             _applicationInsightsRestClient = applicationInsightsRestClient;
+            _connectionVars = connectionVars;
+            _isAadEnabled = isAadEnabled;
             _blobProvider = blobProvider;
             _transmissionStateManager = transmissionStateManager;
             _transmitFromStorageTimer = new System.Timers.Timer();
@@ -27,11 +33,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             _transmitFromStorageTimer.AutoReset = true;
             _transmitFromStorageTimer.Interval = 120000;
             _transmitFromStorageTimer.Start();
+            _isAadEnabled = isAadEnabled;
         }
 
         internal void TransmitFromStorage(object? sender, ElapsedEventArgs? e)
         {
-            // Only proces 10 files at a time so that we don't end up taking lot of cpu
+            // Only process 10 files at a time so that we don't end up taking lot of cpu
             // if the number of files are large.
             int fileCount = 10;
             while (fileCount > 0)
@@ -50,22 +57,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             _transmissionStateManager.ResetConsecutiveErrors();
                             _transmissionStateManager.CloseTransmission();
 
-                            AzureMonitorExporterEventSource.Log.WriteInformational("TransmitFromStorageSuccess", "Successfully transmitted a blob from storage.");
+                            AzureMonitorExporterEventSource.Log.TransmitFromStorageSuccess(_isAadEnabled, _connectionVars.InstrumentationKey);
 
                             // In case if the delete fails, there is a possibility
                             // that the current batch will be transmitted more than once resulting in duplicates.
-                            blob.TryDelete();
+                            var deleteSucceeded = blob.TryDelete();
+                            if (!deleteSucceeded)
+                            {
+                                AzureMonitorExporterEventSource.Log.DeletedFailed();
+                            }
                         }
                         else
                         {
-                            _transmissionStateManager.EnableBackOff(httpMessage.Response);
-                            HttpPipelineHelper.HandleFailures(httpMessage, blob, _blobProvider);
+                            _transmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
+                            HttpPipelineHelper.HandleFailures(httpMessage, blob, _blobProvider, _connectionVars, _isAadEnabled);
                             break;
                         }
                     }
                     catch (Exception ex)
                     {
-                        AzureMonitorExporterEventSource.Log.WriteError("FailedToTransmitFromStorage", ex);
+                        AzureMonitorExporterEventSource.Log.FailedToTransmitFromStorage(_isAadEnabled, _connectionVars.InstrumentationKey, ex);
                     }
                 }
                 else

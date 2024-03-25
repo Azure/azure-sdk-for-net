@@ -39,37 +39,39 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Theory]
-        [InlineData("RequestData")]
-        [InlineData("RemoteDependencyData")]
-        public void PropertiesDoesNotContainMSLinksWhenActivityHasNoLinks(string telemetryType)
+        [InlineData("RequestData", ActivityKind.Server)]
+        [InlineData("RequestData", ActivityKind.Consumer)]
+        [InlineData("RemoteDependencyData", ActivityKind.Client)]
+        public void PropertiesDoesNotContainMSLinksWhenActivityHasNoLinks(string telemetryType, ActivityKind kind)
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
                 ActivityName,
-                ActivityKind.Client,
+                kind,
                 parentContext: default,
                 startTime: DateTime.UtcNow);
 
             Assert.NotNull(activity);
-            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
             if (telemetryType == "RequestData")
             {
-                var requestData = new RequestData(2, activity, ref monitorTags);
+                var requestData = new RequestData(2, activity, ref activityTagsProcessor);
                 Assert.False(requestData.Properties.TryGetValue(msLinks, out _));
             }
             if (telemetryType == "RemoteDependencyData")
             {
-                var remoteDependencyData = new RemoteDependencyData(2, activity, ref monitorTags);
+                var remoteDependencyData = new RemoteDependencyData(2, activity, ref activityTagsProcessor);
 
                 Assert.False(remoteDependencyData.Properties.TryGetValue(msLinks, out _));
             }
         }
 
         [Theory]
-        [InlineData("RequestData")]
-        [InlineData("RemoteDependencyData")]
-        public void PropertiesContainMSLinksWhenActivityHasLinks(string telemetryType)
+        [InlineData("RequestData", ActivityKind.Server)]
+        [InlineData("RequestData", ActivityKind.Consumer)]
+        [InlineData("RemoteDependencyData", ActivityKind.Client)]
+        public void PropertiesContainMSLinksWhenActivityHasLinks(string telemetryType, ActivityKind kind)
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             ActivityLink activityLink = new ActivityLink(new ActivityContext(
@@ -82,7 +84,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             using var activity = activitySource.StartActivity(
                 ActivityName,
-                ActivityKind.Client,
+                kind,
                 parentContext: default,
                 null,
                 links,
@@ -92,16 +94,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             string? expectedMSlinks = GetExpectedMSlinks(links);
             string? actualMSlinks = null;
 
-            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
             if (telemetryType == "RequestData")
             {
-                var requestData = new RequestData(2, activity, ref monitorTags);
+                var requestData = new RequestData(2, activity, ref activityTagsProcessor);
                 Assert.True(requestData.Properties.TryGetValue(msLinks, out actualMSlinks));
             }
             if (telemetryType == "RemoteDependencyData")
             {
-                var remoteDependencyData = new RemoteDependencyData(2, activity, ref monitorTags);
+                var remoteDependencyData = new RemoteDependencyData(2, activity, ref activityTagsProcessor);
                 Assert.True(remoteDependencyData.Properties.TryGetValue(msLinks, out actualMSlinks));
             }
 
@@ -109,9 +111,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Theory]
-        [InlineData("RequestData")]
-        [InlineData("RemoteDependencyData")]
-        public void LinksAreTruncatedWhenCannotFitInMaxLength(string telemetryType)
+        [InlineData("RequestData", ActivityKind.Server)]
+        [InlineData("RequestData", ActivityKind.Consumer)]
+        [InlineData("RemoteDependencyData", ActivityKind.Client)]
+        public void LinksAreTruncatedWhenCannotFitInMaxLength(string telemetryType, ActivityKind kind)
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             List<ActivityLink> links = new List<ActivityLink>();
@@ -133,23 +136,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             using var activity = activitySource.StartActivity(
                 ActivityName,
-                ActivityKind.Client,
+                kind,
                 parentContext: default,
                 null,
                 links,
                 startTime: DateTime.UtcNow);
 
             Assert.NotNull(activity);
-            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
             if (telemetryType == "RequestData")
             {
-                var requestData = new RequestData(2, activity, ref monitorTags);
+                var requestData = new RequestData(2, activity, ref activityTagsProcessor);
                 Assert.True(requestData.Properties.TryGetValue(msLinks, out actualMSlinks));
             }
             if (telemetryType == "RemoteDependencyData")
             {
-                var remoteDependencyData = new RemoteDependencyData(2, activity, ref monitorTags);
+                var remoteDependencyData = new RemoteDependencyData(2, activity, ref activityTagsProcessor);
                 Assert.True(remoteDependencyData.Properties.TryGetValue(msLinks, out actualMSlinks));
             }
 
@@ -168,9 +171,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Theory]
-        [InlineData("RequestData")]
-        [InlineData("RemoteDependencyData")]
-        public void LinksAreNotTruncatedWhenCanBeFitInMaxLength(string telemetryType)
+        [InlineData("RequestData", ActivityKind.Server)]
+        [InlineData("RequestData", ActivityKind.Consumer)]
+        [InlineData("RemoteDependencyData", ActivityKind.Client)]
+        public void LinksAreNotTruncatedWhenCanBeFitInMaxLength(string telemetryType, ActivityKind kind)
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             List<ActivityLink> links = new List<ActivityLink>();
@@ -186,7 +190,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             using var activity = activitySource.StartActivity(
                 ActivityName,
-                ActivityKind.Client,
+                kind,
                 parentContext: default,
                 null,
                 links,
@@ -196,16 +200,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             string? expectedMslinks = GetExpectedMSlinks(links);
             string? actualMSlinks = null;
 
-            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
             if (telemetryType == "RequestData")
             {
-                var requestData = new RequestData(2, activity, ref monitorTags);
+                var requestData = new RequestData(2, activity, ref activityTagsProcessor);
                 Assert.True(requestData.Properties.TryGetValue(msLinks, out actualMSlinks));
             }
             if (telemetryType == "RemoteDependencyData")
             {
-                var remoteDependencyData = new RemoteDependencyData(2, activity, ref monitorTags);
+                var remoteDependencyData = new RemoteDependencyData(2, activity, ref activityTagsProcessor);
                 Assert.True(remoteDependencyData.Properties.TryGetValue(msLinks, out actualMSlinks));
             }
 
@@ -240,7 +244,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Batch<Activity> batch = new Batch<Activity>(activityList, 1);
             var traceResource = new AzureMonitorResource();
 
-            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, traceResource, "00000000-0000-0000-0000-000000000000");
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, traceResource, "00000000-0000-0000-0000-000000000000", 1.0f);
 
             Assert.Equal(2, telemetryItems.Count());
             Assert.Equal("Exception", telemetryItems[0].Name);
@@ -277,7 +281,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Batch<Activity> batch = new Batch<Activity>(activityList, 1);
             var traceResource = new AzureMonitorResource();
 
-            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, traceResource, "00000000-0000-0000-0000-000000000000");
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, traceResource, "00000000-0000-0000-0000-000000000000", 1.0f);
 
             Assert.Equal(2, telemetryItems.Count());
             Assert.Equal("Message", telemetryItems[0].Name);
@@ -310,7 +314,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Batch<Activity> batch = new Batch<Activity>(activityList, 1);
             var traceResource = new AzureMonitorResource();
 
-            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, traceResource, "00000000 - 0000 - 0000 - 0000 - 000000000000");
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, traceResource, "00000000 - 0000 - 0000 - 0000 - 000000000000", 1.0f);
 
             Assert.Single(telemetryItems);
             Assert.Equal("Request", (IEnumerable<char>)telemetryItems[0].Name);
@@ -343,7 +347,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Batch<Activity> batch = new Batch<Activity>(activityList, 1);
             var traceResource = new AzureMonitorResource();
 
-            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, traceResource, "00000000 - 0000 - 0000 - 0000 - 000000000000");
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, traceResource, "00000000 - 0000 - 0000 - 0000 - 000000000000", 1.0f);
 
             Assert.Single(telemetryItems);
             Assert.Equal("Request", telemetryItems[0].Name);

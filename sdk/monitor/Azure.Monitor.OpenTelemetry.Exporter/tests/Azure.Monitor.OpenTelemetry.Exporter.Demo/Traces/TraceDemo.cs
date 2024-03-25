@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Azure.Core;
 using OpenTelemetry;
-using OpenTelemetry.Extensions.AzureMonitor;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
@@ -26,6 +25,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
                 { "service.name", "my-service" },
                 { "service.namespace", "my-namespace" },
                 { "service.instance.id", "my-instance" },
+                { "service.version", "1.0.0-demo" },
             };
 
             var resourceBuilder = ResourceBuilder.CreateDefault().AddAttributes(resourceAttributes);
@@ -35,8 +35,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
                             .AddSource(ActivitySourceName)
                             .AddProcessor(new ActivityFilteringProcessor())
                             .AddProcessor(new ActivityEnrichingProcessor())
-                            .SetSampler(new ApplicationInsightsSampler(1.0F))
-                            .AddAzureMonitorTraceExporter(o => o.ConnectionString = connectionString, credential)
+                            .AddAzureMonitorTraceExporter(o => { o.ConnectionString = connectionString; o.SamplingRatio = 1.0F; }, credential)
                             .Build();
         }
 

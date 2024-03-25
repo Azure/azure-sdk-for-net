@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
@@ -19,16 +18,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             {
                 return null;
             }
-            Optional<int> itemsReceived = default;
-            Optional<int> itemsAccepted = default;
-            Optional<IReadOnlyList<TelemetryErrorDetails>> errors = default;
+            int? itemsReceived = default;
+            int? itemsAccepted = default;
+            IReadOnlyList<TelemetryErrorDetails> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("itemsReceived"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     itemsReceived = property.Value.GetInt32();
@@ -38,7 +36,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     itemsAccepted = property.Value.GetInt32();
@@ -48,7 +45,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TelemetryErrorDetails> array = new List<TelemetryErrorDetails>();
@@ -60,7 +56,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     continue;
                 }
             }
-            return new TrackResponse(Optional.ToNullable(itemsReceived), Optional.ToNullable(itemsAccepted), Optional.ToList(errors));
+            return new TrackResponse(itemsReceived, itemsAccepted, errors ?? new ChangeTrackingList<TelemetryErrorDetails>());
         }
     }
 }

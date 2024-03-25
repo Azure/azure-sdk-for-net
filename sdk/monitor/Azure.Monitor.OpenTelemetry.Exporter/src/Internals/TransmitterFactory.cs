@@ -12,10 +12,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     /// This factory should ensure that only one instance of the Transmitter is created for
     /// any unique connection string.
     /// </summary>
-    internal class TransmitterFactory
+    internal sealed class TransmitterFactory
     {
         public static readonly TransmitterFactory Instance = new();
-        public static readonly IPlatform platform = new DefaultPlatform();
 
         internal readonly Dictionary<string, AzureMonitorTransmitter> _transmitters = new();
         private readonly object _lockObj = new();
@@ -30,7 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     if (!_transmitters.TryGetValue(key, out transmitter))
                     {
-                        transmitter = new AzureMonitorTransmitter(azureMonitorExporterOptions, platform);
+                        transmitter = new AzureMonitorTransmitter(azureMonitorExporterOptions, new DefaultPlatform());
 
                         _transmitters.Add(key, transmitter);
                     }

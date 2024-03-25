@@ -98,11 +98,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
+            // In AOT, StackFrame.GetMethod() can return null.
+            // In this instance, we fall back to StackFrame.ToString()
+            frameMock.Setup(x => x.ToString()).Returns("MethodName + 0x00 at offset 000 in file:line:column <filename unknown>:0:0");
+
             Models.StackFrame stackFrame = new Models.StackFrame(frameMock.Object, 0);
 
             Assert.Equal("unknown", stackFrame.Assembly);
             Assert.Null(stackFrame.FileName);
-            Assert.Equal("unknown", stackFrame.Method);
+            Assert.Equal("MethodName + 0x00 at offset 000 in file:line:column <filename unknown>:0:0", stackFrame.Method);
             Assert.Null(stackFrame.Line);
         }
 
@@ -188,7 +192,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
                 builder.AddOpenTelemetry(options =>
                 {
-                    options.ParseStateValues = true;
                     options.AddInMemoryExporter(logRecords);
                 });
                 builder.AddFilter(typeof(TelemetryExceptionDataTests).FullName, LogLevel.Trace);
@@ -205,14 +208,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void ExceptionDataContainsExceptionDetailsofAllInnerExceptionsOfAggregateException()
+        public void ExceptionDataContainsExceptionDetailsOfAllInnerExceptionsOfAggregateException()
         {
             var logRecords = new List<LogRecord>();
             using var loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder.AddOpenTelemetry(options =>
                 {
-                    options.ParseStateValues = true;
                     options.AddInMemoryExporter(logRecords);
                 });
                 builder.AddFilter(typeof(TelemetryExceptionDataTests).FullName, LogLevel.Trace);
@@ -226,7 +228,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AggregateException aggregateException = new AggregateException("AggregateException", new[] { innerException1, innerException2 });
 
             // Passing "AggregateException" explicitly here instead of using aggregateException.Message
-            // aggregateException.Message will return different value in case of net461 compared to netcore
+            // aggregateException.Message will return different value in case of net462 compared to netcore
             logger.LogWarning(aggregateException, "AggregateException");
 
             var exceptionData = new TelemetryExceptionData(2, logRecords[0]);
@@ -248,7 +250,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
                 builder.AddOpenTelemetry(options =>
                 {
-                    options.ParseStateValues = true;
                     options.AddInMemoryExporter(logRecords);
                 });
                 builder.AddFilter(typeof(TelemetryExceptionDataTests).FullName, LogLevel.Trace);
@@ -263,7 +264,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var exception = new Exception("Exception", innerexception2);
 
             // Passing "Exception" explicitly here instead of using exception.Message
-            // exception.Message will return different value in case of net461 compared to netcore
+            // exception.Message will return different value in case of net462 compared to netcore
             logger.LogWarning(exception, "Exception");
 
             var exceptionData = new TelemetryExceptionData(2, logRecords[0]);
@@ -282,7 +283,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
                 builder.AddOpenTelemetry(options =>
                 {
-                    options.ParseStateValues = true;
                     options.AddInMemoryExporter(logRecords);
                 });
                 builder.AddFilter(typeof(TelemetryExceptionDataTests).FullName, LogLevel.Trace);
@@ -301,7 +301,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AggregateException rootLevelException = new AggregateException("0", innerExceptions);
 
             // Passing "0" explicitly here instead of using rootLevelException.Message
-            // rootLevelException.Message will return different value in case of net461 compared to netcore
+            // rootLevelException.Message will return different value in case of net462 compared to netcore
             logger.LogWarning(rootLevelException, "0");
 
             var exceptionData = new TelemetryExceptionData(2, logRecords[0]);
@@ -311,7 +311,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // The first exception is the AggregateException
             Assert.Equal("System.AggregateException", exceptionData.Exceptions[0].TypeName);
 
-#if NET461
+#if NETFRAMEWORK
             Assert.Equal("0", exceptionData.Exceptions[0].Message);
 #else
             Assert.Equal("0 (1) (2) (3) (4) (5) (6) (7) (8) (9) (10) (11) (12) (13) (14) (15)", exceptionData.Exceptions[0].Message);
@@ -351,7 +351,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
                 builder.AddOpenTelemetry(options =>
                 {
-                    options.ParseStateValues = true;
                     options.AddInMemoryExporter(logRecords);
                 });
                 builder.AddFilter(typeof(TelemetryExceptionDataTests).FullName, LogLevel.Trace);
