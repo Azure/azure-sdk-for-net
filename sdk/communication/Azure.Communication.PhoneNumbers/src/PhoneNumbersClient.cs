@@ -162,15 +162,16 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumber"> The phone number id in E.164 format. The leading plus can be either + or encoded as %2B, e.g. +14255550123. </param>
         /// <param name="calling"> Capability value for calling. </param>
         /// <param name="sms"> Capability value for SMS. </param>
+        /// <param name="tenDLCCampaignBriefId"> Ten DLC campaign brief id</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public virtual async Task<UpdatePhoneNumberCapabilitiesOperation> StartUpdateCapabilitiesAsync(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, CancellationToken cancellationToken = default)
+        public virtual async Task<UpdatePhoneNumberCapabilitiesOperation> StartUpdateCapabilitiesAsync(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, string? tenDLCCampaignBriefId = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartUpdateCapabilities)}");
             scope.Start();
             try
             {
-                return await InternalClient.StartUpdateCapabilitiesAsync(phoneNumber, calling, sms, null, cancellationToken).ConfigureAwait(false);
+                return await InternalClient.StartUpdateCapabilitiesAsync(phoneNumber, calling, sms, tenDLCCampaignBriefId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -183,15 +184,16 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumber"> The phone number id in E.164 format. The leading plus can be either + or encoded as %2B, e.g. +14255550123. </param>
         /// <param name="calling"> Capability value for calling. </param>
         /// <param name="sms"> Capability value for SMS. </param>
+        /// <param name="tenDLCCampaignBriefId"> Ten DLC campaign brief id</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public virtual UpdatePhoneNumberCapabilitiesOperation StartUpdateCapabilities(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, CancellationToken cancellationToken = default)
+        public virtual UpdatePhoneNumberCapabilitiesOperation StartUpdateCapabilities(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, string? tenDLCCampaignBriefId = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartUpdateCapabilities)}");
             scope.Start();
             try
             {
-                return InternalClient.StartUpdateCapabilities(phoneNumber, calling, sms, null, cancellationToken);
+                return InternalClient.StartUpdateCapabilities(phoneNumber, calling, sms, tenDLCCampaignBriefId, cancellationToken);
             }
             catch (Exception e)
             {
