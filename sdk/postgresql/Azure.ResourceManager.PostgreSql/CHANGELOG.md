@@ -6,6 +6,8 @@
 
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Added experimental Bicep serialization.
+- Added GetIfExists methods.
+- Added mocking types.
 
 ## 1.1.1 (2023-02-16)
 
