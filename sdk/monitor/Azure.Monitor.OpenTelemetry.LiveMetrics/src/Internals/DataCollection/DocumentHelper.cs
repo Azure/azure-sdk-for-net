@@ -142,7 +142,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection
             {
                 DocumentType = DocumentType.Request,
                 Name = activity.DisplayName,
-                Url = new Uri(url), // TODO: THIS COULD THROW. NEED TO HANDLE EXCEPTION.
+                //Url = new Uri(url), // TODO: THIS COULD THROW. NEED TO HANDLE EXCEPTION.
                 ResponseCode = httpResponseStatusCode,
                 Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
                                                 ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
