@@ -10,7 +10,7 @@
 
 ### Other Changes
 
-## 1.3.0-beta.5 (2024-03-01)
+## 1.3.0-beta.5 (2024-03-01).
 
 ### Features Added
 - Add support for number lookup
