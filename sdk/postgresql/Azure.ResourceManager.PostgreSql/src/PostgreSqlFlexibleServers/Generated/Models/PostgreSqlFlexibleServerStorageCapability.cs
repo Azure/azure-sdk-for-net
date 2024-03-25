@@ -11,37 +11,77 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> storage size in MB capability. </summary>
-    public partial class PostgreSqlFlexibleServerStorageCapability : PostgreSqlBaseCapability
+    public partial class PostgreSqlFlexibleServerStorageCapability
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerStorageCapability"/>. </summary>
         internal PostgreSqlFlexibleServerStorageCapability()
         {
-            SupportedIopsTiers = new ChangeTrackingList<PostgreSqlFlexibleServerStorageTierCapability>();
+            SupportedUpgradableTierList = new ChangeTrackingList<PostgreSqlFlexibleServerStorageTierCapability>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerStorageCapability"/>. </summary>
-        /// <param name="capabilityStatus"> The status of the capability. </param>
-        /// <param name="reason"> The reason for the capability not being available. </param>
+        /// <param name="name"> storage MB name. </param>
+        /// <param name="supportedIops"> supported IOPS. </param>
+        /// <param name="storageSizeInMB"> storage size in MB. </param>
+        /// <param name="supportedUpgradableTierList"></param>
+        /// <param name="status"> The status. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="supportedIops"> Supported IOPS. </param>
-        /// <param name="storageSizeInMB"> Storage size in MB. </param>
-        /// <param name="defaultIopsTier"> Default tier for IOPS. </param>
-        /// <param name="supportedIopsTiers"> List of available options to upgrade the storage performance. </param>
-        internal PostgreSqlFlexibleServerStorageCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData, long? supportedIops, long? storageSizeInMB, string defaultIopsTier, IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability> supportedIopsTiers) : base(capabilityStatus, reason, serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerStorageCapability(string name, long? supportedIops, long? storageSizeInMB, IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability> supportedUpgradableTierList, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Name = name;
             SupportedIops = supportedIops;
             StorageSizeInMB = storageSizeInMB;
-            DefaultIopsTier = defaultIopsTier;
-            SupportedIopsTiers = supportedIopsTiers;
+            SupportedUpgradableTierList = supportedUpgradableTierList;
+            Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-        /// <summary> Storage size in MB. </summary>
-        [WirePath("storageSizeMb")]
+
+        /// <summary> storage MB name. </summary>
+        [WirePath("name")]
+        public string Name { get; }
+        /// <summary> supported IOPS. </summary>
+        [WirePath("supportedIops")]
+        public long? SupportedIops { get; }
+        /// <summary> storage size in MB. </summary>
+        [WirePath("storageSizeMB")]
         public long? StorageSizeInMB { get; }
-        /// <summary> Default tier for IOPS. </summary>
-        [WirePath("defaultIopsTier")]
-        public string DefaultIopsTier { get; }
-        /// <summary> List of available options to upgrade the storage performance. </summary>
-        [WirePath("supportedIopsTiers")]
-        public IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability> SupportedIopsTiers { get; }
+        /// <summary> Gets the supported upgradable tier list. </summary>
+        [WirePath("supportedUpgradableTierList")]
+        public IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability> SupportedUpgradableTierList { get; }
+        /// <summary> The status. </summary>
+        [WirePath("status")]
+        public string Status { get; }
     }
 }

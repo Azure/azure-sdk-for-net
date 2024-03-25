@@ -32,20 +32,25 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+            if (options.Format != "W" && Optional.IsDefined(TierName))
+            {
+                writer.WritePropertyName("tierName"u8);
+                writer.WriteStringValue(TierName);
+            }
             if (options.Format != "W" && Optional.IsDefined(Iops))
             {
                 writer.WritePropertyName("iops"u8);
                 writer.WriteNumberValue(Iops.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CapabilityStatus))
+            if (options.Format != "W" && Optional.IsDefined(IsBaseline))
+            {
+                writer.WritePropertyName("isBaseline"u8);
+                writer.WriteBooleanValue(IsBaseline.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(CapabilityStatus.Value.ToSerialString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(Reason))
-            {
-                writer.WritePropertyName("reason"u8);
-                writer.WriteStringValue(Reason);
+                writer.WriteStringValue(Status);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -86,9 +91,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 return null;
             }
             string name = default;
+            string tierName = default;
             long? iops = default;
-            PostgreSqlFlexbileServerCapabilityStatus? status = default;
-            string reason = default;
+            bool? isBaseline = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,6 +102,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("tierName"u8))
+                {
+                    tierName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("iops"u8))
@@ -107,18 +118,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     iops = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (property.NameEquals("isBaseline"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = property.Value.GetString().ToPostgreSqlFlexbileServerCapabilityStatus();
+                    isBaseline = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("reason"u8))
+                if (property.NameEquals("status"u8))
                 {
-                    reason = property.Value.GetString();
+                    status = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -127,7 +138,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerStorageTierCapability(status, reason, serializedAdditionalRawData, name, iops);
+            return new PostgreSqlFlexibleServerStorageTierCapability(
+                name,
+                tierName,
+                iops,
+                isBaseline,
+                status,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -163,6 +180,28 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TierName), out propertyOverride);
+            if (Optional.IsDefined(TierName) || hasPropertyOverride)
+            {
+                builder.Append("  tierName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (TierName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TierName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TierName}'");
+                    }
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Iops), out propertyOverride);
             if (Optional.IsDefined(Iops) || hasPropertyOverride)
             {
@@ -177,8 +216,23 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CapabilityStatus), out propertyOverride);
-            if (Optional.IsDefined(CapabilityStatus) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsBaseline), out propertyOverride);
+            if (Optional.IsDefined(IsBaseline) || hasPropertyOverride)
+            {
+                builder.Append("  isBaseline: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsBaseline.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (Optional.IsDefined(Status) || hasPropertyOverride)
             {
                 builder.Append("  status: ");
                 if (hasPropertyOverride)
@@ -187,28 +241,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 else
                 {
-                    builder.AppendLine($"'{CapabilityStatus.Value.ToSerialString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
-            if (Optional.IsDefined(Reason) || hasPropertyOverride)
-            {
-                builder.Append("  reason: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (Reason.Contains(Environment.NewLine))
+                    if (Status.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{Reason}'''");
+                        builder.AppendLine($"{Status}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{Reason}'");
+                        builder.AppendLine($"'{Status}'");
                     }
                 }
             }

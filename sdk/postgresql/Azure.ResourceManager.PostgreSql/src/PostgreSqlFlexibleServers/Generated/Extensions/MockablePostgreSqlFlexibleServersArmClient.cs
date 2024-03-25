@@ -105,29 +105,5 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
             PostgreSqlFlexibleServerResource.ValidateResourceId(id);
             return new PostgreSqlFlexibleServerResource(Client, id);
         }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="PostgreSqlMigrationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PostgreSqlMigrationResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlMigrationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PostgreSqlMigrationResource"/> object. </returns>
-        public virtual PostgreSqlMigrationResource GetPostgreSqlMigrationResource(ResourceIdentifier id)
-        {
-            PostgreSqlMigrationResource.ValidateResourceId(id);
-            return new PostgreSqlMigrationResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="PostgreSqlLtrServerBackupOperationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PostgreSqlLtrServerBackupOperationResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlLtrServerBackupOperationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PostgreSqlLtrServerBackupOperationResource"/> object. </returns>
-        public virtual PostgreSqlLtrServerBackupOperationResource GetPostgreSqlLtrServerBackupOperationResource(ResourceIdentifier id)
-        {
-            PostgreSqlLtrServerBackupOperationResource.ValidateResourceId(id);
-            return new PostgreSqlLtrServerBackupOperationResource(Client, id);
-        }
     }
 }

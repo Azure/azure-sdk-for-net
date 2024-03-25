@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Capability for the PostgreSQL server. </summary>
+    /// <summary> location capability. </summary>
     internal partial class PostgreSqlFlexibleServerCapabilitiesListResult
     {
         /// <summary>

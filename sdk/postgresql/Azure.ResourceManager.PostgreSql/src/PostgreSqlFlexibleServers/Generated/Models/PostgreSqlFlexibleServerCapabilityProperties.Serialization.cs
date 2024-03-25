@@ -28,35 +28,60 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (options.Format != "W" && Optional.IsDefined(Zone))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                writer.WritePropertyName("zone"u8);
+                writer.WriteStringValue(Zone);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedServerEditions))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedHAModes))
             {
-                writer.WritePropertyName("supportedServerEditions"u8);
+                writer.WritePropertyName("supportedHAMode"u8);
                 writer.WriteStartArray();
-                foreach (var item in SupportedServerEditions)
+                foreach (var item in SupportedHAModes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsGeoBackupSupported))
+            {
+                writer.WritePropertyName("geoBackupSupported"u8);
+                writer.WriteBooleanValue(IsGeoBackupSupported.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsZoneRedundantHASupported))
+            {
+                writer.WritePropertyName("zoneRedundantHaSupported"u8);
+                writer.WriteBooleanValue(IsZoneRedundantHASupported.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsZoneRedundantHAAndGeoBackupSupported))
+            {
+                writer.WritePropertyName("zoneRedundantHaAndGeoBackupSupported"u8);
+                writer.WriteBooleanValue(IsZoneRedundantHAAndGeoBackupSupported.Value);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedFlexibleServerEditions))
+            {
+                writer.WritePropertyName("supportedFlexibleServerEditions"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedFlexibleServerEditions)
                 {
                     writer.WriteObjectValue<PostgreSqlFlexibleServerEditionCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedServerVersions))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedHyperscaleNodeEditions))
             {
-                writer.WritePropertyName("supportedServerVersions"u8);
+                writer.WritePropertyName("supportedHyperscaleNodeEditions"u8);
                 writer.WriteStartArray();
-                foreach (var item in SupportedServerVersions)
+                foreach (var item in SupportedHyperscaleNodeEditions)
                 {
-                    writer.WriteObjectValue<PostgreSqlFlexibleServerServerVersionCapability>(item, options);
+                    writer.WriteObjectValue<PostgreSqlFlexibleServerHyperscaleNodeEditionCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(SupportFastProvisioning))
+            if (options.Format != "W" && Optional.IsDefined(FastProvisioningSupported))
             {
                 writer.WritePropertyName("fastProvisioningSupported"u8);
-                writer.WriteStringValue(SupportFastProvisioning.Value.ToString());
+                writer.WriteBooleanValue(FastProvisioningSupported.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedFastProvisioningEditions))
             {
@@ -68,45 +93,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(GeoBackupSupported))
-            {
-                writer.WritePropertyName("geoBackupSupported"u8);
-                writer.WriteStringValue(GeoBackupSupported.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ZoneRedundantHaSupported))
-            {
-                writer.WritePropertyName("zoneRedundantHaSupported"u8);
-                writer.WriteStringValue(ZoneRedundantHaSupported.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ZoneRedundantHaAndGeoBackupSupported))
-            {
-                writer.WritePropertyName("zoneRedundantHaAndGeoBackupSupported"u8);
-                writer.WriteStringValue(ZoneRedundantHaAndGeoBackupSupported.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(StorageAutoGrowthSupported))
-            {
-                writer.WritePropertyName("storageAutoGrowthSupported"u8);
-                writer.WriteStringValue(StorageAutoGrowthSupported.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(OnlineResizeSupported))
-            {
-                writer.WritePropertyName("onlineResizeSupported"u8);
-                writer.WriteStringValue(OnlineResizeSupported.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(Restricted))
-            {
-                writer.WritePropertyName("restricted"u8);
-                writer.WriteStringValue(Restricted.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(CapabilityStatus))
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(CapabilityStatus.Value.ToSerialString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(Reason))
-            {
-                writer.WritePropertyName("reason"u8);
-                writer.WriteStringValue(Reason);
+                writer.WriteStringValue(Status);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -146,29 +136,67 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            string name = default;
-            IReadOnlyList<PostgreSqlFlexibleServerEditionCapability> supportedServerEditions = default;
-            IReadOnlyList<PostgreSqlFlexibleServerServerVersionCapability> supportedServerVersions = default;
-            PostgreSqlFlexibleServerFastProvisioningSupported? fastProvisioningSupported = default;
+            string zone = default;
+            IReadOnlyList<string> supportedHAMode = default;
+            bool? geoBackupSupported = default;
+            bool? zoneRedundantHaSupported = default;
+            bool? zoneRedundantHaAndGeoBackupSupported = default;
+            IReadOnlyList<PostgreSqlFlexibleServerEditionCapability> supportedFlexibleServerEditions = default;
+            IReadOnlyList<PostgreSqlFlexibleServerHyperscaleNodeEditionCapability> supportedHyperscaleNodeEditions = default;
+            bool? fastProvisioningSupported = default;
             IReadOnlyList<PostgreSqlFlexibleServerFastProvisioningEditionCapability> supportedFastProvisioningEditions = default;
-            PostgreSqlFlexibleServerGeoBackupSupported? geoBackupSupported = default;
-            PostgreSqlFlexibleServerZoneRedundantHaSupported? zoneRedundantHaSupported = default;
-            PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported? zoneRedundantHaAndGeoBackupSupported = default;
-            PostgreSqlFlexibleServerStorageAutoGrowthSupported? storageAutoGrowthSupported = default;
-            PostgreSqlFlexibleServerOnlineResizeSupported? onlineResizeSupported = default;
-            PostgreSqlFlexibleServerZoneRedundantRestricted? restricted = default;
-            PostgreSqlFlexbileServerCapabilityStatus? status = default;
-            string reason = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
+                if (property.NameEquals("zone"u8))
                 {
-                    name = property.Value.GetString();
+                    zone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("supportedServerEditions"u8))
+                if (property.NameEquals("supportedHAMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    supportedHAMode = array;
+                    continue;
+                }
+                if (property.NameEquals("geoBackupSupported"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    geoBackupSupported = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("zoneRedundantHaSupported"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    zoneRedundantHaSupported = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("zoneRedundantHaAndGeoBackupSupported"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    zoneRedundantHaAndGeoBackupSupported = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("supportedFlexibleServerEditions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -179,21 +207,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         array.Add(PostgreSqlFlexibleServerEditionCapability.DeserializePostgreSqlFlexibleServerEditionCapability(item, options));
                     }
-                    supportedServerEditions = array;
+                    supportedFlexibleServerEditions = array;
                     continue;
                 }
-                if (property.NameEquals("supportedServerVersions"u8))
+                if (property.NameEquals("supportedHyperscaleNodeEditions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<PostgreSqlFlexibleServerServerVersionCapability> array = new List<PostgreSqlFlexibleServerServerVersionCapability>();
+                    List<PostgreSqlFlexibleServerHyperscaleNodeEditionCapability> array = new List<PostgreSqlFlexibleServerHyperscaleNodeEditionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlFlexibleServerServerVersionCapability.DeserializePostgreSqlFlexibleServerServerVersionCapability(item, options));
+                        array.Add(PostgreSqlFlexibleServerHyperscaleNodeEditionCapability.DeserializePostgreSqlFlexibleServerHyperscaleNodeEditionCapability(item, options));
                     }
-                    supportedServerVersions = array;
+                    supportedHyperscaleNodeEditions = array;
                     continue;
                 }
                 if (property.NameEquals("fastProvisioningSupported"u8))
@@ -202,7 +230,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    fastProvisioningSupported = new PostgreSqlFlexibleServerFastProvisioningSupported(property.Value.GetString());
+                    fastProvisioningSupported = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("supportedFastProvisioningEditions"u8))
@@ -219,72 +247,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     supportedFastProvisioningEditions = array;
                     continue;
                 }
-                if (property.NameEquals("geoBackupSupported"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    geoBackupSupported = new PostgreSqlFlexibleServerGeoBackupSupported(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("zoneRedundantHaSupported"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    zoneRedundantHaSupported = new PostgreSqlFlexibleServerZoneRedundantHaSupported(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("zoneRedundantHaAndGeoBackupSupported"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    zoneRedundantHaAndGeoBackupSupported = new PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("storageAutoGrowthSupported"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    storageAutoGrowthSupported = new PostgreSqlFlexibleServerStorageAutoGrowthSupported(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("onlineResizeSupported"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    onlineResizeSupported = new PostgreSqlFlexibleServerOnlineResizeSupported(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("restricted"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    restricted = new PostgreSqlFlexibleServerZoneRedundantRestricted(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("status"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    status = property.Value.GetString().ToPostgreSqlFlexbileServerCapabilityStatus();
-                    continue;
-                }
-                if (property.NameEquals("reason"u8))
-                {
-                    reason = property.Value.GetString();
+                    status = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -294,20 +259,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PostgreSqlFlexibleServerCapabilityProperties(
-                status,
-                reason,
-                serializedAdditionalRawData,
-                name,
-                supportedServerEditions ?? new ChangeTrackingList<PostgreSqlFlexibleServerEditionCapability>(),
-                supportedServerVersions ?? new ChangeTrackingList<PostgreSqlFlexibleServerServerVersionCapability>(),
-                fastProvisioningSupported,
-                supportedFastProvisioningEditions ?? new ChangeTrackingList<PostgreSqlFlexibleServerFastProvisioningEditionCapability>(),
+                zone,
+                supportedHAMode ?? new ChangeTrackingList<string>(),
                 geoBackupSupported,
                 zoneRedundantHaSupported,
                 zoneRedundantHaAndGeoBackupSupported,
-                storageAutoGrowthSupported,
-                onlineResizeSupported,
-                restricted);
+                supportedFlexibleServerEditions ?? new ChangeTrackingList<PostgreSqlFlexibleServerEditionCapability>(),
+                supportedHyperscaleNodeEditions ?? new ChangeTrackingList<PostgreSqlFlexibleServerHyperscaleNodeEditionCapability>(),
+                fastProvisioningSupported,
+                supportedFastProvisioningEditions ?? new ChangeTrackingList<PostgreSqlFlexibleServerFastProvisioningEditionCapability>(),
+                status,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -321,34 +283,34 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Zone), out propertyOverride);
+            if (Optional.IsDefined(Zone) || hasPropertyOverride)
             {
-                builder.Append("  name: ");
+                builder.Append("  zone: ");
                 if (hasPropertyOverride)
                 {
                     builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    if (Name.Contains(Environment.NewLine))
+                    if (Zone.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
+                        builder.AppendLine($"{Zone}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{Name}'");
+                        builder.AppendLine($"'{Zone}'");
                     }
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedServerEditions), out propertyOverride);
-            if (Optional.IsCollectionDefined(SupportedServerEditions) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedHAModes), out propertyOverride);
+            if (Optional.IsCollectionDefined(SupportedHAModes) || hasPropertyOverride)
             {
-                if (SupportedServerEditions.Any() || hasPropertyOverride)
+                if (SupportedHAModes.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  supportedServerEditions: ");
+                    builder.Append("  supportedHAMode: ");
                     if (hasPropertyOverride)
                     {
                         builder.AppendLine($"{propertyOverride}");
@@ -356,21 +318,79 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     else
                     {
                         builder.AppendLine("[");
-                        foreach (var item in SupportedServerEditions)
+                        foreach (var item in SupportedHAModes)
                         {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedServerEditions: ");
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedServerVersions), out propertyOverride);
-            if (Optional.IsCollectionDefined(SupportedServerVersions) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsGeoBackupSupported), out propertyOverride);
+            if (Optional.IsDefined(IsGeoBackupSupported) || hasPropertyOverride)
             {
-                if (SupportedServerVersions.Any() || hasPropertyOverride)
+                builder.Append("  geoBackupSupported: ");
+                if (hasPropertyOverride)
                 {
-                    builder.Append("  supportedServerVersions: ");
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsGeoBackupSupported.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsZoneRedundantHASupported), out propertyOverride);
+            if (Optional.IsDefined(IsZoneRedundantHASupported) || hasPropertyOverride)
+            {
+                builder.Append("  zoneRedundantHaSupported: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsZoneRedundantHASupported.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsZoneRedundantHAAndGeoBackupSupported), out propertyOverride);
+            if (Optional.IsDefined(IsZoneRedundantHAAndGeoBackupSupported) || hasPropertyOverride)
+            {
+                builder.Append("  zoneRedundantHaAndGeoBackupSupported: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsZoneRedundantHAAndGeoBackupSupported.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedFlexibleServerEditions), out propertyOverride);
+            if (Optional.IsCollectionDefined(SupportedFlexibleServerEditions) || hasPropertyOverride)
+            {
+                if (SupportedFlexibleServerEditions.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  supportedFlexibleServerEditions: ");
                     if (hasPropertyOverride)
                     {
                         builder.AppendLine($"{propertyOverride}");
@@ -378,17 +398,39 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     else
                     {
                         builder.AppendLine("[");
-                        foreach (var item in SupportedServerVersions)
+                        foreach (var item in SupportedFlexibleServerEditions)
                         {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedServerVersions: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedFlexibleServerEditions: ");
                         }
                         builder.AppendLine("  ]");
                     }
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportFastProvisioning), out propertyOverride);
-            if (Optional.IsDefined(SupportFastProvisioning) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedHyperscaleNodeEditions), out propertyOverride);
+            if (Optional.IsCollectionDefined(SupportedHyperscaleNodeEditions) || hasPropertyOverride)
+            {
+                if (SupportedHyperscaleNodeEditions.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  supportedHyperscaleNodeEditions: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedHyperscaleNodeEditions)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedHyperscaleNodeEditions: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FastProvisioningSupported), out propertyOverride);
+            if (Optional.IsDefined(FastProvisioningSupported) || hasPropertyOverride)
             {
                 builder.Append("  fastProvisioningSupported: ");
                 if (hasPropertyOverride)
@@ -397,7 +439,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 else
                 {
-                    builder.AppendLine($"'{SupportFastProvisioning.Value.ToString()}'");
+                    var boolValue = FastProvisioningSupported.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
@@ -423,92 +466,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GeoBackupSupported), out propertyOverride);
-            if (Optional.IsDefined(GeoBackupSupported) || hasPropertyOverride)
-            {
-                builder.Append("  geoBackupSupported: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{GeoBackupSupported.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ZoneRedundantHaSupported), out propertyOverride);
-            if (Optional.IsDefined(ZoneRedundantHaSupported) || hasPropertyOverride)
-            {
-                builder.Append("  zoneRedundantHaSupported: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{ZoneRedundantHaSupported.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ZoneRedundantHaAndGeoBackupSupported), out propertyOverride);
-            if (Optional.IsDefined(ZoneRedundantHaAndGeoBackupSupported) || hasPropertyOverride)
-            {
-                builder.Append("  zoneRedundantHaAndGeoBackupSupported: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{ZoneRedundantHaAndGeoBackupSupported.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAutoGrowthSupported), out propertyOverride);
-            if (Optional.IsDefined(StorageAutoGrowthSupported) || hasPropertyOverride)
-            {
-                builder.Append("  storageAutoGrowthSupported: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{StorageAutoGrowthSupported.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OnlineResizeSupported), out propertyOverride);
-            if (Optional.IsDefined(OnlineResizeSupported) || hasPropertyOverride)
-            {
-                builder.Append("  onlineResizeSupported: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{OnlineResizeSupported.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Restricted), out propertyOverride);
-            if (Optional.IsDefined(Restricted) || hasPropertyOverride)
-            {
-                builder.Append("  restricted: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Restricted.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CapabilityStatus), out propertyOverride);
-            if (Optional.IsDefined(CapabilityStatus) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (Optional.IsDefined(Status) || hasPropertyOverride)
             {
                 builder.Append("  status: ");
                 if (hasPropertyOverride)
@@ -517,28 +476,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 else
                 {
-                    builder.AppendLine($"'{CapabilityStatus.Value.ToSerialString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
-            if (Optional.IsDefined(Reason) || hasPropertyOverride)
-            {
-                builder.Append("  reason: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (Reason.Contains(Environment.NewLine))
+                    if (Status.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{Reason}'''");
+                        builder.AppendLine($"{Status}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{Reason}'");
+                        builder.AppendLine($"'{Status}'");
                     }
                 }
             }

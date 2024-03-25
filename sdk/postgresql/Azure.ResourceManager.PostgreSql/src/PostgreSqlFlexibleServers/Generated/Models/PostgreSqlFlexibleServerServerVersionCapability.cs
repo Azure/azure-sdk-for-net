@@ -11,31 +11,73 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Server version capabilities. </summary>
-    public partial class PostgreSqlFlexibleServerServerVersionCapability : PostgreSqlBaseCapability
+    public partial class PostgreSqlFlexibleServerServerVersionCapability
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerServerVersionCapability"/>. </summary>
         internal PostgreSqlFlexibleServerServerVersionCapability()
         {
             SupportedVersionsToUpgrade = new ChangeTrackingList<string>();
+            SupportedVCores = new ChangeTrackingList<PostgreSqlFlexibleServerVCoreCapability>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerServerVersionCapability"/>. </summary>
-        /// <param name="capabilityStatus"> The status of the capability. </param>
-        /// <param name="reason"> The reason for the capability not being available. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="name"> Server version. </param>
+        /// <param name="name"> server version. </param>
         /// <param name="supportedVersionsToUpgrade"> Supported servers versions to upgrade. </param>
-        internal PostgreSqlFlexibleServerServerVersionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, IReadOnlyList<string> supportedVersionsToUpgrade) : base(capabilityStatus, reason, serializedAdditionalRawData)
+        /// <param name="supportedVCores"></param>
+        /// <param name="status"> The status. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerServerVersionCapability(string name, IReadOnlyList<string> supportedVersionsToUpgrade, IReadOnlyList<PostgreSqlFlexibleServerVCoreCapability> supportedVCores, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             SupportedVersionsToUpgrade = supportedVersionsToUpgrade;
+            SupportedVCores = supportedVCores;
+            Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Server version. </summary>
+        /// <summary> server version. </summary>
         [WirePath("name")]
         public string Name { get; }
         /// <summary> Supported servers versions to upgrade. </summary>
         [WirePath("supportedVersionsToUpgrade")]
         public IReadOnlyList<string> SupportedVersionsToUpgrade { get; }
+        /// <summary> Gets the supported v cores. </summary>
+        [WirePath("supportedVcores")]
+        public IReadOnlyList<PostgreSqlFlexibleServerVCoreCapability> SupportedVCores { get; }
+        /// <summary> The status. </summary>
+        [WirePath("status")]
+        public string Status { get; }
     }
 }

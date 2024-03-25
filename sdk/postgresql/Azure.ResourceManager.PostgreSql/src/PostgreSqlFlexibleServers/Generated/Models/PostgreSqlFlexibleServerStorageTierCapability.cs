@@ -10,28 +10,77 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Represents capability of a storage tier. </summary>
-    public partial class PostgreSqlFlexibleServerStorageTierCapability : PostgreSqlBaseCapability
+    /// <summary> The PostgreSqlFlexibleServerStorageTierCapability. </summary>
+    public partial class PostgreSqlFlexibleServerStorageTierCapability
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerStorageTierCapability"/>. </summary>
         internal PostgreSqlFlexibleServerStorageTierCapability()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerStorageTierCapability"/>. </summary>
-        /// <param name="capabilityStatus"> The status of the capability. </param>
-        /// <param name="reason"> The reason for the capability not being available. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name to represent Storage tier capability. </param>
+        /// <param name="tierName"> Storage tier name. </param>
         /// <param name="iops"> Supported IOPS for this storage tier. </param>
-        internal PostgreSqlFlexibleServerStorageTierCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, long? iops) : base(capabilityStatus, reason, serializedAdditionalRawData)
+        /// <param name="isBaseline"> Indicates if this is a baseline storage tier or not. </param>
+        /// <param name="status"> Status os this storage tier. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerStorageTierCapability(string name, string tierName, long? iops, bool? isBaseline, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
+            TierName = tierName;
             Iops = iops;
+            IsBaseline = isBaseline;
+            Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name to represent Storage tier capability. </summary>
         [WirePath("name")]
         public string Name { get; }
+        /// <summary> Storage tier name. </summary>
+        [WirePath("tierName")]
+        public string TierName { get; }
+        /// <summary> Supported IOPS for this storage tier. </summary>
+        [WirePath("iops")]
+        public long? Iops { get; }
+        /// <summary> Indicates if this is a baseline storage tier or not. </summary>
+        [WirePath("isBaseline")]
+        public bool? IsBaseline { get; }
+        /// <summary> Status os this storage tier. </summary>
+        [WirePath("status")]
+        public string Status { get; }
     }
 }

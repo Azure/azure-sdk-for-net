@@ -42,11 +42,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(IdentityType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
-            {
-                writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId.Value);
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -87,7 +82,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default;
             PostgreSqlFlexibleServerIdentityType type = default;
-            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,22 +105,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     type = new PostgreSqlFlexibleServerIdentityType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tenantId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    tenantId = property.Value.GetGuid();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerUserAssignedIdentity(userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), type, tenantId, serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerUserAssignedIdentity(userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), type, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -172,20 +157,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             else
             {
                 builder.AppendLine($"'{IdentityType.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
-            if (Optional.IsDefined(TenantId) || hasPropertyOverride)
-            {
-                builder.Append("  tenantId: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{TenantId.Value.ToString()}'");
-                }
             }
 
             builder.AppendLine("}");

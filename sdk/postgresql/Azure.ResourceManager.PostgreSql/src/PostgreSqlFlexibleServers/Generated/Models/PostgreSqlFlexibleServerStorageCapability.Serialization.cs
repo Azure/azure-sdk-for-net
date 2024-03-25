@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
             if (options.Format != "W" && Optional.IsDefined(SupportedIops))
             {
                 writer.WritePropertyName("supportedIops"u8);
@@ -35,33 +40,23 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             if (options.Format != "W" && Optional.IsDefined(StorageSizeInMB))
             {
-                writer.WritePropertyName("storageSizeMb"u8);
+                writer.WritePropertyName("storageSizeMB"u8);
                 writer.WriteNumberValue(StorageSizeInMB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DefaultIopsTier))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedUpgradableTierList))
             {
-                writer.WritePropertyName("defaultIopsTier"u8);
-                writer.WriteStringValue(DefaultIopsTier);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedIopsTiers))
-            {
-                writer.WritePropertyName("supportedIopsTiers"u8);
+                writer.WritePropertyName("supportedUpgradableTierList"u8);
                 writer.WriteStartArray();
-                foreach (var item in SupportedIopsTiers)
+                foreach (var item in SupportedUpgradableTierList)
                 {
                     writer.WriteObjectValue<PostgreSqlFlexibleServerStorageTierCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CapabilityStatus))
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(CapabilityStatus.Value.ToSerialString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(Reason))
-            {
-                writer.WritePropertyName("reason"u8);
-                writer.WriteStringValue(Reason);
+                writer.WriteStringValue(Status);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -101,16 +96,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
+            string name = default;
             long? supportedIops = default;
-            long? storageSizeMb = default;
-            string defaultIopsTier = default;
-            IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability> supportedIopsTiers = default;
-            PostgreSqlFlexbileServerCapabilityStatus? status = default;
-            string reason = default;
+            long? storageSizeMB = default;
+            IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability> supportedUpgradableTierList = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("supportedIops"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -120,21 +119,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     supportedIops = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("storageSizeMb"u8))
+                if (property.NameEquals("storageSizeMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageSizeMb = property.Value.GetInt64();
+                    storageSizeMB = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("defaultIopsTier"u8))
-                {
-                    defaultIopsTier = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("supportedIopsTiers"u8))
+                if (property.NameEquals("supportedUpgradableTierList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -145,21 +139,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         array.Add(PostgreSqlFlexibleServerStorageTierCapability.DeserializePostgreSqlFlexibleServerStorageTierCapability(item, options));
                     }
-                    supportedIopsTiers = array;
+                    supportedUpgradableTierList = array;
                     continue;
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    status = property.Value.GetString().ToPostgreSqlFlexbileServerCapabilityStatus();
-                    continue;
-                }
-                if (property.NameEquals("reason"u8))
-                {
-                    reason = property.Value.GetString();
+                    status = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,13 +154,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PostgreSqlFlexibleServerStorageCapability(
-                status,
-                reason,
-                serializedAdditionalRawData,
+                name,
                 supportedIops,
-                storageSizeMb,
-                defaultIopsTier,
-                supportedIopsTiers ?? new ChangeTrackingList<PostgreSqlFlexibleServerStorageTierCapability>());
+                storageSizeMB,
+                supportedUpgradableTierList ?? new ChangeTrackingList<PostgreSqlFlexibleServerStorageTierCapability>(),
+                status,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -188,6 +172,28 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             string propertyOverride = null;
 
             builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedIops), out propertyOverride);
             if (Optional.IsDefined(SupportedIops) || hasPropertyOverride)
@@ -206,7 +212,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageSizeInMB), out propertyOverride);
             if (Optional.IsDefined(StorageSizeInMB) || hasPropertyOverride)
             {
-                builder.Append("  storageSizeMb: ");
+                builder.Append("  storageSizeMB: ");
                 if (hasPropertyOverride)
                 {
                     builder.AppendLine($"{propertyOverride}");
@@ -217,34 +223,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultIopsTier), out propertyOverride);
-            if (Optional.IsDefined(DefaultIopsTier) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedUpgradableTierList), out propertyOverride);
+            if (Optional.IsCollectionDefined(SupportedUpgradableTierList) || hasPropertyOverride)
             {
-                builder.Append("  defaultIopsTier: ");
-                if (hasPropertyOverride)
+                if (SupportedUpgradableTierList.Any() || hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (DefaultIopsTier.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DefaultIopsTier}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DefaultIopsTier}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedIopsTiers), out propertyOverride);
-            if (Optional.IsCollectionDefined(SupportedIopsTiers) || hasPropertyOverride)
-            {
-                if (SupportedIopsTiers.Any() || hasPropertyOverride)
-                {
-                    builder.Append("  supportedIopsTiers: ");
+                    builder.Append("  supportedUpgradableTierList: ");
                     if (hasPropertyOverride)
                     {
                         builder.AppendLine($"{propertyOverride}");
@@ -252,17 +236,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     else
                     {
                         builder.AppendLine("[");
-                        foreach (var item in SupportedIopsTiers)
+                        foreach (var item in SupportedUpgradableTierList)
                         {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedIopsTiers: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedUpgradableTierList: ");
                         }
                         builder.AppendLine("  ]");
                     }
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CapabilityStatus), out propertyOverride);
-            if (Optional.IsDefined(CapabilityStatus) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (Optional.IsDefined(Status) || hasPropertyOverride)
             {
                 builder.Append("  status: ");
                 if (hasPropertyOverride)
@@ -271,28 +255,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 else
                 {
-                    builder.AppendLine($"'{CapabilityStatus.Value.ToSerialString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
-            if (Optional.IsDefined(Reason) || hasPropertyOverride)
-            {
-                builder.Append("  reason: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (Reason.Contains(Environment.NewLine))
+                    if (Status.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{Reason}'''");
+                        builder.AppendLine($"{Status}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{Reason}'");
+                        builder.AppendLine($"'{Status}'");
                     }
                 }
             }

@@ -104,11 +104,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("replicationRole"u8);
                 writer.WriteStringValue(ReplicationRole.Value.ToString());
             }
-            if (Optional.IsDefined(Network))
-            {
-                writer.WritePropertyName("network"u8);
-                writer.WriteObjectValue<PostgreSqlFlexibleServerNetwork>(Network, options);
-            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -162,7 +157,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             PostgreSqlFlexibleServerDataEncryption dataEncryption = default;
             PostgreSqlFlexibleServerCreateModeForUpdate? createMode = default;
             PostgreSqlFlexibleServerReplicationRole? replicationRole = default;
-            PostgreSqlFlexibleServerNetwork network = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -303,15 +297,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             replicationRole = new PostgreSqlFlexibleServerReplicationRole(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("network"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            network = PostgreSqlFlexibleServerNetwork.DeserializePostgreSqlFlexibleServerNetwork(property0.Value, options);
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -336,7 +321,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 dataEncryption,
                 createMode,
                 replicationRole,
-                network,
                 serializedAdditionalRawData);
         }
 

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Storage properties of a server. </summary>
-    public partial class PostgreSqlFlexibleServerStorage
+    internal partial class PostgreSqlFlexibleServerStorage
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,30 +52,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerStorage"/>. </summary>
         /// <param name="storageSizeInGB"> Max storage allowed for a server. </param>
-        /// <param name="autoGrow"> Flag to enable / disable Storage Auto grow for flexible server. </param>
-        /// <param name="tier"> Name of storage tier for IOPS. </param>
-        /// <param name="iops"> Storage tier IOPS quantity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerStorage(int? storageSizeInGB, StorageAutoGrow? autoGrow, PostgreSqlManagedDiskPerformanceTier? tier, int? iops, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerStorage(int? storageSizeInGB, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageSizeInGB = storageSizeInGB;
-            AutoGrow = autoGrow;
-            Tier = tier;
-            Iops = iops;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Max storage allowed for a server. </summary>
         [WirePath("storageSizeGB")]
         public int? StorageSizeInGB { get; set; }
-        /// <summary> Flag to enable / disable Storage Auto grow for flexible server. </summary>
-        [WirePath("autoGrow")]
-        public StorageAutoGrow? AutoGrow { get; set; }
-        /// <summary> Name of storage tier for IOPS. </summary>
-        [WirePath("tier")]
-        public PostgreSqlManagedDiskPerformanceTier? Tier { get; set; }
-        /// <summary> Storage tier IOPS quantity. </summary>
-        [WirePath("iops")]
-        public int? Iops { get; }
     }
 }

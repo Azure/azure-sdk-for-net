@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 writer.WritePropertyName("replicationRole"u8);
                 writer.WriteStringValue(ReplicationRole.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ReplicaCapacity))
+            if (Optional.IsDefined(ReplicaCapacity))
             {
                 writer.WritePropertyName("replicaCapacity"u8);
                 writer.WriteNumberValue(ReplicaCapacity.Value);
@@ -509,6 +509,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
             bool hasPropertyOverride = false;
             string propertyOverride = null;
+
+            if (propertyOverrides != null)
+            {
+                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
+            }
 
             builder.AppendLine("{");
 
@@ -949,6 +954,23 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
+        }
+
+        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
+        {
+            foreach (var item in propertyOverrides.ToList())
+            {
+                switch (item.Key)
+                {
+                    case "StorageSizeInGB":
+                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
+                        propertyDictionary.Add("StorageSizeInGB", item.Value);
+                        bicepOptions.PropertyOverrides.Add(Storage, propertyDictionary);
+                        break;
+                    default:
+                        continue;
+                }
+            }
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerData>.Write(ModelReaderWriterOptions options)

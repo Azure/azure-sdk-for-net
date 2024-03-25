@@ -10,43 +10,67 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Represents capability of a fast provisioning edition. </summary>
-    public partial class PostgreSqlFlexibleServerFastProvisioningEditionCapability : PostgreSqlBaseCapability
+    /// <summary> The PostgreSqlFlexibleServerFastProvisioningEditionCapability. </summary>
+    public partial class PostgreSqlFlexibleServerFastProvisioningEditionCapability
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerFastProvisioningEditionCapability"/>. </summary>
         internal PostgreSqlFlexibleServerFastProvisioningEditionCapability()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerFastProvisioningEditionCapability"/>. </summary>
-        /// <param name="capabilityStatus"> The status of the capability. </param>
-        /// <param name="reason"> The reason for the capability not being available. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="supportedTier"> Fast provisioning supported tier name. </param>
         /// <param name="supportedSku"> Fast provisioning supported sku name. </param>
         /// <param name="supportedStorageGb"> Fast provisioning supported storage in Gb. </param>
         /// <param name="supportedServerVersions"> Fast provisioning supported version. </param>
-        /// <param name="serverCount"> Count of servers in cache matching the spec. </param>
-        internal PostgreSqlFlexibleServerFastProvisioningEditionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData, string supportedTier, string supportedSku, long? supportedStorageGb, string supportedServerVersions, int? serverCount) : base(capabilityStatus, reason, serializedAdditionalRawData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerFastProvisioningEditionCapability(string supportedSku, long? supportedStorageGb, string supportedServerVersions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SupportedTier = supportedTier;
             SupportedSku = supportedSku;
             SupportedStorageGb = supportedStorageGb;
             SupportedServerVersions = supportedServerVersions;
-            ServerCount = serverCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Fast provisioning supported tier name. </summary>
-        [WirePath("supportedTier")]
-        public string SupportedTier { get; }
         /// <summary> Fast provisioning supported sku name. </summary>
         [WirePath("supportedSku")]
         public string SupportedSku { get; }
+        /// <summary> Fast provisioning supported storage in Gb. </summary>
+        [WirePath("supportedStorageGb")]
+        public long? SupportedStorageGb { get; }
         /// <summary> Fast provisioning supported version. </summary>
         [WirePath("supportedServerVersions")]
         public string SupportedServerVersions { get; }
-        /// <summary> Count of servers in cache matching the spec. </summary>
-        [WirePath("serverCount")]
-        public int? ServerCount { get; }
     }
 }

@@ -37,30 +37,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("primaryUserAssignedIdentityId"u8);
                 writer.WriteStringValue(PrimaryUserAssignedIdentityId);
             }
-            if (Optional.IsDefined(GeoBackupKeyUri))
-            {
-                writer.WritePropertyName("geoBackupKeyURI"u8);
-                writer.WriteStringValue(GeoBackupKeyUri.AbsoluteUri);
-            }
-            if (Optional.IsDefined(GeoBackupUserAssignedIdentityId))
-            {
-                writer.WritePropertyName("geoBackupUserAssignedIdentityId"u8);
-                writer.WriteStringValue(GeoBackupUserAssignedIdentityId);
-            }
             if (Optional.IsDefined(KeyType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(KeyType.Value.ToString());
-            }
-            if (Optional.IsDefined(PrimaryEncryptionKeyStatus))
-            {
-                writer.WritePropertyName("primaryEncryptionKeyStatus"u8);
-                writer.WriteStringValue(PrimaryEncryptionKeyStatus.Value.ToString());
-            }
-            if (Optional.IsDefined(GeoBackupEncryptionKeyStatus))
-            {
-                writer.WritePropertyName("geoBackupEncryptionKeyStatus"u8);
-                writer.WriteStringValue(GeoBackupEncryptionKeyStatus.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -102,11 +82,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             Uri primaryKeyUri = default;
             ResourceIdentifier primaryUserAssignedIdentityId = default;
-            Uri geoBackupKeyUri = default;
-            string geoBackupUserAssignedIdentityId = default;
             PostgreSqlFlexibleServerKeyType? type = default;
-            PostgreSqlKeyStatus? primaryEncryptionKeyStatus = default;
-            PostgreSqlKeyStatus? geoBackupEncryptionKeyStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,20 +105,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     primaryUserAssignedIdentityId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("geoBackupKeyURI"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    geoBackupKeyUri = new Uri(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("geoBackupUserAssignedIdentityId"u8))
-                {
-                    geoBackupUserAssignedIdentityId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -152,39 +114,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     type = new PostgreSqlFlexibleServerKeyType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("primaryEncryptionKeyStatus"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    primaryEncryptionKeyStatus = new PostgreSqlKeyStatus(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("geoBackupEncryptionKeyStatus"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    geoBackupEncryptionKeyStatus = new PostgreSqlKeyStatus(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerDataEncryption(
-                primaryKeyUri,
-                primaryUserAssignedIdentityId,
-                geoBackupKeyUri,
-                geoBackupUserAssignedIdentityId,
-                type,
-                primaryEncryptionKeyStatus,
-                geoBackupEncryptionKeyStatus,
-                serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerDataEncryption(primaryKeyUri, primaryUserAssignedIdentityId, type, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -226,42 +162,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GeoBackupKeyUri), out propertyOverride);
-            if (Optional.IsDefined(GeoBackupKeyUri) || hasPropertyOverride)
-            {
-                builder.Append("  geoBackupKeyURI: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{GeoBackupKeyUri.AbsoluteUri}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GeoBackupUserAssignedIdentityId), out propertyOverride);
-            if (Optional.IsDefined(GeoBackupUserAssignedIdentityId) || hasPropertyOverride)
-            {
-                builder.Append("  geoBackupUserAssignedIdentityId: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (GeoBackupUserAssignedIdentityId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{GeoBackupUserAssignedIdentityId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{GeoBackupUserAssignedIdentityId}'");
-                    }
-                }
-            }
-
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyType), out propertyOverride);
             if (Optional.IsDefined(KeyType) || hasPropertyOverride)
             {
@@ -273,34 +173,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 else
                 {
                     builder.AppendLine($"'{KeyType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryEncryptionKeyStatus), out propertyOverride);
-            if (Optional.IsDefined(PrimaryEncryptionKeyStatus) || hasPropertyOverride)
-            {
-                builder.Append("  primaryEncryptionKeyStatus: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{PrimaryEncryptionKeyStatus.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GeoBackupEncryptionKeyStatus), out propertyOverride);
-            if (Optional.IsDefined(GeoBackupEncryptionKeyStatus) || hasPropertyOverride)
-            {
-                builder.Append("  geoBackupEncryptionKeyStatus: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{GeoBackupEncryptionKeyStatus.Value.ToString()}'");
                 }
             }
 

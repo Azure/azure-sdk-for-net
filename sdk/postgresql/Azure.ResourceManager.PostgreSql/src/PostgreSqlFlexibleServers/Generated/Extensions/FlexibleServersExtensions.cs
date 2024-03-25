@@ -153,44 +153,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PostgreSqlMigrationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PostgreSqlMigrationResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlMigrationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePostgreSqlFlexibleServersArmClient.GetPostgreSqlMigrationResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PostgreSqlMigrationResource"/> object. </returns>
-        public static PostgreSqlMigrationResource GetPostgreSqlMigrationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockablePostgreSqlFlexibleServersArmClient(client).GetPostgreSqlMigrationResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="PostgreSqlLtrServerBackupOperationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PostgreSqlLtrServerBackupOperationResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlLtrServerBackupOperationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePostgreSqlFlexibleServersArmClient.GetPostgreSqlLtrServerBackupOperationResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PostgreSqlLtrServerBackupOperationResource"/> object. </returns>
-        public static PostgreSqlLtrServerBackupOperationResource GetPostgreSqlLtrServerBackupOperationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockablePostgreSqlFlexibleServersArmClient(client).GetPostgreSqlLtrServerBackupOperationResource(id);
-        }
-
-        /// <summary>
         /// Gets a collection of PostgreSqlFlexibleServerResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
@@ -220,7 +182,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2022-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -258,7 +220,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2022-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -296,7 +258,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2022-12-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -329,7 +291,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2022-12-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -362,7 +324,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2022-12-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -394,7 +356,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2022-12-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -426,7 +388,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2022-12-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -459,7 +421,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2022-12-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -492,7 +454,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2022-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -528,7 +490,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2022-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -564,7 +526,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2022-12-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -597,7 +559,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2022-12-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -630,7 +592,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2022-12-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -661,7 +623,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2022-12-01</description>
         /// </item>
         /// </list>
         /// <item>

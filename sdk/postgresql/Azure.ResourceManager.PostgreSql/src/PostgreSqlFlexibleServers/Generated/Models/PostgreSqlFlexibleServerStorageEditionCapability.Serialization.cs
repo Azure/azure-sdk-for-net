@@ -33,14 +33,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(DefaultStorageSizeMb))
-            {
-                writer.WritePropertyName("defaultStorageSizeMb"u8);
-                writer.WriteNumberValue(DefaultStorageSizeMb.Value);
-            }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedStorageCapabilities))
             {
-                writer.WritePropertyName("supportedStorageMb"u8);
+                writer.WritePropertyName("supportedStorageMB"u8);
                 writer.WriteStartArray();
                 foreach (var item in SupportedStorageCapabilities)
                 {
@@ -48,15 +43,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CapabilityStatus))
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(CapabilityStatus.Value.ToSerialString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(Reason))
-            {
-                writer.WritePropertyName("reason"u8);
-                writer.WriteStringValue(Reason);
+                writer.WriteStringValue(Status);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -97,10 +87,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 return null;
             }
             string name = default;
-            long? defaultStorageSizeMb = default;
-            IReadOnlyList<PostgreSqlFlexibleServerStorageCapability> supportedStorageMb = default;
-            PostgreSqlFlexbileServerCapabilityStatus? status = default;
-            string reason = default;
+            IReadOnlyList<PostgreSqlFlexibleServerStorageCapability> supportedStorageMB = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,16 +98,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("defaultStorageSizeMb"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    defaultStorageSizeMb = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("supportedStorageMb"u8))
+                if (property.NameEquals("supportedStorageMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -130,21 +109,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         array.Add(PostgreSqlFlexibleServerStorageCapability.DeserializePostgreSqlFlexibleServerStorageCapability(item, options));
                     }
-                    supportedStorageMb = array;
+                    supportedStorageMB = array;
                     continue;
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    status = property.Value.GetString().ToPostgreSqlFlexbileServerCapabilityStatus();
-                    continue;
-                }
-                if (property.NameEquals("reason"u8))
-                {
-                    reason = property.Value.GetString();
+                    status = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -153,13 +123,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerStorageEditionCapability(
-                status,
-                reason,
-                serializedAdditionalRawData,
-                name,
-                defaultStorageSizeMb,
-                supportedStorageMb ?? new ChangeTrackingList<PostgreSqlFlexibleServerStorageCapability>());
+            return new PostgreSqlFlexibleServerStorageEditionCapability(name, supportedStorageMB ?? new ChangeTrackingList<PostgreSqlFlexibleServerStorageCapability>(), status, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -195,26 +159,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultStorageSizeMb), out propertyOverride);
-            if (Optional.IsDefined(DefaultStorageSizeMb) || hasPropertyOverride)
-            {
-                builder.Append("  defaultStorageSizeMb: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{DefaultStorageSizeMb.Value.ToString()}'");
-                }
-            }
-
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedStorageCapabilities), out propertyOverride);
             if (Optional.IsCollectionDefined(SupportedStorageCapabilities) || hasPropertyOverride)
             {
                 if (SupportedStorageCapabilities.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  supportedStorageMb: ");
+                    builder.Append("  supportedStorageMB: ");
                     if (hasPropertyOverride)
                     {
                         builder.AppendLine($"{propertyOverride}");
@@ -224,15 +174,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                         builder.AppendLine("[");
                         foreach (var item in SupportedStorageCapabilities)
                         {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedStorageMb: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedStorageMB: ");
                         }
                         builder.AppendLine("  ]");
                     }
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CapabilityStatus), out propertyOverride);
-            if (Optional.IsDefined(CapabilityStatus) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (Optional.IsDefined(Status) || hasPropertyOverride)
             {
                 builder.Append("  status: ");
                 if (hasPropertyOverride)
@@ -241,28 +191,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 else
                 {
-                    builder.AppendLine($"'{CapabilityStatus.Value.ToSerialString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
-            if (Optional.IsDefined(Reason) || hasPropertyOverride)
-            {
-                builder.Append("  reason: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (Reason.Contains(Environment.NewLine))
+                    if (Status.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{Reason}'''");
+                        builder.AppendLine($"{Status}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{Reason}'");
+                        builder.AppendLine($"'{Status}'");
                     }
                 }
             }

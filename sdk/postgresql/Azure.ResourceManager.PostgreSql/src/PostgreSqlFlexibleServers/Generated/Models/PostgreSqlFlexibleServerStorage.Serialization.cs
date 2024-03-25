@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlFlexibleServerStorage : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServerStorage>
+    internal partial class PostgreSqlFlexibleServerStorage : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServerStorage>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServerStorage>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -31,21 +31,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 writer.WritePropertyName("storageSizeGB"u8);
                 writer.WriteNumberValue(StorageSizeInGB.Value);
-            }
-            if (Optional.IsDefined(AutoGrow))
-            {
-                writer.WritePropertyName("autoGrow"u8);
-                writer.WriteStringValue(AutoGrow.Value.ToString());
-            }
-            if (Optional.IsDefined(Tier))
-            {
-                writer.WritePropertyName("tier"u8);
-                writer.WriteStringValue(Tier.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(Iops))
-            {
-                writer.WritePropertyName("iops"u8);
-                writer.WriteNumberValue(Iops.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -86,9 +71,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 return null;
             }
             int? storageSizeGB = default;
-            StorageAutoGrow? autoGrow = default;
-            PostgreSqlManagedDiskPerformanceTier? tier = default;
-            int? iops = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,40 +84,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     storageSizeGB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("autoGrow"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    autoGrow = new StorageAutoGrow(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("tier"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    tier = new PostgreSqlManagedDiskPerformanceTier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("iops"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    iops = property.Value.GetInt32();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerStorage(storageSizeGB, autoGrow, tier, iops, serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerStorage(storageSizeGB, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -160,48 +115,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 else
                 {
                     builder.AppendLine($"{StorageSizeInGB.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AutoGrow), out propertyOverride);
-            if (Optional.IsDefined(AutoGrow) || hasPropertyOverride)
-            {
-                builder.Append("  autoGrow: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{AutoGrow.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tier), out propertyOverride);
-            if (Optional.IsDefined(Tier) || hasPropertyOverride)
-            {
-                builder.Append("  tier: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Tier.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Iops), out propertyOverride);
-            if (Optional.IsDefined(Iops) || hasPropertyOverride)
-            {
-                builder.Append("  iops: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"{Iops.Value}");
                 }
             }
 

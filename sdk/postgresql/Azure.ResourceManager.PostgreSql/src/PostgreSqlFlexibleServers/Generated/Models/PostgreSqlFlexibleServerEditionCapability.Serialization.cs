@@ -33,11 +33,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(DefaultSkuName))
-            {
-                writer.WritePropertyName("defaultSkuName"u8);
-                writer.WriteStringValue(DefaultSkuName);
-            }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedStorageEditions))
             {
                 writer.WritePropertyName("supportedStorageEditions"u8);
@@ -48,25 +43,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedServerSkus))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedServerVersions))
             {
-                writer.WritePropertyName("supportedServerSkus"u8);
+                writer.WritePropertyName("supportedServerVersions"u8);
                 writer.WriteStartArray();
-                foreach (var item in SupportedServerSkus)
+                foreach (var item in SupportedServerVersions)
                 {
-                    writer.WriteObjectValue<PostgreSqlFlexibleServerSkuCapability>(item, options);
+                    writer.WriteObjectValue<PostgreSqlFlexibleServerServerVersionCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CapabilityStatus))
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(CapabilityStatus.Value.ToSerialString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(Reason))
-            {
-                writer.WritePropertyName("reason"u8);
-                writer.WriteStringValue(Reason);
+                writer.WriteStringValue(Status);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -107,11 +97,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 return null;
             }
             string name = default;
-            string defaultSkuName = default;
             IReadOnlyList<PostgreSqlFlexibleServerStorageEditionCapability> supportedStorageEditions = default;
-            IReadOnlyList<PostgreSqlFlexibleServerSkuCapability> supportedServerSkus = default;
-            PostgreSqlFlexbileServerCapabilityStatus? status = default;
-            string reason = default;
+            IReadOnlyList<PostgreSqlFlexibleServerServerVersionCapability> supportedServerVersions = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,11 +107,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("defaultSkuName"u8))
-                {
-                    defaultSkuName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("supportedStorageEditions"u8))
@@ -140,32 +123,23 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     supportedStorageEditions = array;
                     continue;
                 }
-                if (property.NameEquals("supportedServerSkus"u8))
+                if (property.NameEquals("supportedServerVersions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<PostgreSqlFlexibleServerSkuCapability> array = new List<PostgreSqlFlexibleServerSkuCapability>();
+                    List<PostgreSqlFlexibleServerServerVersionCapability> array = new List<PostgreSqlFlexibleServerServerVersionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlFlexibleServerSkuCapability.DeserializePostgreSqlFlexibleServerSkuCapability(item, options));
+                        array.Add(PostgreSqlFlexibleServerServerVersionCapability.DeserializePostgreSqlFlexibleServerServerVersionCapability(item, options));
                     }
-                    supportedServerSkus = array;
+                    supportedServerVersions = array;
                     continue;
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    status = property.Value.GetString().ToPostgreSqlFlexbileServerCapabilityStatus();
-                    continue;
-                }
-                if (property.NameEquals("reason"u8))
-                {
-                    reason = property.Value.GetString();
+                    status = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -174,14 +148,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerEditionCapability(
-                status,
-                reason,
-                serializedAdditionalRawData,
-                name,
-                defaultSkuName,
-                supportedStorageEditions ?? new ChangeTrackingList<PostgreSqlFlexibleServerStorageEditionCapability>(),
-                supportedServerSkus ?? new ChangeTrackingList<PostgreSqlFlexibleServerSkuCapability>());
+            return new PostgreSqlFlexibleServerEditionCapability(name, supportedStorageEditions ?? new ChangeTrackingList<PostgreSqlFlexibleServerStorageEditionCapability>(), supportedServerVersions ?? new ChangeTrackingList<PostgreSqlFlexibleServerServerVersionCapability>(), status, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -217,28 +184,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultSkuName), out propertyOverride);
-            if (Optional.IsDefined(DefaultSkuName) || hasPropertyOverride)
-            {
-                builder.Append("  defaultSkuName: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (DefaultSkuName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DefaultSkuName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DefaultSkuName}'");
-                    }
-                }
-            }
-
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedStorageEditions), out propertyOverride);
             if (Optional.IsCollectionDefined(SupportedStorageEditions) || hasPropertyOverride)
             {
@@ -261,12 +206,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedServerSkus), out propertyOverride);
-            if (Optional.IsCollectionDefined(SupportedServerSkus) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedServerVersions), out propertyOverride);
+            if (Optional.IsCollectionDefined(SupportedServerVersions) || hasPropertyOverride)
             {
-                if (SupportedServerSkus.Any() || hasPropertyOverride)
+                if (SupportedServerVersions.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  supportedServerSkus: ");
+                    builder.Append("  supportedServerVersions: ");
                     if (hasPropertyOverride)
                     {
                         builder.AppendLine($"{propertyOverride}");
@@ -274,17 +219,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     else
                     {
                         builder.AppendLine("[");
-                        foreach (var item in SupportedServerSkus)
+                        foreach (var item in SupportedServerVersions)
                         {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedServerSkus: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedServerVersions: ");
                         }
                         builder.AppendLine("  ]");
                     }
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CapabilityStatus), out propertyOverride);
-            if (Optional.IsDefined(CapabilityStatus) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (Optional.IsDefined(Status) || hasPropertyOverride)
             {
                 builder.Append("  status: ");
                 if (hasPropertyOverride)
@@ -293,28 +238,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 else
                 {
-                    builder.AppendLine($"'{CapabilityStatus.Value.ToSerialString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
-            if (Optional.IsDefined(Reason) || hasPropertyOverride)
-            {
-                builder.Append("  reason: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (Reason.Contains(Environment.NewLine))
+                    if (Status.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{Reason}'''");
+                        builder.AppendLine($"{Status}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{Reason}'");
+                        builder.AppendLine($"'{Status}'");
                     }
                 }
             }

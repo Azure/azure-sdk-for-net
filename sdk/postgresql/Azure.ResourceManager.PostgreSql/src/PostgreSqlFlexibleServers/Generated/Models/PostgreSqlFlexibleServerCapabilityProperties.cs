@@ -10,79 +10,106 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Capability for the PostgreSQL server. </summary>
-    public partial class PostgreSqlFlexibleServerCapabilityProperties : PostgreSqlBaseCapability
+    /// <summary> Location capabilities. </summary>
+    public partial class PostgreSqlFlexibleServerCapabilityProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerCapabilityProperties"/>. </summary>
         internal PostgreSqlFlexibleServerCapabilityProperties()
         {
-            SupportedServerEditions = new ChangeTrackingList<PostgreSqlFlexibleServerEditionCapability>();
-            SupportedServerVersions = new ChangeTrackingList<PostgreSqlFlexibleServerServerVersionCapability>();
+            SupportedHAModes = new ChangeTrackingList<string>();
+            SupportedFlexibleServerEditions = new ChangeTrackingList<PostgreSqlFlexibleServerEditionCapability>();
+            SupportedHyperscaleNodeEditions = new ChangeTrackingList<PostgreSqlFlexibleServerHyperscaleNodeEditionCapability>();
             SupportedFastProvisioningEditions = new ChangeTrackingList<PostgreSqlFlexibleServerFastProvisioningEditionCapability>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerCapabilityProperties"/>. </summary>
-        /// <param name="capabilityStatus"> The status of the capability. </param>
-        /// <param name="reason"> The reason for the capability not being available. </param>
+        /// <param name="zone"> zone name. </param>
+        /// <param name="supportedHAModes"> Supported high availability mode. </param>
+        /// <param name="isGeoBackupSupported"> A value indicating whether a new server in this region can have geo-backups to paired region. </param>
+        /// <param name="isZoneRedundantHASupported"> A value indicating whether a new server in this region can support multi zone HA. </param>
+        /// <param name="isZoneRedundantHAAndGeoBackupSupported"> A value indicating whether a new server in this region can have geo-backups to paired region. </param>
+        /// <param name="supportedFlexibleServerEditions"></param>
+        /// <param name="supportedHyperscaleNodeEditions"></param>
+        /// <param name="fastProvisioningSupported"> A value indicating whether fast provisioning is supported in this region. </param>
+        /// <param name="supportedFastProvisioningEditions"></param>
+        /// <param name="status"> The status. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="name"> Name of flexible servers capability. </param>
-        /// <param name="supportedServerEditions"> List of supported flexible server editions. </param>
-        /// <param name="supportedServerVersions"> The list of server versions supported for this capability. </param>
-        /// <param name="supportFastProvisioning"> Gets a value indicating whether fast provisioning is supported. "Enabled" means fast provisioning is supported. "Disabled" stands for fast provisioning is not supported. </param>
-        /// <param name="supportedFastProvisioningEditions"> List of supported server editions for fast provisioning. </param>
-        /// <param name="geoBackupSupported"> Determines if geo-backup is supported in this region. "Enabled" means geo-backup is supported. "Disabled" stands for geo-back is not supported. </param>
-        /// <param name="zoneRedundantHaSupported"> A value indicating whether Zone Redundant HA is supported in this region. "Enabled" means zone redundant HA is supported. "Disabled" stands for zone redundant HA is not supported. </param>
-        /// <param name="zoneRedundantHaAndGeoBackupSupported"> A value indicating whether Zone Redundant HA and Geo-backup is supported in this region. "Enabled" means zone redundant HA and geo-backup is supported. "Disabled" stands for zone redundant HA and geo-backup is not supported. </param>
-        /// <param name="storageAutoGrowthSupported"> A value indicating whether storage auto-grow is supported in this region. "Enabled" means storage auto-grow is supported. "Disabled" stands for storage auto-grow is not supported. </param>
-        /// <param name="onlineResizeSupported"> A value indicating whether online resize is supported in this region for the given subscription. "Enabled" means storage online resize is supported. "Disabled" means storage online resize is not supported. </param>
-        /// <param name="restricted"> A value indicating whether this region is restricted. "Enabled" means region is restricted. "Disabled" stands for region is not restricted. </param>
-        internal PostgreSqlFlexibleServerCapabilityProperties(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, IReadOnlyList<PostgreSqlFlexibleServerEditionCapability> supportedServerEditions, IReadOnlyList<PostgreSqlFlexibleServerServerVersionCapability> supportedServerVersions, PostgreSqlFlexibleServerFastProvisioningSupported? supportFastProvisioning, IReadOnlyList<PostgreSqlFlexibleServerFastProvisioningEditionCapability> supportedFastProvisioningEditions, PostgreSqlFlexibleServerGeoBackupSupported? geoBackupSupported, PostgreSqlFlexibleServerZoneRedundantHaSupported? zoneRedundantHaSupported, PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported? zoneRedundantHaAndGeoBackupSupported, PostgreSqlFlexibleServerStorageAutoGrowthSupported? storageAutoGrowthSupported, PostgreSqlFlexibleServerOnlineResizeSupported? onlineResizeSupported, PostgreSqlFlexibleServerZoneRedundantRestricted? restricted) : base(capabilityStatus, reason, serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerCapabilityProperties(string zone, IReadOnlyList<string> supportedHAModes, bool? isGeoBackupSupported, bool? isZoneRedundantHASupported, bool? isZoneRedundantHAAndGeoBackupSupported, IReadOnlyList<PostgreSqlFlexibleServerEditionCapability> supportedFlexibleServerEditions, IReadOnlyList<PostgreSqlFlexibleServerHyperscaleNodeEditionCapability> supportedHyperscaleNodeEditions, bool? fastProvisioningSupported, IReadOnlyList<PostgreSqlFlexibleServerFastProvisioningEditionCapability> supportedFastProvisioningEditions, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Name = name;
-            SupportedServerEditions = supportedServerEditions;
-            SupportedServerVersions = supportedServerVersions;
-            SupportFastProvisioning = supportFastProvisioning;
+            Zone = zone;
+            SupportedHAModes = supportedHAModes;
+            IsGeoBackupSupported = isGeoBackupSupported;
+            IsZoneRedundantHASupported = isZoneRedundantHASupported;
+            IsZoneRedundantHAAndGeoBackupSupported = isZoneRedundantHAAndGeoBackupSupported;
+            SupportedFlexibleServerEditions = supportedFlexibleServerEditions;
+            SupportedHyperscaleNodeEditions = supportedHyperscaleNodeEditions;
+            FastProvisioningSupported = fastProvisioningSupported;
             SupportedFastProvisioningEditions = supportedFastProvisioningEditions;
-            GeoBackupSupported = geoBackupSupported;
-            ZoneRedundantHaSupported = zoneRedundantHaSupported;
-            ZoneRedundantHaAndGeoBackupSupported = zoneRedundantHaAndGeoBackupSupported;
-            StorageAutoGrowthSupported = storageAutoGrowthSupported;
-            OnlineResizeSupported = onlineResizeSupported;
-            Restricted = restricted;
+            Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of flexible servers capability. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-        /// <summary> List of supported flexible server editions. </summary>
-        [WirePath("supportedServerEditions")]
-        public IReadOnlyList<PostgreSqlFlexibleServerEditionCapability> SupportedServerEditions { get; }
-        /// <summary> The list of server versions supported for this capability. </summary>
-        [WirePath("supportedServerVersions")]
-        public IReadOnlyList<PostgreSqlFlexibleServerServerVersionCapability> SupportedServerVersions { get; }
-        /// <summary> Gets a value indicating whether fast provisioning is supported. "Enabled" means fast provisioning is supported. "Disabled" stands for fast provisioning is not supported. </summary>
+        /// <summary> zone name. </summary>
+        [WirePath("zone")]
+        public string Zone { get; }
+        /// <summary> Supported high availability mode. </summary>
+        [WirePath("supportedHAMode")]
+        public IReadOnlyList<string> SupportedHAModes { get; }
+        /// <summary> A value indicating whether a new server in this region can have geo-backups to paired region. </summary>
+        [WirePath("geoBackupSupported")]
+        public bool? IsGeoBackupSupported { get; }
+        /// <summary> A value indicating whether a new server in this region can support multi zone HA. </summary>
+        [WirePath("zoneRedundantHaSupported")]
+        public bool? IsZoneRedundantHASupported { get; }
+        /// <summary> A value indicating whether a new server in this region can have geo-backups to paired region. </summary>
+        [WirePath("zoneRedundantHaAndGeoBackupSupported")]
+        public bool? IsZoneRedundantHAAndGeoBackupSupported { get; }
+        /// <summary> Gets the supported flexible server editions. </summary>
+        [WirePath("supportedFlexibleServerEditions")]
+        public IReadOnlyList<PostgreSqlFlexibleServerEditionCapability> SupportedFlexibleServerEditions { get; }
+        /// <summary> Gets the supported hyperscale node editions. </summary>
+        [WirePath("supportedHyperscaleNodeEditions")]
+        public IReadOnlyList<PostgreSqlFlexibleServerHyperscaleNodeEditionCapability> SupportedHyperscaleNodeEditions { get; }
+        /// <summary> A value indicating whether fast provisioning is supported in this region. </summary>
         [WirePath("fastProvisioningSupported")]
-        public PostgreSqlFlexibleServerFastProvisioningSupported? SupportFastProvisioning { get; }
-        /// <summary> List of supported server editions for fast provisioning. </summary>
+        public bool? FastProvisioningSupported { get; }
+        /// <summary> Gets the supported fast provisioning editions. </summary>
         [WirePath("supportedFastProvisioningEditions")]
         public IReadOnlyList<PostgreSqlFlexibleServerFastProvisioningEditionCapability> SupportedFastProvisioningEditions { get; }
-        /// <summary> Determines if geo-backup is supported in this region. "Enabled" means geo-backup is supported. "Disabled" stands for geo-back is not supported. </summary>
-        [WirePath("geoBackupSupported")]
-        public PostgreSqlFlexibleServerGeoBackupSupported? GeoBackupSupported { get; }
-        /// <summary> A value indicating whether Zone Redundant HA is supported in this region. "Enabled" means zone redundant HA is supported. "Disabled" stands for zone redundant HA is not supported. </summary>
-        [WirePath("zoneRedundantHaSupported")]
-        public PostgreSqlFlexibleServerZoneRedundantHaSupported? ZoneRedundantHaSupported { get; }
-        /// <summary> A value indicating whether Zone Redundant HA and Geo-backup is supported in this region. "Enabled" means zone redundant HA and geo-backup is supported. "Disabled" stands for zone redundant HA and geo-backup is not supported. </summary>
-        [WirePath("zoneRedundantHaAndGeoBackupSupported")]
-        public PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported? ZoneRedundantHaAndGeoBackupSupported { get; }
-        /// <summary> A value indicating whether storage auto-grow is supported in this region. "Enabled" means storage auto-grow is supported. "Disabled" stands for storage auto-grow is not supported. </summary>
-        [WirePath("storageAutoGrowthSupported")]
-        public PostgreSqlFlexibleServerStorageAutoGrowthSupported? StorageAutoGrowthSupported { get; }
-        /// <summary> A value indicating whether online resize is supported in this region for the given subscription. "Enabled" means storage online resize is supported. "Disabled" means storage online resize is not supported. </summary>
-        [WirePath("onlineResizeSupported")]
-        public PostgreSqlFlexibleServerOnlineResizeSupported? OnlineResizeSupported { get; }
-        /// <summary> A value indicating whether this region is restricted. "Enabled" means region is restricted. "Disabled" stands for region is not restricted. </summary>
-        [WirePath("restricted")]
-        public PostgreSqlFlexibleServerZoneRedundantRestricted? Restricted { get; }
+        /// <summary> The status. </summary>
+        [WirePath("status")]
+        public string Status { get; }
     }
 }

@@ -67,9 +67,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="dataEncryption"> Data encryption properties of a server. </param>
         /// <param name="createMode"> The mode to update a new PostgreSQL server. </param>
         /// <param name="replicationRole"> Replication role of the server. </param>
-        /// <param name="network"> Network properties of a server. These are required to be passed only in case if server is a private access server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerPatch(PostgreSqlFlexibleServerSku sku, PostgreSqlFlexibleServerUserAssignedIdentity identity, IDictionary<string, string> tags, AzureLocation? location, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, PostgreSqlFlexibleServerCreateModeForUpdate? createMode, PostgreSqlFlexibleServerReplicationRole? replicationRole, PostgreSqlFlexibleServerNetwork network, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerPatch(PostgreSqlFlexibleServerSku sku, PostgreSqlFlexibleServerUserAssignedIdentity identity, IDictionary<string, string> tags, AzureLocation? location, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, PostgreSqlFlexibleServerCreateModeForUpdate? createMode, PostgreSqlFlexibleServerReplicationRole? replicationRole, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             Identity = identity;
@@ -85,7 +84,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             DataEncryption = dataEncryption;
             CreateMode = createMode;
             ReplicationRole = replicationRole;
-            Network = network;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -108,8 +106,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         [WirePath("properties.version")]
         public PostgreSqlFlexibleServerVersion? Version { get; set; }
         /// <summary> Storage properties of a server. </summary>
-        [WirePath("properties.storage")]
-        public PostgreSqlFlexibleServerStorage Storage { get; set; }
+        internal PostgreSqlFlexibleServerStorage Storage { get; set; }
+        /// <summary> Max storage allowed for a server. </summary>
+        [WirePath("properties.storage.storageSizeGB")]
+        public int? StorageSizeInGB
+        {
+            get => Storage is null ? default : Storage.StorageSizeInGB;
+            set
+            {
+                if (Storage is null)
+                    Storage = new PostgreSqlFlexibleServerStorage();
+                Storage.StorageSizeInGB = value;
+            }
+        }
+
         /// <summary> Backup properties of a server. </summary>
         [WirePath("properties.backup")]
         public PostgreSqlFlexibleServerBackupProperties Backup { get; set; }
@@ -131,8 +141,5 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Replication role of the server. </summary>
         [WirePath("properties.replicationRole")]
         public PostgreSqlFlexibleServerReplicationRole? ReplicationRole { get; set; }
-        /// <summary> Network properties of a server. These are required to be passed only in case if server is a private access server. </summary>
-        [WirePath("properties.network")]
-        public PostgreSqlFlexibleServerNetwork Network { get; set; }
     }
 }

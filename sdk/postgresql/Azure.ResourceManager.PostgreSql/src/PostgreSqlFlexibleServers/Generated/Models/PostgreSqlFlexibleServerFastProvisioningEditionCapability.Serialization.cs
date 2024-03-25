@@ -27,11 +27,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SupportedTier))
-            {
-                writer.WritePropertyName("supportedTier"u8);
-                writer.WriteStringValue(SupportedTier);
-            }
             if (options.Format != "W" && Optional.IsDefined(SupportedSku))
             {
                 writer.WritePropertyName("supportedSku"u8);
@@ -46,21 +41,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 writer.WritePropertyName("supportedServerVersions"u8);
                 writer.WriteStringValue(SupportedServerVersions);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ServerCount))
-            {
-                writer.WritePropertyName("serverCount"u8);
-                writer.WriteNumberValue(ServerCount.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(CapabilityStatus))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(CapabilityStatus.Value.ToSerialString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(Reason))
-            {
-                writer.WritePropertyName("reason"u8);
-                writer.WriteStringValue(Reason);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -100,22 +80,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            string supportedTier = default;
             string supportedSku = default;
             long? supportedStorageGb = default;
             string supportedServerVersions = default;
-            int? serverCount = default;
-            PostgreSqlFlexbileServerCapabilityStatus? status = default;
-            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("supportedTier"u8))
-                {
-                    supportedTier = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("supportedSku"u8))
                 {
                     supportedSku = property.Value.GetString();
@@ -135,44 +106,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     supportedServerVersions = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverCount"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    serverCount = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("status"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    status = property.Value.GetString().ToPostgreSqlFlexbileServerCapabilityStatus();
-                    continue;
-                }
-                if (property.NameEquals("reason"u8))
-                {
-                    reason = property.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerFastProvisioningEditionCapability(
-                status,
-                reason,
-                serializedAdditionalRawData,
-                supportedTier,
-                supportedSku,
-                supportedStorageGb,
-                supportedServerVersions,
-                serverCount);
+            return new PostgreSqlFlexibleServerFastProvisioningEditionCapability(supportedSku, supportedStorageGb, supportedServerVersions, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -185,28 +125,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             string propertyOverride = null;
 
             builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedTier), out propertyOverride);
-            if (Optional.IsDefined(SupportedTier) || hasPropertyOverride)
-            {
-                builder.Append("  supportedTier: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (SupportedTier.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SupportedTier}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SupportedTier}'");
-                    }
-                }
-            }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedSku), out propertyOverride);
             if (Optional.IsDefined(SupportedSku) || hasPropertyOverride)
@@ -262,56 +180,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     else
                     {
                         builder.AppendLine($"'{SupportedServerVersions}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerCount), out propertyOverride);
-            if (Optional.IsDefined(ServerCount) || hasPropertyOverride)
-            {
-                builder.Append("  serverCount: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"{ServerCount.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CapabilityStatus), out propertyOverride);
-            if (Optional.IsDefined(CapabilityStatus) || hasPropertyOverride)
-            {
-                builder.Append("  status: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{CapabilityStatus.Value.ToSerialString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
-            if (Optional.IsDefined(Reason) || hasPropertyOverride)
-            {
-                builder.Append("  reason: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (Reason.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Reason}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Reason}'");
                     }
                 }
             }

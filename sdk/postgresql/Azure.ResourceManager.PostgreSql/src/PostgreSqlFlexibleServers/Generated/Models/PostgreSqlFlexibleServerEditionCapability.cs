@@ -11,42 +11,73 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Flexible server edition capabilities. </summary>
-    public partial class PostgreSqlFlexibleServerEditionCapability : PostgreSqlBaseCapability
+    public partial class PostgreSqlFlexibleServerEditionCapability
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerEditionCapability"/>. </summary>
         internal PostgreSqlFlexibleServerEditionCapability()
         {
             SupportedStorageEditions = new ChangeTrackingList<PostgreSqlFlexibleServerStorageEditionCapability>();
-            SupportedServerSkus = new ChangeTrackingList<PostgreSqlFlexibleServerSkuCapability>();
+            SupportedServerVersions = new ChangeTrackingList<PostgreSqlFlexibleServerServerVersionCapability>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerEditionCapability"/>. </summary>
-        /// <param name="capabilityStatus"> The status of the capability. </param>
-        /// <param name="reason"> The reason for the capability not being available. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Server edition name. </param>
-        /// <param name="defaultSkuName"> Default sku name for the server edition. </param>
         /// <param name="supportedStorageEditions"> The list of editions supported by this server edition. </param>
-        /// <param name="supportedServerSkus"> List of supported server SKUs. </param>
-        internal PostgreSqlFlexibleServerEditionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string defaultSkuName, IReadOnlyList<PostgreSqlFlexibleServerStorageEditionCapability> supportedStorageEditions, IReadOnlyList<PostgreSqlFlexibleServerSkuCapability> supportedServerSkus) : base(capabilityStatus, reason, serializedAdditionalRawData)
+        /// <param name="supportedServerVersions"> The list of server versions supported by this server edition. </param>
+        /// <param name="status"> The status. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerEditionCapability(string name, IReadOnlyList<PostgreSqlFlexibleServerStorageEditionCapability> supportedStorageEditions, IReadOnlyList<PostgreSqlFlexibleServerServerVersionCapability> supportedServerVersions, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
-            DefaultSkuName = defaultSkuName;
             SupportedStorageEditions = supportedStorageEditions;
-            SupportedServerSkus = supportedServerSkus;
+            SupportedServerVersions = supportedServerVersions;
+            Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Server edition name. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> Default sku name for the server edition. </summary>
-        [WirePath("defaultSkuName")]
-        public string DefaultSkuName { get; }
         /// <summary> The list of editions supported by this server edition. </summary>
         [WirePath("supportedStorageEditions")]
         public IReadOnlyList<PostgreSqlFlexibleServerStorageEditionCapability> SupportedStorageEditions { get; }
-        /// <summary> List of supported server SKUs. </summary>
-        [WirePath("supportedServerSkus")]
-        public IReadOnlyList<PostgreSqlFlexibleServerSkuCapability> SupportedServerSkus { get; }
+        /// <summary> The list of server versions supported by this server edition. </summary>
+        [WirePath("supportedServerVersions")]
+        public IReadOnlyList<PostgreSqlFlexibleServerServerVersionCapability> SupportedServerVersions { get; }
+        /// <summary> The status. </summary>
+        [WirePath("status")]
+        public string Status { get; }
     }
 }

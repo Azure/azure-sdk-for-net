@@ -31,14 +31,12 @@ namespace Azure.ResourceManager.PostgreSql.Tests
         : base(isAsync, mode)
         {
             CompareBodies = false;
-            IgnoreNetworkDependencyVersions();
         }
 
         protected PostgreSqlManagementTestBase(bool isAsync)
             : base(isAsync)
         {
             CompareBodies = false;
-            IgnoreNetworkDependencyVersions();
         }
 
         [SetUp]
@@ -61,12 +59,12 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             return (await Subscription.GetResourceGroups().GetAsync(name)).Value;
         }
 
-        public async Task<(ResourceIdentifier Vnet, ResourceIdentifier Subnet)> CreateVirtualNetwork(string vnetName, string subnetName, string resourceGroupName, AzureLocation location)
+        public async Task<(VirtualNetworkResource Vnet, SubnetResource Subnet)> CreateVirtualNetwork(string vnetName, string subnetName, string resourceGroupName, AzureLocation location)
         {
             var rg = await GetResourceGroup(resourceGroupName);
 
             var vnetCollection = rg.GetVirtualNetworks();
-            var networkData = new VirtualNetworkData()
+            var vnetOperation = await vnetCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, new VirtualNetworkData()
             {
                 AddressPrefixes = { "10.0.0.0/16" },
                 Location = location,
@@ -86,18 +84,15 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                         PrivateLinkServiceNetworkPolicy = VirtualNetworkPrivateLinkServiceNetworkPolicy.Enabled,
                     },
                 },
-            };
-            ResourceIdentifier subnetID;
-            ResourceIdentifier vnetID;
-            VirtualNetworkResource vnetResource = (await rg.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, networkData)).Value;
-            var subnetCollection = vnetResource.GetSubnets();
-            vnetID = vnetResource.Data.Id;
-            subnetID = vnetResource.Data.Subnets[0].Id;
+            });
+            var vnet = vnetOperation.Value;
 
-            return (vnetID, subnetID);
+            var subnet = (await vnet.GetSubnetAsync(subnetName)).Value;
+
+            return (vnet, subnet);
         }
 
-        public async Task<PrivateDnsZoneResource> CreatePrivateDnsZone(string serverName, ResourceIdentifier vnetID, string resourceGroupName)
+        public async Task<PrivateDnsZoneResource> CreatePrivateDnsZone(string serverName, VirtualNetworkResource vnet, string resourceGroupName)
         {
             var rg = await GetResourceGroup(resourceGroupName);
             var tenants = Client.GetTenants().GetAllAsync();
@@ -111,13 +106,13 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 var privateDnsZoneCollection = rg.GetPrivateDnsZones();
                 var privateDnsZoneOperation = await privateDnsZoneCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateDnsZoneName, new PrivateDnsZoneData("global"));
                 var privateDnsZone = privateDnsZoneOperation.Value;
-                string vnetName = vnetID.Name;
-                var virtualLinkNetworkName = $"{vnetName}-link";
+
+                var virtualLinkNetworkName = $"{vnet.Data.Name}-link";
                 var virtualNetworkLinkCollection = privateDnsZone.GetVirtualNetworkLinks();
                 var virtualLinkNetworkOperation = await virtualNetworkLinkCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualLinkNetworkName, new VirtualNetworkLinkData("global")
                 {
                     RegistrationEnabled = false,
-                    VirtualNetworkId = vnetID,
+                    VirtualNetworkId = vnet.Id,
                 });
 
                 return privateDnsZone;

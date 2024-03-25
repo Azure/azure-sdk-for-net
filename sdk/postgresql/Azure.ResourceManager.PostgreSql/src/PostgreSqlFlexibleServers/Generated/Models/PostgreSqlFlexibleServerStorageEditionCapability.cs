@@ -10,9 +10,41 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Storage edition capability. </summary>
-    public partial class PostgreSqlFlexibleServerStorageEditionCapability : PostgreSqlBaseCapability
+    /// <summary> storage edition capability. </summary>
+    public partial class PostgreSqlFlexibleServerStorageEditionCapability
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerStorageEditionCapability"/>. </summary>
         internal PostgreSqlFlexibleServerStorageEditionCapability()
         {
@@ -20,27 +52,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerStorageEditionCapability"/>. </summary>
-        /// <param name="capabilityStatus"> The status of the capability. </param>
-        /// <param name="reason"> The reason for the capability not being available. </param>
+        /// <param name="name"> storage edition name. </param>
+        /// <param name="supportedStorageCapabilities"></param>
+        /// <param name="status"> The status. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="name"> Storage edition name. </param>
-        /// <param name="defaultStorageSizeMb"> Default storage size in MB for storage edition. </param>
-        /// <param name="supportedStorageCapabilities"> Flexible server supported storage range in MB. </param>
-        internal PostgreSqlFlexibleServerStorageEditionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, long? defaultStorageSizeMb, IReadOnlyList<PostgreSqlFlexibleServerStorageCapability> supportedStorageCapabilities) : base(capabilityStatus, reason, serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerStorageEditionCapability(string name, IReadOnlyList<PostgreSqlFlexibleServerStorageCapability> supportedStorageCapabilities, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
-            DefaultStorageSizeMb = defaultStorageSizeMb;
             SupportedStorageCapabilities = supportedStorageCapabilities;
+            Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Storage edition name. </summary>
+        /// <summary> storage edition name. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> Default storage size in MB for storage edition. </summary>
-        [WirePath("defaultStorageSizeMb")]
-        public long? DefaultStorageSizeMb { get; }
-        /// <summary> Flexible server supported storage range in MB. </summary>
-        [WirePath("supportedStorageMb")]
+        /// <summary> Gets the supported storage capabilities. </summary>
+        [WirePath("supportedStorageMB")]
         public IReadOnlyList<PostgreSqlFlexibleServerStorageCapability> SupportedStorageCapabilities { get; }
+        /// <summary> The status. </summary>
+        [WirePath("status")]
+        public string Status { get; }
     }
 }

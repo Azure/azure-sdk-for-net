@@ -43,15 +43,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CapabilityStatus))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedVCores))
+            {
+                writer.WritePropertyName("supportedVcores"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedVCores)
+                {
+                    writer.WriteObjectValue<PostgreSqlFlexibleServerVCoreCapability>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(CapabilityStatus.Value.ToSerialString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(Reason))
-            {
-                writer.WritePropertyName("reason"u8);
-                writer.WriteStringValue(Reason);
+                writer.WriteStringValue(Status);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,8 +98,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             string name = default;
             IReadOnlyList<string> supportedVersionsToUpgrade = default;
-            PostgreSqlFlexbileServerCapabilityStatus? status = default;
-            string reason = default;
+            IReadOnlyList<PostgreSqlFlexibleServerVCoreCapability> supportedVcores = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,18 +123,23 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     supportedVersionsToUpgrade = array;
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (property.NameEquals("supportedVcores"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = property.Value.GetString().ToPostgreSqlFlexbileServerCapabilityStatus();
+                    List<PostgreSqlFlexibleServerVCoreCapability> array = new List<PostgreSqlFlexibleServerVCoreCapability>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(PostgreSqlFlexibleServerVCoreCapability.DeserializePostgreSqlFlexibleServerVCoreCapability(item, options));
+                    }
+                    supportedVcores = array;
                     continue;
                 }
-                if (property.NameEquals("reason"u8))
+                if (property.NameEquals("status"u8))
                 {
-                    reason = property.Value.GetString();
+                    status = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -138,7 +148,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerServerVersionCapability(status, reason, serializedAdditionalRawData, name, supportedVersionsToUpgrade ?? new ChangeTrackingList<string>());
+            return new PostgreSqlFlexibleServerServerVersionCapability(name, supportedVersionsToUpgrade ?? new ChangeTrackingList<string>(), supportedVcores ?? new ChangeTrackingList<PostgreSqlFlexibleServerVCoreCapability>(), status, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -209,8 +219,30 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CapabilityStatus), out propertyOverride);
-            if (Optional.IsDefined(CapabilityStatus) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedVCores), out propertyOverride);
+            if (Optional.IsCollectionDefined(SupportedVCores) || hasPropertyOverride)
+            {
+                if (SupportedVCores.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  supportedVcores: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedVCores)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedVcores: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (Optional.IsDefined(Status) || hasPropertyOverride)
             {
                 builder.Append("  status: ");
                 if (hasPropertyOverride)
@@ -219,28 +251,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 else
                 {
-                    builder.AppendLine($"'{CapabilityStatus.Value.ToSerialString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
-            if (Optional.IsDefined(Reason) || hasPropertyOverride)
-            {
-                builder.Append("  reason: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (Reason.Contains(Environment.NewLine))
+                    if (Status.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{Reason}'''");
+                        builder.AppendLine($"{Status}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{Reason}'");
+                        builder.AppendLine($"'{Status}'");
                     }
                 }
             }
