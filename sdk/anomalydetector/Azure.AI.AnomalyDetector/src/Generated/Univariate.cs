@@ -21,7 +21,7 @@ namespace Azure.AI.AnomalyDetector
         private readonly AzureKeyCredential _keyCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
-        private readonly string _apiVersion;
+        private readonly APIVersion? _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -42,8 +42,8 @@ namespace Azure.AI.AnomalyDetector
         /// Supported Azure Cognitive Services endpoints (protocol and host name, such as
         /// https://westus2.api.cognitive.microsoft.com).
         /// </param>
-        /// <param name="apiVersion"> Api Version. Allowed values: "v1.1". </param>
-        internal Univariate(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, Uri endpoint, string apiVersion)
+        /// <param name="apiVersion"> Api Version. </param>
+        internal Univariate(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, Uri endpoint, APIVersion? apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -354,7 +354,7 @@ namespace Azure.AI.AnomalyDetector
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/anomalydetector/", false);
-            uri.AppendRaw(_apiVersion, true);
+            uri.AppendRaw(_apiVersion.Value.ToString(), true);
             uri.AppendPath("/timeseries/entire/detect", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -371,7 +371,7 @@ namespace Azure.AI.AnomalyDetector
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/anomalydetector/", false);
-            uri.AppendRaw(_apiVersion, true);
+            uri.AppendRaw(_apiVersion.Value.ToString(), true);
             uri.AppendPath("/timeseries/last/detect", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -388,7 +388,7 @@ namespace Azure.AI.AnomalyDetector
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/anomalydetector/", false);
-            uri.AppendRaw(_apiVersion, true);
+            uri.AppendRaw(_apiVersion.Value.ToString(), true);
             uri.AppendPath("/timeseries/changepoint/detect", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

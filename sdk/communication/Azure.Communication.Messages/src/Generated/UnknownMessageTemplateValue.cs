@@ -17,7 +17,7 @@ namespace Azure.Communication.Messages
         /// <param name="name"> Template binding reference name. </param>
         /// <param name="kind"> The type discriminator describing a template parameter type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownMessageTemplateValue(string name, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, kind, serializedAdditionalRawData)
+        internal UnknownMessageTemplateValue(string name, MessageTemplateValueKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, kind, serializedAdditionalRawData)
         {
         }
 
