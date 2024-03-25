@@ -110,11 +110,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (property.NameEquals("infrastructureSubnetId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    infrastructureSubnetId = new ResourceIdentifier(property.Value.GetString());
+                    DeserializeInfrastructureSubnetIdValue(property, ref infrastructureSubnetId);
                     continue;
                 }
                 if (property.NameEquals("dockerBridgeCidr"u8))
