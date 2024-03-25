@@ -49,28 +49,13 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("readOnlyEndpoint"u8);
                 writer.WriteObjectValue<FailoverGroupReadOnlyEndpoint>(ReadOnlyEndpoint, options);
             }
-            if (Optional.IsCollectionDefined(FailoverDatabases))
+            if (Optional.IsCollectionDefined(Databases))
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStartArray();
-                foreach (var item in FailoverDatabases)
+                foreach (var item in Databases)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(PartnerServers))
-            {
-                writer.WritePropertyName("partnerServers"u8);
-                writer.WriteStartArray();
-                foreach (var item in PartnerServers)
-                {
-                    writer.WriteObjectValue<PartnerServerInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -116,8 +101,7 @@ namespace Azure.ResourceManager.Sql.Models
             IDictionary<string, string> tags = default;
             FailoverGroupReadWriteEndpoint readWriteEndpoint = default;
             FailoverGroupReadOnlyEndpoint readOnlyEndpoint = default;
-            IList<ResourceIdentifier> databases = default;
-            IList<PartnerServerInfo> partnerServers = default;
+            IList<string> databases = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,33 +153,12 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                            List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(new ResourceIdentifier(item.GetString()));
-                                }
+                                array.Add(item.GetString());
                             }
                             databases = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("partnerServers"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<PartnerServerInfo> array = new List<PartnerServerInfo>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(PartnerServerInfo.DeserializePartnerServerInfo(item, options));
-                            }
-                            partnerServers = array;
                             continue;
                         }
                     }
@@ -207,13 +170,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FailoverGroupPatch(
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                readWriteEndpoint,
-                readOnlyEndpoint,
-                databases ?? new ChangeTrackingList<ResourceIdentifier>(),
-                partnerServers ?? new ChangeTrackingList<PartnerServerInfo>(),
-                serializedAdditionalRawData);
+            return new FailoverGroupPatch(tags ?? new ChangeTrackingDictionary<string, string>(), readWriteEndpoint, readOnlyEndpoint, databases ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FailoverGroupPatch>.Write(ModelReaderWriterOptions options)

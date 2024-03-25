@@ -1123,6 +1123,75 @@ namespace Azure.ResourceManager.Sql
             return GetManagedServerDnsAliases().Get(dnsAliasName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of ManagedDatabaseResources in the ManagedInstance. </summary>
+        /// <returns> An object representing collection of ManagedDatabaseResources and their operations over a ManagedDatabaseResource. </returns>
+        public virtual ManagedDatabaseCollection GetManagedDatabases()
+        {
+            return GetCachedClient(client => new ManagedDatabaseCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a managed database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ManagedDatabaseResource>> GetManagedDatabaseAsync(string databaseName, CancellationToken cancellationToken = default)
+        {
+            return await GetManagedDatabases().GetAsync(databaseName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a managed database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ManagedDatabaseResource> GetManagedDatabase(string databaseName, CancellationToken cancellationToken = default)
+        {
+            return GetManagedDatabases().Get(databaseName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ManagedInstanceAdvancedThreatProtectionResources in the ManagedInstance. </summary>
         /// <returns> An object representing collection of ManagedInstanceAdvancedThreatProtectionResources and their operations over a ManagedInstanceAdvancedThreatProtectionResource. </returns>
         public virtual ManagedInstanceAdvancedThreatProtectionCollection GetManagedInstanceAdvancedThreatProtections()
@@ -1253,205 +1322,6 @@ namespace Azure.ResourceManager.Sql
             return GetManagedInstanceDtcs().Get(dtcName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ManagedDatabaseResources in the ManagedInstance. </summary>
-        /// <returns> An object representing collection of ManagedDatabaseResources and their operations over a ManagedDatabaseResource. </returns>
-        public virtual ManagedDatabaseCollection GetManagedDatabases()
-        {
-            return GetCachedClient(client => new ManagedDatabaseCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a managed database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedDatabases_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedDatabaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ManagedDatabaseResource>> GetManagedDatabaseAsync(string databaseName, CancellationToken cancellationToken = default)
-        {
-            return await GetManagedDatabases().GetAsync(databaseName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a managed database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedDatabases_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedDatabaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ManagedDatabaseResource> GetManagedDatabase(string databaseName, CancellationToken cancellationToken = default)
-        {
-            return GetManagedDatabases().Get(databaseName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ManagedInstanceServerConfigurationOptionResources in the ManagedInstance. </summary>
-        /// <returns> An object representing collection of ManagedInstanceServerConfigurationOptionResources and their operations over a ManagedInstanceServerConfigurationOptionResource. </returns>
-        public virtual ManagedInstanceServerConfigurationOptionCollection GetManagedInstanceServerConfigurationOptions()
-        {
-            return GetCachedClient(client => new ManagedInstanceServerConfigurationOptionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets managed instance server configuration option.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/serverConfigurationOptions/{serverConfigurationOptionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerConfigurationOptions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceServerConfigurationOptionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="serverConfigurationOptionName"> The name of the server configuration option. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ManagedInstanceServerConfigurationOptionResource>> GetManagedInstanceServerConfigurationOptionAsync(ManagedInstanceServerConfigurationOptionName serverConfigurationOptionName, CancellationToken cancellationToken = default)
-        {
-            return await GetManagedInstanceServerConfigurationOptions().GetAsync(serverConfigurationOptionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets managed instance server configuration option.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/serverConfigurationOptions/{serverConfigurationOptionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerConfigurationOptions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceServerConfigurationOptionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="serverConfigurationOptionName"> The name of the server configuration option. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<ManagedInstanceServerConfigurationOptionResource> GetManagedInstanceServerConfigurationOption(ManagedInstanceServerConfigurationOptionName serverConfigurationOptionName, CancellationToken cancellationToken = default)
-        {
-            return GetManagedInstanceServerConfigurationOptions().Get(serverConfigurationOptionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ManagedInstanceStartStopScheduleResources in the ManagedInstance. </summary>
-        /// <returns> An object representing collection of ManagedInstanceStartStopScheduleResources and their operations over a ManagedInstanceStartStopScheduleResource. </returns>
-        public virtual ManagedInstanceStartStopScheduleCollection GetManagedInstanceStartStopSchedules()
-        {
-            return GetCachedClient(client => new ManagedInstanceStartStopScheduleCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the managed instance's Start/Stop schedule.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/startStopSchedules/{startStopScheduleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StartStopManagedInstanceSchedules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceStartStopScheduleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="startStopScheduleName"> Name of the managed instance Start/Stop schedule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ManagedInstanceStartStopScheduleResource>> GetManagedInstanceStartStopScheduleAsync(ManagedInstanceStartStopScheduleName startStopScheduleName, CancellationToken cancellationToken = default)
-        {
-            return await GetManagedInstanceStartStopSchedules().GetAsync(startStopScheduleName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the managed instance's Start/Stop schedule.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/startStopSchedules/{startStopScheduleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StartStopManagedInstanceSchedules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceStartStopScheduleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="startStopScheduleName"> Name of the managed instance Start/Stop schedule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<ManagedInstanceStartStopScheduleResource> GetManagedInstanceStartStopSchedule(ManagedInstanceStartStopScheduleName startStopScheduleName, CancellationToken cancellationToken = default)
-        {
-            return GetManagedInstanceStartStopSchedules().Get(startStopScheduleName, cancellationToken);
-        }
-
         /// <summary>
         /// Gets a managed instance.
         /// <list type="bullet">
@@ -1465,7 +1335,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2021-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1506,7 +1376,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2021-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1547,7 +1417,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2021-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1589,7 +1459,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2021-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1631,7 +1501,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2021-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1677,7 +1547,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2021-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1855,63 +1725,69 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a list of inaccessible managed databases in a managed instance
+        /// Get top resource consuming queries of a managed instance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/inaccessibleManagedDatabases</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/topqueries</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedDatabases_ListInaccessibleByInstance</description>
+        /// <description>ManagedInstances_ListByManagedInstance</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2021-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ManagedDatabaseResource"/></description>
+        /// <description><see cref="ManagedInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedDatabaseResource> GetInaccessibleManagedDatabasesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="TopQueries"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<TopQueries> GetTopQueriesAsync(ManagedInstanceResourceGetTopQueriesOptions options, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseRestClient.CreateListInaccessibleByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseRestClient.CreateListInaccessibleByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseResource(Client, ManagedDatabaseData.DeserializeManagedDatabaseData(e)), _managedDatabaseClientDiagnostics, Pipeline, "ManagedInstanceResource.GetInaccessibleManagedDatabases", "value", "nextLink", cancellationToken);
+            options ??= new ManagedInstanceResourceGetTopQueriesOptions();
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceRestClient.CreateListByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.NumberOfQueries, options.Databases, options.StartTime, options.EndTime, options.Interval, options.AggregationFunction, options.ObservationMetric);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceRestClient.CreateListByManagedInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.NumberOfQueries, options.Databases, options.StartTime, options.EndTime, options.Interval, options.AggregationFunction, options.ObservationMetric);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TopQueries.DeserializeTopQueries(e), _managedInstanceClientDiagnostics, Pipeline, "ManagedInstanceResource.GetTopQueries", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Gets a list of inaccessible managed databases in a managed instance
+        /// Get top resource consuming queries of a managed instance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/inaccessibleManagedDatabases</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/topqueries</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedDatabases_ListInaccessibleByInstance</description>
+        /// <description>ManagedInstances_ListByManagedInstance</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2021-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ManagedDatabaseResource"/></description>
+        /// <description><see cref="ManagedInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedDatabaseResource> GetInaccessibleManagedDatabases(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="TopQueries"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<TopQueries> GetTopQueries(ManagedInstanceResourceGetTopQueriesOptions options, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseRestClient.CreateListInaccessibleByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseRestClient.CreateListInaccessibleByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseResource(Client, ManagedDatabaseData.DeserializeManagedDatabaseData(e)), _managedDatabaseClientDiagnostics, Pipeline, "ManagedInstanceResource.GetInaccessibleManagedDatabases", "value", "nextLink", cancellationToken);
+            options ??= new ManagedInstanceResourceGetTopQueriesOptions();
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceRestClient.CreateListByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.NumberOfQueries, options.Databases, options.StartTime, options.EndTime, options.Interval, options.AggregationFunction, options.ObservationMetric);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceRestClient.CreateListByManagedInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.NumberOfQueries, options.Databases, options.StartTime, options.EndTime, options.Interval, options.AggregationFunction, options.ObservationMetric);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TopQueries.DeserializeTopQueries(e), _managedInstanceClientDiagnostics, Pipeline, "ManagedInstanceResource.GetTopQueries", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1927,7 +1803,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2021-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1970,7 +1846,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2021-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2001,297 +1877,63 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets the collection of outbound network dependencies for the given managed instance.
+        /// Gets a list of inaccessible managed databases in a managed instance
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/outboundNetworkDependenciesEndpoints</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/inaccessibleManagedDatabases</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedInstances_ListOutboundNetworkDependenciesByManagedInstance</description>
+        /// <description>ManagedDatabases_ListInaccessibleByInstance</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2022-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceResource"/></description>
+        /// <description><see cref="ManagedDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlOutboundEnvironmentEndpoint"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlOutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ManagedDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedDatabaseResource> GetInaccessibleManagedDatabasesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceRestClient.CreateListOutboundNetworkDependenciesByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceRestClient.CreateListOutboundNetworkDependenciesByManagedInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SqlOutboundEnvironmentEndpoint.DeserializeSqlOutboundEnvironmentEndpoint(e), _managedInstanceClientDiagnostics, Pipeline, "ManagedInstanceResource.GetOutboundNetworkDependencies", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseRestClient.CreateListInaccessibleByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseRestClient.CreateListInaccessibleByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseResource(Client, ManagedDatabaseData.DeserializeManagedDatabaseData(e)), _managedDatabaseClientDiagnostics, Pipeline, "ManagedInstanceResource.GetInaccessibleManagedDatabases", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Gets the collection of outbound network dependencies for the given managed instance.
+        /// Gets a list of inaccessible managed databases in a managed instance
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/outboundNetworkDependenciesEndpoints</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/inaccessibleManagedDatabases</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedInstances_ListOutboundNetworkDependenciesByManagedInstance</description>
+        /// <description>ManagedDatabases_ListInaccessibleByInstance</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2022-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceResource"/></description>
+        /// <description><see cref="ManagedDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlOutboundEnvironmentEndpoint"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlOutboundEnvironmentEndpoint> GetOutboundNetworkDependencies(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedDatabaseResource> GetInaccessibleManagedDatabases(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceRestClient.CreateListOutboundNetworkDependenciesByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceRestClient.CreateListOutboundNetworkDependenciesByManagedInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SqlOutboundEnvironmentEndpoint.DeserializeSqlOutboundEnvironmentEndpoint(e), _managedInstanceClientDiagnostics, Pipeline, "ManagedInstanceResource.GetOutboundNetworkDependencies", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Starts the managed instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/start</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstances_Start</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _managedInstanceClientDiagnostics.CreateScope("ManagedInstanceResource.Start");
-            scope.Start();
-            try
-            {
-                var response = await _managedInstanceRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation(_managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Starts the managed instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/start</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstances_Start</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _managedInstanceClientDiagnostics.CreateScope("ManagedInstanceResource.Start");
-            scope.Start();
-            try
-            {
-                var response = _managedInstanceRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new SqlArmOperation(_managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Stops the managed instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/stop</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstances_Stop</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> StopAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _managedInstanceClientDiagnostics.CreateScope("ManagedInstanceResource.Stop");
-            scope.Start();
-            try
-            {
-                var response = await _managedInstanceRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation(_managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Stops the managed instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/stop</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstances_Stop</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Stop(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _managedInstanceClientDiagnostics.CreateScope("ManagedInstanceResource.Stop");
-            scope.Start();
-            try
-            {
-                var response = _managedInstanceRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new SqlArmOperation(_managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get top resource consuming queries of a managed instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/topqueries</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstances_ListByManagedInstance</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TopQueries"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TopQueries> GetTopQueriesAsync(ManagedInstanceResourceGetTopQueriesOptions options, CancellationToken cancellationToken = default)
-        {
-            options ??= new ManagedInstanceResourceGetTopQueriesOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceRestClient.CreateListByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.NumberOfQueries, options.Databases, options.StartTime, options.EndTime, options.Interval, options.AggregationFunction, options.ObservationMetric);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceRestClient.CreateListByManagedInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.NumberOfQueries, options.Databases, options.StartTime, options.EndTime, options.Interval, options.AggregationFunction, options.ObservationMetric);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TopQueries.DeserializeTopQueries(e), _managedInstanceClientDiagnostics, Pipeline, "ManagedInstanceResource.GetTopQueries", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Get top resource consuming queries of a managed instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/topqueries</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstances_ListByManagedInstance</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TopQueries"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TopQueries> GetTopQueries(ManagedInstanceResourceGetTopQueriesOptions options, CancellationToken cancellationToken = default)
-        {
-            options ??= new ManagedInstanceResourceGetTopQueriesOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceRestClient.CreateListByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.NumberOfQueries, options.Databases, options.StartTime, options.EndTime, options.Interval, options.AggregationFunction, options.ObservationMetric);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceRestClient.CreateListByManagedInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.NumberOfQueries, options.Databases, options.StartTime, options.EndTime, options.Interval, options.AggregationFunction, options.ObservationMetric);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TopQueries.DeserializeTopQueries(e), _managedInstanceClientDiagnostics, Pipeline, "ManagedInstanceResource.GetTopQueries", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseRestClient.CreateListInaccessibleByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseRestClient.CreateListInaccessibleByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseResource(Client, ManagedDatabaseData.DeserializeManagedDatabaseData(e)), _managedDatabaseClientDiagnostics, Pipeline, "ManagedInstanceResource.GetInaccessibleManagedDatabases", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2307,7 +1949,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2021-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2369,7 +2011,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2021-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2431,7 +2073,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2021-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2488,7 +2130,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2021-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2545,7 +2187,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2021-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2605,7 +2247,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2021-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

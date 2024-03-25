@@ -9,13 +9,12 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A class representing the RecoverableDatabase data model.
-    /// A recoverable database resource.
+    /// A recoverable database
     /// </summary>
     public partial class RecoverableDatabaseData : ResourceData
     {
@@ -54,7 +53,6 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of <see cref="RecoverableDatabaseData"/>. </summary>
         public RecoverableDatabaseData()
         {
-            Keys = new ChangeTrackingDictionary<string, SqlDatabaseKey>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoverableDatabaseData"/>. </summary>
@@ -65,16 +63,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="edition"> The edition of the database. </param>
         /// <param name="serviceLevelObjective"> The service level objective name of the database. </param>
         /// <param name="elasticPoolName"> The elastic pool name of the database. </param>
-        /// <param name="lastAvailableBackupOn"> The last available backup date. </param>
-        /// <param name="keys"> The resource ids of the user assigned identities to use. </param>
+        /// <param name="lastAvailableBackupOn"> The last available backup date of the database (ISO8601 format). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecoverableDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string edition, string serviceLevelObjective, string elasticPoolName, DateTimeOffset? lastAvailableBackupOn, IDictionary<string, SqlDatabaseKey> keys, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal RecoverableDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string edition, string serviceLevelObjective, string elasticPoolName, DateTimeOffset? lastAvailableBackupOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Edition = edition;
             ServiceLevelObjective = serviceLevelObjective;
             ElasticPoolName = elasticPoolName;
             LastAvailableBackupOn = lastAvailableBackupOn;
-            Keys = keys;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -87,11 +83,8 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The elastic pool name of the database. </summary>
         [WirePath("properties.elasticPoolName")]
         public string ElasticPoolName { get; }
-        /// <summary> The last available backup date. </summary>
+        /// <summary> The last available backup date of the database (ISO8601 format). </summary>
         [WirePath("properties.lastAvailableBackupDate")]
         public DateTimeOffset? LastAvailableBackupOn { get; }
-        /// <summary> The resource ids of the user assigned identities to use. </summary>
-        [WirePath("properties.keys")]
-        public IDictionary<string, SqlDatabaseKey> Keys { get; }
     }
 }

@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("dnsZone"u8);
                 writer.WriteStringValue(DnsZone);
             }
-            if (Optional.IsDefined(ManagedDnsZonePartner))
+            if (Optional.IsDefined(DnsZonePartner))
             {
                 writer.WritePropertyName("dnsZonePartner"u8);
-                writer.WriteStringValue(ManagedDnsZonePartner);
+                writer.WriteStringValue(DnsZonePartner);
             }
             if (Optional.IsDefined(IsPublicDataEndpointEnabled))
             {
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Sql
             int? storageSizeInGB = default;
             string collation = default;
             string dnsZone = default;
-            ResourceIdentifier dnsZonePartner = default;
+            string dnsZonePartner = default;
             bool? publicDataEndpointEnabled = default;
             ResourceIdentifier sourceManagedInstanceId = default;
             DateTimeOffset? restorePointInTime = default;
@@ -463,11 +463,7 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("dnsZonePartner"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dnsZonePartner = new ResourceIdentifier(property0.Value.GetString());
+                            dnsZonePartner = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("publicDataEndpointEnabled"u8))
@@ -1015,8 +1011,8 @@ namespace Azure.ResourceManager.Sql
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagedDnsZonePartner), out propertyOverride);
-            if (Optional.IsDefined(ManagedDnsZonePartner) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DnsZonePartner), out propertyOverride);
+            if (Optional.IsDefined(DnsZonePartner) || hasPropertyOverride)
             {
                 builder.Append("    dnsZonePartner: ");
                 if (hasPropertyOverride)
@@ -1025,7 +1021,15 @@ namespace Azure.ResourceManager.Sql
                 }
                 else
                 {
-                    builder.AppendLine($"'{ManagedDnsZonePartner.ToString()}'");
+                    if (DnsZonePartner.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DnsZonePartner}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DnsZonePartner}'");
+                    }
                 }
             }
 

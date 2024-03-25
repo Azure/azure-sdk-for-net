@@ -8,19 +8,19 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Sql.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Sql.Tests
+namespace Azure.ResourceManager.Sql.Tests.Scenario
 {
     /// <summary>
     /// Contains tests for the lifecycle of server and database Advanced Threat Protection settings
     /// </summary>
-    public class AdvancedThreatProtectionSettingsTests : SqlManagementTestBase
+    public class AdvancedThreatProtectionSettingsTests : SqlManagementClientBase
     {
         private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
         private static AzureLocation Location = AzureLocation.WestEurope;
 
         public AdvancedThreatProtectionSettingsTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync)
         {
         }
 

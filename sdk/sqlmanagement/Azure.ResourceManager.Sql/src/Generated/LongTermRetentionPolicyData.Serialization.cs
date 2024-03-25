@@ -12,7 +12,6 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -51,16 +50,6 @@ namespace Azure.ResourceManager.Sql
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(MakeBackupsImmutable))
-            {
-                writer.WritePropertyName("makeBackupsImmutable"u8);
-                writer.WriteBooleanValue(MakeBackupsImmutable.Value);
-            }
-            if (Optional.IsDefined(BackupStorageAccessTier))
-            {
-                writer.WritePropertyName("backupStorageAccessTier"u8);
-                writer.WriteStringValue(BackupStorageAccessTier.Value.ToString());
-            }
             if (Optional.IsDefined(WeeklyRetention))
             {
                 writer.WritePropertyName("weeklyRetention"u8);
@@ -124,8 +113,6 @@ namespace Azure.ResourceManager.Sql
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            bool? makeBackupsImmutable = default;
-            SqlBackupStorageAccessTier? backupStorageAccessTier = default;
             string weeklyRetention = default;
             string monthlyRetention = default;
             string yearlyRetention = default;
@@ -167,24 +154,6 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("makeBackupsImmutable"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            makeBackupsImmutable = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("backupStorageAccessTier"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            backupStorageAccessTier = new SqlBackupStorageAccessTier(property0.Value.GetString());
-                            continue;
-                        }
                         if (property0.NameEquals("weeklyRetention"u8))
                         {
                             weeklyRetention = property0.Value.GetString();
@@ -223,8 +192,6 @@ namespace Azure.ResourceManager.Sql
                 name,
                 type,
                 systemData,
-                makeBackupsImmutable,
-                backupStorageAccessTier,
                 weeklyRetention,
                 monthlyRetention,
                 yearlyRetention,
@@ -295,35 +262,6 @@ namespace Azure.ResourceManager.Sql
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MakeBackupsImmutable), out propertyOverride);
-            if (Optional.IsDefined(MakeBackupsImmutable) || hasPropertyOverride)
-            {
-                builder.Append("    makeBackupsImmutable: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    var boolValue = MakeBackupsImmutable.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupStorageAccessTier), out propertyOverride);
-            if (Optional.IsDefined(BackupStorageAccessTier) || hasPropertyOverride)
-            {
-                builder.Append("    backupStorageAccessTier: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{BackupStorageAccessTier.Value.ToString()}'");
-                }
-            }
-
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WeeklyRetention), out propertyOverride);
             if (Optional.IsDefined(WeeklyRetention) || hasPropertyOverride)
             {

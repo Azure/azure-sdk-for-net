@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<RecoverableDatabaseResource>> GetRecoverableDatabaseAsync(string databaseName, CancellationToken cancellationToken)
-            => await GetRecoverableDatabaseAsync(databaseName, null, null, cancellationToken).ConfigureAwait(false);
+            => await GetRecoverableDatabaseAsync(databaseName, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Gets a recoverable database, which is a resource representing a database's geo backup
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<RecoverableDatabaseResource> GetRecoverableDatabase(string databaseName, CancellationToken cancellationToken)
-            => GetRecoverableDatabase(databaseName, null, null, cancellationToken);
+            => GetRecoverableDatabase(databaseName, cancellationToken);
 
         /// <summary>
         /// Gets a restorable dropped database.
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Sql
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<RestorableDroppedDatabaseResource>> GetRestorableDroppedDatabaseAsync(string restorableDroppedDatabaseId, CancellationToken cancellationToken = default)
         {
-            return await GetRestorableDroppedDatabases().GetAsync(restorableDroppedDatabaseId, null, null, cancellationToken).ConfigureAwait(false);
+            return await GetRestorableDroppedDatabases().GetAsync(restorableDroppedDatabaseId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Sql
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<RestorableDroppedDatabaseResource> GetRestorableDroppedDatabase(string restorableDroppedDatabaseId, CancellationToken cancellationToken)
         {
-            return GetRestorableDroppedDatabases().Get(restorableDroppedDatabaseId, null, null, cancellationToken);
+            return GetRestorableDroppedDatabases().Get(restorableDroppedDatabaseId, cancellationToken);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Sql
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<SqlDatabaseResource>> GetSqlDatabaseAsync(string databaseName, CancellationToken cancellationToken)
         {
-            return await GetSqlDatabases().GetAsync(databaseName, null, null, cancellationToken).ConfigureAwait(false);
+            return await GetSqlDatabases().GetAsync(databaseName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Sql
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<SqlDatabaseResource> GetSqlDatabase(string databaseName, CancellationToken cancellationToken)
         {
-            return GetSqlDatabases().Get(databaseName, null, null, cancellationToken);
+            return GetSqlDatabases().Get(databaseName, cancellationToken);
         }
     }
 }

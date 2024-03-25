@@ -4,32 +4,18 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-tag: package-composite-v5
-require: https://github.com/Azure/azure-rest-api-specs/blob/e7e476ba9cd5dcaacb4b344a0ca9677ba731686b/specification/sql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/f3e7c1b20f032a637069d055524549b950830c22/specification/sql/resource-manager/readme.md
 namespace: Azure.ResourceManager.Sql
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
-sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
-  clear-output-folder: true
-  skipped-operations:
-  - ManagedDatabaseSensitivityLabels_CreateOrUpdate
-  - ManagedDatabaseSensitivityLabels_Delete
-  - SensitivityLabels_CreateOrUpdate
-  - SensitivityLabels_Delete
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-  lenient-model-deduplication: true
 model-namespace: false
 public-clients: false
 head-as-boolean: false
 use-model-reader-writer: true
 enable-bicep-serialization: true
-
-# this is temporary, to be removed when we find the owner of this feature
-operation-groups-to-omit:
-- JobPrivateEndpoints
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -67,7 +53,7 @@ keep-plural-enums:
 keep-plural-resource-data:
 - MaintenanceWindows
 
-acronym-mapping:
+rename-rules:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -100,8 +86,6 @@ acronym-mapping:
   CatchUP: CatchUp
   CCN: Ccn
   SSN: Ssn
-  DbCopying: DBCopying
-  DbMoving: DBMoving
 
 prepend-rp-prefix:
   - DatabaseAutomaticTuning
@@ -151,13 +135,12 @@ list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/rules/{ruleId}/baselines/{baselineName}
 
-# no-property-type-replacement: ResourceMoveDefinition
+no-property-type-replacement: ResourceMoveDefinition
 
 override-operation-name:
   ServerTrustGroups_ListByInstance: GetSqlServerTrustGroups
   ManagedInstances_ListByManagedInstance: GetTopQueries
   ManagedDatabases_ListInaccessibleByInstance: GetInaccessibleManagedDatabases
-  ManagedInstances_ListOutboundNetworkDependenciesByManagedInstance: GetOutboundNetworkDependencies
   ManagedDatabaseQueries_ListByQuery: GetQueryStatistics
   Metrics_ListDatabase: GetMetrics
   MetricDefinitions_ListDatabase: GetMetricDefinitions
@@ -328,32 +311,6 @@ rename-mapping:
   RuleType: SqlVulnerabilityAssessmentRuleType
   SynapseLinkWorkspaceInfoProperties: SqlSynapseLinkWorkspaceInfo
   SynapseLinkWorkspaceInfoProperties.workspaceId: -|arm-id
-  ServerPublicNetworkAccessFlag: ServerNetworkAccessFlag
-  SecondaryInstanceType: GeoSecondaryInstanceType
-  StartStopManagedInstanceSchedule: ManagedInstanceStartStopSchedule
-  StartStopScheduleName: ManagedInstanceStartStopScheduleName
-  DatabaseKey: SqlDatabaseKey
-  DatabaseKeyType: SqlDatabaseKeyType
-  AvailabilityZoneType: SqlAvailabilityZoneType
-  EndpointDependency: ManagedInstanceEndpointDependency
-  EndpointDetail: ManagedInstanceEndpointDetail
-  ScheduleItem: SqlScheduleItem
-  ServerConfigurationOptionName: ManagedInstanceServerConfigurationOptionName
-  ServerConfigurationOption: ManagedInstanceServerConfigurationOption
-  OutboundEnvironmentEndpoint: SqlOutboundEnvironmentEndpoint
-  OutboundEnvironmentEndpointCollection: SqlOutboundEnvironmentEndpointCollection
-  MetricDefinition.resourceUri: ResourceUriString
-  FailoverGroup.properties.databases: FailoverDatabases
-  ManagedInstance.properties.dnsZonePartner: ManagedDnsZonePartner
-  ManagedInstanceUpdate.properties.dnsZonePartner: ManagedDnsZonePartner
-  FailoverGroupUpdate.properties.databases: FailoverDatabases
-  Server.properties.minimalTlsVersion: minTlsVersion
-  ServerUpdate.properties.minimalTlsVersion: minTlsVersion
-  MinimalTlsVersion: SqlMinimalTlsVersion
-  BackupStorageAccessTier: SqlBackupStorageAccessTier
-
-# mgmt-debug:
-#  show-serialized-names: true
 
 prompted-enum-values:
   - Default
@@ -562,8 +519,3 @@ directive:
         $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}/scans/{scanId}/scanResults'].get.parameters[2]['x-ms-enum']['name'] = 'VulnerabilityAssessmentName';
         $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}/scans/{scanId}/scanResults/{scanResultId}'].get.parameters[2]['x-ms-enum']['name'] = 'VulnerabilityAssessmentName';
       reason: unify the name to ensure the right hierarchy
-    - from: Servers.json
-      where: $.definitions.ServerProperties.properties.restrictOutboundNetworkAccess.enum
-      transform: >
-          $.push('SecuredByPerimeter');
-      reason: Align the enum choices to avoid breaking changes of one enum split into two.

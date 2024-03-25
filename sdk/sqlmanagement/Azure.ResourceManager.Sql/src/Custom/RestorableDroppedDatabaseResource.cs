@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Sql
          [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<RestorableDroppedDatabaseResource>> GetAsync(CancellationToken cancellationToken)
         {
-            return await GetAsync(null, null, cancellationToken).ConfigureAwait(false);
+            return await GetAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Sql
          [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<RestorableDroppedDatabaseResource> Get(CancellationToken cancellationToken)
         {
-            return Get(null, null, cancellationToken);
+            return Get(cancellationToken);
         }
     }
 }

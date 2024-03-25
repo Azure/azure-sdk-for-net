@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("dnsZone"u8);
                 writer.WriteStringValue(DnsZone);
             }
-            if (Optional.IsDefined(ManagedDnsZonePartner))
+            if (Optional.IsDefined(DnsZonePartner))
             {
                 writer.WritePropertyName("dnsZonePartner"u8);
-                writer.WriteStringValue(ManagedDnsZonePartner);
+                writer.WriteStringValue(DnsZonePartner);
             }
             if (Optional.IsDefined(IsPublicDataEndpointEnabled))
             {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Sql.Models
             int? storageSizeInGB = default;
             string collation = default;
             string dnsZone = default;
-            ResourceIdentifier dnsZonePartner = default;
+            string dnsZonePartner = default;
             bool? publicDataEndpointEnabled = default;
             ResourceIdentifier sourceManagedInstanceId = default;
             DateTimeOffset? restorePointInTime = default;
@@ -404,11 +404,7 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("dnsZonePartner"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dnsZonePartner = new ResourceIdentifier(property0.Value.GetString());
+                            dnsZonePartner = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("publicDataEndpointEnabled"u8))

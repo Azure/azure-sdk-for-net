@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class FailoverGroupReadOnlyEndpoint : IUtf8JsonSerializable, IJsonModel<FailoverGroupReadOnlyEndpoint>
+    internal partial class FailoverGroupReadOnlyEndpoint : IUtf8JsonSerializable, IJsonModel<FailoverGroupReadOnlyEndpoint>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FailoverGroupReadOnlyEndpoint>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -31,11 +31,6 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 writer.WritePropertyName("failoverPolicy"u8);
                 writer.WriteStringValue(FailoverPolicy.Value.ToString());
-            }
-            if (Optional.IsDefined(TargetServer))
-            {
-                writer.WritePropertyName("targetServer"u8);
-                writer.WriteStringValue(TargetServer);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             ReadOnlyEndpointFailoverPolicy? failoverPolicy = default;
-            ResourceIdentifier targetServer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,22 +84,13 @@ namespace Azure.ResourceManager.Sql.Models
                     failoverPolicy = new ReadOnlyEndpointFailoverPolicy(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetServer"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    targetServer = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FailoverGroupReadOnlyEndpoint(failoverPolicy, targetServer, serializedAdditionalRawData);
+            return new FailoverGroupReadOnlyEndpoint(failoverPolicy, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -130,20 +115,6 @@ namespace Azure.ResourceManager.Sql.Models
                 else
                 {
                     builder.AppendLine($"'{FailoverPolicy.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetServer), out propertyOverride);
-            if (Optional.IsDefined(TargetServer) || hasPropertyOverride)
-            {
-                builder.Append("  targetServer: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{TargetServer.ToString()}'");
                 }
             }
 

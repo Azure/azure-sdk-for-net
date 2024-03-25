@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MinTlsVersion))
+            if (Optional.IsDefined(MinimalTlsVersion))
             {
                 writer.WritePropertyName("minimalTlsVersion"u8);
-                writer.WriteStringValue(MinTlsVersion.Value.ToString());
+                writer.WriteStringValue(MinimalTlsVersion);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -150,16 +150,6 @@ namespace Azure.ResourceManager.Sql
             {
                 writer.WritePropertyName("restrictOutboundNetworkAccess"u8);
                 writer.WriteStringValue(RestrictOutboundNetworkAccess.Value.ToString());
-            }
-            if (Optional.IsDefined(IsIPv6Enabled))
-            {
-                writer.WritePropertyName("isIPv6Enabled"u8);
-                writer.WriteStringValue(IsIPv6Enabled.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ExternalGovernanceStatus))
-            {
-                writer.WritePropertyName("externalGovernanceStatus"u8);
-                writer.WriteStringValue(ExternalGovernanceStatus.Value.ToString());
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -214,7 +204,7 @@ namespace Azure.ResourceManager.Sql
             string state = default;
             string fullyQualifiedDomainName = default;
             IReadOnlyList<SqlServerPrivateEndpointConnection> privateEndpointConnections = default;
-            SqlMinimalTlsVersion? minimalTlsVersion = default;
+            string minimalTlsVersion = default;
             ServerNetworkAccessFlag? publicNetworkAccess = default;
             ServerWorkspaceFeature? workspaceFeature = default;
             ResourceIdentifier primaryUserAssignedIdentityId = default;
@@ -222,8 +212,6 @@ namespace Azure.ResourceManager.Sql
             Uri keyId = default;
             ServerExternalAdministrator administrators = default;
             ServerNetworkAccessFlag? restrictOutboundNetworkAccess = default;
-            ServerNetworkAccessFlag? isIPv6Enabled = default;
-            ExternalGovernanceStatus? externalGovernanceStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -336,11 +324,7 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("minimalTlsVersion"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            minimalTlsVersion = new SqlMinimalTlsVersion(property0.Value.GetString());
+                            minimalTlsVersion = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))
@@ -406,24 +390,6 @@ namespace Azure.ResourceManager.Sql
                             restrictOutboundNetworkAccess = new ServerNetworkAccessFlag(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("isIPv6Enabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isIPv6Enabled = new ServerNetworkAccessFlag(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("externalGovernanceStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            externalGovernanceStatus = new ExternalGovernanceStatus(property0.Value.GetString());
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -456,8 +422,6 @@ namespace Azure.ResourceManager.Sql
                 keyId,
                 administrators,
                 restrictOutboundNetworkAccess,
-                isIPv6Enabled,
-                externalGovernanceStatus,
                 serializedAdditionalRawData);
         }
 
@@ -739,8 +703,8 @@ namespace Azure.ResourceManager.Sql
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinTlsVersion), out propertyOverride);
-            if (Optional.IsDefined(MinTlsVersion) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinimalTlsVersion), out propertyOverride);
+            if (Optional.IsDefined(MinimalTlsVersion) || hasPropertyOverride)
             {
                 builder.Append("    minimalTlsVersion: ");
                 if (hasPropertyOverride)
@@ -749,7 +713,15 @@ namespace Azure.ResourceManager.Sql
                 }
                 else
                 {
-                    builder.AppendLine($"'{MinTlsVersion.Value.ToString()}'");
+                    if (MinimalTlsVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MinimalTlsVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MinimalTlsVersion}'");
+                    }
                 }
             }
 
@@ -848,34 +820,6 @@ namespace Azure.ResourceManager.Sql
                 else
                 {
                     builder.AppendLine($"'{RestrictOutboundNetworkAccess.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsIPv6Enabled), out propertyOverride);
-            if (Optional.IsDefined(IsIPv6Enabled) || hasPropertyOverride)
-            {
-                builder.Append("    isIPv6Enabled: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{IsIPv6Enabled.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExternalGovernanceStatus), out propertyOverride);
-            if (Optional.IsDefined(ExternalGovernanceStatus) || hasPropertyOverride)
-            {
-                builder.Append("    externalGovernanceStatus: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{ExternalGovernanceStatus.Value.ToString()}'");
                 }
             }
 

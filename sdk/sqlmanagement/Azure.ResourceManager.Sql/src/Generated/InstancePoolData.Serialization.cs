@@ -85,16 +85,6 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DnsZone))
-            {
-                writer.WritePropertyName("dnsZone"u8);
-                writer.WriteStringValue(DnsZone);
-            }
-            if (Optional.IsDefined(MaintenanceConfigurationId))
-            {
-                writer.WritePropertyName("maintenanceConfigurationId"u8);
-                writer.WriteStringValue(MaintenanceConfigurationId);
-            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -144,8 +134,6 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier subnetId = default;
             int? vCores = default;
             InstancePoolLicenseType? licenseType = default;
-            string dnsZone = default;
-            ResourceIdentifier maintenanceConfigurationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -238,20 +226,6 @@ namespace Azure.ResourceManager.Sql
                             licenseType = new InstancePoolLicenseType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("dnsZone"u8))
-                        {
-                            dnsZone = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("maintenanceConfigurationId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            maintenanceConfigurationId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -272,8 +246,6 @@ namespace Azure.ResourceManager.Sql
                 subnetId,
                 vCores,
                 licenseType,
-                dnsZone,
-                maintenanceConfigurationId,
                 serializedAdditionalRawData);
         }
 
@@ -440,42 +412,6 @@ namespace Azure.ResourceManager.Sql
                 else
                 {
                     builder.AppendLine($"'{LicenseType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DnsZone), out propertyOverride);
-            if (Optional.IsDefined(DnsZone) || hasPropertyOverride)
-            {
-                builder.Append("    dnsZone: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (DnsZone.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DnsZone}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DnsZone}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaintenanceConfigurationId), out propertyOverride);
-            if (Optional.IsDefined(MaintenanceConfigurationId) || hasPropertyOverride)
-            {
-                builder.Append("    maintenanceConfigurationId: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{MaintenanceConfigurationId.ToString()}'");
                 }
             }
 

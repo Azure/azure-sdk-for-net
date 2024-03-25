@@ -49,11 +49,6 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("maxSizeBytes"u8);
                 writer.WriteNumberValue(MaxSizeBytes.Value);
             }
-            if (Optional.IsDefined(MinCapacity))
-            {
-                writer.WritePropertyName("minCapacity"u8);
-                writer.WriteNumberValue(MinCapacity.Value);
-            }
             if (Optional.IsDefined(PerDatabaseSettings))
             {
                 writer.WritePropertyName("perDatabaseSettings"u8);
@@ -78,16 +73,6 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 writer.WritePropertyName("highAvailabilityReplicaCount"u8);
                 writer.WriteNumberValue(HighAvailabilityReplicaCount.Value);
-            }
-            if (Optional.IsDefined(PreferredEnclaveType))
-            {
-                writer.WritePropertyName("preferredEnclaveType"u8);
-                writer.WriteStringValue(PreferredEnclaveType.Value.ToString());
-            }
-            if (Optional.IsDefined(AvailabilityZone))
-            {
-                writer.WritePropertyName("availabilityZone"u8);
-                writer.WriteStringValue(AvailabilityZone.Value.ToString());
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -131,14 +116,11 @@ namespace Azure.ResourceManager.Sql.Models
             SqlSku sku = default;
             IDictionary<string, string> tags = default;
             long? maxSizeBytes = default;
-            double? minCapacity = default;
             ElasticPoolPerDatabaseSettings perDatabaseSettings = default;
             bool? zoneRedundant = default;
             ElasticPoolLicenseType? licenseType = default;
             ResourceIdentifier maintenanceConfigurationId = default;
             int? highAvailabilityReplicaCount = default;
-            SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default;
-            SqlAvailabilityZoneType? availabilityZone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,15 +164,6 @@ namespace Azure.ResourceManager.Sql.Models
                                 continue;
                             }
                             maxSizeBytes = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("minCapacity"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            minCapacity = property0.Value.GetDouble();
                             continue;
                         }
                         if (property0.NameEquals("perDatabaseSettings"u8))
@@ -238,24 +211,6 @@ namespace Azure.ResourceManager.Sql.Models
                             highAvailabilityReplicaCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("preferredEnclaveType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            preferredEnclaveType = new SqlAlwaysEncryptedEnclaveType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("availabilityZone"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            availabilityZone = new SqlAvailabilityZoneType(property0.Value.GetString());
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -269,14 +224,11 @@ namespace Azure.ResourceManager.Sql.Models
                 sku,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 maxSizeBytes,
-                minCapacity,
                 perDatabaseSettings,
                 zoneRedundant,
                 licenseType,
                 maintenanceConfigurationId,
                 highAvailabilityReplicaCount,
-                preferredEnclaveType,
-                availabilityZone,
                 serializedAdditionalRawData);
         }
 

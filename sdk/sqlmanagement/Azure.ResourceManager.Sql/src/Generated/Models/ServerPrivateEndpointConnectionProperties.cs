@@ -50,19 +50,16 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="ServerPrivateEndpointConnectionProperties"/>. </summary>
         internal ServerPrivateEndpointConnectionProperties()
         {
-            GroupIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerPrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateEndpoint"> Private endpoint which the connection belongs to. </param>
-        /// <param name="groupIds"> Group IDs. </param>
         /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> State of the private endpoint connection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerPrivateEndpointConnectionProperties(WritableSubResource privateEndpoint, IReadOnlyList<string> groupIds, SqlPrivateLinkServiceConnectionStateProperty connectionState, SqlPrivateEndpointProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServerPrivateEndpointConnectionProperties(WritableSubResource privateEndpoint, SqlPrivateLinkServiceConnectionStateProperty connectionState, SqlPrivateEndpointProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrivateEndpoint = privateEndpoint;
-            GroupIds = groupIds;
             ConnectionState = connectionState;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -77,9 +74,6 @@ namespace Azure.ResourceManager.Sql.Models
             get => PrivateEndpoint?.Id;
         }
 
-        /// <summary> Group IDs. </summary>
-        [WirePath("groupIds")]
-        public IReadOnlyList<string> GroupIds { get; }
         /// <summary> Connection state of the private endpoint connection. </summary>
         [WirePath("privateLinkServiceConnectionState")]
         public SqlPrivateLinkServiceConnectionStateProperty ConnectionState { get; }

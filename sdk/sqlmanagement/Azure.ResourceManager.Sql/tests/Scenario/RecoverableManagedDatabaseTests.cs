@@ -9,9 +9,9 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Sql.Tests
+namespace Azure.ResourceManager.Sql.Tests.Scenario
 {
-    public class RecoverableManagedDatabaseTests : SqlManagementTestBase
+    public class RecoverableManagedDatabaseTests : SqlManagementClientBase
     {
         private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
@@ -42,8 +42,10 @@ namespace Azure.ResourceManager.Sql.Tests
         public async Task GetAll()
         {
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
+            string networkSecurityGroupName = Recording.GenerateAssetName("network-security-group-");
+            string routeTableName = Recording.GenerateAssetName("route-table-");
             string vnetName = Recording.GenerateAssetName("vnet-");
-            var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, vnetName, AzureLocation.WestUS2, _resourceGroup);
+            var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, networkSecurityGroupName, routeTableName, vnetName, AzureLocation.WestUS2, _resourceGroup);
             var collection = managedInstance.GetRecoverableManagedDatabases();
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
@@ -56,8 +58,10 @@ namespace Azure.ResourceManager.Sql.Tests
         {
             // Create Managed Instance
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
+            string networkSecurityGroupName = Recording.GenerateAssetName("network-security-group-");
+            string routeTableName = Recording.GenerateAssetName("route-table-");
             string vnetName = Recording.GenerateAssetName("vnet-");
-            var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, vnetName, AzureLocation.WestUS2, _resourceGroup);
+            var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, networkSecurityGroupName, routeTableName, vnetName, AzureLocation.WestUS2, _resourceGroup);
             Assert.IsNotNull(managedInstance.Data);
 
             var collection = managedInstance.GetRecoverableManagedDatabases();

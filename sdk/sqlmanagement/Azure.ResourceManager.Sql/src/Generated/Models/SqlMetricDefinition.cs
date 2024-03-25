@@ -54,15 +54,15 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="SqlMetricDefinition"/>. </summary>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="primaryAggregationType"> The primary aggregation type defining how metric values are displayed. </param>
-        /// <param name="resourceUriString"> The resource uri of the database. </param>
+        /// <param name="resourceUri"> The resource uri of the database. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="metricAvailabilities"> The list of database metric availabilities for the metric. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlMetricDefinition(SqlMetricName name, SqlMetricPrimaryAggregationType? primaryAggregationType, string resourceUriString, SqlMetricDefinitionUnitType? unit, IReadOnlyList<SqlMetricAvailability> metricAvailabilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SqlMetricDefinition(SqlMetricName name, SqlMetricPrimaryAggregationType? primaryAggregationType, Uri resourceUri, SqlMetricDefinitionUnitType? unit, IReadOnlyList<SqlMetricAvailability> metricAvailabilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             PrimaryAggregationType = primaryAggregationType;
-            ResourceUriString = resourceUriString;
+            ResourceUri = resourceUri;
             Unit = unit;
             MetricAvailabilities = metricAvailabilities;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Sql.Models
         public SqlMetricPrimaryAggregationType? PrimaryAggregationType { get; }
         /// <summary> The resource uri of the database. </summary>
         [WirePath("resourceUri")]
-        public string ResourceUriString { get; }
+        public Uri ResourceUri { get; }
         /// <summary> The unit of the metric. </summary>
         [WirePath("unit")]
         public SqlMetricDefinitionUnitType? Unit { get; }

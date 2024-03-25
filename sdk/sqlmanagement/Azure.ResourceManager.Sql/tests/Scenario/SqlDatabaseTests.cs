@@ -11,13 +11,13 @@ using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Sql.Tests
+namespace Azure.ResourceManager.Sql.Tests.Scenario
 {
-    public class SqlDatabaseTests : SqlManagementTestBase
+    public class SqlDatabaseTests : SqlManagementClientBase
     {
         private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
-        private static AzureLocation Location = new AzureLocation("eastus2", "East US 2");
+        private static AzureLocation Location = new AzureLocation("eastus2euap", "East US 2 EUAP");
 
         public SqlDatabaseTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)

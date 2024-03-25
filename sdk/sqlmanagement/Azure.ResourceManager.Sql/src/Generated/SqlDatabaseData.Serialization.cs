@@ -275,61 +275,15 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("federatedClientId"u8);
                 writer.WriteStringValue(FederatedClientId.Value);
             }
-            if (Optional.IsCollectionDefined(Keys))
-            {
-                writer.WritePropertyName("keys"u8);
-                writer.WriteStartObject();
-                foreach (var item in Keys)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<SqlDatabaseKey>(item.Value, options);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(EncryptionProtector))
-            {
-                writer.WritePropertyName("encryptionProtector"u8);
-                writer.WriteStringValue(EncryptionProtector);
-            }
             if (Optional.IsDefined(PreferredEnclaveType))
             {
                 writer.WritePropertyName("preferredEnclaveType"u8);
                 writer.WriteStringValue(PreferredEnclaveType.Value.ToString());
             }
-            if (Optional.IsDefined(UseFreeLimit))
-            {
-                writer.WritePropertyName("useFreeLimit"u8);
-                writer.WriteBooleanValue(UseFreeLimit.Value);
-            }
-            if (Optional.IsDefined(FreeLimitExhaustionBehavior))
-            {
-                writer.WritePropertyName("freeLimitExhaustionBehavior"u8);
-                writer.WriteStringValue(FreeLimitExhaustionBehavior.Value.ToString());
-            }
             if (Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
-            }
-            if (Optional.IsDefined(ManualCutover))
-            {
-                writer.WritePropertyName("manualCutover"u8);
-                writer.WriteBooleanValue(ManualCutover.Value);
-            }
-            if (Optional.IsDefined(PerformCutover))
-            {
-                writer.WritePropertyName("performCutover"u8);
-                writer.WriteBooleanValue(PerformCutover.Value);
-            }
-            if (Optional.IsDefined(AvailabilityZone))
-            {
-                writer.WritePropertyName("availabilityZone"u8);
-                writer.WriteStringValue(AvailabilityZone.Value.ToString());
-            }
-            if (Optional.IsDefined(EncryptionProtectorAutoRotation))
-            {
-                writer.WritePropertyName("encryptionProtectorAutoRotation"u8);
-                writer.WriteBooleanValue(EncryptionProtectorAutoRotation.Value);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -418,16 +372,8 @@ namespace Azure.ResourceManager.Sql
             bool? isLedgerOn = default;
             bool? isInfraEncryptionEnabled = default;
             Guid? federatedClientId = default;
-            IDictionary<string, SqlDatabaseKey> keys = default;
-            string encryptionProtector = default;
             SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default;
-            bool? useFreeLimit = default;
-            FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior = default;
             ResourceIdentifier sourceResourceId = default;
-            bool? manualCutover = default;
-            bool? performCutover = default;
-            SqlAvailabilityZoneType? availabilityZone = default;
-            bool? encryptionProtectorAutoRotation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -842,25 +788,6 @@ namespace Azure.ResourceManager.Sql
                             federatedClientId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("keys"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, SqlDatabaseKey> dictionary = new Dictionary<string, SqlDatabaseKey>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, SqlDatabaseKey.DeserializeSqlDatabaseKey(property1.Value, options));
-                            }
-                            keys = dictionary;
-                            continue;
-                        }
-                        if (property0.NameEquals("encryptionProtector"u8))
-                        {
-                            encryptionProtector = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("preferredEnclaveType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -870,24 +797,6 @@ namespace Azure.ResourceManager.Sql
                             preferredEnclaveType = new SqlAlwaysEncryptedEnclaveType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("useFreeLimit"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            useFreeLimit = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("freeLimitExhaustionBehavior"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            freeLimitExhaustionBehavior = new FreeLimitExhaustionBehavior(property0.Value.GetString());
-                            continue;
-                        }
                         if (property0.NameEquals("sourceResourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -895,42 +804,6 @@ namespace Azure.ResourceManager.Sql
                                 continue;
                             }
                             sourceResourceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("manualCutover"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            manualCutover = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("performCutover"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            performCutover = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("availabilityZone"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            availabilityZone = new SqlAvailabilityZoneType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("encryptionProtectorAutoRotation"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            encryptionProtectorAutoRotation = property0.Value.GetBoolean();
                             continue;
                         }
                     }
@@ -991,16 +864,8 @@ namespace Azure.ResourceManager.Sql
                 isLedgerOn,
                 isInfraEncryptionEnabled,
                 federatedClientId,
-                keys ?? new ChangeTrackingDictionary<string, SqlDatabaseKey>(),
-                encryptionProtector,
                 preferredEnclaveType,
-                useFreeLimit,
-                freeLimitExhaustionBehavior,
                 sourceResourceId,
-                manualCutover,
-                performCutover,
-                availabilityZone,
-                encryptionProtectorAutoRotation,
                 serializedAdditionalRawData);
         }
 
@@ -1751,51 +1616,6 @@ namespace Azure.ResourceManager.Sql
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Keys), out propertyOverride);
-            if (Optional.IsCollectionDefined(Keys) || hasPropertyOverride)
-            {
-                if (Keys.Any() || hasPropertyOverride)
-                {
-                    builder.Append("    keys: ");
-                    if (hasPropertyOverride)
-                    {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
-                        builder.AppendLine("{");
-                        foreach (var item in Keys)
-                        {
-                            builder.Append($"        '{item.Key}': ");
-                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 6, false, "    keys: ");
-                        }
-                        builder.AppendLine("    }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EncryptionProtector), out propertyOverride);
-            if (Optional.IsDefined(EncryptionProtector) || hasPropertyOverride)
-            {
-                builder.Append("    encryptionProtector: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (EncryptionProtector.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{EncryptionProtector}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{EncryptionProtector}'");
-                    }
-                }
-            }
-
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreferredEnclaveType), out propertyOverride);
             if (Optional.IsDefined(PreferredEnclaveType) || hasPropertyOverride)
             {
@@ -1810,35 +1630,6 @@ namespace Azure.ResourceManager.Sql
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UseFreeLimit), out propertyOverride);
-            if (Optional.IsDefined(UseFreeLimit) || hasPropertyOverride)
-            {
-                builder.Append("    useFreeLimit: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    var boolValue = UseFreeLimit.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FreeLimitExhaustionBehavior), out propertyOverride);
-            if (Optional.IsDefined(FreeLimitExhaustionBehavior) || hasPropertyOverride)
-            {
-                builder.Append("    freeLimitExhaustionBehavior: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{FreeLimitExhaustionBehavior.Value.ToString()}'");
-                }
-            }
-
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceResourceId), out propertyOverride);
             if (Optional.IsDefined(SourceResourceId) || hasPropertyOverride)
             {
@@ -1850,65 +1641,6 @@ namespace Azure.ResourceManager.Sql
                 else
                 {
                     builder.AppendLine($"'{SourceResourceId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManualCutover), out propertyOverride);
-            if (Optional.IsDefined(ManualCutover) || hasPropertyOverride)
-            {
-                builder.Append("    manualCutover: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    var boolValue = ManualCutover.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PerformCutover), out propertyOverride);
-            if (Optional.IsDefined(PerformCutover) || hasPropertyOverride)
-            {
-                builder.Append("    performCutover: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    var boolValue = PerformCutover.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AvailabilityZone), out propertyOverride);
-            if (Optional.IsDefined(AvailabilityZone) || hasPropertyOverride)
-            {
-                builder.Append("    availabilityZone: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{AvailabilityZone.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EncryptionProtectorAutoRotation), out propertyOverride);
-            if (Optional.IsDefined(EncryptionProtectorAutoRotation) || hasPropertyOverride)
-            {
-                builder.Append("    encryptionProtectorAutoRotation: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    var boolValue = EncryptionProtectorAutoRotation.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
                 }
             }
 

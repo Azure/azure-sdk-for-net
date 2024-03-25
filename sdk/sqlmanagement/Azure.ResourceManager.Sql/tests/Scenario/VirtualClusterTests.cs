@@ -9,14 +9,14 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Sql.Tests
+namespace Azure.ResourceManager.Sql.Tests.Scenario
 {
-    public class VirtualClusterTests : SqlManagementTestBase
+    public class VirtualClusterTests : SqlManagementClientBase
     {
         private ResourceGroupResource _resourceGroup;
 
         public VirtualClusterTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync)
         {
         }
 
@@ -45,8 +45,10 @@ namespace Azure.ResourceManager.Sql.Tests
             //Because MangedInstance deployment takes a lot of time(more than 4.5 hours), the test cases are not separated separately
             // Create Virtual Cluster
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
+            string networkSecurityGroupName = Recording.GenerateAssetName("network-security-group-");
+            string routeTableName = Recording.GenerateAssetName("route-table-");
             string vnetName = Recording.GenerateAssetName("vnet-");
-            var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, vnetName, AzureLocation.WestUS2, _resourceGroup);
+            var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, networkSecurityGroupName, routeTableName, vnetName, AzureLocation.WestUS2, _resourceGroup);
             Assert.IsNotNull(managedInstance.Data);
 
             // 1.CheckIfExist

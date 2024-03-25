@@ -52,11 +52,6 @@ namespace Azure.ResourceManager.Sql
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SecondaryType))
-            {
-                writer.WritePropertyName("secondaryType"u8);
-                writer.WriteStringValue(SecondaryType.Value.ToString());
-            }
             if (Optional.IsDefined(ReadWriteEndpoint))
             {
                 writer.WritePropertyName("readWriteEndpoint"u8);
@@ -140,7 +135,6 @@ namespace Azure.ResourceManager.Sql
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            GeoSecondaryInstanceType? secondaryType = default;
             InstanceFailoverGroupReadWriteEndpoint readWriteEndpoint = default;
             InstanceFailoverGroupReadOnlyEndpoint readOnlyEndpoint = default;
             InstanceFailoverGroupReplicationRole? replicationRole = default;
@@ -184,15 +178,6 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("secondaryType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            secondaryType = new GeoSecondaryInstanceType(property0.Value.GetString());
-                            continue;
-                        }
                         if (property0.NameEquals("readWriteEndpoint"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -267,7 +252,6 @@ namespace Azure.ResourceManager.Sql
                 name,
                 type,
                 systemData,
-                secondaryType,
                 readWriteEndpoint,
                 readOnlyEndpoint,
                 replicationRole,
@@ -345,20 +329,6 @@ namespace Azure.ResourceManager.Sql
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryType), out propertyOverride);
-            if (Optional.IsDefined(SecondaryType) || hasPropertyOverride)
-            {
-                builder.Append("    secondaryType: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{SecondaryType.Value.ToString()}'");
-                }
-            }
-
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReadWriteEndpoint), out propertyOverride);
             if (Optional.IsDefined(ReadWriteEndpoint) || hasPropertyOverride)
             {

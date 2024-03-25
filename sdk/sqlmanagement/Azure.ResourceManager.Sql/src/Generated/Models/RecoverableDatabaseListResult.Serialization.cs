@@ -28,21 +28,13 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStartArray();
-                foreach (var item in Value)
-                {
-                    writer.WriteObjectValue<RecoverableDatabaseData>(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue<RecoverableDatabaseData>(item, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
-            {
-                writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
-            }
+            writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -82,17 +74,12 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             IReadOnlyList<RecoverableDatabaseData> value = default;
-            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<RecoverableDatabaseData> array = new List<RecoverableDatabaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -101,18 +88,13 @@ namespace Azure.ResourceManager.Sql.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"u8))
-                {
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoverableDatabaseListResult(value ?? new ChangeTrackingList<RecoverableDatabaseData>(), nextLink, serializedAdditionalRawData);
+            return new RecoverableDatabaseListResult(value, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -144,28 +126,6 @@ namespace Azure.ResourceManager.Sql.Models
                             BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  value: ");
                         }
                         builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextLink), out propertyOverride);
-            if (Optional.IsDefined(NextLink) || hasPropertyOverride)
-            {
-                builder.Append("  nextLink: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (NextLink.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{NextLink}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{NextLink}'");
                     }
                 }
             }

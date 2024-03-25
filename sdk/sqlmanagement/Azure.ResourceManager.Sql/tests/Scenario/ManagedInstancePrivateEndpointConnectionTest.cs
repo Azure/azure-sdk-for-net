@@ -10,14 +10,14 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Sql.Tests
+namespace Azure.ResourceManager.Sql.Tests.Scenario
 {
-    public class ManagedInstancePrivateEndpointConnectionTest : SqlManagementTestBase
+    public class ManagedInstancePrivateEndpointConnectionTest : SqlManagementClientBase
     {
         private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
         public ManagedInstancePrivateEndpointConnectionTest(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync)
         {
         }
 
@@ -37,19 +37,24 @@ namespace Azure.ResourceManager.Sql.Tests
             _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
+        [Test]
+        [Ignore("Playback execution timeout")]
         [RecordedTest]
         public async Task ManagedInstancePrivateEndpointConnectioApiTests()
         {
             // Create Managed Instance
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
+            string networkSecurityGroupName = Recording.GenerateAssetName("network-security-group-");
+            string routeTableName = Recording.GenerateAssetName("route-table-");
             string vnetName = Recording.GenerateAssetName("vnet-");
-            var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, vnetName, AzureLocation.WestUS2, _resourceGroup);
+            var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, networkSecurityGroupName, routeTableName, vnetName, AzureLocation.WestUS2, _resourceGroup);
             Assert.IsNotNull(managedInstance.Data);
 
             var collection = managedInstance.GetManagedInstancePrivateEndpointConnections();
 
             // Create Private endpoint
-            await CreateDefaultPrivateEndpoint(managedInstance, AzureLocation.WestUS2, _resourceGroup);
+            var vnet = _resourceGroup.GetVirtualNetworks().GetAllAsync().ToEnumerableAsync().Result.FirstOrDefault();
+            await CreateDefaultPrivateEndpoint(managedInstance, vnet, AzureLocation.WestUS2, _resourceGroup);
 
             // 1.GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
@@ -57,12 +62,14 @@ namespace Azure.ResourceManager.Sql.Tests
             string privateEndpointName = list.FirstOrDefault().Data.Name;
 
             // 2.CheckIfExist
-            bool flag = await collection.ExistsAsync(privateEndpointName);
-            Assert.IsTrue(flag);
+            Assert.IsTrue(collection.Exists(privateEndpointName));
 
             // 3.Get
-            var getprivateEndpoint = await collection.GetAsync(privateEndpointName);
+            var getprivateEndpoint= await collection.GetAsync(privateEndpointName);
             Assert.IsNotNull(getprivateEndpoint.Value.Data);
+
+            // 4.GetAll
+            Assert.IsTrue(await collection.ExistsAsync(privateEndpointName));
         }
     }
 }

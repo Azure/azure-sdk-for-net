@@ -55,7 +55,6 @@ namespace Azure.ResourceManager.Sql
         /// <param name="location"> The location. </param>
         public SqlDatabaseData(AzureLocation location) : base(location)
         {
-            Keys = new ChangeTrackingDictionary<string, SqlDatabaseKey>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlDatabaseData"/>. </summary>
@@ -138,17 +137,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="isLedgerOn"> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </param>
         /// <param name="isInfraEncryptionEnabled"> Infra encryption is enabled for this database. </param>
         /// <param name="federatedClientId"> The Client id used for cross tenant per database CMK scenario. </param>
-        /// <param name="keys"> The resource ids of the user assigned identities to use. </param>
-        /// <param name="encryptionProtector"> The azure key vault URI of the database if it's configured with per Database Customer Managed Keys. </param>
         /// <param name="preferredEnclaveType"> Type of enclave requested on the database i.e. Default or VBS enclaves. </param>
-        /// <param name="useFreeLimit"> Whether or not the database uses free monthly limits. Allowed on one database in a subscription. </param>
-        /// <param name="freeLimitExhaustionBehavior">
-        /// Specifies the behavior when monthly free limits are exhausted for the free database.
-        ///
-        /// AutoPause: The database will be auto paused upon exhaustion of free limits for remainder of the month.
-        ///
-        /// BillForUsage: The database will continue to be online upon exhaustion of free limits and any overage will be billed.
-        /// </param>
         /// <param name="sourceResourceId">
         /// The resource identifier of the source associated with the create operation of this database.
         ///
@@ -164,28 +153,8 @@ namespace Azure.ResourceManager.Sql
         ///
         /// When source subscription belongs to a different tenant than target subscription, “x-ms-authorization-auxiliary” header must contain authentication token for the source tenant. For more details about “x-ms-authorization-auxiliary” header see https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/authenticate-multi-tenant
         /// </param>
-        /// <param name="manualCutover">
-        /// Whether or not customer controlled manual cutover needs to be done during Update Database operation to Hyperscale tier.
-        ///
-        /// This property is only applicable when scaling database from Business Critical/General Purpose/Premium/Standard tier to Hyperscale tier.
-        ///
-        /// When manualCutover is specified, the scaling operation will wait for user input to trigger cutover to Hyperscale database.
-        ///
-        /// To trigger cutover, please provide 'performCutover' parameter when the Scaling operation is in Waiting state.
-        /// </param>
-        /// <param name="performCutover">
-        /// To trigger customer controlled manual cutover during the wait state while Scaling operation is in progress.
-        ///
-        /// This property parameter is only applicable for scaling operations that are initiated along with 'manualCutover' parameter.
-        ///
-        /// This property is only applicable when scaling database from Business Critical/General Purpose/Premium/Standard tier to Hyperscale tier is already in progress.
-        ///
-        /// When performCutover is specified, the scaling operation will trigger cutover and perform role-change to Hyperscale database.
-        /// </param>
-        /// <param name="availabilityZone"> Specifies the availability zone the database is pinned to. </param>
-        /// <param name="encryptionProtectorAutoRotation"> The flag to enable or disable auto rotation of database encryption protector AKV key. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string kind, string managedBy, DatabaseIdentity identity, SqlDatabaseCreateMode? createMode, string collation, long? maxSizeBytes, SampleSchemaName? sampleName, ResourceIdentifier elasticPoolId, ResourceIdentifier sourceDatabaseId, SqlDatabaseStatus? status, Guid? databaseId, DateTimeOffset? createdOn, string currentServiceObjectiveName, string requestedServiceObjectiveName, AzureLocation? defaultSecondaryLocation, ResourceIdentifier failoverGroupId, DateTimeOffset? restorePointInTime, DateTimeOffset? sourceDatabaseDeletedOn, ResourceIdentifier recoveryServicesRecoveryPointId, ResourceIdentifier longTermRetentionBackupResourceId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, CatalogCollationType? catalogCollation, bool? isZoneRedundant, DatabaseLicenseType? licenseType, long? maxLogSizeBytes, DateTimeOffset? earliestRestoreOn, DatabaseReadScale? readScale, int? highAvailabilityReplicaCount, SecondaryType? secondaryType, SqlSku currentSku, int? autoPauseDelay, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, double? minCapacity, DateTimeOffset? pausedOn, DateTimeOffset? resumedOn, ResourceIdentifier maintenanceConfigurationId, bool? isLedgerOn, bool? isInfraEncryptionEnabled, Guid? federatedClientId, IDictionary<string, SqlDatabaseKey> keys, string encryptionProtector, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, bool? useFreeLimit, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior, ResourceIdentifier sourceResourceId, bool? manualCutover, bool? performCutover, SqlAvailabilityZoneType? availabilityZone, bool? encryptionProtectorAutoRotation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal SqlDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string kind, string managedBy, DatabaseIdentity identity, SqlDatabaseCreateMode? createMode, string collation, long? maxSizeBytes, SampleSchemaName? sampleName, ResourceIdentifier elasticPoolId, ResourceIdentifier sourceDatabaseId, SqlDatabaseStatus? status, Guid? databaseId, DateTimeOffset? createdOn, string currentServiceObjectiveName, string requestedServiceObjectiveName, AzureLocation? defaultSecondaryLocation, ResourceIdentifier failoverGroupId, DateTimeOffset? restorePointInTime, DateTimeOffset? sourceDatabaseDeletedOn, ResourceIdentifier recoveryServicesRecoveryPointId, ResourceIdentifier longTermRetentionBackupResourceId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, CatalogCollationType? catalogCollation, bool? isZoneRedundant, DatabaseLicenseType? licenseType, long? maxLogSizeBytes, DateTimeOffset? earliestRestoreOn, DatabaseReadScale? readScale, int? highAvailabilityReplicaCount, SecondaryType? secondaryType, SqlSku currentSku, int? autoPauseDelay, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, double? minCapacity, DateTimeOffset? pausedOn, DateTimeOffset? resumedOn, ResourceIdentifier maintenanceConfigurationId, bool? isLedgerOn, bool? isInfraEncryptionEnabled, Guid? federatedClientId, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, ResourceIdentifier sourceResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Kind = kind;
@@ -229,16 +198,8 @@ namespace Azure.ResourceManager.Sql
             IsLedgerOn = isLedgerOn;
             IsInfraEncryptionEnabled = isInfraEncryptionEnabled;
             FederatedClientId = federatedClientId;
-            Keys = keys;
-            EncryptionProtector = encryptionProtector;
             PreferredEnclaveType = preferredEnclaveType;
-            UseFreeLimit = useFreeLimit;
-            FreeLimitExhaustionBehavior = freeLimitExhaustionBehavior;
             SourceResourceId = sourceResourceId;
-            ManualCutover = manualCutover;
-            PerformCutover = performCutover;
-            AvailabilityZone = availabilityZone;
-            EncryptionProtectorAutoRotation = encryptionProtectorAutoRotation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -404,27 +365,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The Client id used for cross tenant per database CMK scenario. </summary>
         [WirePath("properties.federatedClientId")]
         public Guid? FederatedClientId { get; set; }
-        /// <summary> The resource ids of the user assigned identities to use. </summary>
-        [WirePath("properties.keys")]
-        public IDictionary<string, SqlDatabaseKey> Keys { get; }
-        /// <summary> The azure key vault URI of the database if it's configured with per Database Customer Managed Keys. </summary>
-        [WirePath("properties.encryptionProtector")]
-        public string EncryptionProtector { get; set; }
         /// <summary> Type of enclave requested on the database i.e. Default or VBS enclaves. </summary>
         [WirePath("properties.preferredEnclaveType")]
         public SqlAlwaysEncryptedEnclaveType? PreferredEnclaveType { get; set; }
-        /// <summary> Whether or not the database uses free monthly limits. Allowed on one database in a subscription. </summary>
-        [WirePath("properties.useFreeLimit")]
-        public bool? UseFreeLimit { get; set; }
-        /// <summary>
-        /// Specifies the behavior when monthly free limits are exhausted for the free database.
-        ///
-        /// AutoPause: The database will be auto paused upon exhaustion of free limits for remainder of the month.
-        ///
-        /// BillForUsage: The database will continue to be online upon exhaustion of free limits and any overage will be billed.
-        /// </summary>
-        [WirePath("properties.freeLimitExhaustionBehavior")]
-        public FreeLimitExhaustionBehavior? FreeLimitExhaustionBehavior { get; set; }
         /// <summary>
         /// The resource identifier of the source associated with the create operation of this database.
         ///
@@ -442,33 +385,5 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         [WirePath("properties.sourceResourceId")]
         public ResourceIdentifier SourceResourceId { get; set; }
-        /// <summary>
-        /// Whether or not customer controlled manual cutover needs to be done during Update Database operation to Hyperscale tier.
-        ///
-        /// This property is only applicable when scaling database from Business Critical/General Purpose/Premium/Standard tier to Hyperscale tier.
-        ///
-        /// When manualCutover is specified, the scaling operation will wait for user input to trigger cutover to Hyperscale database.
-        ///
-        /// To trigger cutover, please provide 'performCutover' parameter when the Scaling operation is in Waiting state.
-        /// </summary>
-        [WirePath("properties.manualCutover")]
-        public bool? ManualCutover { get; set; }
-        /// <summary>
-        /// To trigger customer controlled manual cutover during the wait state while Scaling operation is in progress.
-        ///
-        /// This property parameter is only applicable for scaling operations that are initiated along with 'manualCutover' parameter.
-        ///
-        /// This property is only applicable when scaling database from Business Critical/General Purpose/Premium/Standard tier to Hyperscale tier is already in progress.
-        ///
-        /// When performCutover is specified, the scaling operation will trigger cutover and perform role-change to Hyperscale database.
-        /// </summary>
-        [WirePath("properties.performCutover")]
-        public bool? PerformCutover { get; set; }
-        /// <summary> Specifies the availability zone the database is pinned to. </summary>
-        [WirePath("properties.availabilityZone")]
-        public SqlAvailabilityZoneType? AvailabilityZone { get; set; }
-        /// <summary> The flag to enable or disable auto rotation of database encryption protector AKV key. </summary>
-        [WirePath("properties.encryptionProtectorAutoRotation")]
-        public bool? EncryptionProtectorAutoRotation { get; set; }
     }
 }

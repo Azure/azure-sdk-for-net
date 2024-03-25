@@ -58,16 +58,6 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(GroupIds))
-            {
-                writer.WritePropertyName("groupIds"u8);
-                writer.WriteStartArray();
-                foreach (var item in GroupIds)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
@@ -122,7 +112,6 @@ namespace Azure.ResourceManager.Sql
             ResourceType type = default;
             SystemData systemData = default;
             WritableSubResource privateEndpoint = default;
-            IReadOnlyList<string> groupIds = default;
             SqlPrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = default;
             SqlPrivateEndpointProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -171,20 +160,6 @@ namespace Azure.ResourceManager.Sql
                             privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("groupIds"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            groupIds = array;
-                            continue;
-                        }
                         if (property0.NameEquals("privateLinkServiceConnectionState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -218,7 +193,6 @@ namespace Azure.ResourceManager.Sql
                 type,
                 systemData,
                 privateEndpoint,
-                groupIds ?? new ChangeTrackingList<string>(),
                 privateLinkServiceConnectionState,
                 provisioningState,
                 serializedAdditionalRawData);
@@ -303,41 +277,6 @@ namespace Azure.ResourceManager.Sql
                 else
                 {
                     BicepSerializationHelpers.AppendChildObject(builder, PrivateEndpoint, options, 4, false, "    privateEndpoint: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GroupIds), out propertyOverride);
-            if (Optional.IsCollectionDefined(GroupIds) || hasPropertyOverride)
-            {
-                if (GroupIds.Any() || hasPropertyOverride)
-                {
-                    builder.Append("    groupIds: ");
-                    if (hasPropertyOverride)
-                    {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
-                        builder.AppendLine("[");
-                        foreach (var item in GroupIds)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("      '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"      '{item}'");
-                            }
-                        }
-                        builder.AppendLine("    ]");
-                    }
                 }
             }
 

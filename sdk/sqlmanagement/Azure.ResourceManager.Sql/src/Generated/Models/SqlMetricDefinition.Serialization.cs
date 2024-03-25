@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("primaryAggregationType"u8);
                 writer.WriteStringValue(PrimaryAggregationType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceUriString))
+            if (options.Format != "W" && Optional.IsDefined(ResourceUri))
             {
                 writer.WritePropertyName("resourceUri"u8);
-                writer.WriteStringValue(ResourceUriString);
+                writer.WriteStringValue(ResourceUri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(Unit))
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
             SqlMetricName name = default;
             SqlMetricPrimaryAggregationType? primaryAggregationType = default;
-            string resourceUri = default;
+            Uri resourceUri = default;
             SqlMetricDefinitionUnitType? unit = default;
             IReadOnlyList<SqlMetricAvailability> metricAvailabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -125,7 +125,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("resourceUri"u8))
                 {
-                    resourceUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("unit"u8))
@@ -205,8 +209,8 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceUriString), out propertyOverride);
-            if (Optional.IsDefined(ResourceUriString) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceUri), out propertyOverride);
+            if (Optional.IsDefined(ResourceUri) || hasPropertyOverride)
             {
                 builder.Append("  resourceUri: ");
                 if (hasPropertyOverride)
@@ -215,15 +219,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 else
                 {
-                    if (ResourceUriString.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ResourceUriString}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ResourceUriString}'");
-                    }
+                    builder.AppendLine($"'{ResourceUri.AbsoluteUri}'");
                 }
             }
 

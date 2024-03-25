@@ -56,8 +56,6 @@ namespace Azure.ResourceManager.Sql
         private readonly SensitivityLabelsRestOperations _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient;
         private readonly ClientDiagnostics _synapseLinkWorkspacesClientDiagnostics;
         private readonly SynapseLinkWorkspacesRestOperations _synapseLinkWorkspacesRestClient;
-        private readonly ClientDiagnostics _databaseEncryptionProtectorsClientDiagnostics;
-        private readonly DatabaseEncryptionProtectorsRestOperations _databaseEncryptionProtectorsRestClient;
         private readonly SqlDatabaseData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -106,8 +104,6 @@ namespace Azure.ResourceManager.Sql
             _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient = new SensitivityLabelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDatabaseSensitivityLabelSensitivityLabelsApiVersion);
             _synapseLinkWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _synapseLinkWorkspacesRestClient = new SynapseLinkWorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _databaseEncryptionProtectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _databaseEncryptionProtectorsRestClient = new DatabaseEncryptionProtectorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -546,6 +542,71 @@ namespace Azure.ResourceManager.Sql
             return GetDataWarehouseUserActivities().Get(dataWarehouseUserActivityName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of LongTermRetentionPolicyResources in the SqlDatabase. </summary>
+        /// <returns> An object representing collection of LongTermRetentionPolicyResources and their operations over a LongTermRetentionPolicyResource. </returns>
+        public virtual LongTermRetentionPolicyCollection GetLongTermRetentionPolicies()
+        {
+            return GetCachedClient(client => new LongTermRetentionPolicyCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a database's long term retention policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LongTermRetentionPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyName"> The policy name. Should always be Default. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<LongTermRetentionPolicyResource>> GetLongTermRetentionPolicyAsync(LongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
+        {
+            return await GetLongTermRetentionPolicies().GetAsync(policyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a database's long term retention policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LongTermRetentionPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyName"> The policy name. Should always be Default. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<LongTermRetentionPolicyResource> GetLongTermRetentionPolicy(LongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
+        {
+            return GetLongTermRetentionPolicies().Get(policyName, cancellationToken);
+        }
+
         /// <summary> Gets an object representing a MaintenanceWindowOptionResource along with the instance operations that can be performed on it in the SqlDatabase. </summary>
         /// <returns> Returns a <see cref="MaintenanceWindowOptionResource"/> object. </returns>
         public virtual MaintenanceWindowOptionResource GetMaintenanceWindowOption()
@@ -765,6 +826,71 @@ namespace Azure.ResourceManager.Sql
         public virtual Response<WorkloadGroupResource> GetWorkloadGroup(string workloadGroupName, CancellationToken cancellationToken = default)
         {
             return GetWorkloadGroups().Get(workloadGroupName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of LogicalDatabaseTransparentDataEncryptionResources in the SqlDatabase. </summary>
+        /// <returns> An object representing collection of LogicalDatabaseTransparentDataEncryptionResources and their operations over a LogicalDatabaseTransparentDataEncryptionResource. </returns>
+        public virtual LogicalDatabaseTransparentDataEncryptionCollection GetLogicalDatabaseTransparentDataEncryptions()
+        {
+            return GetCachedClient(client => new LogicalDatabaseTransparentDataEncryptionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a logical database's transparent data encryption.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/transparentDataEncryption/{tdeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TransparentDataEncryptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicalDatabaseTransparentDataEncryptionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<LogicalDatabaseTransparentDataEncryptionResource>> GetLogicalDatabaseTransparentDataEncryptionAsync(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
+        {
+            return await GetLogicalDatabaseTransparentDataEncryptions().GetAsync(tdeName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a logical database's transparent data encryption.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/transparentDataEncryption/{tdeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TransparentDataEncryptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicalDatabaseTransparentDataEncryptionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<LogicalDatabaseTransparentDataEncryptionResource> GetLogicalDatabaseTransparentDataEncryption(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
+        {
+            return GetLogicalDatabaseTransparentDataEncryptions().Get(tdeName, cancellationToken);
         }
 
         /// <summary> Gets a collection of BackupShortTermRetentionPolicyResources in the SqlDatabase. </summary>
@@ -1092,6 +1218,71 @@ namespace Azure.ResourceManager.Sql
             return GetDatabaseAdvancedThreatProtections().Get(advancedThreatProtectionName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of SqlDatabaseSqlVulnerabilityAssessmentResources in the SqlDatabase. </summary>
+        /// <returns> An object representing collection of SqlDatabaseSqlVulnerabilityAssessmentResources and their operations over a SqlDatabaseSqlVulnerabilityAssessmentResource. </returns>
+        public virtual SqlDatabaseSqlVulnerabilityAssessmentCollection GetSqlDatabaseSqlVulnerabilityAssessments()
+        {
+            return GetCachedClient(client => new SqlDatabaseSqlVulnerabilityAssessmentCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets SQL Vulnerability Assessment policy for database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseSqlVulnerabilityAssessmentsSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlDatabaseSqlVulnerabilityAssessmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vulnerabilityAssessmentName"> The name of the SQL Vulnerability Assessment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SqlDatabaseSqlVulnerabilityAssessmentResource>> GetSqlDatabaseSqlVulnerabilityAssessmentAsync(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
+        {
+            return await GetSqlDatabaseSqlVulnerabilityAssessments().GetAsync(vulnerabilityAssessmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets SQL Vulnerability Assessment policy for database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseSqlVulnerabilityAssessmentsSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlDatabaseSqlVulnerabilityAssessmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vulnerabilityAssessmentName"> The name of the SQL Vulnerability Assessment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<SqlDatabaseSqlVulnerabilityAssessmentResource> GetSqlDatabaseSqlVulnerabilityAssessment(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
+        {
+            return GetSqlDatabaseSqlVulnerabilityAssessments().Get(vulnerabilityAssessmentName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of SqlServerDatabaseReplicationLinkResources in the SqlDatabase. </summary>
         /// <returns> An object representing collection of SqlServerDatabaseReplicationLinkResources and their operations over a SqlServerDatabaseReplicationLinkResource. </returns>
         public virtual SqlServerDatabaseReplicationLinkCollection GetSqlServerDatabaseReplicationLinks()
@@ -1161,201 +1352,6 @@ namespace Azure.ResourceManager.Sql
             return GetSqlServerDatabaseReplicationLinks().Get(linkId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of LogicalDatabaseTransparentDataEncryptionResources in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of LogicalDatabaseTransparentDataEncryptionResources and their operations over a LogicalDatabaseTransparentDataEncryptionResource. </returns>
-        public virtual LogicalDatabaseTransparentDataEncryptionCollection GetLogicalDatabaseTransparentDataEncryptions()
-        {
-            return GetCachedClient(client => new LogicalDatabaseTransparentDataEncryptionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a logical database's transparent data encryption.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/transparentDataEncryption/{tdeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TransparentDataEncryptions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LogicalDatabaseTransparentDataEncryptionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<LogicalDatabaseTransparentDataEncryptionResource>> GetLogicalDatabaseTransparentDataEncryptionAsync(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
-        {
-            return await GetLogicalDatabaseTransparentDataEncryptions().GetAsync(tdeName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a logical database's transparent data encryption.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/transparentDataEncryption/{tdeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TransparentDataEncryptions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LogicalDatabaseTransparentDataEncryptionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<LogicalDatabaseTransparentDataEncryptionResource> GetLogicalDatabaseTransparentDataEncryption(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
-        {
-            return GetLogicalDatabaseTransparentDataEncryptions().Get(tdeName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SqlDatabaseSqlVulnerabilityAssessmentResources in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of SqlDatabaseSqlVulnerabilityAssessmentResources and their operations over a SqlDatabaseSqlVulnerabilityAssessmentResource. </returns>
-        public virtual SqlDatabaseSqlVulnerabilityAssessmentCollection GetSqlDatabaseSqlVulnerabilityAssessments()
-        {
-            return GetCachedClient(client => new SqlDatabaseSqlVulnerabilityAssessmentCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets SQL Vulnerability Assessment policy for database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseSqlVulnerabilityAssessmentsSettings_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlDatabaseSqlVulnerabilityAssessmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vulnerabilityAssessmentName"> The name of the SQL Vulnerability Assessment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SqlDatabaseSqlVulnerabilityAssessmentResource>> GetSqlDatabaseSqlVulnerabilityAssessmentAsync(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
-        {
-            return await GetSqlDatabaseSqlVulnerabilityAssessments().GetAsync(vulnerabilityAssessmentName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets SQL Vulnerability Assessment policy for database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseSqlVulnerabilityAssessmentsSettings_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlDatabaseSqlVulnerabilityAssessmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vulnerabilityAssessmentName"> The name of the SQL Vulnerability Assessment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<SqlDatabaseSqlVulnerabilityAssessmentResource> GetSqlDatabaseSqlVulnerabilityAssessment(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
-        {
-            return GetSqlDatabaseSqlVulnerabilityAssessments().Get(vulnerabilityAssessmentName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of LongTermRetentionPolicyResources in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of LongTermRetentionPolicyResources and their operations over a LongTermRetentionPolicyResource. </returns>
-        public virtual LongTermRetentionPolicyCollection GetLongTermRetentionPolicies()
-        {
-            return GetCachedClient(client => new LongTermRetentionPolicyCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a database's long term retention policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionPolicies_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LongTermRetentionPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyName"> The policy name. Should always be Default. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<LongTermRetentionPolicyResource>> GetLongTermRetentionPolicyAsync(LongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
-        {
-            return await GetLongTermRetentionPolicies().GetAsync(policyName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a database's long term retention policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionPolicies_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LongTermRetentionPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyName"> The policy name. Should always be Default. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<LongTermRetentionPolicyResource> GetLongTermRetentionPolicy(LongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
-        {
-            return GetLongTermRetentionPolicies().Get(policyName, cancellationToken);
-        }
-
         /// <summary>
         /// Gets a database.
         /// <list type="bullet">
@@ -1369,7 +1365,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2022-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1377,16 +1373,14 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> The child resources to include in the response. </param>
-        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SqlDatabaseResource>> GetAsync(string expand = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlDatabaseResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabaseResource.Get");
             scope.Start();
             try
             {
-                var response = await _sqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, cancellationToken).ConfigureAwait(false);
+                var response = await _sqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlDatabaseResource(Client, response.Value), response.GetRawResponse());
@@ -1411,7 +1405,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2022-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1419,16 +1413,14 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> The child resources to include in the response. </param>
-        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SqlDatabaseResource> Get(string expand = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual Response<SqlDatabaseResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabaseResource.Get");
             scope.Start();
             try
             {
-                var response = _sqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, cancellationToken);
+                var response = _sqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlDatabaseResource(Client, response.Value), response.GetRawResponse());
@@ -1453,7 +1445,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2022-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1495,7 +1487,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2022-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1537,7 +1529,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2022-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1583,7 +1575,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2022-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2555,162 +2547,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Revalidates an existing encryption protector for a particular database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/encryptionProtector/{encryptionProtectorName}/revalidate</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseEncryptionProtectors_Revalidate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="encryptionProtectorName"> The name of the encryption protector to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> RevalidateDatabaseEncryptionProtectorAsync(WaitUntil waitUntil, EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _databaseEncryptionProtectorsClientDiagnostics.CreateScope("SqlDatabaseResource.RevalidateDatabaseEncryptionProtector");
-            scope.Start();
-            try
-            {
-                var response = await _databaseEncryptionProtectorsRestClient.RevalidateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, encryptionProtectorName, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation(_databaseEncryptionProtectorsClientDiagnostics, Pipeline, _databaseEncryptionProtectorsRestClient.CreateRevalidateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, encryptionProtectorName).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Revalidates an existing encryption protector for a particular database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/encryptionProtector/{encryptionProtectorName}/revalidate</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseEncryptionProtectors_Revalidate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="encryptionProtectorName"> The name of the encryption protector to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation RevalidateDatabaseEncryptionProtector(WaitUntil waitUntil, EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _databaseEncryptionProtectorsClientDiagnostics.CreateScope("SqlDatabaseResource.RevalidateDatabaseEncryptionProtector");
-            scope.Start();
-            try
-            {
-                var response = _databaseEncryptionProtectorsRestClient.Revalidate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, encryptionProtectorName, cancellationToken);
-                var operation = new SqlArmOperation(_databaseEncryptionProtectorsClientDiagnostics, Pipeline, _databaseEncryptionProtectorsRestClient.CreateRevalidateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, encryptionProtectorName).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Reverts an existing encryption protector for a particular database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/encryptionProtector/{encryptionProtectorName}/revert</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseEncryptionProtectors_Revert</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="encryptionProtectorName"> The name of the encryption protector to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> RevertDatabaseEncryptionProtectorAsync(WaitUntil waitUntil, EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _databaseEncryptionProtectorsClientDiagnostics.CreateScope("SqlDatabaseResource.RevertDatabaseEncryptionProtector");
-            scope.Start();
-            try
-            {
-                var response = await _databaseEncryptionProtectorsRestClient.RevertAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, encryptionProtectorName, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation(_databaseEncryptionProtectorsClientDiagnostics, Pipeline, _databaseEncryptionProtectorsRestClient.CreateRevertRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, encryptionProtectorName).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Reverts an existing encryption protector for a particular database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/encryptionProtector/{encryptionProtectorName}/revert</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseEncryptionProtectors_Revert</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="encryptionProtectorName"> The name of the encryption protector to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation RevertDatabaseEncryptionProtector(WaitUntil waitUntil, EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _databaseEncryptionProtectorsClientDiagnostics.CreateScope("SqlDatabaseResource.RevertDatabaseEncryptionProtector");
-            scope.Start();
-            try
-            {
-                var response = _databaseEncryptionProtectorsRestClient.Revert(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, encryptionProtectorName, cancellationToken);
-                var operation = new SqlArmOperation(_databaseEncryptionProtectorsClientDiagnostics, Pipeline, _databaseEncryptionProtectorsRestClient.CreateRevertRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, encryptionProtectorName).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Exports a database.
         /// <list type="bullet">
         /// <item>
@@ -2723,7 +2559,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2022-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2769,7 +2605,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2022-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2815,7 +2651,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2022-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2858,7 +2694,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2022-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2901,7 +2737,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2022-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2947,7 +2783,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2022-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2993,7 +2829,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2022-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3035,7 +2871,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2022-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3077,7 +2913,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2022-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3119,7 +2955,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2022-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3161,7 +2997,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2022-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3203,7 +3039,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2022-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3245,7 +3081,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2022-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3287,7 +3123,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2022-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3329,7 +3165,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2022-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3355,7 +3191,7 @@ namespace Azure.ResourceManager.Sql
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _sqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, null, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _sqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new SqlDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -3391,7 +3227,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2022-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3417,7 +3253,7 @@ namespace Azure.ResourceManager.Sql
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _sqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, null, cancellationToken);
+                    var originalResponse = _sqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new SqlDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -3453,7 +3289,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2022-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3478,7 +3314,7 @@ namespace Azure.ResourceManager.Sql
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _sqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, null, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _sqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new SqlDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -3510,7 +3346,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2022-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3535,7 +3371,7 @@ namespace Azure.ResourceManager.Sql
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _sqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, null, cancellationToken);
+                    var originalResponse = _sqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new SqlDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -3567,7 +3403,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2022-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3591,7 +3427,7 @@ namespace Azure.ResourceManager.Sql
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _sqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, null, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _sqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new SqlDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -3627,7 +3463,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2022-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3651,7 +3487,7 @@ namespace Azure.ResourceManager.Sql
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _sqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, null, cancellationToken);
+                    var originalResponse = _sqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new SqlDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else

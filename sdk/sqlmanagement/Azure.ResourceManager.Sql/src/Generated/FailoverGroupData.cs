@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Sql
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             PartnerServers = new ChangeTrackingList<PartnerServerInfo>();
-            FailoverDatabases = new ChangeTrackingList<ResourceIdentifier>();
+            Databases = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FailoverGroupData"/>. </summary>
@@ -71,9 +71,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="replicationRole"> Local replication role of the failover group instance. </param>
         /// <param name="replicationState"> Replication state of the failover group instance. </param>
         /// <param name="partnerServers"> List of partner server information for the failover group. </param>
-        /// <param name="failoverDatabases"> List of databases in the failover group. </param>
+        /// <param name="databases"> List of databases in the failover group. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FailoverGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IDictionary<string, string> tags, FailoverGroupReadWriteEndpoint readWriteEndpoint, FailoverGroupReadOnlyEndpoint readOnlyEndpoint, FailoverGroupReplicationRole? replicationRole, string replicationState, IList<PartnerServerInfo> partnerServers, IList<ResourceIdentifier> failoverDatabases, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal FailoverGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IDictionary<string, string> tags, FailoverGroupReadWriteEndpoint readWriteEndpoint, FailoverGroupReadOnlyEndpoint readOnlyEndpoint, FailoverGroupReplicationRole? replicationRole, string replicationState, IList<PartnerServerInfo> partnerServers, IList<string> databases, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Tags = tags;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Sql
             ReplicationRole = replicationRole;
             ReplicationState = replicationState;
             PartnerServers = partnerServers;
-            FailoverDatabases = failoverDatabases;
+            Databases = databases;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -96,8 +96,20 @@ namespace Azure.ResourceManager.Sql
         [WirePath("properties.readWriteEndpoint")]
         public FailoverGroupReadWriteEndpoint ReadWriteEndpoint { get; set; }
         /// <summary> Read-only endpoint of the failover group instance. </summary>
-        [WirePath("properties.readOnlyEndpoint")]
-        public FailoverGroupReadOnlyEndpoint ReadOnlyEndpoint { get; set; }
+        internal FailoverGroupReadOnlyEndpoint ReadOnlyEndpoint { get; set; }
+        /// <summary> Failover policy of the read-only endpoint for the failover group. </summary>
+        [WirePath("properties.readOnlyEndpoint.failoverPolicy")]
+        public ReadOnlyEndpointFailoverPolicy? ReadOnlyEndpointFailoverPolicy
+        {
+            get => ReadOnlyEndpoint is null ? default : ReadOnlyEndpoint.FailoverPolicy;
+            set
+            {
+                if (ReadOnlyEndpoint is null)
+                    ReadOnlyEndpoint = new FailoverGroupReadOnlyEndpoint();
+                ReadOnlyEndpoint.FailoverPolicy = value;
+            }
+        }
+
         /// <summary> Local replication role of the failover group instance. </summary>
         [WirePath("properties.replicationRole")]
         public FailoverGroupReplicationRole? ReplicationRole { get; }
@@ -109,6 +121,6 @@ namespace Azure.ResourceManager.Sql
         public IList<PartnerServerInfo> PartnerServers { get; }
         /// <summary> List of databases in the failover group. </summary>
         [WirePath("properties.databases")]
-        public IList<ResourceIdentifier> FailoverDatabases { get; }
+        public IList<string> Databases { get; }
     }
 }

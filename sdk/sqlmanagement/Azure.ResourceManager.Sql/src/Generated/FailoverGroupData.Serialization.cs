@@ -98,17 +98,12 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FailoverDatabases))
+            if (Optional.IsCollectionDefined(Databases))
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStartArray();
-                foreach (var item in FailoverDatabases)
+                foreach (var item in Databases)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -163,7 +158,7 @@ namespace Azure.ResourceManager.Sql
             FailoverGroupReplicationRole? replicationRole = default;
             string replicationState = default;
             IList<PartnerServerInfo> partnerServers = default;
-            IList<ResourceIdentifier> databases = default;
+            IList<string> databases = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -276,17 +271,10 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                            List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(new ResourceIdentifier(item.GetString()));
-                                }
+                                array.Add(item.GetString());
                             }
                             databases = array;
                             continue;
@@ -312,7 +300,7 @@ namespace Azure.ResourceManager.Sql
                 replicationRole,
                 replicationState,
                 partnerServers ?? new ChangeTrackingList<PartnerServerInfo>(),
-                databases ?? new ChangeTrackingList<ResourceIdentifier>(),
+                databases ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }
 
@@ -324,6 +312,11 @@ namespace Azure.ResourceManager.Sql
             bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
             bool hasPropertyOverride = false;
             string propertyOverride = null;
+
+            if (propertyOverrides != null)
+            {
+                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
+            }
 
             builder.AppendLine("{");
 
@@ -515,10 +508,10 @@ namespace Azure.ResourceManager.Sql
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailoverDatabases), out propertyOverride);
-            if (Optional.IsCollectionDefined(FailoverDatabases) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Databases), out propertyOverride);
+            if (Optional.IsCollectionDefined(Databases) || hasPropertyOverride)
             {
-                if (FailoverDatabases.Any() || hasPropertyOverride)
+                if (Databases.Any() || hasPropertyOverride)
                 {
                     builder.Append("    databases: ");
                     if (hasPropertyOverride)
@@ -528,14 +521,22 @@ namespace Azure.ResourceManager.Sql
                     else
                     {
                         builder.AppendLine("[");
-                        foreach (var item in FailoverDatabases)
+                        foreach (var item in Databases)
                         {
                             if (item == null)
                             {
                                 builder.Append("null");
                                 continue;
                             }
-                            builder.AppendLine($"      '{item.ToString()}'");
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
                         }
                         builder.AppendLine("    ]");
                     }
@@ -545,6 +546,23 @@ namespace Azure.ResourceManager.Sql
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
+        }
+
+        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
+        {
+            foreach (var item in propertyOverrides.ToList())
+            {
+                switch (item.Key)
+                {
+                    case "ReadOnlyEndpointFailoverPolicy":
+                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
+                        propertyDictionary.Add("FailoverPolicy", item.Value);
+                        bicepOptions.PropertyOverrides.Add(ReadOnlyEndpoint, propertyDictionary);
+                        break;
+                    default:
+                        continue;
+                }
+            }
         }
 
         BinaryData IPersistableModel<FailoverGroupData>.Write(ModelReaderWriterOptions options)
