@@ -23,9 +23,12 @@ namespace Azure.Communication.Chat
         }
 
         private const string ThreadCreationDateValue = "threadCreationDate";
+        private const string NoneValue = "none";
 
         /// <summary> Thread retention policy based on thread creation date. </summary>
         public static RetentionPolicyKind ThreadCreationDate { get; } = new RetentionPolicyKind(ThreadCreationDateValue);
+        /// <summary> No thread retention policy. </summary>
+        public static RetentionPolicyKind None { get; } = new RetentionPolicyKind(NoneValue);
         /// <summary> Determines if two <see cref="RetentionPolicyKind"/> values are the same. </summary>
         public static bool operator ==(RetentionPolicyKind left, RetentionPolicyKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RetentionPolicyKind"/> values are not the same. </summary>

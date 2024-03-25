@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    public partial class ChatRetentionPolicy : IUtf8JsonSerializable
+    public partial class NoneRetentionPolicy : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,21 +20,22 @@ namespace Azure.Communication.Chat
             writer.WriteEndObject();
         }
 
-        internal static ChatRetentionPolicy DeserializeChatRetentionPolicy(JsonElement element)
+        internal static NoneRetentionPolicy DeserializeNoneRetentionPolicy(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("kind", out JsonElement discriminator))
+            RetentionPolicyKind kind = default;
+            foreach (var property in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (property.NameEquals("kind"u8))
                 {
-                    case "none": return NoneRetentionPolicy.DeserializeNoneRetentionPolicy(element);
-                    case "threadCreationDate": return ThreadCreationDateRetentionPolicy.DeserializeThreadCreationDateRetentionPolicy(element);
+                    kind = new RetentionPolicyKind(property.Value.GetString());
+                    continue;
                 }
             }
-            return UnknownChatRetentionPolicy.DeserializeUnknownChatRetentionPolicy(element);
+            return new NoneRetentionPolicy(kind);
         }
     }
 }
