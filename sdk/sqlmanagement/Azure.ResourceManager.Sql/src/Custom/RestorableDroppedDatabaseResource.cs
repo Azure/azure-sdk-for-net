@@ -252,45 +252,5 @@ namespace Azure.ResourceManager.Sql
                 throw;
             }
         }
-
-        /// <summary>
-        /// Gets a restorable dropped database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RestorableDroppedDatabases_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<RestorableDroppedDatabaseResource>> GetAsync(CancellationToken cancellationToken)
-        {
-            return await GetAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a restorable dropped database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RestorableDroppedDatabases_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<RestorableDroppedDatabaseResource> Get(CancellationToken cancellationToken)
-        {
-            return Get(cancellationToken);
-        }
     }
 }
