@@ -48,16 +48,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Errors))
-            {
-                writer.WritePropertyName("errors"u8);
-                writer.WriteStartArray();
-                foreach (var item in Errors)
-                {
-                    writer.WriteObjectValue<CassandraError>(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsCollectionDefined(DataCenters))
             {
                 writer.WritePropertyName("dataCenters"u8);
@@ -109,7 +99,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             ETag? eTag = default;
             CassandraReaperStatus reaperStatus = default;
             IReadOnlyList<CassandraConnectionError> connectionErrors = default;
-            IReadOnlyList<CassandraError> errors = default;
             IReadOnlyList<CassandraClusterPublicStatusDataCentersItem> dataCenters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -147,20 +136,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     connectionErrors = array;
                     continue;
                 }
-                if (property.NameEquals("errors"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<CassandraError> array = new List<CassandraError>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(CassandraError.DeserializeCassandraError(item, options));
-                    }
-                    errors = array;
-                    continue;
-                }
                 if (property.NameEquals("dataCenters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -181,13 +156,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraClusterPublicStatus(
-                eTag,
-                reaperStatus,
-                connectionErrors ?? new ChangeTrackingList<CassandraConnectionError>(),
-                errors ?? new ChangeTrackingList<CassandraError>(),
-                dataCenters ?? new ChangeTrackingList<CassandraClusterPublicStatusDataCentersItem>(),
-                serializedAdditionalRawData);
+            return new CassandraClusterPublicStatus(eTag, reaperStatus, connectionErrors ?? new ChangeTrackingList<CassandraConnectionError>(), dataCenters ?? new ChangeTrackingList<CassandraClusterPublicStatusDataCentersItem>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -245,28 +214,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         foreach (var item in ConnectionErrors)
                         {
                             BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  connectionErrors: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Errors), out propertyOverride);
-            if (Optional.IsCollectionDefined(Errors) || hasPropertyOverride)
-            {
-                if (Errors.Any() || hasPropertyOverride)
-                {
-                    builder.Append("  errors: ");
-                    if (hasPropertyOverride)
-                    {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
-                        builder.AppendLine("[");
-                        foreach (var item in Errors)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  errors: ");
                         }
                         builder.AppendLine("  ]");
                     }

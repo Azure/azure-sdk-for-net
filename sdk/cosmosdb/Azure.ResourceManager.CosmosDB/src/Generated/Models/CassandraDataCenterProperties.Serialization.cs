@@ -93,26 +93,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("availabilityZone"u8);
                 writer.WriteBooleanValue(DoesSupportAvailabilityZone.Value);
             }
-            if (Optional.IsDefined(AuthenticationMethodLdapProperties))
-            {
-                writer.WritePropertyName("authenticationMethodLdapProperties"u8);
-                writer.WriteObjectValue<AuthenticationMethodLdapProperties>(AuthenticationMethodLdapProperties, options);
-            }
-            if (Optional.IsDefined(Deallocated))
-            {
-                writer.WritePropertyName("deallocated"u8);
-                writer.WriteBooleanValue(Deallocated.Value);
-            }
-            if (Optional.IsDefined(ProvisionError))
-            {
-                writer.WritePropertyName("provisionError"u8);
-                writer.WriteObjectValue<CassandraError>(ProvisionError, options);
-            }
-            if (Optional.IsDefined(PrivateEndpointIPAddress))
-            {
-                writer.WritePropertyName("privateEndpointIpAddress"u8);
-                writer.WriteStringValue(PrivateEndpointIPAddress);
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -163,10 +143,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string diskSku = default;
             int? diskCapacity = default;
             bool? availabilityZone = default;
-            AuthenticationMethodLdapProperties authenticationMethodLdapProperties = default;
-            bool? deallocated = default;
-            CassandraError provisionError = default;
-            string privateEndpointIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -272,38 +248,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     availabilityZone = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("authenticationMethodLdapProperties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    authenticationMethodLdapProperties = AuthenticationMethodLdapProperties.DeserializeAuthenticationMethodLdapProperties(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("deallocated"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    deallocated = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("provisionError"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provisionError = CassandraError.DeserializeCassandraError(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("privateEndpointIpAddress"u8))
-                {
-                    privateEndpointIPAddress = property.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -323,10 +267,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 diskSku,
                 diskCapacity,
                 availabilityZone,
-                authenticationMethodLdapProperties,
-                deallocated,
-                provisionError,
-                privateEndpointIPAddress,
                 serializedAdditionalRawData);
         }
 
@@ -539,71 +479,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     var boolValue = DoesSupportAvailabilityZone.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthenticationMethodLdapProperties), out propertyOverride);
-            if (Optional.IsDefined(AuthenticationMethodLdapProperties) || hasPropertyOverride)
-            {
-                builder.Append("  authenticationMethodLdapProperties: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    BicepSerializationHelpers.AppendChildObject(builder, AuthenticationMethodLdapProperties, options, 2, false, "  authenticationMethodLdapProperties: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Deallocated), out propertyOverride);
-            if (Optional.IsDefined(Deallocated) || hasPropertyOverride)
-            {
-                builder.Append("  deallocated: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    var boolValue = Deallocated.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisionError), out propertyOverride);
-            if (Optional.IsDefined(ProvisionError) || hasPropertyOverride)
-            {
-                builder.Append("  provisionError: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    BicepSerializationHelpers.AppendChildObject(builder, ProvisionError, options, 2, false, "  provisionError: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpointIPAddress), out propertyOverride);
-            if (Optional.IsDefined(PrivateEndpointIPAddress) || hasPropertyOverride)
-            {
-                builder.Append("  privateEndpointIpAddress: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (PrivateEndpointIPAddress.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PrivateEndpointIPAddress}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PrivateEndpointIPAddress}'");
-                    }
                 }
             }
 

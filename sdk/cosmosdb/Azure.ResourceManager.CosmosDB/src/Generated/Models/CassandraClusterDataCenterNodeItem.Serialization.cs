@@ -43,11 +43,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(CassandraProcessStatus))
-            {
-                writer.WritePropertyName("cassandraProcessStatus"u8);
-                writer.WriteStringValue(CassandraProcessStatus);
-            }
             if (Optional.IsDefined(Load))
             {
                 writer.WritePropertyName("load"u8);
@@ -118,11 +113,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("cpuUsage"u8);
                 writer.WriteNumberValue(CpuUsage.Value);
             }
-            if (Optional.IsDefined(IsLatestModel))
-            {
-                writer.WritePropertyName("isLatestModel"u8);
-                writer.WriteBooleanValue(IsLatestModel.Value);
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -164,7 +154,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string address = default;
             CassandraNodeState? state = default;
             string status = default;
-            string cassandraProcessStatus = default;
             string load = default;
             IReadOnlyList<string> tokens = default;
             int? size = default;
@@ -178,7 +167,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             long? memoryFreeKB = default;
             long? memoryTotalKB = default;
             double? cpuUsage = default;
-            bool? isLatestModel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,11 +188,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("cassandraProcessStatus"u8))
-                {
-                    cassandraProcessStatus = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("load"u8))
@@ -317,15 +300,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     cpuUsage = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("isLatestModel"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isLatestModel = property.Value.GetBoolean();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -336,7 +310,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 address,
                 state,
                 status,
-                cassandraProcessStatus,
                 load,
                 tokens ?? new ChangeTrackingList<string>(),
                 size,
@@ -350,7 +323,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 memoryFreeKB,
                 memoryTotalKB,
                 cpuUsage,
-                isLatestModel,
                 serializedAdditionalRawData);
         }
 
@@ -419,28 +391,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     else
                     {
                         builder.AppendLine($"'{Status}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CassandraProcessStatus), out propertyOverride);
-            if (Optional.IsDefined(CassandraProcessStatus) || hasPropertyOverride)
-            {
-                builder.Append("  cassandraProcessStatus: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (CassandraProcessStatus.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CassandraProcessStatus}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CassandraProcessStatus}'");
                     }
                 }
             }
@@ -669,21 +619,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 else
                 {
                     builder.AppendLine($"'{CpuUsage.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsLatestModel), out propertyOverride);
-            if (Optional.IsDefined(IsLatestModel) || hasPropertyOverride)
-            {
-                builder.Append("  isLatestModel: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    var boolValue = IsLatestModel.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
                 }
             }
 

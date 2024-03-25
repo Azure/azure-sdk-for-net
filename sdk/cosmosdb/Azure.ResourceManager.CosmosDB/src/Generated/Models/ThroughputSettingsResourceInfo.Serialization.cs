@@ -47,16 +47,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("offerReplacePending"u8);
                 writer.WriteStringValue(OfferReplacePending);
             }
-            if (options.Format != "W" && Optional.IsDefined(InstantMaximumThroughput))
-            {
-                writer.WritePropertyName("instantMaximumThroughput"u8);
-                writer.WriteStringValue(InstantMaximumThroughput);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SoftAllowedMaximumThroughput))
-            {
-                writer.WritePropertyName("softAllowedMaximumThroughput"u8);
-                writer.WriteStringValue(SoftAllowedMaximumThroughput);
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -99,8 +89,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             AutoscaleSettingsResourceInfo autoscaleSettings = default;
             string minimumThroughput = default;
             string offerReplacePending = default;
-            string instantMaximumThroughput = default;
-            string softAllowedMaximumThroughput = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,30 +121,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     offerReplacePending = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instantMaximumThroughput"u8))
-                {
-                    instantMaximumThroughput = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("softAllowedMaximumThroughput"u8))
-                {
-                    softAllowedMaximumThroughput = property.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThroughputSettingsResourceInfo(
-                throughput,
-                autoscaleSettings,
-                minimumThroughput,
-                offerReplacePending,
-                instantMaximumThroughput,
-                softAllowedMaximumThroughput,
-                serializedAdditionalRawData);
+            return new ThroughputSettingsResourceInfo(throughput, autoscaleSettings, minimumThroughput, offerReplacePending, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -238,50 +209,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     else
                     {
                         builder.AppendLine($"'{OfferReplacePending}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstantMaximumThroughput), out propertyOverride);
-            if (Optional.IsDefined(InstantMaximumThroughput) || hasPropertyOverride)
-            {
-                builder.Append("  instantMaximumThroughput: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (InstantMaximumThroughput.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{InstantMaximumThroughput}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{InstantMaximumThroughput}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SoftAllowedMaximumThroughput), out propertyOverride);
-            if (Optional.IsDefined(SoftAllowedMaximumThroughput) || hasPropertyOverride)
-            {
-                builder.Append("  softAllowedMaximumThroughput: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (SoftAllowedMaximumThroughput.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SoftAllowedMaximumThroughput}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SoftAllowedMaximumThroughput}'");
                     }
                 }
             }

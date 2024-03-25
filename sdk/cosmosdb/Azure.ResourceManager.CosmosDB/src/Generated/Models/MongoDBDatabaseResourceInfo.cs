@@ -57,14 +57,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of <see cref="MongoDBDatabaseResourceInfo"/>. </summary>
         /// <param name="databaseName"> Name of the Cosmos DB MongoDB database. </param>
-        /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
-        /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MongoDBDatabaseResourceInfo(string databaseName, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoDBDatabaseResourceInfo(string databaseName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DatabaseName = databaseName;
-            RestoreParameters = restoreParameters;
-            CreateMode = createMode;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -76,11 +72,5 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Name of the Cosmos DB MongoDB database. </summary>
         [WirePath("id")]
         public string DatabaseName { get; set; }
-        /// <summary> Parameters to indicate the information about the restore. </summary>
-        [WirePath("restoreParameters")]
-        public ResourceRestoreParameters RestoreParameters { get; set; }
-        /// <summary> Enum to indicate the mode of resource creation. </summary>
-        [WirePath("createMode")]
-        public CosmosDBAccountCreateMode? CreateMode { get; set; }
     }
 }

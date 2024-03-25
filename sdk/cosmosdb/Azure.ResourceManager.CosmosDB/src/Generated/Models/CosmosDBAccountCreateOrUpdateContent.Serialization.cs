@@ -224,11 +224,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DiagnosticLogSettings))
-            {
-                writer.WritePropertyName("diagnosticLogSettings"u8);
-                writer.WriteObjectValue<DiagnosticLogSettings>(DiagnosticLogSettings, options);
-            }
             if (Optional.IsDefined(DisableLocalAuth))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
@@ -244,11 +239,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue<CosmosDBAccountCapacity>(Capacity, options);
             }
-            if (Optional.IsDefined(EnableMaterializedViews))
-            {
-                writer.WritePropertyName("enableMaterializedViews"u8);
-                writer.WriteBooleanValue(EnableMaterializedViews.Value);
-            }
             if (options.Format != "W" && Optional.IsDefined(KeysMetadata))
             {
                 writer.WritePropertyName("keysMetadata"u8);
@@ -259,35 +249,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("enablePartitionMerge"u8);
                 writer.WriteBooleanValue(EnablePartitionMerge.Value);
             }
-            if (Optional.IsDefined(EnableBurstCapacity))
-            {
-                writer.WritePropertyName("enableBurstCapacity"u8);
-                writer.WriteBooleanValue(EnableBurstCapacity.Value);
-            }
             if (Optional.IsDefined(MinimalTlsVersion))
             {
                 writer.WritePropertyName("minimalTlsVersion"u8);
                 writer.WriteStringValue(MinimalTlsVersion.Value.ToString());
-            }
-            if (Optional.IsDefined(CustomerManagedKeyStatus))
-            {
-                writer.WritePropertyName("customerManagedKeyStatus"u8);
-                writer.WriteStringValue(CustomerManagedKeyStatus);
-            }
-            if (Optional.IsDefined(EnablePriorityBasedExecution))
-            {
-                writer.WritePropertyName("enablePriorityBasedExecution"u8);
-                writer.WriteBooleanValue(EnablePriorityBasedExecution.Value);
-            }
-            if (Optional.IsDefined(DefaultPriorityLevel))
-            {
-                writer.WritePropertyName("defaultPriorityLevel"u8);
-                writer.WriteStringValue(DefaultPriorityLevel.Value.ToString());
-            }
-            if (Optional.IsDefined(EnablePerRegionPerPartitionAutoscale))
-            {
-                writer.WritePropertyName("enablePerRegionPerPartitionAutoscale"u8);
-                writer.WriteBooleanValue(EnablePerRegionPerPartitionAutoscale.Value);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -360,19 +325,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             IList<CosmosDBAccountCorsPolicy> cors = default;
             NetworkAclBypass? networkAclBypass = default;
             IList<ResourceIdentifier> networkAclBypassResourceIds = default;
-            DiagnosticLogSettings diagnosticLogSettings = default;
             bool? disableLocalAuth = default;
             CosmosDBAccountRestoreParameters restoreParameters = default;
             CosmosDBAccountCapacity capacity = default;
-            bool? enableMaterializedViews = default;
             DatabaseAccountKeysMetadata keysMetadata = default;
             bool? enablePartitionMerge = default;
-            bool? enableBurstCapacity = default;
             CosmosDBMinimalTlsVersion? minimalTlsVersion = default;
-            string customerManagedKeyStatus = default;
-            bool? enablePriorityBasedExecution = default;
-            DefaultPriorityLevel? defaultPriorityLevel = default;
-            bool? enablePerRegionPerPartitionAutoscale = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -689,15 +647,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             networkAclBypassResourceIds = array;
                             continue;
                         }
-                        if (property0.NameEquals("diagnosticLogSettings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            diagnosticLogSettings = DiagnosticLogSettings.DeserializeDiagnosticLogSettings(property0.Value, options);
-                            continue;
-                        }
                         if (property0.NameEquals("disableLocalAuth"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -725,15 +674,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             capacity = CosmosDBAccountCapacity.DeserializeCosmosDBAccountCapacity(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("enableMaterializedViews"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableMaterializedViews = property0.Value.GetBoolean();
-                            continue;
-                        }
                         if (property0.NameEquals("keysMetadata"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -752,15 +692,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             enablePartitionMerge = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("enableBurstCapacity"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableBurstCapacity = property0.Value.GetBoolean();
-                            continue;
-                        }
                         if (property0.NameEquals("minimalTlsVersion"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -768,38 +699,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                                 continue;
                             }
                             minimalTlsVersion = new CosmosDBMinimalTlsVersion(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("customerManagedKeyStatus"u8))
-                        {
-                            customerManagedKeyStatus = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("enablePriorityBasedExecution"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enablePriorityBasedExecution = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("defaultPriorityLevel"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            defaultPriorityLevel = new DefaultPriorityLevel(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("enablePerRegionPerPartitionAutoscale"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enablePerRegionPerPartitionAutoscale = property0.Value.GetBoolean();
                             continue;
                         }
                     }
@@ -819,6 +718,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 kind,
+                identity,
                 consistencyPolicy,
                 locations,
                 databaseAccountOfferType,
@@ -843,20 +743,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 cors ?? new ChangeTrackingList<CosmosDBAccountCorsPolicy>(),
                 networkAclBypass,
                 networkAclBypassResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                diagnosticLogSettings,
                 disableLocalAuth,
                 restoreParameters,
                 capacity,
-                enableMaterializedViews,
                 keysMetadata,
                 enablePartitionMerge,
-                enableBurstCapacity,
                 minimalTlsVersion,
-                customerManagedKeyStatus,
-                enablePriorityBasedExecution,
-                defaultPriorityLevel,
-                enablePerRegionPerPartitionAutoscale,
-                identity,
                 serializedAdditionalRawData);
         }
 
@@ -1404,20 +1296,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DiagnosticLogSettings), out propertyOverride);
-            if (Optional.IsDefined(DiagnosticLogSettings) || hasPropertyOverride)
-            {
-                builder.Append("    diagnosticLogSettings: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    BicepSerializationHelpers.AppendChildObject(builder, DiagnosticLogSettings, options, 4, false, "    diagnosticLogSettings: ");
-                }
-            }
-
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisableLocalAuth), out propertyOverride);
             if (Optional.IsDefined(DisableLocalAuth) || hasPropertyOverride)
             {
@@ -1461,21 +1339,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableMaterializedViews), out propertyOverride);
-            if (Optional.IsDefined(EnableMaterializedViews) || hasPropertyOverride)
-            {
-                builder.Append("    enableMaterializedViews: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    var boolValue = EnableMaterializedViews.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeysMetadata), out propertyOverride);
             if (Optional.IsDefined(KeysMetadata) || hasPropertyOverride)
             {
@@ -1505,21 +1368,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableBurstCapacity), out propertyOverride);
-            if (Optional.IsDefined(EnableBurstCapacity) || hasPropertyOverride)
-            {
-                builder.Append("    enableBurstCapacity: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    var boolValue = EnableBurstCapacity.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinimalTlsVersion), out propertyOverride);
             if (Optional.IsDefined(MinimalTlsVersion) || hasPropertyOverride)
             {
@@ -1531,72 +1379,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 else
                 {
                     builder.AppendLine($"'{MinimalTlsVersion.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomerManagedKeyStatus), out propertyOverride);
-            if (Optional.IsDefined(CustomerManagedKeyStatus) || hasPropertyOverride)
-            {
-                builder.Append("    customerManagedKeyStatus: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (CustomerManagedKeyStatus.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CustomerManagedKeyStatus}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CustomerManagedKeyStatus}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnablePriorityBasedExecution), out propertyOverride);
-            if (Optional.IsDefined(EnablePriorityBasedExecution) || hasPropertyOverride)
-            {
-                builder.Append("    enablePriorityBasedExecution: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    var boolValue = EnablePriorityBasedExecution.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultPriorityLevel), out propertyOverride);
-            if (Optional.IsDefined(DefaultPriorityLevel) || hasPropertyOverride)
-            {
-                builder.Append("    defaultPriorityLevel: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{DefaultPriorityLevel.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnablePerRegionPerPartitionAutoscale), out propertyOverride);
-            if (Optional.IsDefined(EnablePerRegionPerPartitionAutoscale) || hasPropertyOverride)
-            {
-                builder.Append("    enablePerRegionPerPartitionAutoscale: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    var boolValue = EnablePerRegionPerPartitionAutoscale.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
                 }
             }
 
@@ -1621,15 +1403,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         propertyDictionary0.Add("SchemaType", item.Value);
                         bicepOptions.PropertyOverrides.Add(AnalyticalStorageConfiguration, propertyDictionary0);
                         break;
-                    case "DiagnosticLogEnableFullTextQuery":
-                        Dictionary<string, string> propertyDictionary1 = new Dictionary<string, string>();
-                        propertyDictionary1.Add("EnableFullTextQuery", item.Value);
-                        bicepOptions.PropertyOverrides.Add(DiagnosticLogSettings, propertyDictionary1);
-                        break;
                     case "CapacityTotalThroughputLimit":
-                        Dictionary<string, string> propertyDictionary2 = new Dictionary<string, string>();
-                        propertyDictionary2.Add("TotalThroughputLimit", item.Value);
-                        bicepOptions.PropertyOverrides.Add(Capacity, propertyDictionary2);
+                        Dictionary<string, string> propertyDictionary1 = new Dictionary<string, string>();
+                        propertyDictionary1.Add("TotalThroughputLimit", item.Value);
+                        bicepOptions.PropertyOverrides.Add(Capacity, propertyDictionary1);
                         break;
                     default:
                         continue;

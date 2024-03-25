@@ -37,16 +37,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("operationType"u8);
                 writer.WriteStringValue(OperationType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CanUndelete))
-            {
-                writer.WritePropertyName("canUndelete"u8);
-                writer.WriteStringValue(CanUndelete);
-            }
-            if (options.Format != "W" && Optional.IsDefined(CanUndeleteReason))
-            {
-                writer.WritePropertyName("canUndeleteReason"u8);
-                writer.WriteStringValue(CanUndeleteReason);
-            }
             if (options.Format != "W" && Optional.IsDefined(EventTimestamp))
             {
                 writer.WritePropertyName("eventTimestamp"u8);
@@ -102,8 +92,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             string rid = default;
             CosmosDBOperationType? operationType = default;
-            string canUndelete = default;
-            string canUndeleteReason = default;
             string eventTimestamp = default;
             string ownerId = default;
             string ownerResourceId = default;
@@ -123,16 +111,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         continue;
                     }
                     operationType = new CosmosDBOperationType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("canUndelete"u8))
-                {
-                    canUndelete = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("canUndeleteReason"u8))
-                {
-                    canUndeleteReason = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("eventTimestamp"u8))
@@ -159,8 +137,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new ExtendedRestorableGremlinGraphResourceInfo(
                 rid,
                 operationType,
-                canUndelete,
-                canUndeleteReason,
                 eventTimestamp,
                 ownerId,
                 ownerResourceId,
@@ -211,50 +187,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 else
                 {
                     builder.AppendLine($"'{OperationType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CanUndelete), out propertyOverride);
-            if (Optional.IsDefined(CanUndelete) || hasPropertyOverride)
-            {
-                builder.Append("  canUndelete: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (CanUndelete.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CanUndelete}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CanUndelete}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CanUndeleteReason), out propertyOverride);
-            if (Optional.IsDefined(CanUndeleteReason) || hasPropertyOverride)
-            {
-                builder.Append("  canUndeleteReason: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (CanUndeleteReason.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CanUndeleteReason}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CanUndeleteReason}'");
-                    }
                 }
             }
 

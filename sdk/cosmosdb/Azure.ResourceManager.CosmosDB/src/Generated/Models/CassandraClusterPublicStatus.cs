@@ -49,7 +49,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal CassandraClusterPublicStatus()
         {
             ConnectionErrors = new ChangeTrackingList<CassandraConnectionError>();
-            Errors = new ChangeTrackingList<CassandraError>();
             DataCenters = new ChangeTrackingList<CassandraClusterPublicStatusDataCentersItem>();
         }
 
@@ -57,15 +56,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="etag"></param>
         /// <param name="reaperStatus"></param>
         /// <param name="connectionErrors"> List relevant information about any connection errors to the Datacenters. </param>
-        /// <param name="errors"> List relevant information about any errors about cluster, data center and connection error. </param>
         /// <param name="dataCenters"> List of the status of each datacenter in this cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraClusterPublicStatus(ETag? etag, CassandraReaperStatus reaperStatus, IReadOnlyList<CassandraConnectionError> connectionErrors, IReadOnlyList<CassandraError> errors, IReadOnlyList<CassandraClusterPublicStatusDataCentersItem> dataCenters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CassandraClusterPublicStatus(ETag? etag, CassandraReaperStatus reaperStatus, IReadOnlyList<CassandraConnectionError> connectionErrors, IReadOnlyList<CassandraClusterPublicStatusDataCentersItem> dataCenters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ETag = etag;
             ReaperStatus = reaperStatus;
             ConnectionErrors = connectionErrors;
-            Errors = errors;
             DataCenters = dataCenters;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -79,9 +76,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> List relevant information about any connection errors to the Datacenters. </summary>
         [WirePath("connectionErrors")]
         public IReadOnlyList<CassandraConnectionError> ConnectionErrors { get; }
-        /// <summary> List relevant information about any errors about cluster, data center and connection error. </summary>
-        [WirePath("errors")]
-        public IReadOnlyList<CassandraError> Errors { get; }
         /// <summary> List of the status of each datacenter in this cluster. </summary>
         [WirePath("dataCenters")]
         public IReadOnlyList<CassandraClusterPublicStatusDataCentersItem> DataCenters { get; }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         private ResourceIdentifier _databaseAccountIdentifier;
         private CosmosDBAccountResource _databaseAccount;
 
-        public PrivateEndpointConnectionTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        public PrivateEndpointConnectionTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -58,6 +58,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
         }
 
+        [Test]
         [RecordedTest]
         public async Task PrivateEndpointConnectionCreateAndUpdate()
         {
@@ -83,6 +84,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual("Approved", privateEndpointConnection.Data.ConnectionState.Status);
         }
 
+        [Test]
         [RecordedTest]
         public async Task PrivateEndpointConnectionList()
         {
@@ -94,6 +96,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyPrivateEndpointConnections(privateEndpoint.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnections[0]);
         }
 
+        [Test]
         [RecordedTest]
         public async Task PrivateEndpointConnectionDelete()
         {
@@ -114,8 +117,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         protected async Task<PrivateEndpointResource> CreatePrivateEndpoint()
         {
             var vnetName = Recording.GenerateAssetName("vnet-");
-            var name = Recording.GenerateAssetName("pe-");
-            var pecName = Recording.GenerateAssetName("pec");
             var vnet = new VirtualNetworkData()
             {
                 Location = AzureLocation.WestUS,
@@ -128,16 +129,17 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             vnet.AddressPrefixes.Add("10.0.0.0/16");
             vnet.DhcpOptionsDnsServers.Add("10.1.1.1");
             vnet.DhcpOptionsDnsServers.Add("10.1.2.4");
-            ResourceIdentifier subnetID = await GetSubnetId(vnetName, vnet);
+            VirtualNetworkResource virtualNetwork = (await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet)).Value;
 
+            var name = Recording.GenerateAssetName("pe-");
             var privateEndpointData = new PrivateEndpointData
             {
                 Location = AzureLocation.WestUS,
-                Subnet = new SubnetData() { Id = subnetID },
+                Subnet = virtualNetwork.Data.Subnets[0],
                 ManualPrivateLinkServiceConnections = {
                     new NetworkPrivateLinkServiceConnection
                     {
-                        Name = pecName,
+                        Name = Recording.GenerateAssetName("pec"),
                         // TODO: externalize or create the service on-demand, like virtual network
                         //PrivateLinkServiceId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{resourceGroup.Data.Name}/providers/Microsoft.Storage/storageAccounts/{storageAccount.Name}",
                         PrivateLinkServiceId = _databaseAccountIdentifier,

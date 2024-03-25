@@ -74,16 +74,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("analyticalStorageTtl"u8);
                 writer.WriteNumberValue(AnalyticalStorageTtl.Value);
             }
-            if (Optional.IsDefined(RestoreParameters))
-            {
-                writer.WritePropertyName("restoreParameters"u8);
-                writer.WriteObjectValue<ResourceRestoreParameters>(RestoreParameters, options);
-            }
-            if (Optional.IsDefined(CreateMode))
-            {
-                writer.WritePropertyName("createMode"u8);
-                writer.WriteStringValue(CreateMode.Value.ToString());
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -132,8 +122,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             CosmosDBUniqueKeyPolicy uniqueKeyPolicy = default;
             ConflictResolutionPolicy conflictResolutionPolicy = default;
             long? analyticalStorageTtl = default;
-            ResourceRestoreParameters restoreParameters = default;
-            CosmosDBAccountCreateMode? createMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,24 +208,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     analyticalStorageTtl = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("restoreParameters"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    restoreParameters = ResourceRestoreParameters.DeserializeResourceRestoreParameters(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("createMode"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    createMode = new CosmosDBAccountCreateMode(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -252,8 +222,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 uniqueKeyPolicy,
                 conflictResolutionPolicy,
                 analyticalStorageTtl,
-                restoreParameters,
-                createMode,
                 serializedAdditionalRawData,
                 rid,
                 ts,
@@ -424,34 +392,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 else
                 {
                     builder.AppendLine($"'{AnalyticalStorageTtl.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestoreParameters), out propertyOverride);
-            if (Optional.IsDefined(RestoreParameters) || hasPropertyOverride)
-            {
-                builder.Append("  restoreParameters: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    BicepSerializationHelpers.AppendChildObject(builder, RestoreParameters, options, 2, false, "  restoreParameters: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreateMode), out propertyOverride);
-            if (Optional.IsDefined(CreateMode) || hasPropertyOverride)
-            {
-                builder.Append("  createMode: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{CreateMode.Value.ToString()}'");
                 }
             }
 

@@ -48,21 +48,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(IsSubscriptionRegionAccessAllowedForRegular))
-            {
-                writer.WritePropertyName("isSubscriptionRegionAccessAllowedForRegular"u8);
-                writer.WriteBooleanValue(IsSubscriptionRegionAccessAllowedForRegular.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(IsSubscriptionRegionAccessAllowedForAz))
-            {
-                writer.WritePropertyName("isSubscriptionRegionAccessAllowedForAz"u8);
-                writer.WriteBooleanValue(IsSubscriptionRegionAccessAllowedForAz.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -104,9 +89,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             bool? supportsAvailabilityZone = default;
             bool? isResidencyRestricted = default;
             IReadOnlyList<CosmosDBBackupStorageRedundancy> backupStorageRedundancies = default;
-            bool? isSubscriptionRegionAccessAllowedForRegular = default;
-            bool? isSubscriptionRegionAccessAllowedForAz = default;
-            CosmosDBStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,47 +125,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     backupStorageRedundancies = array;
                     continue;
                 }
-                if (property.NameEquals("isSubscriptionRegionAccessAllowedForRegular"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isSubscriptionRegionAccessAllowedForRegular = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("isSubscriptionRegionAccessAllowedForAz"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isSubscriptionRegionAccessAllowedForAz = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("status"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    status = new CosmosDBStatus(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBLocationProperties(
-                supportsAvailabilityZone,
-                isResidencyRestricted,
-                backupStorageRedundancies ?? new ChangeTrackingList<CosmosDBBackupStorageRedundancy>(),
-                isSubscriptionRegionAccessAllowedForRegular,
-                isSubscriptionRegionAccessAllowedForAz,
-                status,
-                serializedAdditionalRawData);
+            return new CosmosDBLocationProperties(supportsAvailabilityZone, isResidencyRestricted, backupStorageRedundancies ?? new ChangeTrackingList<CosmosDBBackupStorageRedundancy>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -246,50 +194,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         }
                         builder.AppendLine("  ]");
                     }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSubscriptionRegionAccessAllowedForRegular), out propertyOverride);
-            if (Optional.IsDefined(IsSubscriptionRegionAccessAllowedForRegular) || hasPropertyOverride)
-            {
-                builder.Append("  isSubscriptionRegionAccessAllowedForRegular: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    var boolValue = IsSubscriptionRegionAccessAllowedForRegular.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSubscriptionRegionAccessAllowedForAz), out propertyOverride);
-            if (Optional.IsDefined(IsSubscriptionRegionAccessAllowedForAz) || hasPropertyOverride)
-            {
-                builder.Append("  isSubscriptionRegionAccessAllowedForAz: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    var boolValue = IsSubscriptionRegionAccessAllowedForAz.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (Optional.IsDefined(Status) || hasPropertyOverride)
-            {
-                builder.Append("  status: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Status.Value.ToString()}'");
                 }
             }
 

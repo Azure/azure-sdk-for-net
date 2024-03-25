@@ -63,14 +63,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="backupStorageCustomerKeyUri"> Indicates the Key Uri of the customer key to use for encryption of the backup storage account. </param>
         /// <param name="sku"> Virtual Machine SKU used for data centers. Default value is Standard_DS14_v2. </param>
         /// <param name="diskSku"> Disk SKU used for data centers. Default value is P30. </param>
-        /// <param name="diskCapacity"> Number of disks attached to each node. Default is 4. </param>
-        /// <param name="doesSupportAvailabilityZone"> If the data center has Availability Zone support, apply it to the Virtual Machine ScaleSet that host the cassandra data center virtual machines. </param>
-        /// <param name="authenticationMethodLdapProperties"> Ldap authentication method properties. This feature is in preview. </param>
-        /// <param name="deallocated"> Whether the data center has been deallocated. </param>
-        /// <param name="provisionError"> Error related to resource provisioning. </param>
-        /// <param name="privateEndpointIPAddress"> Ip of the VPN Endpoint for this data center. </param>
+        /// <param name="diskCapacity"> Number of disk used for data centers. Default value is 4. </param>
+        /// <param name="doesSupportAvailabilityZone"> If the azure data center has Availability Zone support, apply it to the Virtual Machine ScaleSet that host the cassandra data center virtual machines. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraDataCenterProperties(CassandraProvisioningState? provisioningState, AzureLocation? dataCenterLocation, ResourceIdentifier delegatedSubnetId, int? nodeCount, IReadOnlyList<CassandraDataCenterSeedNode> seedNodes, string base64EncodedCassandraYamlFragment, Uri managedDiskCustomerKeyUri, Uri backupStorageCustomerKeyUri, string sku, string diskSku, int? diskCapacity, bool? doesSupportAvailabilityZone, AuthenticationMethodLdapProperties authenticationMethodLdapProperties, bool? deallocated, CassandraError provisionError, string privateEndpointIPAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CassandraDataCenterProperties(CassandraProvisioningState? provisioningState, AzureLocation? dataCenterLocation, ResourceIdentifier delegatedSubnetId, int? nodeCount, IReadOnlyList<CassandraDataCenterSeedNode> seedNodes, string base64EncodedCassandraYamlFragment, Uri managedDiskCustomerKeyUri, Uri backupStorageCustomerKeyUri, string sku, string diskSku, int? diskCapacity, bool? doesSupportAvailabilityZone, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             DataCenterLocation = dataCenterLocation;
@@ -84,10 +80,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             DiskSku = diskSku;
             DiskCapacity = diskCapacity;
             DoesSupportAvailabilityZone = doesSupportAvailabilityZone;
-            AuthenticationMethodLdapProperties = authenticationMethodLdapProperties;
-            Deallocated = deallocated;
-            ProvisionError = provisionError;
-            PrivateEndpointIPAddress = privateEndpointIPAddress;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -121,23 +113,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Disk SKU used for data centers. Default value is P30. </summary>
         [WirePath("diskSku")]
         public string DiskSku { get; set; }
-        /// <summary> Number of disks attached to each node. Default is 4. </summary>
+        /// <summary> Number of disk used for data centers. Default value is 4. </summary>
         [WirePath("diskCapacity")]
         public int? DiskCapacity { get; set; }
-        /// <summary> If the data center has Availability Zone support, apply it to the Virtual Machine ScaleSet that host the cassandra data center virtual machines. </summary>
+        /// <summary> If the azure data center has Availability Zone support, apply it to the Virtual Machine ScaleSet that host the cassandra data center virtual machines. </summary>
         [WirePath("availabilityZone")]
         public bool? DoesSupportAvailabilityZone { get; set; }
-        /// <summary> Ldap authentication method properties. This feature is in preview. </summary>
-        [WirePath("authenticationMethodLdapProperties")]
-        public AuthenticationMethodLdapProperties AuthenticationMethodLdapProperties { get; set; }
-        /// <summary> Whether the data center has been deallocated. </summary>
-        [WirePath("deallocated")]
-        public bool? Deallocated { get; set; }
-        /// <summary> Error related to resource provisioning. </summary>
-        [WirePath("provisionError")]
-        public CassandraError ProvisionError { get; set; }
-        /// <summary> Ip of the VPN Endpoint for this data center. </summary>
-        [WirePath("privateEndpointIpAddress")]
-        public string PrivateEndpointIPAddress { get; set; }
     }
 }

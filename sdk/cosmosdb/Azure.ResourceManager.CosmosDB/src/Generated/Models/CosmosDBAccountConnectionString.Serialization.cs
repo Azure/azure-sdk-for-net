@@ -37,16 +37,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(KeyKind))
-            {
-                writer.WritePropertyName("keyKind"u8);
-                writer.WriteStringValue(KeyKind.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(KeyType))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(KeyType.Value.ToString());
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -87,8 +77,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             string connectionString = default;
             string description = default;
-            CosmosDBKind? keyKind = default;
-            CosmosDBType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,31 +91,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyKind"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    keyKind = new CosmosDBKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new CosmosDBType(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBAccountConnectionString(connectionString, description, keyKind, type, serializedAdditionalRawData);
+            return new CosmosDBAccountConnectionString(connectionString, description, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -182,34 +152,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         builder.AppendLine($"'{Description}'");
                     }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyKind), out propertyOverride);
-            if (Optional.IsDefined(KeyKind) || hasPropertyOverride)
-            {
-                builder.Append("  keyKind: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{KeyKind.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyType), out propertyOverride);
-            if (Optional.IsDefined(KeyType) || hasPropertyOverride)
-            {
-                builder.Append("  type: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{KeyType.Value.ToString()}'");
                 }
             }
 

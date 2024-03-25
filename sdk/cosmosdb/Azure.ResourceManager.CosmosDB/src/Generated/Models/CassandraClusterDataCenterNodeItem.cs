@@ -55,7 +55,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="address"> The node's IP address. </param>
         /// <param name="state"> The state of the node in Cassandra ring. </param>
         /// <param name="status"></param>
-        /// <param name="cassandraProcessStatus"> Cassandra service status on this node. </param>
         /// <param name="load"> The amount of file system data in the data directory (e.g., 47.66 kB), excluding all content in the snapshots subdirectories. Because all SSTable data files are included, any data that is not cleaned up (such as TTL-expired cells or tombstones) is counted. </param>
         /// <param name="tokens"> List of tokens this node covers. </param>
         /// <param name="size"></param>
@@ -69,14 +68,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="memoryFreeKB"> Unused memory (MemFree and SwapFree in /proc/meminfo), in kB. </param>
         /// <param name="memoryTotalKB"> Total installed memory (MemTotal and SwapTotal in /proc/meminfo), in kB. </param>
         /// <param name="cpuUsage"> A float representing the current system-wide CPU utilization as a percentage. </param>
-        /// <param name="isLatestModel"> If node has been updated to latest model. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraClusterDataCenterNodeItem(string address, CassandraNodeState? state, string status, string cassandraProcessStatus, string load, IReadOnlyList<string> tokens, int? size, Guid? hostId, string rack, string timestamp, long? diskUsedKB, long? diskFreeKB, long? memoryUsedKB, long? memoryBuffersAndCachedKB, long? memoryFreeKB, long? memoryTotalKB, double? cpuUsage, bool? isLatestModel, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CassandraClusterDataCenterNodeItem(string address, CassandraNodeState? state, string status, string load, IReadOnlyList<string> tokens, int? size, Guid? hostId, string rack, string timestamp, long? diskUsedKB, long? diskFreeKB, long? memoryUsedKB, long? memoryBuffersAndCachedKB, long? memoryFreeKB, long? memoryTotalKB, double? cpuUsage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Address = address;
             State = state;
             Status = status;
-            CassandraProcessStatus = cassandraProcessStatus;
             Load = load;
             Tokens = tokens;
             Size = size;
@@ -90,7 +87,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             MemoryFreeKB = memoryFreeKB;
             MemoryTotalKB = memoryTotalKB;
             CpuUsage = cpuUsage;
-            IsLatestModel = isLatestModel;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -103,9 +99,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Gets the status. </summary>
         [WirePath("status")]
         public string Status { get; }
-        /// <summary> Cassandra service status on this node. </summary>
-        [WirePath("cassandraProcessStatus")]
-        public string CassandraProcessStatus { get; }
         /// <summary> The amount of file system data in the data directory (e.g., 47.66 kB), excluding all content in the snapshots subdirectories. Because all SSTable data files are included, any data that is not cleaned up (such as TTL-expired cells or tombstones) is counted. </summary>
         [WirePath("load")]
         public string Load { get; }
@@ -145,8 +138,5 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> A float representing the current system-wide CPU utilization as a percentage. </summary>
         [WirePath("cpuUsage")]
         public double? CpuUsage { get; }
-        /// <summary> If node has been updated to latest model. </summary>
-        [WirePath("isLatestModel")]
-        public bool? IsLatestModel { get; }
     }
 }
