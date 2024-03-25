@@ -3,7 +3,7 @@
 ## 1.11.0 (2024-04-09)
 
 ### Bugs Fixed
-- `AzurePowerShellCredential` now handles the case where it falls back to legacy powershell without relying on the error message string.
+- `AzurePowerShellCredential` now handles the case where it falls back to legacy PowerShell without relying on the error message string.
 
 ## 1.11.0-beta.1 (2024-02-06)
 
