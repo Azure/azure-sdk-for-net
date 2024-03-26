@@ -19,8 +19,8 @@ internal class ArrayBackedRequestHeaders : PipelineRequestHeaders
 
     public override void Add(string name, string value)
     {
-        Argument.AssertNotNull(name, nameof(name));
-        Argument.AssertNotNull(name, nameof(value));
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        Argument.AssertNotNullOrEmpty(value, nameof(value));
 
         if (_headers.TryAdd(new IgnoreCaseString(name), value, out object? currentValue))
         {
@@ -40,7 +40,7 @@ internal class ArrayBackedRequestHeaders : PipelineRequestHeaders
 
     public override bool TryGetValue(string name, out string? value)
     {
-        Argument.AssertNotNull(name, nameof(name));
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
 
         if (_headers.TryGetValue(new IgnoreCaseString(name), out object? headerValue))
         {
@@ -54,7 +54,7 @@ internal class ArrayBackedRequestHeaders : PipelineRequestHeaders
 
     public override bool TryGetValues(string name, out IEnumerable<string>? values)
     {
-        Argument.AssertNotNull(name, nameof(name));
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
 
         if (_headers.TryGetValue(new IgnoreCaseString(name), out object? value))
         {

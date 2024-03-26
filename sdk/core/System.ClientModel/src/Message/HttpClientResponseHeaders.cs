@@ -23,14 +23,14 @@ internal class HttpClientResponseHeaders : PipelineResponseHeaders
 
     public override bool TryGetValue(string name, out string? value)
     {
-        Argument.AssertNotNull(name, nameof(name));
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
 
         return TryGetHeader(_httpResponse.Headers, _httpResponseContent, name, out value);
     }
 
     public override bool TryGetValues(string name, out IEnumerable<string>? values)
     {
-        Argument.AssertNotNull(name, nameof(name));
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
 
         return TryGetHeader(_httpResponse.Headers, _httpResponseContent, name, out values);
     }
