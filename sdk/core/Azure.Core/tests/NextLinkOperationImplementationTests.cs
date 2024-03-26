@@ -30,6 +30,19 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void CreateWithIncompleteNextRequestUri()
+        {
+            var pipeline = CreateMockHttpPipeline();
+            var operationId = Guid.NewGuid().ToString();
+            var requestMethod = RequestMethod.Delete;
+            var rehydrationToken = new RehydrationToken(null, null, "None", $"/subscriptions/subscription-id/providers/Microsoft.Compute/locations/region/operations/{operationId}?api-version=2019-12-01", "https://test", requestMethod, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
+            var operation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(pipeline, rehydrationToken);
+            Assert.NotNull(operation);
+            Assert.AreEqual(operationId, operation.OperationId);
+            Assert.AreEqual(requestMethod, operation.RequestMethod);
+        }
+
+        [Test]
         public void ConstructNextLinkOperation()
         {
             var operationId = Guid.NewGuid().ToString();

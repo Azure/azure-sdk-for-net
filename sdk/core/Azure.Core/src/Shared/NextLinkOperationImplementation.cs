@@ -173,14 +173,18 @@ namespace Azure.Core
             _finalStateVia = finalStateVia;
             _pipeline = pipeline;
             _apiVersion = apiVersion;
-            OperationId = ParseOperationId(nextRequestUri);
+            OperationId = ParseOperationId(startRequestUri, nextRequestUri);
         }
 
-        private static string ParseOperationId(string nextRequestUri)
+        private static string ParseOperationId(Uri startRequestUri, string nextRequestUri)
         {
-            if (Uri.TryCreate(nextRequestUri, UriKind.Absolute, out var uri))
+            if (Uri.TryCreate(nextRequestUri, UriKind.Absolute, out var nextLink) && nextLink.Scheme != "file")
             {
-                return uri.Segments.Last();
+                return nextLink.Segments.Last();
+            }
+            else
+            {
+                return new Uri(startRequestUri, nextRequestUri).Segments.Last();
             }
             throw new ArgumentException($"\"{nameof(nextRequestUri)}\":{nextRequestUri} is not a valid Uri");
         }
@@ -212,7 +216,7 @@ namespace Azure.Core
             }
             var headerSource = GetHeaderSource(requestMethod, startRequestUri, response, apiVersionStr, out var nextRequestUri);
             response.Headers.TryGetValue("Location", out var lastKnownLocation);
-            var operationId = ParseOperationId(nextRequestUri);
+            var operationId = ParseOperationId(startRequestUri, nextRequestUri);
             return GetRehydrationToken(requestMethod, startRequestUri, nextRequestUri, headerSource.ToString(), lastKnownLocation, finalStateVia.ToString(), operationId);
         }
 
