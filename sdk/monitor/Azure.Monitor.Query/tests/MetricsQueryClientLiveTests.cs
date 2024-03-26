@@ -35,7 +35,7 @@ namespace Azure.Monitor.Query.Tests
         private MetricsClient CreateMetricsClient()
         {
             return InstrumentClient(new MetricsClient(
-                new Uri("https://" + TestEnvironment.MetricsLocation + ".metrics.monitor.azure.com"),
+                new Uri("https://westus.metrics.monitor.azure.com"),
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new MetricsClientOptions())
             ));
