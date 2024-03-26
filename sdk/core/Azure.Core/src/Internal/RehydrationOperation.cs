@@ -12,12 +12,9 @@ namespace Azure.Core
         private readonly NextLinkOperationImplementation _nextLinkOperation;
         private readonly OperationInternal _operation;
 
-        public RehydrationOperation(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions? options = null)
+        public RehydrationOperation(NextLinkOperationImplementation nextLinkOperation, OperationState operationState, ClientOptions? options = null)
         {
-            Argument.AssertNotNull(pipeline, nameof(pipeline));
-            Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
-            _nextLinkOperation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(pipeline, rehydrationToken);
-            var operationState = _nextLinkOperation.UpdateStateAsync(false, default).EnsureCompleted();
+            _nextLinkOperation = nextLinkOperation;
             _operation = operationState.HasCompleted
                 ? _operation = new OperationInternal(operationState)
                 : new OperationInternal(_nextLinkOperation, new ClientDiagnostics(options ?? ClientOptions.Default), operationState.RawResponse);

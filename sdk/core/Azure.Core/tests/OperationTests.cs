@@ -135,7 +135,19 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void RehydrateOperation()
+        public void ThrowOnNullArgumentWhileRehydrateAsync()
+        {
+            Assert.ThrowsAsync<ArgumentNullException>(() => Operation.RehydrateAsync(null, new RehydrationToken()));
+        }
+
+        [Test]
+        public void ThrowOnNullArgumentWhileRehydrate()
+        {
+            Assert.Throws<ArgumentNullException>(() => Operation.Rehydrate(null, new RehydrationToken()));
+        }
+
+        [Test]
+        public void Rehydrate()
         {
             var pipeline = CreateMockHttpPipeline(out _);
             var operationId = Guid.NewGuid().ToString();
@@ -148,7 +160,20 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void RehydrateOperationOfT()
+        public async Task RehydrateAsync()
+        {
+            var pipeline = CreateMockHttpPipeline(out _);
+            var operationId = Guid.NewGuid().ToString();
+            var rehydrationToken = new RehydrationToken(null, null, "None", $"https://management.azure.com/subscriptions/subscription-id/providers/Microsoft.Compute/locations/region/operations/{operationId}?api-version=2019-12-01", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
+            var operation = await Operation.RehydrateAsync(pipeline, rehydrationToken);
+            Assert.NotNull(operation);
+            Assert.AreEqual(operationId, operation.Id);
+            Assert.True(operation.HasCompleted);
+            Assert.AreEqual(200, operation.GetRawResponse().Status);
+        }
+
+        [Test]
+        public void RehydrateOfT()
         {
             var pipeline = CreateMockHttpPipeline(out var mockJsonModel);
             var operationId = Guid.NewGuid().ToString();
@@ -162,6 +187,53 @@ namespace Azure.Core.Tests
             Assert.AreEqual(ModelReaderWriter.Write(mockJsonModel).ToString(), ModelReaderWriter.Write(operation.Value).ToString());
         }
 
+        [Test]
+        public async Task RehydrateAsyncOfT()
+        {
+            var pipeline = CreateMockHttpPipeline(out var mockJsonModel);
+            var operationId = Guid.NewGuid().ToString();
+            var rehydrationToken = new RehydrationToken(null, null, "None", $"https://management.azure.com/subscriptions/subscription-id/providers/Microsoft.Compute/locations/region/operations/{operationId}?api-version=2019-12-01", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
+            var operation = await Operation.RehydrateAsync<MockJsonModel>(pipeline, rehydrationToken);
+            Assert.NotNull(operation);
+            Assert.AreEqual(operationId, operation.Id);
+            Assert.True(operation.HasCompleted);
+            Assert.True(operation.HasValue);
+            Assert.AreEqual(200, operation.GetRawResponse().Status);
+            Assert.AreEqual(ModelReaderWriter.Write(mockJsonModel).ToString(), ModelReaderWriter.Write(operation.Value).ToString());
+        }
+
+        [Test]
+        public async Task ConstructOperationForRehydrationWithFailure()
+        {
+            HttpPipeline pipeline = CreateMockHttpPipelineWithFailure();
+            var operationId = Guid.NewGuid().ToString();
+            var rehydrationToken = new RehydrationToken(null, null, "None", $"https://management.azure.com/subscriptions/subscription-id/providers/Microsoft.Compute/locations/region/operations/{operationId}?api-version=2019-12-01", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
+            var operation = await Operation.RehydrateAsync<MockJsonModel>(pipeline, rehydrationToken);
+            Assert.NotNull(operation);
+            Assert.AreEqual(500, operation.GetRawResponse().Status);
+            Assert.True(operation.HasCompleted);
+        }
+
+        [Test]
+        public async Task GetRehydrationTokenAsync()
+        {
+            var operationId = Guid.NewGuid().ToString();
+            var rehydrationToken = new RehydrationToken(operationId, null, "None", $"https://management.azure.com/subscriptions/subscription-id/providers/Microsoft.Compute/locations/region/operations/{operationId}?api-version=2019-12-01", "https://test/", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
+            var operation = await Operation.RehydrateAsync(HttpPipelineBuilder.Build(new MockClientOptions()), rehydrationToken);
+            var token = operation.GetRehydrationToken();
+            Assert.AreEqual(ModelReaderWriter.Write(rehydrationToken).ToString(), ModelReaderWriter.Write(token).ToString());
+        }
+
+        [Test]
+        public async Task GetRehydrationTokenOfTAsync()
+        {
+            var operationId = Guid.NewGuid().ToString();
+            var rehydrationToken = new RehydrationToken(operationId, null, "None", $"https://management.azure.com/subscriptions/subscription-id/providers/Microsoft.Compute/locations/region/operations/{operationId}?api-version=2019-12-01", "https://test/", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
+            var operation = await Operation.RehydrateAsync<MockJsonModel>(HttpPipelineBuilder.Build(new MockClientOptions()), rehydrationToken);
+            var token = operation.GetRehydrationToken();
+            Assert.AreEqual(ModelReaderWriter.Write(rehydrationToken).ToString(), ModelReaderWriter.Write(token).ToString());
+        }
+
         private static HttpPipeline CreateMockHttpPipeline(out MockJsonModel mockJsonModel)
         {
             var mockResponse = new MockResponse(200);
@@ -170,6 +242,18 @@ namespace Azure.Core.Tests
             var transport = new MockTransport(mockResponse);
             var pipeline = new HttpPipeline(transport, default);
             return pipeline;
+        }
+
+        private static HttpPipeline CreateMockHttpPipelineWithFailure()
+        {
+            var mockResponse = new MockResponse(500);
+            var transport = new MockTransport(mockResponse, mockResponse);
+            var pipeline = new HttpPipeline(transport, default);
+            return pipeline;
+        }
+
+        private class MockClientOptions : ClientOptions
+        {
         }
     }
 }
