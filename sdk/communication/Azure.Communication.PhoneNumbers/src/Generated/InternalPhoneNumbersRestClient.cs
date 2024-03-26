@@ -265,7 +265,7 @@ namespace Azure.Communication.PhoneNumbers
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(phoneNumbersBrowseRequest);
+            content.JsonWriter.WriteObjectValue<PhoneNumbersBrowseContent>(phoneNumbersBrowseRequest);
             request.Content = content;
             return message;
         }
@@ -543,7 +543,7 @@ namespace Azure.Communication.PhoneNumbers
             request.Headers.Add("Content-Type", "application/merge-patch+json");
             var model = new PhoneNumbersReservation(phoneNumbers);
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue<PhoneNumbersReservation>(model);
             request.Content = content;
             return message;
         }
@@ -761,7 +761,7 @@ namespace Azure.Communication.PhoneNumbers
                 ConsentToNotResellNumbers = consentToNotResellNumbers
             };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue<PhoneNumbersReservationPurchaseRequest>(model);
             request.Content = content;
             return message;
         }
