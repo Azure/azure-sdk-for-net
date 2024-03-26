@@ -38,7 +38,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
         #endregion
 
         #region Metadata used by other components
-        private readonly List<Tuple<string, DerivedMetricInfoAggregation?>> telemetryMetadata = new List<Tuple<string, DerivedMetricInfoAggregation?>>();
+        private readonly List<Tuple<string, Models.AggregationType?>> telemetryMetadata = new List<Tuple<string, Models.AggregationType?>>();
         #endregion
 
         public CollectionConfiguration(
@@ -58,7 +58,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 
             foreach (var error in errors)
             {
-                UpdateMetricIdOfError(error, this.info.Etag);
+                UpdateMetricIdOfError(error, this.info.ETag);
             }
         }
 
@@ -68,7 +68,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             {
                 if (error.Data[i].Key == "ETag")
                 {
-                    error.Data[i].Value = id;
+                    error.Data[i] = new KeyValuePairString(error.Data[i].Key, id);
+
+                    // TODO: MODEL CHANGED TO READONLY. I'M INVESTIGATING IF WE CAN REVERT THIS CHANGE. (2024-03-22)
+                    //error.Data[i].Value = id;
+
                     return;
                 }
             }
@@ -85,14 +89,14 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
         /// <summary>
         /// Gets Telemetry types only. Used by QuickPulseTelemetryProcessor.
         /// </summary>
-        public IEnumerable<Tuple<string, DerivedMetricInfoAggregation?>> TelemetryMetadata => this.telemetryMetadata;
+        public IEnumerable<Tuple<string, Models.AggregationType?>> TelemetryMetadata => this.telemetryMetadata;
 
         ///// <summary>
         ///// Gets document streams. Telemetry items are provided by QuickPulseTelemetryProcessor.
         ///// </summary>
         //public IEnumerable<DocumentStream> DocumentStreams => this.documentStreams;
 
-        public string ETag => this.info.Etag;
+        public string ETag => this.info.ETag;
 
         private static void AddMetric<DocumentIngress>(
           DerivedMetricInfo metricInfo,

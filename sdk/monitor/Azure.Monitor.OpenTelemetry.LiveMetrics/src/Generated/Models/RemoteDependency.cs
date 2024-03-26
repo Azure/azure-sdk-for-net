@@ -9,13 +9,13 @@ using System.Collections.Generic;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
-    /// <summary> Dependency type document. </summary>
+    /// <summary> RemoteDependency document type. </summary>
     internal partial class RemoteDependency : DocumentIngress
     {
         /// <summary> Initializes a new instance of <see cref="RemoteDependency"/>. </summary>
         public RemoteDependency()
         {
-            DocumentType = DocumentIngressDocumentType.RemoteDependency;
+            DocumentType = DocumentType.RemoteDependency;
         }
 
         /// <summary> Initializes a new instance of <see cref="RemoteDependency"/>. </summary>
@@ -26,7 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         /// <param name="commandName"> URL of the dependency call to the target, with all query string parameters. </param>
         /// <param name="resultCode"> Result code of a dependency call. Examples are SQL error code and HTTP status code. </param>
         /// <param name="duration"> Request duration in ISO 8601 duration format, i.e., P[n]Y[n]M[n]DT[n]H[n]M[n]S or P[n]W. </param>
-        internal RemoteDependency(DocumentIngressDocumentType documentType, IList<string> documentStreamIds, IList<KeyValuePairString> properties, string name, string commandName, string resultCode, string duration) : base(documentType, documentStreamIds, properties)
+        internal RemoteDependency(DocumentType documentType, IList<string> documentStreamIds, IList<KeyValuePairString> properties, string name, string commandName, string resultCode, string duration) : base(documentType, documentStreamIds, properties)
         {
             Name = name;
             CommandName = commandName;

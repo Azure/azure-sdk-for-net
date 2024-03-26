@@ -185,7 +185,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
         public void StateMachineFailedWithUnknownException(string exceptionMessage) => WriteEvent(11, exceptionMessage);
 
         [NonEvent]
-        public void DroppedDocument(DocumentIngressDocumentType documentType)
+        public void DroppedDocument(DocumentType documentType)
         {
             if (IsEnabled(EventLevel.Warning))
             {

@@ -28,24 +28,23 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
         public MonitoringDataPoint GetDataPoint()
         {
-            var dataPoint = new MonitoringDataPoint
+            var dataPoint = new MonitoringDataPoint(
+                version: SdkVersionUtils.s_sdkVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength),
+                invariantVersion: 5,
+                instance: LiveMetricsResource?.RoleInstance ?? "UNKNOWN_INSTANCE",
+                roleName: LiveMetricsResource?.RoleName,
+                machineName: Environment.MachineName, // TODO: MOVE TO PLATFORM
+                streamId: _streamId,
+                isWebApp: _isAzureWebApp,
+                performanceCollectionSupported: true)
             {
-                Version = SdkVersionUtils.s_sdkVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength),
-                InvariantVersion = 5,
-                Instance = LiveMetricsResource?.RoleInstance ?? "UNKNOWN_INSTANCE",
-                RoleName = LiveMetricsResource?.RoleName,
-                MachineName = Environment.MachineName, // TODO: MOVE TO PLATFORM
-                StreamId = _streamId,
                 Timestamp = DateTime.UtcNow, // Represents timestamp sample was created
                 TransmissionTime = DateTime.UtcNow, // represents timestamp transmission was sent
-                IsWebApp = _isAzureWebApp,
-                PerformanceCollectionSupported = true,
-                // AI SDK relies on PerformanceCounter to collect CPU and Memory metrics.
-                // Follow up with service team to get this removed for OTEL based live metrics.
-                // TopCpuProcesses = null,
-                // TODO: Configuration errors are thrown when filter is applied.
-                // CollectionConfigurationErrors = null,
+                //TopCpuProcesses = null, // TODO
             };
+
+            // TODO: Configuration errors are thrown when filter is applied.
+            // CollectionConfigurationErrors = null,
 
             CollectionConfigurationError[] filteringErrors;
             string projectionError = string.Empty;
@@ -60,7 +59,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
                 if (item is Request request)
                 {
-                    ApplyFilters(metricAccumulators, _collectionConfiguration.RequestMetrics, request, out filteringErrors, ref projectionError);
+                    if (_collectionConfiguration != null)
+                    {
+                        ApplyFilters(metricAccumulators, _collectionConfiguration.RequestMetrics, request, out filteringErrors, ref projectionError);
+                    }
+
                     if (item.Extension_IsSuccess)
                     {
                         liveMetricsBuffer.RecordRequestSucceeded(item.Extension_Duration);
@@ -72,7 +75,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 }
                 else if (item is RemoteDependency remoteDependency)
                 {
-                    ApplyFilters(metricAccumulators, _collectionConfiguration.DependencyMetrics, remoteDependency, out filteringErrors, ref projectionError);
+                    if (_collectionConfiguration != null)
+                    {
+                        ApplyFilters(metricAccumulators, _collectionConfiguration.DependencyMetrics, remoteDependency, out filteringErrors, ref projectionError);
+                    }
+
                     if (item.Extension_IsSuccess)
                     {
                         liveMetricsBuffer.RecordDependencySucceeded(item.Extension_Duration);
@@ -84,12 +91,19 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 }
                 else if (item is Models.Exception exception)
                 {
-                    ApplyFilters(metricAccumulators, _collectionConfiguration.ExceptionMetrics, exception, out filteringErrors, ref projectionError);
+                    if (_collectionConfiguration != null)
+                    {
+                        ApplyFilters(metricAccumulators, _collectionConfiguration.ExceptionMetrics, exception, out filteringErrors, ref projectionError);
+                    }
+
                     liveMetricsBuffer.RecordException();
                 }
                 else if (item is Models.Trace trace)
                 {
-                    ApplyFilters(metricAccumulators, _collectionConfiguration.TraceMetrics, trace, out filteringErrors, ref projectionError);
+                    if (_collectionConfiguration != null)
+                    {
+                        ApplyFilters(metricAccumulators, _collectionConfiguration.TraceMetrics, trace, out filteringErrors, ref projectionError);
+                    }
                 }
                 else
                 {
@@ -131,21 +145,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         {
             _process.Refresh();
 
-            yield return new Models.MetricPoint
-            {
-                Name = LiveMetricConstants.MetricId.MemoryCommittedBytesMetricIdValue,
-                Value = _process.PrivateMemorySize64,
-                Weight = 1
-            };
+            yield return new Models.MetricPoint(name: LiveMetricConstants.MetricId.MemoryCommittedBytesMetricIdValue, value: _process.PrivateMemorySize64, weight: 1);
 
             if (TryCalculateCPUCounter(out var processorValue))
             {
-                yield return new Models.MetricPoint
-                {
-                    Name = LiveMetricConstants.MetricId.ProcessorTimeMetricIdValue,
-                    Value = Convert.ToSingle(processorValue),
-                    Weight = 1
-                };
+                yield return new Models.MetricPoint(name: LiveMetricConstants.MetricId.ProcessorTimeMetricIdValue, value: Convert.ToSingle(processorValue), weight: 1);
             }
         }
 
@@ -163,13 +167,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             {
                 try
                 {
-                    MetricPoint metricPoint = new MetricPoint
-                    {
-                        Name = metricAccumulatedValues.MetricId,
-                        Value = (float)metricAccumulatedValues.CalculateAggregation(out long count),
-                        Weight = (int)count,
-                    };
-
+                    MetricPoint metricPoint = new MetricPoint(name: metricAccumulatedValues.MetricId, value: (float)metricAccumulatedValues.CalculateAggregation(out long count), weight: (int)count);
                     metrics.Add(metricPoint);
                 }
                 catch (System.Exception)
@@ -183,27 +181,31 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             return metrics;
         }
 
-        private Dictionary<string, AccumulatedValues> CreateMetricAccumulators(CollectionConfiguration collectionConfiguration)
+        private Dictionary<string, AccumulatedValues> CreateMetricAccumulators(CollectionConfiguration? collectionConfiguration)
         {
             Dictionary<string, AccumulatedValues> metricAccumulators = new();
 
-            // prepare the accumulators based on the collection configuration
-            IEnumerable<Tuple<string, DerivedMetricInfoAggregation?>> allMetrics = collectionConfiguration.TelemetryMetadata;
-            foreach (Tuple<string, DerivedMetricInfoAggregation?> metricId in allMetrics ?? Enumerable.Empty<Tuple<string, DerivedMetricInfoAggregation?>>())
+            if (collectionConfiguration != null)
             {
-                var derivedMetricInfoAggregation = metricId.Item2;
-                if (!derivedMetricInfoAggregation.HasValue)
+                // prepare the accumulators based on the collection configuration
+                IEnumerable<Tuple<string, Models.AggregationType?>> allMetrics = collectionConfiguration.TelemetryMetadata;
+                foreach (Tuple<string, Models.AggregationType?> metricId in allMetrics)
                 {
-                    continue;
-                }
+                    var derivedMetricInfoAggregation = metricId.Item2;
+                    if (!derivedMetricInfoAggregation.HasValue)
+                    {
+                        continue;
+                    }
 
-                if (Enum.TryParse(derivedMetricInfoAggregation.ToString(), out AggregationType aggregationType))
-                {
-                    var accumulatedValues = new AccumulatedValues(metricId.Item1, aggregationType);
+                    if (Enum.TryParse(derivedMetricInfoAggregation.ToString(), out Filtering.AggregationType aggregationType))
+                    {
+                        var accumulatedValues = new AccumulatedValues(metricId.Item1, aggregationType);
 
-                    metricAccumulators.Add(metricId.Item1, accumulatedValues);
+                        metricAccumulators.Add(metricId.Item1, accumulatedValues);
+                    }
                 }
             }
+
             return metricAccumulators;
         }
 
