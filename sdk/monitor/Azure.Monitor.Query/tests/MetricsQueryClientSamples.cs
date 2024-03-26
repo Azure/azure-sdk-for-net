@@ -223,9 +223,15 @@ namespace Azure.Monitor.Query.Tests
             string resourceId = TestEnvironment.StorageAccountId;
 #endif
             #region Snippet:CreateMetricsClient
+#if SNIPPET
             var client = new MetricsClient(
-                new Uri("https://metrics.monitor.azure.com/.default"),
+                new Uri("https://<region>.metrics.monitor.azure.com/"),
                 new DefaultAzureCredential());
+#else
+            var client = new MetricsClient(
+                new Uri("https://" + TestEnvironment.MetricsLocation + "metrics.monitor.azure.com"),
+                new DefaultAzureCredential());
+#endif
             #endregion Snippet:CreateMetricsClient
             var options = new MetricsQueryResourcesOptions
             {
