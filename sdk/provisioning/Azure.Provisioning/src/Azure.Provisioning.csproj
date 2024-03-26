@@ -27,7 +27,6 @@
     <PackageReference Include="Azure.ResourceManager.ApplicationInsights" />
     <PackageReference Include="Azure.ResourceManager.OperationalInsights" />
     <PackageReference Include="Azure.ResourceManager.ManagedServiceIdentities" />
-    <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 
 </Project>
