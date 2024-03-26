@@ -34,9 +34,9 @@ namespace Azure.Communication.Messages
             writer.WritePropertyName("language"u8);
             writer.WriteStringValue(Language);
             writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToString());
+            writer.WriteStringValue(Status.ToSerialString());
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            writer.WriteStringValue(Kind.ToSerialString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -78,7 +78,7 @@ namespace Azure.Communication.Messages
             string name = default;
             string language = default;
             MessageTemplateStatus status = default;
-            CommunicationMessagesChannel kind = "Unknown";
+            CommunicationMessagesChannel kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,12 +95,12 @@ namespace Azure.Communication.Messages
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new MessageTemplateStatus(property.Value.GetString());
+                    status = property.Value.GetString().ToMessageTemplateStatus();
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = new CommunicationMessagesChannel(property.Value.GetString());
+                    kind = property.Value.GetString().ToCommunicationMessagesChannel();
                     continue;
                 }
                 if (options.Format != "W")

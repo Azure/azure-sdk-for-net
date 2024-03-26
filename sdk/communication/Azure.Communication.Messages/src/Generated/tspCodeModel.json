@@ -33,7 +33,7 @@
    ],
    "Namespace": "Azure.Communication.MessagesService",
    "Description": "The type of message. Supports text, image, template.",
-   "IsExtensible": true,
+   "IsExtensible": false,
    "IsNullable": false,
    "Usage": "Input"
   },
@@ -70,7 +70,7 @@
    ],
    "Namespace": "Azure.Communication.MessagesService",
    "Description": "The aggregated template status.",
-   "IsExtensible": true,
+   "IsExtensible": false,
    "IsNullable": false,
    "Usage": "Output"
   },
@@ -89,7 +89,7 @@
    ],
    "Namespace": "Azure.Communication.MessagesService",
    "Description": "The type of the communication messages channel.",
-   "IsExtensible": true,
+   "IsExtensible": false,
    "IsNullable": false,
    "Usage": "Output"
   },
@@ -138,7 +138,7 @@
    ],
    "Namespace": "Azure.Communication.MessagesService",
    "Description": "The type of the template parameter.",
-   "IsExtensible": true,
+   "IsExtensible": false,
    "IsNullable": false,
    "Usage": "None"
   },
@@ -157,7 +157,7 @@
    ],
    "Namespace": "Azure.Communication.MessagesService",
    "Description": "The type of the message template.",
-   "IsExtensible": true,
+   "IsExtensible": false,
    "IsNullable": false,
    "Usage": "None"
   },
@@ -182,7 +182,7 @@
    ],
    "Namespace": "Azure.Communication.MessagesService",
    "Description": "The WhatsApp button sub type.",
-   "IsExtensible": true,
+   "IsExtensible": false,
    "IsNullable": false,
    "Usage": "None"
   },
@@ -201,7 +201,7 @@
    ],
    "Namespace": "Azure.Communication.MessagesService",
    "Description": "Azure Communication Messages Versions",
-   "IsExtensible": true,
+   "IsExtensible": false,
    "IsNullable": false,
    "Usage": "None"
   }

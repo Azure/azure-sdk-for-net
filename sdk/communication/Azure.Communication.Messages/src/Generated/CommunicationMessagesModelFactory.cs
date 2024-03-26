@@ -18,13 +18,12 @@ namespace Azure.Communication.Messages
         /// <summary> Initializes a new instance of <see cref="Messages.NotificationContent"/>. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
-        /// <param name="kind"> The type discriminator describing a notification type. </param>
         /// <returns> A new <see cref="Messages.NotificationContent"/> instance for mocking. </returns>
-        public static NotificationContent NotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = null, string kind = "Unknown")
+        public static NotificationContent NotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = null)
         {
             to ??= new List<string>();
 
-            return new UnknownNotificationContent(channelRegistrationId, to?.ToList(), kind, serializedAdditionalRawData: null);
+            return new UnknownNotificationContent(channelRegistrationId, to?.ToList(), default, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.SendMessageResult"/>. </summary>
@@ -50,11 +49,10 @@ namespace Azure.Communication.Messages
         /// <param name="name"> The template's name. </param>
         /// <param name="language"> The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'. </param>
         /// <param name="status"> The aggregated template status. </param>
-        /// <param name="kind"> The type discriminator describing a template type. </param>
         /// <returns> A new <see cref="Messages.MessageTemplateItem"/> instance for mocking. </returns>
-        public static MessageTemplateItem MessageTemplateItem(string name = null, string language = null, MessageTemplateStatus status = default, string kind = "Unknown")
+        public static MessageTemplateItem MessageTemplateItem(string name = null, string language = null, MessageTemplateStatus status = default)
         {
-            return new UnknownMessageTemplateItem(name, language, status, kind, serializedAdditionalRawData: null);
+            return new UnknownMessageTemplateItem(name, language, status, default, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.TextNotificationContent"/>. </summary>

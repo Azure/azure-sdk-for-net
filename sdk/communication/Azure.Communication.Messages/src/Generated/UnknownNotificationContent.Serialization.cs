@@ -36,7 +36,7 @@ namespace Azure.Communication.Messages
             }
             writer.WriteEndArray();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            writer.WriteStringValue(Kind.ToSerialString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -77,7 +77,7 @@ namespace Azure.Communication.Messages
             }
             Guid channelRegistrationId = default;
             IList<string> to = default;
-            CommunicationMessageKind kind = "Unknown";
+            CommunicationMessageKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.Communication.Messages
                 }
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = new CommunicationMessageKind(property.Value.GetString());
+                    kind = property.Value.GetString().ToCommunicationMessageKind();
                     continue;
                 }
                 if (options.Format != "W")
