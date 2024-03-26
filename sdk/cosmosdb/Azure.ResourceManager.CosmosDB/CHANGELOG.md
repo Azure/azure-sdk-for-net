@@ -1,18 +1,13 @@
 # Release History
 
-## 1.4.0-beta.6 (Unreleased)
+## 1.4.0-beta.6 (2024-03-26)
 
 ### Features Added
 
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Add support for 'restoreWithTtlDisabled' in RestoreParameter to disable ttl on restored account
 - Adds support for PerRegionPerPartitionAutoscale feature.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added experimental Bicep serialization.
 
 ## 1.4.0-beta.5 (2023-11-21)
 
@@ -65,6 +60,20 @@
 - Added support for restoring deleted table and gremlin resources within the same account
 - Added support for cross region restore
 - Added support for enabling burst capacity of the CosmosDB account
+
+## 1.3.2 (2024-03-25)
+
+### Features Added
+
+- Added model factory.
+
+## 1.3.1 (2024-03-25)
+
+### Features Added
+
+- Added experimental Bicep serialization.
+- Added GetIfExists methods.
+- Added mocking types.
 
 ## 1.3.0 (2023-04-11)
 

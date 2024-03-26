@@ -1,16 +1,11 @@
 # Release History
 
-## 1.2.0-beta.4 (Unreleased)
+## 1.2.0-beta.4 (2024-03-26)
 
 ### Features Added
 
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added experimental Bicep serialization.
 
 ## 1.2.0-beta.3 (2023-11-29)
 
