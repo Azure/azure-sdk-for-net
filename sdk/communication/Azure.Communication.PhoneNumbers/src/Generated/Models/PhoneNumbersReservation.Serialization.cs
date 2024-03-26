@@ -22,7 +22,7 @@ namespace Azure.Communication.PhoneNumbers
             foreach (var item in PhoneNumbers)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<AvailablePhoneNumber>(item.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
