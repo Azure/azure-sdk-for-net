@@ -13,27 +13,30 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiCenter.Models
 {
-    internal partial class ApiCenterServiceListResult : IUtf8JsonSerializable, IJsonModel<ApiCenterServiceListResult>
+    internal partial class ApiVersionListResult : IUtf8JsonSerializable, IJsonModel<ApiVersionListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiCenterServiceListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiVersionListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<ApiCenterServiceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApiVersionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiCenterServiceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiVersionListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiCenterServiceListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiVersionListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("value"u8);
-            writer.WriteStartArray();
-            foreach (var item in Value)
+            if (options.Format != "W")
             {
-                writer.WriteObjectValue<ApiCenterServiceData>(item, options);
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<ApiVersionData>(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
@@ -56,19 +59,19 @@ namespace Azure.ResourceManager.ApiCenter.Models
             writer.WriteEndObject();
         }
 
-        ApiCenterServiceListResult IJsonModel<ApiCenterServiceListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ApiVersionListResult IJsonModel<ApiVersionListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiCenterServiceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiVersionListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiCenterServiceListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiVersionListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApiCenterServiceListResult(document.RootElement, options);
+            return DeserializeApiVersionListResult(document.RootElement, options);
         }
 
-        internal static ApiCenterServiceListResult DeserializeApiCenterServiceListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ApiVersionListResult DeserializeApiVersionListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -76,7 +79,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             {
                 return null;
             }
-            IReadOnlyList<ApiCenterServiceData> value = default;
+            IReadOnlyList<ApiVersionData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -84,10 +87,10 @@ namespace Azure.ResourceManager.ApiCenter.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ApiCenterServiceData> array = new List<ApiCenterServiceData>();
+                    List<ApiVersionData> array = new List<ApiVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiCenterServiceData.DeserializeApiCenterServiceData(item, options));
+                        array.Add(ApiVersionData.DeserializeApiVersionData(item, options));
                     }
                     value = array;
                     continue;
@@ -107,38 +110,38 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiCenterServiceListResult(value, nextLink, serializedAdditionalRawData);
+            return new ApiVersionListResult(value, nextLink, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ApiCenterServiceListResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ApiVersionListResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiCenterServiceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiVersionListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiCenterServiceListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiVersionListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ApiCenterServiceListResult IPersistableModel<ApiCenterServiceListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ApiVersionListResult IPersistableModel<ApiVersionListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiCenterServiceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiVersionListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeApiCenterServiceListResult(document.RootElement, options);
+                        return DeserializeApiVersionListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiCenterServiceListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiVersionListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ApiCenterServiceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApiVersionListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

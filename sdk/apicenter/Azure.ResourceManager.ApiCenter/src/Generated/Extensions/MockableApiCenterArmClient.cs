@@ -45,5 +45,89 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
             ApiCenterServiceResource.ValidateResourceId(id);
             return new ApiCenterServiceResource(Client, id);
         }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="MetadataSchemaResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MetadataSchemaResource.CreateResourceIdentifier" /> to create a <see cref="MetadataSchemaResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MetadataSchemaResource"/> object. </returns>
+        public virtual MetadataSchemaResource GetMetadataSchemaResource(ResourceIdentifier id)
+        {
+            MetadataSchemaResource.ValidateResourceId(id);
+            return new MetadataSchemaResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkspaceResource"/> object. </returns>
+        public virtual WorkspaceResource GetWorkspaceResource(ResourceIdentifier id)
+        {
+            WorkspaceResource.ValidateResourceId(id);
+            return new WorkspaceResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ApiResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiResource.CreateResourceIdentifier" /> to create an <see cref="ApiResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ApiResource"/> object. </returns>
+        public virtual ApiResource GetApiResource(ResourceIdentifier id)
+        {
+            ApiResource.ValidateResourceId(id);
+            return new ApiResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DeploymentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeploymentResource.CreateResourceIdentifier" /> to create a <see cref="DeploymentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DeploymentResource"/> object. </returns>
+        public virtual DeploymentResource GetDeploymentResource(ResourceIdentifier id)
+        {
+            DeploymentResource.ValidateResourceId(id);
+            return new DeploymentResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ApiVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiVersionResource.CreateResourceIdentifier" /> to create an <see cref="ApiVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ApiVersionResource"/> object. </returns>
+        public virtual ApiVersionResource GetApiVersionResource(ResourceIdentifier id)
+        {
+            ApiVersionResource.ValidateResourceId(id);
+            return new ApiVersionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ApiDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiDefinitionResource.CreateResourceIdentifier" /> to create an <see cref="ApiDefinitionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ApiDefinitionResource"/> object. </returns>
+        public virtual ApiDefinitionResource GetApiDefinitionResource(ResourceIdentifier id)
+        {
+            ApiDefinitionResource.ValidateResourceId(id);
+            return new ApiDefinitionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="EnvironmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EnvironmentResource.CreateResourceIdentifier" /> to create an <see cref="EnvironmentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EnvironmentResource"/> object. </returns>
+        public virtual EnvironmentResource GetEnvironmentResource(ResourceIdentifier id)
+        {
+            EnvironmentResource.ValidateResourceId(id);
+            return new EnvironmentResource(Client, id);
+        }
     }
 }

@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.ApiCenter.Models
 {
-    /// <summary> The response of a Service list operation. </summary>
-    internal partial class ApiCenterServiceListResult
+    /// <summary> API version properties entity. </summary>
+    public partial class ApiVersionProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +45,37 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ApiCenterServiceListResult"/>. </summary>
-        /// <param name="value"> The Service items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ApiCenterServiceListResult(IEnumerable<ApiCenterServiceData> value)
+        /// <summary> Initializes a new instance of <see cref="ApiVersionProperties"/>. </summary>
+        /// <param name="title"> API version title. </param>
+        /// <param name="lifecycleStage"> Current lifecycle stage of the API. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="title"/> is null. </exception>
+        public ApiVersionProperties(string title, LifecycleStage lifecycleStage)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            Argument.AssertNotNull(title, nameof(title));
 
-            Value = value.ToList();
+            Title = title;
+            LifecycleStage = lifecycleStage;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiCenterServiceListResult"/>. </summary>
-        /// <param name="value"> The Service items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="ApiVersionProperties"/>. </summary>
+        /// <param name="title"> API version title. </param>
+        /// <param name="lifecycleStage"> Current lifecycle stage of the API. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiCenterServiceListResult(IReadOnlyList<ApiCenterServiceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiVersionProperties(string title, LifecycleStage lifecycleStage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            Title = title;
+            LifecycleStage = lifecycleStage;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiCenterServiceListResult"/> for deserialization. </summary>
-        internal ApiCenterServiceListResult()
+        /// <summary> Initializes a new instance of <see cref="ApiVersionProperties"/> for deserialization. </summary>
+        internal ApiVersionProperties()
         {
         }
 
-        /// <summary> The Service items on this page. </summary>
-        public IReadOnlyList<ApiCenterServiceData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> API version title. </summary>
+        public string Title { get; set; }
+        /// <summary> Current lifecycle stage of the API. </summary>
+        public LifecycleStage LifecycleStage { get; set; }
     }
 }

@@ -7,8 +7,8 @@ azure-arm: true
 csharp: true
 library-name: ApiCenter
 namespace: Azure.ResourceManager.ApiCenter
-require: https://github.com/Azure/azure-rest-api-specs/blob/a29126ca8200a6c981a4e908e41fe55730df4cad/specification/apicenter/resource-manager/readme.md
-#tag: package-2023-07-01-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/2d701c73fb5ee44f95b97b6c3eaf8c4aeb051e73/specification/apicenter/resource-manager/readme.md
+tag: package-2024-03
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
