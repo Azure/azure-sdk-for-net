@@ -26,8 +26,11 @@ namespace Azure.AI.DocumentIntelligence
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("operationId"u8);
-            writer.WriteStringValue(OperationId);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("operationId"u8);
+                writer.WriteStringValue(OperationId);
+            }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             if (Optional.IsDefined(PercentCompleted))
