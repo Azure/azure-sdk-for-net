@@ -66,7 +66,7 @@ namespace Azure.Monitor.Query
         /// <param name="resourceIds">The resource URIs for which the metrics are requested.</param>
         /// <param name="metricNames">The names of the metrics to query.</param>
         /// <param name="metricNamespace">The namespace of the metrics to query.</param>
-        /// <param name="options">The <see cref="MetricsClientOptions"/> to configure the query.</param>
+        /// <param name="options">The <see cref="MetricsQueryResourcesOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>A time series metrics result for the requested metric names.</returns>
         public virtual Response<MetricsQueryResourcesResult> QueryResources(IEnumerable<ResourceIdentifier> resourceIds, List<string> metricNames, string metricNamespace, MetricsQueryResourcesOptions options = null, CancellationToken cancellationToken = default)
@@ -100,7 +100,7 @@ namespace Azure.Monitor.Query
         /// <param name="resourceIds">The resource URIs for which the metrics are requested.</param>
         /// <param name="metricNames">The names of the metrics to query.</param>
         /// <param name="metricNamespace">The namespace of the metrics to query.</param>
-        /// <param name="options">The <see cref="MetricsClientOptions"/> to configure the query.</param>
+        /// <param name="options">The <see cref="MetricsQueryResourcesOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>A time series metrics result for the requested metric names.</returns>
         public virtual async Task<Response<MetricsQueryResourcesResult>> QueryResourcesAsync(IEnumerable<ResourceIdentifier> resourceIds, List<string> metricNames, string metricNamespace, MetricsQueryResourcesOptions options = null, CancellationToken cancellationToken = default)
