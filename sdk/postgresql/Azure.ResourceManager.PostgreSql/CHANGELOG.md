@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.1.3 (2024-03-25)
+
+### Features Added
+
+- Added model factory.
+
 ## 1.1.2 (2024-03-25)
 
 ### Features Added
