@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed an edge case where a cancellation token signaled while waiting for a throttling delay would cause a failure to reset state and service operations would continue to apply the throttle delay going forward.  ([#42952](https://github.com/Azure/azure-sdk-for-net/issues/42952))
+
 ### Other Changes
 
 ## 7.17.4 (2024-03-05)

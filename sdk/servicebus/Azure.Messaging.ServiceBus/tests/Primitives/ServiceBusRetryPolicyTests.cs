@@ -74,6 +74,34 @@ namespace Azure.Messaging.ServiceBus.Tests
             Assert.That(serverNoLongerBusy, Is.True);
         }
 
+        [Test]
+        public void ResetsServerBusyAfterCancellation()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+
+            var policy = new MockServiceBusRetryPolicy
+            {
+                ServerBusyBaseSleepTime = TimeSpan.FromMinutes(5)
+            };
+
+            Assert.ThrowsAsync<ServiceBusException>(async () =>
+            {
+                await policy.RunOperation((state, timeout, token) =>
+                    {
+                        throw new ServiceBusException("Busy", ServiceBusFailureReason.ServiceBusy);
+                    }, false, null,
+                    cancellationSource.Token);
+            });
+
+            // Once the service is confirmed busy, cancel the operation.
+            SpinWait.SpinUntil(() => policy.IsServerBusy == true, TimeSpan.FromSeconds(10));
+            Assert.That(policy.IsServerBusy, Is.True);
+
+            cancellationSource.Cancel();
+            SpinWait.SpinUntil(() => policy.IsServerBusy == false, TimeSpan.FromSeconds(10));
+            Assert.That(policy.IsServerBusy, Is.False);
+        }
+
         private class MockServiceBusRetryPolicy : ServiceBusRetryPolicy
         {
             public override TimeSpan CalculateTryTimeout(int attemptCount)
