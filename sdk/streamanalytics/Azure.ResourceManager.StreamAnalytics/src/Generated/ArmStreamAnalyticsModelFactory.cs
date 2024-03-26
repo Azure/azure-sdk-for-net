@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// The available derived classes include <see cref="EMachineLearningStudioFunctionBinding"/>, <see cref="MachineLearningServiceFunctionBinding"/>, <see cref="CSharpFunctionBinding"/> and <see cref="JavaScriptFunctionBinding"/>.
         /// </param>
         /// <returns> A new <see cref="Models.StreamingJobFunctionProperties"/> instance for mocking. </returns>
-        public static StreamingJobFunctionProperties StreamingJobFunctionProperties(string functionPropertiesType = null, ETag? etag = null, IEnumerable<StreamingJobFunctionInput> inputs = null, string outputDataType = null, StreamingJobFunctionBinding binding = null)
+        public static StreamingJobFunctionProperties StreamingJobFunctionProperties(string functionPropertiesType = "Unknown", ETag? etag = null, IEnumerable<StreamingJobFunctionInput> inputs = null, string outputDataType = null, StreamingJobFunctionBinding binding = null)
         {
             inputs ??= new List<StreamingJobFunctionInput>();
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="partitionKey"> partitionKey Describes a key in the input data which is used for partitioning the input data. </param>
         /// <param name="watermarkMode"> Settings which determine whether to read watermark events. </param>
         /// <returns> A new <see cref="Models.StreamingJobInputProperties"/> instance for mocking. </returns>
-        public static StreamingJobInputProperties StreamingJobInputProperties(string inputPropertiesType = null, StreamAnalyticsDataSerialization serialization = null, IEnumerable<StreamingJobDiagnosticCondition> diagnosticsConditions = null, ETag? etag = null, StreamingCompressionType? compressionType = null, string partitionKey = null, StreamingJobInputWatermarkMode? watermarkMode = null)
+        public static StreamingJobInputProperties StreamingJobInputProperties(string inputPropertiesType = "Unknown", StreamAnalyticsDataSerialization serialization = null, IEnumerable<StreamingJobDiagnosticCondition> diagnosticsConditions = null, ETag? etag = null, StreamingCompressionType? compressionType = null, string partitionKey = null, StreamingJobInputWatermarkMode? watermarkMode = null)
         {
             diagnosticsConditions ??= new List<StreamingJobDiagnosticCondition>();
 

@@ -1050,7 +1050,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.Trigger"/> instance for mocking. </returns>
-        public static Trigger Trigger(string type = null, string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null)
+        public static Trigger Trigger(string type = "Unknown", string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null)
         {
             annotations ??= new List<object>();
             additionalProperties ??= new Dictionary<string, object>();
