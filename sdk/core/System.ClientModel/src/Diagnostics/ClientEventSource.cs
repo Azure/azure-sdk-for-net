@@ -10,7 +10,7 @@ namespace System.ClientModel.Diagnostics;
 
 internal abstract class ClientEventSource : EventSource
 {
-    private const string SharedDataKey = "_AzureEventSourceNamesInUse";
+    private const string SharedDataKey = "_ClientModelEventSourceNamesInUse";
     private static readonly HashSet<string> NamesInUse;
 
 #pragma warning disable CA1810 // Use static initializer
@@ -32,8 +32,8 @@ internal abstract class ClientEventSource : EventSource
 
     private static readonly string[] MainEventSourceTraits =
     {
-            ClientEventListener.TraitName,
-            ClientEventListener.TraitValue
+            ClientEventSourceListener.TraitName,
+            ClientEventSourceListener.TraitValue
         };
 
     protected ClientEventSource(string eventSourceName) : base(
