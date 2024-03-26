@@ -12,12 +12,12 @@ namespace System.ClientModel.Diagnostics;
 /// <summary>
 /// Implementation of <see cref="EventListener"/> that listens to events produced by Azure SDK client libraries.
 /// </summary>
-public class ClientEventListener : EventListener
+public class ClientEventSourceListener : EventListener
 {
     /// <summary>
     /// The trait name that has to be present on all event sources collected by this listener.
     /// </summary>
-    public const string TraitName = "AzureEventSource";
+    public const string TraitName = "ClientEventSource";
     /// <summary>
     /// The trait value that has to be present on all event sources collected by this listener.
     /// </summary>
@@ -28,11 +28,11 @@ public class ClientEventListener : EventListener
     private readonly EventLevel _level;
 
     /// <summary>
-    /// Creates an instance of <see cref="ClientEventListener"/> that executes a <paramref name="log"/> callback every time event is written.
+    /// Creates an instance of <see cref="ClientEventSourceListener"/> that executes a <paramref name="log"/> callback every time event is written.
     /// </summary>
     /// <param name="log">The <see cref="System.Action{EventWrittenEventArgs, String}"/> to call when event is written. The second parameter is formatted message.</param>
     /// <param name="level">The level of events to enable.</param>
-    public ClientEventListener(Action<EventWrittenEventArgs, string> log, EventLevel level)
+    public ClientEventSourceListener(Action<EventWrittenEventArgs, string> log, EventLevel level)
     {
         _log = log ?? throw new ArgumentNullException(nameof(log));
 
@@ -65,7 +65,7 @@ public class ClientEventListener : EventListener
     /// <inheritdoc />
     protected sealed override void OnEventWritten(EventWrittenEventArgs eventData)
     {
-        // Workaround https://github.com/dotnet/corefx/issues/42600
+        // Workaround to https://github.com/dotnet/runtime/issues/31927
         if (eventData.EventId == -1)
         {
             return;
@@ -80,18 +80,18 @@ public class ClientEventListener : EventListener
     /// Creates a new instance of <see cref="ClientEventSourceEventFormatting"/> that forwards events to <see cref="Console.WriteLine(string)"/>.
     /// </summary>
     /// <param name="level">The level of events to enable.</param>
-    public static ClientEventListener CreateConsoleLogger(EventLevel level = EventLevel.Informational)
+    public static ClientEventSourceListener CreateConsoleLogger(EventLevel level = EventLevel.Informational)
     {
-        return new ClientEventListener((eventData, text) => Console.WriteLine("[{1}] {0}: {2}", eventData.EventSource.Name, eventData.Level, text), level);
+        return new ClientEventSourceListener((eventData, text) => Console.WriteLine("[{1}] {0}: {2}", eventData.EventSource.Name, eventData.Level, text), level);
     }
 
     /// <summary>
-    /// Creates a new instance of <see cref="ClientEventListener"/> that forwards events to <see cref="Trace.WriteLine(object)"/>.
+    /// Creates a new instance of <see cref="ClientEventSourceListener"/> that forwards events to <see cref="Trace.WriteLine(object)"/>.
     /// </summary>
     /// <param name="level">The level of events to enable.</param>
-    public static ClientEventListener CreateTraceLogger(EventLevel level = EventLevel.Informational)
+    public static ClientEventSourceListener CreateTraceLogger(EventLevel level = EventLevel.Informational)
     {
-        return new ClientEventListener(
+        return new ClientEventSourceListener(
             (eventData, text) => Trace.WriteLine(string.Format(CultureInfo.InvariantCulture, "[{0}] {1}", eventData.Level, text), eventData.EventSource.Name), level);
     }
 }

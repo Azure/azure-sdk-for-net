@@ -49,11 +49,11 @@ internal sealed class ClientModelEventSource : ClientEventSource
     }
 
     [NonEvent]
-    public void Request(PipelineRequest request, string? assemblyName, PipelineMessageSanitizer sanitizer)
+    public void Request(PipelineRequest request, string requestId, string? assemblyName, PipelineMessageSanitizer sanitizer)
     {
         if (IsEnabled(EventLevel.Informational, EventKeywords.None))
         {
-            Request(request.ClientRequestId, request.Method.ToString(), sanitizer.SanitizeUrl(request.Uri!.AbsoluteUri), FormatHeaders(request.Headers, sanitizer), assemblyName);
+            Request(requestId, request.Method.ToString(), sanitizer.SanitizeUrl(request.Uri!.AbsoluteUri), FormatHeaders(request.Headers, sanitizer), assemblyName);
         }
     }
 
@@ -94,11 +94,11 @@ internal sealed class ClientModelEventSource : ClientEventSource
     }
 
     [NonEvent]
-    public void Response(PipelineResponse response, PipelineMessageSanitizer sanitizer, double elapsed)
+    public void Response(PipelineResponse response, string requestId, PipelineMessageSanitizer sanitizer, double elapsed)
     {
         if (IsEnabled(EventLevel.Informational, EventKeywords.None))
         {
-            Response(response.ClientRequestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers, sanitizer), elapsed);
+            Response(requestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers, sanitizer), elapsed);
         }
     }
 
@@ -169,11 +169,11 @@ internal sealed class ClientModelEventSource : ClientEventSource
     }
 
     [NonEvent]
-    public void ErrorResponse(PipelineResponse response, PipelineMessageSanitizer sanitizer, double elapsed)
+    public void ErrorResponse(PipelineResponse response, string requestId, PipelineMessageSanitizer sanitizer, double elapsed)
     {
         if (IsEnabled(EventLevel.Warning, EventKeywords.None))
         {
-            ErrorResponse(response.ClientRequestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers, sanitizer), elapsed);
+            ErrorResponse(requestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers, sanitizer), elapsed);
         }
     }
 
@@ -264,11 +264,11 @@ internal sealed class ClientModelEventSource : ClientEventSource
     }
 
     [NonEvent]
-    public void RequestRedirect(PipelineRequest request, Uri redirectUri, PipelineResponse response)
+    public void RequestRedirect(PipelineRequest request, string requestId, Uri redirectUri, PipelineResponse response)
     {
         if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
         {
-            RequestRedirect(request.ClientRequestId, request.Uri!.AbsoluteUri, redirectUri.AbsoluteUri, response.Status);
+            RequestRedirect(requestId, request.Uri!.AbsoluteUri, redirectUri.AbsoluteUri, response.Status);
         }
     }
 

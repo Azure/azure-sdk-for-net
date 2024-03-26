@@ -26,12 +26,14 @@ public class ClientLoggingPolicy : PipelinePolicy
     /// <param name="maxLength"></param>
     /// <param name="sanitizer"></param>
     /// <param name="assemblyName"></param>
-    internal ClientLoggingPolicy(bool logContent, int maxLength, PipelineMessageSanitizer sanitizer, string? assemblyName)
+    /// <param name="clientRequestIdHeaderName"></param>
+    internal ClientLoggingPolicy(bool logContent, int maxLength, PipelineMessageSanitizer sanitizer, string? assemblyName, string? clientRequestIdHeaderName)
     {
         _sanitizer = sanitizer;
         _logContent = logContent;
         _maxLength = maxLength;
         _assemblyName = assemblyName;
+        _clientRequestIdHeaderName = clientRequestIdHeaderName;
     }
 
     private const double RequestTooLongTime = 3.0; // sec
@@ -42,6 +44,7 @@ public class ClientLoggingPolicy : PipelinePolicy
     private readonly int _maxLength;
     private readonly PipelineMessageSanitizer _sanitizer;
     private readonly string? _assemblyName;
+    private readonly string? _clientRequestIdHeaderName;
 
     /// <inheritdoc/>
     public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
@@ -69,8 +72,9 @@ public class ClientLoggingPolicy : PipelinePolicy
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool async)
     {
         PipelineRequest request = message.Request;
+        string requestId = GetRequestIdFromHeaders(request.Headers);
 
-        s_eventSource.Request(request, _assemblyName, _sanitizer);
+        s_eventSource.Request(request, requestId, _assemblyName, _sanitizer);
 
         Encoding? requestTextEncoding = null;
 
@@ -81,7 +85,7 @@ public class ClientLoggingPolicy : PipelinePolicy
 
         var logWrapper = new ContentEventSourceWrapper(s_eventSource, _logContent, _maxLength, message.CancellationToken);
 
-        await logWrapper.LogAsync(request.ClientRequestId, request.Content, requestTextEncoding, async).ConfigureAwait(false).EnsureCompleted(async);
+        await logWrapper.LogAsync(requestId, request.Content, requestTextEncoding, async).ConfigureAwait(false).EnsureCompleted(async);
 
         var before = Stopwatch.GetTimestamp();
 
@@ -98,7 +102,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         }
         catch (Exception ex)
         {
-            s_eventSource.ExceptionResponse(request.ClientRequestId, ex.ToString());
+            s_eventSource.ExceptionResponse(requestId, ex.ToString());
             throw;
         }
 
@@ -116,29 +120,45 @@ public class ClientLoggingPolicy : PipelinePolicy
 
         double elapsed = (after - before) / (double)Stopwatch.Frequency;
 
+        string responseId = GetResponseIdFromHeaders(response.Headers);
+
         if (isError)
         {
-            s_eventSource.ErrorResponse(response, _sanitizer, elapsed);
+            s_eventSource.ErrorResponse(response, responseId, _sanitizer, elapsed);
         }
         else
         {
-            s_eventSource.Response(response, _sanitizer, elapsed);
+            s_eventSource.Response(response, responseId, _sanitizer, elapsed);
         }
 
         if (wrapResponseContent)
         {
-            response.ContentStream = new LoggingStream(response.ClientRequestId, logWrapper, _maxLength, response.ContentStream!, isError, responseTextEncoding);
+            response.ContentStream = new LoggingStream(responseId, logWrapper, _maxLength, response.ContentStream!, isError, responseTextEncoding);
         }
         else
         {
-            await logWrapper.LogAsync(response.ClientRequestId, isError, response.ContentStream, responseTextEncoding, async).ConfigureAwait(false).EnsureCompleted(async);
+            await logWrapper.LogAsync(responseId, isError, response.ContentStream, responseTextEncoding, async).ConfigureAwait(false).EnsureCompleted(async);
         }
 
         if (elapsed > RequestTooLongTime)
         {
-            s_eventSource.ResponseDelay(response.ClientRequestId, elapsed);
+            s_eventSource.ResponseDelay(responseId, elapsed);
         }
     }
+
+    private string GetResponseIdFromHeaders(PipelineResponseHeaders keyValuePairs)
+    {
+        keyValuePairs.TryGetValue(_clientRequestIdHeaderName!, out var clientRequestId);
+        return clientRequestId ?? string.Empty;
+    }
+
+    private string GetRequestIdFromHeaders(PipelineRequestHeaders keyValuePairs)
+    {
+        keyValuePairs.TryGetValue(_clientRequestIdHeaderName!, out var clientRequestId);
+        return clientRequestId ?? string.Empty;
+    }
+
+    #region LoggingStream
 
     private class LoggingStream : Stream
     {
@@ -254,6 +274,9 @@ public class ClientLoggingPolicy : PipelinePolicy
             // Flush is allowed on read-only stream
         }
     }
+    #endregion
+
+    #region ContentEventSourceWrapper
 
     private readonly struct ContentEventSourceWrapper
     {
@@ -443,4 +466,5 @@ public class ClientLoggingPolicy : PipelinePolicy
             }
         }
     }
+    #endregion
 }
