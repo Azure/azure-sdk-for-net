@@ -11,6 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Health.Insights.RadiologyInsights.Tests
 {
+    #region Snippet:Followup_Recommendation_Sync_Tests_Samples_Doc_Content
     internal class Sample01_FollowupRecommendationSample : SamplesBase<HealthInsightsTestEnvironment>
     {
         private const string DOC_CONTENT = "CLINICAL HISTORY:   "
@@ -34,6 +35,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             + "\r\n\nA new US pelvis within the next 6 months is recommended."
             + "\n\nThese results have been discussed with Dr. Jones at 3 PM on November 5 2020.\n "
             + "\r\n";
+        #endregion
 
         [Test]
         public void RadiologyInsightsFollowupRecommendationScenario()
@@ -42,13 +44,18 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
+            #region Snippet:Followup_Recommendation_Sync_Tests_Samples_CreateClient
             Uri endpointUri = new Uri(endpoint);
             AzureKeyCredential credential = new AzureKeyCredential(apiKey);
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpointUri, credential);
+            #endregion
 
             RadiologyInsightsData radiologyInsightsData = GetRadiologyInsightsData();
 
+            #region Snippet:Followup_Recommendation_Sync_Tests_Samples_synccall
             Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, radiologyInsightsData);
+            #endregion
+
             RadiologyInsightsInferenceResult responseData = operation.Value;
             IReadOnlyList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
 
@@ -56,6 +63,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             {
                 if (inference is FollowupRecommendationInference followupRecommendationInference)
                 {
+                    #region Snippet:Followup_Recommendation_Sync_Tests_Samples_FollowupRecommendationInference
                     Console.Write("Follow Up Recommendation Inference found");
                     IReadOnlyList<FhirR4Extension> extensions = followupRecommendationInference.Extension;
                     Console.Write("   Evidence: " + ExtractEvidence(extensions));
@@ -102,6 +110,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                             Console.Write("            Evidence: " + ExtractEvidence(anatomy.Extension));
                         }
                         Console.Write(" Recommended procedure: " + recommendedProcedure);
+                        #endregion
                     }
                 }
             }
@@ -116,6 +125,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             }
             if (codeableConcept != null)
             {
+                #region Snippet:Followup_Recommendation_Sync_Tests_Samples_DisplayCodes
                 IList<FhirR4Coding> codingList = codeableConcept.Coding;
                 if (codingList != null)
                 {
@@ -124,12 +134,14 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                         Console.Write(initialBlank + "Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + ")");
                     }
                 }
+                #endregion
             }
         }
 
         private static String ExtractEvidence(IReadOnlyList<FhirR4Extension> extensions)
         {
             String evidence = "";
+            #region Snippet:Followup_Recommendation_Sync_Tests_Samples_ExtractEvidence
             foreach (FhirR4Extension extension in extensions)
             {
                 IReadOnlyList<FhirR4Extension> subExtensions = extension.Extension;
@@ -138,6 +150,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                     evidence += extractEvidenceToken(subExtensions) + " ";
                 }
             }
+            #endregion
             return evidence;
         }
 
@@ -146,6 +159,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             String evidence = "";
             int offset = -1;
             int length = -1;
+            #region Snippet:Followup_Recommendation_Sync_Tests_Samples_ExtractEvidenceToken
             foreach (FhirR4Extension iExtension in subExtensions)
             {
                 if (iExtension.Url.Equals("offset"))
@@ -161,44 +175,39 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             {
                 evidence = DOC_CONTENT.Substring(offset, Math.Min(offset + length, DOC_CONTENT.Length - offset));
             }
+            #endregion
             return evidence;
         }
 
         private static RadiologyInsightsData GetRadiologyInsightsData()
         {
             PatientRecord patientRecord = CreatePatientRecord();
+            #region Snippet:Followup_Recommendation_Sync_Tests_Samples_AddRecordAndConfiguration
             List<PatientRecord> patientRecords = new() { patientRecord };
             RadiologyInsightsData radiologyInsightsData = new(patientRecords);
             radiologyInsightsData.Configuration = CreateConfiguration();
+            #endregion
             return radiologyInsightsData;
         }
 
         private static RadiologyInsightsModelConfiguration CreateConfiguration()
         {
             RadiologyInsightsInferenceOptions radiologyInsightsInferenceOptions = GetRadiologyInsightsInferenceOptions();
-
+            #region Snippet:Followup_Recommendation_Sync_Tests_Samples_CreateModelConfiguration
             RadiologyInsightsModelConfiguration radiologyInsightsModelConfiguration = new()
             {
                 Locale = "en-US",
                 IncludeEvidence = true,
                 InferenceOptions = radiologyInsightsInferenceOptions
             };
-            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.Finding);
-            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.AgeMismatch);
-            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.LateralityDiscrepancy);
-            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.SexMismatch);
-            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.CompleteOrderDiscrepancy);
-            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.LimitedOrderDiscrepancy);
-            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.CriticalResult);
-            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.FollowupCommunication);
             radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.FollowupRecommendation);
-            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.RadiologyProcedure);
-
+            #endregion
             return radiologyInsightsModelConfiguration;
         }
 
         private static RadiologyInsightsInferenceOptions GetRadiologyInsightsInferenceOptions()
         {
+            #region Snippet:Followup_Recommendation_Sync_Tests_Samples_CreateRadiologyInsightsInferenceOptions
             RadiologyInsightsInferenceOptions radiologyInsightsInferenceOptions = new();
             FollowupRecommendationOptions followupRecommendationOptions = new();
             FindingOptions findingOptions = new();
@@ -208,11 +217,13 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             findingOptions.ProvideFocusedSentenceEvidence = true;
             radiologyInsightsInferenceOptions.FollowupRecommendationOptions = followupRecommendationOptions;
             radiologyInsightsInferenceOptions.FindingOptions = findingOptions;
+            #endregion
             return radiologyInsightsInferenceOptions;
         }
 
         private static PatientRecord CreatePatientRecord()
         {
+            #region Snippet:Followup_Recommendation_Sync_Tests_Samples_CreatePatientRecord
             string id = "patient_id2";
             PatientDetails patientInfo = new()
             {
@@ -240,11 +251,13 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             patientRecord.Info = patientInfo;
             patientRecord.Encounters.Add(encounter);
             patientRecord.PatientDocuments.Add(patientDocument);
+            #endregion
             return patientRecord;
         }
 
         private static DocumentAdministrativeMetadata CreateDocumentAdministrativeMetadata()
         {
+            #region Snippet:Followup_Recommendation_Sync_Tests_Samples_CreateDocumentAdministrativeMetadata
             DocumentAdministrativeMetadata documentAdministrativeMetadata = new DocumentAdministrativeMetadata();
 
             FhirR4Coding coding = new()
@@ -264,7 +277,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             };
 
             documentAdministrativeMetadata.OrderedProcedures.Add(orderedProcedure);
-
+            #endregion
             return documentAdministrativeMetadata;
         }
     }
