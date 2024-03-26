@@ -1,14 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+extern alias BaseBlobs;
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Storage.Test.Shared;
 using BlobsClientBuilder = Azure.Storage.Test.Shared.ClientBuilder<
-    Azure.Storage.Blobs.BlobServiceClient,
-    Azure.Storage.Blobs.BlobClientOptions>;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
+    BaseBlobs::Azure.Storage.Blobs.BlobServiceClient,
+    BaseBlobs::Azure.Storage.Blobs.BlobClientOptions>;
+using BaseBlobs::Azure.Storage.Blobs;
+using BaseBlobs::Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Tests;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
@@ -37,7 +38,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 (uri, azureSasCredential, clientOptions) => new BlobServiceClient(uri, azureSasCredential, clientOptions),
                 () => new BlobClientOptions(serviceVersion));
 
-        public static async Task<DisposingContainer> GetTestContainerAsync(
+        public static async Task<DisposingBlobContainer> GetTestContainerAsync(
             this BlobsClientBuilder clientBuilder,
             BlobServiceClient service = default,
             string containerName = default,
@@ -55,7 +56,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             BlobContainerClient container = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(service.GetBlobContainerClient(containerName));
             await container.CreateIfNotExistsAsync(metadata: metadata, publicAccessType: publicAccessType.Value);
-            return new DisposingContainer(container);
+            return new DisposingBlobContainer(container);
         }
     }
 }

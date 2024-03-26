@@ -54,7 +54,14 @@ namespace Azure.Storage.DataMovement.Tests
             string generatedResourceNamePrefix = default,
             RecordedTestMode? mode = null) : base(async, mode)
         {
-            Argument.CheckNotNullOrEmpty(expectedOverwriteExceptionMessage, nameof(expectedOverwriteExceptionMessage));
+            if (expectedOverwriteExceptionMessage is null)
+            {
+                throw new ArgumentNullException(expectedOverwriteExceptionMessage);
+            }
+            if (expectedOverwriteExceptionMessage.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", expectedOverwriteExceptionMessage);
+            }
             _generatedResourceNamePrefix = generatedResourceNamePrefix ?? "test-resource-";
             _expectedOverwriteExceptionMessage = expectedOverwriteExceptionMessage;
         }
@@ -211,7 +218,7 @@ namespace Azure.Storage.DataMovement.Tests
         private async Task CopyRemoteObjectsAndVerify(
             TSourceContainerClient sourceContainer,
             TDestinationContainerClient destinationContainer,
-            long size = Constants.KB,
+            long size = DataMovementTestConstants.KB,
             int waitTimeInSec = 30,
             int objectCount = 1,
             TransferManagerOptions transferManagerOptions = default,
@@ -338,13 +345,13 @@ namespace Azure.Storage.DataMovement.Tests
         [RecordedTest]
         public async Task SourceObjectToDestinationObject_SmallChunk()
         {
-            long size = Constants.KB;
+            long size = DataMovementTestConstants.KB;
             int waitTimeInSec = 25;
 
             DataTransferOptions options = new DataTransferOptions()
             {
-                InitialTransferSize = Constants.KB / 2,
-                MaximumTransferChunkSize = Constants.KB / 2,
+                InitialTransferSize = DataMovementTestConstants.KB / 2,
+                MaximumTransferChunkSize = DataMovementTestConstants.KB / 2,
             };
 
             // Arrange
@@ -362,9 +369,9 @@ namespace Azure.Storage.DataMovement.Tests
 
         [RecordedTest]
         [TestCase(0, 10)]
-        [TestCase(Constants.KB/2, 10)]
-        [TestCase(Constants.KB, 10)]
-        [TestCase(2 * Constants.KB, 10)]
+        [TestCase(DataMovementTestConstants.KB/2, 10)]
+        [TestCase(DataMovementTestConstants.KB, 10)]
+        [TestCase(2 * DataMovementTestConstants.KB, 10)]
         public async Task SourceObjectToDestinationObject_SmallSize(long size, int waitTimeInSec)
         {
             // Arrange
@@ -381,10 +388,10 @@ namespace Azure.Storage.DataMovement.Tests
         [Ignore("These tests currently take 40+ mins for little additional coverage")]
         [Test]
         [LiveOnly]
-        [TestCase(4 * Constants.MB, 20)]
-        [TestCase(5 * Constants.MB, 20)]
-        [TestCase(257 * Constants.MB, 400)]
-        [TestCase(Constants.GB, 1000)]
+        [TestCase(4 * DataMovementTestConstants.MB, 20)]
+        [TestCase(5 * DataMovementTestConstants.MB, 20)]
+        [TestCase(257 * DataMovementTestConstants.MB, 400)]
+        [TestCase(DataMovementTestConstants.GB, 1000)]
         public async Task SourceObjectToDestinationObject_LargeSize(long size, int waitTimeInSec)
         {
             // Arrange
@@ -403,10 +410,10 @@ namespace Azure.Storage.DataMovement.Tests
         [LiveOnly]
         [TestCase(2, 0, 30)]
         [TestCase(6, 0, 30)]
-        [TestCase(2, Constants.KB/2, 30)]
-        [TestCase(6, Constants.KB/2, 30)]
-        [TestCase(2, Constants.KB, 300)]
-        [TestCase(6, Constants.KB, 300)]
+        [TestCase(2, DataMovementTestConstants.KB/2, 30)]
+        [TestCase(6, DataMovementTestConstants.KB/2, 30)]
+        [TestCase(2, DataMovementTestConstants.KB, 300)]
+        [TestCase(6, DataMovementTestConstants.KB, 300)]
         public async Task SourceObjectToDestinationObject_SmallMultiple(int count, long size, int waitTimeInSec)
         {
             // Arrange
@@ -424,11 +431,11 @@ namespace Azure.Storage.DataMovement.Tests
         [Ignore("These tests currently take 40+ mins for little additional coverage")]
         [Test]
         [LiveOnly]
-        [TestCase(2, 4 * Constants.MB, 300)]
-        [TestCase(6, 4 * Constants.MB, 300)]
-        [TestCase(2, 257 * Constants.MB, 400)]
-        [TestCase(6, 257 * Constants.MB, 600)]
-        [TestCase(2, Constants.GB, 2000)]
+        [TestCase(2, 4 * DataMovementTestConstants.MB, 300)]
+        [TestCase(6, 4 * DataMovementTestConstants.MB, 300)]
+        [TestCase(2, 257 * DataMovementTestConstants.MB, 400)]
+        [TestCase(6, 257 * DataMovementTestConstants.MB, 600)]
+        [TestCase(2, DataMovementTestConstants.GB, 2000)]
         public async Task SourceObjectToDestinationObject_LargeMultiple(int count, long size, int waitTimeInSec)
         {
             // Arrange
@@ -454,7 +461,7 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string name = GetNewObjectName();
             string localSourceFile = Path.Combine(testDirectory.DirectoryPath, name);
-            int size = Constants.KB;
+            int size = DataMovementTestConstants.KB;
             // Create destination, so when we attempt to transfer, we have something to overwrite.
             TDestinationObjectClient destClient = await GetDestinationObjectClientAsync(
                 container: destination.Container,
@@ -487,7 +494,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
             await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
 
-            int size = Constants.KB;
+            int size = DataMovementTestConstants.KB;
             int waitTimeInSec = 10;
 
             // Act
@@ -518,7 +525,7 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string objectName = GetNewObjectName();
             string originalSourceFile = Path.Combine(testDirectory.DirectoryPath, objectName);
-            int size = Constants.KB;
+            int size = DataMovementTestConstants.KB;
             var data = GetRandomBuffer(size);
             using Stream originalStream = await CreateLimitedMemoryStream(size);
             TDestinationObjectClient destinationClient = await GetDestinationObjectClientAsync(
@@ -580,7 +587,7 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string name = GetNewObjectName();
             string originalSourceFile = Path.Combine(testDirectory.DirectoryPath, name);
-            int size = Constants.KB;
+            int size = DataMovementTestConstants.KB;
             var data = GetRandomBuffer(size);
             using Stream originalStream = await CreateLimitedMemoryStream(size);
             TDestinationObjectClient destinationClient = await GetDestinationObjectClientAsync(
@@ -640,7 +647,7 @@ namespace Azure.Storage.DataMovement.Tests
             int concurrency,
             bool createFailedCondition = false,
             DataTransferOptions options = default,
-            int size = Constants.KB)
+            int size = DataMovementTestConstants.KB)
         {
             // Arrange
             // Create source local file for checking, and source object

@@ -145,8 +145,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement", "Azure.Storage.DataMovement\src\Azure.Storage.DataMovement.csproj", "{85A1E33C-4E4C-4B18-B441-FA08404983F4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.Blobs.Tests", "Azure.Storage.DataMovement.Blobs\tests\Azure.Storage.DataMovement.Blobs.Tests.csproj", "{86F3F4A7-483E-4316-8ECD-012F2B7CE84A}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.Blobs.Samples.Tests", "Azure.Storage.DataMovement.Blobs\samples\Azure.Storage.DataMovement.Blobs.Samples.Tests.csproj", "{091717A8-A334-42CB-95D8-DABA4F46CD59}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Common.AesGcm.Tests", "Azure.Storage.Common\tests\AesGcmTests\Azure.Storage.Common.AesGcm.Tests.csproj", "{955CECCE-61B1-4832-9A42-88E95CB9ACBD}"
@@ -162,6 +160,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.Files.Shares.Samples.Tests", "Azure.Storage.DataMovement.Files.Shares\samples\Azure.Storage.DataMovement.Files.Shares.Samples.Tests.csproj", "{A564BB94-1867-4D43-98AB-F3C38E9AFA30}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.Blobs.Files.Shares.Tests", "Azure.Storage.DataMovement.Files.Shares\BlobToFileSharesTests\Azure.Storage.DataMovement.Blobs.Files.Shares.Tests.csproj", "{B08F17FE-7AFA-4777-B179-0FE15883EA50}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.Blobs.Tests", "Azure.Storage.DataMovement.Blobs\tests\Azure.Storage.DataMovement.Blobs.Tests.csproj", "{36221D1D-44B1-4407-AB40-D4748014354C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -321,10 +321,6 @@ Global
 		{85A1E33C-4E4C-4B18-B441-FA08404983F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{85A1E33C-4E4C-4B18-B441-FA08404983F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{85A1E33C-4E4C-4B18-B441-FA08404983F4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{86F3F4A7-483E-4316-8ECD-012F2B7CE84A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{86F3F4A7-483E-4316-8ECD-012F2B7CE84A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{86F3F4A7-483E-4316-8ECD-012F2B7CE84A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{86F3F4A7-483E-4316-8ECD-012F2B7CE84A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{091717A8-A334-42CB-95D8-DABA4F46CD59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{091717A8-A334-42CB-95D8-DABA4F46CD59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{091717A8-A334-42CB-95D8-DABA4F46CD59}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -357,6 +353,10 @@ Global
 		{B08F17FE-7AFA-4777-B179-0FE15883EA50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B08F17FE-7AFA-4777-B179-0FE15883EA50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B08F17FE-7AFA-4777-B179-0FE15883EA50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36221D1D-44B1-4407-AB40-D4748014354C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36221D1D-44B1-4407-AB40-D4748014354C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36221D1D-44B1-4407-AB40-D4748014354C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36221D1D-44B1-4407-AB40-D4748014354C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

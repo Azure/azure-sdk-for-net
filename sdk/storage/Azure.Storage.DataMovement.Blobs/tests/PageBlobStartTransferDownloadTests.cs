@@ -1,13 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 extern alias DMBlobs;
+extern alias BaseBlobs;
 
 using System;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Storage.DataMovement.Tests;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Specialized;
+using BaseBlobs::Azure.Storage.Blobs;
+using BaseBlobs::Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using Azure.Storage.Test.Shared;
@@ -18,7 +19,7 @@ using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
-    [BlobsClientTestFixture]
+    [DataMovementBlobsClientTestFixture]
     public class PageBlobStartTransferDownloadTests : StartTransferDownloadTestBase<
         BlobServiceClient,
         BlobContainerClient,
@@ -38,6 +39,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlobClientOptions.ServiceVersion serviceVersion)
             : base(async, _expectedOverwriteExceptionMessage, _blobResourcePrefix, null /* RecordedTestMode.Record /* to re-record */)
         {
+            _serviceVersion = serviceVersion;
             ClientBuilder = ClientBuilderExtensions.GetNewBlobsClientBuilder(Tenants, serviceVersion);
         }
 
@@ -73,7 +75,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     await UploadPagesAsync(blobClient, originalStream);
                 }
             }
-            Uri sourceUri = blobClient.GenerateSasUri(Sas.BlobSasPermissions.All, Recording.UtcNow.AddDays(1));
+            Uri sourceUri = blobClient.GenerateSasUri(BaseBlobs::Azure.Storage.Sas.BlobSasPermissions.All, Recording.UtcNow.AddDays(1));
             return InstrumentClient(new PageBlobClient(sourceUri, GetOptions()));
         }
 
