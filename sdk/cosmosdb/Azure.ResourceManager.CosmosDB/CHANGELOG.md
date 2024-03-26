@@ -61,20 +61,6 @@
 - Added support for cross region restore
 - Added support for enabling burst capacity of the CosmosDB account
 
-## 1.3.2 (2024-03-25)
-
-### Features Added
-
-- Added model factory.
-
-## 1.3.1 (2024-03-25)
-
-### Features Added
-
-- Added experimental Bicep serialization.
-- Added GetIfExists methods.
-- Added mocking types.
-
 ## 1.3.0 (2023-04-11)
 
 ### Features Added
