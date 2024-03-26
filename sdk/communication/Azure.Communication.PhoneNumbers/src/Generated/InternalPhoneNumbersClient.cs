@@ -42,9 +42,9 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Searches for available phone numbers to purchase. Note that this does not reserves the numbers in the response. </summary>
         /// <param name="countryCode"> The ISO 3166-2 country code, e.g. US. </param>
-        /// <param name="phoneNumbersBrowseRequest"> The <see cref="PhoneNumbersBrowseRequest"/> to use. </param>
+        /// <param name="phoneNumbersBrowseRequest"> The <see cref="PhoneNumbersBrowseContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PhoneNumbersBrowseResult>> BrowseAvailableNumbersAsync(string countryCode, PhoneNumbersBrowseRequest phoneNumbersBrowseRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PhoneNumbersBrowseResult>> BrowseAvailableNumbersAsync(string countryCode, PhoneNumbersBrowseContent phoneNumbersBrowseRequest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.BrowseAvailableNumbers");
             scope.Start();
@@ -61,9 +61,9 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Searches for available phone numbers to purchase. Note that this does not reserves the numbers in the response. </summary>
         /// <param name="countryCode"> The ISO 3166-2 country code, e.g. US. </param>
-        /// <param name="phoneNumbersBrowseRequest"> The <see cref="PhoneNumbersBrowseRequest"/> to use. </param>
+        /// <param name="phoneNumbersBrowseRequest"> The <see cref="PhoneNumbersBrowseContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PhoneNumbersBrowseResult> BrowseAvailableNumbers(string countryCode, PhoneNumbersBrowseRequest phoneNumbersBrowseRequest, CancellationToken cancellationToken = default)
+        public virtual Response<PhoneNumbersBrowseResult> BrowseAvailableNumbers(string countryCode, PhoneNumbersBrowseContent phoneNumbersBrowseRequest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.BrowseAvailableNumbers");
             scope.Start();

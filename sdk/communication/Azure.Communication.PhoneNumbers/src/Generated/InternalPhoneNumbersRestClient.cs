@@ -250,7 +250,7 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
-        internal HttpMessage CreateBrowseAvailableNumbersRequest(string countryCode, PhoneNumbersBrowseRequest phoneNumbersBrowseRequest)
+        internal HttpMessage CreateBrowseAvailableNumbersRequest(string countryCode, PhoneNumbersBrowseContent phoneNumbersBrowseRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -272,10 +272,10 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Searches for available phone numbers to purchase. Note that this does not reserves the numbers in the response. </summary>
         /// <param name="countryCode"> The ISO 3166-2 country code, e.g. US. </param>
-        /// <param name="phoneNumbersBrowseRequest"> The <see cref="PhoneNumbersBrowseRequest"/> to use. </param>
+        /// <param name="phoneNumbersBrowseRequest"> The <see cref="PhoneNumbersBrowseContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> or <paramref name="phoneNumbersBrowseRequest"/> is null. </exception>
-        public async Task<Response<PhoneNumbersBrowseResult>> BrowseAvailableNumbersAsync(string countryCode, PhoneNumbersBrowseRequest phoneNumbersBrowseRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<PhoneNumbersBrowseResult>> BrowseAvailableNumbersAsync(string countryCode, PhoneNumbersBrowseContent phoneNumbersBrowseRequest, CancellationToken cancellationToken = default)
         {
             if (countryCode == null)
             {
@@ -304,10 +304,10 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Searches for available phone numbers to purchase. Note that this does not reserves the numbers in the response. </summary>
         /// <param name="countryCode"> The ISO 3166-2 country code, e.g. US. </param>
-        /// <param name="phoneNumbersBrowseRequest"> The <see cref="PhoneNumbersBrowseRequest"/> to use. </param>
+        /// <param name="phoneNumbersBrowseRequest"> The <see cref="PhoneNumbersBrowseContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> or <paramref name="phoneNumbersBrowseRequest"/> is null. </exception>
-        public Response<PhoneNumbersBrowseResult> BrowseAvailableNumbers(string countryCode, PhoneNumbersBrowseRequest phoneNumbersBrowseRequest, CancellationToken cancellationToken = default)
+        public Response<PhoneNumbersBrowseResult> BrowseAvailableNumbers(string countryCode, PhoneNumbersBrowseContent phoneNumbersBrowseRequest, CancellationToken cancellationToken = default)
         {
             if (countryCode == null)
             {

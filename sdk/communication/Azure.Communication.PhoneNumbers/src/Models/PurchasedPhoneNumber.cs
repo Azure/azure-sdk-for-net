@@ -31,7 +31,7 @@ namespace Azure.Communication.PhoneNumbers
             PhoneNumber = phoneNumber;
             CountryCode = countryCode;
             PhoneNumberType = phoneNumberType;
-            PurchaseCapabilities = capabilities;
+            Capabilities = capabilities;
             AssignmentType = assignmentType;
             PurchaseDate = purchaseDate;
             Cost = cost;
@@ -55,7 +55,7 @@ namespace Azure.Communication.PhoneNumbers
             PhoneNumber = phoneNumber;
             CountryCode = countryCode;
             PhoneNumberType = phoneNumberType;
-            PurchaseCapabilities = capabilities;
+            Capabilities = capabilities;
             AssignmentType = assignmentType;
             PurchaseDate = purchaseDate;
             Cost = cost;
@@ -66,6 +66,6 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Capabilities of a phone number. </summary>
         [CodeGenMember("Capabilities")]
-        public PhoneNumberCapabilities PurchaseCapabilities { get; }
+        public PhoneNumberCapabilities Capabilities { get; }
     }
 }

@@ -41,6 +41,25 @@ directive:
     $["x-ms-enum"].name = "ErrorMessage";
 ```
 
+### Change naming of PhoneNumberBrowseCapabilitiesRequest to PhoneNumberBrowseCapabilitiesContent
+``` yaml
+directive:
+  from: swagger-document
+  where: "$.definitions.PhoneNumberBrowseCapabilitiesRequest"
+  transform: >
+    $["x-ms-client-name"] = "PhoneNumberBrowseCapabilitiesContent";
+```
+
+
+### Change naming of PhoneNumbersBrowseRequest to PhoneNumbersBrowseContent
+``` yaml
+directive:
+  from: swagger-document
+  where: "$.definitions.PhoneNumbersBrowseRequest"
+  transform: >
+    $["x-ms-client-name"] = "PhoneNumbersBrowseContent";
+```
+
 ``` yaml
 directive:
   from: swagger-document

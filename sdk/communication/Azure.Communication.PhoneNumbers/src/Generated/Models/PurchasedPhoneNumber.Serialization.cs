@@ -22,7 +22,7 @@ namespace Azure.Communication.PhoneNumbers
             string phoneNumber = default;
             string countryCode = default;
             PhoneNumberType phoneNumberType = default;
-            PurchasedPhoneNumberCapabilities capabilities = default;
+            PhoneNumberCapabilities capabilities = default;
             PhoneNumberAssignmentType assignmentType = default;
             DateTimeOffset purchaseDate = default;
             PhoneNumberCost cost = default;
@@ -53,7 +53,7 @@ namespace Azure.Communication.PhoneNumbers
                 }
                 if (property.NameEquals("capabilities"u8))
                 {
-                    capabilities = PurchasedPhoneNumberCapabilities.DeserializePurchasedPhoneNumberCapabilities(property.Value);
+                    capabilities = PhoneNumberCapabilities.DeserializePhoneNumberCapabilities(property.Value);
                     continue;
                 }
                 if (property.NameEquals("assignmentType"u8))

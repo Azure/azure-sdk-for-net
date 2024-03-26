@@ -8,19 +8,17 @@
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> The minimum desired capabilities for the browse operation request. </summary>
-#pragma warning disable AZC0030 // Improper model name suffix
-    public partial class PhoneNumberBrowseCapabilitiesRequest
-#pragma warning restore AZC0030 // Improper model name suffix
+    public partial class PhoneNumberBrowseCapabilitiesContent
     {
-        /// <summary> Initializes a new instance of <see cref="PhoneNumberBrowseCapabilitiesRequest"/>. </summary>
-        public PhoneNumberBrowseCapabilitiesRequest()
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberBrowseCapabilitiesContent"/>. </summary>
+        public PhoneNumberBrowseCapabilitiesContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PhoneNumberBrowseCapabilitiesRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberBrowseCapabilitiesContent"/>. </summary>
         /// <param name="calling"> Capability value for calling. </param>
         /// <param name="sms"> Capability value for SMS. </param>
-        internal PhoneNumberBrowseCapabilitiesRequest(PhoneNumberCapabilityType? calling, PhoneNumberCapabilityType? sms)
+        internal PhoneNumberBrowseCapabilitiesContent(PhoneNumberCapabilityType? calling, PhoneNumberCapabilityType? sms)
         {
             Calling = calling;
             Sms = sms;
