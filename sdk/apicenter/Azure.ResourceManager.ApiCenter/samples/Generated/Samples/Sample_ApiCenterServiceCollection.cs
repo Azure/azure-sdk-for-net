@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.ApiCenter.Samples
                 Identity = new ManagedServiceIdentity("SystemAssigned, UserAssigned")
                 {
                     UserAssignedIdentities =
-    {
-    [new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/contoso-resources/providers/Microsoft.ManagedIdentity/userAssignedIdentities/contoso-identity")] = new UserAssignedIdentity(),
-    },
+{
+[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/contoso-resources/providers/Microsoft.ManagedIdentity/userAssignedIdentities/contoso-identity")] = new UserAssignedIdentity(),
+},
                 },
                 Tags =
 {
