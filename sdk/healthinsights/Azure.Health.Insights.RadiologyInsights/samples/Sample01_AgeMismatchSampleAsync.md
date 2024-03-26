@@ -1,19 +1,15 @@
-﻿# How to extract the description of a Age Mismatch Inference using a asynchronous call
+# How to extract the description of a Age Mismatch Inference using a asynchronous call
 
 In this sample it is shown how you can construct a request, add a configuration, create a client, send a asynchronous request and use the result returned to extract the tokens and display the document content evidence that triggered the age mismatch inference.
 
 ## Create a PatientRecord
 
-```C#
-PatientRecord patientRecord = new(id);
-patientRecord.Info = patientInfo;
-patientRecord.Encounters.Add(encounter);
-patientRecord.PatientDocuments.Add(patientDocument);
+```C# Snippet:Age_Mismatch_Async_Tests_Samples_CreatePatientRecord
 string id = "patient_id2";
 PatientDetails patientInfo = new()
 {
     BirthDate = new System.DateTime(1959, 11, 11),
-    Sex = PatientInfoSex.Female,
+    Sex = PatientSex.Female,
 };
 Encounter encounter = new("encounterid1")
 {
@@ -24,7 +20,21 @@ Encounter encounter = new("encounterid1")
         End = new System.DateTime(2021, 08, 28)
     }
 };
+List<Encounter> encounterList = new() { encounter };
 DocumentContent documentContent = new(DocumentContentSourceType.Inline, DOC_CONTENT);
+PatientDocument patientDocument = new(DocumentType.Note, "doc2", documentContent)
+{
+    ClinicalType = ClinicalDocumentType.RadiologyReport,
+    CreatedDateTime = new System.DateTime(2021, 08, 28),
+    AdministrativeMetadata = CreateDocumentAdministrativeMetadata()
+};
+PatientRecord patientRecord = new(id);
+patientRecord.Info = patientInfo;
+patientRecord.Encounters.Add(encounter);
+patientRecord.PatientDocuments.Add(patientDocument);
+```
+## For the patient record document specify the following document content.
+```C# Snippet:Age_Mismatch_Async_Tests_Samples_Doc_Content
 private const string DOC_CONTENT = "CLINICAL HISTORY:   "
     + "\r\n20-year-old female presenting with abdominal pain. Surgical history significant for appendectomy."
     + "\r\n "
@@ -46,36 +56,42 @@ private const string DOC_CONTENT = "CLINICAL HISTORY:   "
     + "\r\n\nA new US pelvis within the next 6 months is recommended."
     + "\n\nThese results have been discussed with Dr. Jones at 3 PM on November 5 2020.\n "
     + "\r\n";
-PatientDocument patientDocument = new(DocumentType.Note, "doc2", documentContent)
-{
-    ClinicalType = ClinicalDocumentType.RadiologyReport,
-    CreatedDateTime = new System.DateTime(2021, 08, 28),
-    DocumentAdministrativeMetadata documentAdministrativeMetadata = new DocumentAdministrativeMetadata();
-
-    FhirR4Coding coding = new()
-    {
-        Display = "US PELVIS COMPLETE",
-        Code = "USPELVIS",
-        System = "Http://hl7.org/fhir/ValueSet/cpt-all"
-    };
-
-    FhirR4CodeableConcept codeableConcept = new();
-    codeableConcept.Coding.Add(coding);
-
-    FhirR4Extendible orderedProcedure = new()
-    {
-        Description = "US PELVIS COMPLETE",
-        Code = codeableConcept
-    };
-
-    documentAdministrativeMetadata.OrderedProcedures.Add(orderedProcedure);
-};
-List<PatientRecord> patientRecords = new() { patientRecord };
 ```
+## For the patient record create ordered procedures.
+```C# Snippet:Age_Mismatch_Async_Tests_Samples_CreateDocumentAdministrativeMetadata
+DocumentAdministrativeMetadata documentAdministrativeMetadata = new DocumentAdministrativeMetadata();
 
+FhirR4Coding coding = new()
+{
+    Display = "US PELVIS COMPLETE",
+    Code = "USPELVIS",
+    System = "Http://hl7.org/fhir/ValueSet/cpt-all"
+};
+
+FhirR4CodeableConcept codeableConcept = new();
+codeableConcept.Coding.Add(coding);
+
+FhirR4Extendible orderedProcedure = new()
+{
+    Description = "US PELVIS COMPLETE",
+    Code = codeableConcept
+};
+
+documentAdministrativeMetadata.OrderedProcedures.Add(orderedProcedure);
+```
 ## Create a ModelConfiguration
 
-```C#
+```C# Snippet:Age_Mismatch_Async_Tests_Samples_CreateModelConfiguration
+RadiologyInsightsModelConfiguration radiologyInsightsModelConfiguration = new()
+{
+    Locale = "en-US",
+    IncludeEvidence = true,
+    InferenceOptions = radiologyInsightsInferenceOptions
+};
+radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.AgeMismatch);
+```
+## For the model configuration add the following inference options.
+```C# Snippet:Age_Mismatch_Async_Tests_Samples_CreateRadiologyInsightsInferenceOptions
 RadiologyInsightsInferenceOptions radiologyInsightsInferenceOptions = new();
 FollowupRecommendationOptions followupRecommendationOptions = new();
 FindingOptions findingOptions = new();
@@ -85,19 +101,11 @@ followupRecommendationOptions.ProvideFocusedSentenceEvidence = true;
 findingOptions.ProvideFocusedSentenceEvidence = true;
 radiologyInsightsInferenceOptions.FollowupRecommendationOptions = followupRecommendationOptions;
 radiologyInsightsInferenceOptions.FindingOptions = findingOptions;
-
-RadiologyInsightsModelConfiguration radiologyInsightsModelConfiguration = new()
-{
-    Locale = "en-US",
-    IncludeEvidence = true,
-    InferenceOptions = radiologyInsightsInferenceOptions
-};
-radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.AgeMismatch);
 ```
 
 ## Add the PatientRecord and the ModelConfiguration inside RadiologyInsightsData
 
-```C#
+```C# Snippet:Age_Mismatch_Async_Tests_Samples_AddRecordAndConfiguration
 List<PatientRecord> patientRecords = new() { patientRecord };
 RadiologyInsightsData radiologyInsightsData = new(patientRecords);
 radiologyInsightsData.Configuration = CreateConfiguration();
@@ -105,21 +113,21 @@ radiologyInsightsData.Configuration = CreateConfiguration();
 
 ## Create a RadiologyInsights client
 
-```C#
-Uri endpoint = new Uri("AZURE_HEALTH_INSIGHTS_ENDPOINT");
-AzureKeyCredential credential = new AzureKeyCredential("AZURE_HEALTH_INSIGHTS_KEY");
-RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
+```C# Snippet:Age_Mismatch_Async_Tests_Samples_CreateClient
+Uri endpointUri = new Uri(endpoint);
+AzureKeyCredential credential = new AzureKeyCredential(apiKey);
+RadiologyInsightsClient client = new RadiologyInsightsClient(endpointUri, credential);
 ```
 
 ## Send a asynchronous request to the RadiologyInsights client
 
-```C#
+```C# Snippet:Age_Mismatch_Async_Tests_Samples_synccall
 Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, radiologyInsightsData);
 ```
 
 ## From the result loop over the inferences and call the ExtractEvidence method with  extensions of each age mismatch found. The ExtractEvidence method returns the evidence which triggered the age mismatch inference.
 
-```C#
+```C# Snippet:Age_Mismatch_Async_Tests_Samples_AgeMismatchInference
 RadiologyInsightsInferenceResult responseData = operation.Value;
 IReadOnlyList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
 
@@ -136,7 +144,7 @@ foreach (RadiologyInsightsInference inference in inferences)
 
 ## In the ExtractEvidence method iterate over each of the extensions and get the subExtensions. With these subExtensions call the ExtractEvidenceToken method to get the evidence which is returned back.
 
-```C#
+```C# Snippet:Age_Mismatch_Async_Tests_Samples_ExtractEvidence
 foreach (FhirR4Extension extension in extensions)
 {
     IReadOnlyList<FhirR4Extension> subExtensions = extension.Extension;
@@ -149,7 +157,7 @@ foreach (FhirR4Extension extension in extensions)
 
 ## In the ExtractEvidence method iterate over each of the extensions and get the subExtensions. With these subExtensions call the ExtractEvidenceToken method to get the evidence which is returned back.
 
-```C#
+```C# Snippet:Age_Mismatch_Async_Tests_Samples_EvidenceToken
 foreach (FhirR4Extension iExtension in subExtensions)
 {
     if (iExtension.Url.Equals("offset"))
