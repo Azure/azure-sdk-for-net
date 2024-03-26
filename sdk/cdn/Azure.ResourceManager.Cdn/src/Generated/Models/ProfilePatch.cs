@@ -56,14 +56,12 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="tags"> Profile tags. </param>
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <param name="originResponseTimeoutSeconds"> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </param>
-        /// <param name="logScrubbing"> Defines rules to scrub sensitive fields in logs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProfilePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, int? originResponseTimeoutSeconds, ProfileLogScrubbing logScrubbing, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProfilePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, int? originResponseTimeoutSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Identity = identity;
             OriginResponseTimeoutSeconds = originResponseTimeoutSeconds;
-            LogScrubbing = logScrubbing;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -73,7 +71,5 @@ namespace Azure.ResourceManager.Cdn.Models
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </summary>
         public int? OriginResponseTimeoutSeconds { get; set; }
-        /// <summary> Defines rules to scrub sensitive fields in logs. </summary>
-        public ProfileLogScrubbing LogScrubbing { get; set; }
     }
 }

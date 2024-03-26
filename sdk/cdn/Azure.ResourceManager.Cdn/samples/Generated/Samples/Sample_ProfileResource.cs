@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CheckEndpointNameAvailabilityFrontDoorProfile_CheckEndpointNameAvailability()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/AFDProfiles_CheckEndpointNameAvailability.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2023-05-01/examples/AFDProfiles_CheckEndpointNameAvailability.json
             // this example is just showing the usage of "FrontDoorProfiles_CheckEndpointNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetFrontDoorProfileResourceUsages_AFDProfilesListResourceUsage()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/AFDProfiles_ListResourceUsage.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2023-05-01/examples/AFDProfiles_ListResourceUsage.json
             // this example is just showing the usage of "FrontDoorProfiles_ListResourceUsage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CheckFrontDoorProfileHostNameAvailability_AFDProfilesCheckHostNameAvailability()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/AFDProfiles_CheckHostNameAvailability.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2023-05-01/examples/AFDProfiles_CheckHostNameAvailability.json
             // this example is just showing the usage of "FrontDoorProfiles_CheckHostNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ValidateSecretFrontDoorProfile_ValidateSecret()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/AFDProfiles_ValidateSecret.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2023-05-01/examples/AFDProfiles_ValidateSecret.json
             // this example is just showing the usage of "FrontDoorProfiles_ValidateSecret" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task UpgradeFrontDoorProfile_AFDProfilesUpgrade()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/AFDProfiles_Upgrade.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2023-05-01/examples/AFDProfiles_Upgrade.json
             // this example is just showing the usage of "FrontDoorProfiles_Upgrade" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -181,7 +181,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/RG/providers/Mi
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetLogAnalyticsRankings_LogAnalyticsGetLogAnalyticsRankings()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/LogAnalytics_GetLogAnalyticsRankings.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2023-05-01/examples/LogAnalytics_GetLogAnalyticsRankings.json
             // this example is just showing the usage of "LogAnalytics_GetLogAnalyticsRankings" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -216,7 +216,7 @@ LogRankingMetric.ClientRequestCount
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetLogAnalyticsLocations_LogAnalyticsGetLogAnalyticsLocations()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/LogAnalytics_GetLogAnalyticsLocations.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2023-05-01/examples/LogAnalytics_GetLogAnalyticsLocations.json
             // this example is just showing the usage of "LogAnalytics_GetLogAnalyticsLocations" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -243,7 +243,7 @@ LogRankingMetric.ClientRequestCount
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetLogAnalyticsResources_LogAnalyticsGetLogAnalyticsResources()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/LogAnalytics_GetLogAnalyticsResources.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2023-05-01/examples/LogAnalytics_GetLogAnalyticsResources.json
             // this example is just showing the usage of "LogAnalytics_GetLogAnalyticsResources" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -270,7 +270,7 @@ LogRankingMetric.ClientRequestCount
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetWafLogAnalyticsRankings_LogAnalyticsGetWafLogAnalyticsRankings()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/LogAnalytics_GetWafLogAnalyticsRankings.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2023-05-01/examples/LogAnalytics_GetWafLogAnalyticsRankings.json
             // this example is just showing the usage of "LogAnalytics_GetWafLogAnalyticsRankings" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -305,7 +305,7 @@ WafRankingType.RuleId
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetProfiles_ProfilesList()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Profiles_List.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2023-05-01/examples/Profiles_List.json
             // this example is just showing the usage of "Profiles_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -337,7 +337,7 @@ WafRankingType.RuleId
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ProfilesGet()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Profiles_Get.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2023-05-01/examples/Profiles_Get.json
             // this example is just showing the usage of "Profiles_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -368,7 +368,7 @@ WafRankingType.RuleId
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_ProfilesUpdate()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Profiles_Update.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2023-05-01/examples/Profiles_Update.json
             // this example is just showing the usage of "Profiles_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -407,7 +407,7 @@ WafRankingType.RuleId
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_ProfilesDelete()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Profiles_Delete.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2023-05-01/examples/Profiles_Delete.json
             // this example is just showing the usage of "Profiles_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -434,7 +434,7 @@ WafRankingType.RuleId
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CanMigrateProfile_ProfilesCanMigrate()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Profiles_CanMigrate.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2023-05-01/examples/Profiles_CanMigrate.json
             // this example is just showing the usage of "Profiles_CanMigrate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -465,7 +465,7 @@ WafRankingType.RuleId
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task MigrateProfile_ProfilesMigrate()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Profiles_Migrate.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2023-05-01/examples/Profiles_Migrate.json
             // this example is just showing the usage of "Profiles_Migrate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -499,7 +499,7 @@ WafRankingType.RuleId
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task MigrationCommit_ProfilesMigrationCommit()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Profiles_MigrationCommit.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2023-05-01/examples/Profiles_MigrationCommit.json
             // this example is just showing the usage of "Profiles_MigrationCommit" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -526,7 +526,7 @@ WafRankingType.RuleId
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GenerateSsoUri_ProfilesGenerateSsoUri()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Profiles_GenerateSsoUri.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2023-05-01/examples/Profiles_GenerateSsoUri.json
             // this example is just showing the usage of "Profiles_GenerateSsoUri" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -553,7 +553,7 @@ WafRankingType.RuleId
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetSupportedOptimizationTypes_ProfilesListSupportedOptimizationTypes()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Profiles_ListSupportedOptimizationTypes.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2023-05-01/examples/Profiles_ListSupportedOptimizationTypes.json
             // this example is just showing the usage of "Profiles_ListSupportedOptimizationTypes" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -580,7 +580,7 @@ WafRankingType.RuleId
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetResourceUsages_ProfilesListResourceUsage()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Profiles_ListResourceUsage.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2023-05-01/examples/Profiles_ListResourceUsage.json
             // this example is just showing the usage of "Profiles_ListResourceUsage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

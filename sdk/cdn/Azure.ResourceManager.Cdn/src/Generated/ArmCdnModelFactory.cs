@@ -110,9 +110,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="extendedProperties"> Key-Value pair representing additional properties for profiles. </param>
         /// <param name="frontDoorId"> The Id of the frontdoor. </param>
         /// <param name="originResponseTimeoutSeconds"> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </param>
-        /// <param name="logScrubbing"> Defines rules that scrub sensitive fields in the Azure Front Door profile logs. </param>
         /// <returns> A new <see cref="Cdn.ProfileData"/> instance for mocking. </returns>
-        public static ProfileData ProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CdnSkuName? skuName = null, string kind = null, ManagedServiceIdentity identity = null, ProfileResourceState? resourceState = null, ProfileProvisioningState? provisioningState = null, IReadOnlyDictionary<string, string> extendedProperties = null, Guid? frontDoorId = null, int? originResponseTimeoutSeconds = null, ProfileLogScrubbing logScrubbing = null)
+        public static ProfileData ProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CdnSkuName? skuName = null, string kind = null, ManagedServiceIdentity identity = null, ProfileResourceState? resourceState = null, ProfileProvisioningState? provisioningState = null, IReadOnlyDictionary<string, string> extendedProperties = null, Guid? frontDoorId = null, int? originResponseTimeoutSeconds = null)
         {
             tags ??= new Dictionary<string, string>();
             extendedProperties ??= new Dictionary<string, string>();
@@ -132,7 +131,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 extendedProperties,
                 frontDoorId,
                 originResponseTimeoutSeconds,
-                logScrubbing,
                 serializedAdditionalRawData: null);
         }
 
@@ -1385,7 +1383,7 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProfileData ProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CdnSkuName? skuName, string kind, ProfileResourceState? resourceState, ProfileProvisioningState? provisioningState, Guid? frontDoorId, int? originResponseTimeoutSeconds)
         {
-            return ProfileData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, skuName: skuName, kind: kind, identity: default, resourceState: resourceState, provisioningState: provisioningState, extendedProperties: default, frontDoorId: frontDoorId, originResponseTimeoutSeconds: originResponseTimeoutSeconds, logScrubbing: default);
+            return ProfileData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, skuName: skuName, kind: kind, identity: default, resourceState: resourceState, provisioningState: provisioningState, extendedProperties: default, frontDoorId: frontDoorId, originResponseTimeoutSeconds: originResponseTimeoutSeconds);
         }
 
         /// <summary> Initializes a new instance of CdnWebApplicationFirewallPolicyData. </summary>

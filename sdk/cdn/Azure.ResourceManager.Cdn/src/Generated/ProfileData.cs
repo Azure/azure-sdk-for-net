@@ -78,9 +78,8 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="extendedProperties"> Key-Value pair representing additional properties for profiles. </param>
         /// <param name="frontDoorId"> The Id of the frontdoor. </param>
         /// <param name="originResponseTimeoutSeconds"> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </param>
-        /// <param name="logScrubbing"> Defines rules that scrub sensitive fields in the Azure Front Door profile logs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CdnSku sku, string kind, ManagedServiceIdentity identity, ProfileResourceState? resourceState, ProfileProvisioningState? provisioningState, IReadOnlyDictionary<string, string> extendedProperties, Guid? frontDoorId, int? originResponseTimeoutSeconds, ProfileLogScrubbing logScrubbing, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CdnSku sku, string kind, ManagedServiceIdentity identity, ProfileResourceState? resourceState, ProfileProvisioningState? provisioningState, IReadOnlyDictionary<string, string> extendedProperties, Guid? frontDoorId, int? originResponseTimeoutSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Kind = kind;
@@ -90,7 +89,6 @@ namespace Azure.ResourceManager.Cdn
             ExtendedProperties = extendedProperties;
             FrontDoorId = frontDoorId;
             OriginResponseTimeoutSeconds = originResponseTimeoutSeconds;
-            LogScrubbing = logScrubbing;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -127,7 +125,5 @@ namespace Azure.ResourceManager.Cdn
         public Guid? FrontDoorId { get; }
         /// <summary> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </summary>
         public int? OriginResponseTimeoutSeconds { get; set; }
-        /// <summary> Defines rules that scrub sensitive fields in the Azure Front Door profile logs. </summary>
-        public ProfileLogScrubbing LogScrubbing { get; set; }
     }
 }
