@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="startOn"> The UTC date and time at which this Job Output began processing. </param>
         /// <param name="endOn"> The UTC date and time at which this Job Output finished processing. </param>
         /// <returns> A new <see cref="Models.MediaJobOutput"/> instance for mocking. </returns>
-        public static MediaJobOutput MediaJobOutput(string odataType = null, MediaJobError error = null, MediaTransformPreset presetOverride = null, MediaJobState? state = null, int? progress = null, string label = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null)
+        public static MediaJobOutput MediaJobOutput(string odataType = "Unknown", MediaJobError error = null, MediaTransformPreset presetOverride = null, MediaJobState? state = null, int? progress = null, string label = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null)
         {
             return new UnknownJobOutput(
                 odataType,
