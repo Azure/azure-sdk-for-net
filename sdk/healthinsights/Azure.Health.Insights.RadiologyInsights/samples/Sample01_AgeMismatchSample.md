@@ -34,6 +34,7 @@ patientRecord.Info = patientInfo;
 patientRecord.Encounters.Add(encounter);
 patientRecord.PatientDocuments.Add(patientDocument);
 ```
+
 ## For the patient record document specify the following document content.
 ```C# Snippet:Age_Mismatch_Sync_Tests_Samples_Doc_Content
 private const string DOC_CONTENT = "CLINICAL HISTORY:   "
@@ -58,6 +59,7 @@ private const string DOC_CONTENT = "CLINICAL HISTORY:   "
     + "\n\nThese results have been discussed with Dr. Jones at 3 PM on November 5 2020.\n "
     + "\r\n";
 ```
+
 ## For the patient record create ordered procedures.
 ```C# Snippet:Age_Mismatch_Sync_Tests_Samples_CreateDocumentAdministrativeMetadata
 DocumentAdministrativeMetadata documentAdministrativeMetadata = new DocumentAdministrativeMetadata();
@@ -82,7 +84,6 @@ documentAdministrativeMetadata.OrderedProcedures.Add(orderedProcedure);
 ```
 
 ## Create a ModelConfiguration
-
 ```C# Snippet:Age_Mismatch_Sync_Tests_Samples_CreateModelConfiguration
 RadiologyInsightsModelConfiguration radiologyInsightsModelConfiguration = new()
 {
@@ -92,6 +93,7 @@ RadiologyInsightsModelConfiguration radiologyInsightsModelConfiguration = new()
 };
 radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.AgeMismatch);
 ```
+
 ## For the model configuration add the following inference options.
 ```C# Snippet:Age_Mismatch_Sync_Tests_Samples_CreateRadiologyInsightsInferenceOptions
 RadiologyInsightsInferenceOptions radiologyInsightsInferenceOptions = new();

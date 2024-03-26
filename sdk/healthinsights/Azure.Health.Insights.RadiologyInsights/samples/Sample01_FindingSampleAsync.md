@@ -4,16 +4,12 @@ In this sample it is shown how you can construct a request, add a configuration,
 
 ## Create a PatientRecord
 
-```C#
-PatientRecord patientRecord = new(id);
-patientRecord.Info = patientInfo;
-patientRecord.Encounters.Add(encounter);
-patientRecord.PatientDocuments.Add(patientDocument);
+```C# Snippet:Finding_Async_Tests_Samples_CreatePatientRecord
 string id = "patient_id2";
 PatientDetails patientInfo = new()
 {
     BirthDate = new System.DateTime(1959, 11, 11),
-    Sex = PatientInfoSex.Female,
+    Sex = PatientSex.Female,
 };
 Encounter encounter = new("encounterid1")
 {
@@ -24,7 +20,21 @@ Encounter encounter = new("encounterid1")
         End = new System.DateTime(2021, 08, 28)
     }
 };
+List<Encounter> encounterList = new() { encounter };
 DocumentContent documentContent = new(DocumentContentSourceType.Inline, DOC_CONTENT);
+PatientDocument patientDocument = new(DocumentType.Note, "doc2", documentContent)
+{
+    ClinicalType = ClinicalDocumentType.RadiologyReport,
+    CreatedDateTime = new System.DateTime(2021, 08, 28),
+    AdministrativeMetadata = CreateDocumentAdministrativeMetadata()
+};
+PatientRecord patientRecord = new(id);
+patientRecord.Info = patientInfo;
+patientRecord.Encounters.Add(encounter);
+patientRecord.PatientDocuments.Add(patientDocument);
+```
+## For the patient record document specify the following document content.
+```C# Snippet:Finding_Async_Tests_Samples_Doc_Content
 private const string DOC_CONTENT = "CLINICAL HISTORY:   "
     + "\r\n20-year-old female presenting with abdominal pain. Surgical history significant for appendectomy."
     + "\r\n "
@@ -46,36 +56,43 @@ private const string DOC_CONTENT = "CLINICAL HISTORY:   "
     + "\r\n\nA new US pelvis within the next 6 months is recommended."
     + "\n\nThese results have been discussed with Dr. Jones at 3 PM on November 5 2020.\n "
     + "\r\n";
-PatientDocument patientDocument = new(DocumentType.Note, "doc2", documentContent)
+```
+## For the patient record create ordered procedures.
+```C# Snippet:Finding_Async_Tests_Samples_CreateDocumentAdministrativeMetadata
+DocumentAdministrativeMetadata documentAdministrativeMetadata = new DocumentAdministrativeMetadata();
+
+FhirR4Coding coding = new()
 {
-    ClinicalType = ClinicalDocumentType.RadiologyReport,
-    CreatedDateTime = new System.DateTime(2021, 08, 28),
-    DocumentAdministrativeMetadata documentAdministrativeMetadata = new DocumentAdministrativeMetadata();
-
-    FhirR4Coding coding = new()
-    {
-        Display = "US PELVIS COMPLETE",
-        Code = "USPELVIS",
-        System = "Http://hl7.org/fhir/ValueSet/cpt-all"
-    };
-
-    FhirR4CodeableConcept codeableConcept = new();
-    codeableConcept.Coding.Add(coding);
-
-    FhirR4Extendible orderedProcedure = new()
-    {
-        Description = "US PELVIS COMPLETE",
-        Code = codeableConcept
-    };
-
-    documentAdministrativeMetadata.OrderedProcedures.Add(orderedProcedure);
+    Display = "US PELVIS COMPLETE",
+    Code = "USPELVIS",
+    System = "Http://hl7.org/fhir/ValueSet/cpt-all"
 };
-List<PatientRecord> patientRecords = new() { patientRecord };
+
+FhirR4CodeableConcept codeableConcept = new();
+codeableConcept.Coding.Add(coding);
+
+FhirR4Extendible orderedProcedure = new()
+{
+    Description = "US PELVIS COMPLETE",
+    Code = codeableConcept
+};
+
+documentAdministrativeMetadata.OrderedProcedures.Add(orderedProcedure);
 ```
 
 ## Create a ModelConfiguration
 
-```C#
+```C# Snippet:Finding_Async_Tests_Samples_CreateModelConfiguration
+RadiologyInsightsModelConfiguration radiologyInsightsModelConfiguration = new()
+{
+    Locale = "en-US",
+    IncludeEvidence = true,
+    InferenceOptions = radiologyInsightsInferenceOptions
+};
+radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.Finding);
+```
+## For the model configuration add the following inference options.
+```C# Snippet:Finding_Async_Tests_Samples_CreateRadiologyInsightsInferenceOptions
 RadiologyInsightsInferenceOptions radiologyInsightsInferenceOptions = new();
 FollowupRecommendationOptions followupRecommendationOptions = new();
 FindingOptions findingOptions = new();
@@ -85,19 +102,11 @@ followupRecommendationOptions.ProvideFocusedSentenceEvidence = true;
 findingOptions.ProvideFocusedSentenceEvidence = true;
 radiologyInsightsInferenceOptions.FollowupRecommendationOptions = followupRecommendationOptions;
 radiologyInsightsInferenceOptions.FindingOptions = findingOptions;
-
-RadiologyInsightsModelConfiguration radiologyInsightsModelConfiguration = new()
-{
-    Locale = "en-US",
-    IncludeEvidence = true,
-    InferenceOptions = radiologyInsightsInferenceOptions
-};
-radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.Finding);
 ```
 
 ## Add the PatientRecord and the ModelConfiguration inside RadiologyInsightsData
 
-```C#
+```C# Snippet:Finding_Async_Tests_Samples_AddRecordAndConfiguration
 List<PatientRecord> patientRecords = new() { patientRecord };
 RadiologyInsightsData radiologyInsightsData = new(patientRecords);
 radiologyInsightsData.Configuration = CreateConfiguration();
@@ -105,21 +114,21 @@ radiologyInsightsData.Configuration = CreateConfiguration();
 
 ## Create a RadiologyInsights client
 
-```C#
-Uri endpoint = new Uri("AZURE_HEALTH_INSIGHTS_ENDPOINT");
-AzureKeyCredential credential = new AzureKeyCredential("AZURE_HEALTH_INSIGHTS_KEY");
-RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
+```C# Snippet:Finding_Async_Tests_Samples_CreateClient
+Uri endpointUri = new Uri(endpoint);
+AzureKeyCredential credential = new AzureKeyCredential(apiKey);
+RadiologyInsightsClient client = new RadiologyInsightsClient(endpointUri, credential);
 ```
 
 ## Send an asynchronous request to the RadiologyInsights client
 
-```C#
+```C# Snippet:Finding_Async_Tests_Samples_synccall
 Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, radiologyInsightsData);
 ```
 
 ## From the result loop over the inferences and display the categories, interpretations, components and sections of the finding inferences. 
 
-```C#
+```C# Snippet:Finding_Async_Tests_Samples_FindingInference
 Console.Write("Finding Inference found");
 FhirR4Observation finding = findingInference.Finding;
 IList<FhirR4CodeableConcept> categoryList = finding.Category;
@@ -153,7 +162,7 @@ foreach (FhirR4ObservationComponent component in componentList)
 displaySectionInfo(findingInference);
 ```
 
-## Print the code, display and system properties of the categories, interpretations and components.
+## Print the section info of the finding inference.
 
 ```C#
 for (int i = 0; i < indentation; i++)
@@ -173,7 +182,7 @@ if (codeableConcept != null)
 }
 ```
 
-## Print the section info of the finding inference.
+## Print the code, display and system properties of the categories, interpretations and components.
 
 ```C#
 IReadOnlyList<FhirR4Extension> extensionList = findingInference.Extension;
