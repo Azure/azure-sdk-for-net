@@ -22,59 +22,59 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServerInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerInstanceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerInstanceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ServerName != null)
+            if (options.Format != "W" && Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (options.Format != "W" && SapInstanceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SapInstanceType))
             {
                 writer.WritePropertyName("sapInstanceType"u8);
                 writer.WriteStringValue(SapInstanceType.Value.ToString());
             }
-            if (options.Format != "W" && InstanceSid != null)
+            if (options.Format != "W" && Optional.IsDefined(InstanceSid))
             {
                 writer.WritePropertyName("instanceSid"u8);
                 writer.WriteStringValue(InstanceSid);
             }
-            if (options.Format != "W" && SapProduct != null)
+            if (options.Format != "W" && Optional.IsDefined(SapProduct))
             {
                 writer.WritePropertyName("sapProduct"u8);
                 writer.WriteStringValue(SapProduct);
             }
-            if (options.Format != "W" && SapProductVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(SapProductVersion))
             {
                 writer.WritePropertyName("sapProductVersion"u8);
                 writer.WriteStringValue(SapProductVersion);
             }
-            if (options.Format != "W" && OperatingSystem.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OperatingSystem))
             {
                 writer.WritePropertyName("operatingSystem"u8);
                 writer.WriteStringValue(OperatingSystem.Value.ToString());
             }
-            if (options.Format != "W" && ConfigurationData != null)
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationData))
             {
                 writer.WritePropertyName("configurationData"u8);
-                writer.WriteObjectValue(ConfigurationData);
+                writer.WriteObjectValue<ConfigurationDetail>(ConfigurationData, options);
             }
-            if (options.Format != "W" && PerformanceData != null)
+            if (options.Format != "W" && Optional.IsDefined(PerformanceData))
             {
                 writer.WritePropertyName("performanceData"u8);
-                writer.WriteObjectValue(PerformanceData);
+                writer.WriteObjectValue<PerformanceDetail>(PerformanceData, options);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Errors != null)
+            if (options.Format != "W" && Optional.IsDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
-                writer.WriteObjectValue(Errors);
+                writer.WriteObjectValue<SapMigrateError>(Errors, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServerInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerInstanceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerInstanceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             string instanceSid = default;
             string sapProduct = default;
             string sapProductVersion = default;
-            OperatingSystem? operatingSystem = default;
+            SapDiscoveryOperatingSystem? operatingSystem = default;
             ConfigurationDetail configurationData = default;
             PerformanceDetail performanceData = default;
-            ProvisioningState? provisioningState = default;
-            SAPMigrateError errors = default;
+            SapDiscoveryProvisioningState? provisioningState = default;
+            SapMigrateError errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                     {
                         continue;
                     }
-                    operatingSystem = new OperatingSystem(property.Value.GetString());
+                    operatingSystem = new SapDiscoveryOperatingSystem(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("configurationData"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new SapDiscoveryProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                     {
                         continue;
                     }
-                    errors = SAPMigrateError.DeserializeSAPMigrateError(property.Value, options);
+                    errors = SapMigrateError.DeserializeSapMigrateError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServerInstanceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerInstanceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                         return DeserializeServerInstanceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServerInstanceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerInstanceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,32 +22,32 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapDiscoveryErrorDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapDiscoveryErrorDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapDiscoveryErrorDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Code != null)
+            if (options.Format != "W" && Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Recommendation != null)
+            if (options.Format != "W" && Optional.IsDefined(Recommendation))
             {
                 writer.WritePropertyName("recommendation"u8);
                 writer.WriteStringValue(Recommendation);
             }
-            if (options.Format != "W" && !(Details is ChangeTrackingList<SapDiscoveryErrorDetail> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SapDiscoveryErrorDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapDiscoveryErrorDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapDiscoveryErrorDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapDiscoveryErrorDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SapDiscoveryErrorDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapDiscoveryErrorDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                         return DeserializeSapDiscoveryErrorDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SapDiscoveryErrorDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapDiscoveryErrorDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             var format = options.Format == "W" ? ((IPersistableModel<NativePerformanceDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NativePerformanceDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NativePerformanceDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             var format = options.Format == "W" ? ((IPersistableModel<NativePerformanceDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NativePerformanceDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NativePerformanceDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             {
                 return null;
             }
-            DataSource dataSource = default;
+            SapDiscoveryDataSource dataSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataSource"u8))
                 {
-                    dataSource = new DataSource(property.Value.GetString());
+                    dataSource = new SapDiscoveryDataSource(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NativePerformanceDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NativePerformanceDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                         return DeserializeNativePerformanceDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NativePerformanceDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NativePerformanceDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

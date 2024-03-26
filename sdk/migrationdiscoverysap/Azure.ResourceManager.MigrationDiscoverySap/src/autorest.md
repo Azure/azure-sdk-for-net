@@ -21,13 +21,24 @@ use-model-reader-writer: true
 #mgmt-debug:
 #  show-serialized-names: true
 
-
 rename-mapping:
+  ServerInstance: SapDiscoveryServerInstance
   ErrorDefinition: SapDiscoveryErrorDetail
   ConfigurationData: ConfigurationDetail
   ExcelPerformanceData: ExcelPerformanceDetail
   NativePerformanceData: NativePerformanceDetail
   PerformanceData: PerformanceDetail
+  DataSource: SapDiscoveryDataSource
+  DatabaseType: SapDiscoveryDatabaseType
+  DatabaseType.Db2: DB2
+  DatabaseType.SAPASE: SapAse
+  DatabaseType.SAPDB: SapDB
+  ExtendedLocation: SapDiscoveryExtendedLocation
+  OperatingSystem: SapDiscoveryOperatingSystem
+  OperatingSystem.IBMAIX: IbmAix
+  ProvisioningState: SapDiscoveryProvisioningState
+  SapInstanceType.APP: App
+  SapInstanceType.SCS: Scs
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -58,5 +69,6 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  SAP: Sap|sap
 
 ```

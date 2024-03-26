@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         /// <param name="databaseType"> The database of this is a server instance. Applicable only if SAP instance type for this server instance is 'DB'. </param>
         /// <param name="targetHanaRamSizeGB"> Provide the target HANA database size you need. Applicable only if SAP instance type for this server instance is 'DB' and you are migrating an AnyDb database to SAP S/4HANA. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigurationDetail(int? saps, int? cpu, string cpuType, int? cpuInMhz, int? ram, string hardwareManufacturer, string model, int? totalDiskSizeGB, int? totalDiskIops, DatabaseType? databaseType, int? targetHanaRamSizeGB, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConfigurationDetail(int? saps, int? cpu, string cpuType, int? cpuInMhz, int? ram, string hardwareManufacturer, string model, int? totalDiskSizeGB, int? totalDiskIops, SapDiscoveryDatabaseType? databaseType, int? targetHanaRamSizeGB, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Saps = saps;
             Cpu = cpu;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         /// <summary> Provide the total disk IOPS capacity. Add the disk volume for each individual disk and provide the sum total in this field. </summary>
         public int? TotalDiskIops { get; }
         /// <summary> The database of this is a server instance. Applicable only if SAP instance type for this server instance is 'DB'. </summary>
-        public DatabaseType? DatabaseType { get; }
+        public SapDiscoveryDatabaseType? DatabaseType { get; }
         /// <summary> Provide the target HANA database size you need. Applicable only if SAP instance type for this server instance is 'DB' and you are migrating an AnyDb database to SAP S/4HANA. </summary>
         public int? TargetHanaRamSizeGB { get; }
     }

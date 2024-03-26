@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.MigrationDiscoverySap.Models;
@@ -65,32 +65,11 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapDiscoverySiteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapDiscoverySiteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SAPInstanceListResult>> ListBySapDiscoverySiteAsync(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, CancellationToken cancellationToken = default)
+        public async Task<Response<SapInstanceListResult>> ListBySapDiscoverySiteAsync(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapDiscoverySiteName == null)
-            {
-                throw new ArgumentNullException(nameof(sapDiscoverySiteName));
-            }
-            if (sapDiscoverySiteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapDiscoverySiteName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapDiscoverySiteName, nameof(sapDiscoverySiteName));
 
             using var message = CreateListBySapDiscoverySiteRequest(subscriptionId, resourceGroupName, sapDiscoverySiteName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -98,9 +77,9 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             {
                 case 200:
                     {
-                        SAPInstanceListResult value = default;
+                        SapInstanceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SAPInstanceListResult.DeserializeSAPInstanceListResult(document.RootElement);
+                        value = SapInstanceListResult.DeserializeSapInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -115,32 +94,11 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapDiscoverySiteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapDiscoverySiteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SAPInstanceListResult> ListBySapDiscoverySite(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, CancellationToken cancellationToken = default)
+        public Response<SapInstanceListResult> ListBySapDiscoverySite(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapDiscoverySiteName == null)
-            {
-                throw new ArgumentNullException(nameof(sapDiscoverySiteName));
-            }
-            if (sapDiscoverySiteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapDiscoverySiteName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapDiscoverySiteName, nameof(sapDiscoverySiteName));
 
             using var message = CreateListBySapDiscoverySiteRequest(subscriptionId, resourceGroupName, sapDiscoverySiteName);
             _pipeline.Send(message, cancellationToken);
@@ -148,9 +106,9 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             {
                 case 200:
                     {
-                        SAPInstanceListResult value = default;
+                        SapInstanceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SAPInstanceListResult.DeserializeSAPInstanceListResult(document.RootElement);
+                        value = SapInstanceListResult.DeserializeSapInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -188,40 +146,12 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapDiscoverySiteName"/> or <paramref name="sapInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapDiscoverySiteName"/> or <paramref name="sapInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SAPInstanceData>> GetAsync(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, string sapInstanceName, CancellationToken cancellationToken = default)
+        public async Task<Response<SapInstanceData>> GetAsync(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, string sapInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapDiscoverySiteName == null)
-            {
-                throw new ArgumentNullException(nameof(sapDiscoverySiteName));
-            }
-            if (sapDiscoverySiteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapDiscoverySiteName));
-            }
-            if (sapInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapInstanceName));
-            }
-            if (sapInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapDiscoverySiteName, nameof(sapDiscoverySiteName));
+            Argument.AssertNotNullOrEmpty(sapInstanceName, nameof(sapInstanceName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, sapDiscoverySiteName, sapInstanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -229,13 +159,13 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             {
                 case 200:
                     {
-                        SAPInstanceData value = default;
+                        SapInstanceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SAPInstanceData.DeserializeSAPInstanceData(document.RootElement);
+                        value = SapInstanceData.DeserializeSapInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SAPInstanceData)null, message.Response);
+                    return Response.FromValue((SapInstanceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -249,40 +179,12 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapDiscoverySiteName"/> or <paramref name="sapInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapDiscoverySiteName"/> or <paramref name="sapInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SAPInstanceData> Get(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, string sapInstanceName, CancellationToken cancellationToken = default)
+        public Response<SapInstanceData> Get(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, string sapInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapDiscoverySiteName == null)
-            {
-                throw new ArgumentNullException(nameof(sapDiscoverySiteName));
-            }
-            if (sapDiscoverySiteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapDiscoverySiteName));
-            }
-            if (sapInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapInstanceName));
-            }
-            if (sapInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapDiscoverySiteName, nameof(sapDiscoverySiteName));
+            Argument.AssertNotNullOrEmpty(sapInstanceName, nameof(sapInstanceName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, sapDiscoverySiteName, sapInstanceName);
             _pipeline.Send(message, cancellationToken);
@@ -290,19 +192,19 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             {
                 case 200:
                     {
-                        SAPInstanceData value = default;
+                        SapInstanceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SAPInstanceData.DeserializeSAPInstanceData(document.RootElement);
+                        value = SapInstanceData.DeserializeSapInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SAPInstanceData)null, message.Response);
+                    return Response.FromValue((SapInstanceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, string sapInstanceName, SAPInstanceData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, string sapInstanceName, SapInstanceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -322,7 +224,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<SapInstanceData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -337,44 +239,13 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapDiscoverySiteName"/>, <paramref name="sapInstanceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapDiscoverySiteName"/> or <paramref name="sapInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, string sapInstanceName, SAPInstanceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, string sapInstanceName, SapInstanceData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapDiscoverySiteName == null)
-            {
-                throw new ArgumentNullException(nameof(sapDiscoverySiteName));
-            }
-            if (sapDiscoverySiteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapDiscoverySiteName));
-            }
-            if (sapInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapInstanceName));
-            }
-            if (sapInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapInstanceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapDiscoverySiteName, nameof(sapDiscoverySiteName));
+            Argument.AssertNotNullOrEmpty(sapInstanceName, nameof(sapInstanceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, sapDiscoverySiteName, sapInstanceName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -397,44 +268,13 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapDiscoverySiteName"/>, <paramref name="sapInstanceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapDiscoverySiteName"/> or <paramref name="sapInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, string sapInstanceName, SAPInstanceData data, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, string sapInstanceName, SapInstanceData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapDiscoverySiteName == null)
-            {
-                throw new ArgumentNullException(nameof(sapDiscoverySiteName));
-            }
-            if (sapDiscoverySiteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapDiscoverySiteName));
-            }
-            if (sapInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapInstanceName));
-            }
-            if (sapInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapInstanceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapDiscoverySiteName, nameof(sapDiscoverySiteName));
+            Argument.AssertNotNullOrEmpty(sapInstanceName, nameof(sapInstanceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, sapDiscoverySiteName, sapInstanceName, data);
             _pipeline.Send(message, cancellationToken);
@@ -448,7 +288,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, string sapInstanceName, SAPInstancePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, string sapInstanceName, SapInstancePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -468,7 +308,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue<SapInstancePatch>(patch, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -483,44 +323,13 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapDiscoverySiteName"/>, <paramref name="sapInstanceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapDiscoverySiteName"/> or <paramref name="sapInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SAPInstanceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, string sapInstanceName, SAPInstancePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<SapInstanceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, string sapInstanceName, SapInstancePatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapDiscoverySiteName == null)
-            {
-                throw new ArgumentNullException(nameof(sapDiscoverySiteName));
-            }
-            if (sapDiscoverySiteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapDiscoverySiteName));
-            }
-            if (sapInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapInstanceName));
-            }
-            if (sapInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapInstanceName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapDiscoverySiteName, nameof(sapDiscoverySiteName));
+            Argument.AssertNotNullOrEmpty(sapInstanceName, nameof(sapInstanceName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, sapDiscoverySiteName, sapInstanceName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -528,9 +337,9 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             {
                 case 200:
                     {
-                        SAPInstanceData value = default;
+                        SapInstanceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SAPInstanceData.DeserializeSAPInstanceData(document.RootElement);
+                        value = SapInstanceData.DeserializeSapInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -547,44 +356,13 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapDiscoverySiteName"/>, <paramref name="sapInstanceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapDiscoverySiteName"/> or <paramref name="sapInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SAPInstanceData> Update(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, string sapInstanceName, SAPInstancePatch patch, CancellationToken cancellationToken = default)
+        public Response<SapInstanceData> Update(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, string sapInstanceName, SapInstancePatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapDiscoverySiteName == null)
-            {
-                throw new ArgumentNullException(nameof(sapDiscoverySiteName));
-            }
-            if (sapDiscoverySiteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapDiscoverySiteName));
-            }
-            if (sapInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapInstanceName));
-            }
-            if (sapInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapInstanceName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapDiscoverySiteName, nameof(sapDiscoverySiteName));
+            Argument.AssertNotNullOrEmpty(sapInstanceName, nameof(sapInstanceName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, sapDiscoverySiteName, sapInstanceName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -592,9 +370,9 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             {
                 case 200:
                     {
-                        SAPInstanceData value = default;
+                        SapInstanceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SAPInstanceData.DeserializeSAPInstanceData(document.RootElement);
+                        value = SapInstanceData.DeserializeSapInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -634,38 +412,10 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapDiscoverySiteName"/> or <paramref name="sapInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, string sapInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapDiscoverySiteName == null)
-            {
-                throw new ArgumentNullException(nameof(sapDiscoverySiteName));
-            }
-            if (sapDiscoverySiteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapDiscoverySiteName));
-            }
-            if (sapInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapInstanceName));
-            }
-            if (sapInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapDiscoverySiteName, nameof(sapDiscoverySiteName));
+            Argument.AssertNotNullOrEmpty(sapInstanceName, nameof(sapInstanceName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, sapDiscoverySiteName, sapInstanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -690,38 +440,10 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapDiscoverySiteName"/> or <paramref name="sapInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, string sapInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapDiscoverySiteName == null)
-            {
-                throw new ArgumentNullException(nameof(sapDiscoverySiteName));
-            }
-            if (sapDiscoverySiteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapDiscoverySiteName));
-            }
-            if (sapInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapInstanceName));
-            }
-            if (sapInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapDiscoverySiteName, nameof(sapDiscoverySiteName));
+            Argument.AssertNotNullOrEmpty(sapInstanceName, nameof(sapInstanceName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, sapDiscoverySiteName, sapInstanceName);
             _pipeline.Send(message, cancellationToken);
@@ -758,36 +480,12 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapDiscoverySiteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapDiscoverySiteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SAPInstanceListResult>> ListBySapDiscoverySiteNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, CancellationToken cancellationToken = default)
+        public async Task<Response<SapInstanceListResult>> ListBySapDiscoverySiteNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapDiscoverySiteName == null)
-            {
-                throw new ArgumentNullException(nameof(sapDiscoverySiteName));
-            }
-            if (sapDiscoverySiteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapDiscoverySiteName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapDiscoverySiteName, nameof(sapDiscoverySiteName));
 
             using var message = CreateListBySapDiscoverySiteNextPageRequest(nextLink, subscriptionId, resourceGroupName, sapDiscoverySiteName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -795,9 +493,9 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             {
                 case 200:
                     {
-                        SAPInstanceListResult value = default;
+                        SapInstanceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SAPInstanceListResult.DeserializeSAPInstanceListResult(document.RootElement);
+                        value = SapInstanceListResult.DeserializeSapInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -813,36 +511,12 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapDiscoverySiteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapDiscoverySiteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SAPInstanceListResult> ListBySapDiscoverySiteNextPage(string nextLink, string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, CancellationToken cancellationToken = default)
+        public Response<SapInstanceListResult> ListBySapDiscoverySiteNextPage(string nextLink, string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapDiscoverySiteName == null)
-            {
-                throw new ArgumentNullException(nameof(sapDiscoverySiteName));
-            }
-            if (sapDiscoverySiteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapDiscoverySiteName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapDiscoverySiteName, nameof(sapDiscoverySiteName));
 
             using var message = CreateListBySapDiscoverySiteNextPageRequest(nextLink, subscriptionId, resourceGroupName, sapDiscoverySiteName);
             _pipeline.Send(message, cancellationToken);
@@ -850,9 +524,9 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             {
                 case 200:
                     {
-                        SAPInstanceListResult value = default;
+                        SapInstanceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SAPInstanceListResult.DeserializeSAPInstanceListResult(document.RootElement);
+                        value = SapInstanceListResult.DeserializeSapInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

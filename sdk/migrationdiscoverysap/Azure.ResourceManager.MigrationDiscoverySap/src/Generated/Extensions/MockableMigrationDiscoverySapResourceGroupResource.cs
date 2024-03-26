@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.MigrationDiscoverySap;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Mocking
 {
@@ -36,11 +33,11 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of SAPDiscoverySiteResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of SAPDiscoverySiteResources and their operations over a SAPDiscoverySiteResource. </returns>
-        public virtual SAPDiscoverySiteCollection GetSAPDiscoverySites()
+        /// <summary> Gets a collection of SapDiscoverySiteResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of SapDiscoverySiteResources and their operations over a SapDiscoverySiteResource. </returns>
+        public virtual SapDiscoverySiteCollection GetSapDiscoverySites()
         {
-            return GetCachedClient(client => new SAPDiscoverySiteCollection(client, Id));
+            return GetCachedClient(client => new SapDiscoverySiteCollection(client, Id));
         }
 
         /// <summary>
@@ -60,7 +57,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SAPDiscoverySiteResource"/></description>
+        /// <description><see cref="SapDiscoverySiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -69,9 +66,9 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="sapDiscoverySiteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sapDiscoverySiteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SAPDiscoverySiteResource>> GetSAPDiscoverySiteAsync(string sapDiscoverySiteName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SapDiscoverySiteResource>> GetSapDiscoverySiteAsync(string sapDiscoverySiteName, CancellationToken cancellationToken = default)
         {
-            return await GetSAPDiscoverySites().GetAsync(sapDiscoverySiteName, cancellationToken).ConfigureAwait(false);
+            return await GetSapDiscoverySites().GetAsync(sapDiscoverySiteName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -91,7 +88,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SAPDiscoverySiteResource"/></description>
+        /// <description><see cref="SapDiscoverySiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -100,9 +97,9 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="sapDiscoverySiteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sapDiscoverySiteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SAPDiscoverySiteResource> GetSAPDiscoverySite(string sapDiscoverySiteName, CancellationToken cancellationToken = default)
+        public virtual Response<SapDiscoverySiteResource> GetSapDiscoverySite(string sapDiscoverySiteName, CancellationToken cancellationToken = default)
         {
-            return GetSAPDiscoverySites().Get(sapDiscoverySiteName, cancellationToken);
+            return GetSapDiscoverySites().Get(sapDiscoverySiteName, cancellationToken);
         }
     }
 }

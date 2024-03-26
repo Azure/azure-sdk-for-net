@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MigrationDiscoverySap;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServerInstanceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerInstanceListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerInstanceListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,10 +30,10 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<SapDiscoveryServerInstanceData>(item, options);
             }
             writer.WriteEndArray();
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServerInstanceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerInstanceListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerInstanceListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +76,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             {
                 return null;
             }
-            IReadOnlyList<ServerInstanceData> value = default;
+            IReadOnlyList<SapDiscoveryServerInstanceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -85,10 +84,10 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ServerInstanceData> array = new List<ServerInstanceData>();
+                    List<SapDiscoveryServerInstanceData> array = new List<SapDiscoveryServerInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerInstanceData.DeserializeServerInstanceData(item, options));
+                        array.Add(SapDiscoveryServerInstanceData.DeserializeSapDiscoveryServerInstanceData(item, options));
                     }
                     value = array;
                     continue;
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServerInstanceListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerInstanceListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                         return DeserializeServerInstanceListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServerInstanceListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerInstanceListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

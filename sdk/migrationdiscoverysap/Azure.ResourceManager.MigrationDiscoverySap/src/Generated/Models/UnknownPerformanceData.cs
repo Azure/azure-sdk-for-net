@@ -10,13 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
-    /// <summary> The UnknownPerformanceData. </summary>
+    /// <summary> Unknown version of PerformanceData. </summary>
     internal partial class UnknownPerformanceData : PerformanceDetail
     {
         /// <summary> Initializes a new instance of <see cref="UnknownPerformanceData"/>. </summary>
         /// <param name="dataSource"> The data source of the performance data. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownPerformanceData(DataSource dataSource, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(dataSource, serializedAdditionalRawData)
+        internal UnknownPerformanceData(SapDiscoveryDataSource dataSource, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(dataSource, serializedAdditionalRawData)
         {
             DataSource = dataSource;
         }

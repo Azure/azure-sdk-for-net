@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.MigrationDiscoverySap.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -35,89 +33,77 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SAPDiscoverySiteResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SAPDiscoverySiteResource.CreateResourceIdentifier" /> to create a <see cref="SAPDiscoverySiteResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SapDiscoverySiteResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SapDiscoverySiteResource.CreateResourceIdentifier" /> to create a <see cref="SapDiscoverySiteResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMigrationDiscoverySapArmClient.GetSAPDiscoverySiteResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMigrationDiscoverySapArmClient.GetSapDiscoverySiteResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SAPDiscoverySiteResource"/> object. </returns>
-        public static SAPDiscoverySiteResource GetSAPDiscoverySiteResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SapDiscoverySiteResource"/> object. </returns>
+        public static SapDiscoverySiteResource GetSapDiscoverySiteResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMigrationDiscoverySapArmClient(client).GetSAPDiscoverySiteResource(id);
+            return GetMockableMigrationDiscoverySapArmClient(client).GetSapDiscoverySiteResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SAPInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SAPInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SAPInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SapInstanceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SapInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMigrationDiscoverySapArmClient.GetSAPInstanceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMigrationDiscoverySapArmClient.GetSapInstanceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SAPInstanceResource"/> object. </returns>
-        public static SAPInstanceResource GetSAPInstanceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SapInstanceResource"/> object. </returns>
+        public static SapInstanceResource GetSapInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMigrationDiscoverySapArmClient(client).GetSAPInstanceResource(id);
+            return GetMockableMigrationDiscoverySapArmClient(client).GetSapInstanceResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServerInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerInstanceResource.CreateResourceIdentifier" /> to create a <see cref="ServerInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SapDiscoveryServerInstanceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SapDiscoveryServerInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapDiscoveryServerInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMigrationDiscoverySapArmClient.GetServerInstanceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMigrationDiscoverySapArmClient.GetSapDiscoveryServerInstanceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ServerInstanceResource"/> object. </returns>
-        public static ServerInstanceResource GetServerInstanceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SapDiscoveryServerInstanceResource"/> object. </returns>
+        public static SapDiscoveryServerInstanceResource GetSapDiscoveryServerInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMigrationDiscoverySapArmClient(client).GetServerInstanceResource(id);
+            return GetMockableMigrationDiscoverySapArmClient(client).GetSapDiscoveryServerInstanceResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of SAPDiscoverySiteResources in the ResourceGroupResource.
+        /// Gets a collection of SapDiscoverySiteResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMigrationDiscoverySapResourceGroupResource.GetSAPDiscoverySites()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMigrationDiscoverySapResourceGroupResource.GetSapDiscoverySites()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of SAPDiscoverySiteResources and their operations over a SAPDiscoverySiteResource. </returns>
-        public static SAPDiscoverySiteCollection GetSAPDiscoverySites(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of SapDiscoverySiteResources and their operations over a SapDiscoverySiteResource. </returns>
+        public static SapDiscoverySiteCollection GetSapDiscoverySites(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMigrationDiscoverySapResourceGroupResource(resourceGroupResource).GetSAPDiscoverySites();
+            return GetMockableMigrationDiscoverySapResourceGroupResource(resourceGroupResource).GetSapDiscoverySites();
         }
 
         /// <summary>
@@ -137,12 +123,12 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SAPDiscoverySiteResource"/></description>
+        /// <description><see cref="SapDiscoverySiteResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMigrationDiscoverySapResourceGroupResource.GetSAPDiscoverySiteAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMigrationDiscoverySapResourceGroupResource.GetSapDiscoverySiteAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -151,14 +137,11 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="sapDiscoverySiteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sapDiscoverySiteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SAPDiscoverySiteResource>> GetSAPDiscoverySiteAsync(this ResourceGroupResource resourceGroupResource, string sapDiscoverySiteName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SapDiscoverySiteResource>> GetSapDiscoverySiteAsync(this ResourceGroupResource resourceGroupResource, string sapDiscoverySiteName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableMigrationDiscoverySapResourceGroupResource(resourceGroupResource).GetSAPDiscoverySiteAsync(sapDiscoverySiteName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMigrationDiscoverySapResourceGroupResource(resourceGroupResource).GetSapDiscoverySiteAsync(sapDiscoverySiteName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -178,12 +161,12 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SAPDiscoverySiteResource"/></description>
+        /// <description><see cref="SapDiscoverySiteResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMigrationDiscoverySapResourceGroupResource.GetSAPDiscoverySite(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMigrationDiscoverySapResourceGroupResource.GetSapDiscoverySite(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -192,14 +175,11 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="sapDiscoverySiteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sapDiscoverySiteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<SAPDiscoverySiteResource> GetSAPDiscoverySite(this ResourceGroupResource resourceGroupResource, string sapDiscoverySiteName, CancellationToken cancellationToken = default)
+        public static Response<SapDiscoverySiteResource> GetSapDiscoverySite(this ResourceGroupResource resourceGroupResource, string sapDiscoverySiteName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMigrationDiscoverySapResourceGroupResource(resourceGroupResource).GetSAPDiscoverySite(sapDiscoverySiteName, cancellationToken);
+            return GetMockableMigrationDiscoverySapResourceGroupResource(resourceGroupResource).GetSapDiscoverySite(sapDiscoverySiteName, cancellationToken);
         }
 
         /// <summary>
@@ -219,26 +199,23 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SAPDiscoverySiteResource"/></description>
+        /// <description><see cref="SapDiscoverySiteResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMigrationDiscoverySapSubscriptionResource.GetSAPDiscoverySites(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMigrationDiscoverySapSubscriptionResource.GetSapDiscoverySites(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SAPDiscoverySiteResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SAPDiscoverySiteResource> GetSAPDiscoverySitesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SapDiscoverySiteResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SapDiscoverySiteResource> GetSapDiscoverySitesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMigrationDiscoverySapSubscriptionResource(subscriptionResource).GetSAPDiscoverySitesAsync(cancellationToken);
+            return GetMockableMigrationDiscoverySapSubscriptionResource(subscriptionResource).GetSapDiscoverySitesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -258,26 +235,23 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SAPDiscoverySiteResource"/></description>
+        /// <description><see cref="SapDiscoverySiteResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMigrationDiscoverySapSubscriptionResource.GetSAPDiscoverySites(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMigrationDiscoverySapSubscriptionResource.GetSapDiscoverySites(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SAPDiscoverySiteResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SAPDiscoverySiteResource> GetSAPDiscoverySites(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SapDiscoverySiteResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SapDiscoverySiteResource> GetSapDiscoverySites(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMigrationDiscoverySapSubscriptionResource(subscriptionResource).GetSAPDiscoverySites(cancellationToken);
+            return GetMockableMigrationDiscoverySapSubscriptionResource(subscriptionResource).GetSapDiscoverySites(cancellationToken);
         }
     }
 }

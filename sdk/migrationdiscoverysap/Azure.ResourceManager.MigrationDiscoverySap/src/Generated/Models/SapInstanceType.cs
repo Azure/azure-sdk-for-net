@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 
         private const string AscsValue = "ASCS";
         private const string DBValue = "DB";
-        private const string APPValue = "APP";
-        private const string SCSValue = "SCS";
+        private const string AppValue = "APP";
+        private const string ScsValue = "SCS";
         private const string WebdispValue = "WEBDISP";
 
         /// <summary> The type of Sap Instance- ASCS. </summary>
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         /// <summary> The type of Sap Instance- DB. </summary>
         public static SapInstanceType DB { get; } = new SapInstanceType(DBValue);
         /// <summary> The type of Sap Instance- APP. </summary>
-        public static SapInstanceType APP { get; } = new SapInstanceType(APPValue);
+        public static SapInstanceType App { get; } = new SapInstanceType(AppValue);
         /// <summary> The type of Sap Instance- SCS. </summary>
-        public static SapInstanceType SCS { get; } = new SapInstanceType(SCSValue);
+        public static SapInstanceType Scs { get; } = new SapInstanceType(ScsValue);
         /// <summary> The type of Sap Instance- WEBDISP. </summary>
         public static SapInstanceType Webdisp { get; } = new SapInstanceType(WebdispValue);
         /// <summary> Determines if two <see cref="SapInstanceType"/> values are the same. </summary>

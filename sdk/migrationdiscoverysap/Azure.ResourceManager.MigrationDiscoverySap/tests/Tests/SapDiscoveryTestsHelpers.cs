@@ -21,7 +21,7 @@ public static class SapDiscoveryTestsHelpers
     public const string MigrateProjectIdFormat =
         "/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Migrate/MigrateProjects/{2}";
 
-    public static async Task<SAPDiscoverySiteResource> CreateSapDiscoverySiteAsync(
+    public static async Task<SapDiscoverySiteResource> CreateSapDiscoverySiteAsync(
         AzureLocation region,
         ResourceGroupResource rg,
         string migrateProjectId,
@@ -34,64 +34,64 @@ public static class SapDiscoveryTestsHelpers
                 .Replace("__MigrateProjectId__", migrateProjectId)
                 .Replace("__Location__", region.Name)).RootElement;
 
-        var discoverySiteData = SAPDiscoverySiteData.DeserializeSAPDiscoverySiteData(discoverySiteDataElement);
+        var discoverySiteData = SapDiscoverySiteData.DeserializeSapDiscoverySiteData(discoverySiteDataElement);
 
-        // Create SAP DiscoverySite
-        ArmOperation<SAPDiscoverySiteResource> createDiscoverySiteOperation =
-            await rg.GetSAPDiscoverySites().CreateOrUpdateAsync(
+        // Create Sap DiscoverySite
+        ArmOperation<SapDiscoverySiteResource> createDiscoverySiteOperation =
+            await rg.GetSapDiscoverySites().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 discoverySiteName,
                 discoverySiteData);
         return createDiscoverySiteOperation.Value;
     }
 
-    public static List<SAPInstanceData> GetExpectedSapInstancesListFromJson(
+    public static List<SapInstanceData> GetExpectedSapInstancesListFromJson(
         string sapDiscoverySiteId,
         string filePath)
     {
         var fileText = File.ReadAllText(filePath)
             .Replace("__DiscoverySiteId__", sapDiscoverySiteId);
         JsonElement jsonParsedFile = JsonDocument.Parse(fileText).RootElement;
-        var instanceList = new List<SAPInstanceData>();
+        var instanceList = new List<SapInstanceData>();
         using (JsonElement.ArrayEnumerator listEnumerator = jsonParsedFile.EnumerateArray())
         {
             for (int i = 0; i < listEnumerator.Count(); i++)
             {
                 JsonElement instance = listEnumerator.ElementAt(i);
-                instanceList.Add(SAPInstanceData.DeserializeSAPInstanceData(instance));
+                instanceList.Add(SapInstanceData.DeserializeSapInstanceData(instance));
             }
         }
 
         return instanceList;
     }
 
-    public static List<ServerInstanceData> GetExpectedServerInstancesListFromJson(
+    public static List<SapDiscoveryServerInstanceData> GetExpectedServerInstancesListFromJson(
         string sapDiscoverySiteId,
         string filePath)
     {
         var fileText = File.ReadAllText(filePath)
             .Replace("__DiscoverySiteId__", sapDiscoverySiteId);
         JsonElement jsonParsedFile = JsonDocument.Parse(fileText).RootElement;
-        var instanceList = new List<ServerInstanceData>();
+        var instanceList = new List<SapDiscoveryServerInstanceData>();
         using (JsonElement.ArrayEnumerator listEnumerator = jsonParsedFile.EnumerateArray())
         {
             for (int i = 0; i < listEnumerator.Count(); i++)
             {
                 JsonElement instance = listEnumerator.ElementAt(i);
-                instanceList.Add(ServerInstanceData.DeserializeServerInstanceData(instance));
+                instanceList.Add(SapDiscoveryServerInstanceData.DeserializeSapDiscoveryServerInstanceData(instance));
             }
         }
 
         return instanceList;
     }
 
-    public static async Task<List<SAPInstanceData>> GetSapInstancesListAsync(SAPDiscoverySiteResource sapDiscoverySiteResource)
+    public static async Task<List<SapInstanceData>> GetSapInstancesListAsync(SapDiscoverySiteResource sapDiscoverySiteResource)
     {
-        SAPInstanceCollection sapInstancescollection = sapDiscoverySiteResource.GetSAPInstances();
+        SapInstanceCollection sapInstancescollection = sapDiscoverySiteResource.GetSapInstances();
 
-        var listSapInstances = new List<SAPInstanceData>();
+        var listSapInstances = new List<SapInstanceData>();
         // invoke the operation and iterate over the result
-        await foreach (SAPInstanceResource instance in sapInstancescollection.GetAllAsync())
+        await foreach (SapInstanceResource instance in sapInstancescollection.GetAllAsync())
         {
             listSapInstances.Add(instance.Data);
         }
@@ -99,12 +99,12 @@ public static class SapDiscoveryTestsHelpers
         return listSapInstances;
     }
 
-    public static async Task<List<ServerInstanceData>> GetServerInstancesList(SAPInstanceResource sapInstance)
+    public static async Task<List<SapDiscoveryServerInstanceData>> GetServerInstancesList(SapInstanceResource sapInstance)
     {
-        ServerInstanceCollection serverCollection = sapInstance.GetServerInstances();
+        SapDiscoveryServerInstanceCollection serverCollection = sapInstance.GetSapDiscoveryServerInstances();
 
-        var serverInstancesList = new List<ServerInstanceData>();
-        await foreach (ServerInstanceResource serverInstances in serverCollection.GetAllAsync())
+        var serverInstancesList = new List<SapDiscoveryServerInstanceData>();
+        await foreach (SapDiscoveryServerInstanceResource serverInstances in serverCollection.GetAllAsync())
         {
             serverInstancesList.Add(serverInstances.Data);
         }
@@ -112,7 +112,7 @@ public static class SapDiscoveryTestsHelpers
         return serverInstancesList;
     }
 
-    public static async Task PostImportEntities(ArmClient client, SAPDiscoverySiteResource sapDiscoverySiteResource, string excelPathToImport)
+    public static async Task PostImportEntities(ArmClient client, SapDiscoverySiteResource sapDiscoverySiteResource, string excelPathToImport)
     {
         ArmOperation<OperationStatusResult> importEntitiesOp =
             await sapDiscoverySiteResource.ImportEntitiesAsync(WaitUntil.Completed);

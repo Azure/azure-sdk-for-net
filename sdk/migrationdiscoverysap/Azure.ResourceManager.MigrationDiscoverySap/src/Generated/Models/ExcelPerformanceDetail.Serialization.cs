@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExcelPerformanceDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExcelPerformanceDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExcelPerformanceDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MaxCpuLoad.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxCpuLoad))
             {
                 writer.WritePropertyName("maxCpuLoad"u8);
                 writer.WriteNumberValue(MaxCpuLoad.Value);
             }
-            if (options.Format != "W" && TotalSourceDbSizeGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalSourceDbSizeGB))
             {
                 writer.WritePropertyName("totalSourceDbSizeGB"u8);
                 writer.WriteNumberValue(TotalSourceDbSizeGB.Value);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExcelPerformanceDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExcelPerformanceDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExcelPerformanceDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             }
             int? maxCpuLoad = default;
             int? totalSourceDbSizeGB = default;
-            DataSource dataSource = default;
+            SapDiscoveryDataSource dataSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 }
                 if (property.NameEquals("dataSource"u8))
                 {
-                    dataSource = new DataSource(property.Value.GetString());
+                    dataSource = new SapDiscoveryDataSource(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExcelPerformanceDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExcelPerformanceDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                         return DeserializeExcelPerformanceDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExcelPerformanceDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExcelPerformanceDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

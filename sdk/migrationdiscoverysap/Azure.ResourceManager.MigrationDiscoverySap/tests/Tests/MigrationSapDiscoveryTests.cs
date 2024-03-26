@@ -46,24 +46,24 @@ public class MigrationSapDiscoveryTests : MigrationDiscoverySapManagementTestBas
             migrateProjectId,
             discoverySiteName);
 
-        // Get SAP DiscoverySite
-        SAPDiscoverySiteResource sapDiscoverySiteResource = await rg.GetSAPDiscoverySiteAsync(discoverySiteName);
-        Assert.AreEqual(ProvisioningState.Succeeded, sapDiscoverySiteResource.Data.ProvisioningState);
+        // Get Sap DiscoverySite
+        SapDiscoverySiteResource sapDiscoverySiteResource = await rg.GetSapDiscoverySiteAsync(discoverySiteName);
+        Assert.AreEqual(SapDiscoveryProvisioningState.Succeeded, sapDiscoverySiteResource.Data.ProvisioningState);
         string sapDiscoverySiteId = sapDiscoverySiteResource.Id.ToString();
 
-        // Upload Excel to SAP DiscoverySite
+        // Upload Excel to Sap DiscoverySite
         string excelPathToImport = @"TestData\ExcelSDKTesting.xlsx";
         await SapDiscoveryTestsHelpers.PostImportEntities(Client, sapDiscoverySiteResource, excelPathToImport);
 
-        // Get List SAP Instances
-        List<SAPInstanceData> listSapInstances = await SapDiscoveryTestsHelpers
+        // Get List Sap Instances
+        List<SapInstanceData> listSapInstances = await SapDiscoveryTestsHelpers
             .GetSapInstancesListAsync(sapDiscoverySiteResource);
 
         Assert.IsNotNull(listSapInstances);
 
         const string expectedSapInstancesListPath = @"TestData\ExpectedGetSapInstanceList.json";
 
-        List<SAPInstanceData> expectedListSapInstances = SapDiscoveryTestsHelpers.GetExpectedSapInstancesListFromJson(
+        List<SapInstanceData> expectedListSapInstances = SapDiscoveryTestsHelpers.GetExpectedSapInstancesListFromJson(
             sapDiscoverySiteId,
             expectedSapInstancesListPath);
 
@@ -75,16 +75,16 @@ public class MigrationSapDiscoveryTests : MigrationDiscoverySapManagementTestBas
         // Get SapInstance
         ResourceIdentifier sapInstanceId = listSapInstances.First().Id;
         Assert.IsNotNull(sapInstanceId);
-        SAPInstanceResource sapInstance = await sapDiscoverySiteResource.GetSAPInstanceAsync(sapInstanceId.Name);
+        SapInstanceResource sapInstance = await sapDiscoverySiteResource.GetSapInstanceAsync(sapInstanceId.Name);
 
         // Get Server Instances List
 
-        List<ServerInstanceData> serverInstancesList = await SapDiscoveryTestsHelpers.GetServerInstancesList(sapInstance);
+        List<SapDiscoveryServerInstanceData> serverInstancesList = await SapDiscoveryTestsHelpers.GetServerInstancesList(sapInstance);
         Assert.IsNotNull(serverInstancesList);
 
         const string expectedServerInstanceListPath = @"TestData\ExpectedGetServerInstancesList.json";
 
-        List<ServerInstanceData> expectedServerInstancesList = SapDiscoveryTestsHelpers
+        List<SapDiscoveryServerInstanceData> expectedServerInstancesList = SapDiscoveryTestsHelpers
             .GetExpectedServerInstancesListFromJson(sapDiscoverySiteId, expectedServerInstanceListPath);
 
         serverInstancesList = serverInstancesList.OrderBy(server => server.Name.ToLower()).ToList();
@@ -94,25 +94,25 @@ public class MigrationSapDiscoveryTests : MigrationDiscoverySapManagementTestBas
 
         // Get ServerInstance
         ResourceIdentifier serverInstanceId = serverInstancesList.First().Id;
-        ServerInstanceResource serverInstance = await sapInstance.GetServerInstanceAsync(serverInstanceId.Name);
+        SapDiscoveryServerInstanceResource serverInstance = await sapInstance.GetSapDiscoveryServerInstanceAsync(serverInstanceId.Name);
 
-        //Patch SAP DiscoverySite
-        var discoverySitePatch = new SAPDiscoverySitePatch();
+        //Patch Sap DiscoverySite
+        var discoverySitePatch = new SapDiscoverySitePatch();
         discoverySitePatch.Tags.Add("Key1", "TestPatchValue");
         sapDiscoverySiteResource = await sapDiscoverySiteResource.UpdateAsync(discoverySitePatch);
         string discoverySitetagValue = string.Empty;
         Assert.IsTrue(sapDiscoverySiteResource.Data.Tags.TryGetValue("Key1", out discoverySitetagValue));
         Assert.AreEqual(discoverySitetagValue, "TestPatchValue");
 
-        //Patch SAP Instance
-        var sapInstancePatch = new SAPInstancePatch();
+        //Patch Sap Instance
+        var sapInstancePatch = new SapInstancePatch();
         sapInstancePatch.Tags.Add("Key1", "TestPatchValue");
         sapInstance = await sapInstance.UpdateAsync(sapInstancePatch);
         string sapInstancetagValue = string.Empty;
         Assert.IsTrue(sapInstance.Data.Tags.TryGetValue("Key1", out sapInstancetagValue));
         Assert.AreEqual(sapInstancetagValue, "TestPatchValue");
 
-        // Delete SAP DiscoverySite
+        // Delete Sap DiscoverySite
         await sapDiscoverySiteResource.DeleteAsync(WaitUntil.Completed);
     }
 }

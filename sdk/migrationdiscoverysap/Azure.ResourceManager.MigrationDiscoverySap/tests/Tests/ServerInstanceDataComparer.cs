@@ -6,9 +6,9 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Tests.Tests
 {
-    public class ServerInstanceDataComparer : IEqualityComparer<ServerInstanceData>
+    public class ServerInstanceDataComparer : IEqualityComparer<SapDiscoveryServerInstanceData>
     {
-        public bool Equals(ServerInstanceData x, ServerInstanceData y)
+        public bool Equals(SapDiscoveryServerInstanceData x, SapDiscoveryServerInstanceData y)
         {
             //Check whether the compared objects reference the same data.
             if (Object.ReferenceEquals(x, y))
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Tests.Tests
                 && x.InstanceSid == y.InstanceSid;
         }
 
-        public int GetHashCode(ServerInstanceData serverData)
+        public int GetHashCode(SapDiscoveryServerInstanceData serverData)
         {
             //Check whether the object is null
             if (Object.ReferenceEquals(serverData, null))

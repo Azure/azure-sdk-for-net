@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="errors"> Defines the errors related to SAP Instance resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerInstanceProperties(string serverName, SapInstanceType? sapInstanceType, string instanceSid, string sapProduct, string sapProductVersion, OperatingSystem? operatingSystem, ConfigurationDetail configurationData, PerformanceDetail performanceData, ProvisioningState? provisioningState, SAPMigrateError errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServerInstanceProperties(string serverName, SapInstanceType? sapInstanceType, string instanceSid, string sapProduct, string sapProductVersion, SapDiscoveryOperatingSystem? operatingSystem, ConfigurationDetail configurationData, PerformanceDetail performanceData, SapDiscoveryProvisioningState? provisioningState, SapMigrateError errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServerName = serverName;
             SapInstanceType = sapInstanceType;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         /// <summary> Provide the product version of the SAP product. </summary>
         public string SapProductVersion { get; }
         /// <summary> This is Operating System on which the host server is running. </summary>
-        public OperatingSystem? OperatingSystem { get; }
+        public SapDiscoveryOperatingSystem? OperatingSystem { get; }
         /// <summary> Configuration data for this server instance. </summary>
         public ConfigurationDetail ConfigurationData { get; }
         /// <summary>
@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         /// </summary>
         public PerformanceDetail PerformanceData { get; }
         /// <summary> Defines the provisioning states. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public SapDiscoveryProvisioningState? ProvisioningState { get; }
         /// <summary> Defines the errors related to SAP Instance resource. </summary>
-        public SAPMigrateError Errors { get; }
+        public SapMigrateError Errors { get; }
     }
 }

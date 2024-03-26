@@ -22,61 +22,61 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigurationDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Saps.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Saps))
             {
                 writer.WritePropertyName("saps"u8);
                 writer.WriteNumberValue(Saps.Value);
             }
-            if (options.Format != "W" && Cpu.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Cpu))
             {
                 writer.WritePropertyName("cpu"u8);
                 writer.WriteNumberValue(Cpu.Value);
             }
-            if (options.Format != "W" && CpuType != null)
+            if (options.Format != "W" && Optional.IsDefined(CpuType))
             {
                 writer.WritePropertyName("cpuType"u8);
                 writer.WriteStringValue(CpuType);
             }
-            if (options.Format != "W" && CpuInMhz.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CpuInMhz))
             {
                 writer.WritePropertyName("cpuInMhz"u8);
                 writer.WriteNumberValue(CpuInMhz.Value);
             }
-            if (options.Format != "W" && Ram.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Ram))
             {
                 writer.WritePropertyName("ram"u8);
                 writer.WriteNumberValue(Ram.Value);
             }
-            if (options.Format != "W" && HardwareManufacturer != null)
+            if (options.Format != "W" && Optional.IsDefined(HardwareManufacturer))
             {
                 writer.WritePropertyName("hardwareManufacturer"u8);
                 writer.WriteStringValue(HardwareManufacturer);
             }
-            if (options.Format != "W" && Model != null)
+            if (options.Format != "W" && Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
             }
-            if (options.Format != "W" && TotalDiskSizeGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalDiskSizeGB))
             {
                 writer.WritePropertyName("totalDiskSizeGB"u8);
                 writer.WriteNumberValue(TotalDiskSizeGB.Value);
             }
-            if (options.Format != "W" && TotalDiskIops.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalDiskIops))
             {
                 writer.WritePropertyName("totalDiskIops"u8);
                 writer.WriteNumberValue(TotalDiskIops.Value);
             }
-            if (options.Format != "W" && DatabaseType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseType))
             {
                 writer.WritePropertyName("databaseType"u8);
                 writer.WriteStringValue(DatabaseType.Value.ToString());
             }
-            if (options.Format != "W" && TargetHanaRamSizeGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TargetHanaRamSizeGB))
             {
                 writer.WritePropertyName("targetHanaRamSizeGB"u8);
                 writer.WriteNumberValue(TargetHanaRamSizeGB.Value);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigurationDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             string model = default;
             int? totalDiskSizeGB = default;
             int? totalDiskIops = default;
-            DatabaseType? databaseType = default;
+            SapDiscoveryDatabaseType? databaseType = default;
             int? targetHanaRamSizeGB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                     {
                         continue;
                     }
-                    databaseType = new DatabaseType(property.Value.GetString());
+                    databaseType = new SapDiscoveryDatabaseType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetHanaRamSizeGB"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                         return DeserializeConfigurationDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

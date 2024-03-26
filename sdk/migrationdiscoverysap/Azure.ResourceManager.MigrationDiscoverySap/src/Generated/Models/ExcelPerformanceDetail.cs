@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         /// <summary> Initializes a new instance of <see cref="ExcelPerformanceDetail"/>. </summary>
         internal ExcelPerformanceDetail()
         {
-            DataSource = DataSource.Excel;
+            DataSource = SapDiscoveryDataSource.Excel;
         }
 
         /// <summary> Initializes a new instance of <see cref="ExcelPerformanceDetail"/>. </summary>
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="maxCpuLoad"> Provide the max CPU percentage load on the server. Omit the percentage symbol while filling this value. </param>
         /// <param name="totalSourceDbSizeGB"> Provide the source Database size in GB. Applicable only if SAP instance type for this server instance is 'DB'. </param>
-        internal ExcelPerformanceDetail(DataSource dataSource, IDictionary<string, BinaryData> serializedAdditionalRawData, int? maxCpuLoad, int? totalSourceDbSizeGB) : base(dataSource, serializedAdditionalRawData)
+        internal ExcelPerformanceDetail(SapDiscoveryDataSource dataSource, IDictionary<string, BinaryData> serializedAdditionalRawData, int? maxCpuLoad, int? totalSourceDbSizeGB) : base(dataSource, serializedAdditionalRawData)
         {
             MaxCpuLoad = maxCpuLoad;
             TotalSourceDbSizeGB = totalSourceDbSizeGB;

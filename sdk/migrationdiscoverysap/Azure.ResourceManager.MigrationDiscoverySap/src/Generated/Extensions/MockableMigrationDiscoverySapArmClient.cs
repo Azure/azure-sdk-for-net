@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.MigrationDiscoverySap;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Mocking
 {
@@ -37,39 +35,39 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SAPDiscoverySiteResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SAPDiscoverySiteResource.CreateResourceIdentifier" /> to create a <see cref="SAPDiscoverySiteResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SapDiscoverySiteResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SapDiscoverySiteResource.CreateResourceIdentifier" /> to create a <see cref="SapDiscoverySiteResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SAPDiscoverySiteResource"/> object. </returns>
-        public virtual SAPDiscoverySiteResource GetSAPDiscoverySiteResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SapDiscoverySiteResource"/> object. </returns>
+        public virtual SapDiscoverySiteResource GetSapDiscoverySiteResource(ResourceIdentifier id)
         {
-            SAPDiscoverySiteResource.ValidateResourceId(id);
-            return new SAPDiscoverySiteResource(Client, id);
+            SapDiscoverySiteResource.ValidateResourceId(id);
+            return new SapDiscoverySiteResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SAPInstanceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SAPInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SAPInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SapInstanceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SapInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SAPInstanceResource"/> object. </returns>
-        public virtual SAPInstanceResource GetSAPInstanceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SapInstanceResource"/> object. </returns>
+        public virtual SapInstanceResource GetSapInstanceResource(ResourceIdentifier id)
         {
-            SAPInstanceResource.ValidateResourceId(id);
-            return new SAPInstanceResource(Client, id);
+            SapInstanceResource.ValidateResourceId(id);
+            return new SapInstanceResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServerInstanceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerInstanceResource.CreateResourceIdentifier" /> to create a <see cref="ServerInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SapDiscoveryServerInstanceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SapDiscoveryServerInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapDiscoveryServerInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerInstanceResource"/> object. </returns>
-        public virtual ServerInstanceResource GetServerInstanceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SapDiscoveryServerInstanceResource"/> object. </returns>
+        public virtual SapDiscoveryServerInstanceResource GetSapDiscoveryServerInstanceResource(ResourceIdentifier id)
         {
-            ServerInstanceResource.ValidateResourceId(id);
-            return new ServerInstanceResource(Client, id);
+            SapDiscoveryServerInstanceResource.ValidateResourceId(id);
+            return new SapDiscoveryServerInstanceResource(Client, id);
         }
     }
 }

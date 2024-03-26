@@ -57,13 +57,13 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         /// <summary> Initializes a new instance of <see cref="PerformanceDetail"/>. </summary>
         /// <param name="dataSource"> The data source of the performance data. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PerformanceDetail(DataSource dataSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PerformanceDetail(SapDiscoveryDataSource dataSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataSource = dataSource;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The data source of the performance data. </summary>
-        internal DataSource DataSource { get; set; }
+        internal SapDiscoveryDataSource DataSource { get; set; }
     }
 }
