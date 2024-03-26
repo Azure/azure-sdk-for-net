@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Security.Authentication;
 using System.Xml.Serialization;
@@ -107,6 +108,9 @@ namespace Azure.Storage
 
         public static ArgumentException TransactionalHashingNotSupportedWithClientSideEncryption()
             => new ArgumentException("Client-side encryption and transactional hashing are not supported at the same time.");
+
+        public static InvalidDataException ExpectedStructuredMessage()
+            => new InvalidDataException($"Expected {Constants.StructuredMessage.CrcStructuredMessageHeader} in response, but found none.");
 
         public static void VerifyHttpsTokenAuth(Uri uri)
         {

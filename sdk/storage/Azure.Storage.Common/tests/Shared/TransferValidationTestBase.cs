@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Storage.Shared;
 using NUnit.Framework;
@@ -312,6 +313,32 @@ namespace Azure.Storage.Test.Shared
                 }
             };
         }
+
+#if BlobSDK
+        internal static Action<Response> GetResponseStructuredMessageAssertion(
+            StructuredMessage.Flags flags,
+            Func<Response, bool> isStructuredMessageExpected = default)
+        {
+            return response =>
+            {
+                // filter some requests out with predicate
+                if (isStructuredMessageExpected != default && !isStructuredMessageExpected(response))
+                {
+                    return;
+                }
+
+                Assert.That(response.Headers.TryGetValue("x-ms-structured-body", out string structuredBody));
+                Assert.That(structuredBody, Does.Contain("XSM/1.0"));
+                if (flags.HasFlag(StructuredMessage.Flags.StorageCrc64))
+                {
+                    Assert.That(structuredBody, Does.Contain("crc64"));
+                }
+
+                Assert.That(response.Headers.TryGetValue("Content-Length", out string contentLength));
+                Assert.That(response.Headers.TryGetValue("x-ms-structured-content-length", out string structuredContentLength));
+            };
+        }
+#endif
 
         /// <summary>
         /// Asserts the service returned an error that expected checksum did not match checksum on upload.
@@ -1704,6 +1731,65 @@ namespace Azure.Storage.Test.Shared
             }
             Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
+
+#if BlobSDK
+        [TestCase(StorageChecksumAlgorithm.StorageCrc64, Constants.StructuredMessage.MaxDownloadCrcWithHeader, false, false)]
+        [TestCase(StorageChecksumAlgorithm.StorageCrc64, Constants.StructuredMessage.MaxDownloadCrcWithHeader-1, false, false)]
+        [TestCase(StorageChecksumAlgorithm.StorageCrc64, Constants.StructuredMessage.MaxDownloadCrcWithHeader+1, true, false)]
+        [TestCase(StorageChecksumAlgorithm.MD5, Constants.StructuredMessage.MaxDownloadCrcWithHeader+1, false, true)]
+        public virtual async Task DownloadApporpriatelyUsesStructuredMessage(
+            StorageChecksumAlgorithm algorithm,
+            int? downloadLen,
+            bool expectStructuredMessage,
+            bool expectThrow)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            const int dataLength = Constants.KB;
+            var data = GetRandomBuffer(dataLength);
+
+            var resourceName = GetNewResourceName();
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                createResource: true,
+                resourceName: resourceName);
+            await SetupDataAsync(client, new MemoryStream(data));
+
+            // make pipeline assertion for checking checksum was present on download
+            HttpPipelinePolicy checksumPipelineAssertion = new AssertMessageContentsPolicy(checkResponse: expectStructuredMessage
+                ? GetResponseStructuredMessageAssertion(StructuredMessage.Flags.StorageCrc64)
+                : GetResponseChecksumAssertion(algorithm));
+            TClientOptions clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                resourceName: resourceName,
+                createResource: false,
+                downloadAlgorithm: algorithm,
+                options: clientOptions);
+
+            var validationOptions = new DownloadTransferValidationOptions { ChecksumAlgorithm = algorithm };
+
+            // Act
+            var dest = new MemoryStream();
+            AsyncTestDelegate operation = async () => await DownloadPartitionAsync(
+                client, dest, validationOptions, downloadLen.HasValue ? new HttpRange(length: downloadLen.Value) : default);
+            // Assert (policies checked use of content validation)
+            if (expectThrow)
+            {
+                Assert.That(operation, Throws.TypeOf<RequestFailedException>());
+            }
+            else
+            {
+                Assert.That(operation, Throws.Nothing);
+                Assert.IsTrue(dest.ToArray().SequenceEqual(data));
+            }
+        }
+#endif
 
         [Test, Combinatorial]
         public virtual async Task DownloadHashMismatchThrows(
