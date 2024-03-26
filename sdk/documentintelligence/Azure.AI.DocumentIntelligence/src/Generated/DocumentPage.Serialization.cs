@@ -46,7 +46,7 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
-                writer.WriteStringValue(Unit.Value.ToString());
+                writer.WriteStringValue(Unit.Value.ToSerialString());
             }
             writer.WritePropertyName("spans"u8);
             writer.WriteStartArray();
@@ -196,7 +196,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    unit = new LengthUnit(property.Value.GetString());
+                    unit = property.Value.GetString().ToLengthUnit();
                     continue;
                 }
                 if (property.NameEquals("spans"u8))

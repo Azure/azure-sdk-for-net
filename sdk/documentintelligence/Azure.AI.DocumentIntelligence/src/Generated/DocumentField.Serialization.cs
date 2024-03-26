@@ -27,7 +27,7 @@ namespace Azure.AI.DocumentIntelligence
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(Type.ToSerialString());
             if (Optional.IsDefined(ValueString))
             {
                 writer.WritePropertyName("valueString"u8);
@@ -61,12 +61,12 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(ValueSelectionMark))
             {
                 writer.WritePropertyName("valueSelectionMark"u8);
-                writer.WriteStringValue(ValueSelectionMark.Value.ToString());
+                writer.WriteStringValue(ValueSelectionMark.Value.ToSerialString());
             }
             if (Optional.IsDefined(ValueSignature))
             {
                 writer.WritePropertyName("valueSignature"u8);
-                writer.WriteStringValue(ValueSignature.Value.ToString());
+                writer.WriteStringValue(ValueSignature.Value.ToSerialString());
             }
             if (Optional.IsDefined(ValueCountryRegion))
             {
@@ -213,7 +213,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = new DocumentFieldType(property.Value.GetString());
+                    type = property.Value.GetString().ToDocumentFieldType();
                     continue;
                 }
                 if (property.NameEquals("valueString"u8))
@@ -268,7 +268,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    valueSelectionMark = new DocumentSelectionMarkState(property.Value.GetString());
+                    valueSelectionMark = property.Value.GetString().ToDocumentSelectionMarkState();
                     continue;
                 }
                 if (property.NameEquals("valueSignature"u8))
@@ -277,7 +277,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    valueSignature = new DocumentSignatureType(property.Value.GetString());
+                    valueSignature = property.Value.GetString().ToDocumentSignatureType();
                     continue;
                 }
                 if (property.NameEquals("valueCountryRegion"u8))

@@ -29,7 +29,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WritePropertyName("operationId"u8);
             writer.WriteStringValue(OperationId);
             writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToString());
+            writer.WriteStringValue(Status.ToSerialString());
             if (Optional.IsDefined(PercentCompleted))
             {
                 writer.WritePropertyName("percentCompleted"u8);
@@ -40,7 +40,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WritePropertyName("lastUpdatedDateTime"u8);
             writer.WriteStringValue(LastUpdatedOn, "O");
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            writer.WriteStringValue(Kind.ToSerialString());
             writer.WritePropertyName("resourceLocation"u8);
             writer.WriteStringValue(ResourceLocation.AbsoluteUri);
             if (Optional.IsDefined(ApiVersion))

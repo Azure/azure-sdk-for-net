@@ -29,7 +29,7 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(SourceKind))
             {
                 writer.WritePropertyName("sourceKind"u8);
-                writer.WriteStringValue(SourceKind.Value.ToString());
+                writer.WriteStringValue(SourceKind.Value.ToSerialString());
             }
             if (Optional.IsDefined(AzureBlobSource))
             {
@@ -92,7 +92,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    sourceKind = new ContentSourceKind(property.Value.GetString());
+                    sourceKind = property.Value.GetString().ToContentSourceKind();
                     continue;
                 }
                 if (property.NameEquals("azureBlobSource"u8))

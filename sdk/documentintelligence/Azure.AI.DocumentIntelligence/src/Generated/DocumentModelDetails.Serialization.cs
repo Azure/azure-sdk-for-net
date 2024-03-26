@@ -59,7 +59,7 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(BuildMode))
             {
                 writer.WritePropertyName("buildMode"u8);
-                writer.WriteStringValue(BuildMode.Value.ToString());
+                writer.WriteStringValue(BuildMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(AzureBlobSource))
             {
@@ -194,7 +194,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    buildMode = new DocumentBuildMode(property.Value.GetString());
+                    buildMode = property.Value.GetString().ToDocumentBuildMode();
                     continue;
                 }
                 if (property.NameEquals("azureBlobSource"u8))

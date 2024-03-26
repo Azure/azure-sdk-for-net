@@ -31,11 +31,11 @@ namespace Azure.AI.DocumentIntelligence
             writer.WritePropertyName("modelId"u8);
             writer.WriteStringValue(ModelId);
             writer.WritePropertyName("stringIndexType"u8);
-            writer.WriteStringValue(StringIndexType.ToString());
+            writer.WriteStringValue(StringIndexType.ToSerialString());
             if (Optional.IsDefined(ContentFormat))
             {
                 writer.WritePropertyName("contentFormat"u8);
-                writer.WriteStringValue(ContentFormat.Value.ToString());
+                writer.WriteStringValue(ContentFormat.Value.ToSerialString());
             }
             writer.WritePropertyName("content"u8);
             writer.WriteStringValue(Content);
@@ -205,7 +205,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (property.NameEquals("stringIndexType"u8))
                 {
-                    stringIndexType = new StringIndexType(property.Value.GetString());
+                    stringIndexType = property.Value.GetString().ToStringIndexType();
                     continue;
                 }
                 if (property.NameEquals("contentFormat"u8))
@@ -214,7 +214,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    contentFormat = new ContentFormat(property.Value.GetString());
+                    contentFormat = property.Value.GetString().ToContentFormat();
                     continue;
                 }
                 if (property.NameEquals("content"u8))

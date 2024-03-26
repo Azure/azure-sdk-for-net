@@ -113,7 +113,7 @@ namespace Azure.AI.DocumentIntelligence
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = analyzeRequest?.ToRequestContent();
-            Operation<BinaryData> response = await AnalyzeDocumentAsync(waitUntil, modelId, content, pages, locale, stringIndexType?.ToString(), features, queryFields, outputContentFormat?.ToString(), context).ConfigureAwait(false);
+            Operation<BinaryData> response = await AnalyzeDocumentAsync(waitUntil, modelId, content, pages, locale, stringIndexType?.ToSerialString(), features, queryFields, outputContentFormat?.ToSerialString(), context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, FetchAnalyzeResultFromAnalyzeResultOperation, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeDocument");
         }
 
@@ -140,7 +140,7 @@ namespace Azure.AI.DocumentIntelligence
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = analyzeRequest?.ToRequestContent();
-            Operation<BinaryData> response = AnalyzeDocument(waitUntil, modelId, content, pages, locale, stringIndexType?.ToString(), features, queryFields, outputContentFormat?.ToString(), context);
+            Operation<BinaryData> response = AnalyzeDocument(waitUntil, modelId, content, pages, locale, stringIndexType?.ToSerialString(), features, queryFields, outputContentFormat?.ToSerialString(), context);
             return ProtocolOperationHelpers.Convert(response, FetchAnalyzeResultFromAnalyzeResultOperation, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeDocument");
         }
 
@@ -263,7 +263,7 @@ namespace Azure.AI.DocumentIntelligence
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = classifyRequest.ToRequestContent();
-            Operation<BinaryData> response = await ClassifyDocumentAsync(waitUntil, classifierId, content, stringIndexType?.ToString(), split?.ToString(), context).ConfigureAwait(false);
+            Operation<BinaryData> response = await ClassifyDocumentAsync(waitUntil, classifierId, content, stringIndexType?.ToSerialString(), split?.ToSerialString(), context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, FetchAnalyzeResultFromAnalyzeResultOperation, ClientDiagnostics, "DocumentIntelligenceClient.ClassifyDocument");
         }
 
@@ -284,7 +284,7 @@ namespace Azure.AI.DocumentIntelligence
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = classifyRequest.ToRequestContent();
-            Operation<BinaryData> response = ClassifyDocument(waitUntil, classifierId, content, stringIndexType?.ToString(), split?.ToString(), context);
+            Operation<BinaryData> response = ClassifyDocument(waitUntil, classifierId, content, stringIndexType?.ToSerialString(), split?.ToSerialString(), context);
             return ProtocolOperationHelpers.Convert(response, FetchAnalyzeResultFromAnalyzeResultOperation, ClientDiagnostics, "DocumentIntelligenceClient.ClassifyDocument");
         }
 

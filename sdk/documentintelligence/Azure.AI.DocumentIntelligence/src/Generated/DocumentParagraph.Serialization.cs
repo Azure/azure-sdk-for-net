@@ -29,7 +29,7 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
-                writer.WriteStringValue(Role.Value.ToString());
+                writer.WriteStringValue(Role.Value.ToSerialString());
             }
             writer.WritePropertyName("content"u8);
             writer.WriteStringValue(Content);
@@ -102,7 +102,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    role = new ParagraphRole(property.Value.GetString());
+                    role = property.Value.GetString().ToParagraphRole();
                     continue;
                 }
                 if (property.NameEquals("content"u8))

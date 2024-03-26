@@ -27,7 +27,7 @@ namespace Azure.AI.DocumentIntelligence
 
             writer.WriteStartObject();
             writer.WritePropertyName("state"u8);
-            writer.WriteStringValue(State.ToString());
+            writer.WriteStringValue(State.ToSerialString());
             if (Optional.IsCollectionDefined(Polygon))
             {
                 writer.WritePropertyName("polygon"u8);
@@ -90,7 +90,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 if (property.NameEquals("state"u8))
                 {
-                    state = new DocumentSelectionMarkState(property.Value.GetString());
+                    state = property.Value.GetString().ToDocumentSelectionMarkState();
                     continue;
                 }
                 if (property.NameEquals("polygon"u8))

@@ -27,7 +27,7 @@ namespace Azure.AI.DocumentIntelligence
 
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            writer.WriteStringValue(Kind.ToSerialString());
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
             if (Optional.IsCollectionDefined(Polygon))
@@ -93,7 +93,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = new DocumentBarcodeKind(property.Value.GetString());
+                    kind = property.Value.GetString().ToDocumentBarcodeKind();
                     continue;
                 }
                 if (property.NameEquals("value"u8))

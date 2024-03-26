@@ -39,12 +39,12 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(FontStyle))
             {
                 writer.WritePropertyName("fontStyle"u8);
-                writer.WriteStringValue(FontStyle.Value.ToString());
+                writer.WriteStringValue(FontStyle.Value.ToSerialString());
             }
             if (Optional.IsDefined(FontWeight))
             {
                 writer.WritePropertyName("fontWeight"u8);
-                writer.WriteStringValue(FontWeight.Value.ToString());
+                writer.WriteStringValue(FontWeight.Value.ToSerialString());
             }
             if (Optional.IsDefined(Color))
             {
@@ -135,7 +135,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    fontStyle = new DocumentFontStyle(property.Value.GetString());
+                    fontStyle = property.Value.GetString().ToDocumentFontStyle();
                     continue;
                 }
                 if (property.NameEquals("fontWeight"u8))
@@ -144,7 +144,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    fontWeight = new DocumentFontWeight(property.Value.GetString());
+                    fontWeight = property.Value.GetString().ToDocumentFontWeight();
                     continue;
                 }
                 if (property.NameEquals("color"u8))

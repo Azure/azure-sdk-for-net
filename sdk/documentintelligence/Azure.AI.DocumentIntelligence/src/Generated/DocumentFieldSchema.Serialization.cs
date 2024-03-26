@@ -27,7 +27,7 @@ namespace Azure.AI.DocumentIntelligence
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(Type.ToSerialString());
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -103,7 +103,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = new DocumentFieldType(property.Value.GetString());
+                    type = property.Value.GetString().ToDocumentFieldType();
                     continue;
                 }
                 if (property.NameEquals("description"u8))

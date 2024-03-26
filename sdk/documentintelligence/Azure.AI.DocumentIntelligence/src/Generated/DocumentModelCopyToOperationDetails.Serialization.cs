@@ -34,7 +34,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WritePropertyName("operationId"u8);
             writer.WriteStringValue(OperationId);
             writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToString());
+            writer.WriteStringValue(Status.ToSerialString());
             if (Optional.IsDefined(PercentCompleted))
             {
                 writer.WritePropertyName("percentCompleted"u8);
@@ -45,7 +45,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WritePropertyName("lastUpdatedDateTime"u8);
             writer.WriteStringValue(LastUpdatedOn, "O");
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            writer.WriteStringValue(Kind.ToSerialString());
             writer.WritePropertyName("resourceLocation"u8);
             writer.WriteStringValue(ResourceLocation.AbsoluteUri);
             if (Optional.IsDefined(ApiVersion))
@@ -138,7 +138,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new OperationStatus(property.Value.GetString());
+                    status = property.Value.GetString().ToOperationStatus();
                     continue;
                 }
                 if (property.NameEquals("percentCompleted"u8))
@@ -162,7 +162,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = new OperationKind(property.Value.GetString());
+                    kind = property.Value.GetString().ToOperationKind();
                     continue;
                 }
                 if (property.NameEquals("resourceLocation"u8))

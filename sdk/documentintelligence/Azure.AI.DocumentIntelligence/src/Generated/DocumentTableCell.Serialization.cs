@@ -29,7 +29,7 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
-                writer.WriteStringValue(Kind.Value.ToString());
+                writer.WriteStringValue(Kind.Value.ToSerialString());
             }
             writer.WritePropertyName("rowIndex"u8);
             writer.WriteNumberValue(RowIndex);
@@ -131,7 +131,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    kind = new DocumentTableCellKind(property.Value.GetString());
+                    kind = property.Value.GetString().ToDocumentTableCellKind();
                     continue;
                 }
                 if (property.NameEquals("rowIndex"u8))
