@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Analysis. </summary>
         Analysis,
         /// <summary> CategoryOverview. </summary>
-        CategoryOverview
+        CategoryOverview,
+        /// <summary> WorkflowNode. </summary>
+        WorkflowNode
     }
 }

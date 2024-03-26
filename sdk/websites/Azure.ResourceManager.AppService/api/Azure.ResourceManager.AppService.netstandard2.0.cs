@@ -6441,7 +6441,7 @@ namespace Azure.ResourceManager.AppService.Models
         public static Azure.ResourceManager.AppService.DeletedSiteData DeletedSiteData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? deletedSiteId = default(int?), string deletedTimestamp = null, string subscription = null, string resourceGroup = null, string deletedSiteName = null, string slot = null, string kindPropertiesKind = null, string geoRegionName = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.DetectorDefinition DetectorDefinition(string displayName = null, string description = null, double? rank = default(double?), bool? isEnabled = default(bool?)) { throw null; }
         public static Azure.ResourceManager.AppService.DetectorDefinitionResourceData DetectorDefinitionResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, string description = null, double? rank = default(double?), bool? isEnabled = default(bool?), string kind = null) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.DetectorInfo DetectorInfo(string id = null, string name = null, string description = null, string author = null, string category = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.DetectorSupportTopic> supportTopicList = null, System.Collections.Generic.IEnumerable<string> analysisType = null, Azure.ResourceManager.AppService.Models.DetectorType? detectorType = default(Azure.ResourceManager.AppService.Models.DetectorType?), float? score = default(float?)) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.DetectorInfo DetectorInfo(string id = null, string name = null, string description = null, string author = null, string category = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.DetectorSupportTopic> supportTopicList = null, System.Collections.Generic.IEnumerable<string> analysisType = null, Azure.ResourceManager.AppService.Models.DetectorType? detectorType = default(Azure.ResourceManager.AppService.Models.DetectorType?), float? score = default(float?), System.Collections.Generic.IEnumerable<string> analysisTypes = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.DetectorSupportTopic DetectorSupportTopic(string id = null, Azure.Core.ResourceIdentifier pesId = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.DiagnosticAnalysis DiagnosticAnalysis(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.AbnormalTimePeriod> abnormalTimePeriods = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.AnalysisDetectorEvidences> payload = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.DetectorDefinition> nonCorrelatedDetectors = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.DiagnosticCategoryData DiagnosticCategoryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, string kind = null) { throw null; }
@@ -7229,6 +7229,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public DetectorInfo() { }
         public System.Collections.Generic.IReadOnlyList<string> AnalysisType { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> AnalysisTypes { get { throw null; } }
         public string Author { get { throw null; } }
         public string Category { get { throw null; } }
         public string Description { get { throw null; } }
@@ -7278,6 +7279,7 @@ namespace Azure.ResourceManager.AppService.Models
         Detector = 0,
         Analysis = 1,
         CategoryOverview = 2,
+        WorkflowNode = 3,
     }
     public partial class DiagnosticAnalysis : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DiagnosticAnalysis>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DiagnosticAnalysis>
     {

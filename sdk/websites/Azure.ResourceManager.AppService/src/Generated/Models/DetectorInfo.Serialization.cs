@@ -66,12 +66,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsCollectionDefined(AnalysisType))
             {
                 writer.WritePropertyName("analysisType"u8);
-                writer.WriteStartArray();
-                foreach (var item in AnalysisType)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                WriteAnalysisType(writer);
             }
             if (options.Format != "W" && Optional.IsDefined(DetectorType))
             {
@@ -82,6 +77,16 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("score"u8);
                 writer.WriteNumberValue(Score.Value);
+            }
+            if (options.Format != "W" && !(AnalysisTypes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            {
+                writer.WritePropertyName("analysisTypes"u8);
+                writer.WriteStartArray();
+                foreach (var item in AnalysisTypes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -130,6 +135,7 @@ namespace Azure.ResourceManager.AppService.Models
             IReadOnlyList<string> analysisType = default;
             DetectorType? type = default;
             float? score = default;
+            IReadOnlyList<string> analysisTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,16 +181,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("analysisType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    analysisType = array;
+                    ReadAnalysisType(property, ref analysisType);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -205,6 +202,20 @@ namespace Azure.ResourceManager.AppService.Models
                     score = property.Value.GetSingle();
                     continue;
                 }
+                if (property.NameEquals("analysisTypes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    analysisTypes = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -221,6 +232,7 @@ namespace Azure.ResourceManager.AppService.Models
                 analysisType ?? new ChangeTrackingList<string>(),
                 type,
                 score,
+                analysisTypes ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }
 

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(StatusId))
             {
                 writer.WritePropertyName("statusId"u8);
-                writer.WriteStringValue(StatusId.Value.ToSerialString());
+                WriteStatusId(writer);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,11 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("statusId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    statusId = property.Value.GetString().ToDetectorInsightStatus();
+                    ReadStatusId(property, ref statusId);
                     continue;
                 }
                 if (options.Format != "W")
