@@ -227,6 +227,11 @@ namespace Azure.Messaging.ServiceBus
             {
                 // ignored
             }
+            catch (Exception ex)
+            {
+                // This is non-impactful to the operation; log as verbose and ignore.
+                Logger.RunOperationExceptionEncounteredVerbose(ex.ToString());
+            }
             finally
             {
                 // In the case of cancellation or another exception while
