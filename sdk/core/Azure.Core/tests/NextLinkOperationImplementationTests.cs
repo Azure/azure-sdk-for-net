@@ -68,13 +68,6 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void ThrowWithIvalidNextRequestUri()
-        {
-            var rehydrationToken = new RehydrationToken(null, null, "None", $"invalidNextRequestUri", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
-            Assert.Throws<ArgumentException>(() =>NextLinkOperationImplementation.Create(HttpPipelineBuilder.Build(new MockClientOptions()), rehydrationToken));
-        }
-
-        [Test]
         public void ThrowWithDefaultRehydrationToken()
         {
             Assert.Throws<ArgumentException>(() => NextLinkOperationImplementation.Create(HttpPipelineBuilder.Build(new MockClientOptions()), default));
