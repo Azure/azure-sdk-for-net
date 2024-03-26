@@ -799,7 +799,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="dnsNames"> The domain list of certificate. </param>
         /// <param name="provisioningState"> Provisioning state of the Certificate. </param>
         /// <returns> A new <see cref="Models.AppPlatformCertificateProperties"/> instance for mocking. </returns>
-        public static AppPlatformCertificateProperties AppPlatformCertificateProperties(string certificatePropertiesType = null, string thumbprint = null, string issuer = null, DateTimeOffset? issuedOn = null, DateTimeOffset? expireOn = null, DateTimeOffset? activateOn = null, string subjectName = null, IEnumerable<string> dnsNames = null, AppPlatformCertificateProvisioningState? provisioningState = null)
+        public static AppPlatformCertificateProperties AppPlatformCertificateProperties(string certificatePropertiesType = "Unknown", string thumbprint = null, string issuer = null, DateTimeOffset? issuedOn = null, DateTimeOffset? expireOn = null, DateTimeOffset? activateOn = null, string subjectName = null, IEnumerable<string> dnsNames = null, AppPlatformCertificateProvisioningState? provisioningState = null)
         {
             dnsNames ??= new List<string>();
 
