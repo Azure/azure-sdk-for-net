@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         }
 
         /// <summary>
-        /// Get service
+        /// Returns details of the service.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="serviceName"> Service name. </param>
+        /// <param name="serviceName"> The name of Azure API Center service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         }
 
         /// <summary>
-        /// Get service
+        /// Returns details of the service.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="serviceName"> Service name. </param>
+        /// <param name="serviceName"> The name of Azure API Center service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
