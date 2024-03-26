@@ -193,12 +193,15 @@ namespace Azure.Monitor.Query.Tests
 #if SNIPPET
             string resourceId =
                 "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
+            var client = new MetricsClient(
+                new Uri("https://<region>.metrics.monitor.azure.com"),
+                new DefaultAzureCredential());
 #else
             string resourceId = TestEnvironment.StorageAccountId;
-#endif
             var client = new MetricsClient(
-                new Uri("https://metrics.monitor.azure.com/.default"),
+                new Uri(TestEnvironment.DataplaneEndpoint),
                 new DefaultAzureCredential());
+#endif
             Response<MetricsQueryResourcesResult> result = await client.QueryResourcesAsync(
                 resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
                 metricNames: new List<string> { "Ingress" },
@@ -225,11 +228,11 @@ namespace Azure.Monitor.Query.Tests
             #region Snippet:CreateMetricsClient
 #if SNIPPET
             var client = new MetricsClient(
-                new Uri("https://<region>.metrics.monitor.azure.com/"),
+                new Uri("https://<region>.metrics.monitor.azure.com"),
                 new DefaultAzureCredential());
 #else
             var client = new MetricsClient(
-                new Uri("https://" + TestEnvironment.MetricsLocation + "metrics.monitor.azure.com"),
+                new Uri(TestEnvironment.DataplaneEndpoint),
                 new DefaultAzureCredential());
 #endif
             #endregion Snippet:CreateMetricsClient

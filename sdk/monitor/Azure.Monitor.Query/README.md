@@ -56,7 +56,7 @@ For Metrics queries across multiple Azure resources, use the following client:
 
 ```C# Snippet:CreateMetricsClient
 var client = new MetricsClient(
-    new Uri("https://<region>.metrics.monitor.azure.com/"),
+    new Uri("https://<region>.metrics.monitor.azure.com"),
     new DefaultAzureCredential());
 ```
 
@@ -657,7 +657,7 @@ Furthermore, the metric namespace containing the metrics to be queried must be p
 string resourceId =
     "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
 var client = new MetricsClient(
-    new Uri("https://metrics.monitor.azure.com/.default"),
+    new Uri("https://<region>.metrics.monitor.azure.com"),
     new DefaultAzureCredential());
 Response<MetricsQueryResourcesResult> result = await client.QueryResourcesAsync(
     resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
@@ -679,7 +679,7 @@ The `QueryResources` method also accepts a `MetricsQueryResourcesOptions`-typed 
 string resourceId =
     "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
 var client = new MetricsClient(
-    new Uri("https://<region>.metrics.monitor.azure.com/"),
+    new Uri("https://<region>.metrics.monitor.azure.com"),
     new DefaultAzureCredential());
 var options = new MetricsQueryResourcesOptions
 {
