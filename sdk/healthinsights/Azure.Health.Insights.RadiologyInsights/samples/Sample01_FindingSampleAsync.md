@@ -1,4 +1,4 @@
-﻿# How to extract the description of a finding inference using a asynchronous call
+# How to extract the description of a finding inference using a asynchronous call
 
 In this sample it is shown how you can construct a request, add a configuration, create a client, send a asynchronous request and use the result returned to extract the categories, interpretations and components of the finding inference.
 
@@ -129,54 +129,56 @@ Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiol
 ## From the result loop over the inferences and display the categories, interpretations, components and sections of the finding inferences. 
 
 ```C# Snippet:Finding_Async_Tests_Samples_FindingInference
-Console.Write("Finding Inference found");
-FhirR4Observation finding = findingInference.Finding;
-IList<FhirR4CodeableConcept> categoryList = finding.Category;
-foreach (FhirR4CodeableConcept category in categoryList)
-{
-    Console.Write("   Category: ");
-    DisplayCodes(category, 2);
-}
-Console.Write("   Code: ");
-FhirR4CodeableConcept code = finding.Code;
-DisplayCodes(code, 2);
-Console.Write("   Interpretation: ");
-IList<FhirR4CodeableConcept> interpretationList = finding.Interpretation;
-if (interpretationList != null)
-{
-    foreach (FhirR4CodeableConcept interpretation in interpretationList)
-    {
-        DisplayCodes(interpretation, 2);
+        Console.Write("Finding Inference found");
+        FhirR4Observation finding = findingInference.Finding;
+        IList<FhirR4CodeableConcept> categoryList = finding.Category;
+        foreach (FhirR4CodeableConcept category in categoryList)
+        {
+            Console.Write("   Category: ");
+            DisplayCodes(category, 2);
+        }
+        Console.Write("   Code: ");
+        FhirR4CodeableConcept code = finding.Code;
+        DisplayCodes(code, 2);
+        Console.Write("   Interpretation: ");
+        IList<FhirR4CodeableConcept> interpretationList = finding.Interpretation;
+        if (interpretationList != null)
+        {
+            foreach (FhirR4CodeableConcept interpretation in interpretationList)
+            {
+                DisplayCodes(interpretation, 2);
+            }
+        }
+        Console.Write("   Component: ");
+        IList<FhirR4ObservationComponent> componentList = finding.Component;
+        foreach (FhirR4ObservationComponent component in componentList)
+        {
+            FhirR4CodeableConcept componentCode = component.Code;
+            DisplayCodes(componentCode, 2);
+            Console.Write("      Value codeable concept: ");
+            FhirR4CodeableConcept valueCodeableConcept = component.ValueCodeableConcept;
+            DisplayCodes(valueCodeableConcept, 4);
+        }
+        displaySectionInfo(findingInference);
     }
 }
-Console.Write("   Component: ");
-IList<FhirR4ObservationComponent> componentList = finding.Component;
-foreach (FhirR4ObservationComponent component in componentList)
-{
-    FhirR4CodeableConcept componentCode = component.Code;
-    DisplayCodes(componentCode, 2);
-    Console.Write("      Value codeable concept: ");
-    FhirR4CodeableConcept valueCodeableConcept = component.ValueCodeableConcept;
-    DisplayCodes(valueCodeableConcept, 4);
-}
-displaySectionInfo(findingInference);
 ```
 
 ## Print the section info of the finding inference.
 
-```C#
-for (int i = 0; i < indentation; i++)
+```C# Snippet:Finding_Async_Tests_Samples_DisplaySectionInfo
+foreach (FhirR4Extension extension in extensionList)
 {
-    initialBlank += "   ";
-}
-if (codeableConcept != null)
-{
-    IList<FhirR4Coding> codingList = codeableConcept.Coding;
-    if (codingList != null)
+    if (extension.Url != null && extension.Url.Equals("section"))
     {
-        foreach (FhirR4Coding fhirR4Coding in codingList)
+        Console.Write("   Section:");
+        IReadOnlyList<FhirR4Extension> subextensionList = extension.Extension;
+        if (subextensionList != null)
         {
-            Console.Write(initialBlank + "Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + ")");
+            foreach (FhirR4Extension subextension in subextensionList)
+            {
+                Console.Write("      " + subextension.Url + ": " + subextension.ValueString);
+            }
         }
     }
 }
@@ -184,24 +186,13 @@ if (codeableConcept != null)
 
 ## Print the code, display and system properties of the categories, interpretations and components.
 
-```C#
-IReadOnlyList<FhirR4Extension> extensionList = findingInference.Extension;
-if (extensionList != null)
+```C# Snippet:Finding_Async_Tests_Samples_DisplayCodes
+IList<FhirR4Coding> codingList = codeableConcept.Coding;
+if (codingList != null)
 {
-    foreach (FhirR4Extension extension in extensionList)
+    foreach (FhirR4Coding fhirR4Coding in codingList)
     {
-        if (extension.Url != null && extension.Url.Equals("section"))
-        {
-            Console.Write("   Section:");
-            IReadOnlyList<FhirR4Extension> subextensionList = extension.Extension;
-            if (subextensionList != null)
-            {
-                foreach (FhirR4Extension subextension in subextensionList)
-                {
-                    Console.Write("      " + subextension.Url + ": " + subextension.ValueString);
-                }
-            }
-        }
+        Console.Write(initialBlank + "Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + ")");
     }
 }
 ```
