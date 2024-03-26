@@ -1759,6 +1759,15 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 result.Content = new StructuredMessageDecodingStream(result.Content, long.Parse(rawContentLength));
             }
+            // if not null, we expected a structured message response
+            // but we didn't find one in the above condition
+            else if (structuredBodyType != null)
+            {
+                // okay to throw here. due to 4MB checksum limit on service downloads, and how we don't
+                // request structured message until we exceed that, we are not throwing on a request
+                // that would have otherwise succeeded and still gotten the desired checksum
+                throw Errors.ExpectedStructuredMessage();
+            }
 
             return Response.FromValue(
                 result,
