@@ -13,6 +13,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
 {
     internal class Sample01_CriticalResultSampleAsync : SamplesBase<HealthInsightsTestEnvironment>
     {
+        #region Snippet:Critical_Result_Async_Tests_Samples_Doc_Content
         private const string DOC_CONTENT = "CLINICAL HISTORY:   "
             + "\r\n20-year-old female presenting with abdominal pain. Surgical history significant for appendectomy."
             + "\r\n "
@@ -34,6 +35,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             + "\r\n\nA new US pelvis within the next 6 months is recommended."
             + "\n\nThese results have been discussed with Dr. Jones at 3 PM on November 5 2020.\n "
             + "\r\n";
+        #endregion
 
         [Test]
         public async Task RadiologyInsightsCriticalResultScenario()
@@ -42,14 +44,19 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
+            #region Snippet:Critical_Result_Async_Tests_Samples_CreateClient
             Uri endpointUri = new Uri(endpoint);
             AzureKeyCredential credential = new AzureKeyCredential(apiKey);
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpointUri, credential);
+            #endregion
 
             RadiologyInsightsData radiologyInsightsData = GetRadiologyInsightsData();
 
+            #region Snippet:Critical_Result_Async_Tests_Samples_synccall
             Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, radiologyInsightsData);
+            #endregion
 
+            #region Snippet:Critical_Result_Async_Tests_Samples_CriticalResultInference
             RadiologyInsightsInferenceResult responseData = operation.Value;
             IReadOnlyList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
 
@@ -60,43 +67,38 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                     Console.Write("Critical Result Inference found: " + criticalResultInference.Result.Description);
                 }
             }
+            #endregion
         }
 
         private static RadiologyInsightsData GetRadiologyInsightsData()
         {
             PatientRecord patientRecord = CreatePatientRecord();
+            #region Snippet:Critical_Result_Async_Tests_Samples_AddRecordAndConfiguration
             List<PatientRecord> patientRecords = new() { patientRecord };
             RadiologyInsightsData radiologyInsightsData = new(patientRecords);
             radiologyInsightsData.Configuration = CreateConfiguration();
+            #endregion
             return radiologyInsightsData;
         }
 
         private static RadiologyInsightsModelConfiguration CreateConfiguration()
         {
             RadiologyInsightsInferenceOptions radiologyInsightsInferenceOptions = GetRadiologyInsightsInferenceOptions();
-
+            #region Snippet:Critical_Result_Async_Tests_Samples_CreateModelConfiguration
             RadiologyInsightsModelConfiguration radiologyInsightsModelConfiguration = new()
             {
                 Locale = "en-US",
                 IncludeEvidence = true,
                 InferenceOptions = radiologyInsightsInferenceOptions
             };
-            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.Finding);
-            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.AgeMismatch);
-            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.LateralityDiscrepancy);
-            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.SexMismatch);
-            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.CompleteOrderDiscrepancy);
-            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.LimitedOrderDiscrepancy);
             radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.CriticalResult);
-            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.FollowupCommunication);
-            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.FollowupRecommendation);
-            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.RadiologyProcedure);
-
+            #endregion
             return radiologyInsightsModelConfiguration;
         }
 
         private static RadiologyInsightsInferenceOptions GetRadiologyInsightsInferenceOptions()
         {
+            #region Snippet:Critical_Result_Async_Tests_Samples_CreateRadiologyInsightsInferenceOptions
             RadiologyInsightsInferenceOptions radiologyInsightsInferenceOptions = new();
             FollowupRecommendationOptions followupRecommendationOptions = new();
             FindingOptions findingOptions = new();
@@ -106,11 +108,13 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             findingOptions.ProvideFocusedSentenceEvidence = true;
             radiologyInsightsInferenceOptions.FollowupRecommendationOptions = followupRecommendationOptions;
             radiologyInsightsInferenceOptions.FindingOptions = findingOptions;
+            #endregion
             return radiologyInsightsInferenceOptions;
         }
 
         private static PatientRecord CreatePatientRecord()
         {
+            #region Snippet:Critical_Result_Async_Tests_Samples_CreatePatientRecord
             string id = "patient_id2";
             PatientDetails patientInfo = new()
             {
@@ -126,6 +130,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                     End = new System.DateTime(2021, 08, 28)
                 }
             };
+            List<Encounter> encounterList = new() { encounter };
             DocumentContent documentContent = new(DocumentContentSourceType.Inline, DOC_CONTENT);
             PatientDocument patientDocument = new(DocumentType.Note, "doc2", documentContent)
             {
@@ -137,11 +142,13 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             patientRecord.Info = patientInfo;
             patientRecord.Encounters.Add(encounter);
             patientRecord.PatientDocuments.Add(patientDocument);
+            #endregion
             return patientRecord;
         }
 
         private static DocumentAdministrativeMetadata CreateDocumentAdministrativeMetadata()
         {
+            #region Snippet:Critical_Result_Async_Tests_Samples_CreateDocumentAdministrativeMetadata
             DocumentAdministrativeMetadata documentAdministrativeMetadata = new DocumentAdministrativeMetadata();
 
             FhirR4Coding coding = new()
@@ -161,7 +168,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             };
 
             documentAdministrativeMetadata.OrderedProcedures.Add(orderedProcedure);
-
+            #endregion
             return documentAdministrativeMetadata;
         }
     }
