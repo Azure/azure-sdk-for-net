@@ -27,7 +27,7 @@ namespace Azure.Health.Insights.ClinicalMatching
 
             writer.WriteStartObject();
             writer.WritePropertyName("sourceType"u8);
-            writer.WriteStringValue(SourceType.ToString());
+            writer.WriteStringValue(SourceType.ToSerialString());
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -76,7 +76,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             {
                 if (property.NameEquals("sourceType"u8))
                 {
-                    sourceType = new DocumentContentSourceType(property.Value.GetString());
+                    sourceType = property.Value.GetString().ToDocumentContentSourceType();
                     continue;
                 }
                 if (property.NameEquals("value"u8))

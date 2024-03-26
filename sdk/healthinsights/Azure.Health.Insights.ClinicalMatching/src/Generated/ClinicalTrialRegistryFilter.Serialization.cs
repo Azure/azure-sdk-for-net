@@ -42,7 +42,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in StudyTypes)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in RecruitmentStatuses)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in Phases)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +82,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in Purposes)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +102,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in Sources)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -212,7 +212,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<ClinicalTrialStudyType> array = new List<ClinicalTrialStudyType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new ClinicalTrialStudyType(item.GetString()));
+                        array.Add(item.GetString().ToClinicalTrialStudyType());
                     }
                     studyTypes = array;
                     continue;
@@ -226,7 +226,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<ClinicalTrialRecruitmentStatus> array = new List<ClinicalTrialRecruitmentStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new ClinicalTrialRecruitmentStatus(item.GetString()));
+                        array.Add(item.GetString().ToClinicalTrialRecruitmentStatus());
                     }
                     recruitmentStatuses = array;
                     continue;
@@ -254,7 +254,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<ClinicalTrialPhase> array = new List<ClinicalTrialPhase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new ClinicalTrialPhase(item.GetString()));
+                        array.Add(item.GetString().ToClinicalTrialPhase());
                     }
                     phases = array;
                     continue;
@@ -268,7 +268,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<ClinicalTrialPurpose> array = new List<ClinicalTrialPurpose>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new ClinicalTrialPurpose(item.GetString()));
+                        array.Add(item.GetString().ToClinicalTrialPurpose());
                     }
                     purposes = array;
                     continue;
@@ -296,7 +296,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<ClinicalTrialSource> array = new List<ClinicalTrialSource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new ClinicalTrialSource(item.GetString()));
+                        array.Add(item.GetString().ToClinicalTrialSource());
                     }
                     sources = array;
                     continue;

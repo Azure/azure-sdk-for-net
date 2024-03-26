@@ -27,7 +27,7 @@ namespace Azure.Health.Insights.ClinicalMatching
 
             writer.WriteStartObject();
             writer.WritePropertyName("unit"u8);
-            writer.WriteStringValue(Unit.ToString());
+            writer.WriteStringValue(Unit.ToSerialString());
             writer.WritePropertyName("value"u8);
             writer.WriteNumberValue(Value);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -76,7 +76,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             {
                 if (property.NameEquals("unit"u8))
                 {
-                    unit = new AgeUnit(property.Value.GetString());
+                    unit = property.Value.GetString().ToAgeUnit();
                     continue;
                 }
                 if (property.NameEquals("value"u8))

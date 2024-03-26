@@ -32,7 +32,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteObjectValue<FhirR4CodeableConcept>(LateralityIndication, options);
             }
             writer.WritePropertyName("discrepancyType"u8);
-            writer.WriteStringValue(DiscrepancyType.ToString());
+            writer.WriteStringValue(DiscrepancyType.ToSerialString());
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (Optional.IsCollectionDefined(Extension))
@@ -102,7 +102,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 if (property.NameEquals("discrepancyType"u8))
                 {
-                    discrepancyType = new LateralityDiscrepancyType(property.Value.GetString());
+                    discrepancyType = property.Value.GetString().ToLateralityDiscrepancyType();
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

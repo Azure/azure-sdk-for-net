@@ -27,7 +27,7 @@ namespace Azure.Health.Insights.CancerProfiling
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(Type.ToSerialString());
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
             if (Optional.IsDefined(Description))
@@ -105,7 +105,7 @@ namespace Azure.Health.Insights.CancerProfiling
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = new OncoPhenotypeInferenceType(property.Value.GetString());
+                    type = property.Value.GetString().ToOncoPhenotypeInferenceType();
                     continue;
                 }
                 if (property.NameEquals("value"u8))

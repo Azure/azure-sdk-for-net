@@ -27,11 +27,11 @@ namespace Azure.Health.Insights.RadiologyInsights
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(Type.ToSerialString());
             if (Optional.IsDefined(ClinicalType))
             {
                 writer.WritePropertyName("clinicalType"u8);
-                writer.WriteStringValue(ClinicalType.Value.ToString());
+                writer.WriteStringValue(ClinicalType.Value.ToSerialString());
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
@@ -58,7 +58,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(SpecialtyType))
             {
                 writer.WritePropertyName("specialtyType"u8);
-                writer.WriteStringValue(SpecialtyType.Value.ToString());
+                writer.WriteStringValue(SpecialtyType.Value.ToSerialString());
             }
             if (Optional.IsDefined(AdministrativeMetadata))
             {
@@ -120,7 +120,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = new DocumentType(property.Value.GetString());
+                    type = property.Value.GetString().ToDocumentType();
                     continue;
                 }
                 if (property.NameEquals("clinicalType"u8))
@@ -129,7 +129,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    clinicalType = new ClinicalDocumentType(property.Value.GetString());
+                    clinicalType = property.Value.GetString().ToClinicalDocumentType();
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -171,7 +171,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    specialtyType = new SpecialtyType(property.Value.GetString());
+                    specialtyType = property.Value.GetString().ToSpecialtyType();
                     continue;
                 }
                 if (property.NameEquals("administrativeMetadata"u8))

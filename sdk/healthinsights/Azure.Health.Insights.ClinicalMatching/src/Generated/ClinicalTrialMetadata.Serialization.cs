@@ -32,19 +32,19 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in Phases)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(StudyType))
             {
                 writer.WritePropertyName("studyType"u8);
-                writer.WriteStringValue(StudyType.Value.ToString());
+                writer.WriteStringValue(StudyType.Value.ToSerialString());
             }
             if (Optional.IsDefined(RecruitmentStatus))
             {
                 writer.WritePropertyName("recruitmentStatus"u8);
-                writer.WriteStringValue(RecruitmentStatus.Value.ToString());
+                writer.WriteStringValue(RecruitmentStatus.Value.ToSerialString());
             }
             writer.WritePropertyName("conditions"u8);
             writer.WriteStartArray();
@@ -141,7 +141,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<ClinicalTrialPhase> array = new List<ClinicalTrialPhase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new ClinicalTrialPhase(item.GetString()));
+                        array.Add(item.GetString().ToClinicalTrialPhase());
                     }
                     phases = array;
                     continue;
@@ -152,7 +152,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     {
                         continue;
                     }
-                    studyType = new ClinicalTrialStudyType(property.Value.GetString());
+                    studyType = property.Value.GetString().ToClinicalTrialStudyType();
                     continue;
                 }
                 if (property.NameEquals("recruitmentStatus"u8))
@@ -161,7 +161,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     {
                         continue;
                     }
-                    recruitmentStatus = new ClinicalTrialRecruitmentStatus(property.Value.GetString());
+                    recruitmentStatus = property.Value.GetString().ToClinicalTrialRecruitmentStatus();
                     continue;
                 }
                 if (property.NameEquals("conditions"u8))

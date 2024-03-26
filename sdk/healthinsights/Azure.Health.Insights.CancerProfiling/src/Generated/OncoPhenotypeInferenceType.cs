@@ -5,65 +5,26 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
-
 namespace Azure.Health.Insights.CancerProfiling
 {
     /// <summary> The type of the Onco Phenotype inference. </summary>
-    public readonly partial struct OncoPhenotypeInferenceType : IEquatable<OncoPhenotypeInferenceType>
+    public enum OncoPhenotypeInferenceType
     {
-        private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="OncoPhenotypeInferenceType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public OncoPhenotypeInferenceType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string TumorSiteValue = "tumorSite";
-        private const string HistologyValue = "histology";
-        private const string ClinicalStageTValue = "clinicalStageT";
-        private const string ClinicalStageNValue = "clinicalStageN";
-        private const string ClinicalStageMValue = "clinicalStageM";
-        private const string PathologicStageTValue = "pathologicStageT";
-        private const string PathologicStageNValue = "pathologicStageN";
-        private const string PathologicStageMValue = "pathologicStageM";
-
         /// <summary> tumorSite. </summary>
-        public static OncoPhenotypeInferenceType TumorSite { get; } = new OncoPhenotypeInferenceType(TumorSiteValue);
+        TumorSite,
         /// <summary> histology. </summary>
-        public static OncoPhenotypeInferenceType Histology { get; } = new OncoPhenotypeInferenceType(HistologyValue);
+        Histology,
         /// <summary> clinicalStageT. </summary>
-        public static OncoPhenotypeInferenceType ClinicalStageT { get; } = new OncoPhenotypeInferenceType(ClinicalStageTValue);
+        ClinicalStageT,
         /// <summary> clinicalStageN. </summary>
-        public static OncoPhenotypeInferenceType ClinicalStageN { get; } = new OncoPhenotypeInferenceType(ClinicalStageNValue);
+        ClinicalStageN,
         /// <summary> clinicalStageM. </summary>
-        public static OncoPhenotypeInferenceType ClinicalStageM { get; } = new OncoPhenotypeInferenceType(ClinicalStageMValue);
+        ClinicalStageM,
         /// <summary> pathologicStageT. </summary>
-        public static OncoPhenotypeInferenceType PathologicStageT { get; } = new OncoPhenotypeInferenceType(PathologicStageTValue);
+        PathologicStageT,
         /// <summary> pathologicStageN. </summary>
-        public static OncoPhenotypeInferenceType PathologicStageN { get; } = new OncoPhenotypeInferenceType(PathologicStageNValue);
+        PathologicStageN,
         /// <summary> pathologicStageM. </summary>
-        public static OncoPhenotypeInferenceType PathologicStageM { get; } = new OncoPhenotypeInferenceType(PathologicStageMValue);
-        /// <summary> Determines if two <see cref="OncoPhenotypeInferenceType"/> values are the same. </summary>
-        public static bool operator ==(OncoPhenotypeInferenceType left, OncoPhenotypeInferenceType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="OncoPhenotypeInferenceType"/> values are not the same. </summary>
-        public static bool operator !=(OncoPhenotypeInferenceType left, OncoPhenotypeInferenceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OncoPhenotypeInferenceType"/>. </summary>
-        public static implicit operator OncoPhenotypeInferenceType(string value) => new OncoPhenotypeInferenceType(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is OncoPhenotypeInferenceType other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(OncoPhenotypeInferenceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        PathologicStageM
     }
 }

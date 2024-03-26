@@ -36,7 +36,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Class))
             {
                 writer.WritePropertyName("class"u8);
-                writer.WriteStringValue(Class.Value.ToString());
+                writer.WriteStringValue(Class.Value.ToSerialString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -103,7 +103,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    @class = new EncounterClass(property.Value.GetString());
+                    @class = property.Value.GetString().ToEncounterClass();
                     continue;
                 }
                 if (options.Format != "W")

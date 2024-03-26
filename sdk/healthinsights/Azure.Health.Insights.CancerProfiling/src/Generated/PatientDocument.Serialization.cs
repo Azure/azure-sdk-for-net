@@ -27,11 +27,11 @@ namespace Azure.Health.Insights.CancerProfiling
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(Type.ToSerialString());
             if (Optional.IsDefined(ClinicalType))
             {
                 writer.WritePropertyName("clinicalType"u8);
-                writer.WriteStringValue(ClinicalType.Value.ToString());
+                writer.WriteStringValue(ClinicalType.Value.ToSerialString());
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
@@ -97,7 +97,7 @@ namespace Azure.Health.Insights.CancerProfiling
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = new DocumentType(property.Value.GetString());
+                    type = property.Value.GetString().ToDocumentType();
                     continue;
                 }
                 if (property.NameEquals("clinicalType"u8))
@@ -106,7 +106,7 @@ namespace Azure.Health.Insights.CancerProfiling
                     {
                         continue;
                     }
-                    clinicalType = new ClinicalDocumentType(property.Value.GetString());
+                    clinicalType = property.Value.GetString().ToClinicalDocumentType();
                     continue;
                 }
                 if (property.NameEquals("id"u8))

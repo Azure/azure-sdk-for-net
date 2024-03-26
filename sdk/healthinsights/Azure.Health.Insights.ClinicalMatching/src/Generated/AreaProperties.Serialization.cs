@@ -27,7 +27,7 @@ namespace Azure.Health.Insights.ClinicalMatching
 
             writer.WriteStartObject();
             writer.WritePropertyName("subType"u8);
-            writer.WriteStringValue(SubType.ToString());
+            writer.WriteStringValue(SubType.ToSerialString());
             writer.WritePropertyName("radius"u8);
             writer.WriteNumberValue(Radius);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -76,7 +76,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             {
                 if (property.NameEquals("subType"u8))
                 {
-                    subType = new GeoJsonPropertiesSubType(property.Value.GetString());
+                    subType = property.Value.GetString().ToGeoJsonPropertiesSubType();
                     continue;
                 }
                 if (property.NameEquals("radius"u8))

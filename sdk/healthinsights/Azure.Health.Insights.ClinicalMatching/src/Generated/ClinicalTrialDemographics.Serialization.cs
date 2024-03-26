@@ -29,7 +29,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             if (Optional.IsDefined(AcceptedSex))
             {
                 writer.WritePropertyName("acceptedSex"u8);
-                writer.WriteStringValue(AcceptedSex.Value.ToString());
+                writer.WriteStringValue(AcceptedSex.Value.ToSerialString());
             }
             if (Optional.IsDefined(AcceptedAgeRange))
             {
@@ -86,7 +86,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     {
                         continue;
                     }
-                    acceptedSex = new ClinicalTrialAcceptedSex(property.Value.GetString());
+                    acceptedSex = property.Value.GetString().ToClinicalTrialAcceptedSex();
                     continue;
                 }
                 if (property.NameEquals("acceptedAgeRange"u8))

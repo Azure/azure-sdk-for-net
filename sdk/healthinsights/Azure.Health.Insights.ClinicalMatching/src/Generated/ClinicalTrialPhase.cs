@@ -5,59 +5,22 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
-
 namespace Azure.Health.Insights.ClinicalMatching
 {
     /// <summary> Possible phases of a clinical trial. </summary>
-    public readonly partial struct ClinicalTrialPhase : IEquatable<ClinicalTrialPhase>
+    public enum ClinicalTrialPhase
     {
-        private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ClinicalTrialPhase"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ClinicalTrialPhase(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string NotApplicableValue = "notApplicable";
-        private const string EarlyPhase1Value = "earlyPhase1";
-        private const string Phase1Value = "phase1";
-        private const string Phase2Value = "phase2";
-        private const string Phase3Value = "phase3";
-        private const string Phase4Value = "phase4";
-
         /// <summary> notApplicable. </summary>
-        public static ClinicalTrialPhase NotApplicable { get; } = new ClinicalTrialPhase(NotApplicableValue);
+        NotApplicable,
         /// <summary> earlyPhase1. </summary>
-        public static ClinicalTrialPhase EarlyPhase1 { get; } = new ClinicalTrialPhase(EarlyPhase1Value);
+        EarlyPhase1,
         /// <summary> phase1. </summary>
-        public static ClinicalTrialPhase Phase1 { get; } = new ClinicalTrialPhase(Phase1Value);
+        Phase1,
         /// <summary> phase2. </summary>
-        public static ClinicalTrialPhase Phase2 { get; } = new ClinicalTrialPhase(Phase2Value);
+        Phase2,
         /// <summary> phase3. </summary>
-        public static ClinicalTrialPhase Phase3 { get; } = new ClinicalTrialPhase(Phase3Value);
+        Phase3,
         /// <summary> phase4. </summary>
-        public static ClinicalTrialPhase Phase4 { get; } = new ClinicalTrialPhase(Phase4Value);
-        /// <summary> Determines if two <see cref="ClinicalTrialPhase"/> values are the same. </summary>
-        public static bool operator ==(ClinicalTrialPhase left, ClinicalTrialPhase right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ClinicalTrialPhase"/> values are not the same. </summary>
-        public static bool operator !=(ClinicalTrialPhase left, ClinicalTrialPhase right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ClinicalTrialPhase"/>. </summary>
-        public static implicit operator ClinicalTrialPhase(string value) => new ClinicalTrialPhase(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ClinicalTrialPhase other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(ClinicalTrialPhase other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        Phase4
     }
 }

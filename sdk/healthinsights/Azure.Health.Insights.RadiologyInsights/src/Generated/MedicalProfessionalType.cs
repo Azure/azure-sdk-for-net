@@ -5,56 +5,20 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
-
 namespace Azure.Health.Insights.RadiologyInsights
 {
     /// <summary> Medical Professional Type. </summary>
-    public readonly partial struct MedicalProfessionalType : IEquatable<MedicalProfessionalType>
+    public enum MedicalProfessionalType
     {
-        private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MedicalProfessionalType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MedicalProfessionalType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string UnknownValue = "unknown";
-        private const string DoctorValue = "doctor";
-        private const string NurseValue = "nurse";
-        private const string MidwifeValue = "midwife";
-        private const string PhysicianAssistantValue = "physicianAssistant";
-
         /// <summary> Unknown medical professional type. </summary>
-        public static MedicalProfessionalType Unknown { get; } = new MedicalProfessionalType(UnknownValue);
+        Unknown,
         /// <summary> Doctor medical professional type. </summary>
-        public static MedicalProfessionalType Doctor { get; } = new MedicalProfessionalType(DoctorValue);
+        Doctor,
         /// <summary> Nurse medical professional type. </summary>
-        public static MedicalProfessionalType Nurse { get; } = new MedicalProfessionalType(NurseValue);
+        Nurse,
         /// <summary> Technician medical professional type. </summary>
-        public static MedicalProfessionalType Midwife { get; } = new MedicalProfessionalType(MidwifeValue);
+        Midwife,
         /// <summary> Technician medical professional type. </summary>
-        public static MedicalProfessionalType PhysicianAssistant { get; } = new MedicalProfessionalType(PhysicianAssistantValue);
-        /// <summary> Determines if two <see cref="MedicalProfessionalType"/> values are the same. </summary>
-        public static bool operator ==(MedicalProfessionalType left, MedicalProfessionalType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="MedicalProfessionalType"/> values are not the same. </summary>
-        public static bool operator !=(MedicalProfessionalType left, MedicalProfessionalType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MedicalProfessionalType"/>. </summary>
-        public static implicit operator MedicalProfessionalType(string value) => new MedicalProfessionalType(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is MedicalProfessionalType other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(MedicalProfessionalType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        PhysicianAssistant
     }
 }

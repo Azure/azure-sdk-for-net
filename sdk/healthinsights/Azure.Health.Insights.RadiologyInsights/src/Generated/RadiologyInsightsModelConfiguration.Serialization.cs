@@ -42,7 +42,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in InferenceTypes)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -130,7 +130,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     List<RadiologyInsightsInferenceType> array = new List<RadiologyInsightsInferenceType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new RadiologyInsightsInferenceType(item.GetString()));
+                        array.Add(item.GetString().ToRadiologyInsightsInferenceType());
                     }
                     inferenceTypes = array;
                     continue;

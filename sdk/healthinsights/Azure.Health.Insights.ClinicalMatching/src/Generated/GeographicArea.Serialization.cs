@@ -27,7 +27,7 @@ namespace Azure.Health.Insights.ClinicalMatching
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(Type.ToSerialString());
             writer.WritePropertyName("geometry"u8);
             writer.WriteObjectValue<AreaGeometry>(Geometry, options);
             writer.WritePropertyName("properties"u8);
@@ -79,7 +79,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = new GeoJsonType(property.Value.GetString());
+                    type = property.Value.GetString().ToGeoJsonType();
                     continue;
                 }
                 if (property.NameEquals("geometry"u8))

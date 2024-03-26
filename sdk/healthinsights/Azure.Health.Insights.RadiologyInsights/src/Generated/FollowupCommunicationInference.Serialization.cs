@@ -42,7 +42,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Recipient)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -130,7 +130,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     List<MedicalProfessionalType> array = new List<MedicalProfessionalType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new MedicalProfessionalType(item.GetString()));
+                        array.Add(item.GetString().ToMedicalProfessionalType());
                     }
                     recipient = array;
                     continue;

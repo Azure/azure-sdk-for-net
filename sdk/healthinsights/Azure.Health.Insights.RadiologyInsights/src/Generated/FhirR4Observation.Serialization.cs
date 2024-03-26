@@ -37,7 +37,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToString());
+            writer.WriteStringValue(Status.ToSerialString());
             if (Optional.IsCollectionDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
@@ -361,7 +361,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new ObservationStatusCodeType(property.Value.GetString());
+                    status = property.Value.GetString().ToObservationStatusCodeType();
                     continue;
                 }
                 if (property.NameEquals("category"u8))

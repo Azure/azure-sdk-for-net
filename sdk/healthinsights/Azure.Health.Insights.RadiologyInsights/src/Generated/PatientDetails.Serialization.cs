@@ -29,7 +29,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Sex))
             {
                 writer.WritePropertyName("sex"u8);
-                writer.WriteStringValue(Sex.Value.ToString());
+                writer.WriteStringValue(Sex.Value.ToSerialString());
             }
             if (Optional.IsDefined(BirthDate))
             {
@@ -97,7 +97,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    sex = new PatientSex(property.Value.GetString());
+                    sex = property.Value.GetString().ToPatientSex();
                     continue;
                 }
                 if (property.NameEquals("birthDate"u8))

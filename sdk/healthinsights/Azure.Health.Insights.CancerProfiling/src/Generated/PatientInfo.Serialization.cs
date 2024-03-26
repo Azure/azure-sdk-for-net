@@ -29,7 +29,7 @@ namespace Azure.Health.Insights.CancerProfiling
             if (Optional.IsDefined(Sex))
             {
                 writer.WritePropertyName("sex"u8);
-                writer.WriteStringValue(Sex.Value.ToString());
+                writer.WriteStringValue(Sex.Value.ToSerialString());
             }
             if (Optional.IsDefined(BirthDate))
             {
@@ -97,7 +97,7 @@ namespace Azure.Health.Insights.CancerProfiling
                     {
                         continue;
                     }
-                    sex = new PatientInfoSex(property.Value.GetString());
+                    sex = property.Value.GetString().ToPatientInfoSex();
                     continue;
                 }
                 if (property.NameEquals("birthDate"u8))
