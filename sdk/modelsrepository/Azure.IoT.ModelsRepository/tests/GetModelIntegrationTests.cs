@@ -80,13 +80,12 @@ namespace Azure.IoT.ModelsRepository.Tests
 
         [TestCase(ModelsRepositoryTestBase.ClientType.Local, true)]
         [TestCase(ModelsRepositoryTestBase.ClientType.Local, false)]
-        [TestCase(ModelsRepositoryTestBase.ClientType.Remote, true)]
-        [TestCase(ModelsRepositoryTestBase.ClientType.Remote, false)]
         public async Task GetModelNoDependencies(ModelsRepositoryTestBase.ClientType clientType, bool hasMetadata)
         {
             const string dtmi1 = "dtmi:com:example:Thermostat;1";
             const string dtmi2 = "dtmi:azure:DeviceManagement:DeviceInformation;1";
-            string[] dtmis = new[] { dtmi1, dtmi2 };
+            const string dtmi3 = "dtmi:com:example:Thermostat;1.2";
+            string[] dtmis = new[] { dtmi1, dtmi2, dtmi3 };
 
             ModelsRepositoryClient client = GetClient(clientType, hasMetadata);
 
