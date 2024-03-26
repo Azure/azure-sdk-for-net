@@ -182,7 +182,7 @@ namespace Azure.Core
             {
                 return uri.Segments.Last();
             }
-            throw new ArgumentException($"{nameof(nextRequestUri)} is not a valid Uri");
+            throw new ArgumentException($"\"{nameof(nextRequestUri)}\":{nextRequestUri} is not a valid Uri");
         }
 
         public RehydrationToken GetRehydrationToken()
@@ -417,7 +417,7 @@ namespace Azure.Core
             // If we are doing final get for a delete LRO with 404, just return empty response with 204
             if (message.Response.Status == 404 && RequestMethod == RequestMethod.Delete)
             {
-                return new EmptyResponse(HttpStatusCode.NoContent);
+                return new EmptyResponse(HttpStatusCode.NoContent, message.Response.ClientRequestId);
             }
             return message.Response;
         }
@@ -427,18 +427,19 @@ namespace Azure.Core
         /// </summary>
         private sealed class EmptyResponse : Response
         {
-            public EmptyResponse(HttpStatusCode status)
+            public EmptyResponse(HttpStatusCode status, string clientRequestId)
             {
                 Status = (int)status;
                 ReasonPhrase = status.ToString();
+                ClientRequestId = clientRequestId;
             }
 
             public override int Status { get; }
 
             public override string ReasonPhrase { get; }
 
-            public override Stream? ContentStream { get => null; set => throw new System.NotImplementedException(); }
-            public override string ClientRequestId { get => string.Empty; set => throw new System.NotImplementedException(); }
+            public override Stream? ContentStream { get => null; set => throw new InvalidOperationException("Should not set ContentStream for an empty response."); }
+            public override string ClientRequestId { get; set; }
 
             public override void Dispose()
             {
