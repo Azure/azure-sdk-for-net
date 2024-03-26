@@ -4,8 +4,8 @@ targetScope = 'resourceGroup'
 param location string = resourceGroup().location
 
 
-resource redisCache_YE3v6ym48 'Microsoft.Cache/Redis@2020-06-01' = {
-  name: toLower(take(concat('redis', uniqueString(resourceGroup().id)), 24))
+resource redisCache_1pkKDcARg 'Microsoft.Cache/Redis@2020-06-01' = {
+  name: toLower(take('redis${uniqueString(resourceGroup().id)}', 24))
   location: location
   properties: {
     enableNonSslPort: false
@@ -18,8 +18,8 @@ resource redisCache_YE3v6ym48 'Microsoft.Cache/Redis@2020-06-01' = {
   }
 }
 
-resource keyVault_5t0GshPLB 'Microsoft.KeyVault/vaults@2022-07-01' = {
-  name: toLower(take(concat('kv', uniqueString(resourceGroup().id)), 24))
+resource keyVault_NEuaN7OeP 'Microsoft.KeyVault/vaults@2022-07-01' = {
+  name: toLower(take('kv${uniqueString(resourceGroup().id)}', 24))
   location: location
   properties: {
     tenantId: tenant().tenantId
@@ -31,11 +31,11 @@ resource keyVault_5t0GshPLB 'Microsoft.KeyVault/vaults@2022-07-01' = {
   }
 }
 
-resource keyVaultSecret_R6AWfDGcA 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
-  parent: keyVault_5t0GshPLB
+resource keyVaultSecret_ztMuSEPLk 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
+  parent: keyVault_NEuaN7OeP
   name: 'connectionString'
   location: location
   properties: {
-    value: '${redisCache_YE3v6ym48.properties.hostName},ssl=true,password=${redisCache_YE3v6ym48.listkeys(redisCache_YE3v6ym48.apiVersion).secondaryKey}'
+    value: '${redisCache_1pkKDcARg.properties.hostName},ssl=true,password=${redisCache_1pkKDcARg.listkeys(redisCache_1pkKDcARg.apiVersion).secondaryKey}'
   }
 }
