@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
+using OpenTelemetry.Logs;
 using ExceptionDocument = Azure.Monitor.OpenTelemetry.LiveMetrics.Models.Exception;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection
@@ -168,6 +169,16 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection
             };
 
             return exceptionDocumentIngress;
+        }
+
+        internal static Models.Trace ConvertToTrace(LogRecord logRecord)
+        {
+            return new Models.Trace()
+            {
+                DocumentType = DocumentIngressDocumentType.Trace,
+                Message = logRecord.FormattedMessage ?? logRecord.Body, // TODO: MAY NEED TO BUILD THE FORMATTED MESSAGE IF NOT AVAILABLE
+                // TODO: Properties = new Dictionary<string, string>(), - UX supports up to 10 custom properties
+            };
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

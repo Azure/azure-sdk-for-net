@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using OpenTelemetry;
 using OpenTelemetry.Trace;
 
@@ -13,6 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
     {
         private const string ActivitySourceName = "MyCompany.MyProduct.MyLibrary";
         private static readonly ActivitySource s_activitySource = new(ActivitySourceName);
+        private static ILogger _logger;
 
         private const string ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
 
@@ -27,6 +29,17 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
                             .AddSource(ActivitySourceName)
                             .AddLiveMetrics(configure => configure.ConnectionString = ConnectionString)
                             .Build();
+
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options =>
+                {
+                    //options.IncludeFormattedMessage = true;
+                    options.AddLiveMetrics(configure => configure.ConnectionString = ConnectionString);
+                });
+            });
+
+            _logger = loggerFactory.CreateLogger("DemoLogger");
 
             Console.WriteLine("Press any key to stop the loop.");
 
@@ -71,7 +84,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
                         Console.WriteLine("Request Exception");
                         try
                         {
-                            throw new Exception("Test exception");
+                            throw new Exception("Test Request Exception");
                         }
                         catch (Exception ex)
                         {
@@ -94,13 +107,45 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
                         Console.WriteLine("Dependency Exception");
                         try
                         {
-                            throw new Exception("Test exception");
+                            throw new Exception("Test Dependency Exception");
                         }
                         catch (Exception ex)
                         {
                             activity?.SetStatus(ActivityStatusCode.Error);
                             activity?.RecordException(ex);
                         }
+                    }
+                }
+            }
+
+            // Logs
+            if (GetRandomBool(percent: 70))
+            {
+                Console.WriteLine("Log");
+
+                _logger.Log(
+                    logLevel: LogLevel.Information,
+                    eventId: 0,
+                    exception: null,
+                    message: "Hello {name}.",
+                    args: new object[] { "World" });
+
+                // Exception
+                if (GetRandomBool(percent: 40))
+                {
+                    Console.WriteLine("Log Exception");
+                    try
+                    {
+                        throw new Exception("Test Log Exception");
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Log(
+                            logLevel: LogLevel.Error,
+                            eventId: 0,
+                            exception: ex,
+                            message: "Hello {name}.",
+                            args: new object[] { "World" });
                     }
                 }
             }

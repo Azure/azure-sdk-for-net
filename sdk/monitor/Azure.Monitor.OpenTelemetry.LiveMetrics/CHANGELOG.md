@@ -4,6 +4,10 @@
 
 ### Features Added
 
+* Add Logs to the Documents which are exported to LiveMetrics.
+  These are displayed in the right-side of the Live Metrics UX.
+  ([#42889](https://github.com/Azure/azure-sdk-for-net/pull/42889))
+
 ### Breaking Changes
 
 ### Bugs Fixed
