@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// If it is null, default will be considered as System Assigned.
         /// </param>
         /// <returns> A new <see cref="Models.BackupRestoreContent"/> instance for mocking. </returns>
-        public static BackupRestoreContent BackupRestoreContent(string objectType = null, RestoreTargetInfoBase restoreTargetInfo = null, SourceDataStoreType sourceDataStoreType = default, ResourceIdentifier sourceResourceId = null, DataProtectionIdentityDetails identityDetails = null)
+        public static BackupRestoreContent BackupRestoreContent(string objectType = "Unknown", RestoreTargetInfoBase restoreTargetInfo = null, SourceDataStoreType sourceDataStoreType = default, ResourceIdentifier sourceResourceId = null, DataProtectionIdentityDetails identityDetails = null)
         {
             return new UnknownAzureBackupRestoreRequest(
                 objectType,
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="recoverySetting"> Recovery Option. </param>
         /// <param name="restoreLocation"> Target Restore region. </param>
         /// <returns> A new <see cref="Models.RestoreTargetInfoBase"/> instance for mocking. </returns>
-        public static RestoreTargetInfoBase RestoreTargetInfoBase(string objectType = null, RecoverySetting recoverySetting = default, AzureLocation? restoreLocation = null)
+        public static RestoreTargetInfoBase RestoreTargetInfoBase(string objectType = "Unknown", RecoverySetting recoverySetting = default, AzureLocation? restoreLocation = null)
         {
             return new UnknownRestoreTargetInfoBase(objectType, recoverySetting, restoreLocation, serializedAdditionalRawData: null);
         }

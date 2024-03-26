@@ -30,7 +30,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="auditTrail"> The history of how this asset was pulled into the workspace through the discovery process. </param>
         /// <param name="reason"></param>
         /// <returns> A new <see cref="Easm.AssetResource"/> instance for mocking. </returns>
-        public static AssetResource AssetResource(string kind = null, string id = null, string name = null, string displayName = null, Guid? uuid = null, DateTimeOffset? createdDate = null, DateTimeOffset? updatedDate = null, AssetState? state = null, string externalId = null, IEnumerable<string> labels = null, bool? wildcard = null, string discoGroupName = null, IEnumerable<AuditTrailItem> auditTrail = null, string reason = null)
+        public static AssetResource AssetResource(string kind = "Unknown", string id = null, string name = null, string displayName = null, Guid? uuid = null, DateTimeOffset? createdDate = null, DateTimeOffset? updatedDate = null, AssetState? state = null, string externalId = null, IEnumerable<string> labels = null, bool? wildcard = null, string discoGroupName = null, IEnumerable<AuditTrailItem> auditTrail = null, string reason = null)
         {
             labels ??= new List<string>();
             auditTrail ??= new List<AuditTrailItem>();
@@ -111,7 +111,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="active"> An indicator of whether the data connection is active. </param>
         /// <param name="inactiveMessage"> A message that specifies details about data connection if inactive. </param>
         /// <returns> A new <see cref="Easm.DataConnection"/> instance for mocking. </returns>
-        public static DataConnection DataConnection(string kind = null, string id = null, string name = null, string displayName = null, DataConnectionContent? content = null, DateTimeOffset? createdDate = null, DataConnectionFrequency? frequency = null, int? frequencyOffset = null, DateTimeOffset? updatedDate = null, DateTimeOffset? userUpdatedAt = null, bool? active = null, string inactiveMessage = null)
+        public static DataConnection DataConnection(string kind = "Unknown", string id = null, string name = null, string displayName = null, DataConnectionContent? content = null, DateTimeOffset? createdDate = null, DataConnectionFrequency? frequency = null, int? frequencyOffset = null, DateTimeOffset? updatedDate = null, DateTimeOffset? userUpdatedAt = null, bool? active = null, string inactiveMessage = null)
         {
             return new UnknownDataConnection(
                 kind,

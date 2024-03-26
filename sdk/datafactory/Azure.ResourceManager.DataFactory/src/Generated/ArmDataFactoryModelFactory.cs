@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.DataFactoryTriggerProperties"/> instance for mocking. </returns>
-        public static DataFactoryTriggerProperties DataFactoryTriggerProperties(string triggerType = null, string description = null, DataFactoryTriggerRuntimeState? runtimeState = null, IEnumerable<BinaryData> annotations = null, IDictionary<string, BinaryData> additionalProperties = null)
+        public static DataFactoryTriggerProperties DataFactoryTriggerProperties(string triggerType = "Unknown", string description = null, DataFactoryTriggerRuntimeState? runtimeState = null, IEnumerable<BinaryData> annotations = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();

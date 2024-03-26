@@ -992,7 +992,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Type of result - database level or task level. </param>
         /// <returns> A new <see cref="Models.ConnectToSourceSqlServerTaskOutput"/> instance for mocking. </returns>
-        public static ConnectToSourceSqlServerTaskOutput ConnectToSourceSqlServerTaskOutput(string id = null, string resultType = null)
+        public static ConnectToSourceSqlServerTaskOutput ConnectToSourceSqlServerTaskOutput(string id = null, string resultType = "Unknown")
         {
             return new UnknownConnectToSourceSqlServerTaskOutput(id, resultType, serializedAdditionalRawData: null);
         }
@@ -1339,7 +1339,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <returns> A new <see cref="Models.MigrateSchemaSqlServerSqlDBTaskOutput"/> instance for mocking. </returns>
-        public static MigrateSchemaSqlServerSqlDBTaskOutput MigrateSchemaSqlServerSqlDBTaskOutput(string id = null, string resultType = null)
+        public static MigrateSchemaSqlServerSqlDBTaskOutput MigrateSchemaSqlServerSqlDBTaskOutput(string id = null, string resultType = "Unknown")
         {
             return new UnknownMigrateSchemaSqlServerSqlDBTaskOutput(id, resultType, serializedAdditionalRawData: null);
         }
@@ -1423,7 +1423,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <returns> A new <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutput"/> instance for mocking. </returns>
-        public static MigrateMySqlAzureDBForMySqlSyncTaskOutput MigrateMySqlAzureDBForMySqlSyncTaskOutput(string id = null, string resultType = null)
+        public static MigrateMySqlAzureDBForMySqlSyncTaskOutput MigrateMySqlAzureDBForMySqlSyncTaskOutput(string id = null, string resultType = "Unknown")
         {
             return new UnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput(id, resultType, serializedAdditionalRawData: null);
         }
@@ -1611,7 +1611,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <returns> A new <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput"/> instance for mocking. </returns>
-        public static MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput(string id = null, string resultType = null)
+        public static MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput(string id = null, string resultType = "Unknown")
         {
             return new UnknownMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput(id, resultType, serializedAdditionalRawData: null);
         }
@@ -1753,7 +1753,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutput"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlDBSyncTaskOutput MigrateSqlServerSqlDBSyncTaskOutput(string id = null, string resultType = null)
+        public static MigrateSqlServerSqlDBSyncTaskOutput MigrateSqlServerSqlDBSyncTaskOutput(string id = null, string resultType = "Unknown")
         {
             return new UnknownMigrateSqlServerSqlDBSyncTaskOutput(id, resultType, serializedAdditionalRawData: null);
         }
@@ -1886,7 +1886,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlDBTaskOutput"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlDBTaskOutput MigrateSqlServerSqlDBTaskOutput(string id = null, string resultType = null)
+        public static MigrateSqlServerSqlDBTaskOutput MigrateSqlServerSqlDBTaskOutput(string id = null, string resultType = "Unknown")
         {
             return new UnknownMigrateSqlServerSqlDBTaskOutput(id, resultType, serializedAdditionalRawData: null);
         }
@@ -2206,7 +2206,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlMISyncTaskOutput"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlMISyncTaskOutput MigrateSqlServerSqlMISyncTaskOutput(string id = null, string resultType = null)
+        public static MigrateSqlServerSqlMISyncTaskOutput MigrateSqlServerSqlMISyncTaskOutput(string id = null, string resultType = "Unknown")
         {
             return new UnknownMigrateSqlServerSqlMISyncTaskOutput(id, resultType, serializedAdditionalRawData: null);
         }
@@ -2293,7 +2293,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlMITaskOutput"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlMITaskOutput MigrateSqlServerSqlMITaskOutput(string id = null, string resultType = null)
+        public static MigrateSqlServerSqlMITaskOutput MigrateSqlServerSqlMITaskOutput(string id = null, string resultType = "Unknown")
         {
             return new UnknownMigrateSqlServerSqlMITaskOutput(id, resultType, serializedAdditionalRawData: null);
         }
@@ -2438,7 +2438,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <returns> A new <see cref="Models.MigrateSsisTaskOutput"/> instance for mocking. </returns>
-        public static MigrateSsisTaskOutput MigrateSsisTaskOutput(string id = null, string resultType = null)
+        public static MigrateSsisTaskOutput MigrateSsisTaskOutput(string id = null, string resultType = "Unknown")
         {
             return new UnknownMigrateSsisTaskOutput(id, resultType, serializedAdditionalRawData: null);
         }
@@ -2892,7 +2892,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <returns> A new <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutput"/> instance for mocking. </returns>
-        public static MigrateOracleAzureDBPostgreSqlSyncTaskOutput MigrateOracleAzureDBPostgreSqlSyncTaskOutput(string id = null, string resultType = null)
+        public static MigrateOracleAzureDBPostgreSqlSyncTaskOutput MigrateOracleAzureDBPostgreSqlSyncTaskOutput(string id = null, string resultType = "Unknown")
         {
             return new UnknownMigrateOracleAzureDBPostgreSqlSyncTaskOutput(id, resultType, serializedAdditionalRawData: null);
         }
@@ -4019,7 +4019,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <returns> A new <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutput"/> instance for mocking. </returns>
-        public static MigrateMySqlAzureDBForMySqlOfflineTaskOutput MigrateMySqlAzureDBForMySqlOfflineTaskOutput(string id = null, string resultType = null)
+        public static MigrateMySqlAzureDBForMySqlOfflineTaskOutput MigrateMySqlAzureDBForMySqlOfflineTaskOutput(string id = null, string resultType = "Unknown")
         {
             return new UnknownMigrateMySqlAzureDBForMySqlOfflineTaskOutput(id, resultType, serializedAdditionalRawData: null);
         }

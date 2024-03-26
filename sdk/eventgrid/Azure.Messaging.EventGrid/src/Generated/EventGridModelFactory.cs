@@ -926,7 +926,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="progress"> Gets the Job output progress. </param>
         /// <param name="state"> Gets the Job output state. </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobOutput"/> instance for mocking. </returns>
-        public static MediaJobOutput MediaJobOutput(string odataType = null, MediaJobError error = null, string label = null, long progress = default, MediaJobState state = default)
+        public static MediaJobOutput MediaJobOutput(string odataType = "Unknown", MediaJobError error = null, string label = null, long progress = default, MediaJobState state = default)
         {
             return new MediaJobOutput(odataType, error, label, progress, state);
         }
