@@ -669,7 +669,6 @@
 
 # ServiceLabel: %Network - CDN
 # ServiceOwners:                                                   @cdnfdsuppgithub
-/sdk/cdn/                                                          @ptnan7
 
 # ServiceLabel: %Network - DDOS Protection
 # ServiceOwners:                                                   @ddossuppgithub
@@ -927,6 +926,8 @@
 # -----------------------------------------------------------------
 # ServiceLabel: %Mgmt
 # AzureSdkOwners:                                                  @ArthurMa1978
+
+/sdk/cdn/                                                          @ptnan7
 
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/            @archerzz @ArcturusZhang @ArthurMa1978
