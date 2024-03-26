@@ -97,7 +97,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             IList<FhirR4Coding> coding = default;
             string text = default;
             string id = default;
-            IReadOnlyList<FhirR4Extension> extension = default;
+            IList<FhirR4Extension> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
