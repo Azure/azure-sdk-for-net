@@ -46,7 +46,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(EncodingFormat))
             {
                 writer.WritePropertyName("encoding_format"u8);
-                writer.WriteStringValue(EncodingFormat.Value.ToString());
+                writer.WriteStringValue(EncodingFormat.Value.ToSerialString());
             }
             if (Optional.IsDefined(Dimensions))
             {
@@ -132,7 +132,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    encodingFormat = new EmbeddingEncodingFormat(property.Value.GetString());
+                    encodingFormat = property.Value.GetString().ToEmbeddingEncodingFormat();
                     continue;
                 }
                 if (property.NameEquals("dimensions"u8))

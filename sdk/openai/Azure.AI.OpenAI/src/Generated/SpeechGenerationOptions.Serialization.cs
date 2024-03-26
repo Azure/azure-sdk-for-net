@@ -53,7 +53,7 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("voice"u8))
                 {
-                    voice = new SpeechVoice(property.Value.GetString());
+                    voice = property.Value.GetString().ToSpeechVoice();
                     continue;
                 }
                 if (property.NameEquals("response_format"u8))
@@ -62,7 +62,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    responseFormat = new SpeechGenerationResponseFormat(property.Value.GetString());
+                    responseFormat = property.Value.GetString().ToSpeechGenerationResponseFormat();
                     continue;
                 }
                 if (property.NameEquals("speed"u8))
