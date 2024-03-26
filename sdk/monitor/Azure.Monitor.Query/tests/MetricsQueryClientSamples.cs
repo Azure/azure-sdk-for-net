@@ -239,7 +239,8 @@ namespace Azure.Monitor.Query.Tests
             var options = new MetricsQueryResourcesOptions
             {
                 OrderBy = "sum asc",
-                RollUpBy = { "RollUpBy=City" }
+                Size = 10,
+                Filter = "a1"
             };
 
             Response<MetricsQueryResourcesResult> result = await client.QueryResourcesAsync(
