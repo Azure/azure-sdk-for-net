@@ -139,7 +139,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="type"> The object type for the required tool call. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
         /// <returns> A new <see cref="Assistants.RequiredToolCall"/> instance for mocking. </returns>
-        public static RequiredToolCall RequiredToolCall(string type = null, string id = null)
+        public static RequiredToolCall RequiredToolCall(string type = "Unknown", string id = null)
         {
             return new UnknownRequiredToolCall(type, id, serializedAdditionalRawData: null);
         }
@@ -148,7 +148,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <returns> A new <see cref="Assistants.RunStepToolCall"/> instance for mocking. </returns>
-        public static RunStepToolCall RunStepToolCall(string type = null, string id = null)
+        public static RunStepToolCall RunStepToolCall(string type = "Unknown", string id = null)
         {
             return new UnknownRunStepToolCall(type, id, serializedAdditionalRawData: null);
         }
@@ -194,7 +194,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="startIndex"> The first text index associated with this text annotation. </param>
         /// <param name="endIndex"> The last text index associated with this text annotation. </param>
         /// <returns> A new <see cref="Assistants.MessageTextAnnotation"/> instance for mocking. </returns>
-        public static MessageTextAnnotation MessageTextAnnotation(string type = null, string text = null, int startIndex = default, int endIndex = default)
+        public static MessageTextAnnotation MessageTextAnnotation(string type = "Unknown", string text = null, int startIndex = default, int endIndex = default)
         {
             return new UnknownMessageTextAnnotation(type, text, startIndex, endIndex, serializedAdditionalRawData: null);
         }
