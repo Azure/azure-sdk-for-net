@@ -1099,13 +1099,9 @@ namespace Azure.Storage.Blobs
                         encryptionScopeOptions,
                         async,
                         cancellationToken,
-                        operationName)
+                        operationName,
+                        false)
                         .ConfigureAwait(false);
-                }
-                catch (RequestFailedException storageRequestFailedException)
-                when (storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerAlreadyExists)
-                {
-                    response = default;
                 }
                 catch (Exception ex)
                 {
@@ -1160,6 +1156,9 @@ namespace Azure.Storage.Blobs
         /// <param name="operationName">
         /// Optional. To indicate if the name of the operation.
         /// </param>
+        /// <param name="failScopeOnAlreadyExists">
+        /// Optional. To indicate if the logging scope should fail upon an container already exists exception.
+        /// </param>
         /// <returns>
         /// A <see cref="Response{ContainerInfo}"/> describing the newly
         /// created container.
@@ -1175,8 +1174,9 @@ namespace Azure.Storage.Blobs
             bool async,
             CancellationToken cancellationToken,
 #pragma warning disable CA1801 // Review unused parameters
-            string operationName = null)
+            string operationName = null,
 #pragma warning restore CA1801 // Review unused parameters
+            bool failScopeOnAlreadyExists = true)
         {
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
             {
@@ -1216,6 +1216,11 @@ namespace Azure.Storage.Blobs
                     return Response.FromValue(
                         response.ToBlobContainerInfo(),
                         response.GetRawResponse());
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerAlreadyExists && !failScopeOnAlreadyExists)
+                {
+                    return default;
                 }
                 catch (Exception ex)
                 {
