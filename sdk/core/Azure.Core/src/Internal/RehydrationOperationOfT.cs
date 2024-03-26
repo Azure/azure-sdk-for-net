@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
-
 using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,7 +15,7 @@ namespace Azure.Core
         private readonly OperationInternal<T> _operation;
         private readonly NextLinkOperationImplementation _nextLinkOperation;
 
-        public RehydrationOperation(HttpPipeline pipeline, RehydrationToken? rehydrationToken, ClientOptions options = null)
+        public RehydrationOperation(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions? options = null)
         {
             Argument.AssertNotNull(pipeline, nameof(pipeline));
             Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
@@ -35,9 +33,9 @@ namespace Azure.Core
 
         public override bool HasValue => _operation.HasValue;
 
-        public override string Id => _nextLinkOperation.OperationId ?? null;
+        public override string Id => _nextLinkOperation.OperationId;
 
-        public override RehydrationToken? GetRehydrationToken() => _nextLinkOperation?.GetRehydrationToken();
+        public override RehydrationToken? GetRehydrationToken() => _nextLinkOperation.GetRehydrationToken();
 
         public override bool HasCompleted => _operation.HasCompleted;
 

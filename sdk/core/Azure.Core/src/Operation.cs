@@ -25,7 +25,7 @@ namespace Azure
         /// <param name="rehydrationToken">The rehydration token.</param>
         /// <param name="options">The client options.</param>
         /// <returns>The long-running operation.</returns>
-        public static Operation<T> Rehydrate<T>(HttpPipeline pipeline, RehydrationToken? rehydrationToken, ClientOptions? options = null) where T : IPersistableModel<T>
+        public static Operation<T> Rehydrate<T>(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions? options = null) where T : IPersistableModel<T>
             => new RehydrationOperation<T>(pipeline, rehydrationToken, options);
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Azure
         /// <param name="rehydrationToken">The rehydration token.</param>
         /// <param name="options">The client options.</param>
         /// <returns>The long-running operation.</returns>
-        public static Operation Rehydrate(HttpPipeline pipeline, RehydrationToken? rehydrationToken, ClientOptions? options = null)
+        public static Operation Rehydrate(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions? options = null)
             => new RehydrationOperation(pipeline, rehydrationToken, options);
 
         /// <summary>
