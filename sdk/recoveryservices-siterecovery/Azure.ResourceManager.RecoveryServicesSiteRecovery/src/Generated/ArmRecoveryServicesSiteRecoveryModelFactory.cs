@@ -1246,7 +1246,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="instanceType"> The type of task details. </param>
         /// <param name="childTasks"> The child tasks. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryGroupTaskDetails"/> instance for mocking. </returns>
-        public static SiteRecoveryGroupTaskDetails SiteRecoveryGroupTaskDetails(string instanceType = null, IEnumerable<AsrTask> childTasks = null)
+        public static SiteRecoveryGroupTaskDetails SiteRecoveryGroupTaskDetails(string instanceType = "Unknown", IEnumerable<AsrTask> childTasks = null)
         {
             childTasks ??= new List<AsrTask>();
 
@@ -1311,7 +1311,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="instanceType"> Gets the type of job details (see JobDetailsTypes enum for possible values). </param>
         /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryJobDetails"/> instance for mocking. </returns>
-        public static SiteRecoveryJobDetails SiteRecoveryJobDetails(string instanceType = null, IReadOnlyDictionary<string, string> affectedObjectDetails = null)
+        public static SiteRecoveryJobDetails SiteRecoveryJobDetails(string instanceType = "Unknown", IReadOnlyDictionary<string, string> affectedObjectDetails = null)
         {
             affectedObjectDetails ??= new Dictionary<string, string>();
 

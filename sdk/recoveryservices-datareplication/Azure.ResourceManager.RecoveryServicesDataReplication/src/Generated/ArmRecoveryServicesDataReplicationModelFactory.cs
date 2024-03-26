@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         /// <param name="affectedObjectDetails"> Gets or sets any custom properties of the affected object. </param>
         /// <returns> A new <see cref="Models.WorkflowModelCustomProperties"/> instance for mocking. </returns>
-        public static WorkflowModelCustomProperties WorkflowModelCustomProperties(string instanceType = null, IReadOnlyDictionary<string, string> affectedObjectDetails = null)
+        public static WorkflowModelCustomProperties WorkflowModelCustomProperties(string instanceType = "Unknown", IReadOnlyDictionary<string, string> affectedObjectDetails = null)
         {
             affectedObjectDetails ??= new Dictionary<string, string>();
 

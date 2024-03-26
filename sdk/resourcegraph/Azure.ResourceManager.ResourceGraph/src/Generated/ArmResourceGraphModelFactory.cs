@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <param name="expression"> Facet expression, same as in the corresponding facet request. </param>
         /// <param name="resultType"> Result type. </param>
         /// <returns> A new <see cref="Models.Facet"/> instance for mocking. </returns>
-        public static Facet Facet(string expression = null, string resultType = null)
+        public static Facet Facet(string expression = null, string resultType = "Unknown")
         {
             return new UnknownFacet(expression, resultType, serializedAdditionalRawData: null);
         }

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="validStartOn"> Certificate Validity start Date time. </param>
         /// <param name="validEndOn"> Certificate Validity End Date time. </param>
         /// <returns> A new <see cref="Models.ResourceCertificateDetails"/> instance for mocking. </returns>
-        public static ResourceCertificateDetails ResourceCertificateDetails(string authType = null, byte[] certificate = null, string friendlyName = null, string issuer = null, long? resourceId = null, string subject = null, BinaryData thumbprint = null, DateTimeOffset? validStartOn = null, DateTimeOffset? validEndOn = null)
+        public static ResourceCertificateDetails ResourceCertificateDetails(string authType = "Unknown", byte[] certificate = null, string friendlyName = null, string issuer = null, long? resourceId = null, string subject = null, BinaryData thumbprint = null, DateTimeOffset? validStartOn = null, DateTimeOffset? validEndOn = null)
         {
             return new UnknownResourceCertificateDetails(
                 authType,
