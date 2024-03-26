@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
@@ -23,51 +22,51 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<SubResourceIntegrityCheck>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubResourceIntegrityCheck)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubResourceIntegrityCheck)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Violation.HasValue)
+            if (Optional.IsDefined(Violation))
             {
                 writer.WritePropertyName("violation"u8);
                 writer.WriteBooleanValue(Violation.Value);
             }
-            if (FirstSeen.HasValue)
+            if (Optional.IsDefined(FirstSeen))
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (LastSeen.HasValue)
+            if (Optional.IsDefined(LastSeen))
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (CausePageUrl != null)
+            if (Optional.IsDefined(CausePageUrl))
             {
                 writer.WritePropertyName("causePageUrl"u8);
                 writer.WriteStringValue(CausePageUrl);
             }
-            if (CrawlGuid != null)
+            if (Optional.IsDefined(CrawlGuid))
             {
                 writer.WritePropertyName("crawlGuid"u8);
                 writer.WriteStringValue(CrawlGuid);
             }
-            if (PageGuid != null)
+            if (Optional.IsDefined(PageGuid))
             {
                 writer.WritePropertyName("pageGuid"u8);
                 writer.WriteStringValue(PageGuid);
             }
-            if (ResourceGuid != null)
+            if (Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid);
             }
-            if (ExpectedHash != null)
+            if (Optional.IsDefined(ExpectedHash))
             {
                 writer.WritePropertyName("expectedHash"u8);
                 writer.WriteStringValue(ExpectedHash);
@@ -95,7 +94,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<SubResourceIntegrityCheck>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubResourceIntegrityCheck)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubResourceIntegrityCheck)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -212,7 +211,7 @@ namespace Azure.Analytics.Defender.Easm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SubResourceIntegrityCheck)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubResourceIntegrityCheck)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -228,7 +227,7 @@ namespace Azure.Analytics.Defender.Easm
                         return DeserializeSubResourceIntegrityCheck(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubResourceIntegrityCheck)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubResourceIntegrityCheck)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -246,7 +245,7 @@ namespace Azure.Analytics.Defender.Easm
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<SubResourceIntegrityCheck>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

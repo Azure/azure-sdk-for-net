@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterVersionDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterVersionDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterVersionDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CodeVersion != null)
+            if (Optional.IsDefined(CodeVersion))
             {
                 writer.WritePropertyName("codeVersion"u8);
                 writer.WriteStringValue(CodeVersion);
             }
-            if (SupportExpireOn.HasValue)
+            if (Optional.IsDefined(SupportExpireOn))
             {
                 writer.WritePropertyName("supportExpiryUtc"u8);
                 writer.WriteStringValue(SupportExpireOn.Value, "O");
             }
-            if (Environment.HasValue)
+            if (Optional.IsDefined(Environment))
             {
                 writer.WritePropertyName("environment"u8);
                 writer.WriteStringValue(Environment.Value.ToString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterVersionDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterVersionDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterVersionDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterVersionDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterVersionDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         return DeserializeClusterVersionDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterVersionDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterVersionDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

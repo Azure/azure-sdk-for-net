@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<HlsSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HlsSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HlsSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsDefault.HasValue)
+            if (Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (IsForced.HasValue)
+            if (Optional.IsDefined(IsForced))
             {
                 writer.WritePropertyName("forced"u8);
                 writer.WriteBooleanValue(IsForced.Value);
             }
-            if (Characteristics != null)
+            if (Optional.IsDefined(Characteristics))
             {
                 writer.WritePropertyName("characteristics"u8);
                 writer.WriteStringValue(Characteristics);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<HlsSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HlsSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HlsSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HlsSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HlsSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeHlsSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HlsSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HlsSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

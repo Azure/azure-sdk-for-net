@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<CacheKeyQueryStringActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CacheKeyQueryStringActionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CacheKeyQueryStringActionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(ActionType.ToString());
             writer.WritePropertyName("queryStringBehavior"u8);
             writer.WriteStringValue(QueryStringBehavior.ToString());
-            if (QueryParameters != null)
+            if (Optional.IsDefined(QueryParameters))
             {
                 if (QueryParameters != null)
                 {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<CacheKeyQueryStringActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CacheKeyQueryStringActionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CacheKeyQueryStringActionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CacheKeyQueryStringActionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CacheKeyQueryStringActionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeCacheKeyQueryStringActionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CacheKeyQueryStringActionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CacheKeyQueryStringActionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

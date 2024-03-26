@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
@@ -23,62 +22,62 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<BannerDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BannerDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BannerDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (BannerName != null)
+            if (Optional.IsDefined(BannerName))
             {
                 writer.WritePropertyName("banner"u8);
                 writer.WriteStringValue(BannerName);
             }
-            if (FirstSeen.HasValue)
+            if (Optional.IsDefined(FirstSeen))
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (LastSeen.HasValue)
+            if (Optional.IsDefined(LastSeen))
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (ScanType != null)
+            if (Optional.IsDefined(ScanType))
             {
                 writer.WritePropertyName("scanType"u8);
                 writer.WriteStringValue(ScanType);
             }
-            if (BannerMetadata != null)
+            if (Optional.IsDefined(BannerMetadata))
             {
                 writer.WritePropertyName("bannerMetadata"u8);
                 writer.WriteStringValue(BannerMetadata);
             }
-            if (Recent.HasValue)
+            if (Optional.IsDefined(Recent))
             {
                 writer.WritePropertyName("recent"u8);
                 writer.WriteBooleanValue(Recent.Value);
             }
-            if (Sha256 != null)
+            if (Optional.IsDefined(Sha256))
             {
                 writer.WritePropertyName("sha256"u8);
                 writer.WriteStringValue(Sha256);
             }
-            if (!(Sources is ChangeTrackingList<SourceDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Sources))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
                 foreach (var item in Sources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SourceDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -105,7 +104,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<BannerDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BannerDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BannerDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -242,7 +241,7 @@ namespace Azure.Analytics.Defender.Easm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BannerDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BannerDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -258,7 +257,7 @@ namespace Azure.Analytics.Defender.Easm
                         return DeserializeBannerDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BannerDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BannerDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -276,7 +275,7 @@ namespace Azure.Analytics.Defender.Easm
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<BannerDetails>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

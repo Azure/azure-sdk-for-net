@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Execution timeout for the job step. </summary>
+        [WirePath("timeoutSeconds")]
         public int? TimeoutSeconds { get; set; }
         /// <summary> Maximum number of times the job step will be reattempted if the first attempt fails. </summary>
+        [WirePath("retryAttempts")]
         public int? RetryAttempts { get; set; }
         /// <summary> Initial delay between retries for job step execution. </summary>
+        [WirePath("initialRetryIntervalSeconds")]
         public int? InitialRetryIntervalSeconds { get; set; }
         /// <summary> The maximum amount of time to wait between retries for job step execution. </summary>
+        [WirePath("maximumRetryIntervalSeconds")]
         public int? MaximumRetryIntervalSeconds { get; set; }
         /// <summary> The backoff multiplier for the time between retries. </summary>
+        [WirePath("retryIntervalBackoffMultiplier")]
         public float? RetryIntervalBackoffMultiplier { get; set; }
     }
 }

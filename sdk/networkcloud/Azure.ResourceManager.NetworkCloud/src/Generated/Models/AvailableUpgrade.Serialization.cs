@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableUpgrade>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableUpgrade)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableUpgrade)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AvailabilityLifecycle.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AvailabilityLifecycle))
             {
                 writer.WritePropertyName("availabilityLifecycle"u8);
                 writer.WriteStringValue(AvailabilityLifecycle.Value.ToString());
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableUpgrade>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableUpgrade)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableUpgrade)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvailableUpgrade)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableUpgrade)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeAvailableUpgrade(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvailableUpgrade)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableUpgrade)} does not support reading '{options.Format}' format.");
             }
         }
 

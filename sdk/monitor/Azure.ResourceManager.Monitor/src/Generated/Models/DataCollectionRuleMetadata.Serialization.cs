@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCollectionRuleMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionRuleMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisionedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisionedBy))
             {
                 writer.WritePropertyName("provisionedBy"u8);
                 writer.WriteStringValue(ProvisionedBy);
             }
-            if (options.Format != "W" && ProvisionedByResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisionedByResourceId))
             {
                 writer.WritePropertyName("provisionedByResourceId"u8);
                 writer.WriteStringValue(ProvisionedByResourceId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCollectionRuleMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionRuleMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataCollectionRuleMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionRuleMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeDataCollectionRuleMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataCollectionRuleMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionRuleMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 

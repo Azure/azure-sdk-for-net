@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
@@ -80,24 +79,34 @@ namespace Azure.ResourceManager.ServiceBus.Models
         }
 
         /// <summary> dictionary object for custom filters. </summary>
+        [WirePath("properties")]
         public IDictionary<string, object> ApplicationProperties { get; }
         /// <summary> Identifier of the correlation. </summary>
+        [WirePath("correlationId")]
         public string CorrelationId { get; set; }
         /// <summary> Identifier of the message. </summary>
+        [WirePath("messageId")]
         public string MessageId { get; set; }
         /// <summary> Address to send to. </summary>
+        [WirePath("to")]
         public string SendTo { get; set; }
         /// <summary> Address of the queue to reply to. </summary>
+        [WirePath("replyTo")]
         public string ReplyTo { get; set; }
         /// <summary> Application specific label. </summary>
+        [WirePath("label")]
         public string Subject { get; set; }
         /// <summary> Session identifier. </summary>
+        [WirePath("sessionId")]
         public string SessionId { get; set; }
         /// <summary> Session identifier to reply to. </summary>
+        [WirePath("replyToSessionId")]
         public string ReplyToSessionId { get; set; }
         /// <summary> Content type of the message. </summary>
+        [WirePath("contentType")]
         public string ContentType { get; set; }
         /// <summary> Value that indicates whether the rule action requires preprocessing. </summary>
+        [WirePath("requiresPreprocessing")]
         public bool? RequiresPreprocessing { get; set; }
     }
 }

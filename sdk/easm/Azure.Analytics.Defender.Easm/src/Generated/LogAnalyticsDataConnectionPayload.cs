@@ -18,10 +18,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public LogAnalyticsDataConnectionPayload(LogAnalyticsDataConnectionProperties properties)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Kind = "logAnalytics";
             Properties = properties;

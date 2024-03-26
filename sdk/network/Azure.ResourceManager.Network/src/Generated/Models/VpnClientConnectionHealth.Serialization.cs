@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VpnClientConnectionHealth>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnClientConnectionHealth)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnClientConnectionHealth)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TotalIngressBytesTransferred.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalIngressBytesTransferred))
             {
                 writer.WritePropertyName("totalIngressBytesTransferred"u8);
                 writer.WriteNumberValue(TotalIngressBytesTransferred.Value);
             }
-            if (options.Format != "W" && TotalEgressBytesTransferred.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalEgressBytesTransferred))
             {
                 writer.WritePropertyName("totalEgressBytesTransferred"u8);
                 writer.WriteNumberValue(TotalEgressBytesTransferred.Value);
             }
-            if (VpnClientConnectionsCount.HasValue)
+            if (Optional.IsDefined(VpnClientConnectionsCount))
             {
                 writer.WritePropertyName("vpnClientConnectionsCount"u8);
                 writer.WriteNumberValue(VpnClientConnectionsCount.Value);
             }
-            if (!(AllocatedIPAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllocatedIPAddresses))
             {
                 writer.WritePropertyName("allocatedIpAddresses"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VpnClientConnectionHealth>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnClientConnectionHealth)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnClientConnectionHealth)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VpnClientConnectionHealth)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnClientConnectionHealth)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeVpnClientConnectionHealth(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VpnClientConnectionHealth)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnClientConnectionHealth)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedComputeIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedComputeIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedComputeIdentity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedComputeIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedComputeIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedComputeIdentity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedComputeIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedComputeIdentity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeManagedComputeIdentity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedComputeIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedComputeIdentity)} does not support reading '{options.Format}' format.");
             }
         }
 

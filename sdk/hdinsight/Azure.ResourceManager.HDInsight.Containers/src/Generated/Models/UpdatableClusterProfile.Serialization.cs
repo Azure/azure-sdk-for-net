@@ -22,52 +22,62 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdatableClusterProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdatableClusterProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdatableClusterProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(ServiceConfigsProfiles is ChangeTrackingList<ClusterServiceConfigsProfile> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceConfigsProfiles))
             {
                 writer.WritePropertyName("serviceConfigsProfiles"u8);
                 writer.WriteStartArray();
                 foreach (var item in ServiceConfigsProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ClusterServiceConfigsProfile>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (SshProfile != null)
+            if (Optional.IsDefined(SshProfile))
             {
                 writer.WritePropertyName("sshProfile"u8);
-                writer.WriteObjectValue(SshProfile);
+                writer.WriteObjectValue<ClusterSshProfile>(SshProfile, options);
             }
-            if (AutoscaleProfile != null)
+            if (Optional.IsDefined(AutoscaleProfile))
             {
                 writer.WritePropertyName("autoscaleProfile"u8);
-                writer.WriteObjectValue(AutoscaleProfile);
+                writer.WriteObjectValue<ClusterAutoscaleProfile>(AutoscaleProfile, options);
             }
-            if (AuthorizationProfile != null)
+            if (Optional.IsDefined(AuthorizationProfile))
             {
                 writer.WritePropertyName("authorizationProfile"u8);
-                writer.WriteObjectValue(AuthorizationProfile);
+                writer.WriteObjectValue<AuthorizationProfile>(AuthorizationProfile, options);
             }
-            if (LogAnalyticsProfile != null)
+            if (Optional.IsDefined(LogAnalyticsProfile))
             {
                 writer.WritePropertyName("logAnalyticsProfile"u8);
-                writer.WriteObjectValue(LogAnalyticsProfile);
+                writer.WriteObjectValue<ClusterLogAnalyticsProfile>(LogAnalyticsProfile, options);
             }
-            if (PrometheusProfile != null)
+            if (Optional.IsDefined(PrometheusProfile))
             {
                 writer.WritePropertyName("prometheusProfile"u8);
-                writer.WriteObjectValue(PrometheusProfile);
+                writer.WriteObjectValue<ClusterPrometheusProfile>(PrometheusProfile, options);
             }
-            if (!(ScriptActionProfiles is ChangeTrackingList<ScriptActionProfile> collection0 && collection0.IsUndefined))
+            if (Optional.IsDefined(RangerPluginProfile))
+            {
+                writer.WritePropertyName("rangerPluginProfile"u8);
+                writer.WriteObjectValue<ClusterRangerPluginProfile>(RangerPluginProfile, options);
+            }
+            if (Optional.IsDefined(RangerProfile))
+            {
+                writer.WritePropertyName("rangerProfile"u8);
+                writer.WriteObjectValue<RangerProfile>(RangerProfile, options);
+            }
+            if (Optional.IsCollectionDefined(ScriptActionProfiles))
             {
                 writer.WritePropertyName("scriptActionProfiles"u8);
                 writer.WriteStartArray();
                 foreach (var item in ScriptActionProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScriptActionProfile>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +104,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdatableClusterProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdatableClusterProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdatableClusterProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -115,6 +125,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             AuthorizationProfile authorizationProfile = default;
             ClusterLogAnalyticsProfile logAnalyticsProfile = default;
             ClusterPrometheusProfile prometheusProfile = default;
+            ClusterRangerPluginProfile rangerPluginProfile = default;
+            RangerProfile rangerProfile = default;
             IList<ScriptActionProfile> scriptActionProfiles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -179,6 +191,24 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     prometheusProfile = ClusterPrometheusProfile.DeserializeClusterPrometheusProfile(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("rangerPluginProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rangerPluginProfile = ClusterRangerPluginProfile.DeserializeClusterRangerPluginProfile(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("rangerProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rangerProfile = RangerProfile.DeserializeRangerProfile(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("scriptActionProfiles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -206,6 +236,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 authorizationProfile,
                 logAnalyticsProfile,
                 prometheusProfile,
+                rangerPluginProfile,
+                rangerProfile,
                 scriptActionProfiles ?? new ChangeTrackingList<ScriptActionProfile>(),
                 serializedAdditionalRawData);
         }
@@ -219,7 +251,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UpdatableClusterProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdatableClusterProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -235,7 +267,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeUpdatableClusterProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpdatableClusterProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdatableClusterProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

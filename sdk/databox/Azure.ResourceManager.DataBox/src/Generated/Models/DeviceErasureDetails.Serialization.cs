@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeviceErasureDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceErasureDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceErasureDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DeviceErasureStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeviceErasureStatus))
             {
                 writer.WritePropertyName("deviceErasureStatus"u8);
                 writer.WriteStringValue(DeviceErasureStatus.Value.ToSerialString());
             }
-            if (options.Format != "W" && ErasureOrDestructionCertificateSasKey != null)
+            if (options.Format != "W" && Optional.IsDefined(ErasureOrDestructionCertificateSasKey))
             {
                 writer.WritePropertyName("erasureOrDestructionCertificateSasKey"u8);
                 writer.WriteStringValue(ErasureOrDestructionCertificateSasKey);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeviceErasureDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceErasureDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceErasureDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeviceErasureDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceErasureDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDeviceErasureDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeviceErasureDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceErasureDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

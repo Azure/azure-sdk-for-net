@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<CryptoCertificateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CryptoCertificateResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CryptoCertificateResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (CryptoCertId != null)
+            if (Optional.IsDefined(CryptoCertId))
             {
                 if (CryptoCertId != null)
                 {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("cryptoCertId");
                 }
             }
-            if (NamePropertiesName != null)
+            if (Optional.IsDefined(NamePropertiesName))
             {
                 if (NamePropertiesName != null)
                 {
@@ -73,31 +73,31 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("name");
                 }
             }
-            if (Subject != null)
+            if (Optional.IsDefined(Subject))
             {
                 if (Subject != null)
                 {
                     writer.WritePropertyName("subject"u8);
-                    writer.WriteObjectValue(Subject);
+                    writer.WriteObjectValue<CryptoCertificateEntity>(Subject, options);
                 }
                 else
                 {
                     writer.WriteNull("subject");
                 }
             }
-            if (Issuer != null)
+            if (Optional.IsDefined(Issuer))
             {
                 if (Issuer != null)
                 {
                     writer.WritePropertyName("issuer"u8);
-                    writer.WriteObjectValue(Issuer);
+                    writer.WriteObjectValue<CryptoCertificateEntity>(Issuer, options);
                 }
                 else
                 {
                     writer.WriteNull("issuer");
                 }
             }
-            if (IssuedOn.HasValue)
+            if (Optional.IsDefined(IssuedOn))
             {
                 if (IssuedOn != null)
                 {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("issuedDate");
                 }
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 if (ExpireOn != null)
                 {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("expirationDate");
                 }
             }
-            if (Role != null)
+            if (Optional.IsDefined(Role))
             {
                 if (Role != null)
                 {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("role");
                 }
             }
-            if (SignatureAlgorithm != null)
+            if (Optional.IsDefined(SignatureAlgorithm))
             {
                 if (SignatureAlgorithm != null)
                 {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("signatureAlgorithm");
                 }
             }
-            if (KeySize.HasValue)
+            if (Optional.IsDefined(KeySize))
             {
                 if (KeySize != null)
                 {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("keySize");
                 }
             }
-            if (KeyAlgorithm != null)
+            if (Optional.IsDefined(KeyAlgorithm))
             {
                 if (KeyAlgorithm != null)
                 {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("keyAlgorithm");
                 }
             }
-            if (Encoding != null)
+            if (Optional.IsDefined(Encoding))
             {
                 if (Encoding != null)
                 {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("encoding");
                 }
             }
-            if (SerialNumber != null)
+            if (Optional.IsDefined(SerialNumber))
             {
                 if (SerialNumber != null)
                 {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("serialNumber");
                 }
             }
-            if (Fingerprint != null)
+            if (Optional.IsDefined(Fingerprint))
             {
                 if (Fingerprint != null)
                 {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("fingerprint");
                 }
             }
-            if (!(Usage is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Usage))
             {
                 if (Usage != null)
                 {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("usage");
                 }
             }
-            if (options.Format != "W" && !(FilePaths is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(FilePaths))
             {
                 if (FilePaths != null)
                 {
@@ -239,19 +239,19 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("filePaths");
                 }
             }
-            if (PairedKey != null)
+            if (Optional.IsDefined(PairedKey))
             {
                 if (PairedKey != null)
                 {
                     writer.WritePropertyName("pairedKey"u8);
-                    writer.WriteObjectValue(PairedKey);
+                    writer.WriteObjectValue<CryptoPairedKey>(PairedKey, options);
                 }
                 else
                 {
                     writer.WriteNull("pairedKey");
                 }
             }
-            if (IsExpired.HasValue)
+            if (Optional.IsDefined(IsExpired))
             {
                 if (IsExpired != null)
                 {
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("isExpired");
                 }
             }
-            if (IsSelfSigned.HasValue)
+            if (Optional.IsDefined(IsSelfSigned))
             {
                 if (IsSelfSigned != null)
                 {
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("isSelfSigned");
                 }
             }
-            if (IsWeakSignature.HasValue)
+            if (Optional.IsDefined(IsWeakSignature))
             {
                 if (IsWeakSignature != null)
                 {
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("isWeakSignature");
                 }
             }
-            if (IsShortKeySize.HasValue)
+            if (Optional.IsDefined(IsShortKeySize))
             {
                 if (IsShortKeySize != null)
                 {
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<CryptoCertificateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CryptoCertificateResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CryptoCertificateResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CryptoCertificateResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CryptoCertificateResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         return DeserializeCryptoCertificateResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CryptoCertificateResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CryptoCertificateResult)} does not support reading '{options.Format}' format.");
             }
         }
 

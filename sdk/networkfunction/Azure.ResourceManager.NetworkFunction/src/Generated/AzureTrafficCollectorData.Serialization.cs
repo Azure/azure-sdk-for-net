@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkFunction.Models;
@@ -26,16 +25,16 @@ namespace Azure.ResourceManager.NetworkFunction
             var format = options.Format == "W" ? ((IPersistableModel<AzureTrafficCollectorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureTrafficCollectorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureTrafficCollectorData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -63,14 +62,14 @@ namespace Azure.ResourceManager.NetworkFunction
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(CollectorPolicies is ChangeTrackingList<SubResource> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(CollectorPolicies))
             {
                 writer.WritePropertyName("collectorPolicies"u8);
                 writer.WriteStartArray();
@@ -80,12 +79,12 @@ namespace Azure.ResourceManager.NetworkFunction
                 }
                 writer.WriteEndArray();
             }
-            if (VirtualHub != null)
+            if (Optional.IsDefined(VirtualHub))
             {
                 writer.WritePropertyName("virtualHub"u8);
                 JsonSerializer.Serialize(writer, VirtualHub);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.NetworkFunction
             var format = options.Format == "W" ? ((IPersistableModel<AzureTrafficCollectorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureTrafficCollectorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureTrafficCollectorData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -268,7 +267,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureTrafficCollectorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureTrafficCollectorData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -284,7 +283,7 @@ namespace Azure.ResourceManager.NetworkFunction
                         return DeserializeAzureTrafficCollectorData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureTrafficCollectorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureTrafficCollectorData)} does not support reading '{options.Format}' format.");
             }
         }
 

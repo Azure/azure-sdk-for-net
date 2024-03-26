@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Subscription.Models
             var format = options.Format == "W" ? ((IPersistableModel<TenantPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TenantPolicyProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TenantPolicyProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PolicyId != null)
+            if (options.Format != "W" && Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (BlockSubscriptionsLeavingTenant.HasValue)
+            if (Optional.IsDefined(BlockSubscriptionsLeavingTenant))
             {
                 writer.WritePropertyName("blockSubscriptionsLeavingTenant"u8);
                 writer.WriteBooleanValue(BlockSubscriptionsLeavingTenant.Value);
             }
-            if (BlockSubscriptionsIntoTenant.HasValue)
+            if (Optional.IsDefined(BlockSubscriptionsIntoTenant))
             {
                 writer.WritePropertyName("blockSubscriptionsIntoTenant"u8);
                 writer.WriteBooleanValue(BlockSubscriptionsIntoTenant.Value);
             }
-            if (!(ExemptedPrincipals is ChangeTrackingList<Guid> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExemptedPrincipals))
             {
                 writer.WritePropertyName("exemptedPrincipals"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Subscription.Models
             var format = options.Format == "W" ? ((IPersistableModel<TenantPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TenantPolicyProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TenantPolicyProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TenantPolicyProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TenantPolicyProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Subscription.Models
                         return DeserializeTenantPolicyProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TenantPolicyProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TenantPolicyProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

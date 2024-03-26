@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesRoleCompute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeKubernetesRoleCompute)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeKubernetesRoleCompute)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("vmProfile"u8);
             writer.WriteStringValue(VmProfile);
-            if (options.Format != "W" && MemoryInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MemoryInBytes))
             {
                 writer.WritePropertyName("memoryInBytes"u8);
                 writer.WriteNumberValue(MemoryInBytes.Value);
             }
-            if (options.Format != "W" && ProcessorCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProcessorCount))
             {
                 writer.WritePropertyName("processorCount"u8);
                 writer.WriteNumberValue(ProcessorCount.Value);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesRoleCompute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeKubernetesRoleCompute)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeKubernetesRoleCompute)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeKubernetesRoleCompute)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeKubernetesRoleCompute)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeEdgeKubernetesRoleCompute(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeKubernetesRoleCompute)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeKubernetesRoleCompute)} does not support reading '{options.Format}' format.");
             }
         }
 

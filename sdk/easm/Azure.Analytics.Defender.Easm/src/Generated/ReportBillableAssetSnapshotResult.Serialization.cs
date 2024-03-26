@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
@@ -23,27 +22,27 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<ReportBillableAssetSnapshotResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReportBillableAssetSnapshotResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReportBillableAssetSnapshotResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Date.HasValue)
+            if (Optional.IsDefined(Date))
             {
                 writer.WritePropertyName("date"u8);
                 writer.WriteStringValue(Date.Value, "D");
             }
-            if (Total.HasValue)
+            if (Optional.IsDefined(Total))
             {
                 writer.WritePropertyName("total"u8);
                 writer.WriteNumberValue(Total.Value);
             }
-            if (!(AssetBreakdown is ChangeTrackingList<ReportBillableAssetBreakdown> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AssetBreakdown))
             {
                 writer.WritePropertyName("assetBreakdown"u8);
                 writer.WriteStartArray();
                 foreach (var item in AssetBreakdown)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReportBillableAssetBreakdown>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +69,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<ReportBillableAssetSnapshotResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReportBillableAssetSnapshotResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReportBillableAssetSnapshotResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +141,7 @@ namespace Azure.Analytics.Defender.Easm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReportBillableAssetSnapshotResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReportBillableAssetSnapshotResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +157,7 @@ namespace Azure.Analytics.Defender.Easm
                         return DeserializeReportBillableAssetSnapshotResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReportBillableAssetSnapshotResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReportBillableAssetSnapshotResult)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -176,7 +175,7 @@ namespace Azure.Analytics.Defender.Easm
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ReportBillableAssetSnapshotResult>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

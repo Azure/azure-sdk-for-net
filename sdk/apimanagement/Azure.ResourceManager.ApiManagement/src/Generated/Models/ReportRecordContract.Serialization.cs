@@ -22,136 +22,136 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReportRecordContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReportRecordContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReportRecordContract)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Timestamp.HasValue)
+            if (Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (Interval != null)
+            if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteStringValue(Interval);
             }
-            if (Country != null)
+            if (Optional.IsDefined(Country))
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
-            if (Region != null)
+            if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (Zip != null)
+            if (Optional.IsDefined(Zip))
             {
                 writer.WritePropertyName("zip"u8);
                 writer.WriteStringValue(Zip);
             }
-            if (options.Format != "W" && UserId != null)
+            if (options.Format != "W" && Optional.IsDefined(UserId))
             {
                 writer.WritePropertyName("userId"u8);
                 writer.WriteStringValue(UserId);
             }
-            if (options.Format != "W" && ProductId != null)
+            if (options.Format != "W" && Optional.IsDefined(ProductId))
             {
                 writer.WritePropertyName("productId"u8);
                 writer.WriteStringValue(ProductId);
             }
-            if (ApiId != null)
+            if (Optional.IsDefined(ApiId))
             {
                 writer.WritePropertyName("apiId"u8);
                 writer.WriteStringValue(ApiId);
             }
-            if (OperationId != null)
+            if (Optional.IsDefined(OperationId))
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (ApiRegion != null)
+            if (Optional.IsDefined(ApiRegion))
             {
                 writer.WritePropertyName("apiRegion"u8);
                 writer.WriteStringValue(ApiRegion);
             }
-            if (SubscriptionResourceId != null)
+            if (Optional.IsDefined(SubscriptionResourceId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionResourceId);
             }
-            if (CallCountSuccess.HasValue)
+            if (Optional.IsDefined(CallCountSuccess))
             {
                 writer.WritePropertyName("callCountSuccess"u8);
                 writer.WriteNumberValue(CallCountSuccess.Value);
             }
-            if (CallCountBlocked.HasValue)
+            if (Optional.IsDefined(CallCountBlocked))
             {
                 writer.WritePropertyName("callCountBlocked"u8);
                 writer.WriteNumberValue(CallCountBlocked.Value);
             }
-            if (CallCountFailed.HasValue)
+            if (Optional.IsDefined(CallCountFailed))
             {
                 writer.WritePropertyName("callCountFailed"u8);
                 writer.WriteNumberValue(CallCountFailed.Value);
             }
-            if (CallCountOther.HasValue)
+            if (Optional.IsDefined(CallCountOther))
             {
                 writer.WritePropertyName("callCountOther"u8);
                 writer.WriteNumberValue(CallCountOther.Value);
             }
-            if (CallCountTotal.HasValue)
+            if (Optional.IsDefined(CallCountTotal))
             {
                 writer.WritePropertyName("callCountTotal"u8);
                 writer.WriteNumberValue(CallCountTotal.Value);
             }
-            if (Bandwidth.HasValue)
+            if (Optional.IsDefined(Bandwidth))
             {
                 writer.WritePropertyName("bandwidth"u8);
                 writer.WriteNumberValue(Bandwidth.Value);
             }
-            if (CacheHitCount.HasValue)
+            if (Optional.IsDefined(CacheHitCount))
             {
                 writer.WritePropertyName("cacheHitCount"u8);
                 writer.WriteNumberValue(CacheHitCount.Value);
             }
-            if (CacheMissCount.HasValue)
+            if (Optional.IsDefined(CacheMissCount))
             {
                 writer.WritePropertyName("cacheMissCount"u8);
                 writer.WriteNumberValue(CacheMissCount.Value);
             }
-            if (ApiTimeAvg.HasValue)
+            if (Optional.IsDefined(ApiTimeAvg))
             {
                 writer.WritePropertyName("apiTimeAvg"u8);
                 writer.WriteNumberValue(ApiTimeAvg.Value);
             }
-            if (ApiTimeMin.HasValue)
+            if (Optional.IsDefined(ApiTimeMin))
             {
                 writer.WritePropertyName("apiTimeMin"u8);
                 writer.WriteNumberValue(ApiTimeMin.Value);
             }
-            if (ApiTimeMax.HasValue)
+            if (Optional.IsDefined(ApiTimeMax))
             {
                 writer.WritePropertyName("apiTimeMax"u8);
                 writer.WriteNumberValue(ApiTimeMax.Value);
             }
-            if (ServiceTimeAvg.HasValue)
+            if (Optional.IsDefined(ServiceTimeAvg))
             {
                 writer.WritePropertyName("serviceTimeAvg"u8);
                 writer.WriteNumberValue(ServiceTimeAvg.Value);
             }
-            if (ServiceTimeMin.HasValue)
+            if (Optional.IsDefined(ServiceTimeMin))
             {
                 writer.WritePropertyName("serviceTimeMin"u8);
                 writer.WriteNumberValue(ServiceTimeMin.Value);
             }
-            if (ServiceTimeMax.HasValue)
+            if (Optional.IsDefined(ServiceTimeMax))
             {
                 writer.WritePropertyName("serviceTimeMax"u8);
                 writer.WriteNumberValue(ServiceTimeMax.Value);
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReportRecordContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReportRecordContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReportRecordContract)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReportRecordContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReportRecordContract)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeReportRecordContract(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReportRecordContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReportRecordContract)} does not support reading '{options.Format}' format.");
             }
         }
 

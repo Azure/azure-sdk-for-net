@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<CryptoCertificateEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CryptoCertificateEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CryptoCertificateEntity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CommonName != null)
+            if (Optional.IsDefined(CommonName))
             {
                 if (CommonName != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("commonName");
                 }
             }
-            if (Organization != null)
+            if (Optional.IsDefined(Organization))
             {
                 if (Organization != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("organization");
                 }
             }
-            if (OrganizationalUnit != null)
+            if (Optional.IsDefined(OrganizationalUnit))
             {
                 if (OrganizationalUnit != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("organizationalUnit");
                 }
             }
-            if (State != null)
+            if (Optional.IsDefined(State))
             {
                 if (State != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("state");
                 }
             }
-            if (Country != null)
+            if (Optional.IsDefined(Country))
             {
                 if (Country != null)
                 {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<CryptoCertificateEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CryptoCertificateEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CryptoCertificateEntity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CryptoCertificateEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CryptoCertificateEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         return DeserializeCryptoCertificateEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CryptoCertificateEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CryptoCertificateEntity)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -51,20 +51,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="userName"> UseName for windows authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> Password for windows authentication. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domain"/>, <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
-        public SsisAccessCredential(DataFactoryElement<string> domain, DataFactoryElement<string> userName, DataFactorySecretBaseDefinition password)
+        public SsisAccessCredential(DataFactoryElement<string> domain, DataFactoryElement<string> userName, DataFactorySecret password)
         {
-            if (domain == null)
-            {
-                throw new ArgumentNullException(nameof(domain));
-            }
-            if (userName == null)
-            {
-                throw new ArgumentNullException(nameof(userName));
-            }
-            if (password == null)
-            {
-                throw new ArgumentNullException(nameof(password));
-            }
+            Argument.AssertNotNull(domain, nameof(domain));
+            Argument.AssertNotNull(userName, nameof(userName));
+            Argument.AssertNotNull(password, nameof(password));
 
             Domain = domain;
             UserName = userName;
@@ -76,7 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="userName"> UseName for windows authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> Password for windows authentication. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SsisAccessCredential(DataFactoryElement<string> domain, DataFactoryElement<string> userName, DataFactorySecretBaseDefinition password, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SsisAccessCredential(DataFactoryElement<string> domain, DataFactoryElement<string> userName, DataFactorySecret password, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Domain = domain;
             UserName = userName;
@@ -94,6 +85,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> UseName for windows authentication. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> Password for windows authentication. </summary>
-        public DataFactorySecretBaseDefinition Password { get; set; }
+        public DataFactorySecret Password { get; set; }
     }
 }

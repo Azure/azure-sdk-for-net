@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExportDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportDiskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportDiskDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ManifestFile != null)
+            if (options.Format != "W" && Optional.IsDefined(ManifestFile))
             {
                 writer.WritePropertyName("manifestFile"u8);
                 writer.WriteStringValue(ManifestFile);
             }
-            if (options.Format != "W" && ManifestHash != null)
+            if (options.Format != "W" && Optional.IsDefined(ManifestHash))
             {
                 writer.WritePropertyName("manifestHash"u8);
                 writer.WriteStringValue(ManifestHash);
             }
-            if (options.Format != "W" && BackupManifestCloudPath != null)
+            if (options.Format != "W" && Optional.IsDefined(BackupManifestCloudPath))
             {
                 writer.WritePropertyName("backupManifestCloudPath"u8);
                 writer.WriteStringValue(BackupManifestCloudPath);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExportDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportDiskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportDiskDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExportDiskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportDiskDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeExportDiskDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExportDiskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportDiskDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

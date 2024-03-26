@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -23,7 +22,7 @@ namespace Azure.Communication.JobRouter
             var format = options.Format == "W" ? ((IPersistableModel<RouterJobAssignment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouterJobAssignment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouterJobAssignment)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,19 +31,19 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("assignmentId"u8);
                 writer.WriteStringValue(AssignmentId);
             }
-            if (WorkerId != null)
+            if (Optional.IsDefined(WorkerId))
             {
                 writer.WritePropertyName("workerId"u8);
                 writer.WriteStringValue(WorkerId);
             }
             writer.WritePropertyName("assignedAt"u8);
             writer.WriteStringValue(AssignedAt, "O");
-            if (CompletedAt.HasValue)
+            if (Optional.IsDefined(CompletedAt))
             {
                 writer.WritePropertyName("completedAt"u8);
                 writer.WriteStringValue(CompletedAt.Value, "O");
             }
-            if (ClosedAt.HasValue)
+            if (Optional.IsDefined(ClosedAt))
             {
                 writer.WritePropertyName("closedAt"u8);
                 writer.WriteStringValue(ClosedAt.Value, "O");
@@ -72,7 +71,7 @@ namespace Azure.Communication.JobRouter
             var format = options.Format == "W" ? ((IPersistableModel<RouterJobAssignment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouterJobAssignment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouterJobAssignment)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -153,7 +152,7 @@ namespace Azure.Communication.JobRouter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RouterJobAssignment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouterJobAssignment)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +168,7 @@ namespace Azure.Communication.JobRouter
                         return DeserializeRouterJobAssignment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RouterJobAssignment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouterJobAssignment)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -187,7 +186,7 @@ namespace Azure.Communication.JobRouter
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<RouterJobAssignment>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

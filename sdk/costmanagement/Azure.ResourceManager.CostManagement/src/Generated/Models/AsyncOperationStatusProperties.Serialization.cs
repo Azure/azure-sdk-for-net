@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<AsyncOperationStatusProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AsyncOperationStatusProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AsyncOperationStatusProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ReportUri.HasValue)
+            if (Optional.IsDefined(ReportUri))
             {
                 writer.WritePropertyName("reportUrl"u8);
                 writer.WriteStringValue(ReportUri.Value.ToString());
             }
-            if (SecondaryReportUri.HasValue)
+            if (Optional.IsDefined(SecondaryReportUri))
             {
                 writer.WritePropertyName("secondaryReportUrl"u8);
                 writer.WriteStringValue(SecondaryReportUri.Value.ToString());
             }
-            if (ValidUntil.HasValue)
+            if (Optional.IsDefined(ValidUntil))
             {
                 writer.WritePropertyName("validUntil"u8);
                 writer.WriteStringValue(ValidUntil.Value, "O");
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<AsyncOperationStatusProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AsyncOperationStatusProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AsyncOperationStatusProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AsyncOperationStatusProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AsyncOperationStatusProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeAsyncOperationStatusProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AsyncOperationStatusProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AsyncOperationStatusProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

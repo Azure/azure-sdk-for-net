@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirmwareAnalysisWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirmwareAnalysisWorkspacePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirmwareAnalysisWorkspacePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirmwareAnalysisWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirmwareAnalysisWorkspacePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirmwareAnalysisWorkspacePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirmwareAnalysisWorkspacePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirmwareAnalysisWorkspacePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         return DeserializeFirmwareAnalysisWorkspacePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirmwareAnalysisWorkspacePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirmwareAnalysisWorkspacePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

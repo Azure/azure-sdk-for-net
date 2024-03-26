@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
@@ -281,10 +279,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="threatIntelligenceAppendTags"/> is null. </exception>
         public virtual async Task<Response> AppendTagsAsync(ThreatIntelligenceAppendTags threatIntelligenceAppendTags, CancellationToken cancellationToken = default)
         {
-            if (threatIntelligenceAppendTags == null)
-            {
-                throw new ArgumentNullException(nameof(threatIntelligenceAppendTags));
-            }
+            Argument.AssertNotNull(threatIntelligenceAppendTags, nameof(threatIntelligenceAppendTags));
 
             using var scope = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsClientDiagnostics.CreateScope("SecurityInsightsThreatIntelligenceIndicatorResource.AppendTags");
             scope.Start();
@@ -326,10 +321,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="threatIntelligenceAppendTags"/> is null. </exception>
         public virtual Response AppendTags(ThreatIntelligenceAppendTags threatIntelligenceAppendTags, CancellationToken cancellationToken = default)
         {
-            if (threatIntelligenceAppendTags == null)
-            {
-                throw new ArgumentNullException(nameof(threatIntelligenceAppendTags));
-            }
+            Argument.AssertNotNull(threatIntelligenceAppendTags, nameof(threatIntelligenceAppendTags));
 
             using var scope = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsClientDiagnostics.CreateScope("SecurityInsightsThreatIntelligenceIndicatorResource.AppendTags");
             scope.Start();

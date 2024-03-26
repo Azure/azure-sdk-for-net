@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<WafPolicySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WafPolicySettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WafPolicySettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EnabledState.HasValue)
+            if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (DefaultRedirectUri != null)
+            if (Optional.IsDefined(DefaultRedirectUri))
             {
                 writer.WritePropertyName("defaultRedirectUrl"u8);
                 writer.WriteStringValue(DefaultRedirectUri.AbsoluteUri);
             }
-            if (DefaultCustomBlockResponseStatusCode.HasValue)
+            if (Optional.IsDefined(DefaultCustomBlockResponseStatusCode))
             {
                 if (DefaultCustomBlockResponseStatusCode != null)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("defaultCustomBlockResponseStatusCode");
                 }
             }
-            if (DefaultCustomBlockResponseBody != null)
+            if (Optional.IsDefined(DefaultCustomBlockResponseBody))
             {
                 if (DefaultCustomBlockResponseBody != null)
                 {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<WafPolicySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WafPolicySettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WafPolicySettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WafPolicySettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WafPolicySettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeWafPolicySettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WafPolicySettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WafPolicySettings)} does not support reading '{options.Format}' format.");
             }
         }
 

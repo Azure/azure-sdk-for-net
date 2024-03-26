@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoSkuLocationInfoItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoSkuLocationInfoItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoSkuLocationInfoItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -38,13 +38,13 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ZoneDetails is ChangeTrackingList<KustoResourceSkuZoneDetails> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ZoneDetails))
             {
                 writer.WritePropertyName("zoneDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in ZoneDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KustoResourceSkuZoneDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoSkuLocationInfoItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoSkuLocationInfoItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoSkuLocationInfoItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KustoSkuLocationInfoItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoSkuLocationInfoItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Kusto.Models
                         return DeserializeKustoSkuLocationInfoItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KustoSkuLocationInfoItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoSkuLocationInfoItem)} does not support reading '{options.Format}' format.");
             }
         }
 

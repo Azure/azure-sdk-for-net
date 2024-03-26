@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DistcpSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DistcpSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DistcpSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             JsonSerializer.Serialize(writer, ResourceManagerEndpoint);
             writer.WritePropertyName("tempScriptPath"u8);
             JsonSerializer.Serialize(writer, TempScriptPath);
-            if (DistcpOptions != null)
+            if (Optional.IsDefined(DistcpOptions))
             {
                 writer.WritePropertyName("distcpOptions"u8);
                 JsonSerializer.Serialize(writer, DistcpOptions);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DistcpSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DistcpSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DistcpSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DistcpSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DistcpSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeDistcpSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DistcpSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DistcpSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

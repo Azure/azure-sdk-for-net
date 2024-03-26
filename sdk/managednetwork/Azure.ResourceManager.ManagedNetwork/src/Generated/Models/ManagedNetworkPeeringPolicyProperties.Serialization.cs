@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -24,18 +23,18 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkPeeringPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedNetworkPeeringPolicyProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedNetworkPeeringPolicyProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ConnectivityType.ToString());
-            if (Hub != null)
+            if (Optional.IsDefined(Hub))
             {
                 writer.WritePropertyName("hub"u8);
                 JsonSerializer.Serialize(writer, Hub);
             }
-            if (!(Spokes is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Spokes))
             {
                 writer.WritePropertyName("spokes"u8);
                 writer.WriteStartArray();
@@ -45,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Mesh is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Mesh))
             {
                 writer.WritePropertyName("mesh"u8);
                 writer.WriteStartArray();
@@ -55,12 +54,12 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkPeeringPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedNetworkPeeringPolicyProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedNetworkPeeringPolicyProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -198,7 +197,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedNetworkPeeringPolicyProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedNetworkPeeringPolicyProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -214,7 +213,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                         return DeserializeManagedNetworkPeeringPolicyProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedNetworkPeeringPolicyProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedNetworkPeeringPolicyProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

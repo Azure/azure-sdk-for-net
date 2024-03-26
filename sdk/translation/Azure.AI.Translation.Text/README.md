@@ -73,7 +73,7 @@ Client API key authentication is used in most of the examples, but you can also 
 dotnet add package Azure.Identity
 ```
 
-Create a [custom subdomain][custom_subdomain] for your resource in order to use this type of authentication.  Use this value for the `endpoint` variable for `Text Translator Custom Endpoint`.  Only custom subdomains are supported by the SDK.  Outside of the SDK, you can use Microsoft Entra authorization for Machine Translation endpoints, as detailed [here][mt_endpoints].
+Create a [custom subdomain][custom_subdomain] for your resource in order to use this type of authentication.  Use this value for the `endpoint` variable for `Text Translator Custom Endpoint`.
 
 You will also need to [register a new Microsoft Entra application][register_aad_app] and [grant access][aad_grant_access] to your Translator resource by assigning the `"Cognitive Services User"` role to your service principal.  Additional information about Microsoft Entra authentication is available [here][custom_details].
 

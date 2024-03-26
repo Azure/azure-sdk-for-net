@@ -22,55 +22,55 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReportConfigDataset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReportConfigDataset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReportConfigDataset)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Granularity.HasValue)
+            if (Optional.IsDefined(Granularity))
             {
                 writer.WritePropertyName("granularity"u8);
                 writer.WriteStringValue(Granularity.Value.ToString());
             }
-            if (Configuration != null)
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration);
+                writer.WriteObjectValue<ReportConfigDatasetConfiguration>(Configuration, options);
             }
-            if (!(Aggregation is ChangeTrackingDictionary<string, ReportConfigAggregation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Aggregation))
             {
                 writer.WritePropertyName("aggregation"u8);
                 writer.WriteStartObject();
                 foreach (var item in Aggregation)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ReportConfigAggregation>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (!(Grouping is ChangeTrackingList<ReportConfigGrouping> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Grouping))
             {
                 writer.WritePropertyName("grouping"u8);
                 writer.WriteStartArray();
                 foreach (var item in Grouping)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReportConfigGrouping>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Sorting is ChangeTrackingList<ReportConfigSorting> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Sorting))
             {
                 writer.WritePropertyName("sorting"u8);
                 writer.WriteStartArray();
                 foreach (var item in Sorting)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReportConfigSorting>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Filter != null)
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                writer.WriteObjectValue<ReportConfigFilter>(Filter, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReportConfigDataset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReportConfigDataset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReportConfigDataset)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReportConfigDataset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReportConfigDataset)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeReportConfigDataset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReportConfigDataset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReportConfigDataset)} does not support reading '{options.Format}' format.");
             }
         }
 

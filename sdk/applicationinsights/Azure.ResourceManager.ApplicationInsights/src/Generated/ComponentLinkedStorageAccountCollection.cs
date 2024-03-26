@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ApplicationInsights.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights
@@ -79,10 +77,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ComponentLinkedStorageAccountResource>> CreateOrUpdateAsync(WaitUntil waitUntil, StorageType storageType, ComponentLinkedStorageAccountData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _componentLinkedStorageAccountClientDiagnostics.CreateScope("ComponentLinkedStorageAccountCollection.CreateOrUpdate");
             scope.Start();
@@ -129,10 +124,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ComponentLinkedStorageAccountResource> CreateOrUpdate(WaitUntil waitUntil, StorageType storageType, ComponentLinkedStorageAccountData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _componentLinkedStorageAccountClientDiagnostics.CreateScope("ComponentLinkedStorageAccountCollection.CreateOrUpdate");
             scope.Start();

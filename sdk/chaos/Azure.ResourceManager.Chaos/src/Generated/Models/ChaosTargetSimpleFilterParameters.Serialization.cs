@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Chaos.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChaosTargetSimpleFilterParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosTargetSimpleFilterParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChaosTargetSimpleFilterParameters)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Chaos.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChaosTargetSimpleFilterParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosTargetSimpleFilterParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChaosTargetSimpleFilterParameters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChaosTargetSimpleFilterParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChaosTargetSimpleFilterParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Chaos.Models
                         return DeserializeChaosTargetSimpleFilterParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChaosTargetSimpleFilterParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChaosTargetSimpleFilterParameters)} does not support reading '{options.Format}' format.");
             }
         }
 

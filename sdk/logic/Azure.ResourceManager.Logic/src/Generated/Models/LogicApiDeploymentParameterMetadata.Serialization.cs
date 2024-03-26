@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicApiDeploymentParameterMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ApiDeploymentParameterMetadataType != null)
+            if (Optional.IsDefined(ApiDeploymentParameterMetadataType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ApiDeploymentParameterMetadataType);
             }
-            if (IsRequired.HasValue)
+            if (Optional.IsDefined(IsRequired))
             {
                 writer.WritePropertyName("isRequired"u8);
                 writer.WriteBooleanValue(IsRequired.Value);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Visibility.HasValue)
+            if (Optional.IsDefined(Visibility))
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility.Value.ToString());
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicApiDeploymentParameterMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeLogicApiDeploymentParameterMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 

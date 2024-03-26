@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancingRuleName"/> is null. </exception>
         public virtual async Task<Response<LoadBalancingRuleResource>> GetAsync(string loadBalancingRuleName, CancellationToken cancellationToken = default)
         {
-            if (loadBalancingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(loadBalancingRuleName));
-            }
-            if (loadBalancingRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(loadBalancingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(loadBalancingRuleName, nameof(loadBalancingRuleName));
 
             using var scope = _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRuleCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancingRuleName"/> is null. </exception>
         public virtual Response<LoadBalancingRuleResource> Get(string loadBalancingRuleName, CancellationToken cancellationToken = default)
         {
-            if (loadBalancingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(loadBalancingRuleName));
-            }
-            if (loadBalancingRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(loadBalancingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(loadBalancingRuleName, nameof(loadBalancingRuleName));
 
             using var scope = _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRuleCollection.Get");
             scope.Start();
@@ -244,14 +228,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancingRuleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string loadBalancingRuleName, CancellationToken cancellationToken = default)
         {
-            if (loadBalancingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(loadBalancingRuleName));
-            }
-            if (loadBalancingRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(loadBalancingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(loadBalancingRuleName, nameof(loadBalancingRuleName));
 
             using var scope = _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRuleCollection.Exists");
             scope.Start();
@@ -294,14 +271,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancingRuleName"/> is null. </exception>
         public virtual Response<bool> Exists(string loadBalancingRuleName, CancellationToken cancellationToken = default)
         {
-            if (loadBalancingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(loadBalancingRuleName));
-            }
-            if (loadBalancingRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(loadBalancingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(loadBalancingRuleName, nameof(loadBalancingRuleName));
 
             using var scope = _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRuleCollection.Exists");
             scope.Start();
@@ -344,14 +314,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancingRuleName"/> is null. </exception>
         public virtual async Task<NullableResponse<LoadBalancingRuleResource>> GetIfExistsAsync(string loadBalancingRuleName, CancellationToken cancellationToken = default)
         {
-            if (loadBalancingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(loadBalancingRuleName));
-            }
-            if (loadBalancingRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(loadBalancingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(loadBalancingRuleName, nameof(loadBalancingRuleName));
 
             using var scope = _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRuleCollection.GetIfExists");
             scope.Start();
@@ -396,14 +359,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancingRuleName"/> is null. </exception>
         public virtual NullableResponse<LoadBalancingRuleResource> GetIfExists(string loadBalancingRuleName, CancellationToken cancellationToken = default)
         {
-            if (loadBalancingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(loadBalancingRuleName));
-            }
-            if (loadBalancingRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(loadBalancingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(loadBalancingRuleName, nameof(loadBalancingRuleName));
 
             using var scope = _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRuleCollection.GetIfExists");
             scope.Start();

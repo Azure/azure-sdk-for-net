@@ -22,18 +22,29 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<HiveCatalogOption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HiveCatalogOption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HiveCatalogOption)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("catalogName"u8);
             writer.WriteStringValue(CatalogName);
-            writer.WritePropertyName("metastoreDbConnectionPasswordSecret"u8);
-            writer.WriteStringValue(MetastoreDBConnectionPasswordSecret);
+            if (Optional.IsDefined(MetastoreDBConnectionAuthenticationMode))
+            {
+                writer.WritePropertyName("metastoreDbConnectionAuthenticationMode"u8);
+                writer.WriteStringValue(MetastoreDBConnectionAuthenticationMode.Value.ToString());
+            }
+            if (Optional.IsDefined(MetastoreDBConnectionPasswordSecret))
+            {
+                writer.WritePropertyName("metastoreDbConnectionPasswordSecret"u8);
+                writer.WriteStringValue(MetastoreDBConnectionPasswordSecret);
+            }
             writer.WritePropertyName("metastoreDbConnectionURL"u8);
             writer.WriteStringValue(MetastoreDBConnectionUriString);
-            writer.WritePropertyName("metastoreDbConnectionUserName"u8);
-            writer.WriteStringValue(MetastoreDBConnectionUserName);
+            if (Optional.IsDefined(MetastoreDBConnectionUserName))
+            {
+                writer.WritePropertyName("metastoreDbConnectionUserName"u8);
+                writer.WriteStringValue(MetastoreDBConnectionUserName);
+            }
             writer.WritePropertyName("metastoreWarehouseDir"u8);
             writer.WriteStringValue(MetastoreWarehouseDir);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -59,7 +70,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<HiveCatalogOption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HiveCatalogOption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HiveCatalogOption)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,6 +86,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             string catalogName = default;
+            MetastoreDBConnectionAuthenticationMode? metastoreDBConnectionAuthenticationMode = default;
             string metastoreDBConnectionPasswordSecret = default;
             string metastoreDBConnectionURL = default;
             string metastoreDBConnectionUserName = default;
@@ -86,6 +98,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 if (property.NameEquals("catalogName"u8))
                 {
                     catalogName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("metastoreDbConnectionAuthenticationMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    metastoreDBConnectionAuthenticationMode = new MetastoreDBConnectionAuthenticationMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("metastoreDbConnectionPasswordSecret"u8))
@@ -116,6 +137,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HiveCatalogOption(
                 catalogName,
+                metastoreDBConnectionAuthenticationMode,
                 metastoreDBConnectionPasswordSecret,
                 metastoreDBConnectionURL,
                 metastoreDBConnectionUserName,
@@ -132,7 +154,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HiveCatalogOption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HiveCatalogOption)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +170,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeHiveCatalogOption(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HiveCatalogOption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HiveCatalogOption)} does not support reading '{options.Format}' format.");
             }
         }
 

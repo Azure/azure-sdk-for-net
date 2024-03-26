@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
@@ -23,61 +22,61 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<DiscoveryRunResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiscoveryRunResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiscoveryRunResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SubmittedDate.HasValue)
+            if (Optional.IsDefined(SubmittedDate))
             {
                 writer.WritePropertyName("submittedDate"u8);
                 writer.WriteStringValue(SubmittedDate.Value, "O");
             }
-            if (StartedDate.HasValue)
+            if (Optional.IsDefined(StartedDate))
             {
                 writer.WritePropertyName("startedDate"u8);
                 writer.WriteStringValue(StartedDate.Value, "O");
             }
-            if (CompletedDate.HasValue)
+            if (Optional.IsDefined(CompletedDate))
             {
                 writer.WritePropertyName("completedDate"u8);
                 writer.WriteStringValue(CompletedDate.Value, "O");
             }
-            if (Tier != null)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (TotalAssetsFoundCount.HasValue)
+            if (Optional.IsDefined(TotalAssetsFoundCount))
             {
                 writer.WritePropertyName("totalAssetsFoundCount"u8);
                 writer.WriteNumberValue(TotalAssetsFoundCount.Value);
             }
-            if (!(Seeds is ChangeTrackingList<DiscoverySource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Seeds))
             {
                 writer.WritePropertyName("seeds"u8);
                 writer.WriteStartArray();
                 foreach (var item in Seeds)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DiscoverySource>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Excludes is ChangeTrackingList<DiscoverySource> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Excludes))
             {
                 writer.WritePropertyName("excludes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Excludes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DiscoverySource>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Names is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Names))
             {
                 writer.WritePropertyName("names"u8);
                 writer.WriteStartArray();
@@ -110,7 +109,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<DiscoveryRunResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiscoveryRunResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiscoveryRunResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -258,7 +257,7 @@ namespace Azure.Analytics.Defender.Easm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiscoveryRunResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiscoveryRunResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -274,7 +273,7 @@ namespace Azure.Analytics.Defender.Easm
                         return DeserializeDiscoveryRunResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiscoveryRunResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiscoveryRunResult)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -292,7 +291,7 @@ namespace Azure.Analytics.Defender.Easm
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<DiscoveryRunResult>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

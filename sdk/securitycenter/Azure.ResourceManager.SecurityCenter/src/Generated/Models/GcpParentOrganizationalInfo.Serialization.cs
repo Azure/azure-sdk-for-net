@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<GcpParentOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GcpParentOrganizationalInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GcpParentOrganizationalInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(ExcludedProjectNumbers is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludedProjectNumbers))
             {
                 writer.WritePropertyName("excludedProjectNumbers"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ServiceAccountEmailAddress != null)
+            if (Optional.IsDefined(ServiceAccountEmailAddress))
             {
                 writer.WritePropertyName("serviceAccountEmailAddress"u8);
                 writer.WriteStringValue(ServiceAccountEmailAddress);
             }
-            if (WorkloadIdentityProviderId != null)
+            if (Optional.IsDefined(WorkloadIdentityProviderId))
             {
                 writer.WritePropertyName("workloadIdentityProviderId"u8);
                 writer.WriteStringValue(WorkloadIdentityProviderId);
             }
-            if (options.Format != "W" && OrganizationName != null)
+            if (options.Format != "W" && Optional.IsDefined(OrganizationName))
             {
                 writer.WritePropertyName("organizationName"u8);
                 writer.WriteStringValue(OrganizationName);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<GcpParentOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GcpParentOrganizationalInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GcpParentOrganizationalInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GcpParentOrganizationalInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GcpParentOrganizationalInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeGcpParentOrganizationalInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GcpParentOrganizationalInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GcpParentOrganizationalInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

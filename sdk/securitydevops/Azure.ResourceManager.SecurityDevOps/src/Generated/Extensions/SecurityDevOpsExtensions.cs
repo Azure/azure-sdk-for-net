@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SecurityDevOps.Mocking;
 
@@ -48,10 +46,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> Returns a <see cref="AzureDevOpsConnectorResource"/> object. </returns>
         public static AzureDevOpsConnectorResource GetAzureDevOpsConnectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSecurityDevOpsArmClient(client).GetAzureDevOpsConnectorResource(id);
         }
@@ -70,10 +65,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> Returns a <see cref="AzureDevOpsRepoResource"/> object. </returns>
         public static AzureDevOpsRepoResource GetAzureDevOpsRepoResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSecurityDevOpsArmClient(client).GetAzureDevOpsRepoResource(id);
         }
@@ -92,10 +84,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> Returns a <see cref="AzureDevOpsOrgResource"/> object. </returns>
         public static AzureDevOpsOrgResource GetAzureDevOpsOrgResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSecurityDevOpsArmClient(client).GetAzureDevOpsOrgResource(id);
         }
@@ -114,10 +103,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> Returns a <see cref="AzureDevOpsProjectResource"/> object. </returns>
         public static AzureDevOpsProjectResource GetAzureDevOpsProjectResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSecurityDevOpsArmClient(client).GetAzureDevOpsProjectResource(id);
         }
@@ -136,10 +122,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> Returns a <see cref="GitHubConnectorResource"/> object. </returns>
         public static GitHubConnectorResource GetGitHubConnectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSecurityDevOpsArmClient(client).GetGitHubConnectorResource(id);
         }
@@ -158,10 +141,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> Returns a <see cref="GitHubRepoResource"/> object. </returns>
         public static GitHubRepoResource GetGitHubRepoResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSecurityDevOpsArmClient(client).GetGitHubRepoResource(id);
         }
@@ -180,10 +160,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> Returns a <see cref="GitHubOwnerResource"/> object. </returns>
         public static GitHubOwnerResource GetGitHubOwnerResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSecurityDevOpsArmClient(client).GetGitHubOwnerResource(id);
         }
@@ -200,10 +177,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> An object representing collection of AzureDevOpsConnectorResources and their operations over a AzureDevOpsConnectorResource. </returns>
         public static AzureDevOpsConnectorCollection GetAzureDevOpsConnectors(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableSecurityDevOpsResourceGroupResource(resourceGroupResource).GetAzureDevOpsConnectors();
         }
@@ -241,10 +215,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         [ForwardsClientCalls]
         public static async Task<Response<AzureDevOpsConnectorResource>> GetAzureDevOpsConnectorAsync(this ResourceGroupResource resourceGroupResource, string azureDevOpsConnectorName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableSecurityDevOpsResourceGroupResource(resourceGroupResource).GetAzureDevOpsConnectorAsync(azureDevOpsConnectorName, cancellationToken).ConfigureAwait(false);
         }
@@ -282,10 +253,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         [ForwardsClientCalls]
         public static Response<AzureDevOpsConnectorResource> GetAzureDevOpsConnector(this ResourceGroupResource resourceGroupResource, string azureDevOpsConnectorName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableSecurityDevOpsResourceGroupResource(resourceGroupResource).GetAzureDevOpsConnector(azureDevOpsConnectorName, cancellationToken);
         }
@@ -302,10 +270,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> An object representing collection of GitHubConnectorResources and their operations over a GitHubConnectorResource. </returns>
         public static GitHubConnectorCollection GetGitHubConnectors(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableSecurityDevOpsResourceGroupResource(resourceGroupResource).GetGitHubConnectors();
         }
@@ -343,10 +308,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         [ForwardsClientCalls]
         public static async Task<Response<GitHubConnectorResource>> GetGitHubConnectorAsync(this ResourceGroupResource resourceGroupResource, string gitHubConnectorName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableSecurityDevOpsResourceGroupResource(resourceGroupResource).GetGitHubConnectorAsync(gitHubConnectorName, cancellationToken).ConfigureAwait(false);
         }
@@ -384,10 +346,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         [ForwardsClientCalls]
         public static Response<GitHubConnectorResource> GetGitHubConnector(this ResourceGroupResource resourceGroupResource, string gitHubConnectorName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableSecurityDevOpsResourceGroupResource(resourceGroupResource).GetGitHubConnector(gitHubConnectorName, cancellationToken);
         }
@@ -423,10 +382,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> An async collection of <see cref="AzureDevOpsConnectorResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AzureDevOpsConnectorResource> GetAzureDevOpsConnectorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSecurityDevOpsSubscriptionResource(subscriptionResource).GetAzureDevOpsConnectorsAsync(cancellationToken);
         }
@@ -462,10 +418,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> A collection of <see cref="AzureDevOpsConnectorResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AzureDevOpsConnectorResource> GetAzureDevOpsConnectors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSecurityDevOpsSubscriptionResource(subscriptionResource).GetAzureDevOpsConnectors(cancellationToken);
         }
@@ -501,10 +454,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> An async collection of <see cref="GitHubConnectorResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<GitHubConnectorResource> GetGitHubConnectorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSecurityDevOpsSubscriptionResource(subscriptionResource).GetGitHubConnectorsAsync(cancellationToken);
         }
@@ -540,10 +490,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> A collection of <see cref="GitHubConnectorResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<GitHubConnectorResource> GetGitHubConnectors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSecurityDevOpsSubscriptionResource(subscriptionResource).GetGitHubConnectors(cancellationToken);
         }

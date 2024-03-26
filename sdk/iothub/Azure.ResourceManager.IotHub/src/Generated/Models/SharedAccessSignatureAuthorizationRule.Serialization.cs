@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<SharedAccessSignatureAuthorizationRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharedAccessSignatureAuthorizationRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SharedAccessSignatureAuthorizationRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("keyName"u8);
             writer.WriteStringValue(KeyName);
-            if (PrimaryKey != null)
+            if (Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (SecondaryKey != null)
+            if (Optional.IsDefined(SecondaryKey))
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<SharedAccessSignatureAuthorizationRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharedAccessSignatureAuthorizationRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SharedAccessSignatureAuthorizationRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SharedAccessSignatureAuthorizationRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharedAccessSignatureAuthorizationRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeSharedAccessSignatureAuthorizationRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SharedAccessSignatureAuthorizationRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharedAccessSignatureAuthorizationRule)} does not support reading '{options.Format}' format.");
             }
         }
 

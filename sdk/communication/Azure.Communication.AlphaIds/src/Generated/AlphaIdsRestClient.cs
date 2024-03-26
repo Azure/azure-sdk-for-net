@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Communication.AlphaIds.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -107,7 +106,7 @@ namespace Azure.Communication.AlphaIds
             request.Headers.Add("Content-Type", "application/merge-patch+json");
             var model = new AlphaIdConfiguration(enabled);
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue<AlphaIdConfiguration>(model);
             request.Content = content;
             return message;
         }

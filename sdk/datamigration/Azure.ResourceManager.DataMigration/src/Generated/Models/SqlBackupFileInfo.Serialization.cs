@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlBackupFileInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlBackupFileInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlBackupFileInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && FileName != null)
+            if (options.Format != "W" && Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && TotalSize.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalSize))
             {
                 writer.WritePropertyName("totalSize"u8);
                 writer.WriteNumberValue(TotalSize.Value);
             }
-            if (options.Format != "W" && DataRead.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataRead))
             {
                 writer.WritePropertyName("dataRead"u8);
                 writer.WriteNumberValue(DataRead.Value);
             }
-            if (options.Format != "W" && DataWritten.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataWritten))
             {
                 writer.WritePropertyName("dataWritten"u8);
                 writer.WriteNumberValue(DataWritten.Value);
             }
-            if (options.Format != "W" && CopyThroughput.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CopyThroughput))
             {
                 writer.WritePropertyName("copyThroughput"u8);
                 writer.WriteNumberValue(CopyThroughput.Value);
             }
-            if (options.Format != "W" && CopyDuration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CopyDuration))
             {
                 writer.WritePropertyName("copyDuration"u8);
                 writer.WriteNumberValue(CopyDuration.Value);
             }
-            if (options.Format != "W" && FamilySequenceNumber.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FamilySequenceNumber))
             {
                 writer.WritePropertyName("familySequenceNumber"u8);
                 writer.WriteNumberValue(FamilySequenceNumber.Value);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlBackupFileInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlBackupFileInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlBackupFileInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlBackupFileInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlBackupFileInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeSqlBackupFileInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlBackupFileInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlBackupFileInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

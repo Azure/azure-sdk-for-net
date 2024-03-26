@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<CveResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CveResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CveResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (CveId != null)
+            if (Optional.IsDefined(CveId))
             {
                 if (CveId != null)
                 {
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("cveId");
                 }
             }
-            if (Component != null)
+            if (Optional.IsDefined(Component))
             {
                 if (Component != null)
                 {
                     writer.WritePropertyName("component"u8);
-                    writer.WriteObjectValue(Component);
+                    writer.WriteObjectValue<CveComponent>(Component, options);
                 }
                 else
                 {
                     writer.WriteNull("component");
                 }
             }
-            if (Severity != null)
+            if (Optional.IsDefined(Severity))
             {
                 if (Severity != null)
                 {
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("severity");
                 }
             }
-            if (NamePropertiesName != null)
+            if (Optional.IsDefined(NamePropertiesName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(NamePropertiesName);
             }
-            if (CvssScore != null)
+            if (Optional.IsDefined(CvssScore))
             {
                 if (CvssScore != null)
                 {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("cvssScore");
                 }
             }
-            if (CvssVersion != null)
+            if (Optional.IsDefined(CvssVersion))
             {
                 if (CvssVersion != null)
                 {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("cvssVersion");
                 }
             }
-            if (CvssV2Score != null)
+            if (Optional.IsDefined(CvssV2Score))
             {
                 if (CvssV2Score != null)
                 {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("cvssV2Score");
                 }
             }
-            if (CvssV3Score != null)
+            if (Optional.IsDefined(CvssV3Score))
             {
                 if (CvssV3Score != null)
                 {
@@ -138,17 +138,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("cvssV3Score");
                 }
             }
-            if (options.Format != "W" && !(Links is ChangeTrackingList<CveLink> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Links))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CveLink>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<CveResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CveResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CveResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CveResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CveResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         return DeserializeCveResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CveResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CveResult)} does not support reading '{options.Format}' format.");
             }
         }
 

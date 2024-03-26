@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultCertificateSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyVaultCertificateSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyVaultCertificateSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(VaultName);
             writer.WritePropertyName("secretName"u8);
             writer.WriteStringValue(SecretName);
-            if (SecretVersion != null)
+            if (Optional.IsDefined(SecretVersion))
             {
                 writer.WritePropertyName("secretVersion"u8);
                 writer.WriteStringValue(SecretVersion);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultCertificateSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyVaultCertificateSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyVaultCertificateSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KeyVaultCertificateSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultCertificateSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeKeyVaultCertificateSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KeyVaultCertificateSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultCertificateSource)} does not support reading '{options.Format}' format.");
             }
         }
 

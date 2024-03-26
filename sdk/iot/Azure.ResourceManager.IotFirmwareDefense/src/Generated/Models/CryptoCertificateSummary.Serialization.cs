@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<CryptoCertificateSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CryptoCertificateSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CryptoCertificateSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TotalCertificates.HasValue)
+            if (Optional.IsDefined(TotalCertificates))
             {
                 writer.WritePropertyName("totalCertificates"u8);
                 writer.WriteNumberValue(TotalCertificates.Value);
             }
-            if (PairedKeys.HasValue)
+            if (Optional.IsDefined(PairedKeys))
             {
                 writer.WritePropertyName("pairedKeys"u8);
                 writer.WriteNumberValue(PairedKeys.Value);
             }
-            if (Expired.HasValue)
+            if (Optional.IsDefined(Expired))
             {
                 writer.WritePropertyName("expired"u8);
                 writer.WriteNumberValue(Expired.Value);
             }
-            if (ExpiringSoon.HasValue)
+            if (Optional.IsDefined(ExpiringSoon))
             {
                 writer.WritePropertyName("expiringSoon"u8);
                 writer.WriteNumberValue(ExpiringSoon.Value);
             }
-            if (WeakSignature.HasValue)
+            if (Optional.IsDefined(WeakSignature))
             {
                 writer.WritePropertyName("weakSignature"u8);
                 writer.WriteNumberValue(WeakSignature.Value);
             }
-            if (SelfSigned.HasValue)
+            if (Optional.IsDefined(SelfSigned))
             {
                 writer.WritePropertyName("selfSigned"u8);
                 writer.WriteNumberValue(SelfSigned.Value);
             }
-            if (ShortKeySize.HasValue)
+            if (Optional.IsDefined(ShortKeySize))
             {
                 writer.WritePropertyName("shortKeySize"u8);
                 writer.WriteNumberValue(ShortKeySize.Value);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<CryptoCertificateSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CryptoCertificateSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CryptoCertificateSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CryptoCertificateSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CryptoCertificateSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         return DeserializeCryptoCertificateSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CryptoCertificateSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CryptoCertificateSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

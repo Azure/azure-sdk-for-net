@@ -17,14 +17,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("zone"u8);
-            writer.WriteObjectValue(Zone);
-            if (!(Events is ChangeTrackingList<SpatialAnalysisPersonCountEvent> collection && collection.IsUndefined))
+            writer.WriteObjectValue<NamedPolygonBase>(Zone);
+            if (Optional.IsCollectionDefined(Events))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SpatialAnalysisPersonCountEvent>(item);
                 }
                 writer.WriteEndArray();
             }

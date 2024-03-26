@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
@@ -23,15 +22,15 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDataConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogAnalyticsDataConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogAnalyticsDataConnection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            writer.WriteObjectValue<LogAnalyticsDataConnectionProperties>(Properties, options);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -41,47 +40,47 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Content.HasValue)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content.Value.ToString());
             }
-            if (options.Format != "W" && CreatedDate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedDate))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedDate.Value, "O");
             }
-            if (Frequency.HasValue)
+            if (Optional.IsDefined(Frequency))
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToString());
             }
-            if (FrequencyOffset.HasValue)
+            if (Optional.IsDefined(FrequencyOffset))
             {
                 writer.WritePropertyName("frequencyOffset"u8);
                 writer.WriteNumberValue(FrequencyOffset.Value);
             }
-            if (options.Format != "W" && UpdatedDate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedDate))
             {
                 writer.WritePropertyName("updatedDate"u8);
                 writer.WriteStringValue(UpdatedDate.Value, "O");
             }
-            if (options.Format != "W" && UserUpdatedAt.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UserUpdatedAt))
             {
                 writer.WritePropertyName("userUpdatedAt"u8);
                 writer.WriteStringValue(UserUpdatedAt.Value, "O");
             }
-            if (Active.HasValue)
+            if (Optional.IsDefined(Active))
             {
                 writer.WritePropertyName("active"u8);
                 writer.WriteBooleanValue(Active.Value);
             }
-            if (options.Format != "W" && InactiveMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(InactiveMessage))
             {
                 writer.WritePropertyName("inactiveMessage"u8);
                 writer.WriteStringValue(InactiveMessage);
@@ -109,7 +108,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDataConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogAnalyticsDataConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogAnalyticsDataConnection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -266,7 +265,7 @@ namespace Azure.Analytics.Defender.Easm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsDataConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogAnalyticsDataConnection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -282,7 +281,7 @@ namespace Azure.Analytics.Defender.Easm
                         return DeserializeLogAnalyticsDataConnection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsDataConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogAnalyticsDataConnection)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -300,7 +299,7 @@ namespace Azure.Analytics.Defender.Easm
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<LogAnalyticsDataConnection>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

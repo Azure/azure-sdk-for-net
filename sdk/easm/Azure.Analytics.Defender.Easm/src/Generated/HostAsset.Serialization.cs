@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
@@ -23,302 +22,302 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<HostAsset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HostAsset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HostAsset)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Host != null)
+            if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
             }
-            if (Domain != null)
+            if (Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain);
             }
-            if (!(IpAddresses is ChangeTrackingList<ObservedString> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IpAddresses))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in IpAddresses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(WebComponents is ChangeTrackingList<WebComponent> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(WebComponents))
             {
                 writer.WritePropertyName("webComponents"u8);
                 writer.WriteStartArray();
                 foreach (var item in WebComponents)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WebComponent>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Headers is ChangeTrackingList<ObservedHeader> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
                 foreach (var item in Headers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedHeader>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Attributes is ChangeTrackingList<AttributeDetails> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Attributes))
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Attributes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AttributeDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Cookies is ChangeTrackingList<CookieDetails> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Cookies))
             {
                 writer.WritePropertyName("cookies"u8);
                 writer.WriteStartArray();
                 foreach (var item in Cookies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CookieDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(SslCerts is ChangeTrackingList<SslCertAsset> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(SslCerts))
             {
                 writer.WritePropertyName("sslCerts"u8);
                 writer.WriteStartArray();
                 foreach (var item in SslCerts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SslCertAsset>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ParentHosts is ChangeTrackingList<ObservedString> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(ParentHosts))
             {
                 writer.WritePropertyName("parentHosts"u8);
                 writer.WriteStartArray();
                 foreach (var item in ParentHosts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ChildHosts is ChangeTrackingList<ObservedString> collection6 && collection6.IsUndefined))
+            if (Optional.IsCollectionDefined(ChildHosts))
             {
                 writer.WritePropertyName("childHosts"u8);
                 writer.WriteStartArray();
                 foreach (var item in ChildHosts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (HostCore != null)
+            if (Optional.IsDefined(HostCore))
             {
                 writer.WritePropertyName("hostCore"u8);
-                writer.WriteObjectValue(HostCore);
+                writer.WriteObjectValue<HostCore>(HostCore, options);
             }
-            if (!(Services is ChangeTrackingList<AssetService> collection7 && collection7.IsUndefined))
+            if (Optional.IsCollectionDefined(Services))
             {
                 writer.WritePropertyName("services"u8);
                 writer.WriteStartArray();
                 foreach (var item in Services)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AssetService>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Cnames is ChangeTrackingList<ObservedString> collection8 && collection8.IsUndefined))
+            if (Optional.IsCollectionDefined(Cnames))
             {
                 writer.WritePropertyName("cnames"u8);
                 writer.WriteStartArray();
                 foreach (var item in Cnames)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Sources is ChangeTrackingList<SourceDetails> collection9 && collection9.IsUndefined))
+            if (Optional.IsCollectionDefined(Sources))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
                 foreach (var item in Sources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SourceDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (FirstSeen.HasValue)
+            if (Optional.IsDefined(FirstSeen))
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (LastSeen.HasValue)
+            if (Optional.IsDefined(LastSeen))
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (!(ResourceUrls is ChangeTrackingList<ResourceUri> collection10 && collection10.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceUrls))
             {
                 writer.WritePropertyName("resourceUrls"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceUrls)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceUri>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ScanMetadata is ChangeTrackingList<ScanMetadata> collection11 && collection11.IsUndefined))
+            if (Optional.IsCollectionDefined(ScanMetadata))
             {
                 writer.WritePropertyName("scanMetadata"u8);
                 writer.WriteStartArray();
                 foreach (var item in ScanMetadata)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScanMetadata>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Asns is ChangeTrackingList<ObservedLong> collection12 && collection12.IsUndefined))
+            if (Optional.IsCollectionDefined(Asns))
             {
                 writer.WritePropertyName("asns"u8);
                 writer.WriteStartArray();
                 foreach (var item in Asns)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedLong>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(IpBlocks is ChangeTrackingList<IpBlock> collection13 && collection13.IsUndefined))
+            if (Optional.IsCollectionDefined(IpBlocks))
             {
                 writer.WritePropertyName("ipBlocks"u8);
                 writer.WriteStartArray();
                 foreach (var item in IpBlocks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IpBlock>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ResponseBodies is ChangeTrackingList<ObservedString> collection14 && collection14.IsUndefined))
+            if (Optional.IsCollectionDefined(ResponseBodies))
             {
                 writer.WritePropertyName("responseBodies"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResponseBodies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (DomainAsset != null)
+            if (Optional.IsDefined(DomainAsset))
             {
                 writer.WritePropertyName("domainAsset"u8);
-                writer.WriteObjectValue(DomainAsset);
+                writer.WriteObjectValue<DomainAsset>(DomainAsset, options);
             }
-            if (!(NsRecord is ChangeTrackingList<ObservedBoolean> collection15 && collection15.IsUndefined))
+            if (Optional.IsCollectionDefined(NsRecord))
             {
                 writer.WritePropertyName("nsRecord"u8);
                 writer.WriteStartArray();
                 foreach (var item in NsRecord)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedBoolean>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(MxRecord is ChangeTrackingList<ObservedBoolean> collection16 && collection16.IsUndefined))
+            if (Optional.IsCollectionDefined(MxRecord))
             {
                 writer.WritePropertyName("mxRecord"u8);
                 writer.WriteStartArray();
                 foreach (var item in MxRecord)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedBoolean>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Webserver is ChangeTrackingList<ObservedBoolean> collection17 && collection17.IsUndefined))
+            if (Optional.IsCollectionDefined(Webserver))
             {
                 writer.WritePropertyName("webserver"u8);
                 writer.WriteStartArray();
                 foreach (var item in Webserver)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedBoolean>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Location is ChangeTrackingList<ObservedLocation> collection18 && collection18.IsUndefined))
+            if (Optional.IsCollectionDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStartArray();
                 foreach (var item in Location)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedLocation>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Nxdomain is ChangeTrackingList<ObservedBoolean> collection19 && collection19.IsUndefined))
+            if (Optional.IsCollectionDefined(Nxdomain))
             {
                 writer.WritePropertyName("nxdomain"u8);
                 writer.WriteStartArray();
                 foreach (var item in Nxdomain)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedBoolean>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(SslServerConfig is ChangeTrackingList<SslServerConfig> collection20 && collection20.IsUndefined))
+            if (Optional.IsCollectionDefined(SslServerConfig))
             {
                 writer.WritePropertyName("sslServerConfig"u8);
                 writer.WriteStartArray();
                 foreach (var item in SslServerConfig)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SslServerConfig>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(IsWildcard is ChangeTrackingList<ObservedBoolean> collection21 && collection21.IsUndefined))
+            if (Optional.IsCollectionDefined(IsWildcard))
             {
                 writer.WritePropertyName("isWildcard"u8);
                 writer.WriteStartArray();
                 foreach (var item in IsWildcard)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedBoolean>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Banners is ChangeTrackingList<BannerDetails> collection22 && collection22.IsUndefined))
+            if (Optional.IsCollectionDefined(Banners))
             {
                 writer.WritePropertyName("banners"u8);
                 writer.WriteStartArray();
                 foreach (var item in Banners)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BannerDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Ipv4 is ChangeTrackingList<ObservedBoolean> collection23 && collection23.IsUndefined))
+            if (Optional.IsCollectionDefined(Ipv4))
             {
                 writer.WritePropertyName("ipv4"u8);
                 writer.WriteStartArray();
                 foreach (var item in Ipv4)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedBoolean>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Ipv6 is ChangeTrackingList<ObservedBoolean> collection24 && collection24.IsUndefined))
+            if (Optional.IsCollectionDefined(Ipv6))
             {
                 writer.WritePropertyName("ipv6"u8);
                 writer.WriteStartArray();
                 foreach (var item in Ipv6)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedBoolean>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -345,7 +344,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<HostAsset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HostAsset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HostAsset)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -868,7 +867,7 @@ namespace Azure.Analytics.Defender.Easm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HostAsset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HostAsset)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -884,7 +883,7 @@ namespace Azure.Analytics.Defender.Easm
                         return DeserializeHostAsset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HostAsset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HostAsset)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -902,7 +901,7 @@ namespace Azure.Analytics.Defender.Easm
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<HostAsset>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

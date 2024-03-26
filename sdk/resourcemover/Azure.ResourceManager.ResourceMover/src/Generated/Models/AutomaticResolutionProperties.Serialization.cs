@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomaticResolutionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomaticResolutionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomaticResolutionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("moveResourceId"u8);
                 writer.WriteStringValue(ResourceId);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomaticResolutionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomaticResolutionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomaticResolutionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomaticResolutionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomaticResolutionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeAutomaticResolutionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomaticResolutionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomaticResolutionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

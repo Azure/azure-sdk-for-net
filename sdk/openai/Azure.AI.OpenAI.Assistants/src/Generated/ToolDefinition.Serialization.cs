@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -23,7 +22,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<ToolDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ToolDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ToolDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +51,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<ToolDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ToolDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ToolDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,8 +71,8 @@ namespace Azure.AI.OpenAI.Assistants
                 switch (discriminator.GetString())
                 {
                     case "code_interpreter": return CodeInterpreterToolDefinition.DeserializeCodeInterpreterToolDefinition(element, options);
-                    case "retrieval": return RetrievalToolDefinition.DeserializeRetrievalToolDefinition(element, options);
                     case "function": return FunctionToolDefinition.DeserializeFunctionToolDefinition(element, options);
+                    case "retrieval": return RetrievalToolDefinition.DeserializeRetrievalToolDefinition(element, options);
                 }
             }
             return UnknownToolDefinition.DeserializeUnknownToolDefinition(element, options);
@@ -88,7 +87,7 @@ namespace Azure.AI.OpenAI.Assistants
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ToolDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ToolDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -104,7 +103,7 @@ namespace Azure.AI.OpenAI.Assistants
                         return DeserializeToolDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ToolDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ToolDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -122,7 +121,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ToolDefinition>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="propertyName"/> or <paramref name="columnName"/> is null. </exception>
         public ConnectorMappingStructure(string propertyName, string columnName)
         {
-            if (propertyName == null)
-            {
-                throw new ArgumentNullException(nameof(propertyName));
-            }
-            if (columnName == null)
-            {
-                throw new ArgumentNullException(nameof(columnName));
-            }
+            Argument.AssertNotNull(propertyName, nameof(propertyName));
+            Argument.AssertNotNull(columnName, nameof(columnName));
 
             PropertyName = propertyName;
             ColumnName = columnName;

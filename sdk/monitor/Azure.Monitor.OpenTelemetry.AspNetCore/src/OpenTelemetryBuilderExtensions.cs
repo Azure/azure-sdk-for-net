@@ -4,6 +4,7 @@
 #nullable enable
 
 using System.Reflection;
+using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.AzureSdkCompat;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Azure.Monitor.OpenTelemetry.LiveMetrics;
@@ -118,6 +119,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                             .AddAzureMonitorTraceExporter());
 
             builder.WithMetrics(b => b
+                            .AddHttpClientAndServerMetrics()
                             .AddAzureMonitorMetricExporter());
 
             builder.Services.AddLogging(logging =>
@@ -129,7 +131,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                     builderOptions.SetResourceBuilder(resourceBuilder);
 
                     builderOptions.IncludeFormattedMessage = true;
-                    builderOptions.IncludeScopes = false;
                 });
             });
 
@@ -184,6 +185,21 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                         azureMonitorOptions.Get(Options.DefaultName).SetValueToLiveMetricsExporterOptions(exporterOptions);
                     });
 
+            // Register Azure SDK log forwarder in the case it was not registered by the user application.
+            builder.Services.AddHostedService(sp =>
+            {
+                var logForwarderType = Type.GetType("Microsoft.Extensions.Azure.AzureEventSourceLogForwarder, Microsoft.Extensions.Azure", false);
+
+                if (logForwarderType != null && sp.GetService(logForwarderType) != null)
+                {
+                    AzureMonitorAspNetCoreEventSource.Log.LogForwarderIsAlreadyRegistered();
+                    return AzureEventSourceLogForwarder.Noop;
+                }
+
+                var loggerFactory = sp.GetRequiredService<ILoggerFactory>();
+                return new AzureEventSourceLogForwarder(loggerFactory);
+            });
+
             return builder;
         }
 
@@ -216,6 +232,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             }
 
             return tracerProviderBuilder;
+        }
+
+        private static MeterProviderBuilder AddHttpClientAndServerMetrics(this MeterProviderBuilder meterProviderBuilder)
+        {
+            return Environment.Version.Major >= 8 ?
+                meterProviderBuilder.AddMeter("Microsoft.AspNetCore.Hosting").AddMeter("System.Net.Http")
+                : meterProviderBuilder.AddAspNetCoreInstrumentation().AddHttpClientInstrumentation();
         }
     }
 }

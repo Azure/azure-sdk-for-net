@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
@@ -23,196 +22,196 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<HostCore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HostCore)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HostCore)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Host != null)
+            if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
             }
-            if (Domain != null)
+            if (Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain);
             }
-            if (FirstSeen.HasValue)
+            if (Optional.IsDefined(FirstSeen))
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (LastSeen.HasValue)
+            if (Optional.IsDefined(LastSeen))
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (BlacklistCauseFirstSeen.HasValue)
+            if (Optional.IsDefined(BlacklistCauseFirstSeen))
             {
                 writer.WritePropertyName("blacklistCauseFirstSeen"u8);
                 writer.WriteStringValue(BlacklistCauseFirstSeen.Value, "O");
             }
-            if (BlacklistCauseLastSeen.HasValue)
+            if (Optional.IsDefined(BlacklistCauseLastSeen))
             {
                 writer.WritePropertyName("blacklistCauseLastSeen"u8);
                 writer.WriteStringValue(BlacklistCauseLastSeen.Value, "O");
             }
-            if (BlacklistCauseCount.HasValue)
+            if (Optional.IsDefined(BlacklistCauseCount))
             {
                 writer.WritePropertyName("blacklistCauseCount"u8);
                 writer.WriteNumberValue(BlacklistCauseCount.Value);
             }
-            if (BlacklistResourceFirstSeen.HasValue)
+            if (Optional.IsDefined(BlacklistResourceFirstSeen))
             {
                 writer.WritePropertyName("blacklistResourceFirstSeen"u8);
                 writer.WriteStringValue(BlacklistResourceFirstSeen.Value, "O");
             }
-            if (BlacklistResourceLastSeen.HasValue)
+            if (Optional.IsDefined(BlacklistResourceLastSeen))
             {
                 writer.WritePropertyName("blacklistResourceLastSeen"u8);
                 writer.WriteStringValue(BlacklistResourceLastSeen.Value, "O");
             }
-            if (BlacklistResourceCount.HasValue)
+            if (Optional.IsDefined(BlacklistResourceCount))
             {
                 writer.WritePropertyName("blacklistResourceCount"u8);
                 writer.WriteNumberValue(BlacklistResourceCount.Value);
             }
-            if (BlacklistSequenceFirstSeen.HasValue)
+            if (Optional.IsDefined(BlacklistSequenceFirstSeen))
             {
                 writer.WritePropertyName("blacklistSequenceFirstSeen"u8);
                 writer.WriteStringValue(BlacklistSequenceFirstSeen.Value, "O");
             }
-            if (BlacklistSequenceLastSeen.HasValue)
+            if (Optional.IsDefined(BlacklistSequenceLastSeen))
             {
                 writer.WritePropertyName("blacklistSequenceLastSeen"u8);
                 writer.WriteStringValue(BlacklistSequenceLastSeen.Value, "O");
             }
-            if (BlacklistSequenceCount.HasValue)
+            if (Optional.IsDefined(BlacklistSequenceCount))
             {
                 writer.WritePropertyName("blacklistSequenceCount"u8);
                 writer.WriteNumberValue(BlacklistSequenceCount.Value);
             }
-            if (PhishCauseCount.HasValue)
+            if (Optional.IsDefined(PhishCauseCount))
             {
                 writer.WritePropertyName("phishCauseCount"u8);
                 writer.WriteNumberValue(PhishCauseCount.Value);
             }
-            if (MalwareCauseCount.HasValue)
+            if (Optional.IsDefined(MalwareCauseCount))
             {
                 writer.WritePropertyName("malwareCauseCount"u8);
                 writer.WriteNumberValue(MalwareCauseCount.Value);
             }
-            if (SpamCauseCount.HasValue)
+            if (Optional.IsDefined(SpamCauseCount))
             {
                 writer.WritePropertyName("spamCauseCount"u8);
                 writer.WriteNumberValue(SpamCauseCount.Value);
             }
-            if (ScamCauseCount.HasValue)
+            if (Optional.IsDefined(ScamCauseCount))
             {
                 writer.WritePropertyName("scamCauseCount"u8);
                 writer.WriteNumberValue(ScamCauseCount.Value);
             }
-            if (PhishResourceCount.HasValue)
+            if (Optional.IsDefined(PhishResourceCount))
             {
                 writer.WritePropertyName("phishResourceCount"u8);
                 writer.WriteNumberValue(PhishResourceCount.Value);
             }
-            if (MalwareResourceCount.HasValue)
+            if (Optional.IsDefined(MalwareResourceCount))
             {
                 writer.WritePropertyName("malwareResourceCount"u8);
                 writer.WriteNumberValue(MalwareResourceCount.Value);
             }
-            if (SpamResourceCount.HasValue)
+            if (Optional.IsDefined(SpamResourceCount))
             {
                 writer.WritePropertyName("spamResourceCount"u8);
                 writer.WriteNumberValue(SpamResourceCount.Value);
             }
-            if (ScamResourceCount.HasValue)
+            if (Optional.IsDefined(ScamResourceCount))
             {
                 writer.WritePropertyName("scamResourceCount"u8);
                 writer.WriteNumberValue(ScamResourceCount.Value);
             }
-            if (PhishSequenceCount.HasValue)
+            if (Optional.IsDefined(PhishSequenceCount))
             {
                 writer.WritePropertyName("phishSequenceCount"u8);
                 writer.WriteNumberValue(PhishSequenceCount.Value);
             }
-            if (MalwareSequenceCount.HasValue)
+            if (Optional.IsDefined(MalwareSequenceCount))
             {
                 writer.WritePropertyName("malwareSequenceCount"u8);
                 writer.WriteNumberValue(MalwareSequenceCount.Value);
             }
-            if (SpamSequenceCount.HasValue)
+            if (Optional.IsDefined(SpamSequenceCount))
             {
                 writer.WritePropertyName("spamSequenceCount"u8);
                 writer.WriteNumberValue(SpamSequenceCount.Value);
             }
-            if (ScamSequenceCount.HasValue)
+            if (Optional.IsDefined(ScamSequenceCount))
             {
                 writer.WritePropertyName("scamSequenceCount"u8);
                 writer.WriteNumberValue(ScamSequenceCount.Value);
             }
-            if (AlexaRank.HasValue)
+            if (Optional.IsDefined(AlexaRank))
             {
                 writer.WritePropertyName("alexaRank"u8);
                 writer.WriteNumberValue(AlexaRank.Value);
             }
-            if (HostReputationScore.HasValue)
+            if (Optional.IsDefined(HostReputationScore))
             {
                 writer.WritePropertyName("hostReputationScore"u8);
                 writer.WriteNumberValue(HostReputationScore.Value);
             }
-            if (HostPhishReputationScore.HasValue)
+            if (Optional.IsDefined(HostPhishReputationScore))
             {
                 writer.WritePropertyName("hostPhishReputationScore"u8);
                 writer.WriteNumberValue(HostPhishReputationScore.Value);
             }
-            if (HostMalwareReputationScore.HasValue)
+            if (Optional.IsDefined(HostMalwareReputationScore))
             {
                 writer.WritePropertyName("hostMalwareReputationScore"u8);
                 writer.WriteNumberValue(HostMalwareReputationScore.Value);
             }
-            if (HostSpamReputationScore.HasValue)
+            if (Optional.IsDefined(HostSpamReputationScore))
             {
                 writer.WritePropertyName("hostSpamReputationScore"u8);
                 writer.WriteNumberValue(HostSpamReputationScore.Value);
             }
-            if (HostScamReputationScore.HasValue)
+            if (Optional.IsDefined(HostScamReputationScore))
             {
                 writer.WritePropertyName("hostScamReputationScore"u8);
                 writer.WriteNumberValue(HostScamReputationScore.Value);
             }
-            if (DomainReputationScore.HasValue)
+            if (Optional.IsDefined(DomainReputationScore))
             {
                 writer.WritePropertyName("domainReputationScore"u8);
                 writer.WriteNumberValue(DomainReputationScore.Value);
             }
-            if (DomainPhishReputationScore.HasValue)
+            if (Optional.IsDefined(DomainPhishReputationScore))
             {
                 writer.WritePropertyName("domainPhishReputationScore"u8);
                 writer.WriteNumberValue(DomainPhishReputationScore.Value);
             }
-            if (DomainMalwareReputationScore.HasValue)
+            if (Optional.IsDefined(DomainMalwareReputationScore))
             {
                 writer.WritePropertyName("domainMalwareReputationScore"u8);
                 writer.WriteNumberValue(DomainMalwareReputationScore.Value);
             }
-            if (DomainSpamReputationScore.HasValue)
+            if (Optional.IsDefined(DomainSpamReputationScore))
             {
                 writer.WritePropertyName("domainSpamReputationScore"u8);
                 writer.WriteNumberValue(DomainSpamReputationScore.Value);
             }
-            if (DomainScamReputationScore.HasValue)
+            if (Optional.IsDefined(DomainScamReputationScore))
             {
                 writer.WritePropertyName("domainScamReputationScore"u8);
                 writer.WriteNumberValue(DomainScamReputationScore.Value);
             }
-            if (Uuid != null)
+            if (Optional.IsDefined(Uuid))
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
@@ -240,7 +239,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<HostCore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HostCore)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HostCore)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -684,7 +683,7 @@ namespace Azure.Analytics.Defender.Easm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HostCore)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HostCore)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -700,7 +699,7 @@ namespace Azure.Analytics.Defender.Easm
                         return DeserializeHostCore(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HostCore)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HostCore)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -718,7 +717,7 @@ namespace Azure.Analytics.Defender.Easm
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<HostCore>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

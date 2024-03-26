@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabRosterProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabRosterProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabRosterProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ActiveDirectoryGroupId != null)
+            if (Optional.IsDefined(ActiveDirectoryGroupId))
             {
                 writer.WritePropertyName("activeDirectoryGroupId"u8);
                 writer.WriteStringValue(ActiveDirectoryGroupId);
             }
-            if (LtiContextId != null)
+            if (Optional.IsDefined(LtiContextId))
             {
                 writer.WritePropertyName("ltiContextId"u8);
                 writer.WriteStringValue(LtiContextId);
             }
-            if (LmsInstance != null)
+            if (Optional.IsDefined(LmsInstance))
             {
                 writer.WritePropertyName("lmsInstance"u8);
                 writer.WriteStringValue(LmsInstance.AbsoluteUri);
             }
-            if (LtiClientId != null)
+            if (Optional.IsDefined(LtiClientId))
             {
                 writer.WritePropertyName("ltiClientId"u8);
                 writer.WriteStringValue(LtiClientId);
             }
-            if (LtiRosterEndpoint != null)
+            if (Optional.IsDefined(LtiRosterEndpoint))
             {
                 writer.WritePropertyName("ltiRosterEndpoint"u8);
                 writer.WriteStringValue(LtiRosterEndpoint.AbsoluteUri);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabRosterProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabRosterProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabRosterProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabRosterProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabRosterProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         return DeserializeLabRosterProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabRosterProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabRosterProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

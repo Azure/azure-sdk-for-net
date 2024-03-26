@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataBox.Models;
 using Azure.ResourceManager.Models;
@@ -59,10 +58,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public DataBoxJobData(AzureLocation location, DataBoxJobTransferType transferType, DataBoxSku sku) : base(location)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
+            Argument.AssertNotNull(sku, nameof(sku));
 
             TransferType = transferType;
             Sku = sku;

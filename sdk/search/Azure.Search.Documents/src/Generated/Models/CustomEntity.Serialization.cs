@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 if (Type != null)
                 {
@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("type");
                 }
             }
-            if (Subtype != null)
+            if (Optional.IsDefined(Subtype))
             {
                 if (Subtype != null)
                 {
@@ -54,7 +54,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("subtype");
                 }
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 if (Id != null)
                 {
@@ -66,7 +66,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("id");
                 }
             }
-            if (CaseSensitive.HasValue)
+            if (Optional.IsDefined(CaseSensitive))
             {
                 if (CaseSensitive != null)
                 {
@@ -78,7 +78,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("caseSensitive");
                 }
             }
-            if (AccentSensitive.HasValue)
+            if (Optional.IsDefined(AccentSensitive))
             {
                 if (AccentSensitive != null)
                 {
@@ -90,7 +90,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("accentSensitive");
                 }
             }
-            if (FuzzyEditDistance.HasValue)
+            if (Optional.IsDefined(FuzzyEditDistance))
             {
                 if (FuzzyEditDistance != null)
                 {
@@ -102,7 +102,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("fuzzyEditDistance");
                 }
             }
-            if (DefaultCaseSensitive.HasValue)
+            if (Optional.IsDefined(DefaultCaseSensitive))
             {
                 if (DefaultCaseSensitive != null)
                 {
@@ -114,7 +114,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultCaseSensitive");
                 }
             }
-            if (DefaultAccentSensitive.HasValue)
+            if (Optional.IsDefined(DefaultAccentSensitive))
             {
                 if (DefaultAccentSensitive != null)
                 {
@@ -126,7 +126,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultAccentSensitive");
                 }
             }
-            if (DefaultFuzzyEditDistance.HasValue)
+            if (Optional.IsDefined(DefaultFuzzyEditDistance))
             {
                 if (DefaultFuzzyEditDistance != null)
                 {
@@ -138,7 +138,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultFuzzyEditDistance");
                 }
             }
-            if (!(Aliases is ChangeTrackingList<CustomEntityAlias> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Aliases))
             {
                 if (Aliases != null)
                 {
@@ -146,7 +146,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteStartArray();
                     foreach (var item in Aliases)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<CustomEntityAlias>(item);
                     }
                     writer.WriteEndArray();
                 }

@@ -22,27 +22,27 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheHealth>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCacheHealth)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheHealth)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (StatusDescription != null)
+            if (Optional.IsDefined(StatusDescription))
             {
                 writer.WritePropertyName("statusDescription"u8);
                 writer.WriteStringValue(StatusDescription);
             }
-            if (options.Format != "W" && !(Conditions is ChangeTrackingList<OutstandingCondition> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Conditions))
             {
                 writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Conditions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OutstandingCondition>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheHealth>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCacheHealth)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheHealth)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageCacheHealth)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheHealth)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         return DeserializeStorageCacheHealth(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageCacheHealth)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheHealth)} does not support reading '{options.Format}' format.");
             }
         }
 

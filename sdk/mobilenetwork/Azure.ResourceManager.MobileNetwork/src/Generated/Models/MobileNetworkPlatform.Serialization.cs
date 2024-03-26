@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkPlatform>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkPlatform)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkPlatform)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PlatformType.HasValue)
+            if (Optional.IsDefined(PlatformType))
             {
                 writer.WritePropertyName("platformType"u8);
                 writer.WriteStringValue(PlatformType.Value.ToString());
             }
-            if (VersionState.HasValue)
+            if (Optional.IsDefined(VersionState))
             {
                 writer.WritePropertyName("versionState"u8);
                 writer.WriteStringValue(VersionState.Value.ToString());
             }
-            if (MinimumPlatformSoftwareVersion != null)
+            if (Optional.IsDefined(MinimumPlatformSoftwareVersion))
             {
                 writer.WritePropertyName("minimumPlatformSoftwareVersion"u8);
                 writer.WriteStringValue(MinimumPlatformSoftwareVersion);
             }
-            if (MaximumPlatformSoftwareVersion != null)
+            if (Optional.IsDefined(MaximumPlatformSoftwareVersion))
             {
                 writer.WritePropertyName("maximumPlatformSoftwareVersion"u8);
                 writer.WriteStringValue(MaximumPlatformSoftwareVersion);
             }
-            if (RecommendedVersion.HasValue)
+            if (Optional.IsDefined(RecommendedVersion))
             {
                 writer.WritePropertyName("recommendedVersion"u8);
                 writer.WriteStringValue(RecommendedVersion.Value.ToString());
             }
-            if (ObsoleteVersion.HasValue)
+            if (Optional.IsDefined(ObsoleteVersion))
             {
                 writer.WritePropertyName("obsoleteVersion"u8);
                 writer.WriteStringValue(ObsoleteVersion.Value.ToString());
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkPlatform>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkPlatform)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkPlatform)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkPlatform)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkPlatform)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         return DeserializeMobileNetworkPlatform(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkPlatform)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkPlatform)} does not support reading '{options.Format}' format.");
             }
         }
 

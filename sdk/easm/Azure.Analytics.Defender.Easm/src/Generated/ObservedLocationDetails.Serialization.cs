@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
@@ -23,61 +22,61 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<ObservedLocationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ObservedLocationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ObservedLocationDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CountryCode != null)
+            if (Optional.IsDefined(CountryCode))
             {
                 writer.WritePropertyName("countryCode"u8);
                 writer.WriteStringValue(CountryCode);
             }
-            if (CountryName != null)
+            if (Optional.IsDefined(CountryName))
             {
                 writer.WritePropertyName("countryName"u8);
                 writer.WriteStringValue(CountryName);
             }
-            if (Region != null)
+            if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (RegionName != null)
+            if (Optional.IsDefined(RegionName))
             {
                 writer.WritePropertyName("regionName"u8);
                 writer.WriteStringValue(RegionName);
             }
-            if (City != null)
+            if (Optional.IsDefined(City))
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (AreaCode.HasValue)
+            if (Optional.IsDefined(AreaCode))
             {
                 writer.WritePropertyName("areaCode"u8);
                 writer.WriteNumberValue(AreaCode.Value);
             }
-            if (PostalCode != null)
+            if (Optional.IsDefined(PostalCode))
             {
                 writer.WritePropertyName("postalCode"u8);
                 writer.WriteStringValue(PostalCode);
             }
-            if (Latitude.HasValue)
+            if (Optional.IsDefined(Latitude))
             {
                 writer.WritePropertyName("latitude"u8);
                 writer.WriteNumberValue(Latitude.Value);
             }
-            if (Longitude.HasValue)
+            if (Optional.IsDefined(Longitude))
             {
                 writer.WritePropertyName("longitude"u8);
                 writer.WriteNumberValue(Longitude.Value);
             }
-            if (DmaCode.HasValue)
+            if (Optional.IsDefined(DmaCode))
             {
                 writer.WritePropertyName("dmaCode"u8);
                 writer.WriteNumberValue(DmaCode.Value);
             }
-            if (MetroCodeId.HasValue)
+            if (Optional.IsDefined(MetroCodeId))
             {
                 writer.WritePropertyName("metroCodeId"u8);
                 writer.WriteNumberValue(MetroCodeId.Value);
@@ -105,7 +104,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<ObservedLocationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ObservedLocationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ObservedLocationDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -240,7 +239,7 @@ namespace Azure.Analytics.Defender.Easm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ObservedLocationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ObservedLocationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -256,7 +255,7 @@ namespace Azure.Analytics.Defender.Easm
                         return DeserializeObservedLocationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ObservedLocationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ObservedLocationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -274,7 +273,7 @@ namespace Azure.Analytics.Defender.Easm
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ObservedLocationDetails>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Public land mobile network (PLMN) ID. </summary>
+    /// <summary> Public land mobile network (PLMN) ID. This is made up of the mobile country code and mobile network code, as defined in https://www.itu.int/rec/T-REC-E.212. The values 001-01 and 001-001 can be used for testing and the values 999-99 and 999-999 can be used on internal private networks. </summary>
     public partial class MobileNetworkPlmnId
     {
         /// <summary>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MobileNetworkPlmnId"/>. </summary>
         /// <param name="mcc"> Mobile country code (MCC). </param>
@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <exception cref="ArgumentNullException"> <paramref name="mcc"/> or <paramref name="mnc"/> is null. </exception>
         public MobileNetworkPlmnId(string mcc, string mnc)
         {
-            if (mcc == null)
-            {
-                throw new ArgumentNullException(nameof(mcc));
-            }
-            if (mnc == null)
-            {
-                throw new ArgumentNullException(nameof(mnc));
-            }
+            Argument.AssertNotNull(mcc, nameof(mcc));
+            Argument.AssertNotNull(mnc, nameof(mnc));
 
             Mcc = mcc;
             Mnc = mnc;

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterExtensionStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterExtensionStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterExtensionStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsClusterMonitoringEnabled.HasValue)
+            if (Optional.IsDefined(IsClusterMonitoringEnabled))
             {
                 writer.WritePropertyName("clusterMonitoringEnabled"u8);
                 writer.WriteBooleanValue(IsClusterMonitoringEnabled.Value);
             }
-            if (WorkspaceId != null)
+            if (Optional.IsDefined(WorkspaceId))
             {
                 writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterExtensionStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterExtensionStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterExtensionStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterExtensionStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterExtensionStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightClusterExtensionStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterExtensionStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterExtensionStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

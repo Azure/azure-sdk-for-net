@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
@@ -20,7 +21,7 @@ namespace Azure.Maps.Search.Models
             writer.WriteStartArray();
             foreach (var item in Features)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<GeoJsonFeature>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

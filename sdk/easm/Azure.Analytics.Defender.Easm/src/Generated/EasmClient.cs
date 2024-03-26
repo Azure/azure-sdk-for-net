@@ -9,7 +9,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -51,14 +50,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public EasmClient(Uri endpoint, TokenCredential credential, EasmClientOptions options)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new EasmClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -76,14 +69,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='UpdateAssetsAsync(string,AssetUpdatePayload,CancellationToken)']/*" />
         public virtual async Task<Response<TaskResource>> UpdateAssetsAsync(string filter, AssetUpdatePayload assetUpdatePayload, CancellationToken cancellationToken = default)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
-            if (assetUpdatePayload == null)
-            {
-                throw new ArgumentNullException(nameof(assetUpdatePayload));
-            }
+            Argument.AssertNotNull(filter, nameof(filter));
+            Argument.AssertNotNull(assetUpdatePayload, nameof(assetUpdatePayload));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = assetUpdatePayload.ToRequestContent();
@@ -99,14 +86,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='UpdateAssets(string,AssetUpdatePayload,CancellationToken)']/*" />
         public virtual Response<TaskResource> UpdateAssets(string filter, AssetUpdatePayload assetUpdatePayload, CancellationToken cancellationToken = default)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
-            if (assetUpdatePayload == null)
-            {
-                throw new ArgumentNullException(nameof(assetUpdatePayload));
-            }
+            Argument.AssertNotNull(filter, nameof(filter));
+            Argument.AssertNotNull(assetUpdatePayload, nameof(assetUpdatePayload));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = assetUpdatePayload.ToRequestContent();
@@ -138,14 +119,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='UpdateAssetsAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> UpdateAssetsAsync(string filter, RequestContent content, RequestContext context = null)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(filter, nameof(filter));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.UpdateAssets");
             scope.Start();
@@ -185,14 +160,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='UpdateAssets(string,RequestContent,RequestContext)']/*" />
         public virtual Response UpdateAssets(string filter, RequestContent content, RequestContext context = null)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(filter, nameof(filter));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.UpdateAssets");
             scope.Start();
@@ -216,14 +185,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetAssetResourceAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AssetResource>> GetAssetResourceAsync(string assetId, CancellationToken cancellationToken = default)
         {
-            if (assetId == null)
-            {
-                throw new ArgumentNullException(nameof(assetId));
-            }
-            if (assetId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assetId));
-            }
+            Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetAssetResourceAsync(assetId, context).ConfigureAwait(false);
@@ -238,14 +200,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetAssetResource(string,CancellationToken)']/*" />
         public virtual Response<AssetResource> GetAssetResource(string assetId, CancellationToken cancellationToken = default)
         {
-            if (assetId == null)
-            {
-                throw new ArgumentNullException(nameof(assetId));
-            }
-            if (assetId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assetId));
-            }
+            Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetAssetResource(assetId, context);
@@ -276,14 +231,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetAssetResourceAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetAssetResourceAsync(string assetId, RequestContext context)
         {
-            if (assetId == null)
-            {
-                throw new ArgumentNullException(nameof(assetId));
-            }
-            if (assetId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assetId));
-            }
+            Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.GetAssetResource");
             scope.Start();
@@ -323,14 +271,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetAssetResource(string,RequestContext)']/*" />
         public virtual Response GetAssetResource(string assetId, RequestContext context)
         {
-            if (assetId == null)
-            {
-                throw new ArgumentNullException(nameof(assetId));
-            }
-            if (assetId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assetId));
-            }
+            Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.GetAssetResource");
             scope.Start();
@@ -353,10 +294,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='ValidateDataConnectionAsync(DataConnectionPayload,CancellationToken)']/*" />
         public virtual async Task<Response<ValidateResult>> ValidateDataConnectionAsync(DataConnectionPayload dataConnectionPayload, CancellationToken cancellationToken = default)
         {
-            if (dataConnectionPayload == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionPayload));
-            }
+            Argument.AssertNotNull(dataConnectionPayload, nameof(dataConnectionPayload));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = dataConnectionPayload.ToRequestContent();
@@ -371,10 +309,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='ValidateDataConnection(DataConnectionPayload,CancellationToken)']/*" />
         public virtual Response<ValidateResult> ValidateDataConnection(DataConnectionPayload dataConnectionPayload, CancellationToken cancellationToken = default)
         {
-            if (dataConnectionPayload == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionPayload));
-            }
+            Argument.AssertNotNull(dataConnectionPayload, nameof(dataConnectionPayload));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = dataConnectionPayload.ToRequestContent();
@@ -405,10 +340,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='ValidateDataConnectionAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> ValidateDataConnectionAsync(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.ValidateDataConnection");
             scope.Start();
@@ -447,10 +379,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='ValidateDataConnection(RequestContent,RequestContext)']/*" />
         public virtual Response ValidateDataConnection(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.ValidateDataConnection");
             scope.Start();
@@ -474,14 +403,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDataConnectionAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<DataConnection>> GetDataConnectionAsync(string dataConnectionName, CancellationToken cancellationToken = default)
         {
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetDataConnectionAsync(dataConnectionName, context).ConfigureAwait(false);
@@ -496,14 +418,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDataConnection(string,CancellationToken)']/*" />
         public virtual Response<DataConnection> GetDataConnection(string dataConnectionName, CancellationToken cancellationToken = default)
         {
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetDataConnection(dataConnectionName, context);
@@ -534,14 +449,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDataConnectionAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetDataConnectionAsync(string dataConnectionName, RequestContext context)
         {
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.GetDataConnection");
             scope.Start();
@@ -581,14 +489,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDataConnection(string,RequestContext)']/*" />
         public virtual Response GetDataConnection(string dataConnectionName, RequestContext context)
         {
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.GetDataConnection");
             scope.Start();
@@ -613,18 +514,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceDataConnectionAsync(string,DataConnectionPayload,CancellationToken)']/*" />
         public virtual async Task<Response<DataConnection>> CreateOrReplaceDataConnectionAsync(string dataConnectionName, DataConnectionPayload dataConnectionPayload, CancellationToken cancellationToken = default)
         {
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
-            if (dataConnectionPayload == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionPayload));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+            Argument.AssertNotNull(dataConnectionPayload, nameof(dataConnectionPayload));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = dataConnectionPayload.ToRequestContent();
@@ -641,18 +532,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceDataConnection(string,DataConnectionPayload,CancellationToken)']/*" />
         public virtual Response<DataConnection> CreateOrReplaceDataConnection(string dataConnectionName, DataConnectionPayload dataConnectionPayload, CancellationToken cancellationToken = default)
         {
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
-            if (dataConnectionPayload == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionPayload));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+            Argument.AssertNotNull(dataConnectionPayload, nameof(dataConnectionPayload));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = dataConnectionPayload.ToRequestContent();
@@ -685,18 +566,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceDataConnectionAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrReplaceDataConnectionAsync(string dataConnectionName, RequestContent content, RequestContext context = null)
         {
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.CreateOrReplaceDataConnection");
             scope.Start();
@@ -737,18 +608,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceDataConnection(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrReplaceDataConnection(string dataConnectionName, RequestContent content, RequestContext context = null)
         {
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.CreateOrReplaceDataConnection");
             scope.Start();
@@ -784,14 +645,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='DeleteDataConnectionAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteDataConnectionAsync(string dataConnectionName, RequestContext context = null)
         {
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.DeleteDataConnection");
             scope.Start();
@@ -827,14 +681,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='DeleteDataConnection(string,RequestContext)']/*" />
         public virtual Response DeleteDataConnection(string dataConnectionName, RequestContext context = null)
         {
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.DeleteDataConnection");
             scope.Start();
@@ -857,10 +704,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='ValidateDiscoveryGroupAsync(DiscoveryGroupPayload,CancellationToken)']/*" />
         public virtual async Task<Response<ValidateResult>> ValidateDiscoveryGroupAsync(DiscoveryGroupPayload discoveryGroupPayload, CancellationToken cancellationToken = default)
         {
-            if (discoveryGroupPayload == null)
-            {
-                throw new ArgumentNullException(nameof(discoveryGroupPayload));
-            }
+            Argument.AssertNotNull(discoveryGroupPayload, nameof(discoveryGroupPayload));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = discoveryGroupPayload.ToRequestContent();
@@ -875,10 +719,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='ValidateDiscoveryGroup(DiscoveryGroupPayload,CancellationToken)']/*" />
         public virtual Response<ValidateResult> ValidateDiscoveryGroup(DiscoveryGroupPayload discoveryGroupPayload, CancellationToken cancellationToken = default)
         {
-            if (discoveryGroupPayload == null)
-            {
-                throw new ArgumentNullException(nameof(discoveryGroupPayload));
-            }
+            Argument.AssertNotNull(discoveryGroupPayload, nameof(discoveryGroupPayload));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = discoveryGroupPayload.ToRequestContent();
@@ -909,10 +750,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='ValidateDiscoveryGroupAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> ValidateDiscoveryGroupAsync(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.ValidateDiscoveryGroup");
             scope.Start();
@@ -951,10 +789,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='ValidateDiscoveryGroup(RequestContent,RequestContext)']/*" />
         public virtual Response ValidateDiscoveryGroup(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.ValidateDiscoveryGroup");
             scope.Start();
@@ -978,14 +813,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoveryGroupAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<DiscoveryGroup>> GetDiscoveryGroupAsync(string groupName, CancellationToken cancellationToken = default)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetDiscoveryGroupAsync(groupName, context).ConfigureAwait(false);
@@ -1000,14 +828,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoveryGroup(string,CancellationToken)']/*" />
         public virtual Response<DiscoveryGroup> GetDiscoveryGroup(string groupName, CancellationToken cancellationToken = default)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetDiscoveryGroup(groupName, context);
@@ -1038,14 +859,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoveryGroupAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetDiscoveryGroupAsync(string groupName, RequestContext context)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.GetDiscoveryGroup");
             scope.Start();
@@ -1085,14 +899,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoveryGroup(string,RequestContext)']/*" />
         public virtual Response GetDiscoveryGroup(string groupName, RequestContext context)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.GetDiscoveryGroup");
             scope.Start();
@@ -1117,18 +924,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceDiscoveryGroupAsync(string,DiscoveryGroupPayload,CancellationToken)']/*" />
         public virtual async Task<Response<DiscoveryGroup>> CreateOrReplaceDiscoveryGroupAsync(string groupName, DiscoveryGroupPayload discoveryGroupPayload, CancellationToken cancellationToken = default)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
-            if (discoveryGroupPayload == null)
-            {
-                throw new ArgumentNullException(nameof(discoveryGroupPayload));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNull(discoveryGroupPayload, nameof(discoveryGroupPayload));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = discoveryGroupPayload.ToRequestContent();
@@ -1145,18 +942,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceDiscoveryGroup(string,DiscoveryGroupPayload,CancellationToken)']/*" />
         public virtual Response<DiscoveryGroup> CreateOrReplaceDiscoveryGroup(string groupName, DiscoveryGroupPayload discoveryGroupPayload, CancellationToken cancellationToken = default)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
-            if (discoveryGroupPayload == null)
-            {
-                throw new ArgumentNullException(nameof(discoveryGroupPayload));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNull(discoveryGroupPayload, nameof(discoveryGroupPayload));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = discoveryGroupPayload.ToRequestContent();
@@ -1189,18 +976,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceDiscoveryGroupAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrReplaceDiscoveryGroupAsync(string groupName, RequestContent content, RequestContext context = null)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.CreateOrReplaceDiscoveryGroup");
             scope.Start();
@@ -1241,18 +1018,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceDiscoveryGroup(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrReplaceDiscoveryGroup(string groupName, RequestContent content, RequestContext context = null)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.CreateOrReplaceDiscoveryGroup");
             scope.Start();
@@ -1288,14 +1055,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='RunDiscoveryGroupAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> RunDiscoveryGroupAsync(string groupName, RequestContext context = null)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.RunDiscoveryGroup");
             scope.Start();
@@ -1331,14 +1091,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='RunDiscoveryGroup(string,RequestContext)']/*" />
         public virtual Response RunDiscoveryGroup(string groupName, RequestContext context = null)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.RunDiscoveryGroup");
             scope.Start();
@@ -1362,14 +1115,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoveryTemplateAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<DiscoveryTemplate>> GetDiscoveryTemplateAsync(string templateId, CancellationToken cancellationToken = default)
         {
-            if (templateId == null)
-            {
-                throw new ArgumentNullException(nameof(templateId));
-            }
-            if (templateId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(templateId));
-            }
+            Argument.AssertNotNullOrEmpty(templateId, nameof(templateId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetDiscoveryTemplateAsync(templateId, context).ConfigureAwait(false);
@@ -1384,14 +1130,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoveryTemplate(string,CancellationToken)']/*" />
         public virtual Response<DiscoveryTemplate> GetDiscoveryTemplate(string templateId, CancellationToken cancellationToken = default)
         {
-            if (templateId == null)
-            {
-                throw new ArgumentNullException(nameof(templateId));
-            }
-            if (templateId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(templateId));
-            }
+            Argument.AssertNotNullOrEmpty(templateId, nameof(templateId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetDiscoveryTemplate(templateId, context);
@@ -1422,14 +1161,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoveryTemplateAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetDiscoveryTemplateAsync(string templateId, RequestContext context)
         {
-            if (templateId == null)
-            {
-                throw new ArgumentNullException(nameof(templateId));
-            }
-            if (templateId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(templateId));
-            }
+            Argument.AssertNotNullOrEmpty(templateId, nameof(templateId));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.GetDiscoveryTemplate");
             scope.Start();
@@ -1469,14 +1201,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoveryTemplate(string,RequestContext)']/*" />
         public virtual Response GetDiscoveryTemplate(string templateId, RequestContext context)
         {
-            if (templateId == null)
-            {
-                throw new ArgumentNullException(nameof(templateId));
-            }
-            if (templateId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(templateId));
-            }
+            Argument.AssertNotNullOrEmpty(templateId, nameof(templateId));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.GetDiscoveryTemplate");
             scope.Start();
@@ -1589,10 +1314,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSnapshotAsync(ReportAssetSnapshotPayload,CancellationToken)']/*" />
         public virtual async Task<Response<ReportAssetSnapshotResult>> GetSnapshotAsync(ReportAssetSnapshotPayload reportAssetSnapshotPayload, CancellationToken cancellationToken = default)
         {
-            if (reportAssetSnapshotPayload == null)
-            {
-                throw new ArgumentNullException(nameof(reportAssetSnapshotPayload));
-            }
+            Argument.AssertNotNull(reportAssetSnapshotPayload, nameof(reportAssetSnapshotPayload));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = reportAssetSnapshotPayload.ToRequestContent();
@@ -1607,10 +1329,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSnapshot(ReportAssetSnapshotPayload,CancellationToken)']/*" />
         public virtual Response<ReportAssetSnapshotResult> GetSnapshot(ReportAssetSnapshotPayload reportAssetSnapshotPayload, CancellationToken cancellationToken = default)
         {
-            if (reportAssetSnapshotPayload == null)
-            {
-                throw new ArgumentNullException(nameof(reportAssetSnapshotPayload));
-            }
+            Argument.AssertNotNull(reportAssetSnapshotPayload, nameof(reportAssetSnapshotPayload));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = reportAssetSnapshotPayload.ToRequestContent();
@@ -1641,10 +1360,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSnapshotAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> GetSnapshotAsync(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.GetSnapshot");
             scope.Start();
@@ -1683,10 +1399,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSnapshot(RequestContent,RequestContext)']/*" />
         public virtual Response GetSnapshot(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.GetSnapshot");
             scope.Start();
@@ -1709,10 +1422,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSummaryAsync(ReportAssetSummaryPayload,CancellationToken)']/*" />
         public virtual async Task<Response<ReportAssetSummaryResult>> GetSummaryAsync(ReportAssetSummaryPayload reportAssetSummaryPayload, CancellationToken cancellationToken = default)
         {
-            if (reportAssetSummaryPayload == null)
-            {
-                throw new ArgumentNullException(nameof(reportAssetSummaryPayload));
-            }
+            Argument.AssertNotNull(reportAssetSummaryPayload, nameof(reportAssetSummaryPayload));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = reportAssetSummaryPayload.ToRequestContent();
@@ -1727,10 +1437,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSummary(ReportAssetSummaryPayload,CancellationToken)']/*" />
         public virtual Response<ReportAssetSummaryResult> GetSummary(ReportAssetSummaryPayload reportAssetSummaryPayload, CancellationToken cancellationToken = default)
         {
-            if (reportAssetSummaryPayload == null)
-            {
-                throw new ArgumentNullException(nameof(reportAssetSummaryPayload));
-            }
+            Argument.AssertNotNull(reportAssetSummaryPayload, nameof(reportAssetSummaryPayload));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = reportAssetSummaryPayload.ToRequestContent();
@@ -1761,10 +1468,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSummaryAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> GetSummaryAsync(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.GetSummary");
             scope.Start();
@@ -1803,10 +1507,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSummary(RequestContent,RequestContext)']/*" />
         public virtual Response GetSummary(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.GetSummary");
             scope.Start();
@@ -1830,14 +1531,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSavedFilterAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<SavedFilter>> GetSavedFilterAsync(string filterName, CancellationToken cancellationToken = default)
         {
-            if (filterName == null)
-            {
-                throw new ArgumentNullException(nameof(filterName));
-            }
-            if (filterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(filterName));
-            }
+            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetSavedFilterAsync(filterName, context).ConfigureAwait(false);
@@ -1852,14 +1546,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSavedFilter(string,CancellationToken)']/*" />
         public virtual Response<SavedFilter> GetSavedFilter(string filterName, CancellationToken cancellationToken = default)
         {
-            if (filterName == null)
-            {
-                throw new ArgumentNullException(nameof(filterName));
-            }
-            if (filterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(filterName));
-            }
+            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetSavedFilter(filterName, context);
@@ -1890,14 +1577,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSavedFilterAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetSavedFilterAsync(string filterName, RequestContext context)
         {
-            if (filterName == null)
-            {
-                throw new ArgumentNullException(nameof(filterName));
-            }
-            if (filterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(filterName));
-            }
+            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.GetSavedFilter");
             scope.Start();
@@ -1937,14 +1617,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSavedFilter(string,RequestContext)']/*" />
         public virtual Response GetSavedFilter(string filterName, RequestContext context)
         {
-            if (filterName == null)
-            {
-                throw new ArgumentNullException(nameof(filterName));
-            }
-            if (filterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(filterName));
-            }
+            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.GetSavedFilter");
             scope.Start();
@@ -1969,18 +1642,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceSavedFilterAsync(string,SavedFilterPayload,CancellationToken)']/*" />
         public virtual async Task<Response<SavedFilter>> CreateOrReplaceSavedFilterAsync(string filterName, SavedFilterPayload savedFilterPayload, CancellationToken cancellationToken = default)
         {
-            if (filterName == null)
-            {
-                throw new ArgumentNullException(nameof(filterName));
-            }
-            if (filterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(filterName));
-            }
-            if (savedFilterPayload == null)
-            {
-                throw new ArgumentNullException(nameof(savedFilterPayload));
-            }
+            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+            Argument.AssertNotNull(savedFilterPayload, nameof(savedFilterPayload));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = savedFilterPayload.ToRequestContent();
@@ -1997,18 +1660,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceSavedFilter(string,SavedFilterPayload,CancellationToken)']/*" />
         public virtual Response<SavedFilter> CreateOrReplaceSavedFilter(string filterName, SavedFilterPayload savedFilterPayload, CancellationToken cancellationToken = default)
         {
-            if (filterName == null)
-            {
-                throw new ArgumentNullException(nameof(filterName));
-            }
-            if (filterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(filterName));
-            }
-            if (savedFilterPayload == null)
-            {
-                throw new ArgumentNullException(nameof(savedFilterPayload));
-            }
+            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+            Argument.AssertNotNull(savedFilterPayload, nameof(savedFilterPayload));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = savedFilterPayload.ToRequestContent();
@@ -2041,18 +1694,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceSavedFilterAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrReplaceSavedFilterAsync(string filterName, RequestContent content, RequestContext context = null)
         {
-            if (filterName == null)
-            {
-                throw new ArgumentNullException(nameof(filterName));
-            }
-            if (filterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(filterName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.CreateOrReplaceSavedFilter");
             scope.Start();
@@ -2093,18 +1736,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceSavedFilter(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrReplaceSavedFilter(string filterName, RequestContent content, RequestContext context = null)
         {
-            if (filterName == null)
-            {
-                throw new ArgumentNullException(nameof(filterName));
-            }
-            if (filterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(filterName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.CreateOrReplaceSavedFilter");
             scope.Start();
@@ -2140,14 +1773,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='DeleteSavedFilterAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteSavedFilterAsync(string filterName, RequestContext context = null)
         {
-            if (filterName == null)
-            {
-                throw new ArgumentNullException(nameof(filterName));
-            }
-            if (filterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(filterName));
-            }
+            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.DeleteSavedFilter");
             scope.Start();
@@ -2183,14 +1809,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='DeleteSavedFilter(string,RequestContext)']/*" />
         public virtual Response DeleteSavedFilter(string filterName, RequestContext context = null)
         {
-            if (filterName == null)
-            {
-                throw new ArgumentNullException(nameof(filterName));
-            }
-            if (filterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(filterName));
-            }
+            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.DeleteSavedFilter");
             scope.Start();
@@ -2214,14 +1833,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetTaskAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<TaskResource>> GetTaskAsync(string taskId, CancellationToken cancellationToken = default)
         {
-            if (taskId == null)
-            {
-                throw new ArgumentNullException(nameof(taskId));
-            }
-            if (taskId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(taskId));
-            }
+            Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetTaskAsync(taskId, context).ConfigureAwait(false);
@@ -2236,14 +1848,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetTask(string,CancellationToken)']/*" />
         public virtual Response<TaskResource> GetTask(string taskId, CancellationToken cancellationToken = default)
         {
-            if (taskId == null)
-            {
-                throw new ArgumentNullException(nameof(taskId));
-            }
-            if (taskId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(taskId));
-            }
+            Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetTask(taskId, context);
@@ -2274,14 +1879,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetTaskAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetTaskAsync(string taskId, RequestContext context)
         {
-            if (taskId == null)
-            {
-                throw new ArgumentNullException(nameof(taskId));
-            }
-            if (taskId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(taskId));
-            }
+            Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.GetTask");
             scope.Start();
@@ -2321,14 +1919,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetTask(string,RequestContext)']/*" />
         public virtual Response GetTask(string taskId, RequestContext context)
         {
-            if (taskId == null)
-            {
-                throw new ArgumentNullException(nameof(taskId));
-            }
-            if (taskId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(taskId));
-            }
+            Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.GetTask");
             scope.Start();
@@ -2352,14 +1943,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CancelTaskAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<TaskResource>> CancelTaskAsync(string taskId, CancellationToken cancellationToken = default)
         {
-            if (taskId == null)
-            {
-                throw new ArgumentNullException(nameof(taskId));
-            }
-            if (taskId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(taskId));
-            }
+            Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CancelTaskAsync(taskId, context).ConfigureAwait(false);
@@ -2374,14 +1958,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CancelTask(string,CancellationToken)']/*" />
         public virtual Response<TaskResource> CancelTask(string taskId, CancellationToken cancellationToken = default)
         {
-            if (taskId == null)
-            {
-                throw new ArgumentNullException(nameof(taskId));
-            }
-            if (taskId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(taskId));
-            }
+            Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CancelTask(taskId, context);
@@ -2412,14 +1989,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CancelTaskAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> CancelTaskAsync(string taskId, RequestContext context)
         {
-            if (taskId == null)
-            {
-                throw new ArgumentNullException(nameof(taskId));
-            }
-            if (taskId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(taskId));
-            }
+            Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.CancelTask");
             scope.Start();
@@ -2459,14 +2029,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CancelTask(string,RequestContext)']/*" />
         public virtual Response CancelTask(string taskId, RequestContext context)
         {
-            if (taskId == null)
-            {
-                throw new ArgumentNullException(nameof(taskId));
-            }
-            if (taskId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(taskId));
-            }
+            Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
             using var scope = ClientDiagnostics.CreateScope("EasmClient.CancelTask");
             scope.Start();
@@ -2755,14 +2318,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoveryGroupRunsAsync(string,string,int?,int?,CancellationToken)']/*" />
         public virtual AsyncPageable<DiscoveryRunResult> GetDiscoveryGroupRunsAsync(string groupName, string filter = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDiscoveryGroupRunsRequest(groupName, filter, skip, maxpagesize, context);
@@ -2781,14 +2337,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoveryGroupRuns(string,string,int?,int?,CancellationToken)']/*" />
         public virtual Pageable<DiscoveryRunResult> GetDiscoveryGroupRuns(string groupName, string filter = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDiscoveryGroupRunsRequest(groupName, filter, skip, maxpagesize, context);
@@ -2823,14 +2372,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoveryGroupRunsAsync(string,string,int?,int?,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetDiscoveryGroupRunsAsync(string groupName, string filter, int? skip, int? maxpagesize, RequestContext context)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDiscoveryGroupRunsRequest(groupName, filter, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDiscoveryGroupRunsNextPageRequest(nextLink, groupName, filter, skip, maxpagesize, context);
@@ -2864,14 +2406,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoveryGroupRuns(string,string,int?,int?,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetDiscoveryGroupRuns(string groupName, string filter, int? skip, int? maxpagesize, RequestContext context)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDiscoveryGroupRunsRequest(groupName, filter, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDiscoveryGroupRunsNextPageRequest(nextLink, groupName, filter, skip, maxpagesize, context);

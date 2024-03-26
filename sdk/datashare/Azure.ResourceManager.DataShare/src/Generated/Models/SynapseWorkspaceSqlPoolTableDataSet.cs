@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
@@ -21,10 +20,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <exception cref="ArgumentNullException"> <paramref name="synapseWorkspaceSqlPoolTableResourceId"/> is null. </exception>
         public SynapseWorkspaceSqlPoolTableDataSet(ResourceIdentifier synapseWorkspaceSqlPoolTableResourceId)
         {
-            if (synapseWorkspaceSqlPoolTableResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(synapseWorkspaceSqlPoolTableResourceId));
-            }
+            Argument.AssertNotNull(synapseWorkspaceSqlPoolTableResourceId, nameof(synapseWorkspaceSqlPoolTableResourceId));
 
             SynapseWorkspaceSqlPoolTableResourceId = synapseWorkspaceSqlPoolTableResourceId;
             Kind = DataSetKind.SynapseWorkspaceSqlPoolTable;

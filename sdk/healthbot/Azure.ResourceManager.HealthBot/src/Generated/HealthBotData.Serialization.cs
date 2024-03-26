@@ -24,23 +24,23 @@ namespace Azure.ResourceManager.HealthBot
             var format = options.Format == "W" ? ((IPersistableModel<HealthBotData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthBotData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthBotData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
-            if (Identity != null)
+            writer.WriteObjectValue<HealthBotSku>(Sku, options);
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<HealthBotProperties>(Properties, options);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HealthBot
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HealthBot
             var format = options.Format == "W" ? ((IPersistableModel<HealthBotData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthBotData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthBotData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.HealthBot
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HealthBotData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthBotData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.HealthBot
                         return DeserializeHealthBotData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HealthBotData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthBotData)} does not support reading '{options.Format}' format.");
             }
         }
 

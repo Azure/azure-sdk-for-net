@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<TenantAccessInfoData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TenantAccessInfoData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TenantAccessInfoData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AccessInfoType != null)
+            if (Optional.IsDefined(AccessInfoType))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(AccessInfoType);
             }
-            if (PrincipalId != null)
+            if (Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId);
             }
-            if (IsDirectAccessEnabled.HasValue)
+            if (Optional.IsDefined(IsDirectAccessEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsDirectAccessEnabled.Value);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<TenantAccessInfoData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TenantAccessInfoData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TenantAccessInfoData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TenantAccessInfoData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TenantAccessInfoData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ApiManagement
                         return DeserializeTenantAccessInfoData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TenantAccessInfoData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TenantAccessInfoData)} does not support reading '{options.Format}' format.");
             }
         }
 

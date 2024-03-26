@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureDatabricksDeltaLakeExportCommand>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeExportCommand)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeExportCommand)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DateFormat != null)
+            if (Optional.IsDefined(DateFormat))
             {
                 writer.WritePropertyName("dateFormat"u8);
                 JsonSerializer.Serialize(writer, DateFormat);
             }
-            if (TimestampFormat != null)
+            if (Optional.IsDefined(TimestampFormat))
             {
                 writer.WritePropertyName("timestampFormat"u8);
                 JsonSerializer.Serialize(writer, TimestampFormat);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureDatabricksDeltaLakeExportCommand>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeExportCommand)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeExportCommand)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeExportCommand)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeExportCommand)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeAzureDatabricksDeltaLakeExportCommand(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeExportCommand)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeExportCommand)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -23,7 +22,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<MessageContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MessageContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MessageContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +51,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<MessageContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MessageContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MessageContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,8 +70,8 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 switch (discriminator.GetString())
                 {
-                    case "text": return MessageTextContent.DeserializeMessageTextContent(element, options);
                     case "image_file": return MessageImageFileContent.DeserializeMessageImageFileContent(element, options);
+                    case "text": return MessageTextContent.DeserializeMessageTextContent(element, options);
                 }
             }
             return UnknownMessageContent.DeserializeUnknownMessageContent(element, options);
@@ -87,7 +86,7 @@ namespace Azure.AI.OpenAI.Assistants
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MessageContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MessageContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -103,7 +102,7 @@ namespace Azure.AI.OpenAI.Assistants
                         return DeserializeMessageContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MessageContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MessageContent)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -121,7 +120,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<MessageContent>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

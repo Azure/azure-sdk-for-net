@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirmwareAnalysisStatusMessage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirmwareAnalysisStatusMessage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirmwareAnalysisStatusMessage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ErrorCode.HasValue)
+            if (Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteNumberValue(ErrorCode.Value);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirmwareAnalysisStatusMessage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirmwareAnalysisStatusMessage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirmwareAnalysisStatusMessage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirmwareAnalysisStatusMessage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirmwareAnalysisStatusMessage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         return DeserializeFirmwareAnalysisStatusMessage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirmwareAnalysisStatusMessage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirmwareAnalysisStatusMessage)} does not support reading '{options.Format}' format.");
             }
         }
 

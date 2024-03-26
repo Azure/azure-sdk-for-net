@@ -20,13 +20,13 @@ namespace Azure.Communication.PhoneNumbers
             writer.WritePropertyName("assignmentType"u8);
             writer.WriteStringValue(AssignmentType.ToString());
             writer.WritePropertyName("capabilities"u8);
-            writer.WriteObjectValue(Capabilities);
-            if (AreaCode != null)
+            writer.WriteObjectValue<PhoneNumberCapabilities>(Capabilities);
+            if (Optional.IsDefined(AreaCode))
             {
                 writer.WritePropertyName("areaCode"u8);
                 writer.WriteStringValue(AreaCode);
             }
-            if (Quantity.HasValue)
+            if (Optional.IsDefined(Quantity))
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);

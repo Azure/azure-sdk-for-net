@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverOperationStatusError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverOperationStatusError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverOperationStatusError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Code != null)
+            if (options.Format != "W" && Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && !(Details is ChangeTrackingList<MoverOperationStatusError> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MoverOperationStatusError>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(AdditionalInfo is ChangeTrackingList<MoverOperationErrorAdditionalInfo> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalInfo))
             {
                 if (AdditionalInfo != null)
                 {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteStartArray();
                     foreach (var item in AdditionalInfo)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<MoverOperationErrorAdditionalInfo>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverOperationStatusError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverOperationStatusError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverOperationStatusError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MoverOperationStatusError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverOperationStatusError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeMoverOperationStatusError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MoverOperationStatusError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverOperationStatusError)} does not support reading '{options.Format}' format.");
             }
         }
 

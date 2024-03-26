@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
@@ -23,21 +22,21 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<AssetUpdatePayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssetUpdatePayload)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssetUpdatePayload)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (ExternalId != null)
+            if (Optional.IsDefined(ExternalId))
             {
                 writer.WritePropertyName("externalId"u8);
                 writer.WriteStringValue(ExternalId);
             }
-            if (!(Labels is ChangeTrackingDictionary<string, bool> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartObject();
@@ -48,7 +47,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndObject();
             }
-            if (Transfers.HasValue)
+            if (Optional.IsDefined(Transfers))
             {
                 writer.WritePropertyName("transfers"u8);
                 writer.WriteStringValue(Transfers.Value.ToString());
@@ -76,7 +75,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<AssetUpdatePayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssetUpdatePayload)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssetUpdatePayload)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -154,7 +153,7 @@ namespace Azure.Analytics.Defender.Easm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AssetUpdatePayload)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssetUpdatePayload)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -170,7 +169,7 @@ namespace Azure.Analytics.Defender.Easm
                         return DeserializeAssetUpdatePayload(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssetUpdatePayload)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssetUpdatePayload)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -188,7 +187,7 @@ namespace Azure.Analytics.Defender.Easm
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AssetUpdatePayload>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

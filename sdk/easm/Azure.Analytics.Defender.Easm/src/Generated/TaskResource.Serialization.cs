@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
@@ -23,7 +22,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<TaskResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TaskResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TaskResource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,37 +31,37 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (StartedAt.HasValue)
+            if (Optional.IsDefined(StartedAt))
             {
                 writer.WritePropertyName("startedAt"u8);
                 writer.WriteStringValue(StartedAt.Value, "O");
             }
-            if (CompletedAt.HasValue)
+            if (Optional.IsDefined(CompletedAt))
             {
                 writer.WritePropertyName("completedAt"u8);
                 writer.WriteStringValue(CompletedAt.Value, "O");
             }
-            if (LastPolledAt.HasValue)
+            if (Optional.IsDefined(LastPolledAt))
             {
                 writer.WritePropertyName("lastPolledAt"u8);
                 writer.WriteStringValue(LastPolledAt.Value, "O");
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Phase.HasValue)
+            if (Optional.IsDefined(Phase))
             {
                 writer.WritePropertyName("phase"u8);
                 writer.WriteStringValue(Phase.Value.ToString());
             }
-            if (Reason != null)
+            if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (!(Metadata is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -108,7 +107,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<TaskResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TaskResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TaskResource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -238,7 +237,7 @@ namespace Azure.Analytics.Defender.Easm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TaskResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TaskResource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -254,7 +253,7 @@ namespace Azure.Analytics.Defender.Easm
                         return DeserializeTaskResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TaskResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TaskResource)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -272,7 +271,7 @@ namespace Azure.Analytics.Defender.Easm
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<TaskResource>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

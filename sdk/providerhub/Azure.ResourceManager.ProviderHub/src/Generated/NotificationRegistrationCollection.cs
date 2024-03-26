@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ProviderHub
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="notificationRegistrationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NotificationRegistrationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string notificationRegistrationName, NotificationRegistrationData data, CancellationToken cancellationToken = default)
         {
-            if (notificationRegistrationName == null)
-            {
-                throw new ArgumentNullException(nameof(notificationRegistrationName));
-            }
-            if (notificationRegistrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(notificationRegistrationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(notificationRegistrationName, nameof(notificationRegistrationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _notificationRegistrationClientDiagnostics.CreateScope("NotificationRegistrationCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="notificationRegistrationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NotificationRegistrationResource> CreateOrUpdate(WaitUntil waitUntil, string notificationRegistrationName, NotificationRegistrationData data, CancellationToken cancellationToken = default)
         {
-            if (notificationRegistrationName == null)
-            {
-                throw new ArgumentNullException(nameof(notificationRegistrationName));
-            }
-            if (notificationRegistrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(notificationRegistrationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(notificationRegistrationName, nameof(notificationRegistrationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _notificationRegistrationClientDiagnostics.CreateScope("NotificationRegistrationCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="notificationRegistrationName"/> is null. </exception>
         public virtual async Task<Response<NotificationRegistrationResource>> GetAsync(string notificationRegistrationName, CancellationToken cancellationToken = default)
         {
-            if (notificationRegistrationName == null)
-            {
-                throw new ArgumentNullException(nameof(notificationRegistrationName));
-            }
-            if (notificationRegistrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(notificationRegistrationName));
-            }
+            Argument.AssertNotNullOrEmpty(notificationRegistrationName, nameof(notificationRegistrationName));
 
             using var scope = _notificationRegistrationClientDiagnostics.CreateScope("NotificationRegistrationCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="notificationRegistrationName"/> is null. </exception>
         public virtual Response<NotificationRegistrationResource> Get(string notificationRegistrationName, CancellationToken cancellationToken = default)
         {
-            if (notificationRegistrationName == null)
-            {
-                throw new ArgumentNullException(nameof(notificationRegistrationName));
-            }
-            if (notificationRegistrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(notificationRegistrationName));
-            }
+            Argument.AssertNotNullOrEmpty(notificationRegistrationName, nameof(notificationRegistrationName));
 
             using var scope = _notificationRegistrationClientDiagnostics.CreateScope("NotificationRegistrationCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="notificationRegistrationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string notificationRegistrationName, CancellationToken cancellationToken = default)
         {
-            if (notificationRegistrationName == null)
-            {
-                throw new ArgumentNullException(nameof(notificationRegistrationName));
-            }
-            if (notificationRegistrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(notificationRegistrationName));
-            }
+            Argument.AssertNotNullOrEmpty(notificationRegistrationName, nameof(notificationRegistrationName));
 
             using var scope = _notificationRegistrationClientDiagnostics.CreateScope("NotificationRegistrationCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="notificationRegistrationName"/> is null. </exception>
         public virtual Response<bool> Exists(string notificationRegistrationName, CancellationToken cancellationToken = default)
         {
-            if (notificationRegistrationName == null)
-            {
-                throw new ArgumentNullException(nameof(notificationRegistrationName));
-            }
-            if (notificationRegistrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(notificationRegistrationName));
-            }
+            Argument.AssertNotNullOrEmpty(notificationRegistrationName, nameof(notificationRegistrationName));
 
             using var scope = _notificationRegistrationClientDiagnostics.CreateScope("NotificationRegistrationCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="notificationRegistrationName"/> is null. </exception>
         public virtual async Task<NullableResponse<NotificationRegistrationResource>> GetIfExistsAsync(string notificationRegistrationName, CancellationToken cancellationToken = default)
         {
-            if (notificationRegistrationName == null)
-            {
-                throw new ArgumentNullException(nameof(notificationRegistrationName));
-            }
-            if (notificationRegistrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(notificationRegistrationName));
-            }
+            Argument.AssertNotNullOrEmpty(notificationRegistrationName, nameof(notificationRegistrationName));
 
             using var scope = _notificationRegistrationClientDiagnostics.CreateScope("NotificationRegistrationCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="notificationRegistrationName"/> is null. </exception>
         public virtual NullableResponse<NotificationRegistrationResource> GetIfExists(string notificationRegistrationName, CancellationToken cancellationToken = default)
         {
-            if (notificationRegistrationName == null)
-            {
-                throw new ArgumentNullException(nameof(notificationRegistrationName));
-            }
-            if (notificationRegistrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(notificationRegistrationName));
-            }
+            Argument.AssertNotNullOrEmpty(notificationRegistrationName, nameof(notificationRegistrationName));
 
             using var scope = _notificationRegistrationClientDiagnostics.CreateScope("NotificationRegistrationCollection.GetIfExists");
             scope.Start();

@@ -19,7 +19,7 @@ namespace Azure.Search.Documents.Models
             writer.WriteStartArray();
             foreach (var item in Actions)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<IndexAction>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

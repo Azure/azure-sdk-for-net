@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Gets the key. </summary>
+        [WirePath("key")]
         public string Key { get; }
         /// <summary>
         /// Any object
@@ -93,6 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("value")]
         public BinaryData Value { get; }
     }
 }

@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineDisk)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineDisk)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && CapacityGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CapacityGB))
             {
                 writer.WritePropertyName("capacityGB"u8);
                 writer.WriteNumberValue(CapacityGB.Value);
             }
-            if (options.Format != "W" && Connection.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Connection))
             {
                 writer.WritePropertyName("connection"u8);
                 writer.WriteStringValue(Connection.Value.ToString());
             }
-            if (options.Format != "W" && DiskType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DiskType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DiskType.Value.ToString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineDisk)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineDisk)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineDisk)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineDisk)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeMachineDisk(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineDisk)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineDisk)} does not support reading '{options.Format}' format.");
             }
         }
 

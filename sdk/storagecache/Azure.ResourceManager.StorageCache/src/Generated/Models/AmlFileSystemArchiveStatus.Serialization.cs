@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemArchiveStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlFileSystemArchiveStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlFileSystemArchiveStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && LastCompletionOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastCompletionOn))
             {
                 writer.WritePropertyName("lastCompletionTime"u8);
                 writer.WriteStringValue(LastCompletionOn.Value, "O");
             }
-            if (options.Format != "W" && LastStartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastStartedOn))
             {
                 writer.WritePropertyName("lastStartedTime"u8);
                 writer.WriteStringValue(LastStartedOn.Value, "O");
             }
-            if (options.Format != "W" && PercentComplete.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PercentComplete))
             {
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (options.Format != "W" && ErrorCode != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (options.Format != "W" && ErrorMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemArchiveStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlFileSystemArchiveStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlFileSystemArchiveStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AmlFileSystemArchiveStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlFileSystemArchiveStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         return DeserializeAmlFileSystemArchiveStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AmlFileSystemArchiveStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlFileSystemArchiveStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

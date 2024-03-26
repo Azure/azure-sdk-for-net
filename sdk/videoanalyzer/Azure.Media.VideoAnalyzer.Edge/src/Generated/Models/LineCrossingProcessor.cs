@@ -25,18 +25,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/> or <paramref name="lines"/> is null. </exception>
         public LineCrossingProcessor(string name, IEnumerable<NodeInput> inputs, IEnumerable<NamedLineBase> lines) : base(name, inputs)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (inputs == null)
-            {
-                throw new ArgumentNullException(nameof(inputs));
-            }
-            if (lines == null)
-            {
-                throw new ArgumentNullException(nameof(lines));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            Argument.AssertNotNull(lines, nameof(lines));
 
             Lines = lines.ToList();
             Type = "#Microsoft.VideoAnalyzer.LineCrossingProcessor";

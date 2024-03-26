@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiscoveryConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiscoveryConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiscoveryConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CentralServerVmId != null)
+            if (Optional.IsDefined(CentralServerVmId))
             {
                 writer.WritePropertyName("centralServerVmId"u8);
                 writer.WriteStringValue(CentralServerVmId);
             }
-            if (ManagedRgStorageAccountName != null)
+            if (Optional.IsDefined(ManagedRgStorageAccountName))
             {
                 writer.WritePropertyName("managedRgStorageAccountName"u8);
                 writer.WriteStringValue(ManagedRgStorageAccountName);
             }
-            if (options.Format != "W" && AppLocation.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AppLocation))
             {
                 writer.WritePropertyName("appLocation"u8);
                 writer.WriteStringValue(AppLocation.Value);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiscoveryConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiscoveryConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiscoveryConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiscoveryConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiscoveryConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeDiscoveryConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiscoveryConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiscoveryConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

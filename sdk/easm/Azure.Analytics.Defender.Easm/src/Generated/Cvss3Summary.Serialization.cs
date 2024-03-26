@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
@@ -23,91 +22,91 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<Cvss3Summary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Cvss3Summary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Cvss3Summary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (VectorString != null)
+            if (Optional.IsDefined(VectorString))
             {
                 writer.WritePropertyName("vectorString"u8);
                 writer.WriteStringValue(VectorString);
             }
-            if (AttackVector != null)
+            if (Optional.IsDefined(AttackVector))
             {
                 writer.WritePropertyName("attackVector"u8);
                 writer.WriteStringValue(AttackVector);
             }
-            if (AttackComplexity != null)
+            if (Optional.IsDefined(AttackComplexity))
             {
                 writer.WritePropertyName("attackComplexity"u8);
                 writer.WriteStringValue(AttackComplexity);
             }
-            if (PrivilegesRequired != null)
+            if (Optional.IsDefined(PrivilegesRequired))
             {
                 writer.WritePropertyName("privilegesRequired"u8);
                 writer.WriteStringValue(PrivilegesRequired);
             }
-            if (UserInteraction != null)
+            if (Optional.IsDefined(UserInteraction))
             {
                 writer.WritePropertyName("userInteraction"u8);
                 writer.WriteStringValue(UserInteraction);
             }
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (ConfidentialityImpact != null)
+            if (Optional.IsDefined(ConfidentialityImpact))
             {
                 writer.WritePropertyName("confidentialityImpact"u8);
                 writer.WriteStringValue(ConfidentialityImpact);
             }
-            if (IntegrityImpact != null)
+            if (Optional.IsDefined(IntegrityImpact))
             {
                 writer.WritePropertyName("integrityImpact"u8);
                 writer.WriteStringValue(IntegrityImpact);
             }
-            if (AvailabilityImpact != null)
+            if (Optional.IsDefined(AvailabilityImpact))
             {
                 writer.WritePropertyName("availabilityImpact"u8);
                 writer.WriteStringValue(AvailabilityImpact);
             }
-            if (BaseScore.HasValue)
+            if (Optional.IsDefined(BaseScore))
             {
                 writer.WritePropertyName("baseScore"u8);
                 writer.WriteNumberValue(BaseScore.Value);
             }
-            if (BaseSeverity != null)
+            if (Optional.IsDefined(BaseSeverity))
             {
                 writer.WritePropertyName("baseSeverity"u8);
                 writer.WriteStringValue(BaseSeverity);
             }
-            if (ExploitCodeMaturity != null)
+            if (Optional.IsDefined(ExploitCodeMaturity))
             {
                 writer.WritePropertyName("exploitCodeMaturity"u8);
                 writer.WriteStringValue(ExploitCodeMaturity);
             }
-            if (RemediationLevel != null)
+            if (Optional.IsDefined(RemediationLevel))
             {
                 writer.WritePropertyName("remediationLevel"u8);
                 writer.WriteStringValue(RemediationLevel);
             }
-            if (ReportConfidence != null)
+            if (Optional.IsDefined(ReportConfidence))
             {
                 writer.WritePropertyName("reportConfidence"u8);
                 writer.WriteStringValue(ReportConfidence);
             }
-            if (ExploitabilityScore.HasValue)
+            if (Optional.IsDefined(ExploitabilityScore))
             {
                 writer.WritePropertyName("exploitabilityScore"u8);
                 writer.WriteNumberValue(ExploitabilityScore.Value);
             }
-            if (ImpactScore.HasValue)
+            if (Optional.IsDefined(ImpactScore))
             {
                 writer.WritePropertyName("impactScore"u8);
                 writer.WriteNumberValue(ImpactScore.Value);
@@ -135,7 +134,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<Cvss3Summary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Cvss3Summary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Cvss3Summary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -304,7 +303,7 @@ namespace Azure.Analytics.Defender.Easm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Cvss3Summary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Cvss3Summary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -320,7 +319,7 @@ namespace Azure.Analytics.Defender.Easm
                         return DeserializeCvss3Summary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Cvss3Summary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Cvss3Summary)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -338,7 +337,7 @@ namespace Azure.Analytics.Defender.Easm
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<Cvss3Summary>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

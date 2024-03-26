@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<CveSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CveSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CveSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Critical.HasValue)
+            if (Optional.IsDefined(Critical))
             {
                 if (Critical != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("critical");
                 }
             }
-            if (High.HasValue)
+            if (Optional.IsDefined(High))
             {
                 if (High != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("high");
                 }
             }
-            if (Medium.HasValue)
+            if (Optional.IsDefined(Medium))
             {
                 if (Medium != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("medium");
                 }
             }
-            if (Low.HasValue)
+            if (Optional.IsDefined(Low))
             {
                 if (Low != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("low");
                 }
             }
-            if (Unknown.HasValue)
+            if (Optional.IsDefined(Unknown))
             {
                 if (Unknown != null)
                 {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<CveSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CveSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CveSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CveSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CveSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         return DeserializeCveSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CveSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CveSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Synapse
             var format = options.Format == "W" ? ((IPersistableModel<SynapseDedicatedSqlMinimalTlsSettingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseDedicatedSqlMinimalTlsSettingData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseDedicatedSqlMinimalTlsSettingData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (MinimalTlsVersion != null)
+            if (Optional.IsDefined(MinimalTlsVersion))
             {
                 writer.WritePropertyName("minimalTlsVersion"u8);
                 writer.WriteStringValue(MinimalTlsVersion);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Synapse
             var format = options.Format == "W" ? ((IPersistableModel<SynapseDedicatedSqlMinimalTlsSettingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseDedicatedSqlMinimalTlsSettingData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseDedicatedSqlMinimalTlsSettingData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Synapse
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseDedicatedSqlMinimalTlsSettingData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseDedicatedSqlMinimalTlsSettingData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Synapse
                         return DeserializeSynapseDedicatedSqlMinimalTlsSettingData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseDedicatedSqlMinimalTlsSettingData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseDedicatedSqlMinimalTlsSettingData)} does not support reading '{options.Format}' format.");
             }
         }
 

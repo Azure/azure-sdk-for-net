@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<RegionalQuotaCapability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegionalQuotaCapability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RegionalQuotaCapability)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Region.HasValue)
+            if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("regionName"u8);
                 writer.WriteStringValue(Region.Value);
             }
-            if (CoresUsed.HasValue)
+            if (Optional.IsDefined(CoresUsed))
             {
                 writer.WritePropertyName("coresUsed"u8);
                 writer.WriteNumberValue(CoresUsed.Value);
             }
-            if (CoresAvailable.HasValue)
+            if (Optional.IsDefined(CoresAvailable))
             {
                 writer.WritePropertyName("coresAvailable"u8);
                 writer.WriteNumberValue(CoresAvailable.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<RegionalQuotaCapability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegionalQuotaCapability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RegionalQuotaCapability)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RegionalQuotaCapability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegionalQuotaCapability)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeRegionalQuotaCapability(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RegionalQuotaCapability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegionalQuotaCapability)} does not support reading '{options.Format}' format.");
             }
         }
 

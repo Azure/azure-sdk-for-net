@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionIdentityDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionIdentityDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionIdentityDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (UseSystemAssignedIdentity.HasValue)
+            if (Optional.IsDefined(UseSystemAssignedIdentity))
             {
                 writer.WritePropertyName("useSystemAssignedIdentity"u8);
                 writer.WriteBooleanValue(UseSystemAssignedIdentity.Value);
             }
-            if (UserAssignedIdentityArmUri != null)
+            if (Optional.IsDefined(UserAssignedIdentityArmUri))
             {
                 writer.WritePropertyName("userAssignedIdentityArmUrl"u8);
                 writer.WriteStringValue(UserAssignedIdentityArmUri.AbsoluteUri);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionIdentityDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionIdentityDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionIdentityDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionIdentityDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionIdentityDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeDataProtectionIdentityDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionIdentityDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionIdentityDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Automation
             var format = options.Format == "W" ? ((IPersistableModel<HybridRunbookWorkerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridRunbookWorkerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridRunbookWorkerData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IP != null)
+            if (Optional.IsDefined(IP))
             {
                 writer.WritePropertyName("ip"u8);
                 writer.WriteStringValue(IP);
             }
-            if (RegisteredOn.HasValue)
+            if (Optional.IsDefined(RegisteredOn))
             {
                 writer.WritePropertyName("registeredDateTime"u8);
                 writer.WriteStringValue(RegisteredOn.Value, "O");
             }
-            if (LastSeenOn.HasValue)
+            if (Optional.IsDefined(LastSeenOn))
             {
                 writer.WritePropertyName("lastSeenDateTime"u8);
                 writer.WriteStringValue(LastSeenOn.Value, "O");
             }
-            if (VmResourceId != null)
+            if (Optional.IsDefined(VmResourceId))
             {
                 writer.WritePropertyName("vmResourceId"u8);
                 writer.WriteStringValue(VmResourceId);
             }
-            if (WorkerType.HasValue)
+            if (Optional.IsDefined(WorkerType))
             {
                 writer.WritePropertyName("workerType"u8);
                 writer.WriteStringValue(WorkerType.Value.ToString());
             }
-            if (WorkerName != null)
+            if (Optional.IsDefined(WorkerName))
             {
                 writer.WritePropertyName("workerName"u8);
                 writer.WriteStringValue(WorkerName);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Automation
             var format = options.Format == "W" ? ((IPersistableModel<HybridRunbookWorkerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridRunbookWorkerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridRunbookWorkerData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Automation
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridRunbookWorkerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridRunbookWorkerData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Automation
                         return DeserializeHybridRunbookWorkerData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridRunbookWorkerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridRunbookWorkerData)} does not support reading '{options.Format}' format.");
             }
         }
 

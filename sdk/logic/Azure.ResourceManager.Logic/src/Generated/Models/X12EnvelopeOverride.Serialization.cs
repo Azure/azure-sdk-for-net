@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<X12EnvelopeOverride>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(X12EnvelopeOverride)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(X12EnvelopeOverride)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStringValue(SenderApplicationId);
             writer.WritePropertyName("receiverApplicationId"u8);
             writer.WriteStringValue(ReceiverApplicationId);
-            if (FunctionalIdentifierCode != null)
+            if (Optional.IsDefined(FunctionalIdentifierCode))
             {
                 writer.WritePropertyName("functionalIdentifierCode"u8);
                 writer.WriteStringValue(FunctionalIdentifierCode);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<X12EnvelopeOverride>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(X12EnvelopeOverride)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(X12EnvelopeOverride)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(X12EnvelopeOverride)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(X12EnvelopeOverride)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeX12EnvelopeOverride(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(X12EnvelopeOverride)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(X12EnvelopeOverride)} does not support reading '{options.Format}' format.");
             }
         }
 

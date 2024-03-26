@@ -55,22 +55,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="allowedOrigins"/>, <paramref name="allowedMethods"/>, <paramref name="exposedHeaders"/> or <paramref name="allowedHeaders"/> is null. </exception>
         public StorageCorsRule(IEnumerable<string> allowedOrigins, IEnumerable<CorsRuleAllowedMethod> allowedMethods, int maxAgeInSeconds, IEnumerable<string> exposedHeaders, IEnumerable<string> allowedHeaders)
         {
-            if (allowedOrigins == null)
-            {
-                throw new ArgumentNullException(nameof(allowedOrigins));
-            }
-            if (allowedMethods == null)
-            {
-                throw new ArgumentNullException(nameof(allowedMethods));
-            }
-            if (exposedHeaders == null)
-            {
-                throw new ArgumentNullException(nameof(exposedHeaders));
-            }
-            if (allowedHeaders == null)
-            {
-                throw new ArgumentNullException(nameof(allowedHeaders));
-            }
+            Argument.AssertNotNull(allowedOrigins, nameof(allowedOrigins));
+            Argument.AssertNotNull(allowedMethods, nameof(allowedMethods));
+            Argument.AssertNotNull(exposedHeaders, nameof(exposedHeaders));
+            Argument.AssertNotNull(allowedHeaders, nameof(allowedHeaders));
 
             AllowedOrigins = allowedOrigins.ToList();
             AllowedMethods = allowedMethods.ToList();
@@ -102,14 +90,19 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Required if CorsRule element is present. A list of origin domains that will be allowed via CORS, or "*" to allow all domains. </summary>
+        [WirePath("allowedOrigins")]
         public IList<string> AllowedOrigins { get; }
         /// <summary> Required if CorsRule element is present. A list of HTTP methods that are allowed to be executed by the origin. </summary>
+        [WirePath("allowedMethods")]
         public IList<CorsRuleAllowedMethod> AllowedMethods { get; }
         /// <summary> Required if CorsRule element is present. The number of seconds that the client/browser should cache a preflight response. </summary>
+        [WirePath("maxAgeInSeconds")]
         public int MaxAgeInSeconds { get; set; }
         /// <summary> Required if CorsRule element is present. A list of response headers to expose to CORS clients. </summary>
+        [WirePath("exposedHeaders")]
         public IList<string> ExposedHeaders { get; }
         /// <summary> Required if CorsRule element is present. A list of headers allowed to be part of the cross-origin request. </summary>
+        [WirePath("allowedHeaders")]
         public IList<string> AllowedHeaders { get; }
     }
 }

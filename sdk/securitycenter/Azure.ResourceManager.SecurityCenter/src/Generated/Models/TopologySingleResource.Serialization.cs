@@ -22,57 +22,57 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<TopologySingleResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TopologySingleResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TopologySingleResource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (options.Format != "W" && Severity != null)
+            if (options.Format != "W" && Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity);
             }
-            if (options.Format != "W" && RecommendationsExist.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RecommendationsExist))
             {
                 writer.WritePropertyName("recommendationsExist"u8);
                 writer.WriteBooleanValue(RecommendationsExist.Value);
             }
-            if (options.Format != "W" && NetworkZones != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkZones))
             {
                 writer.WritePropertyName("networkZones"u8);
                 writer.WriteStringValue(NetworkZones);
             }
-            if (options.Format != "W" && TopologyScore.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TopologyScore))
             {
                 writer.WritePropertyName("topologyScore"u8);
                 writer.WriteNumberValue(TopologyScore.Value);
             }
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && !(Parents is ChangeTrackingList<TopologySingleResourceParent> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Parents))
             {
                 writer.WritePropertyName("parents"u8);
                 writer.WriteStartArray();
                 foreach (var item in Parents)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TopologySingleResourceParent>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Children is ChangeTrackingList<TopologySingleResourceChild> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Children))
             {
                 writer.WritePropertyName("children"u8);
                 writer.WriteStartArray();
                 foreach (var item in Children)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TopologySingleResourceChild>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<TopologySingleResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TopologySingleResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TopologySingleResource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TopologySingleResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TopologySingleResource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeTopologySingleResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TopologySingleResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TopologySingleResource)} does not support reading '{options.Format}' format.");
             }
         }
 

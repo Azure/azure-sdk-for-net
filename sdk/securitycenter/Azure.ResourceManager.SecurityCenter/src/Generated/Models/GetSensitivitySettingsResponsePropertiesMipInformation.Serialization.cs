@@ -22,42 +22,42 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<GetSensitivitySettingsResponsePropertiesMipInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetSensitivitySettingsResponsePropertiesMipInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GetSensitivitySettingsResponsePropertiesMipInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MipIntegrationStatus.HasValue)
+            if (Optional.IsDefined(MipIntegrationStatus))
             {
                 writer.WritePropertyName("mipIntegrationStatus"u8);
                 writer.WriteStringValue(MipIntegrationStatus.Value.ToString());
             }
-            if (!(Labels is ChangeTrackingList<MipSensitivityLabel> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
                 foreach (var item in Labels)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MipSensitivityLabel>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(CustomInfoTypes is ChangeTrackingList<UserDefinedInformationType> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomInfoTypes))
             {
                 writer.WritePropertyName("customInfoTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in CustomInfoTypes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UserDefinedInformationType>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(BuiltInInfoTypes is ChangeTrackingList<BuiltInInfoType> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(BuiltInInfoTypes))
             {
                 writer.WritePropertyName("builtInInfoTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in BuiltInInfoTypes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BuiltInInfoType>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<GetSensitivitySettingsResponsePropertiesMipInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetSensitivitySettingsResponsePropertiesMipInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GetSensitivitySettingsResponsePropertiesMipInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GetSensitivitySettingsResponsePropertiesMipInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetSensitivitySettingsResponsePropertiesMipInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeGetSensitivitySettingsResponsePropertiesMipInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GetSensitivitySettingsResponsePropertiesMipInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetSensitivitySettingsResponsePropertiesMipInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

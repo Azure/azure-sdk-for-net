@@ -22,55 +22,55 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<JpgImage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JpgImage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JpgImage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Layers is ChangeTrackingList<JpgLayer> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Layers))
             {
                 writer.WritePropertyName("layers"u8);
                 writer.WriteStartArray();
                 foreach (var item in Layers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<JpgLayer>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (SpriteColumn.HasValue)
+            if (Optional.IsDefined(SpriteColumn))
             {
                 writer.WritePropertyName("spriteColumn"u8);
                 writer.WriteNumberValue(SpriteColumn.Value);
             }
             writer.WritePropertyName("start"u8);
             writer.WriteStringValue(Start);
-            if (Step != null)
+            if (Optional.IsDefined(Step))
             {
                 writer.WritePropertyName("step"u8);
                 writer.WriteStringValue(Step);
             }
-            if (Range != null)
+            if (Optional.IsDefined(Range))
             {
                 writer.WritePropertyName("range"u8);
                 writer.WriteStringValue(Range);
             }
-            if (KeyFrameInterval.HasValue)
+            if (Optional.IsDefined(KeyFrameInterval))
             {
                 writer.WritePropertyName("keyFrameInterval"u8);
                 writer.WriteStringValue(KeyFrameInterval.Value, "P");
             }
-            if (StretchMode.HasValue)
+            if (Optional.IsDefined(StretchMode))
             {
                 writer.WritePropertyName("stretchMode"u8);
                 writer.WriteStringValue(StretchMode.Value.ToString());
             }
-            if (SyncMode.HasValue)
+            if (Optional.IsDefined(SyncMode))
             {
                 writer.WritePropertyName("syncMode"u8);
                 writer.WriteStringValue(SyncMode.Value.ToString());
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Label != null)
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<JpgImage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JpgImage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JpgImage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JpgImage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JpgImage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeJpgImage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JpgImage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JpgImage)} does not support reading '{options.Format}' format.");
             }
         }
 

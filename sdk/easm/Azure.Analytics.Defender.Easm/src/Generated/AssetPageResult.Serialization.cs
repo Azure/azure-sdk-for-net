@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
@@ -23,32 +22,32 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<AssetPageResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssetPageResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssetPageResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TotalElements.HasValue)
+            if (Optional.IsDefined(TotalElements))
             {
                 writer.WritePropertyName("totalElements"u8);
                 writer.WriteNumberValue(TotalElements.Value);
             }
-            if (Mark != null)
+            if (Optional.IsDefined(Mark))
             {
                 writer.WritePropertyName("mark"u8);
                 writer.WriteStringValue(Mark);
             }
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (!(Value is ChangeTrackingList<AssetResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AssetResource>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +74,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<AssetPageResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssetPageResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssetPageResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -149,7 +148,7 @@ namespace Azure.Analytics.Defender.Easm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AssetPageResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssetPageResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +164,7 @@ namespace Azure.Analytics.Defender.Easm
                         return DeserializeAssetPageResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssetPageResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssetPageResult)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -183,7 +182,7 @@ namespace Azure.Analytics.Defender.Easm
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AssetPageResult>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

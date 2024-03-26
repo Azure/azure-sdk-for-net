@@ -22,24 +22,24 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<UriSigningActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UriSigningActionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UriSigningActionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("typeName"u8);
             writer.WriteStringValue(ActionType.ToString());
-            if (Algorithm.HasValue)
+            if (Optional.IsDefined(Algorithm))
             {
                 writer.WritePropertyName("algorithm"u8);
                 writer.WriteStringValue(Algorithm.Value.ToString());
             }
-            if (!(ParameterNameOverride is ChangeTrackingList<UriSigningParamIdentifier> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ParameterNameOverride))
             {
                 writer.WritePropertyName("parameterNameOverride"u8);
                 writer.WriteStartArray();
                 foreach (var item in ParameterNameOverride)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UriSigningParamIdentifier>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<UriSigningActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UriSigningActionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UriSigningActionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UriSigningActionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UriSigningActionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeUriSigningActionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UriSigningActionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UriSigningActionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesStatefulSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesStatefulSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesStatefulSet)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Namespace != null)
+            if (Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (DesiredNumberOfPods.HasValue)
+            if (Optional.IsDefined(DesiredNumberOfPods))
             {
                 writer.WritePropertyName("desired"u8);
                 writer.WriteNumberValue(DesiredNumberOfPods.Value);
             }
-            if (ReadyNumberOfPods.HasValue)
+            if (Optional.IsDefined(ReadyNumberOfPods))
             {
                 writer.WritePropertyName("ready"u8);
                 writer.WriteNumberValue(ReadyNumberOfPods.Value);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesStatefulSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesStatefulSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesStatefulSet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesStatefulSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesStatefulSet)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeKubernetesStatefulSet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesStatefulSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesStatefulSet)} does not support reading '{options.Format}' format.");
             }
         }
 

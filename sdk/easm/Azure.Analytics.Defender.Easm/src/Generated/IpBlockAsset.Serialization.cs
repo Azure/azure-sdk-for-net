@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
@@ -23,271 +22,271 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<IpBlockAsset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IpBlockAsset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IpBlockAsset)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IpBlock != null)
+            if (Optional.IsDefined(IpBlock))
             {
                 writer.WritePropertyName("ipBlock"u8);
                 writer.WriteStringValue(IpBlock);
             }
-            if (!(Asns is ChangeTrackingList<ObservedLong> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Asns))
             {
                 writer.WritePropertyName("asns"u8);
                 writer.WriteStartArray();
                 foreach (var item in Asns)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedLong>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(BgpPrefixes is ChangeTrackingList<ObservedString> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(BgpPrefixes))
             {
                 writer.WritePropertyName("bgpPrefixes"u8);
                 writer.WriteStartArray();
                 foreach (var item in BgpPrefixes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(NetNames is ChangeTrackingList<ObservedString> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(NetNames))
             {
                 writer.WritePropertyName("netNames"u8);
                 writer.WriteStartArray();
                 foreach (var item in NetNames)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(RegistrantContacts is ChangeTrackingList<ObservedString> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(RegistrantContacts))
             {
                 writer.WritePropertyName("registrantContacts"u8);
                 writer.WriteStartArray();
                 foreach (var item in RegistrantContacts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(RegistrantOrgs is ChangeTrackingList<ObservedString> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(RegistrantOrgs))
             {
                 writer.WritePropertyName("registrantOrgs"u8);
                 writer.WriteStartArray();
                 foreach (var item in RegistrantOrgs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(AdminContacts is ChangeTrackingList<ObservedString> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(AdminContacts))
             {
                 writer.WritePropertyName("adminContacts"u8);
                 writer.WriteStartArray();
                 foreach (var item in AdminContacts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(TechnicalContacts is ChangeTrackingList<ObservedString> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(TechnicalContacts))
             {
                 writer.WritePropertyName("technicalContacts"u8);
                 writer.WriteStartArray();
                 foreach (var item in TechnicalContacts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(RegistrarCreatedAt is ChangeTrackingList<ObservedLong> collection6 && collection6.IsUndefined))
+            if (Optional.IsCollectionDefined(RegistrarCreatedAt))
             {
                 writer.WritePropertyName("registrarCreatedAt"u8);
                 writer.WriteStartArray();
                 foreach (var item in RegistrarCreatedAt)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedLong>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(RegistrarUpdatedAt is ChangeTrackingList<ObservedLong> collection7 && collection7.IsUndefined))
+            if (Optional.IsCollectionDefined(RegistrarUpdatedAt))
             {
                 writer.WritePropertyName("registrarUpdatedAt"u8);
                 writer.WriteStartArray();
                 foreach (var item in RegistrarUpdatedAt)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedLong>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(NetRanges is ChangeTrackingList<ObservedString> collection8 && collection8.IsUndefined))
+            if (Optional.IsCollectionDefined(NetRanges))
             {
                 writer.WritePropertyName("netRanges"u8);
                 writer.WriteStartArray();
                 foreach (var item in NetRanges)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (StartIp != null)
+            if (Optional.IsDefined(StartIp))
             {
                 writer.WritePropertyName("startIp"u8);
                 writer.WriteStringValue(StartIp);
             }
-            if (EndIp != null)
+            if (Optional.IsDefined(EndIp))
             {
                 writer.WritePropertyName("endIp"u8);
                 writer.WriteStringValue(EndIp);
             }
-            if (!(Reputations is ChangeTrackingList<ReputationDetails> collection9 && collection9.IsUndefined))
+            if (Optional.IsCollectionDefined(Reputations))
             {
                 writer.WritePropertyName("reputations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Reputations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReputationDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (DetailedFromWhoisAt.HasValue)
+            if (Optional.IsDefined(DetailedFromWhoisAt))
             {
                 writer.WritePropertyName("detailedFromWhoisAt"u8);
                 writer.WriteStringValue(DetailedFromWhoisAt.Value, "O");
             }
-            if (!(Sources is ChangeTrackingList<SourceDetails> collection10 && collection10.IsUndefined))
+            if (Optional.IsCollectionDefined(Sources))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
                 foreach (var item in Sources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SourceDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (FirstSeen.HasValue)
+            if (Optional.IsDefined(FirstSeen))
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (LastSeen.HasValue)
+            if (Optional.IsDefined(LastSeen))
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (!(Location is ChangeTrackingList<ObservedLocation> collection11 && collection11.IsUndefined))
+            if (Optional.IsCollectionDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStartArray();
                 foreach (var item in Location)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedLocation>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(RegistrarExpiresAt is ChangeTrackingList<ObservedLong> collection12 && collection12.IsUndefined))
+            if (Optional.IsCollectionDefined(RegistrarExpiresAt))
             {
                 writer.WritePropertyName("registrarExpiresAt"u8);
                 writer.WriteStartArray();
                 foreach (var item in RegistrarExpiresAt)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedLong>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(RegistrantNames is ChangeTrackingList<ObservedString> collection13 && collection13.IsUndefined))
+            if (Optional.IsCollectionDefined(RegistrantNames))
             {
                 writer.WritePropertyName("registrantNames"u8);
                 writer.WriteStartArray();
                 foreach (var item in RegistrantNames)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(AdminNames is ChangeTrackingList<ObservedString> collection14 && collection14.IsUndefined))
+            if (Optional.IsCollectionDefined(AdminNames))
             {
                 writer.WritePropertyName("adminNames"u8);
                 writer.WriteStartArray();
                 foreach (var item in AdminNames)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(TechnicalNames is ChangeTrackingList<ObservedString> collection15 && collection15.IsUndefined))
+            if (Optional.IsCollectionDefined(TechnicalNames))
             {
                 writer.WritePropertyName("technicalNames"u8);
                 writer.WriteStartArray();
                 foreach (var item in TechnicalNames)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(AdminOrgs is ChangeTrackingList<ObservedString> collection16 && collection16.IsUndefined))
+            if (Optional.IsCollectionDefined(AdminOrgs))
             {
                 writer.WritePropertyName("adminOrgs"u8);
                 writer.WriteStartArray();
                 foreach (var item in AdminOrgs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(TechnicalOrgs is ChangeTrackingList<ObservedString> collection17 && collection17.IsUndefined))
+            if (Optional.IsCollectionDefined(TechnicalOrgs))
             {
                 writer.WritePropertyName("technicalOrgs"u8);
                 writer.WriteStartArray();
                 foreach (var item in TechnicalOrgs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(RegistrantPhones is ChangeTrackingList<ObservedString> collection18 && collection18.IsUndefined))
+            if (Optional.IsCollectionDefined(RegistrantPhones))
             {
                 writer.WritePropertyName("registrantPhones"u8);
                 writer.WriteStartArray();
                 foreach (var item in RegistrantPhones)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(AdminPhones is ChangeTrackingList<ObservedString> collection19 && collection19.IsUndefined))
+            if (Optional.IsCollectionDefined(AdminPhones))
             {
                 writer.WritePropertyName("adminPhones"u8);
                 writer.WriteStartArray();
                 foreach (var item in AdminPhones)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(TechnicalPhones is ChangeTrackingList<ObservedString> collection20 && collection20.IsUndefined))
+            if (Optional.IsCollectionDefined(TechnicalPhones))
             {
                 writer.WritePropertyName("technicalPhones"u8);
                 writer.WriteStartArray();
                 foreach (var item in TechnicalPhones)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Ipv4.HasValue)
+            if (Optional.IsDefined(Ipv4))
             {
                 writer.WritePropertyName("ipv4"u8);
                 writer.WriteBooleanValue(Ipv4.Value);
             }
-            if (Ipv6.HasValue)
+            if (Optional.IsDefined(Ipv6))
             {
                 writer.WritePropertyName("ipv6"u8);
                 writer.WriteBooleanValue(Ipv6.Value);
@@ -315,7 +314,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<IpBlockAsset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IpBlockAsset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IpBlockAsset)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -792,7 +791,7 @@ namespace Azure.Analytics.Defender.Easm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IpBlockAsset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IpBlockAsset)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -808,7 +807,7 @@ namespace Azure.Analytics.Defender.Easm
                         return DeserializeIpBlockAsset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IpBlockAsset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IpBlockAsset)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -826,7 +825,7 @@ namespace Azure.Analytics.Defender.Easm
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<IpBlockAsset>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<CryptoKeySummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CryptoKeySummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CryptoKeySummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TotalKeys.HasValue)
+            if (Optional.IsDefined(TotalKeys))
             {
                 writer.WritePropertyName("totalKeys"u8);
                 writer.WriteNumberValue(TotalKeys.Value);
             }
-            if (PublicKeys.HasValue)
+            if (Optional.IsDefined(PublicKeys))
             {
                 writer.WritePropertyName("publicKeys"u8);
                 writer.WriteNumberValue(PublicKeys.Value);
             }
-            if (PrivateKeys.HasValue)
+            if (Optional.IsDefined(PrivateKeys))
             {
                 writer.WritePropertyName("privateKeys"u8);
                 writer.WriteNumberValue(PrivateKeys.Value);
             }
-            if (PairedKeys.HasValue)
+            if (Optional.IsDefined(PairedKeys))
             {
                 writer.WritePropertyName("pairedKeys"u8);
                 writer.WriteNumberValue(PairedKeys.Value);
             }
-            if (ShortKeySize.HasValue)
+            if (Optional.IsDefined(ShortKeySize))
             {
                 writer.WritePropertyName("shortKeySize"u8);
                 writer.WriteNumberValue(ShortKeySize.Value);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<CryptoKeySummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CryptoKeySummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CryptoKeySummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CryptoKeySummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CryptoKeySummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         return DeserializeCryptoKeySummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CryptoKeySummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CryptoKeySummary)} does not support reading '{options.Format}' format.");
             }
         }
 

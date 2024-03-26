@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataMigrationServiceStatusResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataMigrationServiceStatusResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataMigrationServiceStatusResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AgentVersion != null)
+            if (Optional.IsDefined(AgentVersion))
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (AgentConfiguration != null)
+            if (Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
 #if NET6_0_OR_GREATER
@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
 #endif
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (VmSize != null)
+            if (Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (!(SupportedTaskTypes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SupportedTaskTypes))
             {
                 writer.WritePropertyName("supportedTaskTypes"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataMigrationServiceStatusResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataMigrationServiceStatusResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataMigrationServiceStatusResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataMigrationServiceStatusResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataMigrationServiceStatusResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeDataMigrationServiceStatusResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataMigrationServiceStatusResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataMigrationServiceStatusResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.LargeInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<LargeInstanceHardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LargeInstanceHardwareProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LargeInstanceHardwareProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && HardwareType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HardwareType))
             {
                 writer.WritePropertyName("hardwareType"u8);
                 writer.WriteStringValue(HardwareType.Value.ToString());
             }
-            if (options.Format != "W" && AzureLargeInstanceSize.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AzureLargeInstanceSize))
             {
                 writer.WritePropertyName("azureLargeInstanceSize"u8);
                 writer.WriteStringValue(AzureLargeInstanceSize.Value.ToString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<LargeInstanceHardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LargeInstanceHardwareProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LargeInstanceHardwareProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LargeInstanceHardwareProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LargeInstanceHardwareProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                         return DeserializeLargeInstanceHardwareProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LargeInstanceHardwareProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LargeInstanceHardwareProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

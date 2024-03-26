@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The name of the SkuCapability. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The value of the SkuCapability. </summary>
+        [WirePath("value")]
         public string Value { get; }
     }
 }

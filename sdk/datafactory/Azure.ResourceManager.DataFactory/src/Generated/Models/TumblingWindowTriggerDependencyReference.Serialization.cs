@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<TumblingWindowTriggerDependencyReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TumblingWindowTriggerDependencyReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TumblingWindowTriggerDependencyReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Offset != null)
+            if (Optional.IsDefined(Offset))
             {
                 writer.WritePropertyName("offset"u8);
                 writer.WriteStringValue(Offset);
             }
-            if (Size != null)
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
             writer.WritePropertyName("referenceTrigger"u8);
-            writer.WriteObjectValue(ReferenceTrigger);
+            writer.WriteObjectValue<DataFactoryTriggerReference>(ReferenceTrigger, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DependencyReferenceType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<TumblingWindowTriggerDependencyReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TumblingWindowTriggerDependencyReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TumblingWindowTriggerDependencyReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TumblingWindowTriggerDependencyReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TumblingWindowTriggerDependencyReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeTumblingWindowTriggerDependencyReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TumblingWindowTriggerDependencyReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TumblingWindowTriggerDependencyReference)} does not support reading '{options.Format}' format.");
             }
         }
 

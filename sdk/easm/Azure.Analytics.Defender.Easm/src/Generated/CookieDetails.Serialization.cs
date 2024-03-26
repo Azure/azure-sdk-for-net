@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
@@ -23,41 +22,41 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<CookieDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CookieDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CookieDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CookieName != null)
+            if (Optional.IsDefined(CookieName))
             {
                 writer.WritePropertyName("cookieName"u8);
                 writer.WriteStringValue(CookieName);
             }
-            if (CookieDomain != null)
+            if (Optional.IsDefined(CookieDomain))
             {
                 writer.WritePropertyName("cookieDomain"u8);
                 writer.WriteStringValue(CookieDomain);
             }
-            if (FirstSeen.HasValue)
+            if (Optional.IsDefined(FirstSeen))
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (LastSeen.HasValue)
+            if (Optional.IsDefined(LastSeen))
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Recent.HasValue)
+            if (Optional.IsDefined(Recent))
             {
                 writer.WritePropertyName("recent"u8);
                 writer.WriteBooleanValue(Recent.Value);
             }
-            if (CookieExpiryDate.HasValue)
+            if (Optional.IsDefined(CookieExpiryDate))
             {
                 writer.WritePropertyName("cookieExpiryDate"u8);
                 writer.WriteStringValue(CookieExpiryDate.Value, "O");
@@ -85,7 +84,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<CookieDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CookieDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CookieDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -192,7 +191,7 @@ namespace Azure.Analytics.Defender.Easm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CookieDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CookieDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -208,7 +207,7 @@ namespace Azure.Analytics.Defender.Easm
                         return DeserializeCookieDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CookieDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CookieDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -226,7 +225,7 @@ namespace Azure.Analytics.Defender.Easm
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<CookieDetails>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

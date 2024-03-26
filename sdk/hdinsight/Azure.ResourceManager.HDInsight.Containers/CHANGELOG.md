@@ -1,22 +1,31 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.3 (2024-03-23)
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
-
-### Breaking Changes
-
-### Bugs Fixed
+- Upgraded api-version tag from 'package-2023-06-preview' to 'package-preview-2023-11'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/a434a5a7ee851abc96218443e66a5ebb57911fee/specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/readme.md.
+    - Cluster Pool
+        - Enabled create cluster pool with user network profile.
+        - Enabled get cluster pool available upgrade versions.
+    - Cluster
+        - Enabled create Ranger cluster.
+        - Enabled get cluster available upgrade versions.
+        - Enabled set internal ingress.
+        - Enabled check if the cluster name is available.
+        - Enabled upgrade hot fix for cluster.
+        - Enabled upgrade node os for cluster.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.10.2.
 
 ## 1.0.0-beta.2 (2023-11-29)
 
 ### Features Added
 
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
 

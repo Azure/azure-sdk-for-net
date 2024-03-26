@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -23,41 +22,41 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(AuthorizationPolicies is ChangeTrackingList<SharedAccessSignatureAuthorizationRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AuthorizationPolicies))
             {
                 writer.WritePropertyName("authorizationPolicies"u8);
                 writer.WriteStartArray();
                 foreach (var item in AuthorizationPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SharedAccessSignatureAuthorizationRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (DisableLocalAuth.HasValue)
+            if (Optional.IsDefined(DisableLocalAuth))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
-            if (DisableDeviceSas.HasValue)
+            if (Optional.IsDefined(DisableDeviceSas))
             {
                 writer.WritePropertyName("disableDeviceSAS"u8);
                 writer.WriteBooleanValue(DisableDeviceSas.Value);
             }
-            if (DisableModuleSas.HasValue)
+            if (Optional.IsDefined(DisableModuleSas))
             {
                 writer.WritePropertyName("disableModuleSAS"u8);
                 writer.WriteBooleanValue(DisableModuleSas.Value);
             }
-            if (RestrictOutboundNetworkAccess.HasValue)
+            if (Optional.IsDefined(RestrictOutboundNetworkAccess))
             {
                 writer.WritePropertyName("restrictOutboundNetworkAccess"u8);
                 writer.WriteBooleanValue(RestrictOutboundNetworkAccess.Value);
             }
-            if (!(AllowedFqdns is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedFqdns))
             {
                 writer.WritePropertyName("allowedFqdnList"u8);
                 writer.WriteStartArray();
@@ -67,125 +66,125 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (!(IPFilterRules is ChangeTrackingList<IotHubIPFilterRule> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(IPFilterRules))
             {
                 writer.WritePropertyName("ipFilterRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPFilterRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IotHubIPFilterRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (NetworkRuleSets != null)
+            if (Optional.IsDefined(NetworkRuleSets))
             {
                 writer.WritePropertyName("networkRuleSets"u8);
-                writer.WriteObjectValue(NetworkRuleSets);
+                writer.WriteObjectValue<IotHubNetworkRuleSetProperties>(NetworkRuleSets, options);
             }
-            if (MinTlsVersion != null)
+            if (Optional.IsDefined(MinTlsVersion))
             {
                 writer.WritePropertyName("minTlsVersion"u8);
                 writer.WriteStringValue(MinTlsVersion);
             }
-            if (!(PrivateEndpointConnections is ChangeTrackingList<IotHubPrivateEndpointConnectionData> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IotHubPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && State != null)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (options.Format != "W" && HostName != null)
+            if (options.Format != "W" && Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (!(EventHubEndpoints is ChangeTrackingDictionary<string, EventHubCompatibleEndpointProperties> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(EventHubEndpoints))
             {
                 writer.WritePropertyName("eventHubEndpoints"u8);
                 writer.WriteStartObject();
                 foreach (var item in EventHubEndpoints)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<EventHubCompatibleEndpointProperties>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (Routing != null)
+            if (Optional.IsDefined(Routing))
             {
                 writer.WritePropertyName("routing"u8);
-                writer.WriteObjectValue(Routing);
+                writer.WriteObjectValue<IotHubRoutingProperties>(Routing, options);
             }
-            if (!(StorageEndpoints is ChangeTrackingDictionary<string, IotHubStorageEndpointProperties> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(StorageEndpoints))
             {
                 writer.WritePropertyName("storageEndpoints"u8);
                 writer.WriteStartObject();
                 foreach (var item in StorageEndpoints)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<IotHubStorageEndpointProperties>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (!(MessagingEndpoints is ChangeTrackingDictionary<string, MessagingEndpointProperties> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(MessagingEndpoints))
             {
                 writer.WritePropertyName("messagingEndpoints"u8);
                 writer.WriteStartObject();
                 foreach (var item in MessagingEndpoints)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<MessagingEndpointProperties>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (EnableFileUploadNotifications.HasValue)
+            if (Optional.IsDefined(EnableFileUploadNotifications))
             {
                 writer.WritePropertyName("enableFileUploadNotifications"u8);
                 writer.WriteBooleanValue(EnableFileUploadNotifications.Value);
             }
-            if (CloudToDevice != null)
+            if (Optional.IsDefined(CloudToDevice))
             {
                 writer.WritePropertyName("cloudToDevice"u8);
-                writer.WriteObjectValue(CloudToDevice);
+                writer.WriteObjectValue<CloudToDeviceProperties>(CloudToDevice, options);
             }
-            if (Comments != null)
+            if (Optional.IsDefined(Comments))
             {
                 writer.WritePropertyName("comments"u8);
                 writer.WriteStringValue(Comments);
             }
-            if (Features.HasValue)
+            if (Optional.IsDefined(Features))
             {
                 writer.WritePropertyName("features"u8);
                 writer.WriteStringValue(Features.Value.ToString());
             }
-            if (options.Format != "W" && !(Locations is ChangeTrackingList<IotHubLocationDescription> collection6 && collection6.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IotHubLocationDescription>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (EnableDataResidency.HasValue)
+            if (Optional.IsDefined(EnableDataResidency))
             {
                 writer.WritePropertyName("enableDataResidency"u8);
                 writer.WriteBooleanValue(EnableDataResidency.Value);
@@ -213,7 +212,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -535,7 +534,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotHubProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -551,7 +550,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeIotHubProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotHubProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

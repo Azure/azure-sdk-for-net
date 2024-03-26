@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<RemediationDeploymentSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RemediationDeploymentSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RemediationDeploymentSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TotalDeployments.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalDeployments))
             {
                 writer.WritePropertyName("totalDeployments"u8);
                 writer.WriteNumberValue(TotalDeployments.Value);
             }
-            if (options.Format != "W" && SuccessfulDeployments.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SuccessfulDeployments))
             {
                 writer.WritePropertyName("successfulDeployments"u8);
                 writer.WriteNumberValue(SuccessfulDeployments.Value);
             }
-            if (options.Format != "W" && FailedDeployments.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FailedDeployments))
             {
                 writer.WritePropertyName("failedDeployments"u8);
                 writer.WriteNumberValue(FailedDeployments.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<RemediationDeploymentSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RemediationDeploymentSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RemediationDeploymentSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RemediationDeploymentSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RemediationDeploymentSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializeRemediationDeploymentSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RemediationDeploymentSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RemediationDeploymentSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

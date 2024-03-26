@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAksComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningAksComputeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningAksComputeProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ClusterFqdn != null)
+            if (Optional.IsDefined(ClusterFqdn))
             {
                 if (ClusterFqdn != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("clusterFqdn");
                 }
             }
-            if (options.Format != "W" && !(SystemServices is ChangeTrackingList<MachineLearningComputeSystemService> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SystemServices))
             {
                 if (SystemServices != null)
                 {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in SystemServices)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<MachineLearningComputeSystemService>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("systemServices");
                 }
             }
-            if (AgentCount.HasValue)
+            if (Optional.IsDefined(AgentCount))
             {
                 if (AgentCount != null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("agentCount");
                 }
             }
-            if (AgentVmSize != null)
+            if (Optional.IsDefined(AgentVmSize))
             {
                 if (AgentVmSize != null)
                 {
@@ -79,41 +79,41 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("agentVmSize");
                 }
             }
-            if (ClusterPurpose.HasValue)
+            if (Optional.IsDefined(ClusterPurpose))
             {
                 writer.WritePropertyName("clusterPurpose"u8);
                 writer.WriteStringValue(ClusterPurpose.Value.ToString());
             }
-            if (SslConfiguration != null)
+            if (Optional.IsDefined(SslConfiguration))
             {
                 if (SslConfiguration != null)
                 {
                     writer.WritePropertyName("sslConfiguration"u8);
-                    writer.WriteObjectValue(SslConfiguration);
+                    writer.WriteObjectValue<MachineLearningSslConfiguration>(SslConfiguration, options);
                 }
                 else
                 {
                     writer.WriteNull("sslConfiguration");
                 }
             }
-            if (AksNetworkingConfiguration != null)
+            if (Optional.IsDefined(AksNetworkingConfiguration))
             {
                 if (AksNetworkingConfiguration != null)
                 {
                     writer.WritePropertyName("aksNetworkingConfiguration"u8);
-                    writer.WriteObjectValue(AksNetworkingConfiguration);
+                    writer.WriteObjectValue<MachineLearningAksNetworkingConfiguration>(AksNetworkingConfiguration, options);
                 }
                 else
                 {
                     writer.WriteNull("aksNetworkingConfiguration");
                 }
             }
-            if (LoadBalancerType.HasValue)
+            if (Optional.IsDefined(LoadBalancerType))
             {
                 writer.WritePropertyName("loadBalancerType"u8);
                 writer.WriteStringValue(LoadBalancerType.Value.ToString());
             }
-            if (LoadBalancerSubnet != null)
+            if (Optional.IsDefined(LoadBalancerSubnet))
             {
                 if (LoadBalancerSubnet != null)
                 {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAksComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningAksComputeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningAksComputeProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningAksComputeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningAksComputeProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningAksComputeProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningAksComputeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningAksComputeProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Maps.Models
             var format = options.Format == "W" ? ((IPersistableModel<MapsCreatorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MapsCreatorProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MapsCreatorProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Maps.Models
             var format = options.Format == "W" ? ((IPersistableModel<MapsCreatorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MapsCreatorProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MapsCreatorProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Maps.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MapsCreatorProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MapsCreatorProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Maps.Models
                         return DeserializeMapsCreatorProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MapsCreatorProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MapsCreatorProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

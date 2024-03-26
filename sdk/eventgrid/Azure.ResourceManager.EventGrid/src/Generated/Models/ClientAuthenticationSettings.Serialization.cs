@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClientAuthenticationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClientAuthenticationSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClientAuthenticationSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(AlternativeAuthenticationNameSources is ChangeTrackingList<AlternativeAuthenticationNameSource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AlternativeAuthenticationNameSources))
             {
                 writer.WritePropertyName("alternativeAuthenticationNameSources"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClientAuthenticationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClientAuthenticationSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClientAuthenticationSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClientAuthenticationSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClientAuthenticationSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeClientAuthenticationSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClientAuthenticationSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClientAuthenticationSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
@@ -23,11 +22,11 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<ReportAssetSummaryPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReportAssetSummaryPayload)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReportAssetSummaryPayload)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(MetricCategories is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MetricCategories))
             {
                 writer.WritePropertyName("metricCategories"u8);
                 writer.WriteStartArray();
@@ -37,7 +36,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(Metrics is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
@@ -47,7 +46,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(Filters is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
@@ -57,17 +56,17 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (GroupBy != null)
+            if (Optional.IsDefined(GroupBy))
             {
                 writer.WritePropertyName("groupBy"u8);
                 writer.WriteStringValue(GroupBy);
             }
-            if (SegmentBy != null)
+            if (Optional.IsDefined(SegmentBy))
             {
                 writer.WritePropertyName("segmentBy"u8);
                 writer.WriteStringValue(SegmentBy);
             }
-            if (LabelName != null)
+            if (Optional.IsDefined(LabelName))
             {
                 writer.WritePropertyName("labelName"u8);
                 writer.WriteStringValue(LabelName);
@@ -95,7 +94,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<ReportAssetSummaryPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReportAssetSummaryPayload)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReportAssetSummaryPayload)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -202,7 +201,7 @@ namespace Azure.Analytics.Defender.Easm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReportAssetSummaryPayload)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReportAssetSummaryPayload)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -218,7 +217,7 @@ namespace Azure.Analytics.Defender.Easm
                         return DeserializeReportAssetSummaryPayload(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReportAssetSummaryPayload)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReportAssetSummaryPayload)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -236,7 +235,7 @@ namespace Azure.Analytics.Defender.Easm
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ReportAssetSummaryPayload>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

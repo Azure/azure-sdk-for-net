@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<IfNotExistsEvaluationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IfNotExistsEvaluationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IfNotExistsEvaluationDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (TotalResources.HasValue)
+            if (Optional.IsDefined(TotalResources))
             {
                 writer.WritePropertyName("totalResources"u8);
                 writer.WriteNumberValue(TotalResources.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<IfNotExistsEvaluationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IfNotExistsEvaluationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IfNotExistsEvaluationDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IfNotExistsEvaluationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IfNotExistsEvaluationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializeIfNotExistsEvaluationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IfNotExistsEvaluationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IfNotExistsEvaluationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.HybridContainerService
             var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClusterUpgradeProfileData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisionedClusterUpgradeProfileData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProvisionedClusterUpgradeProfileData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,20 +43,20 @@ namespace Azure.ResourceManager.HybridContainerService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("controlPlaneProfile"u8);
-            writer.WriteObjectValue(ControlPlaneProfile);
+            writer.WriteObjectValue<ProvisionedClusterPoolUpgradeProfile>(ControlPlaneProfile, options);
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.HybridContainerService
             var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClusterUpgradeProfileData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisionedClusterUpgradeProfileData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProvisionedClusterUpgradeProfileData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProvisionedClusterUpgradeProfileData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProvisionedClusterUpgradeProfileData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.HybridContainerService
                         return DeserializeProvisionedClusterUpgradeProfileData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProvisionedClusterUpgradeProfileData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProvisionedClusterUpgradeProfileData)} does not support reading '{options.Format}' format.");
             }
         }
 

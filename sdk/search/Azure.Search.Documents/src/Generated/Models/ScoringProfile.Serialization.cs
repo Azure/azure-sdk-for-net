@@ -18,29 +18,29 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (TextWeights != null)
+            if (Optional.IsDefined(TextWeights))
             {
                 if (TextWeights != null)
                 {
                     writer.WritePropertyName("text"u8);
-                    writer.WriteObjectValue(TextWeights);
+                    writer.WriteObjectValue<TextWeights>(TextWeights);
                 }
                 else
                 {
                     writer.WriteNull("text");
                 }
             }
-            if (!(Functions is ChangeTrackingList<ScoringFunction> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Functions))
             {
                 writer.WritePropertyName("functions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Functions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScoringFunction>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (FunctionAggregation.HasValue)
+            if (Optional.IsDefined(FunctionAggregation))
             {
                 if (FunctionAggregation != null)
                 {

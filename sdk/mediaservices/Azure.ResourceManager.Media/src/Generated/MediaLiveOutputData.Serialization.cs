@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Media
             var format = options.Format == "W" ? ((IPersistableModel<MediaLiveOutputData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaLiveOutputData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaLiveOutputData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (AssetName != null)
+            if (Optional.IsDefined(AssetName))
             {
                 writer.WritePropertyName("assetName"u8);
                 writer.WriteStringValue(AssetName);
             }
-            if (ArchiveWindowLength.HasValue)
+            if (Optional.IsDefined(ArchiveWindowLength))
             {
                 writer.WritePropertyName("archiveWindowLength"u8);
                 writer.WriteStringValue(ArchiveWindowLength.Value, "P");
             }
-            if (RewindWindowLength.HasValue)
+            if (Optional.IsDefined(RewindWindowLength))
             {
                 if (RewindWindowLength != null)
                 {
@@ -77,37 +77,37 @@ namespace Azure.ResourceManager.Media
                     writer.WriteNull("rewindWindowLength");
                 }
             }
-            if (ManifestName != null)
+            if (Optional.IsDefined(ManifestName))
             {
                 writer.WritePropertyName("manifestName"u8);
                 writer.WriteStringValue(ManifestName);
             }
-            if (Hls != null)
+            if (Optional.IsDefined(Hls))
             {
                 writer.WritePropertyName("hls"u8);
-                writer.WriteObjectValue(Hls);
+                writer.WriteObjectValue<Hls>(Hls, options);
             }
-            if (OutputSnapTime.HasValue)
+            if (Optional.IsDefined(OutputSnapTime))
             {
                 writer.WritePropertyName("outputSnapTime"u8);
                 writer.WriteNumberValue(OutputSnapTime.Value);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && ResourceState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Media
             var format = options.Format == "W" ? ((IPersistableModel<MediaLiveOutputData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaLiveOutputData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaLiveOutputData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Media
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaLiveOutputData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaLiveOutputData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Media
                         return DeserializeMediaLiveOutputData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaLiveOutputData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaLiveOutputData)} does not support reading '{options.Format}' format.");
             }
         }
 

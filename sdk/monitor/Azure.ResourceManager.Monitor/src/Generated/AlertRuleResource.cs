@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources;
 
@@ -287,10 +285,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<AlertRuleResource>> UpdateAsync(AlertRulePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _alertRuleClientDiagnostics.CreateScope("AlertRuleResource.Update");
             scope.Start();
@@ -332,10 +327,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<AlertRuleResource> Update(AlertRulePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _alertRuleClientDiagnostics.CreateScope("AlertRuleResource.Update");
             scope.Start();
@@ -374,14 +366,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="incidentName"/> is null. </exception>
         public virtual async Task<Response<MonitorIncident>> GetAlertRuleIncidentAsync(string incidentName, CancellationToken cancellationToken = default)
         {
-            if (incidentName == null)
-            {
-                throw new ArgumentNullException(nameof(incidentName));
-            }
-            if (incidentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(incidentName));
-            }
+            Argument.AssertNotNullOrEmpty(incidentName, nameof(incidentName));
 
             using var scope = _alertRuleIncidentsClientDiagnostics.CreateScope("AlertRuleResource.GetAlertRuleIncident");
             scope.Start();
@@ -420,14 +405,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="incidentName"/> is null. </exception>
         public virtual Response<MonitorIncident> GetAlertRuleIncident(string incidentName, CancellationToken cancellationToken = default)
         {
-            if (incidentName == null)
-            {
-                throw new ArgumentNullException(nameof(incidentName));
-            }
-            if (incidentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(incidentName));
-            }
+            Argument.AssertNotNullOrEmpty(incidentName, nameof(incidentName));
 
             using var scope = _alertRuleIncidentsClientDiagnostics.CreateScope("AlertRuleResource.GetAlertRuleIncident");
             scope.Start();
@@ -520,14 +498,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<AlertRuleResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _alertRuleClientDiagnostics.CreateScope("AlertRuleResource.AddTag");
             scope.Start();
@@ -588,14 +560,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<AlertRuleResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _alertRuleClientDiagnostics.CreateScope("AlertRuleResource.AddTag");
             scope.Start();
@@ -655,10 +621,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<AlertRuleResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _alertRuleClientDiagnostics.CreateScope("AlertRuleResource.SetTags");
             scope.Start();
@@ -715,10 +678,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<AlertRuleResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _alertRuleClientDiagnostics.CreateScope("AlertRuleResource.SetTags");
             scope.Start();
@@ -775,10 +735,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<AlertRuleResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _alertRuleClientDiagnostics.CreateScope("AlertRuleResource.RemoveTag");
             scope.Start();
@@ -838,10 +795,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<AlertRuleResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _alertRuleClientDiagnostics.CreateScope("AlertRuleResource.RemoveTag");
             scope.Start();

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<PasswordHashResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PasswordHashResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PasswordHashResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PasswordHashId != null)
+            if (Optional.IsDefined(PasswordHashId))
             {
                 if (PasswordHashId != null)
                 {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("passwordHashId");
                 }
             }
-            if (FilePath != null)
+            if (Optional.IsDefined(FilePath))
             {
                 if (FilePath != null)
                 {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("filePath");
                 }
             }
-            if (Salt != null)
+            if (Optional.IsDefined(Salt))
             {
                 if (Salt != null)
                 {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("salt");
                 }
             }
-            if (Hash != null)
+            if (Optional.IsDefined(Hash))
             {
                 if (Hash != null)
                 {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("hash");
                 }
             }
-            if (Context != null)
+            if (Optional.IsDefined(Context))
             {
                 if (Context != null)
                 {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("context");
                 }
             }
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 if (Username != null)
                 {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("username");
                 }
             }
-            if (Algorithm != null)
+            if (Optional.IsDefined(Algorithm))
             {
                 if (Algorithm != null)
                 {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<PasswordHashResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PasswordHashResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PasswordHashResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PasswordHashResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PasswordHashResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         return DeserializePasswordHashResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PasswordHashResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PasswordHashResult)} does not support reading '{options.Format}' format.");
             }
         }
 

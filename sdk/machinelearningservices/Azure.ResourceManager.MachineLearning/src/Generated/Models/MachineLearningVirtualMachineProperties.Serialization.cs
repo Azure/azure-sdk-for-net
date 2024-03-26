@@ -23,43 +23,43 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningVirtualMachineProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningVirtualMachineProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningVirtualMachineProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (VirtualMachineSize != null)
+            if (Optional.IsDefined(VirtualMachineSize))
             {
                 writer.WritePropertyName("virtualMachineSize"u8);
                 writer.WriteStringValue(VirtualMachineSize);
             }
-            if (SshPort.HasValue)
+            if (Optional.IsDefined(SshPort))
             {
                 writer.WritePropertyName("sshPort"u8);
                 writer.WriteNumberValue(SshPort.Value);
             }
-            if (NotebookServerPort.HasValue)
+            if (Optional.IsDefined(NotebookServerPort))
             {
                 writer.WritePropertyName("notebookServerPort"u8);
                 writer.WriteNumberValue(NotebookServerPort.Value);
             }
-            if (Address != null)
+            if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address.ToString());
             }
-            if (AdministratorAccount != null)
+            if (Optional.IsDefined(AdministratorAccount))
             {
                 if (AdministratorAccount != null)
                 {
                     writer.WritePropertyName("administratorAccount"u8);
-                    writer.WriteObjectValue(AdministratorAccount);
+                    writer.WriteObjectValue<MachineLearningVmSshCredentials>(AdministratorAccount, options);
                 }
                 else
                 {
                     writer.WriteNull("administratorAccount");
                 }
             }
-            if (IsNotebookInstanceCompute.HasValue)
+            if (Optional.IsDefined(IsNotebookInstanceCompute))
             {
                 writer.WritePropertyName("isNotebookInstanceCompute"u8);
                 writer.WriteBooleanValue(IsNotebookInstanceCompute.Value);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningVirtualMachineProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningVirtualMachineProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningVirtualMachineProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningVirtualMachineProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningVirtualMachineProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningVirtualMachineProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningVirtualMachineProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningVirtualMachineProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

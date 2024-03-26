@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetConnectionInfo"/> is null. </exception>
         public ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput(PostgreSqlConnectionInfo targetConnectionInfo)
         {
-            if (targetConnectionInfo == null)
-            {
-                throw new ArgumentNullException(nameof(targetConnectionInfo));
-            }
+            Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
 
             TargetConnectionInfo = targetConnectionInfo;
         }

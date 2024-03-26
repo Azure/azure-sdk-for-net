@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ParameterExampleContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ParameterExampleContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ParameterExampleContract)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Summary != null)
+            if (Optional.IsDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
 #endif
             }
-            if (ExternalValue != null)
+            if (Optional.IsDefined(ExternalValue))
             {
                 writer.WritePropertyName("externalValue"u8);
                 writer.WriteStringValue(ExternalValue);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ParameterExampleContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ParameterExampleContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ParameterExampleContract)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ParameterExampleContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ParameterExampleContract)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeParameterExampleContract(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ParameterExampleContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ParameterExampleContract)} does not support reading '{options.Format}' format.");
             }
         }
 

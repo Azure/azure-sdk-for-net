@@ -80,7 +80,7 @@ namespace Azure.Communication.NetworkTraversal
         {
             public override void Write(Utf8JsonWriter writer, CommunicationIceServer model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<CommunicationIceServer>(model);
             }
             public override CommunicationIceServer Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

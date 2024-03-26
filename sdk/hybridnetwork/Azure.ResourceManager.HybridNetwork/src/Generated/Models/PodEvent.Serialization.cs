@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<PodEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PodEvent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PodEvent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EventType.HasValue)
+            if (Optional.IsDefined(EventType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(EventType.Value.ToString());
             }
-            if (Reason != null)
+            if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (LastSeenOn.HasValue)
+            if (Optional.IsDefined(LastSeenOn))
             {
                 writer.WritePropertyName("lastSeenTime"u8);
                 writer.WriteStringValue(LastSeenOn.Value, "O");
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<PodEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PodEvent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PodEvent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PodEvent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PodEvent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializePodEvent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PodEvent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PodEvent)} does not support reading '{options.Format}' format.");
             }
         }
 

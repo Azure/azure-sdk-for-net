@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.SelfHelp.Models;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SelfHelp
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<TroubleshooterResourceData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -68,22 +68,9 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<TroubleshooterResourceData>> CreateAsync(string scope, string troubleshooterName, TroubleshooterResourceData data, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (troubleshooterName == null)
-            {
-                throw new ArgumentNullException(nameof(troubleshooterName));
-            }
-            if (troubleshooterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(troubleshooterName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(scope, troubleshooterName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -111,22 +98,9 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<TroubleshooterResourceData> Create(string scope, string troubleshooterName, TroubleshooterResourceData data, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (troubleshooterName == null)
-            {
-                throw new ArgumentNullException(nameof(troubleshooterName));
-            }
-            if (troubleshooterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(troubleshooterName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(scope, troubleshooterName, data);
             _pipeline.Send(message, cancellationToken);
@@ -171,18 +145,8 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<TroubleshooterResourceData>> GetAsync(string scope, string troubleshooterName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (troubleshooterName == null)
-            {
-                throw new ArgumentNullException(nameof(troubleshooterName));
-            }
-            if (troubleshooterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(troubleshooterName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
             using var message = CreateGetRequest(scope, troubleshooterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -210,18 +174,8 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<TroubleshooterResourceData> Get(string scope, string troubleshooterName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (troubleshooterName == null)
-            {
-                throw new ArgumentNullException(nameof(troubleshooterName));
-            }
-            if (troubleshooterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(troubleshooterName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
             using var message = CreateGetRequest(scope, troubleshooterName);
             _pipeline.Send(message, cancellationToken);
@@ -260,7 +214,7 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(continueRequestBody);
+                content.JsonWriter.WriteObjectValue<ContinueRequestBody>(continueRequestBody, new ModelReaderWriterOptions("W"));
                 request.Content = content;
             }
             _userAgent.Apply(message);
@@ -276,18 +230,8 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ContinueAsync(string scope, string troubleshooterName, ContinueRequestBody continueRequestBody = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (troubleshooterName == null)
-            {
-                throw new ArgumentNullException(nameof(troubleshooterName));
-            }
-            if (troubleshooterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(troubleshooterName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
             using var message = CreateContinueRequest(scope, troubleshooterName, continueRequestBody);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -309,18 +253,8 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Continue(string scope, string troubleshooterName, ContinueRequestBody continueRequestBody = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (troubleshooterName == null)
-            {
-                throw new ArgumentNullException(nameof(troubleshooterName));
-            }
-            if (troubleshooterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(troubleshooterName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
             using var message = CreateContinueRequest(scope, troubleshooterName, continueRequestBody);
             _pipeline.Send(message, cancellationToken);
@@ -360,18 +294,8 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> EndAsync(string scope, string troubleshooterName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (troubleshooterName == null)
-            {
-                throw new ArgumentNullException(nameof(troubleshooterName));
-            }
-            if (troubleshooterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(troubleshooterName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
             using var message = CreateEndRequest(scope, troubleshooterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -392,18 +316,8 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response End(string scope, string troubleshooterName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (troubleshooterName == null)
-            {
-                throw new ArgumentNullException(nameof(troubleshooterName));
-            }
-            if (troubleshooterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(troubleshooterName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
             using var message = CreateEndRequest(scope, troubleshooterName);
             _pipeline.Send(message, cancellationToken);
@@ -443,18 +357,8 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RestartTroubleshooterResult>> RestartAsync(string scope, string troubleshooterName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (troubleshooterName == null)
-            {
-                throw new ArgumentNullException(nameof(troubleshooterName));
-            }
-            if (troubleshooterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(troubleshooterName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
             using var message = CreateRestartRequest(scope, troubleshooterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -480,18 +384,8 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RestartTroubleshooterResult> Restart(string scope, string troubleshooterName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (troubleshooterName == null)
-            {
-                throw new ArgumentNullException(nameof(troubleshooterName));
-            }
-            if (troubleshooterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(troubleshooterName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
             using var message = CreateRestartRequest(scope, troubleshooterName);
             _pipeline.Send(message, cancellationToken);

@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerExecContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerExecContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerExecContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Command != null)
+            if (Optional.IsDefined(Command))
             {
                 writer.WritePropertyName("command"u8);
                 writer.WriteStringValue(Command);
             }
-            if (TerminalSize != null)
+            if (Optional.IsDefined(TerminalSize))
             {
                 writer.WritePropertyName("terminalSize"u8);
-                writer.WriteObjectValue(TerminalSize);
+                writer.WriteObjectValue<ContainerExecRequestTerminalSize>(TerminalSize, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerExecContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerExecContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerExecContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerExecContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerExecContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeContainerExecContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerExecContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerExecContent)} does not support reading '{options.Format}' format.");
             }
         }
 

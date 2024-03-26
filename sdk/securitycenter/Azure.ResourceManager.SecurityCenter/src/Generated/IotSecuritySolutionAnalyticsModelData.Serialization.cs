@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<IotSecuritySolutionAnalyticsModelData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotSecuritySolutionAnalyticsModelData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotSecuritySolutionAnalyticsModelData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,60 +43,60 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Metrics != null)
+            if (options.Format != "W" && Optional.IsDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
-                writer.WriteObjectValue(Metrics);
+                writer.WriteObjectValue<IotSeverityMetrics>(Metrics, options);
             }
-            if (options.Format != "W" && UnhealthyDeviceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UnhealthyDeviceCount))
             {
                 writer.WritePropertyName("unhealthyDeviceCount"u8);
                 writer.WriteNumberValue(UnhealthyDeviceCount.Value);
             }
-            if (options.Format != "W" && !(DevicesMetrics is ChangeTrackingList<IotSecuritySolutionAnalyticsModelDevicesMetrics> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DevicesMetrics))
             {
                 writer.WritePropertyName("devicesMetrics"u8);
                 writer.WriteStartArray();
                 foreach (var item in DevicesMetrics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IotSecuritySolutionAnalyticsModelDevicesMetrics>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(TopAlertedDevices is ChangeTrackingList<IotSecurityAlertedDevice> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(TopAlertedDevices))
             {
                 writer.WritePropertyName("topAlertedDevices"u8);
                 writer.WriteStartArray();
                 foreach (var item in TopAlertedDevices)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IotSecurityAlertedDevice>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(MostPrevalentDeviceAlerts is ChangeTrackingList<IotSecurityDeviceAlert> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(MostPrevalentDeviceAlerts))
             {
                 writer.WritePropertyName("mostPrevalentDeviceAlerts"u8);
                 writer.WriteStartArray();
                 foreach (var item in MostPrevalentDeviceAlerts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IotSecurityDeviceAlert>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(MostPrevalentDeviceRecommendations is ChangeTrackingList<IotSecurityDeviceRecommendation> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(MostPrevalentDeviceRecommendations))
             {
                 writer.WritePropertyName("mostPrevalentDeviceRecommendations"u8);
                 writer.WriteStartArray();
                 foreach (var item in MostPrevalentDeviceRecommendations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IotSecurityDeviceRecommendation>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<IotSecuritySolutionAnalyticsModelData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotSecuritySolutionAnalyticsModelData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotSecuritySolutionAnalyticsModelData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotSecuritySolutionAnalyticsModelData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotSecuritySolutionAnalyticsModelData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         return DeserializeIotSecuritySolutionAnalyticsModelData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotSecuritySolutionAnalyticsModelData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotSecuritySolutionAnalyticsModelData)} does not support reading '{options.Format}' format.");
             }
         }
 

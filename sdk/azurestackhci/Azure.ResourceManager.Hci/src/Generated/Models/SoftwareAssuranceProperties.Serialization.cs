@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<SoftwareAssuranceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SoftwareAssuranceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SoftwareAssuranceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SoftwareAssuranceStatus.HasValue)
+            if (Optional.IsDefined(SoftwareAssuranceStatus))
             {
                 writer.WritePropertyName("softwareAssuranceStatus"u8);
                 writer.WriteStringValue(SoftwareAssuranceStatus.Value.ToString());
             }
-            if (SoftwareAssuranceIntent.HasValue)
+            if (Optional.IsDefined(SoftwareAssuranceIntent))
             {
                 writer.WritePropertyName("softwareAssuranceIntent"u8);
                 writer.WriteStringValue(SoftwareAssuranceIntent.Value.ToString());
             }
-            if (options.Format != "W" && LastUpdated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdated))
             {
                 writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdated.Value, "O");
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<SoftwareAssuranceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SoftwareAssuranceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SoftwareAssuranceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SoftwareAssuranceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SoftwareAssuranceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeSoftwareAssuranceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SoftwareAssuranceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SoftwareAssuranceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

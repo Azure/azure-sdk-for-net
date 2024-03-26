@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -43,7 +42,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="endpoint"> The Document Intelligence service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new AzureAIDocumentIntelligenceClientOptions())
+        public DocumentIntelligenceClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new DocumentIntelligenceClientOptions())
         {
         }
 
@@ -51,7 +50,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="endpoint"> The Document Intelligence service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzureAIDocumentIntelligenceClientOptions())
+        public DocumentIntelligenceClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DocumentIntelligenceClientOptions())
         {
         }
 
@@ -60,17 +59,11 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceClient(Uri endpoint, AzureKeyCredential credential, AzureAIDocumentIntelligenceClientOptions options)
+        public DocumentIntelligenceClient(Uri endpoint, AzureKeyCredential credential, DocumentIntelligenceClientOptions options)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
-            options ??= new AzureAIDocumentIntelligenceClientOptions();
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new DocumentIntelligenceClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _keyCredential = credential;
@@ -84,17 +77,11 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceClient(Uri endpoint, TokenCredential credential, AzureAIDocumentIntelligenceClientOptions options)
+        public DocumentIntelligenceClient(Uri endpoint, TokenCredential credential, DocumentIntelligenceClientOptions options)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
-            options ??= new AzureAIDocumentIntelligenceClientOptions();
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new DocumentIntelligenceClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
@@ -122,14 +109,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <include file="Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='AnalyzeDocumentAsync(WaitUntil,string,AnalyzeDocumentContent,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},ContentFormat?,CancellationToken)']/*" />
         public virtual async Task<Operation<AnalyzeResult>> AnalyzeDocumentAsync(WaitUntil waitUntil, string modelId, AnalyzeDocumentContent analyzeRequest = null, string pages = null, string locale = null, StringIndexType? stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, IEnumerable<string> queryFields = null, ContentFormat? outputContentFormat = null, CancellationToken cancellationToken = default)
         {
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
-            if (modelId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(modelId));
-            }
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = analyzeRequest?.ToRequestContent();
@@ -156,14 +136,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <include file="Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='AnalyzeDocument(WaitUntil,string,AnalyzeDocumentContent,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},ContentFormat?,CancellationToken)']/*" />
         public virtual Operation<AnalyzeResult> AnalyzeDocument(WaitUntil waitUntil, string modelId, AnalyzeDocumentContent analyzeRequest = null, string pages = null, string locale = null, StringIndexType? stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, IEnumerable<string> queryFields = null, ContentFormat? outputContentFormat = null, CancellationToken cancellationToken = default)
         {
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
-            if (modelId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(modelId));
-            }
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = analyzeRequest?.ToRequestContent();
@@ -206,14 +179,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <include file="Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='AnalyzeDocumentAsync(WaitUntil,string,RequestContent,string,string,string,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> AnalyzeDocumentAsync(WaitUntil waitUntil, string modelId, RequestContent content, string pages = null, string locale = null, string stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, IEnumerable<string> queryFields = null, string outputContentFormat = null, RequestContext context = null)
         {
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
-            if (modelId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(modelId));
-            }
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
             using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceClient.AnalyzeDocument");
             scope.Start();
@@ -264,14 +230,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <include file="Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='AnalyzeDocument(WaitUntil,string,RequestContent,string,string,string,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},string,RequestContext)']/*" />
         public virtual Operation<BinaryData> AnalyzeDocument(WaitUntil waitUntil, string modelId, RequestContent content, string pages = null, string locale = null, string stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, IEnumerable<string> queryFields = null, string outputContentFormat = null, RequestContext context = null)
         {
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
-            if (modelId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(modelId));
-            }
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
             using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceClient.AnalyzeDocument");
             scope.Start();
@@ -299,18 +258,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <include file="Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='ClassifyDocumentAsync(WaitUntil,string,ClassifyDocumentContent,StringIndexType?,SplitMode?,CancellationToken)']/*" />
         public virtual async Task<Operation<AnalyzeResult>> ClassifyDocumentAsync(WaitUntil waitUntil, string classifierId, ClassifyDocumentContent classifyRequest, StringIndexType? stringIndexType = null, SplitMode? split = null, CancellationToken cancellationToken = default)
         {
-            if (classifierId == null)
-            {
-                throw new ArgumentNullException(nameof(classifierId));
-            }
-            if (classifierId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(classifierId));
-            }
-            if (classifyRequest == null)
-            {
-                throw new ArgumentNullException(nameof(classifyRequest));
-            }
+            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
+            Argument.AssertNotNull(classifyRequest, nameof(classifyRequest));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = classifyRequest.ToRequestContent();
@@ -330,18 +279,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <include file="Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='ClassifyDocument(WaitUntil,string,ClassifyDocumentContent,StringIndexType?,SplitMode?,CancellationToken)']/*" />
         public virtual Operation<AnalyzeResult> ClassifyDocument(WaitUntil waitUntil, string classifierId, ClassifyDocumentContent classifyRequest, StringIndexType? stringIndexType = null, SplitMode? split = null, CancellationToken cancellationToken = default)
         {
-            if (classifierId == null)
-            {
-                throw new ArgumentNullException(nameof(classifierId));
-            }
-            if (classifierId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(classifierId));
-            }
-            if (classifyRequest == null)
-            {
-                throw new ArgumentNullException(nameof(classifyRequest));
-            }
+            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
+            Argument.AssertNotNull(classifyRequest, nameof(classifyRequest));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = classifyRequest.ToRequestContent();
@@ -377,18 +316,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <include file="Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='ClassifyDocumentAsync(WaitUntil,string,RequestContent,string,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> ClassifyDocumentAsync(WaitUntil waitUntil, string classifierId, RequestContent content, string stringIndexType = null, string split = null, RequestContext context = null)
         {
-            if (classifierId == null)
-            {
-                throw new ArgumentNullException(nameof(classifierId));
-            }
-            if (classifierId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(classifierId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceClient.ClassifyDocument");
             scope.Start();
@@ -432,18 +361,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <include file="Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='ClassifyDocument(WaitUntil,string,RequestContent,string,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> ClassifyDocument(WaitUntil waitUntil, string classifierId, RequestContent content, string stringIndexType = null, string split = null, RequestContext context = null)
         {
-            if (classifierId == null)
-            {
-                throw new ArgumentNullException(nameof(classifierId));
-            }
-            if (classifierId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(classifierId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceClient.ClassifyDocument");
             scope.Start();

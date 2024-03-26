@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationHubWnsCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationHubWnsCredential)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubWnsCredential)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PackageSid != null)
+            if (Optional.IsDefined(PackageSid))
             {
                 writer.WritePropertyName("packageSid"u8);
                 writer.WriteStringValue(PackageSid);
             }
-            if (SecretKey != null)
+            if (Optional.IsDefined(SecretKey))
             {
                 writer.WritePropertyName("secretKey"u8);
                 writer.WriteStringValue(SecretKey);
             }
-            if (WindowsLiveEndpoint != null)
+            if (Optional.IsDefined(WindowsLiveEndpoint))
             {
                 writer.WritePropertyName("windowsLiveEndpoint"u8);
                 writer.WriteStringValue(WindowsLiveEndpoint.AbsoluteUri);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationHubWnsCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationHubWnsCredential)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubWnsCredential)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NotificationHubWnsCredential)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubWnsCredential)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         return DeserializeNotificationHubWnsCredential(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NotificationHubWnsCredential)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubWnsCredential)} does not support reading '{options.Format}' format.");
             }
         }
 

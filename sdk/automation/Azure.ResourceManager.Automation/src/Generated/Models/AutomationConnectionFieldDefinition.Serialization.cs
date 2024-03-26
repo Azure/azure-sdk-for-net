@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationConnectionFieldDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationConnectionFieldDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationConnectionFieldDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsEncrypted.HasValue)
+            if (Optional.IsDefined(IsEncrypted))
             {
                 writer.WritePropertyName("isEncrypted"u8);
                 writer.WriteBooleanValue(IsEncrypted.Value);
             }
-            if (IsOptional.HasValue)
+            if (Optional.IsDefined(IsOptional))
             {
                 writer.WritePropertyName("isOptional"u8);
                 writer.WriteBooleanValue(IsOptional.Value);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationConnectionFieldDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationConnectionFieldDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationConnectionFieldDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationConnectionFieldDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationConnectionFieldDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeAutomationConnectionFieldDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationConnectionFieldDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationConnectionFieldDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

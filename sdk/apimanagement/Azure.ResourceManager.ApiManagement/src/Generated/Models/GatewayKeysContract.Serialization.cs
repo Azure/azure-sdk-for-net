@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<GatewayKeysContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GatewayKeysContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GatewayKeysContract)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Primary != null)
+            if (Optional.IsDefined(Primary))
             {
                 writer.WritePropertyName("primary"u8);
                 writer.WriteStringValue(Primary);
             }
-            if (Secondary != null)
+            if (Optional.IsDefined(Secondary))
             {
                 writer.WritePropertyName("secondary"u8);
                 writer.WriteStringValue(Secondary);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<GatewayKeysContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GatewayKeysContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GatewayKeysContract)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GatewayKeysContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GatewayKeysContract)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeGatewayKeysContract(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GatewayKeysContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GatewayKeysContract)} does not support reading '{options.Format}' format.");
             }
         }
 

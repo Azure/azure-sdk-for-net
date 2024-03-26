@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DataFactory.Models;
 
 namespace Azure.ResourceManager.DataFactory
@@ -292,10 +290,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<DataFactoryIntegrationRuntimeResource>> UpdateAsync(DataFactoryIntegrationRuntimePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.Update");
             scope.Start();
@@ -337,10 +332,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<DataFactoryIntegrationRuntimeResource> Update(DataFactoryIntegrationRuntimePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.Update");
             scope.Start();
@@ -592,10 +584,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<IntegrationRuntimeAuthKeys>> RegenerateAuthKeyAsync(IntegrationRuntimeRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.RegenerateAuthKey");
             scope.Start();
@@ -637,10 +626,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<IntegrationRuntimeAuthKeys> RegenerateAuthKey(IntegrationRuntimeRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.RegenerateAuthKey");
             scope.Start();
@@ -1154,10 +1140,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response> RemoveLinksAsync(LinkedIntegrationRuntimeContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.RemoveLinks");
             scope.Start();
@@ -1199,10 +1182,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response RemoveLinks(LinkedIntegrationRuntimeContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.RemoveLinks");
             scope.Start();
@@ -1244,10 +1224,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<DataFactoryIntegrationRuntimeStatusResult>> CreateLinkedIntegrationRuntimeAsync(CreateLinkedIntegrationRuntimeContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.CreateLinkedIntegrationRuntime");
             scope.Start();
@@ -1289,10 +1266,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<DataFactoryIntegrationRuntimeStatusResult> CreateLinkedIntegrationRuntime(CreateLinkedIntegrationRuntimeContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.CreateLinkedIntegrationRuntime");
             scope.Start();
@@ -1459,14 +1433,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
         public virtual async Task<Response<SelfHostedIntegrationRuntimeNode>> GetIntegrationRuntimeNodeAsync(string nodeName, CancellationToken cancellationToken = default)
         {
-            if (nodeName == null)
-            {
-                throw new ArgumentNullException(nameof(nodeName));
-            }
-            if (nodeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeName));
-            }
+            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
 
             using var scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.GetIntegrationRuntimeNode");
             scope.Start();
@@ -1505,14 +1472,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
         public virtual Response<SelfHostedIntegrationRuntimeNode> GetIntegrationRuntimeNode(string nodeName, CancellationToken cancellationToken = default)
         {
-            if (nodeName == null)
-            {
-                throw new ArgumentNullException(nameof(nodeName));
-            }
-            if (nodeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeName));
-            }
+            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
 
             using var scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.GetIntegrationRuntimeNode");
             scope.Start();
@@ -1551,14 +1511,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
         public virtual async Task<Response> DeleteIntegrationRuntimeNodeAsync(string nodeName, CancellationToken cancellationToken = default)
         {
-            if (nodeName == null)
-            {
-                throw new ArgumentNullException(nameof(nodeName));
-            }
-            if (nodeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeName));
-            }
+            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
 
             using var scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.DeleteIntegrationRuntimeNode");
             scope.Start();
@@ -1597,14 +1550,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
         public virtual Response DeleteIntegrationRuntimeNode(string nodeName, CancellationToken cancellationToken = default)
         {
-            if (nodeName == null)
-            {
-                throw new ArgumentNullException(nameof(nodeName));
-            }
-            if (nodeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeName));
-            }
+            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
 
             using var scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.DeleteIntegrationRuntimeNode");
             scope.Start();
@@ -1644,18 +1590,8 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<SelfHostedIntegrationRuntimeNode>> UpdateIntegrationRuntimeNodeAsync(string nodeName, UpdateIntegrationRuntimeNodeContent content, CancellationToken cancellationToken = default)
         {
-            if (nodeName == null)
-            {
-                throw new ArgumentNullException(nameof(nodeName));
-            }
-            if (nodeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.UpdateIntegrationRuntimeNode");
             scope.Start();
@@ -1695,18 +1631,8 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> or <paramref name="content"/> is null. </exception>
         public virtual Response<SelfHostedIntegrationRuntimeNode> UpdateIntegrationRuntimeNode(string nodeName, UpdateIntegrationRuntimeNodeContent content, CancellationToken cancellationToken = default)
         {
-            if (nodeName == null)
-            {
-                throw new ArgumentNullException(nameof(nodeName));
-            }
-            if (nodeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.UpdateIntegrationRuntimeNode");
             scope.Start();
@@ -1745,14 +1671,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
         public virtual async Task<Response<IntegrationRuntimeNodeIPAddress>> GetIPAddressIntegrationRuntimeNodeAsync(string nodeName, CancellationToken cancellationToken = default)
         {
-            if (nodeName == null)
-            {
-                throw new ArgumentNullException(nameof(nodeName));
-            }
-            if (nodeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeName));
-            }
+            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
 
             using var scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.GetIPAddressIntegrationRuntimeNode");
             scope.Start();
@@ -1791,14 +1710,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
         public virtual Response<IntegrationRuntimeNodeIPAddress> GetIPAddressIntegrationRuntimeNode(string nodeName, CancellationToken cancellationToken = default)
         {
-            if (nodeName == null)
-            {
-                throw new ArgumentNullException(nameof(nodeName));
-            }
-            if (nodeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeName));
-            }
+            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
 
             using var scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.GetIPAddressIntegrationRuntimeNode");
             scope.Start();

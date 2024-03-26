@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
@@ -23,26 +22,26 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<ScanMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScanMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScanMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (BannerMetadata != null)
+            if (Optional.IsDefined(BannerMetadata))
             {
                 writer.WritePropertyName("bannerMetadata"u8);
                 writer.WriteStringValue(BannerMetadata);
             }
-            if (StartScan.HasValue)
+            if (Optional.IsDefined(StartScan))
             {
                 writer.WritePropertyName("startScan"u8);
                 writer.WriteStringValue(StartScan.Value, "O");
             }
-            if (EndScan.HasValue)
+            if (Optional.IsDefined(EndScan))
             {
                 writer.WritePropertyName("endScan"u8);
                 writer.WriteStringValue(EndScan.Value, "O");
@@ -70,7 +69,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<ScanMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScanMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScanMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -143,7 +142,7 @@ namespace Azure.Analytics.Defender.Easm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScanMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScanMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -159,7 +158,7 @@ namespace Azure.Analytics.Defender.Easm
                         return DeserializeScanMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScanMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScanMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -177,7 +176,7 @@ namespace Azure.Analytics.Defender.Easm
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ScanMetadata>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

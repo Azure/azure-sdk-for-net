@@ -22,27 +22,27 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContinentsResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContinentsResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContinentsResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Continents is ChangeTrackingList<ContinentsResponseContinentsItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Continents))
             {
                 writer.WritePropertyName("continents"u8);
                 writer.WriteStartArray();
                 foreach (var item in Continents)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContinentsResponseContinentsItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(CountryOrRegions is ChangeTrackingList<ContinentsResponseCountryOrRegionsItem> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(CountryOrRegions))
             {
                 writer.WritePropertyName("countryOrRegions"u8);
                 writer.WriteStartArray();
                 foreach (var item in CountryOrRegions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContinentsResponseCountryOrRegionsItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContinentsResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContinentsResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContinentsResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContinentsResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContinentsResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeContinentsResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContinentsResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContinentsResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

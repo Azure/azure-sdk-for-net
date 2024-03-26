@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
@@ -23,29 +22,29 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<CveDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CveDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CveDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (CweId != null)
+            if (Optional.IsDefined(CweId))
             {
                 writer.WritePropertyName("cweId"u8);
                 writer.WriteStringValue(CweId);
             }
-            if (CvssScore.HasValue)
+            if (Optional.IsDefined(CvssScore))
             {
                 writer.WritePropertyName("cvssScore"u8);
                 writer.WriteNumberValue(CvssScore.Value);
             }
-            if (Cvss3Summary != null)
+            if (Optional.IsDefined(Cvss3Summary))
             {
                 writer.WritePropertyName("cvss3Summary"u8);
-                writer.WriteObjectValue(Cvss3Summary);
+                writer.WriteObjectValue<Cvss3Summary>(Cvss3Summary, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -70,7 +69,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<CveDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CveDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CveDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -139,7 +138,7 @@ namespace Azure.Analytics.Defender.Easm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CveDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CveDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -155,7 +154,7 @@ namespace Azure.Analytics.Defender.Easm
                         return DeserializeCveDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CveDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CveDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -173,7 +172,7 @@ namespace Azure.Analytics.Defender.Easm
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<CveDetails>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

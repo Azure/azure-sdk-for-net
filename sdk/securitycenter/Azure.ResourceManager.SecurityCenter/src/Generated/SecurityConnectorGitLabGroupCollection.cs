@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
@@ -84,14 +82,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="groupFQName"/> is null. </exception>
         public virtual async Task<Response<SecurityConnectorGitLabGroupResource>> GetAsync(string groupFQName, CancellationToken cancellationToken = default)
         {
-            if (groupFQName == null)
-            {
-                throw new ArgumentNullException(nameof(groupFQName));
-            }
-            if (groupFQName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupFQName));
-            }
+            Argument.AssertNotNullOrEmpty(groupFQName, nameof(groupFQName));
 
             using var scope = _securityConnectorGitLabGroupGitLabGroupsClientDiagnostics.CreateScope("SecurityConnectorGitLabGroupCollection.Get");
             scope.Start();
@@ -136,14 +127,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="groupFQName"/> is null. </exception>
         public virtual Response<SecurityConnectorGitLabGroupResource> Get(string groupFQName, CancellationToken cancellationToken = default)
         {
-            if (groupFQName == null)
-            {
-                throw new ArgumentNullException(nameof(groupFQName));
-            }
-            if (groupFQName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupFQName));
-            }
+            Argument.AssertNotNullOrEmpty(groupFQName, nameof(groupFQName));
 
             using var scope = _securityConnectorGitLabGroupGitLabGroupsClientDiagnostics.CreateScope("SecurityConnectorGitLabGroupCollection.Get");
             scope.Start();
@@ -245,14 +229,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="SecurityConnectorGitLabGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityConnectorGitLabGroupResource> GetGitLabSubgroupsAsync(string groupFQName, CancellationToken cancellationToken = default)
         {
-            if (groupFQName == null)
-            {
-                throw new ArgumentNullException(nameof(groupFQName));
-            }
-            if (groupFQName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupFQName));
-            }
+            Argument.AssertNotNullOrEmpty(groupFQName, nameof(groupFQName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _gitLabSubgroupsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, groupFQName);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SecurityConnectorGitLabGroupResource(Client, SecurityConnectorGitLabGroupData.DeserializeSecurityConnectorGitLabGroupData(e)), _gitLabSubgroupsClientDiagnostics, Pipeline, "SecurityConnectorGitLabGroupCollection.GetGitLabSubgroups", "value", null, cancellationToken);
@@ -282,14 +259,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SecurityConnectorGitLabGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityConnectorGitLabGroupResource> GetGitLabSubgroups(string groupFQName, CancellationToken cancellationToken = default)
         {
-            if (groupFQName == null)
-            {
-                throw new ArgumentNullException(nameof(groupFQName));
-            }
-            if (groupFQName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupFQName));
-            }
+            Argument.AssertNotNullOrEmpty(groupFQName, nameof(groupFQName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _gitLabSubgroupsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, groupFQName);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new SecurityConnectorGitLabGroupResource(Client, SecurityConnectorGitLabGroupData.DeserializeSecurityConnectorGitLabGroupData(e)), _gitLabSubgroupsClientDiagnostics, Pipeline, "SecurityConnectorGitLabGroupCollection.GetGitLabSubgroups", "value", null, cancellationToken);
@@ -322,14 +292,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="groupFQName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string groupFQName, CancellationToken cancellationToken = default)
         {
-            if (groupFQName == null)
-            {
-                throw new ArgumentNullException(nameof(groupFQName));
-            }
-            if (groupFQName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupFQName));
-            }
+            Argument.AssertNotNullOrEmpty(groupFQName, nameof(groupFQName));
 
             using var scope = _securityConnectorGitLabGroupGitLabGroupsClientDiagnostics.CreateScope("SecurityConnectorGitLabGroupCollection.Exists");
             scope.Start();
@@ -372,14 +335,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="groupFQName"/> is null. </exception>
         public virtual Response<bool> Exists(string groupFQName, CancellationToken cancellationToken = default)
         {
-            if (groupFQName == null)
-            {
-                throw new ArgumentNullException(nameof(groupFQName));
-            }
-            if (groupFQName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupFQName));
-            }
+            Argument.AssertNotNullOrEmpty(groupFQName, nameof(groupFQName));
 
             using var scope = _securityConnectorGitLabGroupGitLabGroupsClientDiagnostics.CreateScope("SecurityConnectorGitLabGroupCollection.Exists");
             scope.Start();
@@ -422,14 +378,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="groupFQName"/> is null. </exception>
         public virtual async Task<NullableResponse<SecurityConnectorGitLabGroupResource>> GetIfExistsAsync(string groupFQName, CancellationToken cancellationToken = default)
         {
-            if (groupFQName == null)
-            {
-                throw new ArgumentNullException(nameof(groupFQName));
-            }
-            if (groupFQName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupFQName));
-            }
+            Argument.AssertNotNullOrEmpty(groupFQName, nameof(groupFQName));
 
             using var scope = _securityConnectorGitLabGroupGitLabGroupsClientDiagnostics.CreateScope("SecurityConnectorGitLabGroupCollection.GetIfExists");
             scope.Start();
@@ -474,14 +423,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="groupFQName"/> is null. </exception>
         public virtual NullableResponse<SecurityConnectorGitLabGroupResource> GetIfExists(string groupFQName, CancellationToken cancellationToken = default)
         {
-            if (groupFQName == null)
-            {
-                throw new ArgumentNullException(nameof(groupFQName));
-            }
-            if (groupFQName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupFQName));
-            }
+            Argument.AssertNotNullOrEmpty(groupFQName, nameof(groupFQName));
 
             using var scope = _securityConnectorGitLabGroupGitLabGroupsClientDiagnostics.CreateScope("SecurityConnectorGitLabGroupCollection.GetIfExists");
             scope.Start();

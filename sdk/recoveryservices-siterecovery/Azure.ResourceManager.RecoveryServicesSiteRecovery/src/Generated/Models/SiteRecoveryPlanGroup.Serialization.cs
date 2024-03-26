@@ -22,39 +22,39 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryPlanGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryPlanGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryPlanGroup)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("groupType"u8);
             writer.WriteStringValue(GroupType.ToString());
-            if (!(ReplicationProtectedItems is ChangeTrackingList<RecoveryPlanProtectedItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ReplicationProtectedItems))
             {
                 writer.WritePropertyName("replicationProtectedItems"u8);
                 writer.WriteStartArray();
                 foreach (var item in ReplicationProtectedItems)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RecoveryPlanProtectedItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(StartGroupActions is ChangeTrackingList<RecoveryPlanAction> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(StartGroupActions))
             {
                 writer.WritePropertyName("startGroupActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in StartGroupActions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RecoveryPlanAction>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(EndGroupActions is ChangeTrackingList<RecoveryPlanAction> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(EndGroupActions))
             {
                 writer.WritePropertyName("endGroupActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in EndGroupActions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RecoveryPlanAction>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryPlanGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryPlanGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryPlanGroup)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryPlanGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryPlanGroup)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSiteRecoveryPlanGroup(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryPlanGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryPlanGroup)} does not support reading '{options.Format}' format.");
             }
         }
 

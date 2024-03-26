@@ -18,15 +18,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (FileMissing != null)
+            if (Optional.IsDefined(FileMissing))
             {
                 writer.WritePropertyName("fileMissing"u8);
-                writer.WriteObjectValue(FileMissing);
+                writer.WriteObjectValue<object>(FileMissing);
             }
-            if (DataInconsistency != null)
+            if (Optional.IsDefined(DataInconsistency))
             {
                 writer.WritePropertyName("dataInconsistency"u8);
-                writer.WriteObjectValue(DataInconsistency);
+                writer.WriteObjectValue<object>(DataInconsistency);
             }
             writer.WriteEndObject();
         }
@@ -67,7 +67,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, SkipErrorFile model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SkipErrorFile>(model);
             }
             public override SkipErrorFile Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

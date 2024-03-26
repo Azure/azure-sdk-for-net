@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
@@ -23,41 +22,41 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<PageCause>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PageCause)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PageCause)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Cause != null)
+            if (Optional.IsDefined(Cause))
             {
                 writer.WritePropertyName("cause"u8);
                 writer.WriteStringValue(Cause);
             }
-            if (CauseElementXPath != null)
+            if (Optional.IsDefined(CauseElementXPath))
             {
                 writer.WritePropertyName("causeElementXPath"u8);
                 writer.WriteStringValue(CauseElementXPath);
             }
-            if (Location != null)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location);
             }
-            if (PossibleMatches.HasValue)
+            if (Optional.IsDefined(PossibleMatches))
             {
                 writer.WritePropertyName("possibleMatches"u8);
                 writer.WriteNumberValue(PossibleMatches.Value);
             }
-            if (LoopDetected.HasValue)
+            if (Optional.IsDefined(LoopDetected))
             {
                 writer.WritePropertyName("loopDetected"u8);
                 writer.WriteBooleanValue(LoopDetected.Value);
             }
-            if (Version.HasValue)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (DomChangeIndex.HasValue)
+            if (Optional.IsDefined(DomChangeIndex))
             {
                 writer.WritePropertyName("domChangeIndex"u8);
                 writer.WriteNumberValue(DomChangeIndex.Value);
@@ -85,7 +84,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<PageCause>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PageCause)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PageCause)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -188,7 +187,7 @@ namespace Azure.Analytics.Defender.Easm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PageCause)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PageCause)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -204,7 +203,7 @@ namespace Azure.Analytics.Defender.Easm
                         return DeserializePageCause(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PageCause)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PageCause)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -222,7 +221,7 @@ namespace Azure.Analytics.Defender.Easm
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<PageCause>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

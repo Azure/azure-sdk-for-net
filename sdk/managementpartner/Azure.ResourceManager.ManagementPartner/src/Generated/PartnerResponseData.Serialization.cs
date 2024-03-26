@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.ManagementPartner
             var format = options.Format == "W" ? ((IPersistableModel<PartnerResponseData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PartnerResponseData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PartnerResponseData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteNumberValue(ETag.Value);
@@ -48,49 +48,49 @@ namespace Azure.ResourceManager.ManagementPartner
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PartnerId != null)
+            if (Optional.IsDefined(PartnerId))
             {
                 writer.WritePropertyName("partnerId"u8);
                 writer.WriteStringValue(PartnerId);
             }
-            if (PartnerName != null)
+            if (Optional.IsDefined(PartnerName))
             {
                 writer.WritePropertyName("partnerName"u8);
                 writer.WriteStringValue(PartnerName);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (ObjectId != null)
+            if (Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId);
             }
-            if (Version.HasValue)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (UpdatedOn.HasValue)
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedTime"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ManagementPartner
             var format = options.Format == "W" ? ((IPersistableModel<PartnerResponseData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PartnerResponseData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PartnerResponseData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ManagementPartner
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PartnerResponseData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PartnerResponseData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.ManagementPartner
                         return DeserializePartnerResponseData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PartnerResponseData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PartnerResponseData)} does not support reading '{options.Format}' format.");
             }
         }
 

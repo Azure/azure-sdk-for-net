@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityRulesEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSecurityRulesEvaluationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityRulesEvaluationResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ProtocolMatched.HasValue)
+            if (Optional.IsDefined(ProtocolMatched))
             {
                 writer.WritePropertyName("protocolMatched"u8);
                 writer.WriteBooleanValue(ProtocolMatched.Value);
             }
-            if (SourceMatched.HasValue)
+            if (Optional.IsDefined(SourceMatched))
             {
                 writer.WritePropertyName("sourceMatched"u8);
                 writer.WriteBooleanValue(SourceMatched.Value);
             }
-            if (SourcePortMatched.HasValue)
+            if (Optional.IsDefined(SourcePortMatched))
             {
                 writer.WritePropertyName("sourcePortMatched"u8);
                 writer.WriteBooleanValue(SourcePortMatched.Value);
             }
-            if (DestinationMatched.HasValue)
+            if (Optional.IsDefined(DestinationMatched))
             {
                 writer.WritePropertyName("destinationMatched"u8);
                 writer.WriteBooleanValue(DestinationMatched.Value);
             }
-            if (DestinationPortMatched.HasValue)
+            if (Optional.IsDefined(DestinationPortMatched))
             {
                 writer.WritePropertyName("destinationPortMatched"u8);
                 writer.WriteBooleanValue(DestinationPortMatched.Value);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityRulesEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSecurityRulesEvaluationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityRulesEvaluationResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSecurityRulesEvaluationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityRulesEvaluationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeNetworkSecurityRulesEvaluationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSecurityRulesEvaluationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityRulesEvaluationResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ReservedResourceType.HasValue)
+            if (Optional.IsDefined(ReservedResourceType))
             {
                 writer.WritePropertyName("reservedResourceType"u8);
                 writer.WriteStringValue(ReservedResourceType.Value.ToString());
             }
-            if (InstanceFlexibility.HasValue)
+            if (Optional.IsDefined(InstanceFlexibility))
             {
                 writer.WritePropertyName("instanceFlexibility"u8);
                 writer.WriteStringValue(InstanceFlexibility.Value.ToString());
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (!(AppliedScopes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AppliedScopes))
             {
                 writer.WritePropertyName("appliedScopes"u8);
                 writer.WriteStartArray();
@@ -51,160 +51,160 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AppliedScopeType.HasValue)
+            if (Optional.IsDefined(AppliedScopeType))
             {
                 writer.WritePropertyName("appliedScopeType"u8);
                 writer.WriteStringValue(AppliedScopeType.Value.ToString());
             }
-            if (IsArchived.HasValue)
+            if (Optional.IsDefined(IsArchived))
             {
                 writer.WritePropertyName("archived"u8);
                 writer.WriteBooleanValue(IsArchived.Value);
             }
-            if (Capabilities != null)
+            if (Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStringValue(Capabilities);
             }
-            if (Quantity.HasValue)
+            if (Optional.IsDefined(Quantity))
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (EffectOn.HasValue)
+            if (Optional.IsDefined(EffectOn))
             {
                 writer.WritePropertyName("effectiveDateTime"u8);
                 writer.WriteStringValue(EffectOn.Value, "O");
             }
-            if (BenefitStartOn.HasValue)
+            if (Optional.IsDefined(BenefitStartOn))
             {
                 writer.WritePropertyName("benefitStartTime"u8);
                 writer.WriteStringValue(BenefitStartOn.Value, "O");
             }
-            if (options.Format != "W" && LastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedDateTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiryDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "D");
             }
-            if (ReservationExpireOn.HasValue)
+            if (Optional.IsDefined(ReservationExpireOn))
             {
                 writer.WritePropertyName("expiryDateTime"u8);
                 writer.WriteStringValue(ReservationExpireOn.Value, "O");
             }
-            if (ReviewOn.HasValue)
+            if (Optional.IsDefined(ReviewOn))
             {
                 writer.WritePropertyName("reviewDateTime"u8);
                 writer.WriteStringValue(ReviewOn.Value, "O");
             }
-            if (SkuDescription != null)
+            if (Optional.IsDefined(SkuDescription))
             {
                 writer.WritePropertyName("skuDescription"u8);
                 writer.WriteStringValue(SkuDescription);
             }
-            if (ExtendedStatusInfo != null)
+            if (Optional.IsDefined(ExtendedStatusInfo))
             {
                 writer.WritePropertyName("extendedStatusInfo"u8);
-                writer.WriteObjectValue(ExtendedStatusInfo);
+                writer.WriteObjectValue<ExtendedStatusInfo>(ExtendedStatusInfo, options);
             }
-            if (BillingPlan.HasValue)
+            if (Optional.IsDefined(BillingPlan))
             {
                 writer.WritePropertyName("billingPlan"u8);
                 writer.WriteStringValue(BillingPlan.Value.ToString());
             }
-            if (options.Format != "W" && DisplayProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayProvisioningState))
             {
                 writer.WritePropertyName("displayProvisioningState"u8);
                 writer.WriteStringValue(DisplayProvisioningState);
             }
-            if (options.Format != "W" && ProvisioningSubState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningSubState))
             {
                 writer.WritePropertyName("provisioningSubState"u8);
                 writer.WriteStringValue(ProvisioningSubState);
             }
-            if (PurchaseOn.HasValue)
+            if (Optional.IsDefined(PurchaseOn))
             {
                 writer.WritePropertyName("purchaseDate"u8);
                 writer.WriteStringValue(PurchaseOn.Value, "D");
             }
-            if (ReservationPurchaseOn.HasValue)
+            if (Optional.IsDefined(ReservationPurchaseOn))
             {
                 writer.WritePropertyName("purchaseDateTime"u8);
                 writer.WriteStringValue(ReservationPurchaseOn.Value, "O");
             }
-            if (SplitProperties != null)
+            if (Optional.IsDefined(SplitProperties))
             {
                 writer.WritePropertyName("splitProperties"u8);
-                writer.WriteObjectValue(SplitProperties);
+                writer.WriteObjectValue<ReservationSplitProperties>(SplitProperties, options);
             }
-            if (MergeProperties != null)
+            if (Optional.IsDefined(MergeProperties))
             {
                 writer.WritePropertyName("mergeProperties"u8);
-                writer.WriteObjectValue(MergeProperties);
+                writer.WriteObjectValue<ReservationMergeProperties>(MergeProperties, options);
             }
-            if (SwapProperties != null)
+            if (Optional.IsDefined(SwapProperties))
             {
                 writer.WritePropertyName("swapProperties"u8);
-                writer.WriteObjectValue(SwapProperties);
+                writer.WriteObjectValue<ReservationSwapProperties>(SwapProperties, options);
             }
-            if (AppliedScopeProperties != null)
+            if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue(AppliedScopeProperties);
+                writer.WriteObjectValue<AppliedScopeProperties>(AppliedScopeProperties, options);
             }
-            if (BillingScopeId != null)
+            if (Optional.IsDefined(BillingScopeId))
             {
                 writer.WritePropertyName("billingScopeId"u8);
                 writer.WriteStringValue(BillingScopeId);
             }
-            if (IsRenewEnabled.HasValue)
+            if (Optional.IsDefined(IsRenewEnabled))
             {
                 writer.WritePropertyName("renew"u8);
                 writer.WriteBooleanValue(IsRenewEnabled.Value);
             }
-            if (RenewSource != null)
+            if (Optional.IsDefined(RenewSource))
             {
                 writer.WritePropertyName("renewSource"u8);
                 writer.WriteStringValue(RenewSource);
             }
-            if (RenewDestination != null)
+            if (Optional.IsDefined(RenewDestination))
             {
                 writer.WritePropertyName("renewDestination"u8);
                 writer.WriteStringValue(RenewDestination);
             }
-            if (RenewProperties != null)
+            if (Optional.IsDefined(RenewProperties))
             {
                 writer.WritePropertyName("renewProperties"u8);
-                writer.WriteObjectValue(RenewProperties);
+                writer.WriteObjectValue<RenewProperties>(RenewProperties, options);
             }
-            if (Term.HasValue)
+            if (Optional.IsDefined(Term))
             {
                 writer.WritePropertyName("term"u8);
                 writer.WriteStringValue(Term.Value.ToString());
             }
-            if (options.Format != "W" && UserFriendlyAppliedScopeType != null)
+            if (options.Format != "W" && Optional.IsDefined(UserFriendlyAppliedScopeType))
             {
                 writer.WritePropertyName("userFriendlyAppliedScopeType"u8);
                 writer.WriteStringValue(UserFriendlyAppliedScopeType);
             }
-            if (options.Format != "W" && UserFriendlyRenewState != null)
+            if (options.Format != "W" && Optional.IsDefined(UserFriendlyRenewState))
             {
                 writer.WritePropertyName("userFriendlyRenewState"u8);
                 writer.WriteStringValue(UserFriendlyRenewState);
             }
-            if (options.Format != "W" && Utilization != null)
+            if (options.Format != "W" && Optional.IsDefined(Utilization))
             {
                 writer.WritePropertyName("utilization"u8);
-                writer.WriteObjectValue(Utilization);
+                writer.WriteObjectValue<ReservationPropertiesUtilization>(Utilization, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReservationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeReservationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReservationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

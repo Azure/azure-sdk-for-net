@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareV2FabricCreationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareV2FabricCreationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareV2FabricCreationContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (VMwareSiteId != null)
+            if (Optional.IsDefined(VMwareSiteId))
             {
                 writer.WritePropertyName("vmwareSiteId"u8);
                 writer.WriteStringValue(VMwareSiteId);
             }
-            if (PhysicalSiteId != null)
+            if (Optional.IsDefined(PhysicalSiteId))
             {
                 writer.WritePropertyName("physicalSiteId"u8);
                 writer.WriteStringValue(PhysicalSiteId);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareV2FabricCreationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareV2FabricCreationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareV2FabricCreationContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareV2FabricCreationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareV2FabricCreationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeVMwareV2FabricCreationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareV2FabricCreationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareV2FabricCreationContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,42 +22,42 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkSiblingSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSiblingSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSiblingSet)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (NetworkSiblingSetId != null)
+            if (Optional.IsDefined(NetworkSiblingSetId))
             {
                 writer.WritePropertyName("networkSiblingSetId"u8);
                 writer.WriteStringValue(NetworkSiblingSetId);
             }
-            if (SubnetId != null)
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (NetworkSiblingSetStateId != null)
+            if (Optional.IsDefined(NetworkSiblingSetStateId))
             {
                 writer.WritePropertyName("networkSiblingSetStateId"u8);
                 writer.WriteStringValue(NetworkSiblingSetStateId);
             }
-            if (NetworkFeatures.HasValue)
+            if (Optional.IsDefined(NetworkFeatures))
             {
                 writer.WritePropertyName("networkFeatures"u8);
                 writer.WriteStringValue(NetworkFeatures.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (!(NicInfoList is ChangeTrackingList<NicInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NicInfoList))
             {
                 writer.WritePropertyName("nicInfoList"u8);
                 writer.WriteStartArray();
                 foreach (var item in NicInfoList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NicInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkSiblingSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSiblingSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSiblingSet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSiblingSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSiblingSet)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetworkSiblingSet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSiblingSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSiblingSet)} does not support reading '{options.Format}' format.");
             }
         }
 

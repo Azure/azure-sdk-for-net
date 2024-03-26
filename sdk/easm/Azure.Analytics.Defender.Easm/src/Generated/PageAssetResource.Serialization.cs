@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
@@ -23,12 +22,12 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<PageAssetResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PageAssetResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PageAssetResource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("asset"u8);
-            writer.WriteObjectValue(Asset);
+            writer.WriteObjectValue<PageAsset>(Asset, options);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (options.Format != "W")
@@ -36,42 +35,42 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Uuid.HasValue)
+            if (Optional.IsDefined(Uuid))
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid.Value);
             }
-            if (CreatedDate.HasValue)
+            if (Optional.IsDefined(CreatedDate))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedDate.Value, "O");
             }
-            if (UpdatedDate.HasValue)
+            if (Optional.IsDefined(UpdatedDate))
             {
                 writer.WritePropertyName("updatedDate"u8);
                 writer.WriteStringValue(UpdatedDate.Value, "O");
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (ExternalId != null)
+            if (Optional.IsDefined(ExternalId))
             {
                 writer.WritePropertyName("externalId"u8);
                 writer.WriteStringValue(ExternalId);
             }
-            if (!(Labels is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -81,27 +80,27 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Wildcard.HasValue)
+            if (Optional.IsDefined(Wildcard))
             {
                 writer.WritePropertyName("wildcard"u8);
                 writer.WriteBooleanValue(Wildcard.Value);
             }
-            if (DiscoGroupName != null)
+            if (Optional.IsDefined(DiscoGroupName))
             {
                 writer.WritePropertyName("discoGroupName"u8);
                 writer.WriteStringValue(DiscoGroupName);
             }
-            if (!(AuditTrail is ChangeTrackingList<AuditTrailItem> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AuditTrail))
             {
                 writer.WritePropertyName("auditTrail"u8);
                 writer.WriteStartArray();
                 foreach (var item in AuditTrail)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AuditTrailItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Reason != null)
+            if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
@@ -129,7 +128,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<PageAssetResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PageAssetResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PageAssetResource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -310,7 +309,7 @@ namespace Azure.Analytics.Defender.Easm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PageAssetResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PageAssetResource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -326,7 +325,7 @@ namespace Azure.Analytics.Defender.Easm
                         return DeserializePageAssetResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PageAssetResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PageAssetResource)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -344,7 +343,7 @@ namespace Azure.Analytics.Defender.Easm
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<PageAssetResource>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }
