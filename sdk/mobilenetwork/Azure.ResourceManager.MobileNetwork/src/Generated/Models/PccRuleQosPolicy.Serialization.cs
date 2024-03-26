@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(GuaranteedBitRate))
             {
                 writer.WritePropertyName("guaranteedBitRate"u8);
-                writer.WriteObjectValue(GuaranteedBitRate);
+                writer.WriteObjectValue<Ambr>(GuaranteedBitRate, options);
             }
             if (Optional.IsDefined(FiveQi))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WriteStringValue(PreemptionVulnerability.Value.ToString());
             }
             writer.WritePropertyName("maximumBitRate"u8);
-            writer.WriteObjectValue(MaximumBitRate);
+            writer.WriteObjectValue<Ambr>(MaximumBitRate, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

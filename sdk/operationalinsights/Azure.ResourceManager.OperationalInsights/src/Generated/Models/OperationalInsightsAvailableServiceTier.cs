@@ -72,18 +72,25 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The name of the Service Tier. </summary>
+        [WirePath("serviceTier")]
         public OperationalInsightsSkuName? ServiceTier { get; }
         /// <summary> True if the Service Tier is enabled for the workspace. </summary>
+        [WirePath("enabled")]
         public bool? IsEnabled { get; }
         /// <summary> The minimum retention for the Service Tier, in days. </summary>
+        [WirePath("minimumRetention")]
         public long? MinimumRetention { get; }
         /// <summary> The maximum retention for the Service Tier, in days. </summary>
+        [WirePath("maximumRetention")]
         public long? MaximumRetention { get; }
         /// <summary> The default retention for the Service Tier, in days. </summary>
+        [WirePath("defaultRetention")]
         public long? DefaultRetention { get; }
         /// <summary> The capacity reservation level in GB per day. Returned for the Capacity Reservation Service Tier. </summary>
+        [WirePath("capacityReservationLevel")]
         public long? CapacityReservationLevel { get; }
         /// <summary> Time when the sku was last updated for the workspace. Returned for the Capacity Reservation Service Tier. </summary>
+        [WirePath("lastSkuUpdate")]
         public DateTimeOffset? LastSkuUpdatedOn { get; }
     }
 }

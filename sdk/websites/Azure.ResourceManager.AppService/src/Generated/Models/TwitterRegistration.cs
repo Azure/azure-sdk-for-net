@@ -73,11 +73,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// This setting is required for enabling Twitter Sign-In.
         /// Twitter Sign-In documentation: https://dev.twitter.com/web/sign-in
         /// </summary>
+        [WirePath("consumerKey")]
         public string ConsumerKey { get; set; }
         /// <summary>
         /// The app setting name that contains the OAuth 1.0a consumer secret of the Twitter
         /// application used for sign-in.
         /// </summary>
+        [WirePath("consumerSecretSettingName")]
         public string ConsumerSecretSettingName { get; set; }
     }
 }

@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The data type of the parameter. </summary>
+        [WirePath("type")]
         public ArmPolicyParameterType? ParameterType { get; set; }
         /// <summary>
         /// The allowed values for the parameter.
@@ -98,6 +99,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("allowedValues")]
         public IList<BinaryData> AllowedValues { get; }
         /// <summary>
         /// The default value for the parameter if no value is provided.
@@ -129,8 +131,10 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("defaultValue")]
         public BinaryData DefaultValue { get; set; }
         /// <summary> General metadata for the parameter. </summary>
+        [WirePath("metadata")]
         public ParameterDefinitionsValueMetadata Metadata { get; set; }
     }
 }

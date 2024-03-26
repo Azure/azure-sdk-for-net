@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in AdvancedFilters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AdvancedFilter>(item, options);
                 }
                 writer.WriteEndArray();
             }

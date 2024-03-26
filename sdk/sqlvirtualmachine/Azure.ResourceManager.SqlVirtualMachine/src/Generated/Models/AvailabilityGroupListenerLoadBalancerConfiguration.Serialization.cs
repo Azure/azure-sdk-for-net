@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
-                writer.WriteObjectValue(PrivateIPAddress);
+                writer.WriteObjectValue<AvailabilityGroupListenerPrivateIPAddress>(PrivateIPAddress, options);
             }
             if (Optional.IsDefined(PublicIPAddressResourceId))
             {

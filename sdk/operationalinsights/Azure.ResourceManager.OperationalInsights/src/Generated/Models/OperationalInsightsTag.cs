@@ -75,8 +75,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The tag name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The tag value. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

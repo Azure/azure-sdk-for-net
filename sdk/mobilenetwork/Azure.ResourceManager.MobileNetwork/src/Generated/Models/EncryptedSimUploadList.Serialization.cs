@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartArray();
             foreach (var item in Sims)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<SimNameAndEncryptedProperties>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

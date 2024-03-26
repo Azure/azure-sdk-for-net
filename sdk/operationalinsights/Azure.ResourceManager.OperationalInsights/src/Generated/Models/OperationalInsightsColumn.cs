@@ -72,18 +72,25 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> Column name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Column data type. </summary>
+        [WirePath("type")]
         public OperationalInsightsColumnType? ColumnType { get; set; }
         /// <summary> Column data type logical hint. </summary>
+        [WirePath("dataTypeHint")]
         public OperationalInsightsColumnDataTypeHint? DataTypeHint { get; set; }
         /// <summary> Column display name. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
         /// <summary> Column description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Is displayed by default. </summary>
+        [WirePath("isDefaultDisplay")]
         public bool? IsDefaultDisplay { get; }
         /// <summary> Is column hidden. </summary>
+        [WirePath("isHidden")]
         public bool? IsHidden { get; }
     }
 }

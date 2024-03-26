@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(GitPropertyValidationResult))
             {
                 writer.WritePropertyName("gitPropertyValidationResult"u8);
-                writer.WriteObjectValue(GitPropertyValidationResult);
+                writer.WriteObjectValue<AppPlatformConfigurationServiceGitValidateResult>(GitPropertyValidationResult, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
-                writer.WriteObjectValue(Details);
+                writer.WriteObjectValue<CreateManagementGroupDetails>(Details, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Children))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteStartArray();
                     foreach (var item in Children)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<ManagementGroupChildOptions>(item, options);
                     }
                     writer.WriteEndArray();
                 }

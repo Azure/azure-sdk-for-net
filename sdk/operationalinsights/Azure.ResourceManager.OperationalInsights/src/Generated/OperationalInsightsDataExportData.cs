@@ -85,20 +85,28 @@ namespace Azure.ResourceManager.OperationalInsights
         }
 
         /// <summary> The data export rule ID. </summary>
+        [WirePath("properties.dataExportId")]
         public Guid? DataExportId { get; set; }
         /// <summary> An array of tables to export, for example: [“Heartbeat, SecurityEvent”]. </summary>
+        [WirePath("properties.tableNames")]
         public IList<string> TableNames { get; }
         /// <summary> Active when enabled. </summary>
+        [WirePath("properties.enable")]
         public bool? IsEnabled { get; set; }
         /// <summary> The latest data export rule modification time. </summary>
+        [WirePath("properties.createdDate")]
         public DateTimeOffset? CreatedOn { get; set; }
         /// <summary> Date and time when the export was last modified. </summary>
+        [WirePath("properties.lastModifiedDate")]
         public DateTimeOffset? LastModifiedOn { get; set; }
         /// <summary> The destination resource ID. This can be copied from the Properties entry of the destination resource in Azure. </summary>
+        [WirePath("properties.resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The type of the destination resource. </summary>
+        [WirePath("properties.type")]
         public OperationalInsightsDataExportDestinationType? DestinationType { get; }
         /// <summary> Optional. Allows to define an Event Hub name. Not applicable when destination is Storage Account. </summary>
+        [WirePath("properties.eventHubName")]
         public string EventHubName { get; set; }
     }
 }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in MatchCriteria)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RouteCriterion>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RouteMapAction>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SynapseIntegrationRuntimeNodeMonitoringResult>(item, options);
                 }
                 writer.WriteEndArray();
             }

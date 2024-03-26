@@ -72,8 +72,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Name of the Cosmos DB SQL userDefinedFunction. </summary>
+        [WirePath("id")]
         public string FunctionName { get; set; }
         /// <summary> Body of the User Defined Function. </summary>
+        [WirePath("body")]
         public string Body { get; set; }
     }
 }

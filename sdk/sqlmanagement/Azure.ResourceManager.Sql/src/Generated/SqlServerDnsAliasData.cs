@@ -69,6 +69,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The fully qualified DNS record for alias. </summary>
+        [WirePath("properties.azureDnsRecord")]
         public string AzureDnsRecord { get; }
     }
 }

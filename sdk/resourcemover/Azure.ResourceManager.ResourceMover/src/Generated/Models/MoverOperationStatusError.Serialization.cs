@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MoverOperationStatusError>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteStartArray();
                     foreach (var item in AdditionalInfo)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<MoverOperationErrorAdditionalInfo>(item, options);
                     }
                     writer.WriteEndArray();
                 }

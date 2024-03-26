@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<DataBoxEdgeJobErrorDetails>(Error, options);
             }
             if (options.Format != "W")
             {
@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (options.Format != "W" && Optional.IsDefined(DownloadProgress))
             {
                 writer.WritePropertyName("downloadProgress"u8);
-                writer.WriteObjectValue(DownloadProgress);
+                writer.WriteObjectValue<UpdateDownloadProgress>(DownloadProgress, options);
             }
             if (options.Format != "W" && Optional.IsDefined(InstallProgress))
             {
                 writer.WritePropertyName("installProgress"u8);
-                writer.WriteObjectValue(InstallProgress);
+                writer.WriteObjectValue<UpdateInstallProgress>(InstallProgress, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TotalRefreshErrors))
             {

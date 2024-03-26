@@ -59,22 +59,22 @@ namespace Azure.ResourceManager.StorageSync.Models
             if (options.Format != "W" && Optional.IsDefined(UploadStatus))
             {
                 writer.WritePropertyName("uploadStatus"u8);
-                writer.WriteObjectValue(UploadStatus);
+                writer.WriteObjectValue<ServerEndpointSyncSessionStatus>(UploadStatus, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DownloadStatus))
             {
                 writer.WritePropertyName("downloadStatus"u8);
-                writer.WriteObjectValue(DownloadStatus);
+                writer.WriteObjectValue<ServerEndpointSyncSessionStatus>(DownloadStatus, options);
             }
             if (options.Format != "W" && Optional.IsDefined(UploadActivity))
             {
                 writer.WritePropertyName("uploadActivity"u8);
-                writer.WriteObjectValue(UploadActivity);
+                writer.WriteObjectValue<ServerEndpointSyncActivityStatus>(UploadActivity, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DownloadActivity))
             {
                 writer.WritePropertyName("downloadActivity"u8);
-                writer.WriteObjectValue(DownloadActivity);
+                writer.WriteObjectValue<ServerEndpointSyncActivityStatus>(DownloadActivity, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OfflineDataTransferStatus))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             if (options.Format != "W" && Optional.IsDefined(BackgroundDataDownloadActivity))
             {
                 writer.WritePropertyName("backgroundDataDownloadActivity"u8);
-                writer.WriteObjectValue(BackgroundDataDownloadActivity);
+                writer.WriteObjectValue<ServerEndpointBackgroundDataDownloadActivity>(BackgroundDataDownloadActivity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

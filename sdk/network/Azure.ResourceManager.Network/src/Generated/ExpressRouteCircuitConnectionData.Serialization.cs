@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(IPv6CircuitConnectionConfig))
             {
                 writer.WritePropertyName("ipv6CircuitConnectionConfig"u8);
-                writer.WriteObjectValue(IPv6CircuitConnectionConfig);
+                writer.WriteObjectValue<IPv6CircuitConnectionConfig>(IPv6CircuitConnectionConfig, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CircuitConnectionStatus))
             {

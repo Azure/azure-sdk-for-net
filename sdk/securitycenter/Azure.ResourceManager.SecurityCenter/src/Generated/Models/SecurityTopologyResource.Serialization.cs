@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in TopologyResources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TopologySingleResource>(item, options);
                 }
                 writer.WriteEndArray();
             }

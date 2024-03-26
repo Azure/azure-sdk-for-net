@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in AppliesToGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkManagerSecurityGroupItem>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> This property indicates the current sku conversion status. </summary>
+        [WirePath("skuConversionStatus")]
         public StorageAccountSkuConversionState? SkuConversionStatus { get; }
         /// <summary> This property represents the target sku name to which the account sku is being converted asynchronously. </summary>
+        [WirePath("targetSkuName")]
         public StorageSkuName? TargetSkuName { get; set; }
         /// <summary> This property represents the sku conversion start time. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> This property represents the sku conversion end time. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
     }
 }

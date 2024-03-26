@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             if (Optional.IsDefined(DisplayText))
             {
                 writer.WritePropertyName("displayText"u8);
-                writer.WriteObjectValue(DisplayText);
+                writer.WriteObjectValue<ResourceHealthEventLinkDisplayText>(DisplayText, options);
             }
             if (Optional.IsDefined(ExtensionName))
             {

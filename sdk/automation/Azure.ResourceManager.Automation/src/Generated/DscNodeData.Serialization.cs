@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Automation
                 writer.WriteStartArray();
                 foreach (var item in ExtensionHandler)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DscNodeExtensionHandlerAssociationProperty>(item, options);
                 }
                 writer.WriteEndArray();
             }

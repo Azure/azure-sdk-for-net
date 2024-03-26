@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartArray();
             foreach (var item in FailoverPolicies)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<CosmosDBFailoverPolicy>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

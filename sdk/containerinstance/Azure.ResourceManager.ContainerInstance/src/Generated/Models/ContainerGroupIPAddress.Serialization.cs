@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStartArray();
             foreach (var item in Ports)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ContainerGroupPort>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("type"u8);

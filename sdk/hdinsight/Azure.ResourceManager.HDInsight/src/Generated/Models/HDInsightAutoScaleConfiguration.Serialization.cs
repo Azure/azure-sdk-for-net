@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity);
+                writer.WriteObjectValue<HDInsightAutoScaleCapacity>(Capacity, options);
             }
             if (Optional.IsDefined(Recurrence))
             {
                 writer.WritePropertyName("recurrence"u8);
-                writer.WriteObjectValue(Recurrence);
+                writer.WriteObjectValue<HDInsightAutoScaleRecurrence>(Recurrence, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

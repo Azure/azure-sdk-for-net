@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Purview
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                writer.WriteObjectValue<PurviewCredentials>(Credentials, options);
             }
             if (Optional.IsDefined(EventHubPartitionId))
             {

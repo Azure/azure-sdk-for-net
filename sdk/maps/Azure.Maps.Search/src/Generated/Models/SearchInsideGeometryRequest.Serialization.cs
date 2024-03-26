@@ -19,7 +19,7 @@ namespace Azure.Maps.Search.Models
             if (Common.Optional.IsDefined(Geometry))
             {
                 writer.WritePropertyName("geometry"u8);
-                writer.WriteObjectValue(Geometry);
+                writer.WriteObjectValue<GeoJsonObject>(Geometry);
             }
             writer.WriteEndObject();
         }

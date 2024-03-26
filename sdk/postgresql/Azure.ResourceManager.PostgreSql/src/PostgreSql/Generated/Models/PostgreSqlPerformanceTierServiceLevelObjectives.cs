@@ -74,20 +74,28 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> ID for the service level objective. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> Edition of the performance tier. </summary>
+        [WirePath("edition")]
         public string Edition { get; }
         /// <summary> vCore associated with the service level objective. </summary>
+        [WirePath("vCore")]
         public int? VCores { get; }
         /// <summary> Hardware generation associated with the service level objective. </summary>
+        [WirePath("hardwareGeneration")]
         public string HardwareGeneration { get; }
         /// <summary> Maximum Backup retention in days for the performance tier edition. </summary>
+        [WirePath("maxBackupRetentionDays")]
         public int? MaxBackupRetentionDays { get; }
         /// <summary> Minimum Backup retention in days for the performance tier edition. </summary>
+        [WirePath("minBackupRetentionDays")]
         public int? MinBackupRetentionDays { get; }
         /// <summary> Max storage allowed for a server. </summary>
+        [WirePath("maxStorageMB")]
         public int? MaxStorageInMB { get; }
         /// <summary> Max storage allowed for a server. </summary>
+        [WirePath("minStorageMB")]
         public int? MinStorageInMB { get; }
     }
 }

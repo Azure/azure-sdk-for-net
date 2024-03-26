@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MaintenanceConfigurationData>(item, options);
                 }
                 writer.WriteEndArray();
             }

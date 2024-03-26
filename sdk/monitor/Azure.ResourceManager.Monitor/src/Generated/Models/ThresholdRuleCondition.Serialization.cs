@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(DataSource))
             {
                 writer.WritePropertyName("dataSource"u8);
-                writer.WriteObjectValue(DataSource);
+                writer.WriteObjectValue<RuleDataSource>(DataSource, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

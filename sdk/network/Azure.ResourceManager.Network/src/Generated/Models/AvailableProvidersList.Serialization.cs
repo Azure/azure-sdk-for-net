@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartArray();
             foreach (var item in Countries)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<AvailableProvidersListCountry>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

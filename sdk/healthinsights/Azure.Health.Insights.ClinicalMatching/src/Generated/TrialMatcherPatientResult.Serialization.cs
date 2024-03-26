@@ -32,7 +32,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WriteStartArray();
             foreach (var item in Inferences)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<TrialMatcherInference>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(NeededClinicalInfo))
@@ -41,7 +41,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in NeededClinicalInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ExtendedClinicalCodedElement>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -171,7 +171,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<TrialMatcherPatientResult>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

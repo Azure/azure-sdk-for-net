@@ -20,16 +20,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         [EnumerableItemsNotNull]
         public List<T> Actions { get; set; } = new List<T>();
 
-        /// <summary>Invalidates this instance.
-        /// Subsequently invalidates the actions.</summary>
+        /// <summary>Build AuthenticationEventJsonElement and set body to it.</summary>
         /// <seealso cref="AuthenticationEventResponse" />
-        internal override void Invalidate()
+        internal override void BuildJsonElement()
         {
-            InvalidateActions();
+            BuildAndSetActions();
         }
 
-        /// <summary>Invalidates the actions.</summary>
-        internal void InvalidateActions()
+        /// <summary>Build and sets the actions</summary>
+        internal void BuildAndSetActions()
         {
             string actionElement = "actions";
 

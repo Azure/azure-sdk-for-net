@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 writer.WriteStartArray();
                 foreach (var item in FilteringTags)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NewRelicObservabilityFilteringTag>(item, options);
                 }
                 writer.WriteEndArray();
             }

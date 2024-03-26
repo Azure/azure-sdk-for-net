@@ -20,6 +20,6 @@ namespace Azure.Maps.Search
         public static GeographicEntity Neighborhood { get; } = new GeographicEntity(NeighborhoodValue);
 
         /// <summary> NeighborhoodValue. </summary>
-        private const string NeighborhoodValue = "Neighborhood";
+        private const string NeighborhoodValue = "Neighbourhood";
     }
 }

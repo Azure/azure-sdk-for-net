@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<CapabilitiesResultProperties>(Properties, options);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ResourceCapabilitiesBaseType);

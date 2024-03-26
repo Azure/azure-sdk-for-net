@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 writer.WriteStartArray();
                 foreach (var item in DataPartitionNames)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataPartitionName>(item, options);
                 }
                 writer.WriteEndArray();
             }

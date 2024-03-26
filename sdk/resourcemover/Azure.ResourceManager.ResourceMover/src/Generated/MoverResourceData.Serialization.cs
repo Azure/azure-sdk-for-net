@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ResourceMover
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<MoverResourceProperties>(Properties, options);
             }
             if (options.Format != "W")
             {

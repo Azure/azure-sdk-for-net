@@ -71,8 +71,10 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> String representation of the identity. </summary>
+        [WirePath("properties.id")]
         public string Value { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(MigrationValidationResult))
             {
                 writer.WritePropertyName("migrationValidationResult"u8);
-                writer.WriteObjectValue(MigrationValidationResult);
+                writer.WriteObjectValue<MigrationValidationResult>(MigrationValidationResult, options);
             }
             if (Optional.IsDefined(MigrationReportResult))
             {
                 writer.WritePropertyName("migrationReportResult"u8);
-                writer.WriteObjectValue(MigrationReportResult);
+                writer.WriteObjectValue<MigrationReportResult>(MigrationReportResult, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SourceServerVersion))
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ExceptionsAndWarnings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReportableException>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DataFactoryDataFlowData>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))

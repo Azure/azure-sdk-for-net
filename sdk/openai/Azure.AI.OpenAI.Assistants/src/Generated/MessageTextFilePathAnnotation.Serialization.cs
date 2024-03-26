@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI.Assistants
 
             writer.WriteStartObject();
             writer.WritePropertyName("file_path"u8);
-            writer.WriteObjectValue(InternalDetails);
+            writer.WriteObjectValue<InternalMessageTextFilePathDetails>(InternalDetails, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("text"u8);
@@ -166,7 +166,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<MessageTextFilePathAnnotation>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

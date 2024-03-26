@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ExportSettings))
             {
                 writer.WritePropertyName("exportSettings"u8);
-                writer.WriteObjectValue(ExportSettings);
+                writer.WriteObjectValue<AzureDatabricksDeltaLakeExportCommand>(ExportSettings, options);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySourceType);

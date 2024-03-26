@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(InvitedUserDetails))
             {
                 writer.WritePropertyName("invitedUserDetails"u8);
-                writer.WriteObjectValue(InvitedUserDetails);
+                writer.WriteObjectValue<AccessInvitedUserDetails>(InvitedUserDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

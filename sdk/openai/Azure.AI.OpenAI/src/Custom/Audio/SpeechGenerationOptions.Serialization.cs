@@ -10,15 +10,21 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI;
 
-[CodeGenSuppress("global::Azure.Core.IUtf8JsonSerializable.Write", typeof(Utf8JsonWriter))]
-public partial class SpeechGenerationOptions : IUtf8JsonSerializable
+[CodeGenSuppress("global::System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.SpeechGenerationOptions>.Write", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
+public partial class SpeechGenerationOptions : IJsonModel<SpeechGenerationOptions>
 {
     // CUSTOM CODE NOTE:
     //   We manipulate the object model of this type relative to the wire format in several places; currently, this is
     //   best facilitated by performing a complete customization of the serialization.
-
-    void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+    //TODO: Should use the property based serialization overrides here instead of the full serialization override.
+    void IJsonModel<SpeechGenerationOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
     {
+        var format = options.Format == "W" ? ((IPersistableModel<SpeechGenerationOptions>)this).GetFormatFromOptions(options) : options.Format;
+        if (format != "J")
+        {
+            throw new FormatException($"The model {nameof(SpeechGenerationOptions)} does not support writing '{format}' format.");
+        }
+
         writer.WriteStartObject();
         writer.WritePropertyName("model"u8);
         writer.WriteStringValue(DeploymentName);
@@ -35,6 +41,21 @@ public partial class SpeechGenerationOptions : IUtf8JsonSerializable
         {
             writer.WritePropertyName("speed"u8);
             writer.WriteNumberValue(Speed.Value);
+        }
+        if (options.Format != "W" && _serializedAdditionalRawData != null)
+        {
+            foreach (var item in _serializedAdditionalRawData)
+            {
+                writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
         }
         writer.WriteEndObject();
     }

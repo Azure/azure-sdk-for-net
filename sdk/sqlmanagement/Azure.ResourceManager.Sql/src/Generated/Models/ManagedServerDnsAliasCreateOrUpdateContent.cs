@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Whether or not DNS record should be created for this alias. </summary>
+        [WirePath("createDnsRecord")]
         public bool? CreateDnsRecord { get; set; }
     }
 }

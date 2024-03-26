@@ -74,8 +74,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> The name to check for availability. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The resource type to check for name availability. </summary>
+        [WirePath("type")]
         public AppConfigurationResourceType ResourceType { get; }
     }
 }

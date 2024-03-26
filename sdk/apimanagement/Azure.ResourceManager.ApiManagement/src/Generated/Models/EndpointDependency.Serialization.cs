@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in EndpointDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EndpointDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in ManagedRuleSets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WafPolicyManagedRuleSet>(item, options);
                 }
                 writer.WriteEndArray();
             }

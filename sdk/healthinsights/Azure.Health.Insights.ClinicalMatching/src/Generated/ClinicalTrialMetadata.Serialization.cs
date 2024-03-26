@@ -69,7 +69,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in Contacts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContactDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in Facilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ClinicalTrialResearchFacility>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -276,7 +276,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ClinicalTrialMetadata>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

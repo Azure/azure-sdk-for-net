@@ -46,8 +46,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Gets or sets the database name. </summary>
+        [WirePath("databaseName")]
         public string DatabaseName { get; set; }
         /// <summary> Gets or sets the collection name. </summary>
+        [WirePath("collectionName")]
         public string CollectionName { get; set; }
     }
 }

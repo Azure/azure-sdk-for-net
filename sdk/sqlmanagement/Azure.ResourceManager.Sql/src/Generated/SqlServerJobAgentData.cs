@@ -82,10 +82,13 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The name and tier of the SKU. </summary>
+        [WirePath("sku")]
         public SqlSku Sku { get; set; }
         /// <summary> Resource ID of the database to store job metadata in. </summary>
+        [WirePath("properties.databaseId")]
         public ResourceIdentifier DatabaseId { get; set; }
         /// <summary> The state of the job agent. </summary>
+        [WirePath("properties.state")]
         public JobAgentState? State { get; }
     }
 }

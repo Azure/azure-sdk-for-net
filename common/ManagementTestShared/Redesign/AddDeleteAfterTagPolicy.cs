@@ -11,6 +11,8 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
+#nullable disable
+
 namespace Azure.ResourceManager.TestFramework
 {
     public class AddDeleteAfterTagPolicy : HttpPipelineSynchronousPolicy

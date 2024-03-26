@@ -27,24 +27,24 @@ namespace Azure.ResourceManager.Logic.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("validationSettings"u8);
-            writer.WriteObjectValue(ValidationSettings);
+            writer.WriteObjectValue<EdifactValidationSettings>(ValidationSettings, options);
             writer.WritePropertyName("framingSettings"u8);
-            writer.WriteObjectValue(FramingSettings);
+            writer.WriteObjectValue<EdifactFramingSettings>(FramingSettings, options);
             writer.WritePropertyName("envelopeSettings"u8);
-            writer.WriteObjectValue(EnvelopeSettings);
+            writer.WriteObjectValue<EdifactEnvelopeSettings>(EnvelopeSettings, options);
             writer.WritePropertyName("acknowledgementSettings"u8);
-            writer.WriteObjectValue(AcknowledgementSettings);
+            writer.WriteObjectValue<EdifactAcknowledgementSettings>(AcknowledgementSettings, options);
             writer.WritePropertyName("messageFilter"u8);
-            writer.WriteObjectValue(MessageFilter);
+            writer.WriteObjectValue<EdifactMessageFilter>(MessageFilter, options);
             writer.WritePropertyName("processingSettings"u8);
-            writer.WriteObjectValue(ProcessingSettings);
+            writer.WriteObjectValue<EdifactProcessingSettings>(ProcessingSettings, options);
             if (Optional.IsCollectionDefined(EnvelopeOverrides))
             {
                 writer.WritePropertyName("envelopeOverrides"u8);
                 writer.WriteStartArray();
                 foreach (var item in EnvelopeOverrides)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EdifactEnvelopeOverride>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in MessageFilterList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EdifactMessageIdentifier>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartArray();
             foreach (var item in SchemaReferences)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<EdifactSchemaReference>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(ValidationOverrides))
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationOverrides)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EdifactValidationOverride>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in EdifactDelimiterOverrides)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EdifactDelimiterOverride>(item, options);
                 }
                 writer.WriteEndArray();
             }

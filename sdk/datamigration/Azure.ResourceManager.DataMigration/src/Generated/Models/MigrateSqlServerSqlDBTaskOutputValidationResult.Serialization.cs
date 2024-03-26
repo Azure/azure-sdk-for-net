@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 foreach (var item in SummaryResults)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<MigrationValidationDatabaseSummaryResult>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

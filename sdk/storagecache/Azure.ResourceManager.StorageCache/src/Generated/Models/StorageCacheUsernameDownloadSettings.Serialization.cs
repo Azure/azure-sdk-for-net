@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                writer.WriteObjectValue<StorageCacheUsernameDownloadCredential>(Credentials, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

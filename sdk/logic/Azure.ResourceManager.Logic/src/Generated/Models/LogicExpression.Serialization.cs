@@ -49,14 +49,14 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in Subexpressions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LogicExpression>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<LogicExpressionErrorInfo>(Error, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

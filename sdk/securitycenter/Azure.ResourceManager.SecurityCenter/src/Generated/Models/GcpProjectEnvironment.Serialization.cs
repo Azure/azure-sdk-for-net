@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(OrganizationalData))
             {
                 writer.WritePropertyName("organizationalData"u8);
-                writer.WriteObjectValue(OrganizationalData);
+                writer.WriteObjectValue<GcpOrganizationalInfo>(OrganizationalData, options);
             }
             if (Optional.IsDefined(ProjectDetails))
             {
                 writer.WritePropertyName("projectDetails"u8);
-                writer.WriteObjectValue(ProjectDetails);
+                writer.WriteObjectValue<GcpProjectDetails>(ProjectDetails, options);
             }
             if (Optional.IsDefined(ScanInterval))
             {

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            writer.WriteObjectValue<DataProtectionBackupVaultProperties>(Properties, options);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);

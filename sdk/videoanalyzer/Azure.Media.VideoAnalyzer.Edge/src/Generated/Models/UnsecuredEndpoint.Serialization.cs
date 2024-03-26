@@ -20,7 +20,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                writer.WriteObjectValue<CredentialsBase>(Credentials);
             }
             writer.WritePropertyName("url"u8);
             writer.WriteStringValue(Url);

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WorkloadNetworkDnsServiceData>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Multichannel setting. Applies to Premium FileStorage only. </summary>
         internal Multichannel Multichannel { get; set; }
         /// <summary> Indicates whether multichannel is enabled. </summary>
+        [WirePath("multichannel.enabled")]
         public bool? IsMultiChannelEnabled
         {
             get => Multichannel is null ? default : Multichannel.IsMultiChannelEnabled;
@@ -82,12 +83,16 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> SMB protocol versions supported by server. Valid values are SMB2.1, SMB3.0, SMB3.1.1. Should be passed as a string with delimiter ';'. </summary>
+        [WirePath("versions")]
         public string Versions { get; set; }
         /// <summary> SMB authentication methods supported by server. Valid values are NTLMv2, Kerberos. Should be passed as a string with delimiter ';'. </summary>
+        [WirePath("authenticationMethods")]
         public string AuthenticationMethods { get; set; }
         /// <summary> Kerberos ticket encryption supported by server. Valid values are RC4-HMAC, AES-256. Should be passed as a string with delimiter ';'. </summary>
+        [WirePath("kerberosTicketEncryption")]
         public string KerberosTicketEncryption { get; set; }
         /// <summary> SMB channel encryption supported by server. Valid values are AES-128-CCM, AES-128-GCM, AES-256-GCM. Should be passed as a string with delimiter ';'. </summary>
+        [WirePath("channelEncryption")]
         public string ChannelEncryption { get; set; }
     }
 }

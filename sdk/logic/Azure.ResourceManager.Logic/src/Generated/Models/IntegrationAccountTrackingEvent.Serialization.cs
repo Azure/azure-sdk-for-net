@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<IntegrationAccountTrackingEventErrorInfo>(Error, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

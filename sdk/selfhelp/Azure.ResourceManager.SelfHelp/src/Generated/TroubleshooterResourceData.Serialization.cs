@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SelfHelp
                 writer.WriteStartArray();
                 foreach (var item in Steps)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SelfHelpStep>(item, options);
                 }
                 writer.WriteEndArray();
             }

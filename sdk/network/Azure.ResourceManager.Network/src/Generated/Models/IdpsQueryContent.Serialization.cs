@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Filters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IdpsQueryFilterItems>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(OrderBy))
             {
                 writer.WritePropertyName("orderBy"u8);
-                writer.WriteObjectValue(OrderBy);
+                writer.WriteObjectValue<IdpsQueryOrderBy>(OrderBy, options);
             }
             if (Optional.IsDefined(ResultsPerPage))
             {

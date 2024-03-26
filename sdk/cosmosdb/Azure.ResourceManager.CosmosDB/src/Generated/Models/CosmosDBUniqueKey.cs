@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> List of paths must be unique for each document in the Azure Cosmos DB service. </summary>
+        [WirePath("paths")]
         public IList<string> Paths { get; }
     }
 }

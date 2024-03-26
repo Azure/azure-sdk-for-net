@@ -80,16 +80,22 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> The resource id of the original configuration store. </summary>
+        [WirePath("properties.configurationStoreId")]
         public ResourceIdentifier ConfigurationStoreId { get; }
         /// <summary> The location of the original configuration store. </summary>
+        [WirePath("properties.location")]
         public AzureLocation? Location { get; }
         /// <summary> The deleted date. </summary>
+        [WirePath("properties.deletionDate")]
         public DateTimeOffset? DeletedOn { get; }
         /// <summary> The scheduled purged date. </summary>
+        [WirePath("properties.scheduledPurgeDate")]
         public DateTimeOffset? ScheduledPurgeOn { get; }
         /// <summary> Tags of the original configuration store. </summary>
+        [WirePath("properties.tags")]
         public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary> Purge protection status of the original configuration store. </summary>
+        [WirePath("properties.purgeProtectionEnabled")]
         public bool? IsPurgeProtectionEnabled { get; }
     }
 }

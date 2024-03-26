@@ -71,10 +71,13 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Indicates the directory service used. Note that this enum may be extended in the future. </summary>
+        [WirePath("directoryServiceOptions")]
         public DirectoryServiceOption DirectoryServiceOptions { get; set; }
         /// <summary> Required if directoryServiceOptions are AD, optional if they are AADKERB. </summary>
+        [WirePath("activeDirectoryProperties")]
         public StorageActiveDirectoryProperties ActiveDirectoryProperties { get; set; }
         /// <summary> Default share permission for users using Kerberos authentication if RBAC role is not assigned. </summary>
+        [WirePath("defaultSharePermission")]
         public DefaultSharePermission? DefaultSharePermission { get; set; }
     }
 }

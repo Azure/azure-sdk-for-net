@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in EvaluatedExpressions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ExpressionEvaluationDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(IfNotExistsDetails))
             {
                 writer.WritePropertyName("ifNotExistsDetails"u8);
-                writer.WriteObjectValue(IfNotExistsDetails);
+                writer.WriteObjectValue<IfNotExistsEvaluationDetails>(IfNotExistsDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

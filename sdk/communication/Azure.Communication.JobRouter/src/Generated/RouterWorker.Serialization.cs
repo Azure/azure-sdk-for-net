@@ -108,7 +108,7 @@ namespace Azure.Communication.JobRouter
                 writer.WriteStartArray();
                 foreach (var item in Channels)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RouterChannel>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +118,7 @@ namespace Azure.Communication.JobRouter
                 writer.WriteStartArray();
                 foreach (var item in Offers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RouterJobOffer>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -128,7 +128,7 @@ namespace Azure.Communication.JobRouter
                 writer.WriteStartArray();
                 foreach (var item in AssignedJobs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RouterWorkerAssignment>(item, options);
                 }
                 writer.WriteEndArray();
             }

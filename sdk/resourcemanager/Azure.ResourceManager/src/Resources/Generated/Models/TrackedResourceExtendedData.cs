@@ -74,6 +74,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Resource extended location. </summary>
+        [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
     }
 }

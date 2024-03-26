@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> The principal ID of resource identity. </summary>
+        [WirePath("principalId")]
         public string PrincipalId { get; }
         /// <summary> The tenant ID of resource. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; }
     }
 }

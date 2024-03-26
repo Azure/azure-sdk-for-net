@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartArray();
             foreach (var item in SkuSettings)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ResourceTypeSkuSetting>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(ProvisioningState))

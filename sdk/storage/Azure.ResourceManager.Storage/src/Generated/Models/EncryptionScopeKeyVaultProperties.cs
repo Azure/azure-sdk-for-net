@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The object identifier for a key vault key object. When applied, the encryption scope will use the key referenced by the identifier to enable customer-managed key support on this encryption scope. </summary>
+        [WirePath("keyUri")]
         public Uri KeyUri { get; set; }
         /// <summary> The object identifier of the current versioned Key Vault Key in use. </summary>
+        [WirePath("currentVersionedKeyIdentifier")]
         public string CurrentVersionedKeyIdentifier { get; }
         /// <summary> Timestamp of last rotation of the Key Vault Key. </summary>
+        [WirePath("lastKeyRotationTimestamp")]
         public DateTimeOffset? LastKeyRotationTimestamp { get; }
     }
 }

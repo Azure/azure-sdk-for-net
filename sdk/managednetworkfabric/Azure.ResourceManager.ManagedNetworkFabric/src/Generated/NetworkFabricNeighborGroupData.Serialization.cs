@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination);
+                writer.WriteObjectValue<NeighborGroupDestination>(Destination, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(NetworkTapIds))
             {

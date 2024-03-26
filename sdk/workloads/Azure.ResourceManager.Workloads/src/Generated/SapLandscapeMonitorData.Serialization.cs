@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Workloads
             if (Optional.IsDefined(Grouping))
             {
                 writer.WritePropertyName("grouping"u8);
-                writer.WriteObjectValue(Grouping);
+                writer.WriteObjectValue<SapLandscapeMonitorPropertiesGrouping>(Grouping, options);
             }
             if (Optional.IsCollectionDefined(TopMetricsThresholds))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Workloads
                 writer.WriteStartArray();
                 foreach (var item in TopMetricsThresholds)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SapLandscapeMonitorMetricThresholds>(item, options);
                 }
                 writer.WriteEndArray();
             }

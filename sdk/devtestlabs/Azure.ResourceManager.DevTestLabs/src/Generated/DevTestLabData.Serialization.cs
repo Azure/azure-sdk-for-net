@@ -131,12 +131,12 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(Announcement))
             {
                 writer.WritePropertyName("announcement"u8);
-                writer.WriteObjectValue(Announcement);
+                writer.WriteObjectValue<DevTestLabAnnouncement>(Announcement, options);
             }
             if (Optional.IsDefined(Support))
             {
                 writer.WritePropertyName("support"u8);
-                writer.WriteObjectValue(Support);
+                writer.WriteObjectValue<DevTestLabSupport>(Support, options);
             }
             if (options.Format != "W" && Optional.IsDefined(VmCreationResourceGroup))
             {

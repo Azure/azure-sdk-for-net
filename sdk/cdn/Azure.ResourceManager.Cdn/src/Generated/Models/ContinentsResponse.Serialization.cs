@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Continents)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContinentsResponseContinentsItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in CountryOrRegions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContinentsResponseCountryOrRegionsItem>(item, options);
                 }
                 writer.WriteEndArray();
             }

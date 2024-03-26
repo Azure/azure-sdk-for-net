@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> List of columns in sync group schema. </summary>
+        [WirePath("columns")]
         public IList<SyncGroupSchemaTableColumn> Columns { get; }
         /// <summary> Quoted name of sync group schema table. </summary>
+        [WirePath("quotedName")]
         public string QuotedName { get; set; }
     }
 }

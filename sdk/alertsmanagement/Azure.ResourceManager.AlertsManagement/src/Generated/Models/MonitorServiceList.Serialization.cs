@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteStartArray();
             foreach (var item in Data)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MonitorServiceDetails>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("metadataIdentifier"u8);

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DefaultValues)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DWCopyCommandDefaultValue>(item, options);
                 }
                 writer.WriteEndArray();
             }

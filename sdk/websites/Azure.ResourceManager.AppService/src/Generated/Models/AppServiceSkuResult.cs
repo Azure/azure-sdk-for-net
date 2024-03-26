@@ -64,8 +64,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Resource type that this SKU applies to. </summary>
+        [WirePath("resourceType")]
         public ResourceType? ResourceType { get; }
         /// <summary> List of SKUs the subscription is able to use. </summary>
+        [WirePath("skus")]
         public IReadOnlyList<GlobalCsmSkuDescription> Skus { get; }
     }
 }

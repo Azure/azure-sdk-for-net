@@ -75,10 +75,13 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The type of JIT schedule. </summary>
+        [WirePath("type")]
         public JitSchedulingType SchedulingType { get; }
         /// <summary> The required duration of the JIT request. </summary>
+        [WirePath("duration")]
         public TimeSpan Duration { get; set; }
         /// <summary> The start time of the request. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset StartOn { get; set; }
     }
 }

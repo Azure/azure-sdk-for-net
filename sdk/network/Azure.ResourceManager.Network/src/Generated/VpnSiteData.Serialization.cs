@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(DeviceProperties))
             {
                 writer.WritePropertyName("deviceProperties"u8);
-                writer.WriteObjectValue(DeviceProperties);
+                writer.WriteObjectValue<DeviceProperties>(DeviceProperties, options);
             }
             if (Optional.IsDefined(IPAddress))
             {
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(AddressSpace))
             {
                 writer.WritePropertyName("addressSpace"u8);
-                writer.WriteObjectValue(AddressSpace);
+                writer.WriteObjectValue<AddressSpace>(AddressSpace, options);
             }
             if (Optional.IsDefined(BgpProperties))
             {
                 writer.WritePropertyName("bgpProperties"u8);
-                writer.WriteObjectValue(BgpProperties);
+                writer.WriteObjectValue<BgpSettings>(BgpProperties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -112,14 +112,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VpnSiteLinks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VpnSiteLinkData>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(O365Policy))
             {
                 writer.WritePropertyName("o365Policy"u8);
-                writer.WriteObjectValue(O365Policy);
+                writer.WriteObjectValue<O365PolicyProperties>(O365Policy, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

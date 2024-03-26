@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in PropertyBag)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem>(item, options);
                 }
                 writer.WriteEndArray();
             }

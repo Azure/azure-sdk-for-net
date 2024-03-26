@@ -76,7 +76,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(analyzeRequest);
+                content.JsonWriter.WriteObjectValue<AnalyzeDocumentRequest>(analyzeRequest);
                 request.Content = content;
             }
             return message;
@@ -424,7 +424,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(buildRequest);
+            content.JsonWriter.WriteObjectValue<BuildDocumentModelRequest>(buildRequest);
             request.Content = content;
             return message;
         }
@@ -489,7 +489,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(composeRequest);
+            content.JsonWriter.WriteObjectValue<ComposeDocumentModelRequest>(composeRequest);
             request.Content = content;
             return message;
         }
@@ -554,7 +554,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(authorizeCopyRequest);
+            content.JsonWriter.WriteObjectValue<AuthorizeCopyRequest>(authorizeCopyRequest);
             request.Content = content;
             return message;
         }
@@ -629,7 +629,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(copyToRequest);
+            content.JsonWriter.WriteObjectValue<DocumentModelCopyAuthorization>(copyToRequest);
             request.Content = content;
             return message;
         }
@@ -1014,7 +1014,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(buildRequest);
+            content.JsonWriter.WriteObjectValue<BuildDocumentClassifierRequest>(buildRequest);
             request.Content = content;
             return message;
         }
@@ -1272,7 +1272,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(classifyRequest);
+                content.JsonWriter.WriteObjectValue<ClassifyDocumentRequest>(classifyRequest);
                 request.Content = content;
             }
             return message;

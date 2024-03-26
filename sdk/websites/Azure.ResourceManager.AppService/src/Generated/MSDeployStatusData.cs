@@ -80,16 +80,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Username of deployer. </summary>
+        [WirePath("properties.deployer")]
         public string Deployer { get; }
         /// <summary> Provisioning state. </summary>
+        [WirePath("properties.provisioningState")]
         public MSDeployProvisioningState? ProvisioningState { get; }
         /// <summary> Start time of deploy operation. </summary>
+        [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> End time of deploy operation. </summary>
+        [WirePath("properties.endTime")]
         public DateTimeOffset? EndOn { get; }
         /// <summary> Whether the deployment operation has completed. </summary>
+        [WirePath("properties.complete")]
         public bool? IsComplete { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

@@ -157,7 +157,11 @@ namespace Azure.Storage.DataMovement.Blobs
                 // Default to Upload
                 await BlobClient.UploadAsync(
                     stream,
-                    _options.ToBlobUploadOptions(overwrite, _maxInitialSize),
+                    DataMovementBlobsExtensions.GetBlobUploadOptions(
+                        _options,
+                        overwrite,
+                        _maxInitialSize,
+                        options?.SourceProperties),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
                 return;
             }
@@ -204,7 +208,11 @@ namespace Azure.Storage.DataMovement.Blobs
             // TODO: subject to change as we scale to support resource types outside of blobs.
             await BlobClient.SyncUploadFromUriAsync(
                 sourceResource.Uri,
-                _options.ToSyncUploadFromUriOptions(overwrite, options?.SourceAuthentication),
+                DataMovementBlobsExtensions.GetSyncUploadFromUriOptions(
+                    _options,
+                    overwrite,
+                    options?.SourceAuthentication,
+                    options?.SourceProperties),
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
@@ -236,7 +244,7 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
-            string id = options?.BlockId ?? Shared.StorageExtensions.GenerateBlockId(range.Offset);
+            string id = options?.BlockId ?? Storage.Shared.StorageExtensions.GenerateBlockId(range.Offset);
             if (!_blocks.TryAdd(range.Offset, id))
             {
                 throw new ArgumentException($"Cannot Stage Block to the specific offset \"{range.Offset}\", it already exists in the block list");
@@ -299,6 +307,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if exists.
         /// </param>
+        /// <param name="completeTransferOptions">
+        /// Optional parameters.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -306,15 +317,20 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>The Task which Commits the list of ids</returns>
         protected override async Task CompleteTransferAsync(
             bool overwrite,
+            StorageResourceCompleteTransferOptions completeTransferOptions = default,
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            // Call commit block list if the blob was uploaded in chunks.
             if (_blocks != null && !_blocks.IsEmpty)
             {
                 IEnumerable<string> blockIds = _blocks.OrderBy(x => x.Key).Select(x => x.Value);
                 await BlobClient.CommitBlockListAsync(
                     blockIds,
-                    _options.ToCommitBlockOptions(overwrite),
+                    DataMovementBlobsExtensions.GetCommitBlockOptions(
+                        _options,
+                        overwrite,
+                        completeTransferOptions?.SourceProperties),
                     cancellationToken).ConfigureAwait(false);
                 _blocks.Clear();
             }
@@ -344,11 +360,15 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
             return new BlobDestinationCheckpointData(
-                BlobType.Block,
-                _options?.HttpHeaders,
-                _options?.AccessTier,
-                _options?.Metadata,
-                _options?.Tags);
+                blobType: BlobType.Block,
+                contentType: _options?.ContentType,
+                contentEncoding: _options?.ContentEncoding,
+                contentLanguage: _options?.ContentLanguage,
+                contentDisposition: _options?.ContentDisposition,
+                cacheControl: _options?.CacheControl,
+                accessTier: _options?.AccessTier,
+                metadata: _options?.Metadata,
+                tags: default);
         }
     }
 }

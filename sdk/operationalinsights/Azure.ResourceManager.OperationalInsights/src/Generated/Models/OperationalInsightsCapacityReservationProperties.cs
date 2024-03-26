@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The last time Sku was updated. </summary>
+        [WirePath("lastSkuUpdate")]
         public DateTimeOffset? LastSkuUpdatedOn { get; }
         /// <summary> Minimum CapacityReservation value in GB. </summary>
+        [WirePath("minCapacity")]
         public long? MinCapacity { get; }
     }
 }

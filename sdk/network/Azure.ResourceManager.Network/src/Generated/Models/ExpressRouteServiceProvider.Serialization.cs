@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in BandwidthsOffered)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ExpressRouteServiceProviderBandwidthsOffered>(item, options);
                 }
                 writer.WriteEndArray();
             }

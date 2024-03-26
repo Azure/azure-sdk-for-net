@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RecordSets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RecordSet>(item, options);
                 }
                 writer.WriteEndArray();
             }

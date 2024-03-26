@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in OutboundNetworkDependencies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IntegrationServiceEnvironmentNetworkDependency>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OutboundNetworkHealth))
             {
                 writer.WritePropertyName("outboundNetworkHealth"u8);
-                writer.WriteObjectValue(OutboundNetworkHealth);
+                writer.WriteObjectValue<IntegrationServiceEnvironmentNetworkDependencyHealth>(OutboundNetworkHealth, options);
             }
             writer.WritePropertyName("networkDependencyHealthState"u8);
             writer.WriteStringValue(NetworkDependencyHealthState.ToString());

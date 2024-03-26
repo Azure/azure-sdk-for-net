@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<CommunityGalleryImageData>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))

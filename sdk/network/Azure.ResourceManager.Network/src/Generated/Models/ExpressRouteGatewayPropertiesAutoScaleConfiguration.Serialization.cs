@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Bounds))
             {
                 writer.WritePropertyName("bounds"u8);
-                writer.WriteObjectValue(Bounds);
+                writer.WriteObjectValue<ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds>(Bounds, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in LatencyMetrics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LatencyMetric>(item, options);
                 }
                 writer.WriteEndArray();
             }

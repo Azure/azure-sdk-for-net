@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(HttpConfiguration))
             {
                 writer.WritePropertyName("HTTPConfiguration"u8);
-                writer.WriteObjectValue(HttpConfiguration);
+                writer.WriteObjectValue<ConnectivityCheckRequestHttpConfiguration>(HttpConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

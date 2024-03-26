@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartArray();
             foreach (var item in Options)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ContentKeyPolicyOption>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

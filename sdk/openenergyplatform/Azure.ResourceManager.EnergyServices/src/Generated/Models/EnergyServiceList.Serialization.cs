@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EnergyServiceData>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Indexes.Models
                             writer.WriteNullValue();
                             continue;
                         }
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteObjectValue<object>(item.Value);
                     }
                     writer.WriteEndObject();
                 }

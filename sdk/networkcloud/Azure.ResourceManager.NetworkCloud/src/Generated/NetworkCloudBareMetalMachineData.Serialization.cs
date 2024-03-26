@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud
 
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation);
+            writer.WriteObjectValue<ExtendedLocation>(ExtendedLocation, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WritePropertyName("bmcConnectionString"u8);
             writer.WriteStringValue(BmcConnectionString);
             writer.WritePropertyName("bmcCredentials"u8);
-            writer.WriteObjectValue(BmcCredentials);
+            writer.WriteObjectValue<AdministrativeCredentials>(BmcCredentials, options);
             writer.WritePropertyName("bmcMacAddress"u8);
             writer.WriteStringValue(BmcMacAddress);
             writer.WritePropertyName("bootMacAddress"u8);
@@ -112,12 +112,12 @@ namespace Azure.ResourceManager.NetworkCloud
             if (options.Format != "W" && Optional.IsDefined(HardwareInventory))
             {
                 writer.WritePropertyName("hardwareInventory"u8);
-                writer.WriteObjectValue(HardwareInventory);
+                writer.WriteObjectValue<HardwareInventory>(HardwareInventory, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HardwareValidationStatus))
             {
                 writer.WritePropertyName("hardwareValidationStatus"u8);
-                writer.WriteObjectValue(HardwareValidationStatus);
+                writer.WriteObjectValue<HardwareValidationStatus>(HardwareValidationStatus, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(HybridAksClustersAssociatedIds))
             {

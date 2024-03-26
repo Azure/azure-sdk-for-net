@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DevCenterCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }

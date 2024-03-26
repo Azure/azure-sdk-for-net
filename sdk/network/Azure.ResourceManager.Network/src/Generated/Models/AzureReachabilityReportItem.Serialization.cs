@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Latencies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AzureReachabilityReportLatencyInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

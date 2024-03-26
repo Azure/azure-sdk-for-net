@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Describes what response the data plane API of a Search service would send for requests that failed authentication. </summary>
+    /// <summary> Describes what response the data plane API of a search service would send for requests that failed authentication. </summary>
     public enum SearchAadAuthFailureMode
     {
         /// <summary> Indicates that requests that failed authentication should be presented with an HTTP status code of 403 (Forbidden). </summary>

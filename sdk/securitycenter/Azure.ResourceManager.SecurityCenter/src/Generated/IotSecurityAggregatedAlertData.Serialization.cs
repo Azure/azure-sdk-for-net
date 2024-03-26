@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in TopDevicesList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IotSecurityAggregatedAlertTopDevice>(item, options);
                 }
                 writer.WriteEndArray();
             }

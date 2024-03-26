@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConnectedClusterData>(item, options);
                 }
                 writer.WriteEndArray();
             }

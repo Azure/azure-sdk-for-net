@@ -136,7 +136,7 @@ namespace Azure.AI.DocumentIntelligence
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<CustomDocumentModelsDetails>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

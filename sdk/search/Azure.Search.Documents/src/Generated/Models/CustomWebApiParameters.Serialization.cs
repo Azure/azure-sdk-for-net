@@ -60,7 +60,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (AuthIdentity != null)
                 {
                     writer.WritePropertyName("authIdentity"u8);
-                    writer.WriteObjectValue(AuthIdentity);
+                    writer.WriteObjectValue<SearchIndexerDataIdentity>(AuthIdentity);
                 }
                 else
                 {

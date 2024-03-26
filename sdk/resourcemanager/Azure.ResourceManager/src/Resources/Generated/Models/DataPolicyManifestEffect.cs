@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The data effect name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary>
         /// The data effect details schema.
@@ -93,6 +94,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("detailsSchema")]
         public BinaryData DetailsSchema { get; }
     }
 }

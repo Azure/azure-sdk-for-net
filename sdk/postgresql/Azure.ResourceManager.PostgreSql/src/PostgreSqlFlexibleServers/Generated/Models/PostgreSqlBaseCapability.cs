@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> The status of the capability. </summary>
+        [WirePath("status")]
         public PostgreSqlFlexbileServerCapabilityStatus? CapabilityStatus { get; }
         /// <summary> The reason for the capability not being available. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
     }
 }

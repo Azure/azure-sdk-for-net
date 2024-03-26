@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(ParametersSchema))
             {
                 writer.WritePropertyName("parametersSchema"u8);
-                writer.WriteObjectValue(ParametersSchema);
+                writer.WriteObjectValue<IntegrationAccountMapPropertiesParametersSchema>(ParametersSchema, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Logic
             if (options.Format != "W" && Optional.IsDefined(ContentLink))
             {
                 writer.WritePropertyName("contentLink"u8);
-                writer.WriteObjectValue(ContentLink);
+                writer.WriteObjectValue<LogicContentLink>(ContentLink, options);
             }
             if (Optional.IsDefined(Metadata))
             {

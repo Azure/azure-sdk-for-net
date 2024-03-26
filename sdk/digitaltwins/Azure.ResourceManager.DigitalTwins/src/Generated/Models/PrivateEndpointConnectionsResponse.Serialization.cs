@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DigitalTwinsPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }

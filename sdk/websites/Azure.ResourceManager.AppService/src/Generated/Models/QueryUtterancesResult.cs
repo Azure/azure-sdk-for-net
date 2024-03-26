@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> A sample utterance. </summary>
+        [WirePath("sampleUtterance")]
         public SampleUtterance SampleUtterance { get; set; }
         /// <summary> Score of a sample utterance. </summary>
+        [WirePath("score")]
         public float? Score { get; set; }
     }
 }

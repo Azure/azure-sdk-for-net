@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(AdditionalSignatures))
             {
                 writer.WritePropertyName("additionalSignatures"u8);
-                writer.WriteObjectValue(AdditionalSignatures);
+                writer.WriteObjectValue<UefiKeySignatures>(AdditionalSignatures, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Associations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SecurityPolicyWebApplicationFirewallAssociation>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 writer.WriteStartArray();
                 foreach (var item in QuotaDimensions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<QuantumQuotaDimension>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 writer.WriteStartArray();
                 foreach (var item in PricingDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<QuantumPricingDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }

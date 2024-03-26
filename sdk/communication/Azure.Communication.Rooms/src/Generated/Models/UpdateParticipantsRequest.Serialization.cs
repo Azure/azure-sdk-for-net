@@ -22,7 +22,7 @@ namespace Azure.Communication.Rooms
                 foreach (var item in Participants)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ParticipantProperties>(item.Value);
                 }
                 writer.WriteEndObject();
             }

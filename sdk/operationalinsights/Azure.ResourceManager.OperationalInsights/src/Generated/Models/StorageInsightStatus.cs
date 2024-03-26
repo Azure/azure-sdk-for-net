@@ -69,8 +69,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The state of the storage insight connection to the workspace. </summary>
+        [WirePath("state")]
         public StorageInsightState State { get; }
         /// <summary> Description of the state of the storage insight. </summary>
+        [WirePath("description")]
         public string Description { get; }
     }
 }

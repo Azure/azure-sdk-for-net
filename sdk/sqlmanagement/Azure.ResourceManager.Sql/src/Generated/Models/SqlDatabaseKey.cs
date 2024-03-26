@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The database key type. Only supported value is 'AzureKeyVault'. </summary>
+        [WirePath("type")]
         public SqlDatabaseKeyType? KeyType { get; }
         /// <summary> Thumbprint of the database key. </summary>
+        [WirePath("thumbprint")]
         public string Thumbprint { get; }
         /// <summary> The database key creation date. </summary>
+        [WirePath("creationDate")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Subregion of the server key. </summary>
+        [WirePath("subregion")]
         public string Subregion { get; }
     }
 }

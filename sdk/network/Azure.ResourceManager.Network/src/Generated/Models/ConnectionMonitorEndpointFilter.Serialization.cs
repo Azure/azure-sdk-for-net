@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Items)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConnectionMonitorEndpointFilterItem>(item, options);
                 }
                 writer.WriteEndArray();
             }

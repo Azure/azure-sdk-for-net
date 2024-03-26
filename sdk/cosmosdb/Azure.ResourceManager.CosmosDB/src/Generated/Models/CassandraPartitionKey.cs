@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Name of the Cosmos DB Cassandra table partition key. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
     }
 }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
-                writer.WriteObjectValue(KeyEncryptionKey);
+                writer.WriteObjectValue<StorageCacheEncryptionKeyVaultKeyReference>(KeyEncryptionKey, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CommandPayload))
             {
                 writer.WritePropertyName("commandPayload"u8);
-                writer.WriteObjectValue(CommandPayload);
+                writer.WriteObjectValue<DataFlowDebugCommandPayload>(CommandPayload, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

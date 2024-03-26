@@ -119,7 +119,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=none");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(searchRequest);
+            content.JsonWriter.WriteObjectValue<SearchOptions>(searchRequest);
             request.Content = content;
             return message;
         }
@@ -297,7 +297,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=none");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(suggestRequest);
+            content.JsonWriter.WriteObjectValue<SuggestOptions>(suggestRequest);
             request.Content = content;
             return message;
         }
@@ -372,7 +372,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=none");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(batch);
+            content.JsonWriter.WriteObjectValue<IndexBatch>(batch);
             request.Content = content;
             return message;
         }
@@ -449,7 +449,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=none");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(autocompleteRequest);
+            content.JsonWriter.WriteObjectValue<AutocompleteOptions>(autocompleteRequest);
             request.Content = content;
             return message;
         }

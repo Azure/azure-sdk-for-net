@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in ParameterNameOverride)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UriSigningParamIdentifier>(item, options);
                 }
                 writer.WriteEndArray();
             }

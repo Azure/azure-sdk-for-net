@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
-                writer.WriteObjectValue(Key);
+                writer.WriteObjectValue<SynapseWorkspaceKeyDetails>(Key, options);
             }
             if (Optional.IsDefined(KekIdentity))
             {
                 writer.WritePropertyName("kekIdentity"u8);
-                writer.WriteObjectValue(KekIdentity);
+                writer.WriteObjectValue<KekIdentityProperties>(KekIdentity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

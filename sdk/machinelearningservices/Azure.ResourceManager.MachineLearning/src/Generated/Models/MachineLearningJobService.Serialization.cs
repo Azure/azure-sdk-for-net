@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Nodes != null)
                 {
                     writer.WritePropertyName("nodes"u8);
-                    writer.WriteObjectValue(Nodes);
+                    writer.WriteObjectValue<JobNodes>(Nodes, options);
                 }
                 else
                 {

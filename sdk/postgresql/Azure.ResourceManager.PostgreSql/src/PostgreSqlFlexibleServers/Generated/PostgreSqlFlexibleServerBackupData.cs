@@ -74,10 +74,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Backup type. </summary>
+        [WirePath("properties.backupType")]
         public PostgreSqlFlexibleServerBackupOrigin? BackupType { get; set; }
         /// <summary> Backup completed time (ISO8601 format). </summary>
+        [WirePath("properties.completedTime")]
         public DateTimeOffset? CompletedOn { get; set; }
         /// <summary> Backup source. </summary>
+        [WirePath("properties.source")]
         public string Source { get; set; }
     }
 }

@@ -77,6 +77,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <summary> Private endpoint which the connection belongs to. </summary>
         internal WritableSubResource PrivateEndpoint { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.privateEndpoint.id")]
         public ResourceIdentifier PrivateEndpointId
         {
             get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
@@ -89,8 +90,10 @@ namespace Azure.ResourceManager.PostgreSql
         }
 
         /// <summary> Connection state of the private endpoint connection. </summary>
+        [WirePath("properties.privateLinkServiceConnectionState")]
         public PostgreSqlPrivateLinkServiceConnectionStateProperty ConnectionState { get; set; }
         /// <summary> State of the private endpoint connection. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
     }
 }

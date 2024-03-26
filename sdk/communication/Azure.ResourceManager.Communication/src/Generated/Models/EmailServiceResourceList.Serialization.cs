@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Communication.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EmailServiceResourceData>(item, options);
                 }
                 writer.WriteEndArray();
             }

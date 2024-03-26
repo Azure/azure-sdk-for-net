@@ -26,7 +26,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             writer.WriteStartArray();
             foreach (var item in ComponentModels)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ComponentDocumentModelDetails>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Tags))

@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Hci
                 writer.WriteStartArray();
                 foreach (var item in SkuMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HciSkuMappings>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Modifications)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SmartGroupModificationItemInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

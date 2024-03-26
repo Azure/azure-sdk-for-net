@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(CustomWebApiParameters))
             {
                 writer.WritePropertyName("customWebApiParameters"u8);
-                writer.WriteObjectValue(CustomWebApiParameters);
+                writer.WriteObjectValue<CustomWebApiParameters>(CustomWebApiParameters);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);

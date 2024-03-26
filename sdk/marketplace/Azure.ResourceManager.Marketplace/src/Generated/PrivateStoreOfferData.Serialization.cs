@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WriteStartArray();
                 foreach (var item in Plans)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PrivateStorePlan>(item, options);
                 }
                 writer.WriteEndArray();
             }

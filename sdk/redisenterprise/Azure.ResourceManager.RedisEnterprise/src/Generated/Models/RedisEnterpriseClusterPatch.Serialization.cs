@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<RedisEnterpriseSku>(Sku, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<ClusterPropertiesEncryption>(Encryption, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HostName))
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RedisEnterprisePrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }

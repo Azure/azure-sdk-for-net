@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStartArray();
                 foreach (var item in StaticIPConfiguration)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SimStaticIPProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }

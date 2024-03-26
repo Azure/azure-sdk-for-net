@@ -29,22 +29,22 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(Sexual))
             {
                 writer.WritePropertyName("sexual"u8);
-                writer.WriteObjectValue(Sexual);
+                writer.WriteObjectValue<ContentFilterResult>(Sexual, options);
             }
             if (Optional.IsDefined(Violence))
             {
                 writer.WritePropertyName("violence"u8);
-                writer.WriteObjectValue(Violence);
+                writer.WriteObjectValue<ContentFilterResult>(Violence, options);
             }
             if (Optional.IsDefined(Hate))
             {
                 writer.WritePropertyName("hate"u8);
-                writer.WriteObjectValue(Hate);
+                writer.WriteObjectValue<ContentFilterResult>(Hate, options);
             }
             if (Optional.IsDefined(SelfHarm))
             {
                 writer.WritePropertyName("self_harm"u8);
-                writer.WriteObjectValue(SelfHarm);
+                writer.WriteObjectValue<ContentFilterResult>(SelfHarm, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -180,7 +180,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ImageGenerationContentFilterResults>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

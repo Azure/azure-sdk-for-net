@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue<AppPlatformServiceNetworkProfile>(NetworkProfile, options);
             }
             if (Optional.IsDefined(VnetAddons))
             {
                 writer.WritePropertyName("vnetAddons"u8);
-                writer.WriteObjectValue(VnetAddons);
+                writer.WriteObjectValue<ServiceVnetAddons>(VnetAddons, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Version))
             {

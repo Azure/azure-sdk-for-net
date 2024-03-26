@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in Fields)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PropertyDefinition>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in LookupMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RelationshipTypeMapping>(item, options);
                 }
                 writer.WriteEndArray();
             }

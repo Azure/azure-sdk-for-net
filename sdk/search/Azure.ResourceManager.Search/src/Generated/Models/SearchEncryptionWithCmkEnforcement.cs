@@ -7,14 +7,14 @@
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Describes how a search service should enforce having one or more non customer encrypted resources. </summary>
+    /// <summary> Describes how a search service should enforce having one or more non-customer-encrypted resources. </summary>
     public enum SearchEncryptionWithCmkEnforcement
     {
         /// <summary> Enforcement policy is not explicitly specified, with the behavior being the same as if it were set to 'Disabled'. </summary>
         Unspecified,
-        /// <summary> No enforcement will be made and the search service can have non customer encrypted resources. </summary>
+        /// <summary> No enforcement will be made and the search service can have non-customer-encrypted resources. </summary>
         Disabled,
-        /// <summary> Search service will be marked as non-compliant if there are one or more non customer encrypted resources. </summary>
+        /// <summary> Search service will be marked as non-compliant if there are one or more non-customer-encrypted resources. </summary>
         Enabled
     }
 }

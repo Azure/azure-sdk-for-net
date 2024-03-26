@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Performance level value. </summary>
+        [WirePath("value")]
         public double? Value { get; }
         /// <summary> Unit type used to measure performance level. </summary>
+        [WirePath("unit")]
         public PerformanceLevelUnit? Unit { get; }
     }
 }

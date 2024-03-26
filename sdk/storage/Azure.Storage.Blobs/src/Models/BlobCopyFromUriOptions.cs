@@ -84,7 +84,7 @@ namespace Azure.Storage.Blobs.Models
         public HttpAuthorization SourceAuthentication { get; set; }
 
         /// <summary>
-        /// Optional.
+        /// Optional.  Note that this option is not applicable to <see cref="BlobBaseClient.StartCopyFromUri(System.Uri, BlobCopyFromUriOptions, System.Threading.CancellationToken)"/> and <see cref="BlobBaseClient.StartCopyFromUriAsync(System.Uri, BlobCopyFromUriOptions, System.Threading.CancellationToken)"/>.
         /// If <see cref="BlobCopySourceTagsMode.Replace"/>, the tags on the destination blob will be set to <see cref="Tags"/>.
         /// If <see cref="BlobCopySourceTagsMode.Copy"/>, the tags on the source blob will be copied to the destination blob.
         /// Default is to replace.

@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(SchedulePolicy))
             {
                 writer.WritePropertyName("schedulePolicy"u8);
-                writer.WriteObjectValue(SchedulePolicy);
+                writer.WriteObjectValue<BackupSchedulePolicy>(SchedulePolicy, options);
             }
             if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
-                writer.WriteObjectValue(RetentionPolicy);
+                writer.WriteObjectValue<BackupRetentionPolicy>(RetentionPolicy, options);
             }
             if (Optional.IsDefined(VaultRetentionPolicy))
             {
                 writer.WritePropertyName("vaultRetentionPolicy"u8);
-                writer.WriteObjectValue(VaultRetentionPolicy);
+                writer.WriteObjectValue<VaultRetentionPolicy>(VaultRetentionPolicy, options);
             }
             if (Optional.IsDefined(TimeZone))
             {

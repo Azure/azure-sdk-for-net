@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(BackendAddressPool))
             {
                 writer.WritePropertyName("backendAddressPool"u8);
-                writer.WriteObjectValue(BackendAddressPool);
+                writer.WriteObjectValue<ApplicationGatewayBackendAddressPool>(BackendAddressPool, options);
             }
             if (Optional.IsCollectionDefined(BackendHttpSettingsCollection))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in BackendHttpSettingsCollection)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplicationGatewayBackendHealthHttpSettings>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
         }
 
         /// <summary> Status of the connection. </summary>
+        [WirePath("status")]
         public ServiceBusPrivateLinkConnectionStatus? Status { get; set; }
         /// <summary> Description of the connection state. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
     }
 }

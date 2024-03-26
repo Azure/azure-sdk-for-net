@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConfigData>(item, options);
                 }
                 writer.WriteEndArray();
             }

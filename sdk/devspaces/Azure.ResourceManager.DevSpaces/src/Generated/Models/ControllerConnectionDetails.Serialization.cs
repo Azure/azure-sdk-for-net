@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             if (Optional.IsDefined(OrchestratorSpecificConnectionDetails))
             {
                 writer.WritePropertyName("orchestratorSpecificConnectionDetails"u8);
-                writer.WriteObjectValue(OrchestratorSpecificConnectionDetails);
+                writer.WriteObjectValue<OrchestratorSpecificConnectionDetails>(OrchestratorSpecificConnectionDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

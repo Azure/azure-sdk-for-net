@@ -29,12 +29,12 @@ namespace Azure.Health.Insights.CancerProfiling
             if (Optional.IsDefined(PatientDataEvidence))
             {
                 writer.WritePropertyName("patientDataEvidence"u8);
-                writer.WriteObjectValue(PatientDataEvidence);
+                writer.WriteObjectValue<ClinicalNoteEvidence>(PatientDataEvidence, options);
             }
             if (Optional.IsDefined(PatientInfoEvidence))
             {
                 writer.WritePropertyName("patientInfoEvidence"u8);
-                writer.WriteObjectValue(PatientInfoEvidence);
+                writer.WriteObjectValue<ClinicalCodedElement>(PatientInfoEvidence, options);
             }
             if (Optional.IsDefined(Importance))
             {
@@ -165,7 +165,7 @@ namespace Azure.Health.Insights.CancerProfiling
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<InferenceEvidence>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

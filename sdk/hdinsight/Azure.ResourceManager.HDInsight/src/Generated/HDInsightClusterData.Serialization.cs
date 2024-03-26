@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HDInsight
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<HDInsightClusterProperties>(Properties, options);
             }
             if (Optional.IsDefined(Identity))
             {

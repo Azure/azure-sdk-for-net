@@ -17,7 +17,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             StatusCode = code;
         }
 
-        internal override void Invalidate()
+        internal override void BuildJsonElement()
         { }
     }
 }

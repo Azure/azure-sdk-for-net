@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataBox.Models
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<DataBoxSku>(Sku, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsEnabled))
             {
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in DataLocationToServiceLocationMap)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataLocationToServiceLocationMap>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity);
+                writer.WriteObjectValue<DataBoxSkuCapacity>(Capacity, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Costs))
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in Costs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataBoxSkuCost>(item, options);
                 }
                 writer.WriteEndArray();
             }

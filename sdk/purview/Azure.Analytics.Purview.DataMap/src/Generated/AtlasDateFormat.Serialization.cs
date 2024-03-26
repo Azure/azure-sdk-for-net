@@ -44,17 +44,17 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(DateInstance))
             {
                 writer.WritePropertyName("dateInstance"u8);
-                writer.WriteObjectValue(DateInstance);
+                writer.WriteObjectValue<AtlasDateFormat>(DateInstance, options);
             }
             if (Optional.IsDefined(DateTimeInstance))
             {
                 writer.WritePropertyName("dateTimeInstance"u8);
-                writer.WriteObjectValue(DateTimeInstance);
+                writer.WriteObjectValue<AtlasDateFormat>(DateTimeInstance, options);
             }
             if (Optional.IsDefined(Instance))
             {
                 writer.WritePropertyName("instance"u8);
-                writer.WriteObjectValue(Instance);
+                writer.WriteObjectValue<AtlasDateFormat>(Instance, options);
             }
             if (Optional.IsDefined(Lenient))
             {
@@ -64,17 +64,17 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(NumberFormat))
             {
                 writer.WritePropertyName("numberFormat"u8);
-                writer.WriteObjectValue(NumberFormat);
+                writer.WriteObjectValue<AtlasNumberFormat>(NumberFormat, options);
             }
             if (Optional.IsDefined(TimeInstance))
             {
                 writer.WritePropertyName("timeInstance"u8);
-                writer.WriteObjectValue(TimeInstance);
+                writer.WriteObjectValue<AtlasDateFormat>(TimeInstance, options);
             }
             if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
-                writer.WriteObjectValue(TimeZone);
+                writer.WriteObjectValue<AtlasTimeZone>(TimeZone, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -275,7 +275,7 @@ namespace Azure.Analytics.Purview.DataMap
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AtlasDateFormat>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

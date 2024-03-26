@@ -18,7 +18,7 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(SourceCallerIdNumber))
             {
                 writer.WritePropertyName("sourceCallerIdNumber"u8);
-                writer.WriteObjectValue(SourceCallerIdNumber);
+                writer.WriteObjectValue<PhoneNumberIdentifierModel>(SourceCallerIdNumber);
             }
             if (Optional.IsDefined(SourceDisplayName))
             {
@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteStringValue(SourceDisplayName);
             }
             writer.WritePropertyName("participantToAdd"u8);
-            writer.WriteObjectValue(ParticipantToAdd);
+            writer.WriteObjectValue<CommunicationIdentifierModel>(ParticipantToAdd);
             if (Optional.IsDefined(InvitationTimeoutInSeconds))
             {
                 writer.WritePropertyName("invitationTimeoutInSeconds"u8);
@@ -40,7 +40,7 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(CustomCallingContext))
             {
                 writer.WritePropertyName("customCallingContext"u8);
-                writer.WriteObjectValue(CustomCallingContext);
+                writer.WriteObjectValue<CustomCallingContextInternal>(CustomCallingContext);
             }
             if (Optional.IsDefined(OperationCallbackUri))
             {

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DataflowSinks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PowerQuerySink>(item, options);
                 }
                 writer.WriteEndArray();
             }

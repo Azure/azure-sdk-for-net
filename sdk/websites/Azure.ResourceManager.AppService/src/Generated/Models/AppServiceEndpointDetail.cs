@@ -67,12 +67,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> An IP Address that Domain Name currently resolves to. </summary>
+        [WirePath("ipAddress")]
         public IPAddress IPAddress { get; }
         /// <summary> The port an endpoint is connected to. </summary>
+        [WirePath("port")]
         public int? Port { get; }
         /// <summary> The time in milliseconds it takes for a TCP connection to be created from the App Service Environment to this IpAddress at this Port. </summary>
+        [WirePath("latency")]
         public double? Latency { get; }
         /// <summary> Whether it is possible to create a TCP connection from the App Service Environment to this IpAddress at this Port. </summary>
+        [WirePath("isAccessible")]
         public bool? IsAccessible { get; }
     }
 }

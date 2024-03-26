@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ComputePrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }

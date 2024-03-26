@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> The key ID. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> A name for the key describing its usage. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The value of the key that is used for authentication purposes. </summary>
+        [WirePath("value")]
         public string Value { get; }
         /// <summary> A connection string that can be used by supporting clients for authentication. </summary>
+        [WirePath("connectionString")]
         public string ConnectionString { get; }
         /// <summary> The last time any of the key's properties were modified. </summary>
+        [WirePath("lastModified")]
         public DateTimeOffset? LastModifiedOn { get; }
         /// <summary> Whether this key can only be used for read operations. </summary>
+        [WirePath("readOnly")]
         public bool? IsReadOnly { get; }
     }
 }

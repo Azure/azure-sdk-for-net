@@ -27,12 +27,12 @@ namespace Azure.Health.Insights.RadiologyInsights
 
             writer.WriteStartObject();
             writer.WritePropertyName("code"u8);
-            writer.WriteObjectValue(Code);
+            writer.WriteObjectValue<FhirR4CodeableConcept>(Code, options);
             writer.WritePropertyName("types"u8);
             writer.WriteStartArray();
             foreach (var item in Types)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<FhirR4CodeableConcept>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -146,7 +146,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<RadiologyCodeWithTypes>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

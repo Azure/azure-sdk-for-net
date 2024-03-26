@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in UserList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KeySetUser>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The unique resource identifier of the ARM resource. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> The name of the Table. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The type of Azure resource. </summary>
+        [WirePath("type")]
         public string ResourceType { get; }
     }
 }

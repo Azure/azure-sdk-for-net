@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.BotService
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<BotProperties>(Properties, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<BotServiceSku>(Sku, options);
             }
             if (Optional.IsDefined(Kind))
             {

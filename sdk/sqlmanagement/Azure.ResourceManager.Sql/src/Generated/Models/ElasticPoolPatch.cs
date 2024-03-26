@@ -82,26 +82,37 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> An ARM Resource SKU. </summary>
+        [WirePath("sku")]
         public SqlSku Sku { get; set; }
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> The storage limit for the database elastic pool in bytes. </summary>
+        [WirePath("properties.maxSizeBytes")]
         public long? MaxSizeBytes { get; set; }
         /// <summary> Minimal capacity that serverless pool will not shrink below, if not paused. </summary>
+        [WirePath("properties.minCapacity")]
         public double? MinCapacity { get; set; }
         /// <summary> The per database settings for the elastic pool. </summary>
+        [WirePath("properties.perDatabaseSettings")]
         public ElasticPoolPerDatabaseSettings PerDatabaseSettings { get; set; }
         /// <summary> Whether or not this elastic pool is zone redundant, which means the replicas of this elastic pool will be spread across multiple availability zones. </summary>
+        [WirePath("properties.zoneRedundant")]
         public bool? IsZoneRedundant { get; set; }
         /// <summary> The license type to apply for this elastic pool. </summary>
+        [WirePath("properties.licenseType")]
         public ElasticPoolLicenseType? LicenseType { get; set; }
         /// <summary> Maintenance configuration id assigned to the elastic pool. This configuration defines the period when the maintenance updates will will occur. </summary>
+        [WirePath("properties.maintenanceConfigurationId")]
         public ResourceIdentifier MaintenanceConfigurationId { get; set; }
         /// <summary> The number of secondary replicas associated with the elastic pool that are used to provide high availability. Applicable only to Hyperscale elastic pools. </summary>
+        [WirePath("properties.highAvailabilityReplicaCount")]
         public int? HighAvailabilityReplicaCount { get; set; }
         /// <summary> Type of enclave requested on the elastic pool. </summary>
+        [WirePath("properties.preferredEnclaveType")]
         public SqlAlwaysEncryptedEnclaveType? PreferredEnclaveType { get; set; }
         /// <summary> Specifies the availability zone the pool's primary replica is pinned to. </summary>
+        [WirePath("properties.availabilityZone")]
         public SqlAvailabilityZoneType? AvailabilityZone { get; set; }
     }
 }

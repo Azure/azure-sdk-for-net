@@ -31,7 +31,7 @@ namespace Azure.AI.OpenAI.Assistants
             if (Optional.IsDefined(Thread))
             {
                 writer.WritePropertyName("thread"u8);
-                writer.WriteObjectValue(Thread);
+                writer.WriteObjectValue<AssistantThreadCreationOptions>(Thread, options);
             }
             if (Optional.IsDefined(OverrideModelName))
             {
@@ -49,7 +49,7 @@ namespace Azure.AI.OpenAI.Assistants
                 writer.WriteStartArray();
                 foreach (var item in OverrideTools)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ToolDefinition>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -230,7 +230,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<CreateAndRunThreadOptions>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

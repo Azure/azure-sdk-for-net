@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The name of the field the search query is sorted on. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The sort order of the search. </summary>
+        [WirePath("order")]
         public SearchSortEnum? Order { get; }
     }
 }

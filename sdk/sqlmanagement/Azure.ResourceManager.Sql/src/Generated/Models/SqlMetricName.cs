@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The name of the database metric. </summary>
+        [WirePath("value")]
         public string Value { get; }
         /// <summary> The friendly name of the database metric. </summary>
+        [WirePath("localizedValue")]
         public string LocalizedValue { get; }
     }
 }

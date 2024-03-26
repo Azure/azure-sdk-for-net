@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Id of Primary Managed Instance in pair. </summary>
+        [WirePath("primaryManagedInstanceId")]
         public ResourceIdentifier PrimaryManagedInstanceId { get; set; }
         /// <summary> Id of Partner Managed Instance in pair. </summary>
+        [WirePath("partnerManagedInstanceId")]
         public ResourceIdentifier PartnerManagedInstanceId { get; set; }
     }
 }

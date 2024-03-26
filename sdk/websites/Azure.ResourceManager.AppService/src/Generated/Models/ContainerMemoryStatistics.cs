@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Gets or sets the usage. </summary>
+        [WirePath("usage")]
         public long? Usage { get; set; }
         /// <summary> Gets or sets the max usage. </summary>
+        [WirePath("maxUsage")]
         public long? MaxUsage { get; set; }
         /// <summary> Gets or sets the limit. </summary>
+        [WirePath("limit")]
         public long? Limit { get; set; }
     }
 }

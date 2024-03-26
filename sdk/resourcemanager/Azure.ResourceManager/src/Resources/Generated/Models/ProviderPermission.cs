@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The application id. </summary>
+        [WirePath("applicationId")]
         public string ApplicationId { get; }
         /// <summary> Role definition properties. </summary>
+        [WirePath("roleDefinition")]
         public AzureRoleDefinition RoleDefinition { get; }
         /// <summary> Role definition properties. </summary>
+        [WirePath("managedByRoleDefinition")]
         public AzureRoleDefinition ManagedByRoleDefinition { get; }
         /// <summary> The provider authorization consent state. </summary>
+        [WirePath("providerAuthorizationConsentState")]
         public ProviderAuthorizationConsentState? ProviderAuthorizationConsentState { get; }
     }
 }

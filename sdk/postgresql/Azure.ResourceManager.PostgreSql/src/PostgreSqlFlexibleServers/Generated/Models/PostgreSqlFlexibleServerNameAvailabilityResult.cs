@@ -33,8 +33,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> name of the PostgreSQL server. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> type of the server. </summary>
+        [WirePath("type")]
         public ResourceType? ResourceType { get; }
     }
 }

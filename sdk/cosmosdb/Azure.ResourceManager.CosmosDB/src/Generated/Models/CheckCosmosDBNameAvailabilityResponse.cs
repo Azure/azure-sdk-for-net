@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Indicates if the resource name is available. </summary>
+        [WirePath("nameAvailable")]
         public bool? NameAvailable { get; }
         /// <summary> The reason why the given name is not available. </summary>
+        [WirePath("reason")]
         public CosmosDBNameUnavailableReason? Reason { get; }
         /// <summary> Detailed reason why the given name is available. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

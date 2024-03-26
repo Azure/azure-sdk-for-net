@@ -66,10 +66,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Secret key. </summary>
+        [WirePath("masterKey")]
         public string MasterKey { get; }
         /// <summary> Host level function keys. </summary>
+        [WirePath("functionKeys")]
         public IReadOnlyDictionary<string, string> FunctionKeys { get; }
         /// <summary> System keys. </summary>
+        [WirePath("systemKeys")]
         public IReadOnlyDictionary<string, string> SystemKeys { get; }
     }
 }

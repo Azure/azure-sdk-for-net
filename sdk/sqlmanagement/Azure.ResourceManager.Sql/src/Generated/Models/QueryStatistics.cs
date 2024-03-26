@@ -75,14 +75,19 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Database name of the database in which this query was executed. </summary>
+        [WirePath("properties.databaseName")]
         public string DatabaseName { get; }
         /// <summary> Unique query id (unique within one database). </summary>
+        [WirePath("properties.queryId")]
         public string QueryId { get; }
         /// <summary> The start time for the metric (ISO-8601 format). </summary>
+        [WirePath("properties.startTime")]
         public string StartTime { get; }
         /// <summary> The end time for the metric (ISO-8601 format). </summary>
+        [WirePath("properties.endTime")]
         public string EndTime { get; }
         /// <summary> List of intervals with appropriate metric data. </summary>
+        [WirePath("properties.intervals")]
         public IList<QueryMetricInterval> Intervals { get; }
     }
 }

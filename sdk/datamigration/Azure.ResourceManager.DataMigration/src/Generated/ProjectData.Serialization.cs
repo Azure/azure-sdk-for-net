@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataMigration
             if (Optional.IsDefined(AzureAuthenticationInfo))
             {
                 writer.WritePropertyName("azureAuthenticationInfo"u8);
-                writer.WriteObjectValue(AzureAuthenticationInfo);
+                writer.WriteObjectValue<AzureActiveDirectoryApp>(AzureAuthenticationInfo, options);
             }
             if (Optional.IsDefined(TargetPlatform))
             {
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.DataMigration
             if (Optional.IsDefined(SourceConnectionInfo))
             {
                 writer.WritePropertyName("sourceConnectionInfo"u8);
-                writer.WriteObjectValue(SourceConnectionInfo);
+                writer.WriteObjectValue<ConnectionInfo>(SourceConnectionInfo, options);
             }
             if (Optional.IsDefined(TargetConnectionInfo))
             {
                 writer.WritePropertyName("targetConnectionInfo"u8);
-                writer.WriteObjectValue(TargetConnectionInfo);
+                writer.WriteObjectValue<ConnectionInfo>(TargetConnectionInfo, options);
             }
             if (Optional.IsCollectionDefined(DatabasesInfo))
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataMigration
                 writer.WriteStartArray();
                 foreach (var item in DatabasesInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DatabaseInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The regional endpoint for GraphAPICompute. </summary>
+        [WirePath("graphApiComputeEndpoint")]
         public string GraphApiComputeEndpoint { get; }
     }
 }

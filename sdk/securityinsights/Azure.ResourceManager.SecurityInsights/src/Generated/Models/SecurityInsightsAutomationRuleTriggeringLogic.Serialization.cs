@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Conditions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SecurityInsightsAutomationRuleCondition>(item, options);
                 }
                 writer.WriteEndArray();
             }

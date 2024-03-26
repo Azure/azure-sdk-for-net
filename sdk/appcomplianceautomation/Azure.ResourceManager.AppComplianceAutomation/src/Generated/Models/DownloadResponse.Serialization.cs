@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in ComplianceReport)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ComplianceReportItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(CompliancePdfReport))
             {
                 writer.WritePropertyName("compliancePdfReport"u8);
-                writer.WriteObjectValue(CompliancePdfReport);
+                writer.WriteObjectValue<DownloadResponseCompliancePdfReport>(CompliancePdfReport, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ComplianceDetailedPdfReport))
             {
                 writer.WritePropertyName("complianceDetailedPdfReport"u8);
-                writer.WriteObjectValue(ComplianceDetailedPdfReport);
+                writer.WriteObjectValue<DownloadResponseComplianceDetailedPdfReport>(ComplianceDetailedPdfReport, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

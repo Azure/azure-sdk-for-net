@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DevTestLabArmTemplateParameter>(item, options);
                 }
                 writer.WriteEndArray();
             }

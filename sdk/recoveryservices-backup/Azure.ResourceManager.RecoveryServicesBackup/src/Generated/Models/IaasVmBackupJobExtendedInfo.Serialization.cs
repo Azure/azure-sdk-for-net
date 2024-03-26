@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in TasksList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IaasVmBackupJobTaskDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }

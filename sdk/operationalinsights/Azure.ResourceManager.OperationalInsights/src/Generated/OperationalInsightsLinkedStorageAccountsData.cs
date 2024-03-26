@@ -73,8 +73,10 @@ namespace Azure.ResourceManager.OperationalInsights
         }
 
         /// <summary> Linked storage accounts type. </summary>
+        [WirePath("properties.dataSourceType")]
         public OperationalInsightsDataSourceType? DataSourceType { get; }
         /// <summary> Linked storage accounts resources ids. </summary>
+        [WirePath("properties.storageAccountIds")]
         public IList<ResourceIdentifier> StorageAccountIds { get; }
     }
 }

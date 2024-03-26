@@ -77,16 +77,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Function App stack location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> Function App stack (display only). </summary>
+        [WirePath("properties.displayText")]
         public string DisplayText { get; }
         /// <summary> Function App stack name. </summary>
+        [WirePath("properties.value")]
         public string Value { get; }
         /// <summary> List of major versions available. </summary>
+        [WirePath("properties.majorVersions")]
         public IReadOnlyList<FunctionAppMajorVersion> MajorVersions { get; }
         /// <summary> Function App stack preferred OS. </summary>
+        [WirePath("properties.preferredOs")]
         public StackPreferredOS? PreferredOS { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

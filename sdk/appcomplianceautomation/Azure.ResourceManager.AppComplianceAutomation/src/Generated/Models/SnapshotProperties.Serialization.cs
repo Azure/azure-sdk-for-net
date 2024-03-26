@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             if (options.Format != "W" && Optional.IsDefined(ReportProperties))
             {
                 writer.WritePropertyName("reportProperties"u8);
-                writer.WriteObjectValue(ReportProperties);
+                writer.WriteObjectValue<ReportProperties>(ReportProperties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReportSystemData))
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in ComplianceResults)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ComplianceResult>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -76,6 +76,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Properties of a private link resource. </summary>
+        [WirePath("properties")]
         public AppServicePrivateLinkResourceProperties Properties { get; }
     }
 }

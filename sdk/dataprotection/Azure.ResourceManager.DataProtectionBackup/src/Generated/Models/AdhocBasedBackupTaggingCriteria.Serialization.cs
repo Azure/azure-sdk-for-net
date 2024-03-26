@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(TagInfo))
             {
                 writer.WritePropertyName("tagInfo"u8);
-                writer.WriteObjectValue(TagInfo);
+                writer.WriteObjectValue<DataProtectionBackupRetentionTag>(TagInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

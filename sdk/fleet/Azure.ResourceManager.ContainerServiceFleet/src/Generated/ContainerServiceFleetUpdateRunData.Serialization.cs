@@ -68,17 +68,17 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             if (Optional.IsDefined(Strategy))
             {
                 writer.WritePropertyName("strategy"u8);
-                writer.WriteObjectValue(Strategy);
+                writer.WriteObjectValue<ContainerServiceFleetUpdateRunStrategy>(Strategy, options);
             }
             if (Optional.IsDefined(ManagedClusterUpdate))
             {
                 writer.WritePropertyName("managedClusterUpdate"u8);
-                writer.WriteObjectValue(ManagedClusterUpdate);
+                writer.WriteObjectValue<ContainerServiceFleetManagedClusterUpdate>(ManagedClusterUpdate, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<ContainerServiceFleetUpdateRunStatus>(Status, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

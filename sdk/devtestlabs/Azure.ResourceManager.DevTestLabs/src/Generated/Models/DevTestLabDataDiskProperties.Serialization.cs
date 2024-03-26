@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(AttachNewDataDiskOptions))
             {
                 writer.WritePropertyName("attachNewDataDiskOptions"u8);
-                writer.WriteObjectValue(AttachNewDataDiskOptions);
+                writer.WriteObjectValue<AttachNewDataDiskDetails>(AttachNewDataDiskOptions, options);
             }
             if (Optional.IsDefined(ExistingLabDiskId))
             {

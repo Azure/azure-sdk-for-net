@@ -69,6 +69,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The last available backup date. </summary>
+        [WirePath("properties.lastAvailableBackupDate")]
         public string LastAvailableBackupDate { get; }
     }
 }

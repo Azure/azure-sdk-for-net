@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Failover policy of the read-only endpoint for the failover group. </summary>
+        [WirePath("failoverPolicy")]
         public ReadOnlyEndpointFailoverPolicy? FailoverPolicy { get; set; }
         /// <summary> The target partner server where the read-only endpoint points to. </summary>
+        [WirePath("targetServer")]
         public ResourceIdentifier TargetServer { get; set; }
     }
 }

@@ -100,35 +100,49 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Unique name of the rule. </summary>
+        [WirePath("properties.recommendationName")]
         public string RecommendationName { get; set; }
         /// <summary> UI friendly name of the rule. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> Localized name of the rule (Good for UI). </summary>
+        [WirePath("properties.message")]
         public string Message { get; set; }
         /// <summary>
         /// Recommendation ID of an associated recommendation object tied to the rule, if exists.
         /// If such an object doesn't exist, it is set to null.
         /// </summary>
+        [WirePath("properties.recommendationId")]
         public Guid? RecommendationId { get; set; }
         /// <summary> Localized detailed description of the rule. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Name of action that is recommended by this rule in string. </summary>
+        [WirePath("properties.actionName")]
         public string ActionName { get; set; }
         /// <summary> Level of impact indicating how critical this rule is. </summary>
+        [WirePath("properties.level")]
         public NotificationLevel? Level { get; set; }
         /// <summary> List of available channels that this rule applies. </summary>
+        [WirePath("properties.channels")]
         public RecommendationChannel? Channels { get; set; }
         /// <summary> The list of category tags that this recommendation rule belongs to. </summary>
+        [WirePath("properties.categoryTags")]
         public IReadOnlyList<string> CategoryTags { get; }
         /// <summary> True if this is associated with a dynamically added rule. </summary>
+        [WirePath("properties.isDynamic")]
         public bool? IsDynamic { get; set; }
         /// <summary> Extension name of the portal if exists. Applicable to dynamic rule only. </summary>
+        [WirePath("properties.extensionName")]
         public string ExtensionName { get; set; }
         /// <summary> Deep link to a blade on the portal. Applicable to dynamic rule only. </summary>
+        [WirePath("properties.bladeName")]
         public string BladeName { get; set; }
         /// <summary> Forward link to an external document associated with the rule. Applicable to dynamic rule only. </summary>
+        [WirePath("properties.forwardLink")]
         public string ForwardLink { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

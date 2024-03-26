@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WriteStartArray();
                 foreach (var item in RecallErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ServerEndpointRecallError>(item, options);
                 }
                 writer.WriteEndArray();
             }

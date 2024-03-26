@@ -80,14 +80,19 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> The Virtual Network name. </summary>
+        [WirePath("properties.virtualNetworkName")]
         public string VirtualNetworkName { get; }
         /// <summary> The Virtual Network summary view. </summary>
+        [WirePath("properties.virtualNetworkConnection")]
         public AppServiceVirtualNetworkProperties VirtualNetworkConnection { get; }
         /// <summary> The Hybrid Connections summary view. </summary>
+        [WirePath("properties.hybridConnections")]
         public IReadOnlyList<RelayServiceConnectionEntityData> HybridConnections { get; }
         /// <summary> The Hybrid Connection V2 (Service Bus) view. </summary>
+        [WirePath("properties.hybridConnectionsV2")]
         public IReadOnlyList<HybridConnectionData> HybridConnectionsV2 { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Log level. </summary>
+        [WirePath("level")]
         public WebAppLogLevel? Level { get; set; }
     }
 }

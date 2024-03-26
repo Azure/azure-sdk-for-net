@@ -79,14 +79,19 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> A unique id for object replication policy. </summary>
+        [WirePath("properties.policyId")]
         public string PolicyId { get; }
         /// <summary> Indicates when the policy is enabled on the source account. </summary>
+        [WirePath("properties.enabledTime")]
         public DateTimeOffset? EnabledOn { get; }
         /// <summary> Required. Source account name. It should be full resource id if allowCrossTenantReplication set to false. </summary>
+        [WirePath("properties.sourceAccount")]
         public string SourceAccount { get; set; }
         /// <summary> Required. Destination account name. It should be full resource id if allowCrossTenantReplication set to false. </summary>
+        [WirePath("properties.destinationAccount")]
         public string DestinationAccount { get; set; }
         /// <summary> The storage account object replication rules. </summary>
+        [WirePath("properties.rules")]
         public IList<ObjectReplicationPolicyRule> Rules { get; }
     }
 }

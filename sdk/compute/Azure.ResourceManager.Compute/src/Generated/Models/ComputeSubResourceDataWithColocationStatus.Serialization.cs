@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ColocationStatus))
             {
                 writer.WritePropertyName("colocationStatus"u8);
-                writer.WriteObjectValue(ColocationStatus);
+                writer.WriteObjectValue<InstanceViewStatus>(ColocationStatus, options);
             }
             if (Optional.IsDefined(Id))
             {

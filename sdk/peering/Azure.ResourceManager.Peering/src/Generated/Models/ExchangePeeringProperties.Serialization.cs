@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WriteStartArray();
                 foreach (var item in Connections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PeeringExchangeConnection>(item, options);
                 }
                 writer.WriteEndArray();
             }

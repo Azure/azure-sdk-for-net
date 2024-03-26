@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BatchIPRule>(item, options);
                 }
                 writer.WriteEndArray();
             }

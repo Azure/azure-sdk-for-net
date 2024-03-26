@@ -84,7 +84,7 @@ namespace Azure.Identity
                 options ?? s_DefaultCacheOptions);
             _accountAsyncLock = new AsyncLockWithValue<IAccount>();
             TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
-            UseOperatingSystemAccount = (options as IMsalPublicClientInitializerOptions)?.UseOperatingSystemAccount ?? false;
+            UseOperatingSystemAccount = (options as IMsalPublicClientInitializerOptions)?.UseDefaultBrokerAccount ?? false;
         }
 
         /// <summary>

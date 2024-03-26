@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedServicesRegistrationData>(item, options);
                 }
                 writer.WriteEndArray();
             }

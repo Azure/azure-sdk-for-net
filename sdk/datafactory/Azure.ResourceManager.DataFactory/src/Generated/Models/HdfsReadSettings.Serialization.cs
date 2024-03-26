@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(DistcpSettings))
             {
                 writer.WritePropertyName("distcpSettings"u8);
-                writer.WriteObjectValue(DistcpSettings);
+                writer.WriteObjectValue<DistcpSettings>(DistcpSettings, options);
             }
             if (Optional.IsDefined(DeleteFilesAfterCompletion))
             {

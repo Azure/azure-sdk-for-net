@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WriteStartArray();
                 foreach (var item in Updates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceHealthEventUpdate>(item, options);
                 }
                 writer.WriteEndArray();
             }

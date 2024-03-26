@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Full resource id of a Microsoft.Storage resource. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> Gets or sets the identity client id. </summary>
+        [WirePath("identityClientId")]
         public Guid? IdentityClientId { get; set; }
     }
 }

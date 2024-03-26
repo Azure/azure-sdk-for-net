@@ -29,27 +29,27 @@ namespace Azure.ResourceManager.Communication.Models
             if (Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("Domain"u8);
-                writer.WriteObjectValue(Domain);
+                writer.WriteObjectValue<VerificationDnsRecord>(Domain, options);
             }
             if (Optional.IsDefined(Spf))
             {
                 writer.WritePropertyName("SPF"u8);
-                writer.WriteObjectValue(Spf);
+                writer.WriteObjectValue<VerificationDnsRecord>(Spf, options);
             }
             if (Optional.IsDefined(Dkim))
             {
                 writer.WritePropertyName("DKIM"u8);
-                writer.WriteObjectValue(Dkim);
+                writer.WriteObjectValue<VerificationDnsRecord>(Dkim, options);
             }
             if (Optional.IsDefined(Dkim2))
             {
                 writer.WritePropertyName("DKIM2"u8);
-                writer.WriteObjectValue(Dkim2);
+                writer.WriteObjectValue<VerificationDnsRecord>(Dkim2, options);
             }
             if (Optional.IsDefined(Dmarc))
             {
                 writer.WritePropertyName("DMARC"u8);
-                writer.WriteObjectValue(Dmarc);
+                writer.WriteObjectValue<VerificationDnsRecord>(Dmarc, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

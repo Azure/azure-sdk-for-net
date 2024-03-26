@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (options.Format != "W" && Optional.IsDefined(CpuDetails))
             {
                 writer.WritePropertyName("cpuDetails"u8);
-                writer.WriteObjectValue(CpuDetails);
+                writer.WriteObjectValue<ApplianceResourceDetails>(CpuDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RamDetails))
             {
                 writer.WritePropertyName("ramDetails"u8);
-                writer.WriteObjectValue(RamDetails);
+                writer.WriteObjectValue<ApplianceResourceDetails>(RamDetails, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(DatastoreSnapshot))
             {
@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in DatastoreSnapshot)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataStoreUtilizationDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(DisksReplicationDetails))
             {
                 writer.WritePropertyName("disksReplicationDetails"u8);
-                writer.WriteObjectValue(DisksReplicationDetails);
+                writer.WriteObjectValue<ApplianceResourceDetails>(DisksReplicationDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EsxiNfcBuffer))
             {
                 writer.WritePropertyName("esxiNfcBuffer"u8);
-                writer.WriteObjectValue(EsxiNfcBuffer);
+                writer.WriteObjectValue<ApplianceResourceDetails>(EsxiNfcBuffer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(NetworkBandwidth))
             {
                 writer.WritePropertyName("networkBandwidth"u8);
-                writer.WriteObjectValue(NetworkBandwidth);
+                writer.WriteObjectValue<ApplianceResourceDetails>(NetworkBandwidth, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

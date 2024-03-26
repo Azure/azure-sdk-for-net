@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in NotificationEndpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NotificationEndpoint>(item, options);
                 }
                 writer.WriteEndArray();
             }

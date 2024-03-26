@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Automation.Models
                 if (RawContent != null)
                 {
                     writer.WritePropertyName("rawContent"u8);
-                    writer.WriteObjectValue(RawContent);
+                    writer.WriteObjectValue<RawGraphicalRunbookContent>(RawContent, options);
                 }
                 else
                 {

@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(BlobFilterDetails))
             {
                 writer.WritePropertyName("blobFilterDetails"u8);
-                writer.WriteObjectValue(BlobFilterDetails);
+                writer.WriteObjectValue<BlobFilterDetails>(BlobFilterDetails, options);
             }
             if (Optional.IsDefined(AzureFileFilterDetails))
             {
                 writer.WritePropertyName("azureFileFilterDetails"u8);
-                writer.WriteObjectValue(AzureFileFilterDetails);
+                writer.WriteObjectValue<AzureFileFilterDetails>(AzureFileFilterDetails, options);
             }
             if (Optional.IsCollectionDefined(FilterFileDetails))
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in FilterFileDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FilterFileDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }

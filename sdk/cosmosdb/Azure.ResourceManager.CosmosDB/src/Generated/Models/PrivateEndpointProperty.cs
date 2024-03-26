@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Resource id of the private endpoint. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
     }
 }

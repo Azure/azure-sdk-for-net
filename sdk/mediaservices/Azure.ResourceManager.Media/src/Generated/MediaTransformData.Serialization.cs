@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Media
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MediaTransformOutput>(item, options);
                 }
                 writer.WriteEndArray();
             }

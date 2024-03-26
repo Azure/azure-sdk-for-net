@@ -82,10 +82,13 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets or sets the resource. </summary>
+        [WirePath("properties.resource")]
         public ExtendedGremlinGraphResourceInfo Resource { get; set; }
         /// <summary> Gets or sets the options. </summary>
+        [WirePath("properties.options")]
         public GremlinGraphPropertiesConfig Options { get; set; }
         /// <summary> Identity for the resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
     }
 }

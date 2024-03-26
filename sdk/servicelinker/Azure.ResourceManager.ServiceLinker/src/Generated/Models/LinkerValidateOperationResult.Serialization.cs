@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteStartArray();
                     foreach (var item in ValidationDetail)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<LinkerValidationResultItemInfo>(item, options);
                     }
                     writer.WriteEndArray();
                 }

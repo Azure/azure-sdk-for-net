@@ -81,12 +81,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             if (Optional.IsDefined(AggregateRouteConfiguration))
             {
                 writer.WritePropertyName("aggregateRouteConfiguration"u8);
-                writer.WriteObjectValue(AggregateRouteConfiguration);
+                writer.WriteObjectValue<AggregateRouteConfiguration>(AggregateRouteConfiguration, options);
             }
             if (Optional.IsDefined(ConnectedSubnetRoutePolicy))
             {
                 writer.WritePropertyName("connectedSubnetRoutePolicy"u8);
-                writer.WriteObjectValue(ConnectedSubnetRoutePolicy);
+                writer.WriteObjectValue<ConnectedSubnetRoutePolicy>(ConnectedSubnetRoutePolicy, options);
             }
             writer.WritePropertyName("networkFabricId"u8);
             writer.WriteStringValue(NetworkFabricId);

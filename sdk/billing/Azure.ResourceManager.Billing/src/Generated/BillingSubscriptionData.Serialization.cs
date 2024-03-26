@@ -139,17 +139,17 @@ namespace Azure.ResourceManager.Billing
             if (options.Format != "W" && Optional.IsDefined(LastMonthCharges))
             {
                 writer.WritePropertyName("lastMonthCharges"u8);
-                writer.WriteObjectValue(LastMonthCharges);
+                writer.WriteObjectValue<BillingAmount>(LastMonthCharges, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MonthToDateCharges))
             {
                 writer.WritePropertyName("monthToDateCharges"u8);
-                writer.WriteObjectValue(MonthToDateCharges);
+                writer.WriteObjectValue<BillingAmount>(MonthToDateCharges, options);
             }
             if (options.Format != "W" && Optional.IsDefined(NextBillingCycleDetails))
             {
                 writer.WritePropertyName("nextBillingCycleDetails"u8);
-                writer.WriteObjectValue(NextBillingCycleDetails);
+                writer.WriteObjectValue<NextBillingCycleDetails>(NextBillingCycleDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OfferId))
             {
@@ -184,12 +184,12 @@ namespace Azure.ResourceManager.Billing
             if (options.Format != "W" && Optional.IsDefined(Reseller))
             {
                 writer.WritePropertyName("reseller"u8);
-                writer.WriteObjectValue(Reseller);
+                writer.WriteObjectValue<CreatedSubscriptionReseller>(Reseller, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RenewalTermDetails))
             {
                 writer.WritePropertyName("renewalTermDetails"u8);
-                writer.WriteObjectValue(RenewalTermDetails);
+                writer.WriteObjectValue<SubscriptionRenewalTermDetails>(RenewalTermDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SkuDescription))
             {

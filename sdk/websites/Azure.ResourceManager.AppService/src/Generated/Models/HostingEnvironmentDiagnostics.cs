@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Name/identifier of the diagnostics. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Diagnostics output. </summary>
+        [WirePath("diagnosticsOutput")]
         public string DiagnosticsOutput { get; }
     }
 }

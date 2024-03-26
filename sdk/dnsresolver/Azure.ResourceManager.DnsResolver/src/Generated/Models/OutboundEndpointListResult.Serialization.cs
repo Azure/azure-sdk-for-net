@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DnsResolverOutboundEndpointData>(item, options);
                 }
                 writer.WriteEndArray();
             }

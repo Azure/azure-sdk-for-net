@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DevCenter
             if (Optional.IsDefined(StopOnDisconnect))
             {
                 writer.WritePropertyName("stopOnDisconnect"u8);
-                writer.WriteObjectValue(StopOnDisconnect);
+                writer.WriteObjectValue<StopOnDisconnectConfiguration>(StopOnDisconnect, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HealthStatus))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WriteStartArray();
                 foreach (var item in HealthStatusDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DevCenterHealthStatusDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }

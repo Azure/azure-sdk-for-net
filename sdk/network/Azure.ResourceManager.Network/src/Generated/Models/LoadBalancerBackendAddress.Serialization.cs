@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in InboundNatRulesPortMapping)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NatRulePortMapping>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> List of services which support encryption. </summary>
+        [WirePath("services")]
         public StorageAccountEncryptionServices Services { get; set; }
         /// <summary> The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.Storage, Microsoft.Keyvault. </summary>
+        [WirePath("keySource")]
         public StorageAccountKeySource? KeySource { get; set; }
         /// <summary> A boolean indicating whether or not the service applies a secondary layer of encryption with platform managed keys for data at rest. </summary>
+        [WirePath("requireInfrastructureEncryption")]
         public bool? RequireInfrastructureEncryption { get; set; }
         /// <summary> Properties provided by key vault. </summary>
+        [WirePath("keyvaultproperties")]
         public StorageAccountKeyVaultProperties KeyVaultProperties { get; set; }
         /// <summary> The identity to be used with service-side encryption at rest. </summary>
+        [WirePath("identity")]
         public StorageAccountEncryptionIdentity EncryptionIdentity { get; set; }
     }
 }

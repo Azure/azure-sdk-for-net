@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The time grain to be used to summarize the metric values. </summary>
+        [WirePath("timeGrain")]
         public string TimeGrain { get; }
         /// <summary> The retention for the metric values. </summary>
+        [WirePath("retention")]
         public string Retention { get; }
     }
 }

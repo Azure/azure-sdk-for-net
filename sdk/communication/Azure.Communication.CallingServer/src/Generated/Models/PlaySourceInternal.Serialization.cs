@@ -25,7 +25,7 @@ namespace Azure.Communication.CallingServer
             if (Optional.IsDefined(FileSource))
             {
                 writer.WritePropertyName("fileSource"u8);
-                writer.WriteObjectValue(FileSource);
+                writer.WriteObjectValue<FileSourceInternal>(FileSource);
             }
             writer.WriteEndObject();
         }

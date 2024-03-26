@@ -29,12 +29,12 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(FollowupRecommendationOptions))
             {
                 writer.WritePropertyName("followupRecommendationOptions"u8);
-                writer.WriteObjectValue(FollowupRecommendationOptions);
+                writer.WriteObjectValue<FollowupRecommendationOptions>(FollowupRecommendationOptions, options);
             }
             if (Optional.IsDefined(FindingOptions))
             {
                 writer.WritePropertyName("findingOptions"u8);
-                writer.WriteObjectValue(FindingOptions);
+                writer.WriteObjectValue<FindingOptions>(FindingOptions, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -150,7 +150,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<RadiologyInsightsInferenceOptions>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

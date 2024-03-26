@@ -36,7 +36,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             if (Common.Optional.IsDefined(ConversionConfiguration))
             {
                 writer.WritePropertyName("ingestionConfiguration"u8);
-                writer.WriteObjectValue(ConversionConfiguration);
+                writer.WriteObjectValue<AssetConversionConfiguration>(ConversionConfiguration);
             }
             writer.WriteEndObject();
         }

@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Elastic
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<ResourceSku>(Sku, options);
             }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<MonitorProperties>(Properties, options);
             }
             if (Optional.IsDefined(Identity))
             {

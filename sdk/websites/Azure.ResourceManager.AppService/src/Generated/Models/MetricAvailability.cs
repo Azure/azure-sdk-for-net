@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Gets the time grain. </summary>
+        [WirePath("timeGrain")]
         public string TimeGrain { get; }
         /// <summary> Gets the blob duration. </summary>
+        [WirePath("blobDuration")]
         public TimeSpan? BlobDuration { get; }
     }
 }

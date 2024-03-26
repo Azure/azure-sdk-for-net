@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in StopSellNotifications)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StopSellOffersPlansNotificationsResult>(item, options);
                 }
                 writer.WriteEndArray();
             }

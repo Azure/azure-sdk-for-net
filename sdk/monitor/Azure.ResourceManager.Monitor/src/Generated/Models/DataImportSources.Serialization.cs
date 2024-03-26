@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(EventHub))
             {
                 writer.WritePropertyName("eventHub"u8);
-                writer.WriteObjectValue(EventHub);
+                writer.WriteObjectValue<DataImportSourcesEventHub>(EventHub, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

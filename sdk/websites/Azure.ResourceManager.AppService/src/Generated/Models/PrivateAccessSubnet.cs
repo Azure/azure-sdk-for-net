@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The name of the subnet. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The key (ID) of the subnet. </summary>
+        [WirePath("key")]
         public int? Key { get; set; }
     }
 }

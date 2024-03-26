@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataContainer>(item, options);
                 }
                 writer.WriteEndArray();
             }

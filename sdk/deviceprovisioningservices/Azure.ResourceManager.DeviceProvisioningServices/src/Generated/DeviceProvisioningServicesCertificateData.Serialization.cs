@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<DeviceProvisioningServicesCertificateProperties>(Properties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {

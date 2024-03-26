@@ -106,6 +106,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties")]
         public IReadOnlyDictionary<string, BinaryData> Properties { get; }
     }
 }

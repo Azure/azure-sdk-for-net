@@ -44,7 +44,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(SearchFacets))
             {
                 writer.WritePropertyName("@search.facets"u8);
-                writer.WriteObjectValue(SearchFacets);
+                writer.WriteObjectValue<SearchFacetResultValue>(SearchFacets, options);
             }
             if (Optional.IsCollectionDefined(Value))
             {
@@ -52,7 +52,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SearchResultValue>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -207,7 +207,7 @@ namespace Azure.Analytics.Purview.DataMap
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<QueryResult>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

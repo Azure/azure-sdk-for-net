@@ -68,14 +68,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Log level. </summary>
+        [WirePath("level")]
         public WebAppLogLevel? Level { get; set; }
         /// <summary> SAS url to a azure blob container with read/write/list/delete permissions. </summary>
+        [WirePath("sasUrl")]
         public Uri SasUri { get; set; }
         /// <summary>
         /// Retention in days.
         /// Remove blobs older than X days.
         /// 0 or lower means no retention.
         /// </summary>
+        [WirePath("retentionInDays")]
         public int? RetentionInDays { get; set; }
     }
 }

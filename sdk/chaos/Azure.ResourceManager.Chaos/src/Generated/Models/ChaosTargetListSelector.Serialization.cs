@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Chaos.Models
             writer.WriteStartArray();
             foreach (var item in Targets)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ChaosTargetReference>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("type"u8);
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Chaos.Models
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                writer.WriteObjectValue<ChaosTargetFilter>(Filter, options);
             }
             foreach (var item in AdditionalProperties)
             {

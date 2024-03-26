@@ -49,7 +49,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(Default))
             {
                 writer.WritePropertyName("default"u8);
-                writer.WriteObjectValue(Default);
+                writer.WriteObjectValue<AtlasTimeZone>(Default, options);
             }
             if (Optional.IsDefined(DisplayName))
             {
@@ -219,7 +219,7 @@ namespace Azure.Analytics.Purview.DataMap
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AtlasTimeZone>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Relay
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<RelaySku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Relay
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RelayPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }

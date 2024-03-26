@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (AppliedBy != null)
                 {
                     writer.WritePropertyName("appliedBy"u8);
-                    writer.WriteObjectValue(AppliedBy);
+                    writer.WriteObjectValue<KubernetesObjectReference>(AppliedBy, options);
                 }
                 else
                 {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteStartArray();
                     foreach (var item in StatusConditions)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<KubernetesObjectStatusCondition>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (HelmReleaseProperties != null)
                 {
                     writer.WritePropertyName("helmReleaseProperties"u8);
-                    writer.WriteObjectValue(HelmReleaseProperties);
+                    writer.WriteObjectValue<HelmReleaseProperties>(HelmReleaseProperties, options);
                 }
                 else
                 {

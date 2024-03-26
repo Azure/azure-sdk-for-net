@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EndpointResourceData>(item, options);
                 }
                 writer.WriteEndArray();
             }

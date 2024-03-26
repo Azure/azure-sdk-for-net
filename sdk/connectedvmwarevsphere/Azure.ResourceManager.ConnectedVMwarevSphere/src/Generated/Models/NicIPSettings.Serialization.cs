@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WriteStartArray();
                 foreach (var item in IPAddressInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NicIPAddressSettings>(item, options);
                 }
                 writer.WriteEndArray();
             }

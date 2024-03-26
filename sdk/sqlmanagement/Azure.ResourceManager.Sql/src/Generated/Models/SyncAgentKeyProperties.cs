@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Key of sync agent. </summary>
+        [WirePath("syncAgentKey")]
         public string SyncAgentKey { get; }
     }
 }

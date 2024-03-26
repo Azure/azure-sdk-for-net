@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in SystemServices)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<MachineLearningComputeSystemService>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (SslConfiguration != null)
                 {
                     writer.WritePropertyName("sslConfiguration"u8);
-                    writer.WriteObjectValue(SslConfiguration);
+                    writer.WriteObjectValue<MachineLearningSslConfiguration>(SslConfiguration, options);
                 }
                 else
                 {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (AksNetworkingConfiguration != null)
                 {
                     writer.WritePropertyName("aksNetworkingConfiguration"u8);
-                    writer.WriteObjectValue(AksNetworkingConfiguration);
+                    writer.WriteObjectValue<MachineLearningAksNetworkingConfiguration>(AksNetworkingConfiguration, options);
                 }
                 else
                 {

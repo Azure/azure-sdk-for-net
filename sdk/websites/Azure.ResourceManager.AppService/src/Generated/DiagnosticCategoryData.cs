@@ -71,8 +71,10 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description of the diagnostic category. </summary>
+        [WirePath("properties.description")]
         public string Description { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

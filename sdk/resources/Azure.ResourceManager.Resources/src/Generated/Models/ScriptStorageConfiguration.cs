@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The storage account name. </summary>
+        [WirePath("storageAccountName")]
         public string StorageAccountName { get; set; }
         /// <summary> The storage account access key. </summary>
+        [WirePath("storageAccountKey")]
         public string StorageAccountKey { get; set; }
     }
 }

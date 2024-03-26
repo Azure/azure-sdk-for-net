@@ -72,6 +72,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Specifies CORS rules for the Queue service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the Queue service. </summary>
         internal StorageCorsRules Cors { get; set; }
         /// <summary> The List of CORS rules. You can include up to five CorsRule elements in the request. </summary>
+        [WirePath("properties.cors.corsRules")]
         public IList<StorageCorsRule> CorsRules
         {
             get

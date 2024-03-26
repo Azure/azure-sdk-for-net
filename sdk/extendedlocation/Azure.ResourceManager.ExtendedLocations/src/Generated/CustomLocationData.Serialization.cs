@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ExtendedLocations
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication);
+                writer.WriteObjectValue<CustomLocationAuthentication>(Authentication, options);
             }
             if (Optional.IsCollectionDefined(ClusterExtensionIds))
             {

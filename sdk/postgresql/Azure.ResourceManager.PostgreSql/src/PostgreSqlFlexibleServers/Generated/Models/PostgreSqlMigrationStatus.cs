@@ -64,12 +64,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> State of migration. </summary>
+        [WirePath("state")]
         public PostgreSqlMigrationState? State { get; }
         /// <summary> Error message, if any, for the migration state. </summary>
+        [WirePath("error")]
         public string Error { get; }
         /// <summary> Current Migration sub state details. </summary>
         internal PostgreSqlMigrationSubStateDetails CurrentSubStateDetails { get; }
         /// <summary> Migration sub state. </summary>
+        [WirePath("currentSubStateDetails.currentSubState")]
         public PostgreSqlMigrationSubState? CurrentSubState
         {
             get => CurrentSubStateDetails?.CurrentSubState;

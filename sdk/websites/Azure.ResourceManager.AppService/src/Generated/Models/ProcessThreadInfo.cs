@@ -90,30 +90,43 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Site extension ID. </summary>
+        [WirePath("properties.identifier")]
         public int? Identifier { get; }
         /// <summary> HRef URI. </summary>
+        [WirePath("properties.href")]
         public string Href { get; set; }
         /// <summary> Process URI. </summary>
+        [WirePath("properties.process")]
         public string Process { get; set; }
         /// <summary> Start address. </summary>
+        [WirePath("properties.start_address")]
         public string StartAddress { get; set; }
         /// <summary> Current thread priority. </summary>
+        [WirePath("properties.current_priority")]
         public int? CurrentPriority { get; set; }
         /// <summary> Thread priority level. </summary>
+        [WirePath("properties.priority_level")]
         public string PriorityLevel { get; set; }
         /// <summary> Base priority. </summary>
+        [WirePath("properties.base_priority")]
         public int? BasePriority { get; set; }
         /// <summary> Start time. </summary>
+        [WirePath("properties.start_time")]
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> Total processor time. </summary>
+        [WirePath("properties.total_processor_time")]
         public string TotalProcessorTime { get; set; }
         /// <summary> User processor time. </summary>
+        [WirePath("properties.user_processor_time")]
         public string UserProcessorTime { get; set; }
         /// <summary> Thread state. </summary>
+        [WirePath("properties.state")]
         public string State { get; set; }
         /// <summary> Wait reason. </summary>
+        [WirePath("properties.wait_reason")]
         public string WaitReason { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

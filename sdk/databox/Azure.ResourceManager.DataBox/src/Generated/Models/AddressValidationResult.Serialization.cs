@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in AlternateAddresses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataBoxShippingAddress>(item, options);
                 }
                 writer.WriteEndArray();
             }

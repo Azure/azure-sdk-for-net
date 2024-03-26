@@ -94,12 +94,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                 if (Response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     Response.Validate();
-                    Response.Invalidate();
                 }
             }
             catch (Exception ex)
             {
-                Response = Request.Failed(ex, true).Result;
+                Response = Request.Failed(ex);
             }
 
             return Task.CompletedTask;
@@ -112,7 +111,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             //If the request was unsuccessful we return the IActionResult based on the error and do no further processing.
             if (Request.RequestStatus != RequestStatusType.Successful)
             {
-                return Request.Failed(null, true).Result;
+                return Request.Failed(null);
             }
             else if (result is string strResult)//A string was returned from the function execution
             {

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in InboundConnectedResources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConnectedResourceInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in OutboundConnectedResources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConnectedResourceInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

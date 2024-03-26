@@ -73,8 +73,10 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> List of triggered web job runs. </summary>
+        [WirePath("properties.runs")]
         public IList<TriggeredJobRun> Runs { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

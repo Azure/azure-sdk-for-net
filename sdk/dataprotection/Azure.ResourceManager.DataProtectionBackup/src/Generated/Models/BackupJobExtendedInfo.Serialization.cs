@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (options.Format != "W" && Optional.IsDefined(SourceRecoverPoint))
             {
                 writer.WritePropertyName("sourceRecoverPoint"u8);
-                writer.WriteObjectValue(SourceRecoverPoint);
+                writer.WriteObjectValue<RestoreJobRecoveryPointDetails>(SourceRecoverPoint, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SubTasks))
             {
@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in SubTasks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BackupJobSubTask>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(TargetRecoverPoint))
             {
                 writer.WritePropertyName("targetRecoverPoint"u8);
-                writer.WriteObjectValue(TargetRecoverPoint);
+                writer.WriteObjectValue<RestoreJobRecoveryPointDetails>(TargetRecoverPoint, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(WarningDetails))
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in WarningDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UserFacingWarningDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The destination managed database ID. </summary>
+        [WirePath("destinationManagedDatabaseId")]
         public ResourceIdentifier DestinationManagedDatabaseId { get; }
     }
 }

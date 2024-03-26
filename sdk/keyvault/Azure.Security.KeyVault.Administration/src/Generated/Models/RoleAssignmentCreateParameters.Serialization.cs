@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            writer.WriteObjectValue<KeyVaultRoleAssignmentPropertiesInternal>(Properties);
             writer.WriteEndObject();
         }
     }

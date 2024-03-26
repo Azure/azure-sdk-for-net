@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(RouteTable))
             {
                 writer.WritePropertyName("routeTable"u8);
-                writer.WriteObjectValue(RouteTable);
+                writer.WriteObjectValue<VirtualHubRouteTable>(RouteTable, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VirtualHubRouteTableV2S)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VirtualHubRouteTableV2Data>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(VirtualRouterAutoScaleConfiguration))
             {
                 writer.WritePropertyName("virtualRouterAutoScaleConfiguration"u8);
-                writer.WriteObjectValue(VirtualRouterAutoScaleConfiguration);
+                writer.WriteObjectValue<VirtualRouterAutoScaleConfiguration>(VirtualRouterAutoScaleConfiguration, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

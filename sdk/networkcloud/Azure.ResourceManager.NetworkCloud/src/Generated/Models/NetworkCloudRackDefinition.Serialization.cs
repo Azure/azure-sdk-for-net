@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in BareMetalMachineConfigurationData)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BareMetalMachineConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageApplianceConfigurationData)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StorageApplianceConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }

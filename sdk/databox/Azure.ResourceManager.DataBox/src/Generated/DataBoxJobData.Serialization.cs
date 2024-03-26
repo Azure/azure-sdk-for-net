@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataBox
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            writer.WriteObjectValue<DataBoxSku>(Sku, options);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataBox
             if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
-                writer.WriteObjectValue(Details);
+                writer.WriteObjectValue<DataBoxBasicJobDetails>(Details, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CancellationReason))
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataBox
             if (Optional.IsDefined(DeliveryInfo))
             {
                 writer.WritePropertyName("deliveryInfo"u8);
-                writer.WriteObjectValue(DeliveryInfo);
+                writer.WriteObjectValue<JobDeliveryInfo>(DeliveryInfo, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsCancellableWithoutFee))
             {

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PlanExtension>(item, options);
                 }
                 writer.WriteEndArray();
             }

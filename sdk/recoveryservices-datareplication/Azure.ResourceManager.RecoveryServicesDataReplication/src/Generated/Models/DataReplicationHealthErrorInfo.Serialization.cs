@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in ChildErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataReplicationInnerHealthErrorInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

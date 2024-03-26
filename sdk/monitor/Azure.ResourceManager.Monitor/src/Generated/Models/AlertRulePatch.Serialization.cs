@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition"u8);
-                writer.WriteObjectValue(Condition);
+                writer.WriteObjectValue<AlertRuleCondition>(Condition, options);
             }
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteObjectValue(Action);
+                writer.WriteObjectValue<AlertRuleAction>(Action, options);
             }
             if (Optional.IsCollectionDefined(Actions))
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AlertRuleAction>(item, options);
                 }
                 writer.WriteEndArray();
             }

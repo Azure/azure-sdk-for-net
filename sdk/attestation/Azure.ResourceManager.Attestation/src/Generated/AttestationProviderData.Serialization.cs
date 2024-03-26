@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Attestation
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AttestationPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }

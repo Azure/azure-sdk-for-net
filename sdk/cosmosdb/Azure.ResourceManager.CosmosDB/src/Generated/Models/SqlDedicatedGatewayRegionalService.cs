@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The regional endpoint for SqlDedicatedGateway. </summary>
+        [WirePath("sqlDedicatedGatewayEndpoint")]
         public string SqlDedicatedGatewayEndpoint { get; }
     }
 }

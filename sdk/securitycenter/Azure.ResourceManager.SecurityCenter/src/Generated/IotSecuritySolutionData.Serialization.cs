@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(UserDefinedResources))
             {
                 writer.WritePropertyName("userDefinedResources"u8);
-                writer.WriteObjectValue(UserDefinedResources);
+                writer.WriteObjectValue<UserDefinedResourcesProperties>(UserDefinedResources, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AutoDiscoveredResources))
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in RecommendationsConfiguration)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RecommendationConfigurationProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in AdditionalWorkspaces)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AdditionalWorkspacesProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }

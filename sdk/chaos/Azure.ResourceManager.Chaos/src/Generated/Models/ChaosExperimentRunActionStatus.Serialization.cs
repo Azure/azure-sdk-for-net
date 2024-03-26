@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WriteStartArray();
                 foreach (var item in Targets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ExperimentExecutionActionTargetDetailsProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }

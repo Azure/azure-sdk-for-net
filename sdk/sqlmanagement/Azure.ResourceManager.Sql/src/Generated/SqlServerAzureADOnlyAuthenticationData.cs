@@ -69,6 +69,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Azure Active Directory only Authentication enabled. </summary>
+        [WirePath("properties.azureADOnlyAuthentication")]
         public bool? IsAzureADOnlyAuthenticationEnabled { get; set; }
     }
 }

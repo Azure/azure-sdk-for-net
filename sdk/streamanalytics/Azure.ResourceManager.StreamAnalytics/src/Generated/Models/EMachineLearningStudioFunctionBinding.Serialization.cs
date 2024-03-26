@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
-                writer.WriteObjectValue(Inputs);
+                writer.WriteObjectValue<MachineLearningStudioInputs>(Inputs, options);
             }
             if (Optional.IsCollectionDefined(Outputs))
             {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineLearningStudioOutputColumn>(item, options);
                 }
                 writer.WriteEndArray();
             }

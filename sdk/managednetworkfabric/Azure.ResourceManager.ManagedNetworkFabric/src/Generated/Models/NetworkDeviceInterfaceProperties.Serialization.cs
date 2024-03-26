@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedConnectorTypes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SupportedConnectorProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -69,8 +69,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
         }
 
         /// <summary> The access key to regenerate. </summary>
+        [WirePath("keyType")]
         public ServiceBusAccessKeyType KeyType { get; }
         /// <summary> Optional, if the key value provided, is reset for KeyType value or autogenerate Key value set for keyType. </summary>
+        [WirePath("key")]
         public string Key { get; set; }
     }
 }

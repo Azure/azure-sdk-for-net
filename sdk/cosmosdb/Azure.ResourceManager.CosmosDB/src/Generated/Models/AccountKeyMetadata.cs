@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Generation time in UTC of the key in ISO-8601 format. If the value is missing from the object, it means that the last key regeneration was triggered before 2022-06-18. </summary>
+        [WirePath("generationTime")]
         public DateTimeOffset? GeneratedOn { get; }
     }
 }

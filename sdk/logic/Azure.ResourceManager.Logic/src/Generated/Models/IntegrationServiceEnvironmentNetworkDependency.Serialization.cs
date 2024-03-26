@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IntegrationServiceEnvironmentNetworkEndpoint>(item, options);
                 }
                 writer.WriteEndArray();
             }

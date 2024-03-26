@@ -84,20 +84,28 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Kind of encryption protector. This is metadata used for the Azure portal experience. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
         /// <summary> Resource location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> Subregion of the encryption protector. </summary>
+        [WirePath("properties.subregion")]
         public string Subregion { get; }
         /// <summary> The name of the server key. </summary>
+        [WirePath("properties.serverKeyName")]
         public string ServerKeyName { get; set; }
         /// <summary> The encryption protector type like 'ServiceManaged', 'AzureKeyVault'. </summary>
+        [WirePath("properties.serverKeyType")]
         public SqlServerKeyType? ServerKeyType { get; set; }
         /// <summary> The URI of the server key. </summary>
+        [WirePath("properties.uri")]
         public Uri Uri { get; }
         /// <summary> Thumbprint of the server key. </summary>
+        [WirePath("properties.thumbprint")]
         public string Thumbprint { get; }
         /// <summary> Key auto rotation opt-in flag. Either true or false. </summary>
+        [WirePath("properties.autoRotationEnabled")]
         public bool? IsAutoRotationEnabled { get; set; }
     }
 }

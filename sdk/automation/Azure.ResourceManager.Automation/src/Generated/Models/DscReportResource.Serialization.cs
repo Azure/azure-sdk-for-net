@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DscReportResourceNavigation>(item, options);
                 }
                 writer.WriteEndArray();
             }

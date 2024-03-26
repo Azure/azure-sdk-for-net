@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in HttpHeaders)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerHttpHeader>(item, options);
                 }
                 writer.WriteEndArray();
             }

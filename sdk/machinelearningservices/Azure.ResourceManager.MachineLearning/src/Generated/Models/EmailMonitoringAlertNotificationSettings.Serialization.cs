@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (EmailNotificationSetting != null)
                 {
                     writer.WritePropertyName("emailNotificationSetting"u8);
-                    writer.WriteObjectValue(EmailNotificationSetting);
+                    writer.WriteObjectValue<NotificationSetting>(EmailNotificationSetting, options);
                 }
                 else
                 {

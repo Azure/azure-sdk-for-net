@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 writer.WriteStartArray();
                 foreach (var item in ConnectionDetailsList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ControllerConnectionDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }

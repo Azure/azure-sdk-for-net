@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> The plan of the resource. </summary>
+        [WirePath("plan")]
         public ArmPlan Plan { get; set; }
         /// <summary>
         /// The resource properties.
@@ -93,20 +94,28 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties")]
         public BinaryData Properties { get; set; }
         /// <summary> The kind of the resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
         /// <summary> ID of the resource that manages this resource. </summary>
+        [WirePath("managedBy")]
         public string ManagedBy { get; set; }
         /// <summary> The SKU of the resource. </summary>
+        [WirePath("sku")]
         public ResourcesSku Sku { get; set; }
         /// <summary> The identity of the resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The created time of the resource. This is only present if requested via the $expand query parameter. </summary>
+        [WirePath("createdTime")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The changed time of the resource. This is only present if requested via the $expand query parameter. </summary>
+        [WirePath("changedTime")]
         public DateTimeOffset? ChangedOn { get; }
         /// <summary> The provisioning state of the resource. This is only present if requested via the $expand query parameter. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
     }
 }

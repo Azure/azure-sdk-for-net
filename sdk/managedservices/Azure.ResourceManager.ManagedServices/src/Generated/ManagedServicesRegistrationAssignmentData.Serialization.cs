@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ManagedServices
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<ManagedServicesRegistrationAssignmentProperties>(Properties, options);
             }
             if (options.Format != "W")
             {

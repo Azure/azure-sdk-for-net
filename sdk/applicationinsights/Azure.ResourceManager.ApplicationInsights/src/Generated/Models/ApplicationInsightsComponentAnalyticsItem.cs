@@ -76,24 +76,33 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Internally assigned unique id of the item definition. </summary>
+        [WirePath("Id")]
         public string Id { get; set; }
         /// <summary> The user-defined name of the item. </summary>
+        [WirePath("Name")]
         public string Name { get; set; }
         /// <summary> The content of this item. </summary>
+        [WirePath("Content")]
         public string Content { get; set; }
         /// <summary> This instance's version of the data model. This can change as new features are added. </summary>
+        [WirePath("Version")]
         public string Version { get; }
         /// <summary> Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component. </summary>
+        [WirePath("Scope")]
         public ItemScope? Scope { get; set; }
         /// <summary> Enum indicating the type of the Analytics item. </summary>
+        [WirePath("Type")]
         public ItemType? ItemType { get; set; }
         /// <summary> Date and time in UTC when this item was created. </summary>
+        [WirePath("TimeCreated")]
         public string TimeCreated { get; }
         /// <summary> Date and time in UTC of the last modification that was made to this item. </summary>
+        [WirePath("TimeModified")]
         public string TimeModified { get; }
         /// <summary> A set of properties that can be defined in the context of a specific item type. Each type may have its own properties. </summary>
         internal ApplicationInsightsComponentAnalyticsItemProperties Properties { get; set; }
         /// <summary> A function alias, used when the type of the item is Function. </summary>
+        [WirePath("Properties.functionAlias")]
         public string ApplicationInsightsComponentAnalyticsItemFunctionAlias
         {
             get => Properties is null ? default : Properties.FunctionAlias;

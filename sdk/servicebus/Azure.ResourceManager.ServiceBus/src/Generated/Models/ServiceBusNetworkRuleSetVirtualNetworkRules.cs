@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> Subnet properties. </summary>
         internal WritableSubResource Subnet { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("subnet.id")]
         public ResourceIdentifier SubnetId
         {
             get => Subnet is null ? default : Subnet.Id;
@@ -78,6 +79,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         }
 
         /// <summary> Value that indicates whether to ignore missing VNet Service Endpoint. </summary>
+        [WirePath("ignoreMissingVnetServiceEndpoint")]
         public bool? IgnoreMissingVnetServiceEndpoint { get; set; }
     }
 }

@@ -30,8 +30,10 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Key vault uri to access the encryption key. </summary>
+        [WirePath("keyIdentifier")]
         public string KeyIdentifier { get; set; }
         /// <summary> The client ID of the identity which will be used to access key vault. </summary>
+        [WirePath("identity")]
         public string Identity { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Documents)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MultiLanguageInput>(item);
                 }
                 writer.WriteEndArray();
             }

@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> The value of the secret. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
         /// <summary> The content type of the secret. </summary>
+        [WirePath("contentType")]
         public string ContentType { get; set; }
         /// <summary> The attributes of the secret. </summary>
+        [WirePath("attributes")]
         public SecretAttributes Attributes { get; set; }
     }
 }

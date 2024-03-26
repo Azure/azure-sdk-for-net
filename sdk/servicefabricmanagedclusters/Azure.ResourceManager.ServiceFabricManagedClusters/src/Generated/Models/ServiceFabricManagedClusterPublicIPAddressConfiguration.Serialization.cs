@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WriteStartArray();
                 foreach (var item in IPTags)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ServiceFabricManagedClusterIPTag>(item, options);
                 }
                 writer.WriteEndArray();
             }

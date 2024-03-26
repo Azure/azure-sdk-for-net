@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The URL of the API definition. </summary>
+        [WirePath("url")]
         public Uri Uri { get; set; }
     }
 }

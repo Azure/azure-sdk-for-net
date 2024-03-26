@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in InboundNatRulePortMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InboundNatRulePortMapping>(item, options);
                 }
                 writer.WriteEndArray();
             }

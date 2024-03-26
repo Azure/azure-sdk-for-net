@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue(Value);
+                writer.WriteObjectValue<SavingsPlanSummaryCount>(Value, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

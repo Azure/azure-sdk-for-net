@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (Optional.IsDefined(TableLevelSharingProperties))
             {
                 writer.WritePropertyName("tableLevelSharingProperties"u8);
-                writer.WriteObjectValue(TableLevelSharingProperties);
+                writer.WriteObjectValue<KustoDatabaseTableLevelSharingProperties>(TableLevelSharingProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

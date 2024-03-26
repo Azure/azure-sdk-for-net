@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The name of KeyVault key. </summary>
+        [WirePath("keyname")]
         public string KeyName { get; set; }
         /// <summary> The version of KeyVault key. </summary>
+        [WirePath("keyversion")]
         public string KeyVersion { get; set; }
         /// <summary> The Uri of KeyVault. </summary>
+        [WirePath("keyvaulturi")]
         public Uri KeyVaultUri { get; set; }
         /// <summary> The object identifier of the current versioned Key Vault Key in use. </summary>
+        [WirePath("currentVersionedKeyIdentifier")]
         public string CurrentVersionedKeyIdentifier { get; }
         /// <summary> Timestamp of last rotation of the Key Vault Key. </summary>
+        [WirePath("lastKeyRotationTimestamp")]
         public DateTimeOffset? LastKeyRotationTimestamp { get; }
         /// <summary> This is a read only property that represents the expiration time of the current version of the customer managed key used for encryption. </summary>
+        [WirePath("currentVersionedKeyExpirationTimestamp")]
         public DateTimeOffset? CurrentVersionedKeyExpirationTimestamp { get; }
     }
 }

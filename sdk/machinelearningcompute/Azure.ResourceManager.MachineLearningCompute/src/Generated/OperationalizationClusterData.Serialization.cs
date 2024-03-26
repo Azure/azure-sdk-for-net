@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
                 writer.WriteStartArray();
                 foreach (var item in ProvisioningErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ErrorResponseWrapper>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -101,27 +101,27 @@ namespace Azure.ResourceManager.MachineLearningCompute
             if (Optional.IsDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
-                writer.WriteObjectValue(StorageAccount);
+                writer.WriteObjectValue<StorageAccountProperties>(StorageAccount, options);
             }
             if (Optional.IsDefined(ContainerRegistry))
             {
                 writer.WritePropertyName("containerRegistry"u8);
-                writer.WriteObjectValue(ContainerRegistry);
+                writer.WriteObjectValue<ContainerRegistryProperties>(ContainerRegistry, options);
             }
             if (Optional.IsDefined(ContainerService))
             {
                 writer.WritePropertyName("containerService"u8);
-                writer.WriteObjectValue(ContainerService);
+                writer.WriteObjectValue<AcsClusterProperties>(ContainerService, options);
             }
             if (Optional.IsDefined(AppInsights))
             {
                 writer.WritePropertyName("appInsights"u8);
-                writer.WriteObjectValue(AppInsights);
+                writer.WriteObjectValue<AppInsightsProperties>(AppInsights, options);
             }
             if (Optional.IsDefined(GlobalServiceConfiguration))
             {
                 writer.WritePropertyName("globalServiceConfiguration"u8);
-                writer.WriteObjectValue(GlobalServiceConfiguration);
+                writer.WriteObjectValue<GlobalServiceConfiguration>(GlobalServiceConfiguration, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

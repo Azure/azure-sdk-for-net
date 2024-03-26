@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WriteStartArray();
                 foreach (var item in BaseResourceStatus)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceAzStatus>(item, options);
                 }
                 writer.WriteEndArray();
             }

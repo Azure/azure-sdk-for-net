@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 writer.WriteStartArray();
                 foreach (var item in EndpointDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LoadTestingEndpointDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }

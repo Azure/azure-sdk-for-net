@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Application stack minor version (display only). </summary>
+        [WirePath("displayVersion")]
         public string DisplayVersion { get; set; }
         /// <summary> Application stack minor version (runtime only). </summary>
+        [WirePath("runtimeVersion")]
         public string RuntimeVersion { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this is the default minor version; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isDefault")]
         public bool? IsDefault { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this supports Remote Debugging, otherwise &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isRemoteDebuggingEnabled")]
         public bool? IsRemoteDebuggingEnabled { get; set; }
     }
 }

@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(SslPolicy))
             {
                 writer.WritePropertyName("sslPolicy"u8);
-                writer.WriteObjectValue(SslPolicy);
+                writer.WriteObjectValue<ApplicationGatewaySslPolicy>(SslPolicy, options);
             }
             if (Optional.IsDefined(ClientAuthConfiguration))
             {
                 writer.WritePropertyName("clientAuthConfiguration"u8);
-                writer.WriteObjectValue(ClientAuthConfiguration);
+                writer.WriteObjectValue<ApplicationGatewayClientAuthConfiguration>(ClientAuthConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

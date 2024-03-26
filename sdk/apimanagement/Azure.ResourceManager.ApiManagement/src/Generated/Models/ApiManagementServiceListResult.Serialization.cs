@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ApiManagementServiceData>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))

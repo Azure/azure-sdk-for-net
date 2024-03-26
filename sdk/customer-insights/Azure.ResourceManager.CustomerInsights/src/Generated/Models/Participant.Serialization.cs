@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStartArray();
             foreach (var item in ParticipantPropertyReferences)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ParticipantPropertyReference>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("participantName"u8);

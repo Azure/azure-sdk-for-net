@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AlertsManagement
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<AlertProcessingRuleProperties>(Properties, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {

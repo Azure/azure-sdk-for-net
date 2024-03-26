@@ -52,14 +52,14 @@ namespace Azure.Communication.JobRouter
                 writer.WriteStartArray();
                 foreach (var item in QueueSelectorAttachments)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<QueueSelectorAttachment>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PrioritizationRule))
             {
                 writer.WritePropertyName("prioritizationRule"u8);
-                writer.WriteObjectValue(PrioritizationRule);
+                writer.WriteObjectValue<RouterRule>(PrioritizationRule, options);
             }
             if (Optional.IsCollectionDefined(WorkerSelectorAttachments))
             {
@@ -67,7 +67,7 @@ namespace Azure.Communication.JobRouter
                 writer.WriteStartArray();
                 foreach (var item in WorkerSelectorAttachments)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WorkerSelectorAttachment>(item, options);
                 }
                 writer.WriteEndArray();
             }

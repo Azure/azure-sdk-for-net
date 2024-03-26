@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> List of file services returned. </summary>
+        [WirePath("value")]
         public IReadOnlyList<FileServiceData> Value { get; }
     }
 }

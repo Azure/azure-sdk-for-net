@@ -23,7 +23,7 @@ namespace Azure.Communication.CallingServer
             if (Optional.IsDefined(Participant))
             {
                 writer.WritePropertyName("participant"u8);
-                writer.WriteObjectValue(Participant);
+                writer.WriteObjectValue<CommunicationIdentifierModel>(Participant);
             }
             writer.WriteEndObject();
         }

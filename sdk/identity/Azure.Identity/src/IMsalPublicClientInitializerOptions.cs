@@ -11,6 +11,6 @@ namespace Azure.Identity
     {
         Action<PublicClientApplicationBuilder> BeforeBuildClient { get; }
 
-        bool UseOperatingSystemAccount { get; set; }
+        bool UseDefaultBrokerAccount { get; set; }
     }
 }

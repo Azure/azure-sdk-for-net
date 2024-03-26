@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Source of the Data. </summary>
+        [WirePath("dataSource")]
         public DetectorDataSource DataSource { get; set; }
     }
 }

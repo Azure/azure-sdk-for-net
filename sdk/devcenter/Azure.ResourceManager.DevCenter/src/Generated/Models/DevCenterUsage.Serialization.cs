@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                writer.WriteObjectValue<DevCenterUsageName>(Name, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

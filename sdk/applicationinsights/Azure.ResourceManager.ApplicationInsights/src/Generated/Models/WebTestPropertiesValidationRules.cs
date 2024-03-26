@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> The collection of content validation properties. </summary>
+        [WirePath("ContentValidation")]
         public WebTestPropertiesValidationRulesContentValidation ContentValidation { get; set; }
         /// <summary> Checks to see if the SSL cert is still valid. </summary>
+        [WirePath("SSLCheck")]
         public bool? CheckSsl { get; set; }
         /// <summary> A number of days to check still remain before the the existing SSL cert expires.  Value must be positive and the SSLCheck must be set to true. </summary>
+        [WirePath("SSLCertRemainingLifetimeCheck")]
         public int? SSLCertRemainingLifetimeCheck { get; set; }
         /// <summary> Validate that the WebTest returns the http status code provided. </summary>
+        [WirePath("ExpectedHttpStatusCode")]
         public int? ExpectedHttpStatusCode { get; set; }
         /// <summary> When set, validation will ignore the status code. </summary>
+        [WirePath("IgnoreHttpStatusCode")]
         public bool? IgnoreHttpStatusCode { get; set; }
     }
 }

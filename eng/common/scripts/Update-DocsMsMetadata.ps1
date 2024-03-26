@@ -111,18 +111,13 @@ function GetPackageInfoJson ($packageInfoJsonLocation) {
 
   $packageInfoJson = Get-Content $packageInfoJsonLocation -Raw
   $packageInfo = ConvertFrom-Json $packageInfoJson
+  if ($GetDocsMsDevLanguageSpecificPackageInfoFn -and (Test-Path "Function:$GetDocsMsDevLanguageSpecificPackageInfoFn")) {
+    $packageInfo = &$GetDocsMsDevLanguageSpecificPackageInfoFn $packageInfo $PackageSourceOverride
+  }
+  # Default: use the dev version from package info as the version for
+  # downstream processes
   if ($packageInfo.DevVersion) {
-    # If the package is of a dev version there may be language-specific needs to
-    # specify the appropriate version. For example, in the case of JS, the dev
-    # version is always 'dev' when interacting with NPM.
-    if ($GetDocsMsDevLanguageSpecificPackageInfoFn -and (Test-Path "Function:$GetDocsMsDevLanguageSpecificPackageInfoFn")) {
-      $packageInfo = &$GetDocsMsDevLanguageSpecificPackageInfoFn $packageInfo
-    }
-    else {
-      # Default: use the dev version from package info as the version for
-      # downstream processes
-      $packageInfo.Version = $packageInfo.DevVersion
-    }
+    $packageInfo.Version = $packageInfo.DevVersion
   }
   return $packageInfo
 }
@@ -202,7 +197,7 @@ foreach ($packageInfoLocation in $PackageInfoJsonLocations) {
     Write-Host "Validating the packages..."
 
     $packageInfo =  GetPackageInfoJson $packageInfoLocation
-    # This calls a function named "Validate-${Language}-DocMsPackages" 
+    # This calls a function named "Validate-${Language}-DocMsPackages"
     # declared in common.ps1, implemented in Language-Settings.ps1
     $isValid = &$ValidateDocsMsPackagesFn `
       -PackageInfos $packageInfo `
@@ -214,7 +209,7 @@ foreach ($packageInfoLocation in $PackageInfoJsonLocations) {
       Write-Host "Package validation failed for package: $packageInfoLocation"
       $allSucceeded = $false
 
-      # Skip the later call to UpdateDocsMsMetadataForPackage because this 
+      # Skip the later call to UpdateDocsMsMetadataForPackage because this
       # package has not passed validation
       continue
     }
@@ -229,6 +224,6 @@ foreach ($packageInfoLocation in $PackageInfoJsonLocations) {
 # any packages failed validation
 if ($allSucceeded) {
   Write-Host "##vso[task.setvariable variable=DocsMsPackagesAllValid;]$true"
-} else { 
+} else {
   Write-Host "##vso[task.setvariable variable=DocsMsPackagesAllValid;]$false"
 }

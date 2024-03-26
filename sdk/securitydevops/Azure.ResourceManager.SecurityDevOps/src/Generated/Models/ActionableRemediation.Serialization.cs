@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             if (Optional.IsDefined(BranchConfiguration))
             {
                 writer.WritePropertyName("branchConfiguration"u8);
-                writer.WriteObjectValue(BranchConfiguration);
+                writer.WriteObjectValue<TargetBranchConfiguration>(BranchConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

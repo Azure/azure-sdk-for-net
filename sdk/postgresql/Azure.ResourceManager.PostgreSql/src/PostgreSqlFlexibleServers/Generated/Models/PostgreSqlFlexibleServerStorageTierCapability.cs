@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Name to represent Storage tier capability. </summary>
+        [WirePath("name")]
         public string Name { get; }
     }
 }

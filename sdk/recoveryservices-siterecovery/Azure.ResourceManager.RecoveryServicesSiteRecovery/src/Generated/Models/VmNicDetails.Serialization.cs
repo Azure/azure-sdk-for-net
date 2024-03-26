@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in IPConfigs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HyperVIPConfigDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }

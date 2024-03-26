@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in TableList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HDInsightAzureMonitorTableConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }

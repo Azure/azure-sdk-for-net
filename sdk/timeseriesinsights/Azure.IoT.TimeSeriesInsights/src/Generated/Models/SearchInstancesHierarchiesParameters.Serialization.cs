@@ -18,12 +18,12 @@ namespace Azure.IoT.TimeSeriesInsights
             if (Optional.IsDefined(Expand))
             {
                 writer.WritePropertyName("expand"u8);
-                writer.WriteObjectValue(Expand);
+                writer.WriteObjectValue<HierarchiesExpandParameter>(Expand);
             }
             if (Optional.IsDefined(Sort))
             {
                 writer.WritePropertyName("sort"u8);
-                writer.WriteObjectValue(Sort);
+                writer.WriteObjectValue<HierarchiesSortParameter>(Sort);
             }
             if (Optional.IsDefined(PageSize))
             {

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EasmWorkspaceData>(item, options);
                 }
                 writer.WriteEndArray();
             }

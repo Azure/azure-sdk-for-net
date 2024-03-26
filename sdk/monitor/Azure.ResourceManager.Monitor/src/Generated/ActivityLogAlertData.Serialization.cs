@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.Monitor
             if (Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition"u8);
-                writer.WriteObjectValue(Condition);
+                writer.WriteObjectValue<AlertRuleAllOfCondition>(Condition, options);
             }
             if (Optional.IsDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
-                writer.WriteObjectValue(Actions);
+                writer.WriteObjectValue<ActionList>(Actions, options);
             }
             if (Optional.IsDefined(IsEnabled))
             {

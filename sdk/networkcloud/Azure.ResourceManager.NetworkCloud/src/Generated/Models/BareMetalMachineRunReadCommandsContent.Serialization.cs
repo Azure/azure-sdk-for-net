@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStartArray();
             foreach (var item in Commands)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<BareMetalMachineCommandSpecification>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("limitTimeSeconds"u8);

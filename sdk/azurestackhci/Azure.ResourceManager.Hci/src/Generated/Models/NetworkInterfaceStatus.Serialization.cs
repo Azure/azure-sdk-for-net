@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(ProvisioningStatus))
             {
                 writer.WritePropertyName("provisioningStatus"u8);
-                writer.WriteObjectValue(ProvisioningStatus);
+                writer.WriteObjectValue<NetworkInterfaceStatusProvisioningStatus>(ProvisioningStatus, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

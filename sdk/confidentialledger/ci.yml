@@ -33,3 +33,5 @@ extends:
     Artifacts:
     - name: Azure.Security.ConfidentialLedger
       safeName: AzureConfidentialLedger
+    - name: Azure.Security.CodeTransparency
+      safeName: AzureCodeTransparency

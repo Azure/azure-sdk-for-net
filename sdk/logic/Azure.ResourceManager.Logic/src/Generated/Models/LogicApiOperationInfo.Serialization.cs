@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<LogicApiOperationProperties>(Properties, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {

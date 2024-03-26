@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(SchedulePolicy))
             {
                 writer.WritePropertyName("schedulePolicy"u8);
-                writer.WriteObjectValue(SchedulePolicy);
+                writer.WriteObjectValue<BackupSchedulePolicy>(SchedulePolicy, options);
             }
             if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
-                writer.WriteObjectValue(RetentionPolicy);
+                writer.WriteObjectValue<BackupRetentionPolicy>(RetentionPolicy, options);
             }
             if (Optional.IsCollectionDefined(TieringPolicy))
             {
@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 foreach (var item in TieringPolicy)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<BackupTieringPolicy>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(SnapshotBackupAdditionalDetails))
             {
                 writer.WritePropertyName("snapshotBackupAdditionalDetails"u8);
-                writer.WriteObjectValue(SnapshotBackupAdditionalDetails);
+                writer.WriteObjectValue<SnapshotBackupAdditionalDetails>(SnapshotBackupAdditionalDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDirectoryPaths)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SqlDataDirectory>(item, options);
                 }
                 writer.WriteEndArray();
             }

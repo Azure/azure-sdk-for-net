@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                writer.WriteObjectValue<MachineExtensionInstanceView>(InstanceView, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

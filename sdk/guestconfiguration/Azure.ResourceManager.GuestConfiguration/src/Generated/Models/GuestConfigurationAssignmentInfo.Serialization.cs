@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration);
+                writer.WriteObjectValue<GuestConfigurationInfo>(Configuration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

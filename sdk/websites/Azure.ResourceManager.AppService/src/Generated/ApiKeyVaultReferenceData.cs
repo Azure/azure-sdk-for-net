@@ -88,24 +88,34 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Gets or sets the reference. </summary>
+        [WirePath("properties.reference")]
         public string Reference { get; set; }
         /// <summary> Gets or sets the status. </summary>
+        [WirePath("properties.status")]
         public ResolveStatus? Status { get; set; }
         /// <summary> Gets or sets the vault name. </summary>
+        [WirePath("properties.vaultName")]
         public string VaultName { get; set; }
         /// <summary> Gets or sets the secret name. </summary>
+        [WirePath("properties.secretName")]
         public string SecretName { get; set; }
         /// <summary> Gets or sets the secret version. </summary>
+        [WirePath("properties.secretVersion")]
         public string SecretVersion { get; set; }
         /// <summary> Managed service identity. </summary>
+        [WirePath("properties.identityType")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Gets or sets the details. </summary>
+        [WirePath("properties.details")]
         public string Details { get; set; }
         /// <summary> Gets or sets the source. </summary>
+        [WirePath("properties.source")]
         public ConfigReferenceSource? Source { get; set; }
         /// <summary> Gets or sets the active version. </summary>
+        [WirePath("properties.activeVersion")]
         public string ActiveVersion { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

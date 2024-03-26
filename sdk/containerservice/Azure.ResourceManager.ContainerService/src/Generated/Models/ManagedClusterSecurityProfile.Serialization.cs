@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(Defender))
             {
                 writer.WritePropertyName("defender"u8);
-                writer.WriteObjectValue(Defender);
+                writer.WriteObjectValue<ManagedClusterSecurityProfileDefender>(Defender, options);
             }
             if (Optional.IsDefined(AzureKeyVaultKms))
             {
                 writer.WritePropertyName("azureKeyVaultKms"u8);
-                writer.WriteObjectValue(AzureKeyVaultKms);
+                writer.WriteObjectValue<ManagedClusterSecurityProfileKeyVaultKms>(AzureKeyVaultKms, options);
             }
             if (Optional.IsDefined(WorkloadIdentity))
             {
                 writer.WritePropertyName("workloadIdentity"u8);
-                writer.WriteObjectValue(WorkloadIdentity);
+                writer.WriteObjectValue<ManagedClusterSecurityProfileWorkloadIdentity>(WorkloadIdentity, options);
             }
             if (Optional.IsDefined(ImageCleaner))
             {
                 writer.WritePropertyName("imageCleaner"u8);
-                writer.WriteObjectValue(ImageCleaner);
+                writer.WriteObjectValue<ManagedClusterSecurityProfileImageCleaner>(ImageCleaner, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.DataFactory
             if (Optional.IsDefined(PurviewConfiguration))
             {
                 writer.WritePropertyName("purviewConfiguration"u8);
-                writer.WriteObjectValue(PurviewConfiguration);
+                writer.WriteObjectValue<DataFactoryPurviewConfiguration>(PurviewConfiguration, options);
             }
             if (Optional.IsDefined(RepoConfiguration))
             {
                 writer.WritePropertyName("repoConfiguration"u8);
-                writer.WriteObjectValue(RepoConfiguration);
+                writer.WriteObjectValue<FactoryRepoConfiguration>(RepoConfiguration, options);
             }
             if (Optional.IsCollectionDefined(GlobalParameters))
             {
@@ -106,14 +106,14 @@ namespace Azure.ResourceManager.DataFactory
                 foreach (var item in GlobalParameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<DataFactoryGlobalParameterProperties>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<DataFactoryEncryptionConfiguration>(Encryption, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {

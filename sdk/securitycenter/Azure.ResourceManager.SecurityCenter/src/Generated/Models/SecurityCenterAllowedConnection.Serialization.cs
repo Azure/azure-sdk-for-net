@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in ConnectableResources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConnectableResourceInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

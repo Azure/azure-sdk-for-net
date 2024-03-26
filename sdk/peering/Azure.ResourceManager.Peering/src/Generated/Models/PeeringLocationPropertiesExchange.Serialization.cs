@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WriteStartArray();
                 foreach (var item in PeeringFacilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ExchangePeeringFacility>(item, options);
                 }
                 writer.WriteEndArray();
             }

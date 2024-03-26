@@ -69,8 +69,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The name of the database available for restore. </summary>
+        [WirePath("databaseName")]
         public string DatabaseName { get; }
         /// <summary> The names of the collections available for restore. </summary>
+        [WirePath("collectionNames")]
         public IReadOnlyList<string> CollectionNames { get; }
     }
 }

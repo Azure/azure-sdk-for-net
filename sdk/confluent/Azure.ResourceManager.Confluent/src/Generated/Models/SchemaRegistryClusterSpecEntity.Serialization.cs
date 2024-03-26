@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
-                writer.WriteObjectValue(Region);
+                writer.WriteObjectValue<SchemaRegistryClusterEnvironmentRegionEntity>(Region, options);
             }
             if (Optional.IsDefined(Environment))
             {
                 writer.WritePropertyName("environment"u8);
-                writer.WriteObjectValue(Environment);
+                writer.WriteObjectValue<SchemaRegistryClusterEnvironmentRegionEntity>(Environment, options);
             }
             if (Optional.IsDefined(Cloud))
             {

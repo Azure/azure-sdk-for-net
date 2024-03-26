@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Linked storage account resource ID. </summary>
+        [WirePath("properties.linkedStorageAccount")]
         public string LinkedStorageAccount { get; set; }
     }
 }

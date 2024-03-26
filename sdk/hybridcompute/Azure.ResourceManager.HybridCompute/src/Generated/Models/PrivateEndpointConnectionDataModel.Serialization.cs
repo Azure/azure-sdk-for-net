@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<HybridComputePrivateEndpointConnectionProperties>(Properties, options);
             }
             if (options.Format != "W")
             {

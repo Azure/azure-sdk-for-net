@@ -73,13 +73,13 @@ namespace Azure.ResourceManager.MobileNetwork
             if (Optional.IsDefined(ServiceQosPolicy))
             {
                 writer.WritePropertyName("serviceQosPolicy"u8);
-                writer.WriteObjectValue(ServiceQosPolicy);
+                writer.WriteObjectValue<MobileNetworkQosPolicy>(ServiceQosPolicy, options);
             }
             writer.WritePropertyName("pccRules"u8);
             writer.WriteStartArray();
             foreach (var item in PccRules)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<PccRuleConfiguration>(item, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

@@ -64,7 +64,7 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication);
+                writer.WriteObjectValue<AuthenticationMechanism>(Authentication);
             }
             writer.WriteEndObject();
         }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StorageSyncPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }

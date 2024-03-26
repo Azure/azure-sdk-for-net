@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedSkus)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SapSupportedSku>(item, options);
                 }
                 writer.WriteEndArray();
             }

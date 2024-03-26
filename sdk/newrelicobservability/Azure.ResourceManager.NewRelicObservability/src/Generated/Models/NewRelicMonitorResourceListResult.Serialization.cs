@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<NewRelicMonitorResourceData>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))

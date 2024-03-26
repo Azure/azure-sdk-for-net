@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Timestamp of log entry. </summary>
+        [WirePath("time")]
         public DateTimeOffset? Time { get; }
         /// <summary> Log entry type. </summary>
+        [WirePath("type")]
         public WebAppMSDeployLogEntryType? EntryType { get; }
         /// <summary> Log entry message. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

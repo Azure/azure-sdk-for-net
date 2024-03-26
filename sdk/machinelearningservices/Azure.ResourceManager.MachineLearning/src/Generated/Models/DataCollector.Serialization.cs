@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             foreach (var item in Collections)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<DataCollectionConfiguration>(item.Value, options);
             }
             writer.WriteEndObject();
             if (Optional.IsDefined(RequestLogging))
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (RequestLogging != null)
                 {
                     writer.WritePropertyName("requestLogging"u8);
-                    writer.WriteObjectValue(RequestLogging);
+                    writer.WriteObjectValue<RequestLogging>(RequestLogging, options);
                 }
                 else
                 {

@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<StreamingJobFunctionInput>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("output"u8);
-            writer.WriteObjectValue(Output);
+            writer.WriteObjectValue<StreamingJobFunctionOutput>(Output, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

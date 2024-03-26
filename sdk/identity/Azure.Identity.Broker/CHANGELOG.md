@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- The `UseOperatingSystemAccount` property on `InteractiveBrowserCredentialBrokerOptions` and `SharedTokenCacheCredentialBrokerOptions` has been renamed to `UseDefaultBrokerAccount`
+
 ## 1.1.0-beta.1 (2024-02-06)
 
 ### Features Added

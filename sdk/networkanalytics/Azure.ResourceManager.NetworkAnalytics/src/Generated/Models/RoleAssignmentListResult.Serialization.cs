@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in RoleAssignmentResponse)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<RoleAssignmentDetail>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

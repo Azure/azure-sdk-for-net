@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             if (Optional.IsDefined(ManagedIdentity))
             {
                 writer.WritePropertyName("managedIdentity"u8);
-                writer.WriteObjectValue(ManagedIdentity);
+                writer.WriteObjectValue<ManagedIdentitySettings>(ManagedIdentity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

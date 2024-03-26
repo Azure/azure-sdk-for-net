@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
-                writer.WriteObjectValue(Routes);
+                writer.WriteObjectValue<LoginRoutes>(Routes, options);
             }
             if (Optional.IsDefined(PreserveUrlFragmentsForLogins))
             {
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(CookieExpiration))
             {
                 writer.WritePropertyName("cookieExpiration"u8);
-                writer.WriteObjectValue(CookieExpiration);
+                writer.WriteObjectValue<ContainerAppCookieExpiration>(CookieExpiration, options);
             }
             if (Optional.IsDefined(Nonce))
             {
                 writer.WritePropertyName("nonce"u8);
-                writer.WriteObjectValue(Nonce);
+                writer.WriteObjectValue<ContainerAppLoginNonce>(Nonce, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

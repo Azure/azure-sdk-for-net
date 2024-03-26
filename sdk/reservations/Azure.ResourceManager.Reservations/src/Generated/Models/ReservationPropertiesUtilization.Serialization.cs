@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in Aggregates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReservationUtilizationAggregates>(item, options);
                 }
                 writer.WriteEndArray();
             }

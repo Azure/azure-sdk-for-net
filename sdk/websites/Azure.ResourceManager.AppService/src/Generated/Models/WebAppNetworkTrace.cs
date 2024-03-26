@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Local file path for the captured network trace file. </summary>
+        [WirePath("path")]
         public string Path { get; }
         /// <summary> Current status of the network trace operation, same as Operation.Status (InProgress/Succeeded/Failed). </summary>
+        [WirePath("status")]
         public string Status { get; }
         /// <summary> Detailed message of a network trace operation, e.g. error message in case of failure. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Analysis.Models
                 writer.WriteStartArray();
                 foreach (var item in FirewallRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AnalysisIPv4FirewallRule>(item, options);
                 }
                 writer.WriteEndArray();
             }

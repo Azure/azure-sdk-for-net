@@ -83,17 +83,22 @@ namespace Azure.ResourceManager.AppService.Models
         /// ARM resource ID of the deleted app. Example:
         /// /subscriptions/{subId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
         /// </summary>
+        [WirePath("properties.deletedSiteId")]
         public ResourceIdentifier DeletedSiteId { get; set; }
         /// <summary> If true, deleted site configuration, in addition to content, will be restored. </summary>
+        [WirePath("properties.recoverConfiguration")]
         public bool? RecoverConfiguration { get; set; }
         /// <summary>
         /// Point in time to restore the deleted app from, formatted as a DateTime string.
         /// If unspecified, default value is the time that the app was deleted.
         /// </summary>
+        [WirePath("properties.snapshotTime")]
         public string SnapshotTime { get; set; }
         /// <summary> If true, the snapshot is retrieved from DRSecondary endpoint. </summary>
+        [WirePath("properties.useDRSecondary")]
         public bool? UseDRSecondary { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

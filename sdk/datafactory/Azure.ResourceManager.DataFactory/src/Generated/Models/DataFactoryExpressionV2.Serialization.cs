@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Operands)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataFactoryExpressionV2>(item, options);
                 }
                 writer.WriteEndArray();
             }

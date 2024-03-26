@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 writer.WriteStartArray();
                 foreach (var item in FilteringTags)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FilteringTag>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -31,7 +31,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Info))
             {
                 writer.WritePropertyName("info"u8);
-                writer.WriteObjectValue(Info);
+                writer.WriteObjectValue<PatientDetails>(Info, options);
             }
             if (Optional.IsCollectionDefined(Encounters))
             {
@@ -39,7 +39,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Encounters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<Encounter>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -49,7 +49,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in PatientDocuments)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PatientDocument>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -193,7 +193,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<PatientRecord>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

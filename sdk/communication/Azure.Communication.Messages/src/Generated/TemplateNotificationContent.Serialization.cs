@@ -27,7 +27,7 @@ namespace Azure.Communication.Messages
 
             writer.WriteStartObject();
             writer.WritePropertyName("template"u8);
-            writer.WriteObjectValue(Template);
+            writer.WriteObjectValue<MessageTemplate>(Template, options);
             writer.WritePropertyName("channelRegistrationId"u8);
             writer.WriteStringValue(ChannelRegistrationId);
             writer.WritePropertyName("to"u8);
@@ -162,7 +162,7 @@ namespace Azure.Communication.Messages
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<TemplateNotificationContent>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

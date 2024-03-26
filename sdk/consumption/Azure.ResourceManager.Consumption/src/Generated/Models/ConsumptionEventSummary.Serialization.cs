@@ -67,27 +67,27 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(NewCredit))
             {
                 writer.WritePropertyName("newCredit"u8);
-                writer.WriteObjectValue(NewCredit);
+                writer.WriteObjectValue<ConsumptionAmount>(NewCredit, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Adjustments))
             {
                 writer.WritePropertyName("adjustments"u8);
-                writer.WriteObjectValue(Adjustments);
+                writer.WriteObjectValue<ConsumptionAmount>(Adjustments, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreditExpired))
             {
                 writer.WritePropertyName("creditExpired"u8);
-                writer.WriteObjectValue(CreditExpired);
+                writer.WriteObjectValue<ConsumptionAmount>(CreditExpired, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Charges))
             {
                 writer.WritePropertyName("charges"u8);
-                writer.WriteObjectValue(Charges);
+                writer.WriteObjectValue<ConsumptionAmount>(Charges, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ClosedBalance))
             {
                 writer.WritePropertyName("closedBalance"u8);
-                writer.WriteObjectValue(ClosedBalance);
+                writer.WriteObjectValue<ConsumptionAmount>(ClosedBalance, options);
             }
             if (Optional.IsDefined(EventType))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(CanceledCredit))
             {
                 writer.WritePropertyName("canceledCredit"u8);
-                writer.WriteObjectValue(CanceledCredit);
+                writer.WriteObjectValue<ConsumptionAmount>(CanceledCredit, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreditCurrency))
             {
@@ -137,32 +137,32 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(Reseller))
             {
                 writer.WritePropertyName("reseller"u8);
-                writer.WriteObjectValue(Reseller);
+                writer.WriteObjectValue<ConsumptionReseller>(Reseller, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreditExpiredInBillingCurrency))
             {
                 writer.WritePropertyName("creditExpiredInBillingCurrency"u8);
-                writer.WriteObjectValue(CreditExpiredInBillingCurrency);
+                writer.WriteObjectValue<ConsumptionAmountWithExchangeRate>(CreditExpiredInBillingCurrency, options);
             }
             if (options.Format != "W" && Optional.IsDefined(NewCreditInBillingCurrency))
             {
                 writer.WritePropertyName("newCreditInBillingCurrency"u8);
-                writer.WriteObjectValue(NewCreditInBillingCurrency);
+                writer.WriteObjectValue<ConsumptionAmountWithExchangeRate>(NewCreditInBillingCurrency, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AdjustmentsInBillingCurrency))
             {
                 writer.WritePropertyName("adjustmentsInBillingCurrency"u8);
-                writer.WriteObjectValue(AdjustmentsInBillingCurrency);
+                writer.WriteObjectValue<ConsumptionAmountWithExchangeRate>(AdjustmentsInBillingCurrency, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ChargesInBillingCurrency))
             {
                 writer.WritePropertyName("chargesInBillingCurrency"u8);
-                writer.WriteObjectValue(ChargesInBillingCurrency);
+                writer.WriteObjectValue<ConsumptionAmountWithExchangeRate>(ChargesInBillingCurrency, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ClosedBalanceInBillingCurrency))
             {
                 writer.WritePropertyName("closedBalanceInBillingCurrency"u8);
-                writer.WriteObjectValue(ClosedBalanceInBillingCurrency);
+                writer.WriteObjectValue<ConsumptionAmountWithExchangeRate>(ClosedBalanceInBillingCurrency, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

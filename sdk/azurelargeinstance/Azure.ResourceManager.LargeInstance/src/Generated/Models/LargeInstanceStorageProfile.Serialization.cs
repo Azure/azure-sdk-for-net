@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in OSDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LargeInstanceDisk>(item, options);
                 }
                 writer.WriteEndArray();
             }

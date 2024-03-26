@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The format of the What-If results. </summary>
+        [WirePath("resultFormat")]
         public WhatIfResultFormat? ResultFormat { get; set; }
     }
 }

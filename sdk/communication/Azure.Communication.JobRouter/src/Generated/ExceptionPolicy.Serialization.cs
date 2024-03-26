@@ -47,7 +47,7 @@ namespace Azure.Communication.JobRouter
                 writer.WriteStartArray();
                 foreach (var item in ExceptionRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ExceptionRule>(item, options);
                 }
                 writer.WriteEndArray();
             }

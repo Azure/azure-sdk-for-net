@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
-                writer.WriteObjectValue(Settings);
+                writer.WriteObjectValue<BackupCommonSettings>(Settings, options);
             }
             if (Optional.IsCollectionDefined(SubProtectionPolicy))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in SubProtectionPolicy)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SubProtectionPolicy>(item, options);
                 }
                 writer.WriteEndArray();
             }

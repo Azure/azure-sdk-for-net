@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> PEM formatted public key. </summary>
+        [WirePath("pem")]
         public string Pem { get; set; }
     }
 }

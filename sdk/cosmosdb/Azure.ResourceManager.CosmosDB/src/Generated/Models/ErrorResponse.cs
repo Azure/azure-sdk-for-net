@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Error code. </summary>
+        [WirePath("code")]
         public string Code { get; }
         /// <summary> Error message indicating why the operation failed. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

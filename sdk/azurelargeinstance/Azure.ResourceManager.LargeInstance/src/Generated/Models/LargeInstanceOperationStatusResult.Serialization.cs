@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in Operations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LargeInstanceOperationStatusResult>(item, options);
                 }
                 writer.WriteEndArray();
             }

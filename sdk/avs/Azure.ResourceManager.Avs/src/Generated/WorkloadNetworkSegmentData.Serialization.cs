@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Avs
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                writer.WriteObjectValue(Subnet);
+                writer.WriteObjectValue<WorkloadNetworkSegmentSubnet>(Subnet, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PortVif))
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Avs
                 writer.WriteStartArray();
                 foreach (var item in PortVif)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WorkloadNetworkSegmentPortVif>(item, options);
                 }
                 writer.WriteEndArray();
             }

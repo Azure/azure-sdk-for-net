@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ArmResourceIdentifier != null)
                 {
                     writer.WritePropertyName("armResourceId"u8);
-                    writer.WriteObjectValue(ArmResourceIdentifier);
+                    writer.WriteObjectValue<ArmResourceId>(ArmResourceIdentifier, options);
                 }
                 else
                 {

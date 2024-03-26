@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The managed application deployment mode. </summary>
+        [WirePath("deploymentMode")]
         public ArmApplicationDeploymentMode DeploymentMode { get; set; }
     }
 }

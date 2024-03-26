@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 foreach (var item in PlansDetails)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<PrivateStorePlanDetails>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

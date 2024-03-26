@@ -73,8 +73,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> Resource name to verify. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Resource type used for verification. </summary>
+        [WirePath("type")]
         public ResourceType? ResourceType { get; set; }
     }
 }

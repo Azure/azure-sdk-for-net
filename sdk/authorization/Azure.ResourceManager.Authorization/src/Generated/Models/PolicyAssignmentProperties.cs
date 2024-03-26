@@ -82,22 +82,31 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Id of the policy. </summary>
+        [WirePath("policy.id")]
         public ResourceIdentifier PolicyId { get; }
         /// <summary> The name of the entity last modified it. </summary>
+        [WirePath("policy.lastModifiedBy")]
         public RoleManagementPrincipal LastModifiedBy { get; }
         /// <summary> The last modified date time. </summary>
+        [WirePath("policy.lastModifiedDateTime")]
         public DateTimeOffset? LastModifiedOn { get; }
         /// <summary> Id of the role definition. </summary>
+        [WirePath("roleDefinition.id")]
         public ResourceIdentifier RoleDefinitionId { get; }
         /// <summary> Display name of the role definition. </summary>
+        [WirePath("roleDefinition.displayName")]
         public string RoleDefinitionDisplayName { get; }
         /// <summary> The role type. </summary>
+        [WirePath("roleDefinition.type")]
         public AuthorizationRoleType? RoleType { get; }
         /// <summary> Scope id of the resource. </summary>
+        [WirePath("scope.id")]
         public ResourceIdentifier ScopeId { get; }
         /// <summary> Display name of the resource. </summary>
+        [WirePath("scope.displayName")]
         public string ScopeDisplayName { get; }
         /// <summary> Type of the scope. </summary>
+        [WirePath("scope.type")]
         public RoleManagementScopeType? ScopeType { get; }
     }
 }

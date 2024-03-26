@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in PlansContext)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContextAndPlansDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }

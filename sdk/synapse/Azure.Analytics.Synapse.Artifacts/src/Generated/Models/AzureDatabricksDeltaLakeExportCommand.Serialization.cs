@@ -22,19 +22,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(DateFormat))
             {
                 writer.WritePropertyName("dateFormat"u8);
-                writer.WriteObjectValue(DateFormat);
+                writer.WriteObjectValue<object>(DateFormat);
             }
             if (Optional.IsDefined(TimestampFormat))
             {
                 writer.WritePropertyName("timestampFormat"u8);
-                writer.WriteObjectValue(TimestampFormat);
+                writer.WriteObjectValue<object>(TimestampFormat);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -85,7 +85,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, AzureDatabricksDeltaLakeExportCommand model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<AzureDatabricksDeltaLakeExportCommand>(model);
             }
             public override AzureDatabricksDeltaLakeExportCommand Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

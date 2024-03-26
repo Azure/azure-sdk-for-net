@@ -68,10 +68,12 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         }
 
         /// <summary> The friendly name of the management group. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; }
         /// <summary> The ID of the parent management group. </summary>
         internal DescendantParentGroupInfo Parent { get; }
         /// <summary> The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </summary>
+        [WirePath("properties.parent.id")]
         public ResourceIdentifier ParentId
         {
             get => Parent?.Id;

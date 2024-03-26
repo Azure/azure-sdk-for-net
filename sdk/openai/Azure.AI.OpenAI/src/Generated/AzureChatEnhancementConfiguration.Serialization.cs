@@ -29,12 +29,12 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(Grounding))
             {
                 writer.WritePropertyName("grounding"u8);
-                writer.WriteObjectValue(Grounding);
+                writer.WriteObjectValue<AzureChatGroundingEnhancementConfiguration>(Grounding, options);
             }
             if (Optional.IsDefined(Ocr))
             {
                 writer.WritePropertyName("ocr"u8);
-                writer.WriteObjectValue(Ocr);
+                writer.WriteObjectValue<AzureChatOCREnhancementConfiguration>(Ocr, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -150,7 +150,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AzureChatEnhancementConfiguration>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

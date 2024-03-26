@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The Azure resource id of the commitment plan. </summary>
+        [WirePath("commitmentPlanId")]
         public ResourceIdentifier CommitmentPlanId { get; }
         /// <summary> The location of of the commitment plan. </summary>
+        [WirePath("commitmentPlanLocation")]
         public string CommitmentPlanLocation { get; }
     }
 }

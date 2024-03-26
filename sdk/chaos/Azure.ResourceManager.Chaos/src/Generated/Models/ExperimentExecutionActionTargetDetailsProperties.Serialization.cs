@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 if (Error != null)
                 {
                     writer.WritePropertyName("error"u8);
-                    writer.WriteObjectValue(Error);
+                    writer.WriteObjectValue<ExperimentExecutionActionTargetDetailsError>(Error, options);
                 }
                 else
                 {

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Artifacts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManifestArtifactFormat>(item, options);
                 }
                 writer.WriteEndArray();
             }

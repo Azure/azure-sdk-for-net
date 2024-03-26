@@ -72,18 +72,25 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Name of the server usage metric. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The name of the resource. </summary>
+        [WirePath("resourceName")]
         public string ResourceName { get; }
         /// <summary> The metric display name. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
         /// <summary> The current value of the metric. </summary>
+        [WirePath("currentValue")]
         public double? CurrentValue { get; }
         /// <summary> The current limit of the metric. </summary>
+        [WirePath("limit")]
         public double? Limit { get; }
         /// <summary> The units of the metric. </summary>
+        [WirePath("unit")]
         public string Unit { get; }
         /// <summary> The next reset time for the metric (ISO8601 format). </summary>
+        [WirePath("nextResetTime")]
         public DateTimeOffset? NextResetOn { get; }
     }
 }

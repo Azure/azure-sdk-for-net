@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, RunQueryOrderBy model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<RunQueryOrderBy>(model);
             }
             public override RunQueryOrderBy Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

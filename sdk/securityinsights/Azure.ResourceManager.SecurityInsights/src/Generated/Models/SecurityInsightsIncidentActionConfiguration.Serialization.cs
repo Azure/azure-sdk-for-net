@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
-                writer.WriteObjectValue(Owner);
+                writer.WriteObjectValue<SecurityInsightsIncidentOwnerInfo>(Owner, options);
             }
             if (Optional.IsCollectionDefined(Labels))
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Labels)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SecurityInsightsIncidentLabel>(item, options);
                 }
                 writer.WriteEndArray();
             }

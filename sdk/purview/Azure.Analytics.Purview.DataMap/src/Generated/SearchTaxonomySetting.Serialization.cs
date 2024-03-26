@@ -39,7 +39,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(Facet))
             {
                 writer.WritePropertyName("facet"u8);
-                writer.WriteObjectValue(Facet);
+                writer.WriteObjectValue<SearchFacetItem>(Facet, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -160,7 +160,7 @@ namespace Azure.Analytics.Purview.DataMap
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<SearchTaxonomySetting>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

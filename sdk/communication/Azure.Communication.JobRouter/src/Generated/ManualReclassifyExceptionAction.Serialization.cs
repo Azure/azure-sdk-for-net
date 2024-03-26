@@ -42,7 +42,7 @@ namespace Azure.Communication.JobRouter
                 writer.WriteStartArray();
                 foreach (var item in WorkerSelectors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RouterWorkerSelector>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -196,7 +196,7 @@ namespace Azure.Communication.JobRouter
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ManualReclassifyExceptionAction>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

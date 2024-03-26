@@ -27,7 +27,7 @@ namespace Azure.Communication.JobRouter
 
             writer.WriteStartObject();
             writer.WritePropertyName("workerSelector"u8);
-            writer.WriteObjectValue(WorkerSelector);
+            writer.WriteObjectValue<RouterWorkerSelector>(WorkerSelector, options);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -136,7 +136,7 @@ namespace Azure.Communication.JobRouter
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<StaticWorkerSelectorAttachment>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

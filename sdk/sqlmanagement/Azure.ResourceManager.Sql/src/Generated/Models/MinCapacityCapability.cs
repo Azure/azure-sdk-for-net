@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Min capacity value. </summary>
+        [WirePath("value")]
         public double? Value { get; }
         /// <summary> The status of the capability. </summary>
+        [WirePath("status")]
         public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in PublicKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LinuxSshPublicKey>(item, options);
                 }
                 writer.WriteEndArray();
             }

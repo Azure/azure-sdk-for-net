@@ -90,26 +90,37 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Resource partner server. </summary>
+        [WirePath("properties.partnerServer")]
         public string PartnerServer { get; }
         /// <summary> Resource partner database. </summary>
+        [WirePath("properties.partnerDatabase")]
         public string PartnerDatabase { get; }
         /// <summary> Resource partner location. </summary>
+        [WirePath("properties.partnerLocation")]
         public AzureLocation? PartnerLocation { get; }
         /// <summary> Local replication role. </summary>
+        [WirePath("properties.role")]
         public SqlServerDatabaseReplicationRole? Role { get; }
         /// <summary> Partner replication role. </summary>
+        [WirePath("properties.partnerRole")]
         public SqlServerDatabaseReplicationRole? PartnerRole { get; }
         /// <summary> Replication mode. </summary>
+        [WirePath("properties.replicationMode")]
         public string ReplicationMode { get; }
         /// <summary> Time at which the link was created. </summary>
+        [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> Seeding completion percentage for the link. </summary>
+        [WirePath("properties.percentComplete")]
         public int? PercentComplete { get; }
         /// <summary> Replication state (PENDING, SEEDING, CATCHUP, SUSPENDED). </summary>
+        [WirePath("properties.replicationState")]
         public ReplicationLinkState? ReplicationState { get; }
         /// <summary> Whether the user is currently allowed to terminate the link. </summary>
+        [WirePath("properties.isTerminationAllowed")]
         public bool? IsTerminationAllowed { get; }
         /// <summary> Link type (GEO, NAMED, STANDBY). </summary>
+        [WirePath("properties.linkType")]
         public ReplicationLinkType? LinkType { get; }
     }
 }

@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Specifies the state of the transparent data encryption. </summary>
+        [WirePath("properties.state")]
         public TransparentDataEncryptionState? State { get; set; }
     }
 }

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
-                writer.WriteObjectValue(ErrorDetails);
+                writer.WriteObjectValue<DataBoxEdgeAlertErrorDetails>(ErrorDetails, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(DetailedInformation))
             {

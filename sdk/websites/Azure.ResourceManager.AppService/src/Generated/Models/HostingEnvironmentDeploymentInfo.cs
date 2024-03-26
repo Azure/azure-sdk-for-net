@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Name of the App Service Environment. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Location of the App Service Environment. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
     }
 }

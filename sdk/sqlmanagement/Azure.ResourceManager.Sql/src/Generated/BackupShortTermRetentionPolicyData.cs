@@ -72,8 +72,10 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The backup retention period in days. This is how many days Point-in-Time Restore will be supported. </summary>
+        [WirePath("properties.retentionDays")]
         public int? RetentionDays { get; set; }
         /// <summary> The differential backup interval in hours. This is how many interval hours between each differential backup will be supported. This is only applicable to live databases but not dropped databases. </summary>
+        [WirePath("properties.diffBackupIntervalInHours")]
         public DiffBackupIntervalInHours? DiffBackupIntervalInHours { get; set; }
     }
 }

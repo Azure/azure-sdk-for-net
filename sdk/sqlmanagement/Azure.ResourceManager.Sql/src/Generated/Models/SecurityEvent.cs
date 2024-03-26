@@ -83,22 +83,31 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The time when the security event occurred. </summary>
+        [WirePath("properties.eventTime")]
         public DateTimeOffset? EventOn { get; }
         /// <summary> The type of the security event. </summary>
+        [WirePath("properties.securityEventType")]
         public SecurityEventType? SecurityEventType { get; }
         /// <summary> The subscription name. </summary>
+        [WirePath("properties.subscription")]
         public string Subscription { get; }
         /// <summary> The server name. </summary>
+        [WirePath("properties.server")]
         public string Server { get; }
         /// <summary> The database name. </summary>
+        [WirePath("properties.database")]
         public string Database { get; }
         /// <summary> The IP address of the client who executed the statement. </summary>
+        [WirePath("properties.clientIp")]
         public IPAddress ClientIP { get; }
         /// <summary> The application used to execute the statement. </summary>
+        [WirePath("properties.applicationName")]
         public string ApplicationName { get; }
         /// <summary> The principal user who executed the statement. </summary>
+        [WirePath("properties.principalName")]
         public string PrincipalName { get; }
         /// <summary> The sql injection additional properties, populated only if the type of the security event is sql injection. </summary>
+        [WirePath("properties.securityEventSqlInjectionAdditionalProperties")]
         public SecurityEventSqlInjectionAdditionalProperties SecurityEventSqlInjectionAdditionalProperties { get; }
     }
 }

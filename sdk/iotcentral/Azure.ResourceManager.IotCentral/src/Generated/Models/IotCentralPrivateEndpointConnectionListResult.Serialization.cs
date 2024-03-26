@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IotCentralPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }

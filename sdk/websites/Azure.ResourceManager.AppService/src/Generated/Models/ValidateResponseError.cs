@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Validation error code. </summary>
+        [WirePath("code")]
         public string Code { get; }
         /// <summary> Validation error message. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

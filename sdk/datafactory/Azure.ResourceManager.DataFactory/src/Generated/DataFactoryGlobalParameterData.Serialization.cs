@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory
             foreach (var item in Properties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<DataFactoryGlobalParameterProperties>(item.Value, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && Optional.IsDefined(ETag))

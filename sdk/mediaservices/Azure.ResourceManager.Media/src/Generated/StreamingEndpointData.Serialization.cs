@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<StreamingEndpointCurrentSku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Media
                 if (AccessControl != null)
                 {
                     writer.WritePropertyName("accessControl"u8);
-                    writer.WriteObjectValue(AccessControl);
+                    writer.WriteObjectValue<StreamingEndpointAccessControl>(AccessControl, options);
                 }
                 else
                 {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Media
                 if (CrossSiteAccessPolicies != null)
                 {
                     writer.WritePropertyName("crossSiteAccessPolicies"u8);
-                    writer.WriteObjectValue(CrossSiteAccessPolicies);
+                    writer.WriteObjectValue<CrossSiteAccessPolicies>(CrossSiteAccessPolicies, options);
                 }
                 else
                 {

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PipelineReference))
             {
                 writer.WritePropertyName("pipelineReference"u8);
-                writer.WriteObjectValue(PipelineReference);
+                writer.WriteObjectValue<DataFactoryPipelineReference>(PipelineReference, options);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {

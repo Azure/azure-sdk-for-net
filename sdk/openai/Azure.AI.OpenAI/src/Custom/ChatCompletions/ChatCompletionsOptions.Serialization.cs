@@ -3,26 +3,34 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI;
 
-[CodeGenSuppress("global::Azure.Core.IUtf8JsonSerializable.Write", typeof(Utf8JsonWriter))]
-public partial class ChatCompletionsOptions : IUtf8JsonSerializable
+[CodeGenSuppress("global::System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ChatCompletionsOptions>.Write", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
+public partial class ChatCompletionsOptions : IJsonModel<ChatCompletionsOptions>
 {
     // CUSTOM CODE NOTE:
     //   We manipulate the object model of this type relative to the wire format in several places; currently, this is
     //   best facilitated by performing a complete customization of the serialization.
-
-    void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+    //TODO: Should use the property based serialization overrides here instead of the full serialization override.
+    void IJsonModel<ChatCompletionsOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
     {
+        var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsOptions>)this).GetFormatFromOptions(options) : options.Format;
+        if (format != "J")
+        {
+            throw new FormatException($"The model {nameof(ChatCompletionsOptions)} does not support writing '{format}' format.");
+        }
+
         writer.WriteStartObject();
         writer.WritePropertyName("messages"u8);
         writer.WriteStartArray();
         foreach (var item in Messages)
         {
-            writer.WriteObjectValue(item);
+            writer.WriteObjectValue<ChatRequestMessage>(item, options);
         }
         writer.WriteEndArray();
         if (Optional.IsCollectionDefined(Functions))
@@ -31,7 +39,7 @@ public partial class ChatCompletionsOptions : IUtf8JsonSerializable
             writer.WriteStartArray();
             foreach (var item in Functions)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<FunctionDefinition>(item, options);
             }
             writer.WriteEndArray();
         }
@@ -123,7 +131,7 @@ public partial class ChatCompletionsOptions : IUtf8JsonSerializable
         if (Optional.IsDefined(Enhancements))
         {
             writer.WritePropertyName("enhancements"u8);
-            writer.WriteObjectValue(Enhancements);
+            writer.WriteObjectValue<AzureChatEnhancementConfiguration>(Enhancements, options);
         }
         if (Optional.IsDefined(Seed))
         {
@@ -143,7 +151,7 @@ public partial class ChatCompletionsOptions : IUtf8JsonSerializable
         if (Optional.IsDefined(ResponseFormat))
         {
             writer.WritePropertyName("response_format"u8);
-            writer.WriteObjectValue(ResponseFormat);
+            writer.WriteObjectValue<ChatCompletionsResponseFormat>(ResponseFormat, options);
         }
         if (Optional.IsCollectionDefined(Tools))
         {
@@ -151,7 +159,7 @@ public partial class ChatCompletionsOptions : IUtf8JsonSerializable
             writer.WriteStartArray();
             foreach (var item in Tools)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ChatCompletionsToolDefinition>(item, options);
             }
             writer.WriteEndArray();
         }
@@ -160,7 +168,22 @@ public partial class ChatCompletionsOptions : IUtf8JsonSerializable
             // CUSTOM CODE NOTE:
             //   ChatCompletionsToolChoice is a fully custom type and needs integrated custom serialization here.
             writer.WritePropertyName("tool_choice"u8);
-            writer.WriteObjectValue(ToolChoice);
+            writer.WriteObjectValue<ChatCompletionsToolChoice>(ToolChoice, options);
+        }
+        if (options.Format != "W" && _serializedAdditionalRawData != null)
+        {
+            foreach (var item in _serializedAdditionalRawData)
+            {
+                writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
         }
         writer.WriteEndObject();
     }

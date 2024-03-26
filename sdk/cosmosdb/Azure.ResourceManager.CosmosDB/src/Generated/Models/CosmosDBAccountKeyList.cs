@@ -31,8 +31,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Base 64 encoded value of the primary read-write key. </summary>
+        [WirePath("primaryMasterKey")]
         public string PrimaryMasterKey { get; }
         /// <summary> Base 64 encoded value of the secondary read-write key. </summary>
+        [WirePath("secondaryMasterKey")]
         public string SecondaryMasterKey { get; }
     }
 }

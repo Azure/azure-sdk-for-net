@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(Sysctls))
             {
                 writer.WritePropertyName("sysctls"u8);
-                writer.WriteObjectValue(Sysctls);
+                writer.WriteObjectValue<SysctlConfig>(Sysctls, options);
             }
             if (Optional.IsDefined(TransparentHugePageEnabled))
             {

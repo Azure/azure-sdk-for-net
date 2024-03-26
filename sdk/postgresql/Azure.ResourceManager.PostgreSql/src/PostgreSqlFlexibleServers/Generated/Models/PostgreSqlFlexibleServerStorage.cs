@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Max storage allowed for a server. </summary>
+        [WirePath("storageSizeGB")]
         public int? StorageSizeInGB { get; set; }
         /// <summary> Flag to enable / disable Storage Auto grow for flexible server. </summary>
+        [WirePath("autoGrow")]
         public StorageAutoGrow? AutoGrow { get; set; }
         /// <summary> Name of storage tier for IOPS. </summary>
+        [WirePath("tier")]
         public PostgreSqlManagedDiskPerformanceTier? Tier { get; set; }
         /// <summary> Storage tier IOPS quantity. </summary>
+        [WirePath("iops")]
         public int? Iops { get; }
     }
 }

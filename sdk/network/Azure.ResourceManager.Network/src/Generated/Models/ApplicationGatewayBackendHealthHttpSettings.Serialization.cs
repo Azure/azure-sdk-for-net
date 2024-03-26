@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(BackendHttpSettings))
             {
                 writer.WritePropertyName("backendHttpSettings"u8);
-                writer.WriteObjectValue(BackendHttpSettings);
+                writer.WriteObjectValue<ApplicationGatewayBackendHttpSettings>(BackendHttpSettings, options);
             }
             if (Optional.IsCollectionDefined(Servers))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Servers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplicationGatewayBackendHealthServer>(item, options);
                 }
                 writer.WriteEndArray();
             }

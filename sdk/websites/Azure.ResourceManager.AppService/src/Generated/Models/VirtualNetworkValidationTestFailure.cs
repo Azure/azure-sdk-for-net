@@ -70,10 +70,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The name of the test that failed. </summary>
+        [WirePath("properties.testName")]
         public string TestName { get; set; }
         /// <summary> The details of what caused the failure, e.g. the blocking rule name, etc. </summary>
+        [WirePath("properties.details")]
         public string Details { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

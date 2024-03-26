@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrorDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryHealthError>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -119,22 +119,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(AuthenticationIdentityDetails))
             {
                 writer.WritePropertyName("authenticationIdentityDetails"u8);
-                writer.WriteObjectValue(AuthenticationIdentityDetails);
+                writer.WriteObjectValue<IdentityProviderDetails>(AuthenticationIdentityDetails, options);
             }
             if (Optional.IsDefined(ResourceAccessIdentityDetails))
             {
                 writer.WritePropertyName("resourceAccessIdentityDetails"u8);
-                writer.WriteObjectValue(ResourceAccessIdentityDetails);
+                writer.WriteObjectValue<IdentityProviderDetails>(ResourceAccessIdentityDetails, options);
             }
             if (Optional.IsDefined(DataPlaneAuthenticationIdentityDetails))
             {
                 writer.WritePropertyName("dataPlaneAuthenticationIdentityDetails"u8);
-                writer.WriteObjectValue(DataPlaneAuthenticationIdentityDetails);
+                writer.WriteObjectValue<IdentityProviderDetails>(DataPlaneAuthenticationIdentityDetails, options);
             }
             if (Optional.IsDefined(ProviderVersionDetails))
             {
                 writer.WritePropertyName("providerVersionDetails"u8);
-                writer.WriteObjectValue(ProviderVersionDetails);
+                writer.WriteObjectValue<SiteRecoveryVersionDetails>(ProviderVersionDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

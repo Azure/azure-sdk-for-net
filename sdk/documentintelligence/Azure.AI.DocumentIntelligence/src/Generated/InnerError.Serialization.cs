@@ -39,7 +39,7 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(InnerErrorObject))
             {
                 writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue(InnerErrorObject);
+                writer.WriteObjectValue<InnerError>(InnerErrorObject, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -157,7 +157,7 @@ namespace Azure.AI.DocumentIntelligence
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<InnerError>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteStartArray();
             foreach (var item in MatchConditions)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<WebApplicationRuleMatchCondition>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("action"u8);

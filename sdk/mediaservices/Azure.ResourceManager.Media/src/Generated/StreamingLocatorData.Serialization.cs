@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Media
                 writer.WriteStartArray();
                 foreach (var item in ContentKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StreamingLocatorContentKey>(item, options);
                 }
                 writer.WriteEndArray();
             }

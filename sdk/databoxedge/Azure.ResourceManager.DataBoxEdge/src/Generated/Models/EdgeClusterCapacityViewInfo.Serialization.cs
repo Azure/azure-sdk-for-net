@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(GpuCapacity))
             {
                 writer.WritePropertyName("gpuCapacity"u8);
-                writer.WriteObjectValue(GpuCapacity);
+                writer.WriteObjectValue<EdgeClusterGpuCapacity>(GpuCapacity, options);
             }
             if (Optional.IsDefined(MemoryCapacity))
             {
                 writer.WritePropertyName("memoryCapacity"u8);
-                writer.WriteObjectValue(MemoryCapacity);
+                writer.WriteObjectValue<EdgeClusterMemoryCapacity>(MemoryCapacity, options);
             }
             if (Optional.IsDefined(LastRefreshedOn))
             {

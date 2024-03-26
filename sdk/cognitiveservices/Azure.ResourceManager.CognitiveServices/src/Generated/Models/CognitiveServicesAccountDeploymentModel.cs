@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Deployment model format. </summary>
+        [WirePath("format")]
         public string Format { get; set; }
         /// <summary> Deployment model name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Optional. Deployment model version. If version is not specified, a default version will be assigned. The default version is different for different models and might change when there is new version available for a model. Default version for a model could be found from list models API. </summary>
+        [WirePath("version")]
         public string Version { get; set; }
         /// <summary> Optional. Deployment model source ARM resource ID. </summary>
+        [WirePath("source")]
         public string Source { get; set; }
         /// <summary> The call rate limit Cognitive Services account. </summary>
+        [WirePath("callRateLimit")]
         public ServiceAccountCallRateLimit CallRateLimit { get; }
     }
 }

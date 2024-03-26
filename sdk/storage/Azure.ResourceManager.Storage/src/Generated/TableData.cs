@@ -73,8 +73,10 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Table name under the specified account. </summary>
+        [WirePath("properties.tableName")]
         public string TableName { get; }
         /// <summary> List of stored access policies specified on the table. </summary>
+        [WirePath("properties.signedIdentifiers")]
         public IList<StorageTableSignedIdentifier> SignedIdentifiers { get; }
     }
 }

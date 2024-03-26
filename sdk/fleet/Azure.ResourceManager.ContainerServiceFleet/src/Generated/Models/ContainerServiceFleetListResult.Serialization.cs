@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ContainerServiceFleetData>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))

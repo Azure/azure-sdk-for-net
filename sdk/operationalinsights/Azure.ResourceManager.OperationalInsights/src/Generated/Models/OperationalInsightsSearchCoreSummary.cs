@@ -69,8 +69,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The status of a core summary. </summary>
+        [WirePath("status")]
         public string Status { get; }
         /// <summary> The number of documents of a core summary. </summary>
+        [WirePath("numberOfDocuments")]
         public long NumberOfDocuments { get; }
     }
 }

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DigitalTwinsDescriptionData>(item, options);
                 }
                 writer.WriteEndArray();
             }

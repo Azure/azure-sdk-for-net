@@ -31,7 +31,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Period))
             {
                 writer.WritePropertyName("period"u8);
-                writer.WriteObjectValue(Period);
+                writer.WriteObjectValue<TimePeriod>(Period, options);
             }
             if (Optional.IsDefined(Class))
             {
@@ -158,7 +158,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<Encounter>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

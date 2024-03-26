@@ -72,18 +72,23 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> &lt;code&gt;false&lt;/code&gt; if the Azure Active Directory provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
+        [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
         /// <summary> The configuration settings of the Azure Active Directory app registration. </summary>
+        [WirePath("registration")]
         public AppServiceAadRegistration Registration { get; set; }
         /// <summary> The configuration settings of the Azure Active Directory login flow. </summary>
+        [WirePath("login")]
         public AppServiceAadLoginFlow Login { get; set; }
         /// <summary> The configuration settings of the Azure Active Directory token validation flow. </summary>
+        [WirePath("validation")]
         public AppServiceAadValidation Validation { get; set; }
         /// <summary>
         /// Gets a value indicating whether the Azure AD configuration was auto-provisioned using 1st party tooling.
         /// This is an internal flag primarily intended to support the Azure Management Portal. Users should not
         /// read or write to this property.
         /// </summary>
+        [WirePath("isAutoProvisioned")]
         public bool? IsAutoProvisioned { get; set; }
     }
 }

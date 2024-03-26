@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The resource of an Azure Cosmos DB Gremlin graph event. </summary>
+        [WirePath("properties.resource")]
         public ExtendedRestorableGremlinGraphResourceInfo Resource { get; }
     }
 }

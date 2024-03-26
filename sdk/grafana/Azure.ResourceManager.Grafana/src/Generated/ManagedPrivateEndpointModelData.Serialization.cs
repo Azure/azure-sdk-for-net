@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Grafana
             if (options.Format != "W" && Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("connectionState"u8);
-                writer.WriteObjectValue(ConnectionState);
+                writer.WriteObjectValue<ManagedPrivateEndpointConnectionState>(ConnectionState, options);
             }
             if (Optional.IsDefined(PrivateLinkServiceUri))
             {

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (options.Format != "W" && Optional.IsDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
-                writer.WriteObjectValue(Metrics);
+                writer.WriteObjectValue<IotSeverityMetrics>(Metrics, options);
             }
             if (options.Format != "W" && Optional.IsDefined(UnhealthyDeviceCount))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in DevicesMetrics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IotSecuritySolutionAnalyticsModelDevicesMetrics>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in TopAlertedDevices)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IotSecurityAlertedDevice>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in MostPrevalentDeviceAlerts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IotSecurityDeviceAlert>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in MostPrevalentDeviceRecommendations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IotSecurityDeviceRecommendation>(item, options);
                 }
                 writer.WriteEndArray();
             }

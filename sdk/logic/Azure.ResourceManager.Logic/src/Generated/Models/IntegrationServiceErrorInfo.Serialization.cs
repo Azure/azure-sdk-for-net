@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IntegrationServiceErrorInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

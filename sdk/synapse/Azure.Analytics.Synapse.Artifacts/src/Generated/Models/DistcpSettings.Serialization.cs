@@ -19,13 +19,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("resourceManagerEndpoint"u8);
-            writer.WriteObjectValue(ResourceManagerEndpoint);
+            writer.WriteObjectValue<object>(ResourceManagerEndpoint);
             writer.WritePropertyName("tempScriptPath"u8);
-            writer.WriteObjectValue(TempScriptPath);
+            writer.WriteObjectValue<object>(TempScriptPath);
             if (Optional.IsDefined(DistcpOptions))
             {
                 writer.WritePropertyName("distcpOptions"u8);
-                writer.WriteObjectValue(DistcpOptions);
+                writer.WriteObjectValue<object>(DistcpOptions);
             }
             writer.WriteEndObject();
         }
@@ -68,7 +68,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, DistcpSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DistcpSettings>(model);
             }
             public override DistcpSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

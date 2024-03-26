@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The subscription location placement ID. The ID indicates which regions are visible for a subscription. For example, a subscription with a location placement Id of Public_2014-09-01 has access to Azure public regions. </summary>
+        [WirePath("locationPlacementId")]
         public string LocationPlacementId { get; }
         /// <summary> The subscription quota ID. </summary>
+        [WirePath("quotaId")]
         public string QuotaId { get; }
         /// <summary> The subscription spending limit. </summary>
+        [WirePath("spendingLimit")]
         public SpendingLimit? SpendingLimit { get; }
     }
 }

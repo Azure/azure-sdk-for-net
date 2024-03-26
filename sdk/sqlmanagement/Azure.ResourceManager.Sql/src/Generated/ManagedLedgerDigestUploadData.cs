@@ -72,8 +72,10 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The digest storage endpoint, which must be either an Azure blob storage endpoint or an URI for Azure Confidential Ledger. </summary>
+        [WirePath("properties.digestStorageEndpoint")]
         public string DigestStorageEndpoint { get; set; }
         /// <summary> Specifies the state of ledger digest upload. </summary>
+        [WirePath("properties.state")]
         public ManagedLedgerDigestUploadsState? State { get; }
     }
 }

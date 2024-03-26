@@ -75,10 +75,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Whether private access is enabled or not. </summary>
+        [WirePath("properties.enabled")]
         public bool? IsEnabled { get; set; }
         /// <summary> The Virtual Networks (and subnets) allowed to access the site privately. </summary>
+        [WirePath("properties.virtualNetworks")]
         public IList<PrivateAccessVirtualNetwork> VirtualNetworks { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

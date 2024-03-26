@@ -76,16 +76,22 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Type of the sync agent linked database. </summary>
+        [WirePath("properties.databaseType")]
         public SyncMemberDbType? DatabaseType { get; }
         /// <summary> Id of the sync agent linked database. </summary>
+        [WirePath("properties.databaseId")]
         public Guid? DatabaseId { get; }
         /// <summary> Description of the sync agent linked database. </summary>
+        [WirePath("properties.description")]
         public string Description { get; }
         /// <summary> Server name of the sync agent linked database. </summary>
+        [WirePath("properties.serverName")]
         public string ServerName { get; }
         /// <summary> Database name of the sync agent linked database. </summary>
+        [WirePath("properties.databaseName")]
         public string DatabaseName { get; }
         /// <summary> User name of the sync agent linked database. </summary>
+        [WirePath("properties.userName")]
         public string UserName { get; }
     }
 }

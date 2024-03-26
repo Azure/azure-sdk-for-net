@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AgFoodPlatformPrivateLinkResourceData>(item, options);
                 }
                 writer.WriteEndArray();
             }

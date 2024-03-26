@@ -80,16 +80,22 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Provisioning state of the Alias(Disaster Recovery configuration) - possible values 'Accepted' or 'Succeeded' or 'Failed'. </summary>
+        [WirePath("properties.provisioningState")]
         public EventHubsDisasterRecoveryProvisioningState? ProvisioningState { get; }
         /// <summary> ARM Id of the Primary/Secondary eventhub namespace name, which is part of GEO DR pairing. </summary>
+        [WirePath("properties.partnerNamespace")]
         public string PartnerNamespace { get; set; }
         /// <summary> Alternate name specified when alias and namespace names are same. </summary>
+        [WirePath("properties.alternateName")]
         public string AlternateName { get; set; }
         /// <summary> role of namespace in GEO DR - possible values 'Primary' or 'PrimaryNotReplicating' or 'Secondary'. </summary>
+        [WirePath("properties.role")]
         public EventHubsDisasterRecoveryRole? Role { get; }
         /// <summary> Number of entities pending to be replicated. </summary>
+        [WirePath("properties.pendingReplicationOperationsCount")]
         public long? PendingReplicationOperationsCount { get; }
         /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
     }
 }

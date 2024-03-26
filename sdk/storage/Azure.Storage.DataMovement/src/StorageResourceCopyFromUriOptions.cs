@@ -25,5 +25,10 @@ namespace Azure.Storage.DataMovement
         /// Only applies to copy operations, not local operations.
         /// </summary>
         public HttpAuthorization SourceAuthentication { get; set; }
+
+        /// <summary>
+        /// Optional. Specifies the source properties to set in the destination.
+        /// </summary>
+        public StorageResourceItemProperties SourceProperties { get; set; }
     }
 }

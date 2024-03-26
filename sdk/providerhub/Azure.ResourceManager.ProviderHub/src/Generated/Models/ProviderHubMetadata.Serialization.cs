@@ -32,19 +32,19 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ProviderAuthorizations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceProviderAuthorization>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ProviderAuthentication))
             {
                 writer.WritePropertyName("providerAuthentication"u8);
-                writer.WriteObjectValue(ProviderAuthentication);
+                writer.WriteObjectValue<ResourceProviderAuthentication>(ProviderAuthentication, options);
             }
             if (Optional.IsDefined(ThirdPartyProviderAuthorization))
             {
                 writer.WritePropertyName("thirdPartyProviderAuthorization"u8);
-                writer.WriteObjectValue(ThirdPartyProviderAuthorization);
+                writer.WriteObjectValue<ThirdPartyProviderAuthorization>(ThirdPartyProviderAuthorization, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

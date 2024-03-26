@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(EsuProfile))
             {
                 writer.WritePropertyName("esuProfile"u8);
-                writer.WriteObjectValue(EsuProfile);
+                writer.WriteObjectValue<LicenseProfileMachineInstanceViewEsuProperties>(EsuProfile, options);
             }
             writer.WritePropertyName("productProfile"u8);
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in ProductFeatures)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HybridComputeProductFeature>(item, options);
                 }
                 writer.WriteEndArray();
             }

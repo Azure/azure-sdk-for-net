@@ -72,6 +72,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Properties of the previewed feature. </summary>
         internal FeatureProperties Properties { get; }
         /// <summary> The registration state of the feature for the subscription. </summary>
+        [WirePath("properties.state")]
         public string FeatureState
         {
             get => Properties?.State;

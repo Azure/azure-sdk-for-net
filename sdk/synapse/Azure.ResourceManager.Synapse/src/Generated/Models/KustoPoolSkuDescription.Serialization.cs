@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in LocationInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KustoPoolSkuLocationInfoItem>(item, options);
                 }
                 writer.WriteEndArray();
             }

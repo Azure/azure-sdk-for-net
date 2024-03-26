@@ -30,8 +30,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The extended location type. </summary>
+        [WirePath("type")]
         public ExtendedLocationType? ExtendedLocationType { get; set; }
         /// <summary> The extended location name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
     }
 }

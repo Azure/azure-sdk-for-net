@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(VirtualNetworkTap))
             {
                 writer.WritePropertyName("virtualNetworkTap"u8);
-                writer.WriteObjectValue(VirtualNetworkTap);
+                writer.WriteObjectValue<VirtualNetworkTapData>(VirtualNetworkTap, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

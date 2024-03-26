@@ -71,16 +71,22 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The subscription that owns the target server. </summary>
+        [WirePath("properties.targetSubscriptionId")]
         public string TargetSubscriptionId { get; set; }
         /// <summary> The resource group that owns the target server. </summary>
+        [WirePath("properties.targetResourceGroup")]
         public string TargetResourceGroup { get; set; }
         /// <summary> The resource Id of the target server that owns the database. </summary>
+        [WirePath("properties.targetServerResourceId")]
         public ResourceIdentifier TargetServerResourceId { get; set; }
         /// <summary> The fully qualified domain name of the target server. </summary>
+        [WirePath("properties.targetServerFullyQualifiedDomainName")]
         public string TargetServerFullyQualifiedDomainName { get; set; }
         /// <summary> The name of the database owns the copied backup. </summary>
+        [WirePath("properties.targetDatabaseName")]
         public string TargetDatabaseName { get; set; }
         /// <summary> The storage redundancy type of the copied backup. </summary>
+        [WirePath("properties.targetBackupStorageRedundancy")]
         public SqlBackupStorageRedundancy? TargetBackupStorageRedundancy { get; set; }
     }
 }

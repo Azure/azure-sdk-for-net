@@ -88,23 +88,31 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> The Virtual Network's resource ID. </summary>
+        [WirePath("properties.vnetResourceId")]
         public ResourceIdentifier VnetResourceId { get; set; }
         /// <summary> The client certificate thumbprint. </summary>
+        [WirePath("properties.certThumbprint")]
         public string CertThumbprintString { get; }
         /// <summary>
         /// A certificate file (.cer) blob containing the public key of the private key used to authenticate a
         /// Point-To-Site VPN connection.
         /// </summary>
+        [WirePath("properties.certBlob")]
         public string CertBlob { get; set; }
         /// <summary> The routes that this Virtual Network connection uses. </summary>
+        [WirePath("properties.routes")]
         public IReadOnlyList<AppServiceVirtualNetworkRoute> Routes { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if a resync is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.resyncRequired")]
         public bool? IsResyncRequired { get; }
         /// <summary> DNS servers to be used by this Virtual Network. This should be a comma-separated list of IP addresses. </summary>
+        [WirePath("properties.dnsServers")]
         public string DnsServers { get; set; }
         /// <summary> Flag that is used to denote if this is VNET injection. </summary>
+        [WirePath("properties.isSwift")]
         public bool? IsSwift { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Resource metrics service provided by Microsoft.Insights resource provider. </summary>
+        [WirePath("serviceSpecification")]
         public ServiceSpecification ServiceSpecification { get; }
     }
 }

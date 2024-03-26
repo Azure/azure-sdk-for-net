@@ -94,14 +94,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Offerings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SecurityCenterCloudOffering>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(EnvironmentData))
             {
                 writer.WritePropertyName("environmentData"u8);
-                writer.WriteObjectValue(EnvironmentData);
+                writer.WriteObjectValue<SecurityConnectorEnvironment>(EnvironmentData, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

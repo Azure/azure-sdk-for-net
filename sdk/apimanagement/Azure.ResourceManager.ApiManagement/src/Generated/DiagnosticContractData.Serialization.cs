@@ -63,17 +63,17 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(Sampling))
             {
                 writer.WritePropertyName("sampling"u8);
-                writer.WriteObjectValue(Sampling);
+                writer.WriteObjectValue<SamplingSettings>(Sampling, options);
             }
             if (Optional.IsDefined(Frontend))
             {
                 writer.WritePropertyName("frontend"u8);
-                writer.WriteObjectValue(Frontend);
+                writer.WriteObjectValue<PipelineDiagnosticSettings>(Frontend, options);
             }
             if (Optional.IsDefined(Backend))
             {
                 writer.WritePropertyName("backend"u8);
-                writer.WriteObjectValue(Backend);
+                writer.WriteObjectValue<PipelineDiagnosticSettings>(Backend, options);
             }
             if (Optional.IsDefined(IsLogClientIPEnabled))
             {

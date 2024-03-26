@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> The value indicating whether the resource name is available. </summary>
+        [WirePath("nameAvailable")]
         public bool? IsNameAvailable { get; }
         /// <summary> If any, the error message that provides more detail for the reason that the name is not available. </summary>
+        [WirePath("message")]
         public string Message { get; }
         /// <summary> If any, the reason that the name is not available. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
     }
 }

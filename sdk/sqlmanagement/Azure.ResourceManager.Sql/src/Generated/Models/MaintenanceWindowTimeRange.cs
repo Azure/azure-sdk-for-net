@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Day of maintenance window. </summary>
+        [WirePath("dayOfWeek")]
         public SqlDayOfWeek? DayOfWeek { get; set; }
         /// <summary> Start time minutes offset from 12am. </summary>
+        [WirePath("startTime")]
         public string StartTime { get; set; }
         /// <summary> Duration of maintenance window in minutes. </summary>
+        [WirePath("duration")]
         public TimeSpan? Duration { get; set; }
     }
 }

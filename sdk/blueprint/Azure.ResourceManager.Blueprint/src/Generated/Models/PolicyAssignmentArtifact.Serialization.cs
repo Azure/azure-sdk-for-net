@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             foreach (var item in Parameters)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<ParameterValue>(item.Value, options);
             }
             writer.WriteEndObject();
             if (Optional.IsDefined(ResourceGroup))

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(ImageRepository))
             {
                 writer.WritePropertyName("imageRepository"u8);
-                writer.WriteObjectValue(ImageRepository);
+                writer.WriteObjectValue<ImageRepositoryCredential>(ImageRepository, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

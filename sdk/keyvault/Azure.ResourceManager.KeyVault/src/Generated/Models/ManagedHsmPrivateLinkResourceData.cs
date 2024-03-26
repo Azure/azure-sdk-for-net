@@ -82,12 +82,16 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Group identifier of private link resource. </summary>
+        [WirePath("properties.groupId")]
         public string GroupId { get; }
         /// <summary> Required member names of private link resource. </summary>
+        [WirePath("properties.requiredMembers")]
         public IReadOnlyList<string> RequiredMembers { get; }
         /// <summary> Required DNS zone names of the the private link resource. </summary>
+        [WirePath("properties.requiredZoneNames")]
         public IList<string> RequiredZoneNames { get; }
         /// <summary> SKU details. </summary>
+        [WirePath("sku")]
         public ManagedHsmSku Sku { get; set; }
     }
 }

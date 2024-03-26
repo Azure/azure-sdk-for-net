@@ -34,6 +34,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Gets or sets the remote account name. </summary>
+        [WirePath("remoteAccountName")]
         public string RemoteAccountName { get; set; }
     }
 }

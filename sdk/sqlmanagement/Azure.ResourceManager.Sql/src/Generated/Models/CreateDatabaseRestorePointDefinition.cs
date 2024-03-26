@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The restore point label to apply. </summary>
+        [WirePath("restorePointLabel")]
         public string RestorePointLabel { get; }
     }
 }

@@ -104,40 +104,58 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary> Size of the topic, in bytes. </summary>
+        [WirePath("properties.sizeInBytes")]
         public long? SizeInBytes { get; }
         /// <summary> Exact time the message was created. </summary>
+        [WirePath("properties.createdAt")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The exact time the message was updated. </summary>
+        [WirePath("properties.updatedAt")]
         public DateTimeOffset? UpdatedOn { get; }
         /// <summary> Last time the message was sent, or a request was received, for this topic. </summary>
+        [WirePath("properties.accessedAt")]
         public DateTimeOffset? AccessedOn { get; }
         /// <summary> Number of subscriptions. </summary>
+        [WirePath("properties.subscriptionCount")]
         public int? SubscriptionCount { get; }
         /// <summary> Message count details. </summary>
+        [WirePath("properties.countDetails")]
         public MessageCountDetails CountDetails { get; }
         /// <summary> ISO 8601 Default message timespan to live value. This is the duration after which the message expires, starting from when the message is sent to Service Bus. This is the default value used when TimeToLive is not set on a message itself. </summary>
+        [WirePath("properties.defaultMessageTimeToLive")]
         public TimeSpan? DefaultMessageTimeToLive { get; set; }
         /// <summary> Maximum size of the topic in megabytes, which is the size of the memory allocated for the topic. Default is 1024. </summary>
+        [WirePath("properties.maxSizeInMegabytes")]
         public int? MaxSizeInMegabytes { get; set; }
         /// <summary> Maximum size (in KB) of the message payload that can be accepted by the topic. This property is only used in Premium today and default is 1024. </summary>
+        [WirePath("properties.maxMessageSizeInKilobytes")]
         public long? MaxMessageSizeInKilobytes { get; set; }
         /// <summary> Value indicating if this topic requires duplicate detection. </summary>
+        [WirePath("properties.requiresDuplicateDetection")]
         public bool? RequiresDuplicateDetection { get; set; }
         /// <summary> ISO8601 timespan structure that defines the duration of the duplicate detection history. The default value is 10 minutes. </summary>
+        [WirePath("properties.duplicateDetectionHistoryTimeWindow")]
         public TimeSpan? DuplicateDetectionHistoryTimeWindow { get; set; }
         /// <summary> Value that indicates whether server-side batched operations are enabled. </summary>
+        [WirePath("properties.enableBatchedOperations")]
         public bool? EnableBatchedOperations { get; set; }
         /// <summary> Enumerates the possible values for the status of a messaging entity. </summary>
+        [WirePath("properties.status")]
         public ServiceBusMessagingEntityStatus? Status { get; set; }
         /// <summary> Value that indicates whether the topic supports ordering. </summary>
+        [WirePath("properties.supportOrdering")]
         public bool? SupportOrdering { get; set; }
         /// <summary> ISO 8601 timespan idle interval after which the topic is automatically deleted. The minimum duration is 5 minutes. </summary>
+        [WirePath("properties.autoDeleteOnIdle")]
         public TimeSpan? AutoDeleteOnIdle { get; set; }
         /// <summary> Value that indicates whether the topic to be partitioned across multiple message brokers is enabled. </summary>
+        [WirePath("properties.enablePartitioning")]
         public bool? EnablePartitioning { get; set; }
         /// <summary> Value that indicates whether Express Entities are enabled. An express topic holds a message in memory temporarily before writing it to persistent storage. </summary>
+        [WirePath("properties.enableExpress")]
         public bool? EnableExpress { get; set; }
         /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
     }
 }

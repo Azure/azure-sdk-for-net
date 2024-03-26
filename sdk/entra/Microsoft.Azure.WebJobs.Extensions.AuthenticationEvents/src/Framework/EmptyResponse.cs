@@ -8,7 +8,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
     internal class EmptyResponse : AuthenticationEventResponse
     {
         internal override void InstanceCreated(AuthenticationEventJsonElement payload) { }
-        internal override void Invalidate() { }
+        internal override void BuildJsonElement() { }
 
         #region Empty Response/Data
 

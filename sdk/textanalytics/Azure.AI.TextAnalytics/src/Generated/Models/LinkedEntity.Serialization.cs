@@ -23,7 +23,7 @@ namespace Azure.AI.TextAnalytics
             writer.WriteStartArray();
             foreach (var item in Matches)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<LinkedEntityMatch>(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("language"u8);

@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteNumberValue(InitialSilenceTimeoutInSeconds.Value);
             }
             writer.WritePropertyName("targetParticipant"u8);
-            writer.WriteObjectValue(TargetParticipant);
+            writer.WriteObjectValue<CommunicationIdentifierModel>(TargetParticipant);
             if (Optional.IsDefined(SpeechLanguage))
             {
                 writer.WritePropertyName("speechLanguage"u8);
@@ -40,7 +40,7 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(DtmfOptions))
             {
                 writer.WritePropertyName("dtmfOptions"u8);
-                writer.WriteObjectValue(DtmfOptions);
+                writer.WriteObjectValue<DtmfOptionsInternal>(DtmfOptions);
             }
             if (Optional.IsCollectionDefined(Choices))
             {
@@ -48,14 +48,14 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteStartArray();
                 foreach (var item in Choices)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RecognitionChoice>(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SpeechOptions))
             {
                 writer.WritePropertyName("speechOptions"u8);
-                writer.WriteObjectValue(SpeechOptions);
+                writer.WriteObjectValue<SpeechOptionsInternal>(SpeechOptions);
             }
             writer.WriteEndObject();
         }

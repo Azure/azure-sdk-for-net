@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Key vault properties. </summary>
+        [WirePath("keyVaultProperties")]
         public AppConfigurationKeyVaultProperties KeyVaultProperties { get; set; }
     }
 }

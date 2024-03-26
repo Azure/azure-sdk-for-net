@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 foreach (var item in PatchVersions)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<KubernetesPatchVersions>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

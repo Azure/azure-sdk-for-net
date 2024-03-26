@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> HTTP status code. </summary>
+        [WirePath("statusCodes")]
         public string StatusCodes { get; set; }
         /// <summary> Gets or sets the path. </summary>
+        [WirePath("path")]
         public string Path { get; set; }
         /// <summary> Request Count. </summary>
+        [WirePath("count")]
         public int? Count { get; set; }
         /// <summary> Time interval. </summary>
+        [WirePath("timeInterval")]
         public string TimeInterval { get; set; }
     }
 }

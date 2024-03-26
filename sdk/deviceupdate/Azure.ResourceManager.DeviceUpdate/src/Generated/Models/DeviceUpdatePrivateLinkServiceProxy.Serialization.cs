@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             if (Optional.IsDefined(RemotePrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("remotePrivateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(RemotePrivateLinkServiceConnectionState);
+                writer.WriteObjectValue<DeviceUpdatePrivateLinkServiceConnectionState>(RemotePrivateLinkServiceConnectionState, options);
             }
             if (Optional.IsDefined(RemotePrivateEndpointConnection))
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 writer.WriteStartArray();
                 foreach (var item in GroupConnectivityInformation)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GroupConnectivityInformation>(item, options);
                 }
                 writer.WriteEndArray();
             }

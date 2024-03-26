@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> The provisioning state of the private link service connection. Can be Updating, Deleting, Failed, Succeeded, or Incomplete. </summary>
+    /// <summary> The provisioning state of the private link service connection. Valid values are Updating, Deleting, Failed, Succeeded, or Incomplete. </summary>
     public readonly partial struct SearchPrivateLinkServiceConnectionProvisioningState : IEquatable<SearchPrivateLinkServiceConnectionProvisioningState>
     {
         private readonly string _value;

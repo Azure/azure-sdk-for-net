@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Reservations
             if (Optional.IsDefined(PlanInformation))
             {
                 writer.WritePropertyName("planInformation"u8);
-                writer.WriteObjectValue(PlanInformation);
+                writer.WriteObjectValue<ReservationOrderBillingPlanInformation>(PlanInformation, options);
             }
             if (Optional.IsCollectionDefined(Reservations))
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Reservations
                 writer.WriteStartArray();
                 foreach (var item in Reservations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReservationDetailData>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -66,10 +66,13 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The azure location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> The extended location type. </summary>
+        [WirePath("type")]
         public string ProviderExtendedLocationType { get; }
         /// <summary> The extended locations for the azure location. </summary>
+        [WirePath("extendedLocations")]
         public IReadOnlyList<string> ExtendedLocations { get; }
     }
 }

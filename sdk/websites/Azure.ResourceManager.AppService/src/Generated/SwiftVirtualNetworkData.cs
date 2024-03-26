@@ -73,10 +73,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> The Virtual Network subnet's resource ID. This is the subnet that this Web App will join. This subnet must have a delegation to Microsoft.Web/serverFarms defined first. </summary>
+        [WirePath("properties.subnetResourceId")]
         public ResourceIdentifier SubnetResourceId { get; set; }
         /// <summary> A flag that specifies if the scale unit this Web App is on supports Swift integration. </summary>
+        [WirePath("properties.swiftSupported")]
         public bool? IsSwiftSupported { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

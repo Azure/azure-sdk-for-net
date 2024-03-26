@@ -87,20 +87,28 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Resource location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> Read-write endpoint of the failover group instance. </summary>
+        [WirePath("properties.readWriteEndpoint")]
         public FailoverGroupReadWriteEndpoint ReadWriteEndpoint { get; set; }
         /// <summary> Read-only endpoint of the failover group instance. </summary>
+        [WirePath("properties.readOnlyEndpoint")]
         public FailoverGroupReadOnlyEndpoint ReadOnlyEndpoint { get; set; }
         /// <summary> Local replication role of the failover group instance. </summary>
+        [WirePath("properties.replicationRole")]
         public FailoverGroupReplicationRole? ReplicationRole { get; }
         /// <summary> Replication state of the failover group instance. </summary>
+        [WirePath("properties.replicationState")]
         public string ReplicationState { get; }
         /// <summary> List of partner server information for the failover group. </summary>
+        [WirePath("properties.partnerServers")]
         public IList<PartnerServerInfo> PartnerServers { get; }
         /// <summary> List of databases in the failover group. </summary>
+        [WirePath("properties.databases")]
         public IList<ResourceIdentifier> FailoverDatabases { get; }
     }
 }

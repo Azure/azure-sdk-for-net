@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Avs
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScriptExecutionParameterDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Avs
                 writer.WriteStartArray();
                 foreach (var item in HiddenParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScriptExecutionParameterDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }

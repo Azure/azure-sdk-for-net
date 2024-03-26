@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteStartArray();
                     foreach (var item in Groups)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<WafMetricsResponseSeriesPropertiesItemsItem>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems>(item, options);
                 }
                 writer.WriteEndArray();
             }

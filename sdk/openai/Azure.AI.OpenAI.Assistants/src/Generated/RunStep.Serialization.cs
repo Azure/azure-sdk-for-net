@@ -41,11 +41,11 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             writer.WritePropertyName("step_details"u8);
-            writer.WriteObjectValue(StepDetails);
+            writer.WriteObjectValue<RunStepDetails>(StepDetails, options);
             if (LastError != null)
             {
                 writer.WritePropertyName("last_error"u8);
-                writer.WriteObjectValue(LastError);
+                writer.WriteObjectValue<RunStepError>(LastError, options);
             }
             else
             {
@@ -319,7 +319,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<RunStep>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

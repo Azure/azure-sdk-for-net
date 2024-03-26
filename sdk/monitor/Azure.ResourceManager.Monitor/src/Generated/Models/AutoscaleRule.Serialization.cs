@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.Monitor.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("metricTrigger"u8);
-            writer.WriteObjectValue(MetricTrigger);
+            writer.WriteObjectValue<MetricTrigger>(MetricTrigger, options);
             writer.WritePropertyName("scaleAction"u8);
-            writer.WriteObjectValue(ScaleAction);
+            writer.WriteObjectValue<MonitorScaleAction>(ScaleAction, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

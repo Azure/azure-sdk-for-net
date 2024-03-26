@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ErrorDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }

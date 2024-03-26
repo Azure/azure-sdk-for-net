@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(AccessEndpoint))
             {
                 writer.WritePropertyName("accessEndpoint"u8);
-                writer.WriteObjectValue(AccessEndpoint);
+                writer.WriteObjectValue<IntegrationServiceEnvironmentAccessEndpoint>(AccessEndpoint, options);
             }
             if (Optional.IsCollectionDefined(Subnets))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in Subnets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LogicResourceReference>(item, options);
                 }
                 writer.WriteEndArray();
             }

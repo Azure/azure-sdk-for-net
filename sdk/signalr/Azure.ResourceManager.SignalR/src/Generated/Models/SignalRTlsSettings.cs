@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Request client certificate during TLS handshake if enabled. </summary>
+        [WirePath("clientCertEnabled")]
         public bool? IsClientCertEnabled { get; set; }
     }
 }

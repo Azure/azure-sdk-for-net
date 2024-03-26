@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> APIM-Api Identifier. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
     }
 }

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (options.Format != "W" && Optional.IsDefined(Runbook))
             {
                 writer.WritePropertyName("runbook"u8);
-                writer.WriteObjectValue(Runbook);
+                writer.WriteObjectValue<RunbookAssociationProperty>(Runbook, options);
             }
             if (options.Format != "W" && Optional.IsDefined(JobId))
             {

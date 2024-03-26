@@ -75,8 +75,10 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Restore blob to the specified time. </summary>
+        [WirePath("timetoRestore")]
         public DateTimeOffset TimeToRestore { get; set; }
         /// <summary> Blob ranges to restore. </summary>
+        [WirePath("blobRanges")]
         public IList<BlobRestoreRange> BlobRanges { get; }
     }
 }

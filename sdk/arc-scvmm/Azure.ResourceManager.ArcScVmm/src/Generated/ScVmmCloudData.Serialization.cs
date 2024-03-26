@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ArcScVmm
             if (options.Format != "W" && Optional.IsDefined(CloudCapacity))
             {
                 writer.WritePropertyName("cloudCapacity"u8);
-                writer.WriteObjectValue(CloudCapacity);
+                writer.WriteObjectValue<CloudCapacity>(CloudCapacity, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(StorageQoSPolicies))
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ArcScVmm
                 writer.WriteStartArray();
                 foreach (var item in StorageQoSPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StorageQoSPolicy>(item, options);
                 }
                 writer.WriteEndArray();
             }

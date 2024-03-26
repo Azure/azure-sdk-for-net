@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("sshPublicKey"u8);
-            writer.WriteObjectValue(SshPublicKey);
+            writer.WriteObjectValue<NetworkCloudSshPublicKey>(SshPublicKey, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

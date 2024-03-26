@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
-                writer.WriteObjectValue(Interval);
+                writer.WriteObjectValue<DateTimeInterval>(Interval, options);
             }
             if (Optional.IsDefined(Top))
             {

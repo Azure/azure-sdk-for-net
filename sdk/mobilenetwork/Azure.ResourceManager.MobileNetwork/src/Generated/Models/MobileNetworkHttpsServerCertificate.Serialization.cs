@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (options.Format != "W" && Optional.IsDefined(Provisioning))
             {
                 writer.WritePropertyName("provisioning"u8);
-                writer.WriteObjectValue(Provisioning);
+                writer.WriteObjectValue<MobileNetworkCertificateProvisioning>(Provisioning, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

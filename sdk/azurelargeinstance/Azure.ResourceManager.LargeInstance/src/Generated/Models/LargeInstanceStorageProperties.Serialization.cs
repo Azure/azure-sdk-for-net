@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             if (Optional.IsDefined(StorageBillingProperties))
             {
                 writer.WritePropertyName("storageBillingProperties"u8);
-                writer.WriteObjectValue(StorageBillingProperties);
+                writer.WriteObjectValue<LargeInstanceStorageBillingProperties>(StorageBillingProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

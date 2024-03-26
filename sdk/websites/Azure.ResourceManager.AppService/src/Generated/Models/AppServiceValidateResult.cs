@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Result of validation. </summary>
+        [WirePath("status")]
         public string Status { get; }
         /// <summary> Error details for the case when validation fails. </summary>
+        [WirePath("error")]
         public ValidateResponseError Error { get; }
     }
 }

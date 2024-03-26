@@ -73,18 +73,25 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> URI for the key in keyvault for data encryption of the primary server. </summary>
+        [WirePath("primaryKeyURI")]
         public Uri PrimaryKeyUri { get; set; }
         /// <summary> Resource Id for the User assigned identity to be used for data encryption of the primary server. </summary>
+        [WirePath("primaryUserAssignedIdentityId")]
         public ResourceIdentifier PrimaryUserAssignedIdentityId { get; set; }
         /// <summary> URI for the key in keyvault for data encryption for geo-backup of server. </summary>
+        [WirePath("geoBackupKeyURI")]
         public Uri GeoBackupKeyUri { get; set; }
         /// <summary> Resource Id for the User assigned identity to be used for data encryption for geo-backup of server. </summary>
+        [WirePath("geoBackupUserAssignedIdentityId")]
         public string GeoBackupUserAssignedIdentityId { get; set; }
         /// <summary> Data encryption type to depict if it is System Managed vs Azure Key vault. </summary>
+        [WirePath("type")]
         public PostgreSqlFlexibleServerKeyType? KeyType { get; set; }
         /// <summary> Primary encryption key status for Data encryption enabled server. </summary>
+        [WirePath("primaryEncryptionKeyStatus")]
         public PostgreSqlKeyStatus? PrimaryEncryptionKeyStatus { get; set; }
         /// <summary> Geo-backup encryption key status for Data encryption enabled server. </summary>
+        [WirePath("geoBackupEncryptionKeyStatus")]
         public PostgreSqlKeyStatus? GeoBackupEncryptionKeyStatus { get; set; }
     }
 }

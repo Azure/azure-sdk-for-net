@@ -16,11 +16,11 @@ namespace Azure.Communication.CallAutomation
         {
             writer.WriteStartObject();
             writer.WritePropertyName("targetParticipant"u8);
-            writer.WriteObjectValue(TargetParticipant);
+            writer.WriteObjectValue<CommunicationIdentifierModel>(TargetParticipant);
             if (Optional.IsDefined(PlaySourceInfo))
             {
                 writer.WritePropertyName("playSourceInfo"u8);
-                writer.WriteObjectValue(PlaySourceInfo);
+                writer.WriteObjectValue<PlaySourceInternal>(PlaySourceInfo);
             }
             if (Optional.IsDefined(OperationContext))
             {

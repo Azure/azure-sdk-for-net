@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("error"u8);
-            writer.WriteObjectValue(Error);
+            writer.WriteObjectValue<Error>(Error);
             writer.WriteEndObject();
         }
 

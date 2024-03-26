@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ServiceAlertSummaryGroupItemInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

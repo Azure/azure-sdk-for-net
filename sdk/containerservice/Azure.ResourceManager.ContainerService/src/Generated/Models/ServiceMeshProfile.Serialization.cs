@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(Istio))
             {
                 writer.WritePropertyName("istio"u8);
-                writer.WriteObjectValue(Istio);
+                writer.WriteObjectValue<IstioServiceMesh>(Istio, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

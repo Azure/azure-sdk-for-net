@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.ServiceBus.Models
         }
 
         /// <summary> Number of active messages in the queue, topic, or subscription. </summary>
+        [WirePath("activeMessageCount")]
         public long? ActiveMessageCount { get; }
         /// <summary> Number of messages that are dead lettered. </summary>
+        [WirePath("deadLetterMessageCount")]
         public long? DeadLetterMessageCount { get; }
         /// <summary> Number of scheduled messages. </summary>
+        [WirePath("scheduledMessageCount")]
         public long? ScheduledMessageCount { get; }
         /// <summary> Number of messages transferred to another queue, topic, or subscription. </summary>
+        [WirePath("transferMessageCount")]
         public long? TransferMessageCount { get; }
         /// <summary> Number of messages transferred into dead letters. </summary>
+        [WirePath("transferDeadLetterMessageCount")]
         public long? TransferDeadLetterMessageCount { get; }
     }
 }

@@ -155,10 +155,11 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 #region Snippet:ResourceConstruction_Blobs_WithOptions_BlockBlob
                 BlockBlobStorageResourceOptions resourceOptions = new()
                 {
-                    Metadata = new Dictionary<string, string>
-                    {
-                        { "key", "value" }
-                    }
+                    Metadata = new DataTransferProperty<IDictionary<string, string>> (
+                        new Dictionary<string, string>
+                        {
+                            { "key", "value" }
+                        })
                 };
                 StorageResource leasedBlockBlobResource = blobs.FromClient(
                     blockBlobClient,

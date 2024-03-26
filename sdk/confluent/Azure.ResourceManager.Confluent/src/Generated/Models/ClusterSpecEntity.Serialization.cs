@@ -69,22 +69,22 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(Config))
             {
                 writer.WritePropertyName("config"u8);
-                writer.WriteObjectValue(Config);
+                writer.WriteObjectValue<ClusterConfigEntity>(Config, options);
             }
             if (Optional.IsDefined(Environment))
             {
                 writer.WritePropertyName("environment"u8);
-                writer.WriteObjectValue(Environment);
+                writer.WriteObjectValue<ClusterEnvironmentEntity>(Environment, options);
             }
             if (Optional.IsDefined(Network))
             {
                 writer.WritePropertyName("network"u8);
-                writer.WriteObjectValue(Network);
+                writer.WriteObjectValue<ClusterNetworkEntity>(Network, options);
             }
             if (Optional.IsDefined(Byok))
             {
                 writer.WritePropertyName("byok"u8);
-                writer.WriteObjectValue(Byok);
+                writer.WriteObjectValue<ClusterByokEntity>(Byok, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

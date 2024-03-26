@@ -1,0 +1,893 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetEntryStatusAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetEntryStatusAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<GetOperationResult> response = await client.GetEntryStatusAsync("<operationId>");
+]]></code>
+This sample shows how to call GetEntryStatusAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<GetOperationResult> response = await client.GetEntryStatusAsync("<operationId>");
+]]></code></example>
+    </member>
+    <member name="GetEntryStatus(string,CancellationToken)">
+      <example>
+This sample shows how to call GetEntryStatus.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<GetOperationResult> response = client.GetEntryStatus("<operationId>");
+]]></code>
+This sample shows how to call GetEntryStatus with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<GetOperationResult> response = client.GetEntryStatus("<operationId>");
+]]></code></example>
+    </member>
+    <member name="GetEntryStatusAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetEntryStatusAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = await client.GetEntryStatusAsync("<operationId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("operationId").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call GetEntryStatusAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = await client.GetEntryStatusAsync("<operationId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("entryId").ToString());
+Console.WriteLine(result.GetProperty("error").ToString());
+Console.WriteLine(result.GetProperty("operationId").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code></example>
+    </member>
+    <member name="GetEntryStatus(string,RequestContext)">
+      <example>
+This sample shows how to call GetEntryStatus and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = client.GetEntryStatus("<operationId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("operationId").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call GetEntryStatus with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = client.GetEntryStatus("<operationId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("entryId").ToString());
+Console.WriteLine(result.GetProperty("error").ToString());
+Console.WriteLine(result.GetProperty("operationId").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code></example>
+    </member>
+    <member name="GetEntryStatusesAsync(CancellationToken)">
+      <example>
+This sample shows how to call GetEntryStatusesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<ListOperationResult> response = await client.GetEntryStatusesAsync();
+]]></code>
+This sample shows how to call GetEntryStatusesAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<ListOperationResult> response = await client.GetEntryStatusesAsync();
+]]></code></example>
+    </member>
+    <member name="GetEntryStatuses(CancellationToken)">
+      <example>
+This sample shows how to call GetEntryStatuses.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<ListOperationResult> response = client.GetEntryStatuses();
+]]></code>
+This sample shows how to call GetEntryStatuses with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<ListOperationResult> response = client.GetEntryStatuses();
+]]></code></example>
+    </member>
+    <member name="GetEntryStatusesAsync(RequestContext)">
+      <example>
+This sample shows how to call GetEntryStatusesAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = await client.GetEntryStatusesAsync(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("operations")[0].GetProperty("operationId").ToString());
+Console.WriteLine(result.GetProperty("operations")[0].GetProperty("status").ToString());
+]]></code>
+This sample shows how to call GetEntryStatusesAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = await client.GetEntryStatusesAsync(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("operations")[0].GetProperty("entryId").ToString());
+Console.WriteLine(result.GetProperty("operations")[0].GetProperty("error").ToString());
+Console.WriteLine(result.GetProperty("operations")[0].GetProperty("operationId").ToString());
+Console.WriteLine(result.GetProperty("operations")[0].GetProperty("status").ToString());
+]]></code></example>
+    </member>
+    <member name="GetEntryStatuses(RequestContext)">
+      <example>
+This sample shows how to call GetEntryStatuses and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = client.GetEntryStatuses(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("operations")[0].GetProperty("operationId").ToString());
+Console.WriteLine(result.GetProperty("operations")[0].GetProperty("status").ToString());
+]]></code>
+This sample shows how to call GetEntryStatuses with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = client.GetEntryStatuses(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("operations")[0].GetProperty("entryId").ToString());
+Console.WriteLine(result.GetProperty("operations")[0].GetProperty("error").ToString());
+Console.WriteLine(result.GetProperty("operations")[0].GetProperty("operationId").ToString());
+Console.WriteLine(result.GetProperty("operations")[0].GetProperty("status").ToString());
+]]></code></example>
+    </member>
+    <member name="GetEntryAsync(string,bool?,CancellationToken)">
+      <example>
+This sample shows how to call GetEntryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<BinaryData> response = await client.GetEntryAsync("<entryId>");
+]]></code>
+This sample shows how to call GetEntryAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<BinaryData> response = await client.GetEntryAsync("<entryId>", embedReceipt: true);
+]]></code></example>
+    </member>
+    <member name="GetEntry(string,bool?,CancellationToken)">
+      <example>
+This sample shows how to call GetEntry.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<BinaryData> response = client.GetEntry("<entryId>");
+]]></code>
+This sample shows how to call GetEntry with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<BinaryData> response = client.GetEntry("<entryId>", embedReceipt: true);
+]]></code></example>
+    </member>
+    <member name="GetEntryAsync(string,bool?,RequestContext)">
+      <example>
+This sample shows how to call GetEntryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = await client.GetEntryAsync("<entryId>", null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetEntryAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = await client.GetEntryAsync("<entryId>", true, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetEntry(string,bool?,RequestContext)">
+      <example>
+This sample shows how to call GetEntry and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = client.GetEntry("<entryId>", null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetEntry with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = client.GetEntry("<entryId>", true, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetEntryReceiptAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetEntryReceiptAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<BinaryData> response = await client.GetEntryReceiptAsync("<entryId>");
+]]></code>
+This sample shows how to call GetEntryReceiptAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<BinaryData> response = await client.GetEntryReceiptAsync("<entryId>");
+]]></code></example>
+    </member>
+    <member name="GetEntryReceipt(string,CancellationToken)">
+      <example>
+This sample shows how to call GetEntryReceipt.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<BinaryData> response = client.GetEntryReceipt("<entryId>");
+]]></code>
+This sample shows how to call GetEntryReceipt with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<BinaryData> response = client.GetEntryReceipt("<entryId>");
+]]></code></example>
+    </member>
+    <member name="GetEntryReceiptAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetEntryReceiptAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = await client.GetEntryReceiptAsync("<entryId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetEntryReceiptAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = await client.GetEntryReceiptAsync("<entryId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetEntryReceipt(string,RequestContext)">
+      <example>
+This sample shows how to call GetEntryReceipt and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = client.GetEntryReceipt("<entryId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetEntryReceipt with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = client.GetEntryReceipt("<entryId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetParametersAsync(CancellationToken)">
+      <example>
+This sample shows how to call GetParametersAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<ParametersResult> response = await client.GetParametersAsync();
+]]></code>
+This sample shows how to call GetParametersAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<ParametersResult> response = await client.GetParametersAsync();
+]]></code></example>
+    </member>
+    <member name="GetParameters(CancellationToken)">
+      <example>
+This sample shows how to call GetParameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<ParametersResult> response = client.GetParameters();
+]]></code>
+This sample shows how to call GetParameters with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<ParametersResult> response = client.GetParameters();
+]]></code></example>
+    </member>
+    <member name="GetParametersAsync(RequestContext)">
+      <example>
+This sample shows how to call GetParametersAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = await client.GetParametersAsync(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("serviceCertificate").ToString());
+Console.WriteLine(result.GetProperty("serviceId").ToString());
+Console.WriteLine(result.GetProperty("signatureAlgorithm").ToString());
+Console.WriteLine(result.GetProperty("treeAlgorithm").ToString());
+]]></code>
+This sample shows how to call GetParametersAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = await client.GetParametersAsync(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("serviceCertificate").ToString());
+Console.WriteLine(result.GetProperty("serviceId").ToString());
+Console.WriteLine(result.GetProperty("signatureAlgorithm").ToString());
+Console.WriteLine(result.GetProperty("treeAlgorithm").ToString());
+]]></code></example>
+    </member>
+    <member name="GetParameters(RequestContext)">
+      <example>
+This sample shows how to call GetParameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = client.GetParameters(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("serviceCertificate").ToString());
+Console.WriteLine(result.GetProperty("serviceId").ToString());
+Console.WriteLine(result.GetProperty("signatureAlgorithm").ToString());
+Console.WriteLine(result.GetProperty("treeAlgorithm").ToString());
+]]></code>
+This sample shows how to call GetParameters with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = client.GetParameters(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("serviceCertificate").ToString());
+Console.WriteLine(result.GetProperty("serviceId").ToString());
+Console.WriteLine(result.GetProperty("signatureAlgorithm").ToString());
+Console.WriteLine(result.GetProperty("treeAlgorithm").ToString());
+]]></code></example>
+    </member>
+    <member name="GetDidConfigAsync(CancellationToken)">
+      <example>
+This sample shows how to call GetDidConfigAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<DidDocument> response = await client.GetDidConfigAsync();
+]]></code>
+This sample shows how to call GetDidConfigAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<DidDocument> response = await client.GetDidConfigAsync();
+]]></code></example>
+    </member>
+    <member name="GetDidConfig(CancellationToken)">
+      <example>
+This sample shows how to call GetDidConfig.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<DidDocument> response = client.GetDidConfig();
+]]></code>
+This sample shows how to call GetDidConfig with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<DidDocument> response = client.GetDidConfig();
+]]></code></example>
+    </member>
+    <member name="GetDidConfigAsync(RequestContext)">
+      <example>
+This sample shows how to call GetDidConfigAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = await client.GetDidConfigAsync(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("controller").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("kty").ToString());
+]]></code>
+This sample shows how to call GetDidConfigAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = await client.GetDidConfigAsync(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("controller").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("alg").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("crv").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("d").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("dp").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("dq").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("e").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("k").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("kid").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("kty").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("n").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("p").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("q").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("qi").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("use").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("x").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("x5c")[0].ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("y").ToString());
+]]></code></example>
+    </member>
+    <member name="GetDidConfig(RequestContext)">
+      <example>
+This sample shows how to call GetDidConfig and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = client.GetDidConfig(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("controller").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("kty").ToString());
+]]></code>
+This sample shows how to call GetDidConfig with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = client.GetDidConfig(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("controller").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("alg").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("crv").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("d").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("dp").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("dq").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("e").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("k").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("kid").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("kty").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("n").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("p").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("q").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("qi").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("use").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("x").ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("x5c")[0].ToString());
+Console.WriteLine(result.GetProperty("assertionMethod")[0].GetProperty("publicKeyJwk").GetProperty("y").ToString());
+]]></code></example>
+    </member>
+    <member name="GetCodeTransparencyConfigAsync(CancellationToken)">
+      <example>
+This sample shows how to call GetCodeTransparencyConfigAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<CodeTransparencyConfiguration> response = await client.GetCodeTransparencyConfigAsync();
+]]></code>
+This sample shows how to call GetCodeTransparencyConfigAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<CodeTransparencyConfiguration> response = await client.GetCodeTransparencyConfigAsync();
+]]></code></example>
+    </member>
+    <member name="GetCodeTransparencyConfig(CancellationToken)">
+      <example>
+This sample shows how to call GetCodeTransparencyConfig.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<CodeTransparencyConfiguration> response = client.GetCodeTransparencyConfig();
+]]></code>
+This sample shows how to call GetCodeTransparencyConfig with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<CodeTransparencyConfiguration> response = client.GetCodeTransparencyConfig();
+]]></code></example>
+    </member>
+    <member name="GetCodeTransparencyConfigAsync(RequestContext)">
+      <example>
+This sample shows how to call GetCodeTransparencyConfigAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = await client.GetCodeTransparencyConfigAsync(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetCodeTransparencyConfigAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = await client.GetCodeTransparencyConfigAsync(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("policy").GetProperty("accepted_algorithms")[0].ToString());
+Console.WriteLine(result.GetProperty("policy").GetProperty("accepted_did_issuers")[0].ToString());
+Console.WriteLine(result.GetProperty("authentication").GetProperty("allow_unauthenticated").ToString());
+Console.WriteLine(result.GetProperty("authentication").GetProperty("jwt").GetProperty("required_claims").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("service_identifier").ToString());
+]]></code></example>
+    </member>
+    <member name="GetCodeTransparencyConfig(RequestContext)">
+      <example>
+This sample shows how to call GetCodeTransparencyConfig and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = client.GetCodeTransparencyConfig(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetCodeTransparencyConfig with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = client.GetCodeTransparencyConfig(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("policy").GetProperty("accepted_algorithms")[0].ToString());
+Console.WriteLine(result.GetProperty("policy").GetProperty("accepted_did_issuers")[0].ToString());
+Console.WriteLine(result.GetProperty("authentication").GetProperty("allow_unauthenticated").ToString());
+Console.WriteLine(result.GetProperty("authentication").GetProperty("jwt").GetProperty("required_claims").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("service_identifier").ToString());
+]]></code></example>
+    </member>
+    <member name="GetCodeTransparencyVersionAsync(CancellationToken)">
+      <example>
+This sample shows how to call GetCodeTransparencyVersionAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<VersionResult> response = await client.GetCodeTransparencyVersionAsync();
+]]></code>
+This sample shows how to call GetCodeTransparencyVersionAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<VersionResult> response = await client.GetCodeTransparencyVersionAsync();
+]]></code></example>
+    </member>
+    <member name="GetCodeTransparencyVersion(CancellationToken)">
+      <example>
+This sample shows how to call GetCodeTransparencyVersion.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<VersionResult> response = client.GetCodeTransparencyVersion();
+]]></code>
+This sample shows how to call GetCodeTransparencyVersion with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response<VersionResult> response = client.GetCodeTransparencyVersion();
+]]></code></example>
+    </member>
+    <member name="GetCodeTransparencyVersionAsync(RequestContext)">
+      <example>
+This sample shows how to call GetCodeTransparencyVersionAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = await client.GetCodeTransparencyVersionAsync(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("scitt_version").ToString());
+]]></code>
+This sample shows how to call GetCodeTransparencyVersionAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = await client.GetCodeTransparencyVersionAsync(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("scitt_version").ToString());
+]]></code></example>
+    </member>
+    <member name="GetCodeTransparencyVersion(RequestContext)">
+      <example>
+This sample shows how to call GetCodeTransparencyVersion and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = client.GetCodeTransparencyVersion(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("scitt_version").ToString());
+]]></code>
+This sample shows how to call GetCodeTransparencyVersion with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+Response response = client.GetCodeTransparencyVersion(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("scitt_version").ToString());
+]]></code></example>
+    </member>
+    <member name="GetEntryIdsAsync(long?,long?,CancellationToken)">
+      <example>
+This sample shows how to call GetEntryIdsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+await foreach (string item in client.GetEntryIdsAsync())
+{
+}
+]]></code>
+This sample shows how to call GetEntryIdsAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+await foreach (string item in client.GetEntryIdsAsync(from: 1234L, to: 1234L))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetEntryIds(long?,long?,CancellationToken)">
+      <example>
+This sample shows how to call GetEntryIds.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+foreach (string item in client.GetEntryIds())
+{
+}
+]]></code>
+This sample shows how to call GetEntryIds with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+foreach (string item in client.GetEntryIds(from: 1234L, to: 1234L))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetEntryIdsAsync(long?,long?,RequestContext)">
+      <example>
+This sample shows how to call GetEntryIdsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetEntryIdsAsync(null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetEntryIdsAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetEntryIdsAsync(1234L, 1234L, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetEntryIds(long?,long?,RequestContext)">
+      <example>
+This sample shows how to call GetEntryIds and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetEntryIds(null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetEntryIds with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetEntryIds(1234L, 1234L, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code></example>
+    </member>
+  </members>
+</doc>

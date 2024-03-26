@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
-                writer.WriteObjectValue(Request);
+                writer.WriteObjectValue<HttpMessageDiagnostic>(Request, options);
             }
             if (Optional.IsDefined(Response))
             {
                 writer.WritePropertyName("response"u8);
-                writer.WriteObjectValue(Response);
+                writer.WriteObjectValue<HttpMessageDiagnostic>(Response, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Status of the operation represented by the requested Id. </summary>
+        [WirePath("status")]
         public PurgeState Status { get; }
     }
 }

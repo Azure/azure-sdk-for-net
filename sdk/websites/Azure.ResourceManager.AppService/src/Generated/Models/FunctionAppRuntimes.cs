@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Linux-specific settings associated with the minor version. </summary>
+        [WirePath("linuxRuntimeSettings")]
         public FunctionAppRuntimeSettings LinuxRuntimeSettings { get; }
         /// <summary> Windows-specific settings associated with the minor version. </summary>
+        [WirePath("windowsRuntimeSettings")]
         public FunctionAppRuntimeSettings WindowsRuntimeSettings { get; }
     }
 }

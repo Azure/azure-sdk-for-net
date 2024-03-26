@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Synapse
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PrivateEndpointConnectionForPrivateLinkHubBasic>(item, options);
                 }
                 writer.WriteEndArray();
             }

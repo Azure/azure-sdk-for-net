@@ -72,18 +72,25 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The threat ID. </summary>
+        [WirePath("threatId")]
         public string ThreatId { get; }
         /// <summary> The statement. </summary>
+        [WirePath("statement")]
         public string Statement { get; }
         /// <summary> The statement highlight offset. </summary>
+        [WirePath("statementHighlightOffset")]
         public int? StatementHighlightOffset { get; }
         /// <summary> The statement highlight length. </summary>
+        [WirePath("statementHighlightLength")]
         public int? StatementHighlightLength { get; }
         /// <summary> The sql error code. </summary>
+        [WirePath("errorCode")]
         public int? ErrorCode { get; }
         /// <summary> The sql error severity. </summary>
+        [WirePath("errorSeverity")]
         public int? ErrorSeverity { get; }
         /// <summary> The sql error message. </summary>
+        [WirePath("errorMessage")]
         public string ErrorMessage { get; }
     }
 }

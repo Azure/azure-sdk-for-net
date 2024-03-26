@@ -94,30 +94,43 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The name and capacity of the SKU. </summary>
+        [WirePath("sku")]
         public SqlSku Sku { get; set; }
         /// <summary> Sync interval of the sync group. </summary>
+        [WirePath("properties.interval")]
         public int? Interval { get; set; }
         /// <summary> Last sync time of the sync group. </summary>
+        [WirePath("properties.lastSyncTime")]
         public DateTimeOffset? LastSyncOn { get; }
         /// <summary> Conflict resolution policy of the sync group. </summary>
+        [WirePath("properties.conflictResolutionPolicy")]
         public SyncConflictResolutionPolicy? ConflictResolutionPolicy { get; set; }
         /// <summary> ARM resource id of the sync database in the sync group. </summary>
+        [WirePath("properties.syncDatabaseId")]
         public ResourceIdentifier SyncDatabaseId { get; set; }
         /// <summary> User name for the sync group hub database credential. </summary>
+        [WirePath("properties.hubDatabaseUserName")]
         public string HubDatabaseUserName { get; set; }
         /// <summary> Password for the sync group hub database credential. </summary>
+        [WirePath("properties.hubDatabasePassword")]
         public string HubDatabasePassword { get; set; }
         /// <summary> Sync state of the sync group. </summary>
+        [WirePath("properties.syncState")]
         public SyncGroupState? SyncState { get; }
         /// <summary> Sync schema of the sync group. </summary>
+        [WirePath("properties.schema")]
         public SyncGroupSchema Schema { get; set; }
         /// <summary> If conflict logging is enabled. </summary>
+        [WirePath("properties.enableConflictLogging")]
         public bool? IsConflictLoggingEnabled { get; set; }
         /// <summary> Conflict logging retention period. </summary>
+        [WirePath("properties.conflictLoggingRetentionInDays")]
         public int? ConflictLoggingRetentionInDays { get; set; }
         /// <summary> If use private link connection is enabled. </summary>
+        [WirePath("properties.usePrivateLinkConnection")]
         public bool? UsePrivateLinkConnection { get; set; }
         /// <summary> Private endpoint name of the sync group if use private link connection is enabled. </summary>
+        [WirePath("properties.privateEndpointName")]
         public string PrivateEndpointName { get; }
     }
 }

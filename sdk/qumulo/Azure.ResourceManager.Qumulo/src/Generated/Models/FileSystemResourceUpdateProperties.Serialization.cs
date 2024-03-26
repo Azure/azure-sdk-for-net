@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Qumulo.Models
             if (Optional.IsDefined(MarketplaceDetails))
             {
                 writer.WritePropertyName("marketplaceDetails"u8);
-                writer.WriteObjectValue(MarketplaceDetails);
+                writer.WriteObjectValue<MarketplaceDetails>(MarketplaceDetails, options);
             }
             if (Optional.IsDefined(UserDetails))
             {
                 writer.WritePropertyName("userDetails"u8);
-                writer.WriteObjectValue(UserDetails);
+                writer.WriteObjectValue<QumuloUserDetails>(UserDetails, options);
             }
             if (Optional.IsDefined(DelegatedSubnetId))
             {

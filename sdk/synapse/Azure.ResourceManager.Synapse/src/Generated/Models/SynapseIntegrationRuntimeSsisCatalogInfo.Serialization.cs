@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(CatalogAdminPassword))
             {
                 writer.WritePropertyName("catalogAdminPassword"u8);
-                writer.WriteObjectValue(CatalogAdminPassword);
+                writer.WriteObjectValue<SynapseSecureString>(CatalogAdminPassword, options);
             }
             if (Optional.IsDefined(CatalogPricingTier))
             {

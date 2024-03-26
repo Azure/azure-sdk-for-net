@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(GrantSqlControlToManagedIdentity))
             {
                 writer.WritePropertyName("grantSqlControlToManagedIdentity"u8);
-                writer.WriteObjectValue(GrantSqlControlToManagedIdentity);
+                writer.WriteObjectValue<SynapseGrantSqlControlToManagedIdentity>(GrantSqlControlToManagedIdentity, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

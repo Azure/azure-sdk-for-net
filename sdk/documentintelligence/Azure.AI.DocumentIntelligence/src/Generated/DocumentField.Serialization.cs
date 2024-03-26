@@ -79,7 +79,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in ValueList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentField>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,19 +90,19 @@ namespace Azure.AI.DocumentIntelligence
                 foreach (var item in ValueDictionary)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<DocumentField>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(ValueCurrency))
             {
                 writer.WritePropertyName("valueCurrency"u8);
-                writer.WriteObjectValue(ValueCurrency);
+                writer.WriteObjectValue<CurrencyValue>(ValueCurrency, options);
             }
             if (Optional.IsDefined(ValueAddress))
             {
                 writer.WritePropertyName("valueAddress"u8);
-                writer.WriteObjectValue(ValueAddress);
+                writer.WriteObjectValue<AddressValue>(ValueAddress, options);
             }
             if (Optional.IsDefined(ValueBoolean))
             {
@@ -130,7 +130,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in BoundingRegions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BoundingRegion>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -140,7 +140,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Spans)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentSpan>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -469,7 +469,7 @@ namespace Azure.AI.DocumentIntelligence
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<DocumentField>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

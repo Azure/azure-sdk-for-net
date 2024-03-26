@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The convention used when determining the session cookie's expiration. </summary>
+        [WirePath("convention")]
         public CookieExpirationConvention? Convention { get; set; }
         /// <summary> The time after the request is made when the session cookie should expire. </summary>
+        [WirePath("timeToExpiration")]
         public string TimeToExpiration { get; set; }
     }
 }

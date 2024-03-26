@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in ActionGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ActivityLogAlertActionGroup>(item, options);
                 }
                 writer.WriteEndArray();
             }

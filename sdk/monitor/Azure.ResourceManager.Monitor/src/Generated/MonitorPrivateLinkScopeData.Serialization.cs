@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("accessModeSettings"u8);
-            writer.WriteObjectValue(AccessModeSettings);
+            writer.WriteObjectValue<MonitorPrivateLinkAccessModeSettings>(AccessModeSettings, options);
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

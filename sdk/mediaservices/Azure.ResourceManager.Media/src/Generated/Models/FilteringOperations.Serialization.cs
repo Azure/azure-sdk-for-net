@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Deinterlace))
             {
                 writer.WritePropertyName("deinterlace"u8);
-                writer.WriteObjectValue(Deinterlace);
+                writer.WriteObjectValue<DeinterlaceSettings>(Deinterlace, options);
             }
             if (Optional.IsDefined(Rotation))
             {
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Crop))
             {
                 writer.WritePropertyName("crop"u8);
-                writer.WriteObjectValue(Crop);
+                writer.WriteObjectValue<RectangularWindow>(Crop, options);
             }
             if (Optional.IsDefined(FadeIn))
             {
                 writer.WritePropertyName("fadeIn"u8);
-                writer.WriteObjectValue(FadeIn);
+                writer.WriteObjectValue<FadeOptions>(FadeIn, options);
             }
             if (Optional.IsDefined(FadeOut))
             {
                 writer.WritePropertyName("fadeOut"u8);
-                writer.WriteObjectValue(FadeOut);
+                writer.WriteObjectValue<FadeOptions>(FadeOut, options);
             }
             if (Optional.IsCollectionDefined(Overlays))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Overlays)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MediaOverlayBase>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The resource of an Azure Cosmos DB Table event. </summary>
+        [WirePath("properties.resource")]
         public ExtendedRestorableTableResourceInfo Resource { get; }
     }
 }

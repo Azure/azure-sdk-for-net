@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerAppCustomDomainVerificationFailureInfoDetailsItem>(item, options);
                 }
                 writer.WriteEndArray();
             }

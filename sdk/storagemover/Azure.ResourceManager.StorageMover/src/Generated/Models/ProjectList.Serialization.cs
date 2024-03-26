@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StorageMoverProjectData>(item, options);
                 }
                 writer.WriteEndArray();
             }

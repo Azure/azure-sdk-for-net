@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> The list of server configurations. </summary>
+        [WirePath("value")]
         public IList<PostgreSqlConfigurationData> Value { get; }
     }
 }

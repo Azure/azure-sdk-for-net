@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Parameters);
+                writer.WriteObjectValue<PiiTaskParameters>(Parameters);
             }
             if (Optional.IsDefined(TaskName))
             {

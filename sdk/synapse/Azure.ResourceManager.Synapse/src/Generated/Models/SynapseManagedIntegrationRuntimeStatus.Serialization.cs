@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SynapseManagedIntegrationRuntimeNode>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in OtherErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SynapseManagedIntegrationRuntimeError>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(LastOperation))
             {
                 writer.WritePropertyName("lastOperation"u8);
-                writer.WriteObjectValue(LastOperation);
+                writer.WriteObjectValue<SynapseManagedIntegrationRuntimeOperationResult>(LastOperation, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)

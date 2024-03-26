@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Avs
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScriptParameter>(item, options);
                 }
                 writer.WriteEndArray();
             }

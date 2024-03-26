@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerService
             writer.WriteStartArray();
             foreach (var item in OSOptionPropertyList)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ContainerServiceOSOptionProperty>(item, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

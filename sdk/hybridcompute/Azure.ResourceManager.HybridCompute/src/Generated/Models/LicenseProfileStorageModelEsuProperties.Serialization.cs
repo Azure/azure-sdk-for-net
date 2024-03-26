@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in EsuKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EsuKey>(item, options);
                 }
                 writer.WriteEndArray();
             }

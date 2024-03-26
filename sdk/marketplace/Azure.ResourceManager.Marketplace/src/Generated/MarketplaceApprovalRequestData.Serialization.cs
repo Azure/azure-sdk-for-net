@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WriteStartArray();
                 foreach (var item in PlansDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PrivateStorePlanDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }

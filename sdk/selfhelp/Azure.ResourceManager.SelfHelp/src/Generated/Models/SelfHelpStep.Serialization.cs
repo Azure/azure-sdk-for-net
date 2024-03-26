@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StepInput>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(AutomatedCheckResults))
             {
                 writer.WritePropertyName("automatedCheckResults"u8);
-                writer.WriteObjectValue(AutomatedCheckResults);
+                writer.WriteObjectValue<AutomatedCheckResult>(AutomatedCheckResults, options);
             }
             if (Optional.IsCollectionDefined(Insights))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Insights)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SelfHelpDiagnosticInsight>(item, options);
                 }
                 writer.WriteEndArray();
             }

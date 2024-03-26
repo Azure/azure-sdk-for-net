@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Cdn
                 if (SharedPrivateLinkResource != null)
                 {
                     writer.WritePropertyName("sharedPrivateLinkResource"u8);
-                    writer.WriteObjectValue(SharedPrivateLinkResource);
+                    writer.WriteObjectValue<SharedPrivateLinkResourceProperties>(SharedPrivateLinkResource, options);
                 }
                 else
                 {

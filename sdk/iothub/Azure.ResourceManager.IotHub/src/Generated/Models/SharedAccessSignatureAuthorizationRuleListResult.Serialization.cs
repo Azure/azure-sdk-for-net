@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SharedAccessSignatureAuthorizationRule>(item, options);
                 }
                 writer.WriteEndArray();
             }

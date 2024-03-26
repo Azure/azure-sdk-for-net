@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(EstimatedVmPrices))
             {
                 writer.WritePropertyName("estimatedVMPrices"u8);
-                writer.WriteObjectValue(EstimatedVmPrices);
+                writer.WriteObjectValue<MachineLearningEstimatedVmPrices>(EstimatedVmPrices, options);
             }
             if (Optional.IsCollectionDefined(SupportedComputeTypes))
             {

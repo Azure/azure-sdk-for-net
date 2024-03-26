@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in Hive)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HiveCatalogOption>(item, options);
                 }
                 writer.WriteEndArray();
             }

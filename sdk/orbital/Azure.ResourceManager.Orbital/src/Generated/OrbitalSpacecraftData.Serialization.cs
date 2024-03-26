@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Orbital
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OrbitalSpacecraftLink>(item, options);
                 }
                 writer.WriteEndArray();
             }

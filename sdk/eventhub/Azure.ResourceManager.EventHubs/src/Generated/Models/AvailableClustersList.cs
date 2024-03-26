@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> The count of readily available and pre-provisioned Event Hubs Clusters per region. </summary>
+        [WirePath("value")]
         public IReadOnlyList<AvailableCluster> Value { get; }
     }
 }

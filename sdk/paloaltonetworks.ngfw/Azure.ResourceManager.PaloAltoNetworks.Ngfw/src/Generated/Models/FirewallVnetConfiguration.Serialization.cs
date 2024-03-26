@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("vnet"u8);
-            writer.WriteObjectValue(Vnet);
+            writer.WriteObjectValue<IPAddressSpaceInfo>(Vnet, options);
             writer.WritePropertyName("trustSubnet"u8);
-            writer.WriteObjectValue(TrustSubnet);
+            writer.WriteObjectValue<IPAddressSpaceInfo>(TrustSubnet, options);
             writer.WritePropertyName("unTrustSubnet"u8);
-            writer.WriteObjectValue(UnTrustSubnet);
+            writer.WriteObjectValue<IPAddressSpaceInfo>(UnTrustSubnet, options);
             if (Optional.IsDefined(IPOfTrustSubnetForUdr))
             {
                 writer.WritePropertyName("ipOfTrustSubnetForUdr"u8);
-                writer.WriteObjectValue(IPOfTrustSubnetForUdr);
+                writer.WriteObjectValue<IPAddressInfo>(IPOfTrustSubnetForUdr, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

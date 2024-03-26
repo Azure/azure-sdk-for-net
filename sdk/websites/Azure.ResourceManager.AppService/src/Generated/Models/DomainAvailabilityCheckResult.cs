@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Name of the domain. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if domain can be purchased using CreateDomain API; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("available")]
         public bool? IsAvailable { get; }
         /// <summary> Valid values are Regular domain: Azure will charge the full price of domain registration, SoftDeleted: Purchasing this domain will simply restore it and this operation will not cost anything. </summary>
+        [WirePath("domainType")]
         public AppServiceDomainType? DomainType { get; }
     }
 }

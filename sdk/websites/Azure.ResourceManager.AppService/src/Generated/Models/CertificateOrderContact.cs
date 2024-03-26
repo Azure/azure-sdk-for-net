@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Gets the email. </summary>
+        [WirePath("email")]
         public string Email { get; }
         /// <summary> Gets the name first. </summary>
+        [WirePath("nameFirst")]
         public string NameFirst { get; }
         /// <summary> Gets the name last. </summary>
+        [WirePath("nameLast")]
         public string NameLast { get; }
         /// <summary> Gets the phone. </summary>
+        [WirePath("phone")]
         public string Phone { get; }
     }
 }

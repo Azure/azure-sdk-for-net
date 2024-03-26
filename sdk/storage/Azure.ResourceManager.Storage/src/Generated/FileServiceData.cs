@@ -76,10 +76,12 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Sku name and tier. </summary>
+        [WirePath("sku")]
         public StorageSku Sku { get; }
         /// <summary> Specifies CORS rules for the File service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the File service. </summary>
         internal StorageCorsRules Cors { get; set; }
         /// <summary> The List of CORS rules. You can include up to five CorsRule elements in the request. </summary>
+        [WirePath("properties.cors.corsRules")]
         public IList<StorageCorsRule> CorsRules
         {
             get
@@ -91,10 +93,12 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> The file service properties for share soft delete. </summary>
+        [WirePath("properties.shareDeleteRetentionPolicy")]
         public DeleteRetentionPolicy ShareDeleteRetentionPolicy { get; set; }
         /// <summary> Protocol settings for file service. </summary>
         internal ProtocolSettings ProtocolSettings { get; set; }
         /// <summary> Setting for SMB protocol. </summary>
+        [WirePath("properties.protocolSettings.smb")]
         public SmbSetting ProtocolSmbSetting
         {
             get => ProtocolSettings is null ? default : ProtocolSettings.SmbSetting;

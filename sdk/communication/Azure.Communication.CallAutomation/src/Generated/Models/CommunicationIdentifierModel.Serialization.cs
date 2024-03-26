@@ -29,22 +29,22 @@ namespace Azure.Communication
             if (CallAutomation.Optional.IsDefined(CommunicationUser))
             {
                 writer.WritePropertyName("communicationUser"u8);
-                writer.WriteObjectValue(CommunicationUser);
+                writer.WriteObjectValue<CommunicationUserIdentifierModel>(CommunicationUser);
             }
             if (CallAutomation.Optional.IsDefined(PhoneNumber))
             {
                 writer.WritePropertyName("phoneNumber"u8);
-                writer.WriteObjectValue(PhoneNumber);
+                writer.WriteObjectValue<PhoneNumberIdentifierModel>(PhoneNumber);
             }
             if (CallAutomation.Optional.IsDefined(MicrosoftTeamsUser))
             {
                 writer.WritePropertyName("microsoftTeamsUser"u8);
-                writer.WriteObjectValue(MicrosoftTeamsUser);
+                writer.WriteObjectValue<MicrosoftTeamsUserIdentifierModel>(MicrosoftTeamsUser);
             }
             if (CallAutomation.Optional.IsDefined(MicrosoftTeamsApp))
             {
                 writer.WritePropertyName("microsoftTeamsApp"u8);
-                writer.WriteObjectValue(MicrosoftTeamsApp);
+                writer.WriteObjectValue<MicrosoftTeamsAppIdentifierModel>(MicrosoftTeamsApp);
             }
             writer.WriteEndObject();
         }

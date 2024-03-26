@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The time the last successful slot swap completed. </summary>
+        [WirePath("timestampUtc")]
         public DateTimeOffset? TimestampUtc { get; }
         /// <summary> The source slot of the last swap operation. </summary>
+        [WirePath("sourceSlotName")]
         public string SourceSlotName { get; }
         /// <summary> The destination slot of the last swap operation. </summary>
+        [WirePath("destinationSlotName")]
         public string DestinationSlotName { get; }
     }
 }

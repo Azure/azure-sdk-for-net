@@ -59,7 +59,7 @@ namespace Azure.DigitalTwins.Core
                     content.JsonWriter.WriteNullValue();
                     continue;
                 }
-                content.JsonWriter.WriteObjectValue(item);
+                content.JsonWriter.WriteObjectValue<object>(item);
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;
@@ -364,7 +364,7 @@ namespace Azure.DigitalTwins.Core
                     content.JsonWriter.WriteNullValue();
                     continue;
                 }
-                content.JsonWriter.WriteObjectValue(item);
+                content.JsonWriter.WriteObjectValue<object>(item);
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;

@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Hci
                 writer.WriteStartArray();
                 foreach (var item in Steps)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HciUpdateStep>(item, options);
                 }
                 writer.WriteEndArray();
             }

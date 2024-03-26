@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(CustomDetails))
             {
                 writer.WritePropertyName("customDetails"u8);
-                writer.WriteObjectValue(CustomDetails);
+                writer.WriteObjectValue<SiteRecoveryTaskTypeDetails>(CustomDetails, options);
             }
             if (Optional.IsDefined(GroupTaskCustomDetails))
             {
                 writer.WritePropertyName("groupTaskCustomDetails"u8);
-                writer.WriteObjectValue(GroupTaskCustomDetails);
+                writer.WriteObjectValue<SiteRecoveryGroupTaskDetails>(GroupTaskCustomDetails, options);
             }
             if (Optional.IsCollectionDefined(Errors))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryJobErrorDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }

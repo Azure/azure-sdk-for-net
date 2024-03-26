@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Gets or sets the customer id. </summary>
+        [WirePath("customerId")]
         public string CustomerId { get; set; }
         /// <summary> Gets or sets the shared key. </summary>
+        [WirePath("sharedKey")]
         public string SharedKey { get; set; }
     }
 }

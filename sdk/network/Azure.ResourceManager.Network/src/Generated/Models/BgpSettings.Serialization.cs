@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in BgpPeeringAddresses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkIPConfigurationBgpPeeringAddress>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -96,18 +96,25 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Function App ID. </summary>
+        [WirePath("properties.function_app_id")]
         public string FunctionAppId { get; set; }
         /// <summary> Script root path URI. </summary>
+        [WirePath("properties.script_root_path_href")]
         public string ScriptRootPathHref { get; set; }
         /// <summary> Script URI. </summary>
+        [WirePath("properties.script_href")]
         public string ScriptHref { get; set; }
         /// <summary> Config URI. </summary>
+        [WirePath("properties.config_href")]
         public string ConfigHref { get; set; }
         /// <summary> Test data URI. </summary>
+        [WirePath("properties.test_data_href")]
         public string TestDataHref { get; set; }
         /// <summary> Secrets file URI. </summary>
+        [WirePath("properties.secrets_file_href")]
         public string SecretsFileHref { get; set; }
         /// <summary> Function URI. </summary>
+        [WirePath("properties.href")]
         public string Href { get; set; }
         /// <summary>
         /// Config information.
@@ -139,18 +146,25 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.config")]
         public BinaryData Config { get; set; }
         /// <summary> File list. </summary>
+        [WirePath("properties.files")]
         public IDictionary<string, string> Files { get; }
         /// <summary> Test data used when testing via the Azure Portal. </summary>
+        [WirePath("properties.test_data")]
         public string TestData { get; set; }
         /// <summary> The invocation URL. </summary>
+        [WirePath("properties.invoke_url_template")]
         public string InvokeUrlTemplate { get; set; }
         /// <summary> The function language. </summary>
+        [WirePath("properties.language")]
         public string Language { get; set; }
         /// <summary> Gets or sets a value indicating whether the function is disabled. </summary>
+        [WirePath("properties.isDisabled")]
         public bool? IsDisabled { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

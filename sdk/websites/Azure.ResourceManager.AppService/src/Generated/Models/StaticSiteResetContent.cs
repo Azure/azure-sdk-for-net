@@ -70,10 +70,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The token which proves admin privileges to the repository. </summary>
+        [WirePath("properties.repositoryToken")]
         public string RepositoryToken { get; set; }
         /// <summary> Determines whether the repository should be updated with the new properties. </summary>
+        [WirePath("properties.shouldUpdateRepository")]
         public bool? ShouldUpdateRepository { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

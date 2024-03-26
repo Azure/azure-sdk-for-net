@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         }
 
         /// <summary> Safe failover is to indicate the service should wait for pending replication to finish before switching to the secondary. </summary>
+        [WirePath("properties.IsSafeFailover")]
         public bool? IsSafeFailover { get; set; }
     }
 }

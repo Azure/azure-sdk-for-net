@@ -79,14 +79,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStartArray();
                 foreach (var item in ActiveDirectories)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetAppAccountActiveDirectory>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<NetAppAccountEncryption>(Encryption, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DisableShowmount))
             {

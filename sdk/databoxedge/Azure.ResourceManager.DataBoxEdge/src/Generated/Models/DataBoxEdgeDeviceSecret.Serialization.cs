@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(EncryptedSecret))
             {
                 writer.WritePropertyName("encryptedSecret"u8);
-                writer.WriteObjectValue(EncryptedSecret);
+                writer.WriteObjectValue<AsymmetricEncryptedSecret>(EncryptedSecret, options);
             }
             if (Optional.IsDefined(KeyVaultId))
             {

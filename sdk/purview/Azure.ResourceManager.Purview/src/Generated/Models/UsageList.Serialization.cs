@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Purview.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PurviewUsage>(item, options);
                 }
                 writer.WriteEndArray();
             }

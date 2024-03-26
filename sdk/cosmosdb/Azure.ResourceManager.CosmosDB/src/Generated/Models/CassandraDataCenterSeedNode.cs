@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> IP address of this seed node. </summary>
+        [WirePath("ipAddress")]
         public string IPAddress { get; set; }
     }
 }

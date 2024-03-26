@@ -76,16 +76,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The domain name for the static site custom domain. </summary>
+        [WirePath("properties.domain")]
         public string Domain { get; set; }
         /// <summary> The identity provider for the static site user. </summary>
+        [WirePath("properties.provider")]
         public string Provider { get; set; }
         /// <summary> The user id for the static site user. </summary>
+        [WirePath("properties.userDetails")]
         public string UserDetails { get; set; }
         /// <summary> The roles for the static site user, in free-form string format. </summary>
+        [WirePath("properties.roles")]
         public string Roles { get; set; }
         /// <summary> The number of hours the sas token stays valid. </summary>
+        [WirePath("properties.numHoursToExpiration")]
         public int? NumHoursToExpiration { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

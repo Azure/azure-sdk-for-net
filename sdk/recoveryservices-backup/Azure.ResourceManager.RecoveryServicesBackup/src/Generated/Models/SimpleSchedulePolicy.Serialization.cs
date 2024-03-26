@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(HourlySchedule))
             {
                 writer.WritePropertyName("hourlySchedule"u8);
-                writer.WriteObjectValue(HourlySchedule);
+                writer.WriteObjectValue<BackupHourlySchedule>(HourlySchedule, options);
             }
             if (Optional.IsDefined(ScheduleWeeklyFrequency))
             {

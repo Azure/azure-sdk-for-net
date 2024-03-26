@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.EdgeOrder
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("orderItemDetails"u8);
-            writer.WriteObjectValue(OrderItemDetails);
+            writer.WriteObjectValue<EdgeOrderItemDetails>(OrderItemDetails, options);
             writer.WritePropertyName("addressDetails"u8);
-            writer.WriteObjectValue(AddressDetails);
+            writer.WriteObjectValue<EdgeOrderItemAddressDetails>(AddressDetails, options);
             if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 writer.WriteStartArray();
                 foreach (var item in ShareablePrivateLinkTypes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ShareablePrivateLinkType>(item, options);
                 }
                 writer.WriteEndArray();
             }

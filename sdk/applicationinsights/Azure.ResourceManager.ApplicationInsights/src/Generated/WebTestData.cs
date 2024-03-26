@@ -105,28 +105,39 @@ namespace Azure.ResourceManager.ApplicationInsights
         }
 
         /// <summary> The kind of WebTest that this web test watches. Choices are ping, multistep and standard. </summary>
+        [WirePath("kind")]
         public WebTestKind? Kind { get; set; }
         /// <summary> Unique ID of this WebTest. This is typically the same value as the Name field. </summary>
+        [WirePath("properties.SyntheticMonitorId")]
         public string SyntheticMonitorId { get; set; }
         /// <summary> User defined name if this WebTest. </summary>
+        [WirePath("properties.Name")]
         public string WebTestName { get; set; }
         /// <summary> User defined description for this WebTest. </summary>
+        [WirePath("properties.Description")]
         public string Description { get; set; }
         /// <summary> Is the test actively being monitored. </summary>
+        [WirePath("properties.Enabled")]
         public bool? IsEnabled { get; set; }
         /// <summary> Interval in seconds between test runs for this WebTest. Default value is 300. </summary>
+        [WirePath("properties.Frequency")]
         public int? FrequencyInSeconds { get; set; }
         /// <summary> Seconds until this WebTest will timeout and fail. Default value is 30. </summary>
+        [WirePath("properties.Timeout")]
         public int? TimeoutInSeconds { get; set; }
         /// <summary> The kind of web test this is, valid choices are ping, multistep and standard. </summary>
+        [WirePath("properties.Kind")]
         public WebTestKind? WebTestKind { get; set; }
         /// <summary> Allow for retries should this WebTest fail. </summary>
+        [WirePath("properties.RetryEnabled")]
         public bool? IsRetryEnabled { get; set; }
         /// <summary> A list of where to physically run the tests from to give global coverage for accessibility of your application. </summary>
+        [WirePath("properties.Locations")]
         public IList<WebTestGeolocation> Locations { get; }
         /// <summary> An XML configuration specification for a WebTest. </summary>
         internal WebTestPropertiesConfiguration Configuration { get; set; }
         /// <summary> The XML specification of a WebTest to run against an application. </summary>
+        [WirePath("properties.Configuration.WebTest")]
         public string WebTest
         {
             get => Configuration is null ? default : Configuration.WebTest;
@@ -139,10 +150,13 @@ namespace Azure.ResourceManager.ApplicationInsights
         }
 
         /// <summary> Current state of this component, whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Succeeded, Deploying, Canceled, and Failed. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
         /// <summary> The collection of request properties. </summary>
+        [WirePath("properties.Request")]
         public WebTestPropertiesRequest Request { get; set; }
         /// <summary> The collection of validation rule properties. </summary>
+        [WirePath("properties.ValidationRules")]
         public WebTestPropertiesValidationRules ValidationRules { get; set; }
     }
 }

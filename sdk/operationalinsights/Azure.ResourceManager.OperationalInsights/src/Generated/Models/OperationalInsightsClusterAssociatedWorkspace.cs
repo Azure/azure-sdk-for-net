@@ -67,12 +67,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The id of the assigned workspace. </summary>
+        [WirePath("workspaceId")]
         public Guid? WorkspaceId { get; }
         /// <summary> The name id the assigned workspace. </summary>
+        [WirePath("workspaceName")]
         public string WorkspaceName { get; }
         /// <summary> The ResourceId id the assigned workspace. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; }
         /// <summary> The time of workspace association. </summary>
+        [WirePath("associateDate")]
         public DateTimeOffset? AssociatedOn { get; }
     }
 }

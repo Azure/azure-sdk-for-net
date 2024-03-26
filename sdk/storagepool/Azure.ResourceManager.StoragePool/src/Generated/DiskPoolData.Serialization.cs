@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.StoragePool
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<StoragePoolSku>(Sku, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ManagedBy))
             {

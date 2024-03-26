@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Quota
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<ServiceErrorDetail>(Error, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RequestSubmitOn))
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Quota
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<QuotaSubRequestDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }

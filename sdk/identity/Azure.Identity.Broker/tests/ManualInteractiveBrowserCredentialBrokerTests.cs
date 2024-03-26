@@ -42,7 +42,7 @@ namespace Azure.Identity.Broker.Tests
         {
             IntPtr parentWindowHandle = GetForegroundWindow();
 
-            var cred = new InteractiveBrowserCredential(new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle) { UseOperatingSystemAccount = true });
+            var cred = new InteractiveBrowserCredential(new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle) { UseDefaultBrokerAccount = true });
 
             AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
 

@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(NetworkSecurityGroup))
             {
                 writer.WritePropertyName("networkSecurityGroup"u8);
-                writer.WriteObjectValue(NetworkSecurityGroup);
+                writer.WriteObjectValue<NetworkSecurityGroupData>(NetworkSecurityGroup, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                writer.WriteObjectValue(PrivateEndpoint);
+                writer.WriteObjectValue<PrivateEndpointData>(PrivateEndpoint, options);
             }
             if (Optional.IsCollectionDefined(IPConfigurations))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkInterfaceIPConfigurationData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,14 +102,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in TapConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkInterfaceTapConfigurationData>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings"u8);
-                writer.WriteObjectValue(DnsSettings);
+                writer.WriteObjectValue<NetworkInterfaceDnsSettings>(DnsSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MacAddress))
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(PrivateLinkService))
             {
                 writer.WritePropertyName("privateLinkService"u8);
-                writer.WriteObjectValue(PrivateLinkService);
+                writer.WriteObjectValue<PrivateLinkServiceData>(PrivateLinkService, options);
             }
             if (Optional.IsDefined(MigrationPhase))
             {

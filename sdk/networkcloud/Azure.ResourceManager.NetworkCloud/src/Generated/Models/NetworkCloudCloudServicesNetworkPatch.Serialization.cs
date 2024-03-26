@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in AdditionalEgressEndpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EgressEndpoint>(item, options);
                 }
                 writer.WriteEndArray();
             }

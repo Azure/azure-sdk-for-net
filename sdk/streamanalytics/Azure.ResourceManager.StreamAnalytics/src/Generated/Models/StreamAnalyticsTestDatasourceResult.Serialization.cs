@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StreamAnalyticsErrorDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }

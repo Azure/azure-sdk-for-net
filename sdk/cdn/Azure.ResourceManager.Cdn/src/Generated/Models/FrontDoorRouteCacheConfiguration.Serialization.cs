@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(CompressionSettings))
             {
                 writer.WritePropertyName("compressionSettings"u8);
-                writer.WriteObjectValue(CompressionSettings);
+                writer.WriteObjectValue<RouteCacheCompressionSettings>(CompressionSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

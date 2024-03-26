@@ -29,16 +29,16 @@ namespace Azure.Communication.Email
             writer.WritePropertyName("senderAddress"u8);
             writer.WriteStringValue(SenderAddress);
             writer.WritePropertyName("content"u8);
-            writer.WriteObjectValue(Content);
+            writer.WriteObjectValue<EmailContent>(Content);
             writer.WritePropertyName("recipients"u8);
-            writer.WriteObjectValue(Recipients);
+            writer.WriteObjectValue<EmailRecipients>(Recipients);
             if (Optional.IsCollectionDefined(Attachments))
             {
                 writer.WritePropertyName("attachments"u8);
                 writer.WriteStartArray();
                 foreach (var item in Attachments)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EmailAttachment>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -48,7 +48,7 @@ namespace Azure.Communication.Email
                 writer.WriteStartArray();
                 foreach (var item in ReplyTo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EmailAddress>(item);
                 }
                 writer.WriteEndArray();
             }

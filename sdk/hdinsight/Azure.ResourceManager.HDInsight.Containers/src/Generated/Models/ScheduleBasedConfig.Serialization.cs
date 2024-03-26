@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartArray();
             foreach (var item in Schedules)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<AutoscaleSchedule>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

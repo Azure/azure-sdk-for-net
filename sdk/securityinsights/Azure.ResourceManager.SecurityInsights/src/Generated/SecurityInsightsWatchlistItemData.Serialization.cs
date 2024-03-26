@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.SecurityInsights
             if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
-                writer.WriteObjectValue(CreatedBy);
+                writer.WriteObjectValue<SecurityInsightsUserInfo>(CreatedBy, options);
             }
             if (Optional.IsDefined(UpdatedBy))
             {
                 writer.WritePropertyName("updatedBy"u8);
-                writer.WriteObjectValue(UpdatedBy);
+                writer.WriteObjectValue<SecurityInsightsUserInfo>(UpdatedBy, options);
             }
             if (Optional.IsDefined(ItemsKeyValue))
             {

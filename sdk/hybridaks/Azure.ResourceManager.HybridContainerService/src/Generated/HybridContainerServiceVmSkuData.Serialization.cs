@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HybridContainerService
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation);
+                writer.WriteObjectValue<HybridContainerServiceExtendedLocation>(ExtendedLocation, options);
             }
             if (options.Format != "W")
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HybridContainerServiceVmSkuProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }

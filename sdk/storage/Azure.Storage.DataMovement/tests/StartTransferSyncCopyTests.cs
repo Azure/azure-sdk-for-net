@@ -13,13 +13,23 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
+using Azure.Storage.Test;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using NUnit.Framework;
+using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.DataMovement.Tests
 {
     public class StartTransferSyncCopyTests : DataMovementBlobTestBase
     {
+        private static AccessTier DefaultAccessTier = AccessTier.Cold;
+        private const string DefaultContentType = "text/plain";
+        private const string DefaultContentEncoding = "gzip";
+        private const string DefaultContentLanguage = "en-US";
+        private const string DefaultContentDisposition = "inline";
+        private const string DefaultCacheControl = "no-cache";
+
         public StartTransferSyncCopyTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         { }
@@ -51,6 +61,52 @@ namespace Azure.Storage.DataMovement.Tests
                 DataTransfer = default;
             }
         };
+
+        private async Task VerifyBlobPropertiesCopyAsync(
+            DataTransfer transfer,
+            TestEventsRaised testEventsRaised,
+            BlobBaseClient sourceClient,
+            BlobBaseClient destinationClient)
+        {
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
+            // Verify Copy - using original source File and Copying the destination
+            await testEventsRaised.AssertSingleCompletedCheck();
+            using Stream sourceStream = await sourceClient.OpenReadAsync();
+            using Stream destinationStream = await destinationClient.OpenReadAsync();
+            Assert.AreEqual(sourceStream, destinationStream);
+            // Verify Properties
+            BlobProperties sourceProperties = await sourceClient.GetPropertiesAsync();
+            BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
+
+            Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
+            Assert.AreEqual(sourceProperties.AccessTier, destinationProperties.AccessTier);
+            Assert.AreEqual(sourceProperties.ContentDisposition, destinationProperties.ContentDisposition);
+            Assert.AreEqual(sourceProperties.ContentEncoding, destinationProperties.ContentEncoding);
+            Assert.AreEqual(sourceProperties.ContentLanguage, destinationProperties.ContentLanguage);
+            Assert.AreEqual(sourceProperties.CacheControl, destinationProperties.CacheControl);
+        }
+
+        private async Task VerifyEmptyPropertiesAsync(
+            BlobBaseClient destinationClient,
+            bool checkAccessTier = false)
+        {
+            BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
+
+            Assert.IsEmpty(destinationProperties.Metadata);
+            Assert.IsNull(destinationProperties.ContentDisposition);
+            Assert.IsNull(destinationProperties.ContentEncoding);
+            Assert.IsNull(destinationProperties.ContentLanguage);
+            Assert.IsNull(destinationProperties.CacheControl);
+            if (checkAccessTier)
+            {
+                Assert.AreEqual(AccessTier.Hot.ToString(), destinationProperties.AccessTier);
+            }
+
+            GetBlobTagResult destinationTags = await destinationClient.GetTagsAsync();
+            Assert.IsEmpty(destinationTags.Tags);
+        }
         #region SyncCopy BlockBlob
         /// <summary>
         /// Upload the blob, then copy the contents to another blob.
@@ -842,5 +898,828 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(true, transfer.TransferStatus.HasSkippedItems);
         }
         #endregion
+
+        #region Block Blob Properties
+        private async Task<BlockBlobClient> SetupSourceBlockBlobAsync(
+            BlobContainerClient container,
+            Metadata metadata,
+            Tags tags)
+        {
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
+            string blobName = GetNewBlobName();
+            int size = Constants.KB;
+            string newSourceFile = Path.Combine(testDirectory.DirectoryPath, GetNewBlobName());
+
+            BlobUploadOptions uploadOptions = new()
+            {
+                AccessTier = DefaultAccessTier,
+                // We can't include Content Encoding since we can't record the value.
+                HttpHeaders = new()
+                {
+                    CacheControl = DefaultCacheControl,
+                    ContentType = DefaultContentType,
+                    ContentDisposition = DefaultContentDisposition,
+                    ContentLanguage = DefaultContentLanguage,
+                },
+                Metadata = metadata,
+                Tags = tags
+            };
+            return await CreateBlockBlob(
+                container,
+                newSourceFile,
+                GetNewBlobName(),
+                size,
+                uploadOptions);
+        }
+
+        [RecordedTest]
+        public async Task BlockBlobToBlockBlob_DefaultProperties()
+        {
+            // Arrange
+            // Create source local file for checking, and source blob
+            await using DisposingContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            Metadata metadata = DataProvider.BuildMetadata();
+            Tags tags = DataProvider.BuildTags();
+
+            // Act
+            // Create blob with properties
+            BlockBlobClient sourceClient = await SetupSourceBlockBlobAsync(
+                testContainer.Container,
+                metadata,
+                tags);
+
+            // Set preserve properties
+            StorageResourceItem sourceResource = new BlockBlobStorageResource(sourceClient);
+
+            // Destination client - Set Properties
+            BlockBlobClient destinationClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
+            StorageResourceItem destinationResource = new BlockBlobStorageResource(destinationClient);
+
+            DataTransferOptions options = new DataTransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            TransferManager transferManager = new TransferManager();
+
+            // Start transfer and await for completion.
+            DataTransfer transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options);
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            await VerifyBlobPropertiesCopyAsync(
+                transfer,
+                testEventsRaised,
+                sourceClient,
+                destinationClient);
+            // Verify Tags are NOT preserved
+            GetBlobTagResult destinationTags = await destinationClient.GetTagsAsync();
+            Assert.IsEmpty(destinationTags.Tags);
+        }
+
+        [RecordedTest]
+        public async Task BlockBlobToBlockBlob_PreservePropertiesNoTags()
+        {
+            // Arrange
+            // Create source local file for checking, and source blob
+            await using DisposingContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            Metadata metadata = DataProvider.BuildMetadata();
+            Tags tags = DataProvider.BuildTags();
+
+            // Act
+            // Create blob with properties
+            BlockBlobClient sourceClient = await SetupSourceBlockBlobAsync(
+                testContainer.Container,
+                metadata,
+                tags);
+
+            // Set preserve properties
+            StorageResourceItem sourceResource = new BlockBlobStorageResource(sourceClient);
+
+            // Destination client - Set Properties
+            BlockBlobClient destinationClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
+            StorageResourceItem destinationResource = new BlockBlobStorageResource(
+                destinationClient,
+                new()
+                {
+                    AccessTier = new(preserve: true),
+                    ContentType = new(preserve: true),
+                    ContentEncoding = new(preserve: true),
+                    ContentDisposition = new(preserve: true),
+                    ContentLanguage = new(preserve: true),
+                    CacheControl = new(preserve: true),
+                    Metadata = new(preserve: true),
+                });
+
+            DataTransferOptions options = new DataTransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            TransferManager transferManager = new TransferManager();
+
+            // Start transfer and await for completion.
+            DataTransfer transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options);
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            await VerifyBlobPropertiesCopyAsync(
+                transfer,
+                testEventsRaised,
+                sourceClient,
+                destinationClient);
+            // Verify Tags are NOT preserved
+            GetBlobTagResult destinationTags = await destinationClient.GetTagsAsync();
+            Assert.IsEmpty(destinationTags.Tags);
+        }
+
+        [RecordedTest]
+        public async Task BlockBlobToBlockBlob_NoPreserveProperties()
+        {
+            // Arrange
+            // Create source local file for checking, and source blob
+            await using DisposingContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            Metadata metadata = DataProvider.BuildMetadata();
+            Tags tags = DataProvider.BuildTags();
+
+            // Act
+            // Create blob with properties
+            BlockBlobClient sourceClient = await SetupSourceBlockBlobAsync(
+                testContainer.Container,
+                metadata,
+                tags);
+
+            StorageResourceItem sourceResource = new BlockBlobStorageResource(sourceClient);
+
+            // Destination client - Set to not preserve properties
+            BlockBlobClient destinationClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
+            StorageResourceItem destinationResource = new BlockBlobStorageResource(
+                destinationClient,
+                new()
+                {
+                    AccessTier = new(preserve: false),
+                    ContentType = new(true), // For test recording content type has to be the same
+                    ContentEncoding = new(false),
+                    ContentDisposition = new(false),
+                    ContentLanguage = new(false),
+                    CacheControl = new(false),
+                    Metadata = new(false),
+                });
+
+            DataTransferOptions options = new DataTransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            TransferManager transferManager = new TransferManager();
+
+            // Start transfer and await for completion.
+            DataTransfer transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options);
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
+            // Verify Copy - using original source File and Copying the destination
+            await testEventsRaised.AssertSingleCompletedCheck();
+            using Stream sourceStream = await sourceClient.OpenReadAsync();
+            using Stream destinationStream = await destinationClient.OpenReadAsync();
+            Assert.AreEqual(sourceStream, destinationStream);
+            // Verify Properties
+            await VerifyEmptyPropertiesAsync(
+                destinationClient,
+                checkAccessTier: true);
+        }
+
+        [RecordedTest]
+        public async Task BlockBlobToBlockBlob_NewProperties()
+        {
+            // Arrange
+            // Create source local file for checking, and source blob
+            await using DisposingContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            Metadata sourceMetadata = DataProvider.BuildMetadata();
+            Tags tags = DataProvider.BuildTags();
+
+            // Act
+            // Create blob with properties
+            BlockBlobClient sourceClient = await SetupSourceBlockBlobAsync(
+                testContainer.Container,
+                sourceMetadata,
+                tags);
+
+            StorageResourceItem sourceResource = new BlockBlobStorageResource(sourceClient);
+
+            // Destination client - Set to not preserve properties
+            BlockBlobClient destinationClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
+            Metadata destinationMetadata = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase)
+            {
+                { "data", "meta" },
+                { "lower", "case" },
+                { "uni", "corn" }
+            };
+            StorageResourceItem destinationResource = new BlockBlobStorageResource(
+                destinationClient,
+                new()
+                {
+                    AccessTier = new(DefaultAccessTier),
+                    ContentType = new(DefaultContentType),
+                    ContentEncoding = new(false),
+                    ContentDisposition = new(DefaultContentDisposition),
+                    ContentLanguage = new(DefaultContentLanguage),
+                    CacheControl = new(DefaultCacheControl),
+                    Metadata = new(destinationMetadata),
+                });
+
+            DataTransferOptions options = new DataTransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            TransferManager transferManager = new TransferManager();
+
+            // Start transfer and await for completion.
+            DataTransfer transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options);
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
+            // Verify Copy - using original source File and Copying the destination
+            await testEventsRaised.AssertSingleCompletedCheck();
+            using Stream sourceStream = await sourceClient.OpenReadAsync();
+            using Stream destinationStream = await destinationClient.OpenReadAsync();
+            Assert.AreEqual(sourceStream, destinationStream);
+            // Verify Properties
+            BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
+            Assert.That(destinationMetadata, Is.EqualTo(destinationProperties.Metadata));
+            Assert.AreEqual(DefaultAccessTier.ToString(), destinationProperties.AccessTier);
+            Assert.AreEqual(DefaultContentDisposition, destinationProperties.ContentDisposition);
+            Assert.AreEqual(DefaultContentLanguage, destinationProperties.ContentLanguage);
+            Assert.AreEqual(DefaultCacheControl, destinationProperties.CacheControl);
+        }
+        #endregion Block Blob Properties
+
+        #region Page Blob Properties
+        private async Task<PageBlobClient> SetupSourcePageBlobAsync(
+            BlobContainerClient container,
+            Metadata metadata,
+            Tags tags)
+        {
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
+            string blobName = GetNewBlobName();
+            int size = Constants.KB;
+            string newSourceFile = Path.Combine(testDirectory.DirectoryPath, GetNewBlobName());
+
+            PageBlobCreateOptions createOptions = new()
+            {
+                // We can't include Content Encoding since we can't record the value.
+                HttpHeaders = new()
+                {
+                    ContentType = DefaultContentType,
+                    ContentDisposition = DefaultContentDisposition,
+                    ContentLanguage = DefaultContentLanguage,
+                    CacheControl = DefaultCacheControl,
+                },
+                Metadata = metadata,
+                Tags = tags
+            };
+            return await CreatePageBlob(
+                container,
+                newSourceFile,
+                GetNewBlobName(),
+                size,
+                createOptions);
+        }
+
+        [RecordedTest]
+        public async Task PageBlobToPageBlob_DefaultProperties()
+        {
+            // Arrange
+            // Create source local file for checking, and source blob
+            await using DisposingContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            Metadata metadata = DataProvider.BuildMetadata();
+            Tags tags = DataProvider.BuildTags();
+
+            // Act
+            // Create blob with properties
+            PageBlobClient sourceClient = await SetupSourcePageBlobAsync(
+                testContainer.Container,
+                metadata,
+                tags);
+
+            // Set preserve properties
+            StorageResourceItem sourceResource = new PageBlobStorageResource(sourceClient);
+
+            // Destination client - Set Properties
+            PageBlobClient destinationClient = testContainer.Container.GetPageBlobClient(GetNewBlobName());
+            StorageResourceItem destinationResource = new PageBlobStorageResource(destinationClient);
+
+            DataTransferOptions options = new DataTransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            TransferManager transferManager = new TransferManager();
+
+            // Start transfer and await for completion.
+            DataTransfer transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options);
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            await VerifyBlobPropertiesCopyAsync(
+                transfer,
+                testEventsRaised,
+                sourceClient,
+                destinationClient);
+            // Verify Tags are NOT preserved
+            GetBlobTagResult destinationTags = await destinationClient.GetTagsAsync();
+            Assert.IsEmpty(destinationTags.Tags);
+        }
+
+        [RecordedTest]
+        public async Task PageBlobToPageBlob_PreservePropertiesNoTags()
+        {
+            // Arrange
+            // Create source local file for checking, and source blob
+            await using DisposingContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            Metadata metadata = DataProvider.BuildMetadata();
+            Tags tags = DataProvider.BuildTags();
+
+            // Act
+            // Create blob with properties
+            PageBlobClient sourceClient = await SetupSourcePageBlobAsync(
+                testContainer.Container,
+                metadata,
+                tags);
+
+            // Set preserve properties
+            StorageResourceItem sourceResource = new PageBlobStorageResource(sourceClient);
+
+            // Destination client - Set Properties
+            PageBlobClient destinationClient = testContainer.Container.GetPageBlobClient(GetNewBlobName());
+            StorageResourceItem destinationResource = new PageBlobStorageResource(
+                destinationClient,
+                new()
+                {
+                    ContentType = new(preserve: true),
+                    ContentEncoding = new(preserve: true),
+                    ContentDisposition = new(preserve: true),
+                    ContentLanguage = new(preserve: true),
+                    CacheControl = new(preserve: true),
+                    Metadata = new(preserve: true),
+                });
+
+            DataTransferOptions options = new DataTransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            TransferManager transferManager = new TransferManager();
+
+            // Start transfer and await for completion.
+            DataTransfer transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options);
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            await VerifyBlobPropertiesCopyAsync(
+                transfer,
+                testEventsRaised,
+                sourceClient,
+                destinationClient);
+            // Verify Tags are NOT preserved
+            GetBlobTagResult destinationTags = await destinationClient.GetTagsAsync();
+            Assert.IsEmpty(destinationTags.Tags);
+        }
+
+        [RecordedTest]
+        public async Task PageBlobToPageBlob_NoPreserveProperties()
+        {
+            // Arrange
+            // Create source local file for checking, and source blob
+            await using DisposingContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            Metadata metadata = DataProvider.BuildMetadata();
+            Tags tags = DataProvider.BuildTags();
+
+            // Act
+            // Create blob with properties
+            PageBlobClient sourceClient = await SetupSourcePageBlobAsync(
+                testContainer.Container,
+                metadata,
+                tags);
+
+            StorageResourceItem sourceResource = new PageBlobStorageResource(sourceClient);
+
+            // Destination client - Set to not preserve properties
+            PageBlobClient destinationClient = testContainer.Container.GetPageBlobClient(GetNewBlobName());
+            StorageResourceItem destinationResource = new PageBlobStorageResource(
+                destinationClient,
+                new()
+                {
+                    ContentType = new(true), // For test recording content type has to be the same
+                    ContentEncoding = new(false),
+                    ContentDisposition = new(false),
+                    ContentLanguage = new(false),
+                    CacheControl = new(false),
+                    Metadata = new(false),
+                });
+
+            DataTransferOptions options = new DataTransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            TransferManager transferManager = new TransferManager();
+
+            // Start transfer and await for completion.
+            DataTransfer transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options);
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
+            // Verify Copy - using original source File and Copying the destination
+            await testEventsRaised.AssertSingleCompletedCheck();
+            using Stream sourceStream = await sourceClient.OpenReadAsync();
+            using Stream destinationStream = await destinationClient.OpenReadAsync();
+            Assert.AreEqual(sourceStream, destinationStream);
+            // Verify Properties
+            await VerifyEmptyPropertiesAsync(destinationClient);
+        }
+
+        [RecordedTest]
+        public async Task PageBlobToPageBlob_NewProperties()
+        {
+            // Arrange
+            // Create source local file for checking, and source blob
+            await using DisposingContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            Metadata sourceMetadata = DataProvider.BuildMetadata();
+            Tags tags = DataProvider.BuildTags();
+
+            // Act
+            // Create blob with properties
+            PageBlobClient sourceClient = await SetupSourcePageBlobAsync(
+                testContainer.Container,
+                sourceMetadata,
+                tags);
+
+            StorageResourceItem sourceResource = new PageBlobStorageResource(sourceClient);
+
+            // Destination client - Set to not preserve properties
+            PageBlobClient destinationClient = testContainer.Container.GetPageBlobClient(GetNewBlobName());
+            Metadata destinationMetadata = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+            {
+                { "data", "meta" },
+                { "lower", "case" },
+                { "uni", "corn" }
+            };
+            StorageResourceItem destinationResource = new PageBlobStorageResource(
+                destinationClient,
+                new()
+                {
+                    ContentType = new(DefaultContentType),
+                    ContentEncoding = new(false),
+                    ContentDisposition = new(DefaultContentDisposition),
+                    ContentLanguage = new(DefaultContentLanguage),
+                    CacheControl = new(DefaultCacheControl),
+                    Metadata = new(destinationMetadata),
+                });
+
+            DataTransferOptions options = new DataTransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            TransferManager transferManager = new TransferManager();
+
+            // Start transfer and await for completion.
+            DataTransfer transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options);
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
+            // Verify Copy - using original source File and Copying the destination
+            await testEventsRaised.AssertSingleCompletedCheck();
+            using Stream sourceStream = await sourceClient.OpenReadAsync();
+            using Stream destinationStream = await destinationClient.OpenReadAsync();
+            Assert.AreEqual(sourceStream, destinationStream);
+            // Verify Properties
+            BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
+            Assert.That(destinationMetadata, Is.EqualTo(destinationProperties.Metadata));
+            Assert.AreEqual(DefaultContentDisposition, destinationProperties.ContentDisposition);
+            Assert.AreEqual(DefaultContentLanguage, destinationProperties.ContentLanguage);
+            Assert.AreEqual(DefaultCacheControl, destinationProperties.CacheControl);
+            Assert.AreEqual(DefaultContentType, destinationProperties.ContentType);
+        }
+        #endregion Page Blob Properties
+
+        #region Append Blob Properties
+        private async Task<AppendBlobClient> SetupSourceAppendBlobAsync(
+            BlobContainerClient container,
+            Metadata metadata,
+            Tags tags)
+        {
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
+            string blobName = GetNewBlobName();
+            int size = Constants.KB;
+            string newSourceFile = Path.Combine(testDirectory.DirectoryPath, GetNewBlobName());
+
+            AppendBlobCreateOptions createOptions = new()
+            {
+                // We can't include Content Encoding since we can't record the value.
+                HttpHeaders = new()
+                {
+                    ContentType = DefaultContentType,
+                    ContentDisposition = DefaultContentDisposition,
+                    ContentLanguage = DefaultContentLanguage,
+                    CacheControl = DefaultCacheControl,
+                },
+                Metadata = metadata,
+                Tags = tags
+            };
+            return await CreateAppendBlob(
+                container,
+                newSourceFile,
+                GetNewBlobName(),
+                size,
+                createOptions);
+        }
+
+        [RecordedTest]
+        public async Task AppendBlobToAppendBlob_DefaultProperties()
+        {
+            // Arrange
+            // Create source local file for checking, and source blob
+            await using DisposingContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            Metadata metadata = DataProvider.BuildMetadata();
+
+            // Act
+            // Create blob with properties
+            AppendBlobClient sourceClient = await SetupSourceAppendBlobAsync(
+                testContainer.Container,
+                metadata,
+                default);
+
+            // Set preserve properties
+            StorageResourceItem sourceResource = new AppendBlobStorageResource(sourceClient);
+
+            // Destination client - Set Properties
+            AppendBlobClient destinationClient = testContainer.Container.GetAppendBlobClient(GetNewBlobName());
+            StorageResourceItem destinationResource = new AppendBlobStorageResource(destinationClient);
+
+            DataTransferOptions options = new DataTransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            TransferManager transferManager = new TransferManager();
+
+            // Start transfer and await for completion.
+            DataTransfer transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options);
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            await VerifyBlobPropertiesCopyAsync(
+                transfer,
+                testEventsRaised,
+                sourceClient,
+                destinationClient);
+            // Verify Tags are NOT preserved
+            GetBlobTagResult destinationTags = await destinationClient.GetTagsAsync();
+            Assert.IsEmpty(destinationTags.Tags);
+        }
+
+        [RecordedTest]
+        public async Task AppendBlobToAppendBlob_PreservePropertiesNoTags()
+        {
+            // Arrange
+            // Create source local file for checking, and source blob
+            await using DisposingContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            Metadata metadata = DataProvider.BuildMetadata();
+            Tags tags = DataProvider.BuildTags();
+
+            // Act
+            // Create blob with properties
+            AppendBlobClient sourceClient = await SetupSourceAppendBlobAsync(
+                testContainer.Container,
+                metadata,
+                tags);
+
+            // Set preserve properties
+            StorageResourceItem sourceResource = new AppendBlobStorageResource(sourceClient);
+
+            // Destination client - Set Properties
+            AppendBlobClient destinationClient = testContainer.Container.GetAppendBlobClient(GetNewBlobName());
+            StorageResourceItem destinationResource = new AppendBlobStorageResource(
+                destinationClient,
+                new()
+                {
+                    ContentType = new(preserve: true),
+                    ContentEncoding = new(preserve: true),
+                    ContentDisposition = new(preserve: true),
+                    ContentLanguage = new(preserve: true),
+                    CacheControl = new(preserve: true),
+                    Metadata = new(preserve: true),
+                });
+
+            DataTransferOptions options = new DataTransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            TransferManager transferManager = new TransferManager();
+
+            // Start transfer and await for completion.
+            DataTransfer transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options);
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            await VerifyBlobPropertiesCopyAsync(
+                transfer,
+                testEventsRaised,
+                sourceClient,
+                destinationClient);
+            // Verify Tags are NOT preserved
+            GetBlobTagResult destinationTags = await destinationClient.GetTagsAsync();
+            Assert.IsEmpty(destinationTags.Tags);
+        }
+
+        [RecordedTest]
+        public async Task AppendBlobToAppendBlob_NoPreserveProperties()
+        {
+            // Arrange
+            // Create source local file for checking, and source blob
+            await using DisposingContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            Metadata sourceMetadata = DataProvider.BuildMetadata();
+            Tags tags = DataProvider.BuildTags();
+
+            // Act
+            // Create blob with properties
+            AppendBlobClient sourceClient = await SetupSourceAppendBlobAsync(
+                testContainer.Container,
+                sourceMetadata,
+                tags);
+
+            StorageResourceItem sourceResource = new AppendBlobStorageResource(sourceClient);
+
+            // Destination client - Set to not preserve properties
+            AppendBlobClient destinationClient = testContainer.Container.GetAppendBlobClient(GetNewBlobName());
+            StorageResourceItem destinationResource = new AppendBlobStorageResource(
+                destinationClient,
+                new()
+                {
+                    ContentType = new(true), // For test recording content type has to be the same
+                    ContentEncoding = new(false),
+                    ContentDisposition = new(false),
+                    ContentLanguage = new(false),
+                    CacheControl = new(false),
+                    Metadata = new(false),
+                });
+
+            DataTransferOptions options = new DataTransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            TransferManager transferManager = new TransferManager();
+
+            // Start transfer and await for completion.
+            DataTransfer transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options);
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
+            // Verify Copy - using original source File and Copying the destination
+            await testEventsRaised.AssertSingleCompletedCheck();
+            using Stream sourceStream = await sourceClient.OpenReadAsync();
+            using Stream destinationStream = await destinationClient.OpenReadAsync();
+            Assert.AreEqual(sourceStream, destinationStream);
+            // Verify Properties
+            BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
+            Assert.IsNull(destinationProperties.ContentDisposition);
+            Assert.IsNull(destinationProperties.ContentLanguage);
+            Assert.IsNull(destinationProperties.CacheControl);
+        }
+
+        [RecordedTest]
+        public async Task AppendBlobToAppendBlob_NewProperties()
+        {
+            // Arrange
+            // Create source local file for checking, and source blob
+            await using DisposingContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            Metadata sourceMetadata = DataProvider.BuildMetadata();
+            Tags tags = DataProvider.BuildTags();
+
+            // Act
+            // Create blob with properties
+            AppendBlobClient sourceClient = await SetupSourceAppendBlobAsync(
+                testContainer.Container,
+                sourceMetadata,
+                tags);
+
+            StorageResourceItem sourceResource = new AppendBlobStorageResource(sourceClient);
+
+            // Destination client - Set to not preserve properties
+            AppendBlobClient destinationClient = testContainer.Container.GetAppendBlobClient(GetNewBlobName());
+            Metadata destinationMetadata = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+            {
+                { "data", "meta" },
+                { "lower", "case" },
+                { "uni", "corn" }
+            };
+            StorageResourceItem destinationResource = new AppendBlobStorageResource(
+                destinationClient,
+                new()
+                {
+                    ContentType = new(DefaultContentType),
+                    ContentEncoding = new(false),
+                    ContentDisposition = new(DefaultContentDisposition),
+                    ContentLanguage = new(DefaultContentLanguage),
+                    CacheControl = new(DefaultCacheControl),
+                    Metadata = new(destinationMetadata),
+                });
+
+            DataTransferOptions options = new DataTransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            TransferManager transferManager = new TransferManager();
+
+            // Start transfer and await for completion.
+            DataTransfer transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options);
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
+            // Verify Copy - using original source File and Copying the destination
+            await testEventsRaised.AssertSingleCompletedCheck();
+            using Stream sourceStream = await sourceClient.OpenReadAsync();
+            using Stream destinationStream = await destinationClient.OpenReadAsync();
+            Assert.AreEqual(sourceStream, destinationStream);
+            // Verify Properties
+            BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
+            Assert.That(destinationMetadata, Is.EqualTo(destinationProperties.Metadata));
+            Assert.AreEqual(DefaultContentDisposition, destinationProperties.ContentDisposition);
+            Assert.AreEqual(DefaultContentLanguage, destinationProperties.ContentLanguage);
+            Assert.AreEqual(DefaultCacheControl, destinationProperties.CacheControl);
+        }
+        #endregion Append Blob Properties
     }
 }

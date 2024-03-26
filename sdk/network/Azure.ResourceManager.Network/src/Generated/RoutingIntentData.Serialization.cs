@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in RoutingPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RoutingPolicy>(item, options);
                 }
                 writer.WriteEndArray();
             }

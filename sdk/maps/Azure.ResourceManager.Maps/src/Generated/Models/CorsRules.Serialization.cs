@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Maps.Models
                 writer.WriteStartArray();
                 foreach (var item in CorsRulesValue)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MapsCorsRule>(item, options);
                 }
                 writer.WriteEndArray();
             }

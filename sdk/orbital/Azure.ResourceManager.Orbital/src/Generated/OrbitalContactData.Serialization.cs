@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Orbital
             if (options.Format != "W" && Optional.IsDefined(AntennaConfiguration))
             {
                 writer.WritePropertyName("antennaConfiguration"u8);
-                writer.WriteObjectValue(AntennaConfiguration);
+                writer.WriteObjectValue<OrbitalContactAntennaConfiguration>(AntennaConfiguration, options);
             }
             if (Optional.IsDefined(ContactProfile))
             {

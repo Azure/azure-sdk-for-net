@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Deployments)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KubernetesDeployment>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Pods)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KubernetesPod>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in ReplicaSets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KubernetesReplicaSet>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in StatefulSets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KubernetesStatefulSet>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in DaemonSets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KubernetesDaemonSet>(item, options);
                 }
                 writer.WriteEndArray();
             }

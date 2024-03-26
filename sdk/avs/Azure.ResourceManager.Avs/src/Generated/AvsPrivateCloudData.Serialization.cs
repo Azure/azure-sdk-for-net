@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Avs
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            writer.WriteObjectValue<AvsSku>(Sku, options);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Avs
             if (Optional.IsDefined(ManagementCluster))
             {
                 writer.WritePropertyName("managementCluster"u8);
-                writer.WriteObjectValue(ManagementCluster);
+                writer.WriteObjectValue<AvsManagementCluster>(ManagementCluster, options);
             }
             if (Optional.IsDefined(Internet))
             {
@@ -86,19 +86,19 @@ namespace Azure.ResourceManager.Avs
                 writer.WriteStartArray();
                 foreach (var item in IdentitySources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SingleSignOnIdentitySource>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Availability))
             {
                 writer.WritePropertyName("availability"u8);
-                writer.WriteObjectValue(Availability);
+                writer.WriteObjectValue<PrivateCloudAvailabilityProperties>(Availability, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<CustomerManagedEncryption>(Encryption, options);
             }
             if (Optional.IsCollectionDefined(ExtendedNetworkBlocks))
             {
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.Avs
             if (Optional.IsDefined(Circuit))
             {
                 writer.WritePropertyName("circuit"u8);
-                writer.WriteObjectValue(Circuit);
+                writer.WriteObjectValue<ExpressRouteCircuit>(Circuit, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
-                writer.WriteObjectValue(Endpoints);
+                writer.WriteObjectValue<AvsPrivateCloudEndpoints>(Endpoints, options);
             }
             if (Optional.IsDefined(NetworkBlock))
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Avs
             if (Optional.IsDefined(SecondaryCircuit))
             {
                 writer.WritePropertyName("secondaryCircuit"u8);
-                writer.WriteObjectValue(SecondaryCircuit);
+                writer.WriteObjectValue<ExpressRouteCircuit>(SecondaryCircuit, options);
             }
             if (options.Format != "W" && Optional.IsDefined(NsxPublicIPQuotaRaised))
             {

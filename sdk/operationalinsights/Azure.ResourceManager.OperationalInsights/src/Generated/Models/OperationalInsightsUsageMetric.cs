@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The name of the metric. </summary>
+        [WirePath("name")]
         public OperationalInsightsMetricName Name { get; }
         /// <summary> The units used for the metric. </summary>
+        [WirePath("unit")]
         public string Unit { get; }
         /// <summary> The current value of the metric. </summary>
+        [WirePath("currentValue")]
         public double? CurrentValue { get; }
         /// <summary> The quota limit for the metric. </summary>
+        [WirePath("limit")]
         public double? Limit { get; }
         /// <summary> The time that the metric's value will reset. </summary>
+        [WirePath("nextResetTime")]
         public DateTimeOffset? NextResetOn { get; }
         /// <summary> The quota period that determines the length of time between value resets. </summary>
+        [WirePath("quotaPeriod")]
         public string QuotaPeriod { get; }
     }
 }

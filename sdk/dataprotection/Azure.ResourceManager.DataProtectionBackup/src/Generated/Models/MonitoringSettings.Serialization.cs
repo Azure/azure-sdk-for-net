@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(AzureMonitorAlertSettings))
             {
                 writer.WritePropertyName("azureMonitorAlertSettings"u8);
-                writer.WriteObjectValue(AzureMonitorAlertSettings);
+                writer.WriteObjectValue<AzureMonitorAlertSettings>(AzureMonitorAlertSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

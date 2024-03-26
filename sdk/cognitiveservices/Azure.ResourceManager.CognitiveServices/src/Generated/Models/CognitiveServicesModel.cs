@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Model Metadata. </summary>
+        [WirePath("model")]
         public CognitiveServicesAccountModel Model { get; }
         /// <summary> The Kind of the Model. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
         /// <summary> The SKU of the Model. </summary>
+        [WirePath("skuName")]
         public string SkuName { get; }
     }
 }

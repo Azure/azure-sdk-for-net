@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IotCentralAppTemplate>(item, options);
                 }
                 writer.WriteEndArray();
             }

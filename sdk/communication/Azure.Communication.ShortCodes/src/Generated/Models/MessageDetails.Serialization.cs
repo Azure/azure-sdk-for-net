@@ -67,7 +67,7 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WriteStartArray();
                 foreach (var item in UseCases)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UseCase>(item);
                 }
                 writer.WriteEndArray();
             }

@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (CheckpointModel != null)
                 {
                     writer.WritePropertyName("checkpointModel"u8);
-                    writer.WriteObjectValue(CheckpointModel);
+                    writer.WriteObjectValue<MachineLearningFlowModelJobInput>(CheckpointModel, options);
                 }
                 else
                 {

@@ -76,16 +76,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Premier add on SKU. </summary>
+        [WirePath("properties.sku")]
         public string Sku { get; set; }
         /// <summary> Premier add on Product. </summary>
+        [WirePath("properties.product")]
         public string Product { get; set; }
         /// <summary> Premier add on Vendor. </summary>
+        [WirePath("properties.vendor")]
         public string Vendor { get; set; }
         /// <summary> Premier add on Marketplace publisher. </summary>
+        [WirePath("properties.marketplacePublisher")]
         public string MarketplacePublisher { get; set; }
         /// <summary> Premier add on Marketplace offer. </summary>
+        [WirePath("properties.marketplaceOffer")]
         public string MarketplaceOffer { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

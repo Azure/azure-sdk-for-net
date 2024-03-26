@@ -94,30 +94,43 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The job version number. </summary>
+        [WirePath("properties.jobVersion")]
         public int? JobVersion { get; }
         /// <summary> The job step name. </summary>
+        [WirePath("properties.stepName")]
         public string StepName { get; }
         /// <summary> The job step id. </summary>
+        [WirePath("properties.stepId")]
         public int? StepId { get; }
         /// <summary> The unique identifier of the job execution. </summary>
+        [WirePath("properties.jobExecutionId")]
         public Guid? JobExecutionId { get; }
         /// <summary> The detailed state of the job execution. </summary>
+        [WirePath("properties.lifecycle")]
         public JobExecutionLifecycle? Lifecycle { get; }
         /// <summary> The ARM provisioning state of the job execution. </summary>
+        [WirePath("properties.provisioningState")]
         public JobExecutionProvisioningState? ProvisioningState { get; }
         /// <summary> The time that the job execution was created. </summary>
+        [WirePath("properties.createTime")]
         public DateTimeOffset? CreateOn { get; }
         /// <summary> The time that the job execution started. </summary>
+        [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> The time that the job execution completed. </summary>
+        [WirePath("properties.endTime")]
         public DateTimeOffset? EndOn { get; }
         /// <summary> Number of times the job execution has been attempted. </summary>
+        [WirePath("properties.currentAttempts")]
         public int? CurrentAttempts { get; set; }
         /// <summary> Start time of the current attempt. </summary>
+        [WirePath("properties.currentAttemptStartTime")]
         public DateTimeOffset? CurrentAttemptStartOn { get; }
         /// <summary> The last status or error message. </summary>
+        [WirePath("properties.lastMessage")]
         public string LastMessage { get; }
         /// <summary> The target that this execution is executed on. </summary>
+        [WirePath("properties.target")]
         public JobExecutionTarget Target { get; }
     }
 }

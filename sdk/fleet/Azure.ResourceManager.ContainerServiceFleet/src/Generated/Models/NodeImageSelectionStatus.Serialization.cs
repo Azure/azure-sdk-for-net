@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 writer.WriteStartArray();
                 foreach (var item in SelectedNodeImageVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NodeImageVersion>(item, options);
                 }
                 writer.WriteEndArray();
             }

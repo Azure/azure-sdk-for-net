@@ -99,34 +99,49 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Id of the backup. </summary>
+        [WirePath("properties.id")]
         public int? BackupId { get; }
         /// <summary> SAS URL for the storage account container which contains this backup. </summary>
+        [WirePath("properties.storageAccountUrl")]
         public Uri StorageAccountUri { get; }
         /// <summary> Name of the blob which contains data for this backup. </summary>
+        [WirePath("properties.blobName")]
         public string BlobName { get; }
         /// <summary> Name of this backup. </summary>
+        [WirePath("properties.name")]
         public string BackupName { get; }
         /// <summary> Backup status. </summary>
+        [WirePath("properties.status")]
         public WebAppBackupStatus? Status { get; }
         /// <summary> Size of the backup in bytes. </summary>
+        [WirePath("properties.sizeInBytes")]
         public long? SizeInBytes { get; }
         /// <summary> Timestamp of the backup creation. </summary>
+        [WirePath("properties.created")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Details regarding this backup. Might contain an error message. </summary>
+        [WirePath("properties.log")]
         public string Log { get; }
         /// <summary> List of databases included in the backup. </summary>
+        [WirePath("properties.databases")]
         public IReadOnlyList<AppServiceDatabaseBackupSetting> Databases { get; }
         /// <summary> True if this backup has been created due to a schedule being triggered. </summary>
+        [WirePath("properties.scheduled")]
         public bool? IsScheduled { get; }
         /// <summary> Timestamp of a last restore operation which used this backup. </summary>
+        [WirePath("properties.lastRestoreTimeStamp")]
         public DateTimeOffset? LastRestoreOn { get; }
         /// <summary> Timestamp when this backup finished. </summary>
+        [WirePath("properties.finishedTimeStamp")]
         public DateTimeOffset? FinishedOn { get; }
         /// <summary> Unique correlation identifier. Please use this along with the timestamp while communicating with Azure support. </summary>
+        [WirePath("properties.correlationId")]
         public string CorrelationId { get; }
         /// <summary> Size of the original web app which has been backed up. </summary>
+        [WirePath("properties.websiteSizeInBytes")]
         public long? WebsiteSizeInBytes { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

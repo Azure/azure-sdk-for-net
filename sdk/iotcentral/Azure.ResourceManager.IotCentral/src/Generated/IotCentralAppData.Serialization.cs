@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.IotCentral
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            writer.WriteObjectValue<IotCentralAppSkuInfo>(Sku, options);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.IotCentral
             if (Optional.IsDefined(NetworkRuleSets))
             {
                 writer.WritePropertyName("networkRuleSets"u8);
-                writer.WriteObjectValue(NetworkRuleSets);
+                writer.WriteObjectValue<IotCentralNetworkRuleSets>(NetworkRuleSets, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.IotCentral
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IotCentralPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }

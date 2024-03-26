@@ -19,11 +19,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("domain"u8);
-            writer.WriteObjectValue(Domain);
+            writer.WriteObjectValue<object>(Domain);
             writer.WritePropertyName("userName"u8);
-            writer.WriteObjectValue(UserName);
+            writer.WriteObjectValue<object>(UserName);
             writer.WritePropertyName("password"u8);
-            writer.WriteObjectValue(Password);
+            writer.WriteObjectValue<SecretBase>(Password);
             writer.WriteEndObject();
         }
 
@@ -61,7 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, SsisAccessCredential model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SsisAccessCredential>(model);
             }
             public override SsisAccessCredential Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

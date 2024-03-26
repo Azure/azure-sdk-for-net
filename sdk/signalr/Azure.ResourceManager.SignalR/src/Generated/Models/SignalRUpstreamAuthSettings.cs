@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Upstream auth type enum. </summary>
+        [WirePath("type")]
         public SignalRUpstreamAuthType? AuthType { get; set; }
         /// <summary> Managed identity settings for upstream. </summary>
         internal ManagedIdentitySettings ManagedIdentity { get; set; }
@@ -69,6 +70,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// The Resource indicating the App ID URI of the target resource.
         /// It also appears in the aud (audience) claim of the issued token.
         /// </summary>
+        [WirePath("managedIdentity.resource")]
         public string ManagedIdentityResource
         {
             get => ManagedIdentity is null ? default : ManagedIdentity.Resource;

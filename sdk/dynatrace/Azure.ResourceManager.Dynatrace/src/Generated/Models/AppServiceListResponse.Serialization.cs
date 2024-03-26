@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DynatraceOneAgentEnabledAppServiceInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

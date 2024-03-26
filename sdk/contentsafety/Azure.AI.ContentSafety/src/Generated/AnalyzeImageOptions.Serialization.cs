@@ -27,7 +27,7 @@ namespace Azure.AI.ContentSafety
 
             writer.WriteStartObject();
             writer.WritePropertyName("image"u8);
-            writer.WriteObjectValue(Image);
+            writer.WriteObjectValue<ContentSafetyImageData>(Image, options);
             if (Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
@@ -168,7 +168,7 @@ namespace Azure.AI.ContentSafety
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AnalyzeImageOptions>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

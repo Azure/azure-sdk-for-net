@@ -43,7 +43,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, PrivateEndpoint model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<PrivateEndpoint>(model);
             }
             public override PrivateEndpoint Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

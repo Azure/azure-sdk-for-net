@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
-                writer.WriteObjectValue(Email);
+                writer.WriteObjectValue<EmailNotification>(Email, options);
             }
             if (Optional.IsCollectionDefined(Webhooks))
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Webhooks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WebhookNotification>(item, options);
                 }
                 writer.WriteEndArray();
             }

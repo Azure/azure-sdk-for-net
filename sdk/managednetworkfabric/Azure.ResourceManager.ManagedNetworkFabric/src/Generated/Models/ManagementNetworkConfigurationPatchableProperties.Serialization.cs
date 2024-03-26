@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(InfrastructureVpnConfiguration))
             {
                 writer.WritePropertyName("infrastructureVpnConfiguration"u8);
-                writer.WriteObjectValue(InfrastructureVpnConfiguration);
+                writer.WriteObjectValue<VpnConfigurationPatchableProperties>(InfrastructureVpnConfiguration, options);
             }
             if (Optional.IsDefined(WorkloadVpnConfiguration))
             {
                 writer.WritePropertyName("workloadVpnConfiguration"u8);
-                writer.WriteObjectValue(WorkloadVpnConfiguration);
+                writer.WriteObjectValue<VpnConfigurationPatchableProperties>(WorkloadVpnConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

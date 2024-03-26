@@ -71,8 +71,10 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; to allow access to a publishing method; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.allow")]
         public bool? Allow { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

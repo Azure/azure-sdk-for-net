@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Type of the sever administrator. </summary>
+        [WirePath("administratorType")]
         public SqlAdministratorType? AdministratorType { get; set; }
         /// <summary> Principal Type of the sever administrator. </summary>
+        [WirePath("principalType")]
         public SqlServerPrincipalType? PrincipalType { get; set; }
         /// <summary> Login name of the server administrator. </summary>
+        [WirePath("login")]
         public string Login { get; set; }
         /// <summary> SID (object ID) of the server administrator. </summary>
+        [WirePath("sid")]
         public Guid? Sid { get; set; }
         /// <summary> Tenant ID of the administrator. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; set; }
         /// <summary> Azure Active Directory only Authentication enabled. </summary>
+        [WirePath("azureADOnlyAuthentication")]
         public bool? IsAzureADOnlyAuthenticationEnabled { get; set; }
     }
 }

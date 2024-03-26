@@ -77,6 +77,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Private endpoint which the connection belongs to. </summary>
         internal WritableSubResource PrivateEndpoint { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.privateEndpoint.id")]
         public ResourceIdentifier PrivateEndpointId
         {
             get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
@@ -89,8 +90,10 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Connection State of the Private Endpoint Connection. </summary>
+        [WirePath("properties.privateLinkServiceConnectionState")]
         public ManagedInstancePrivateLinkServiceConnectionStateProperty ConnectionState { get; set; }
         /// <summary> State of the Private Endpoint Connection. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
     }
 }

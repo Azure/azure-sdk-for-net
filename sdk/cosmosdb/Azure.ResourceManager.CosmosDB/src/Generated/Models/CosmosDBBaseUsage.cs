@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The unit of the metric. </summary>
+        [WirePath("unit")]
         public CosmosDBMetricUnitType? Unit { get; }
         /// <summary> The name information for the metric. </summary>
+        [WirePath("name")]
         public CosmosDBMetricName Name { get; }
         /// <summary> The quota period used to summarize the usage values. </summary>
+        [WirePath("quotaPeriod")]
         public string QuotaPeriod { get; }
         /// <summary> Maximum value for this metric. </summary>
+        [WirePath("limit")]
         public long? Limit { get; }
         /// <summary> Current value for this metric. </summary>
+        [WirePath("currentValue")]
         public long? CurrentValue { get; }
     }
 }

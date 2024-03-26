@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The state of Sql Agent. </summary>
+        [WirePath("properties.state")]
         public SqlAgentConfigurationPropertiesState? State { get; set; }
     }
 }

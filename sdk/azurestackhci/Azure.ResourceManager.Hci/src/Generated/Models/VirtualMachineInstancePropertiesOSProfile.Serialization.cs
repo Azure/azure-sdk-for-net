@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(LinuxConfiguration))
             {
                 writer.WritePropertyName("linuxConfiguration"u8);
-                writer.WriteObjectValue(LinuxConfiguration);
+                writer.WriteObjectValue<VirtualMachineInstancePropertiesOSProfileLinuxConfiguration>(LinuxConfiguration, options);
             }
             if (Optional.IsDefined(WindowsConfiguration))
             {
                 writer.WritePropertyName("windowsConfiguration"u8);
-                writer.WriteObjectValue(WindowsConfiguration);
+                writer.WriteObjectValue<VirtualMachineInstancePropertiesOSProfileWindowsConfiguration>(WindowsConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -27,7 +27,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     writer.WriteNullValue();
                     continue;
                 }
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<object>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

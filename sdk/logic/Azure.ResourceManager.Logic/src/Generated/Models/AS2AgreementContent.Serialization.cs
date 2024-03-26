@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.Logic.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("receiveAgreement"u8);
-            writer.WriteObjectValue(ReceiveAgreement);
+            writer.WriteObjectValue<AS2OneWayAgreement>(ReceiveAgreement, options);
             writer.WritePropertyName("sendAgreement"u8);
-            writer.WriteObjectValue(SendAgreement);
+            writer.WriteObjectValue<AS2OneWayAgreement>(SendAgreement, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Backup Name for the current backup. </summary>
+        [WirePath("backupName")]
         public string BackupName { get; }
     }
 }

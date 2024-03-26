@@ -71,8 +71,10 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The fully qualified DNS record for managed server alias. </summary>
+        [WirePath("properties.azureDnsRecord")]
         public string AzureDnsRecord { get; }
         /// <summary> The fully qualified public DNS record for managed server alias. </summary>
+        [WirePath("properties.publicAzureDnsRecord")]
         public string PublicAzureDnsRecord { get; }
     }
 }

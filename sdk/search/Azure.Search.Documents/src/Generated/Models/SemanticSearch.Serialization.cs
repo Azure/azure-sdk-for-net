@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Configurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SemanticConfiguration>(item);
                 }
                 writer.WriteEndArray();
             }

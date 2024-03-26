@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Gets or sets the list of category configurations. </summary>
+        [WirePath("categories")]
         public IList<SignalRResourceLogCategory> Categories { get; }
     }
 }

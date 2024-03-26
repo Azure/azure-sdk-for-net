@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WriteStartArray();
                 foreach (var item in Conditions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OutstandingCondition>(item, options);
                 }
                 writer.WriteEndArray();
             }

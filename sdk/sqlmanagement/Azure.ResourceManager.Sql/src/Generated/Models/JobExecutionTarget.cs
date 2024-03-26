@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The type of the target. </summary>
+        [WirePath("type")]
         public JobTargetType? TargetType { get; }
         /// <summary> The server name. </summary>
+        [WirePath("serverName")]
         public string ServerName { get; }
         /// <summary> The database name. </summary>
+        [WirePath("databaseName")]
         public string DatabaseName { get; }
     }
 }

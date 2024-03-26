@@ -72,8 +72,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// WebDeploy -- default
         /// Ftp
         /// </summary>
+        [WirePath("format")]
         public PublishingProfileFormat? Format { get; set; }
         /// <summary> Include the DisasterRecover endpoint if true. </summary>
+        [WirePath("includeDisasterRecoveryEndpoints")]
         public bool? IsIncludeDisasterRecoveryEndpoints { get; set; }
     }
 }

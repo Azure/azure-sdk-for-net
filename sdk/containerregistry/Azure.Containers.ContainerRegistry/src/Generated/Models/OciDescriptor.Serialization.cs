@@ -52,7 +52,7 @@ namespace Azure.Containers.ContainerRegistry
                 if (Annotations != null)
                 {
                     writer.WritePropertyName("annotations"u8);
-                    writer.WriteObjectValue(Annotations);
+                    writer.WriteObjectValue<OciAnnotations>(Annotations);
                 }
                 else
                 {

@@ -16,11 +16,11 @@ namespace Azure.Communication.CallingServer
         {
             writer.WriteStartObject();
             writer.WritePropertyName("targetParticipant"u8);
-            writer.WriteObjectValue(TargetParticipant);
+            writer.WriteObjectValue<CommunicationIdentifierModel>(TargetParticipant);
             if (Optional.IsDefined(TransfereeCallerId))
             {
                 writer.WritePropertyName("transfereeCallerId"u8);
-                writer.WriteObjectValue(TransfereeCallerId);
+                writer.WriteObjectValue<PhoneNumberIdentifierModel>(TransfereeCallerId);
             }
             if (Optional.IsDefined(UserToUserInformation))
             {

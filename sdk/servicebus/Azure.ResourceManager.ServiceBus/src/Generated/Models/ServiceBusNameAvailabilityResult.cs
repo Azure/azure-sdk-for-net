@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.ServiceBus.Models
         }
 
         /// <summary> The detailed info regarding the reason associated with the namespace. </summary>
+        [WirePath("message")]
         public string Message { get; }
         /// <summary> Value indicating namespace is availability, true if the namespace is available; otherwise, false. </summary>
+        [WirePath("nameAvailable")]
         public bool? IsNameAvailable { get; }
         /// <summary> The reason for unavailability of a namespace. </summary>
+        [WirePath("reason")]
         public ServiceBusNameUnavailableReason? Reason { get; }
     }
 }

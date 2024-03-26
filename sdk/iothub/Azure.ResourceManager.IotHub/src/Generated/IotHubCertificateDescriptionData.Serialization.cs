@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.IotHub
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<IotHubCertificateProperties>(Properties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {

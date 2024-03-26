@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LiveTraceCategory>(item, options);
                 }
                 writer.WriteEndArray();
             }

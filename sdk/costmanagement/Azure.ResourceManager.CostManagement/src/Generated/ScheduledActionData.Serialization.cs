@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(FileDestination))
             {
                 writer.WritePropertyName("fileDestination"u8);
-                writer.WriteObjectValue(FileDestination);
+                writer.WriteObjectValue<FileDestination>(FileDestination, options);
             }
             if (Optional.IsDefined(Notification))
             {
                 writer.WritePropertyName("notification"u8);
-                writer.WriteObjectValue(Notification);
+                writer.WriteObjectValue<NotificationProperties>(Notification, options);
             }
             if (Optional.IsDefined(NotificationEmail))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule);
+                writer.WriteObjectValue<ScheduleProperties>(Schedule, options);
             }
             if (Optional.IsDefined(Scope))
             {

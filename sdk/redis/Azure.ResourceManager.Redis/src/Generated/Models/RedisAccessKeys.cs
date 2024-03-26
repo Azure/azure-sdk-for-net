@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Redis.Models
         }
 
         /// <summary> The current primary key that clients can use to authenticate with Redis cache. </summary>
+        [WirePath("primaryKey")]
         public string PrimaryKey { get; }
         /// <summary> The current secondary key that clients can use to authenticate with Redis cache. </summary>
+        [WirePath("secondaryKey")]
         public string SecondaryKey { get; }
     }
 }

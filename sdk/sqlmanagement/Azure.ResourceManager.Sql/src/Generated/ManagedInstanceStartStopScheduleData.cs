@@ -79,14 +79,19 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The description of the schedule. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> The time zone of the schedule. </summary>
+        [WirePath("properties.timeZoneId")]
         public string TimeZoneId { get; set; }
         /// <summary> Schedule list. </summary>
+        [WirePath("properties.scheduleList")]
         public IList<SqlScheduleItem> ScheduleList { get; }
         /// <summary> Next action to be executed (Start or Stop). </summary>
+        [WirePath("properties.nextRunAction")]
         public string NextRunAction { get; }
         /// <summary> Timestamp when the next action will be executed in the corresponding schedule time zone. </summary>
+        [WirePath("properties.nextExecutionTime")]
         public string NextExecutionTime { get; }
     }
 }

@@ -78,12 +78,16 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> List of connection string names. </summary>
+        [WirePath("properties.connectionStringNames")]
         public IList<string> ConnectionStringNames { get; }
         /// <summary> List of application settings names. </summary>
+        [WirePath("properties.appSettingNames")]
         public IList<string> AppSettingNames { get; }
         /// <summary> List of external Azure storage account identifiers. </summary>
+        [WirePath("properties.azureStorageConfigNames")]
         public IList<string> AzureStorageConfigNames { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

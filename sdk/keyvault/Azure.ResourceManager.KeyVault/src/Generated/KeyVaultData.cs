@@ -83,6 +83,7 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Properties of the vault. </summary>
+        [WirePath("properties")]
         public Models.KeyVaultProperties Properties { get; set; }
     }
 }

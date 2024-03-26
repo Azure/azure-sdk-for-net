@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartArray();
             foreach (var item in Fields)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MongoDBShardKeyField>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(IsUnique))

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(StaticIP))
             {
                 writer.WritePropertyName("staticIp"u8);
-                writer.WriteObjectValue(StaticIP);
+                writer.WriteObjectValue<SimStaticIPPropertiesStaticIP>(StaticIP, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

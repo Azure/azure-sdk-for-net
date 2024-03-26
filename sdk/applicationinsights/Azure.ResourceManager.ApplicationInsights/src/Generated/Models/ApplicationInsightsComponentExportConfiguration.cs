@@ -96,42 +96,61 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> The unique ID of the export configuration inside an Application Insights component. It is auto generated when the Continuous Export configuration is created. </summary>
+        [WirePath("ExportId")]
         public string ExportId { get; }
         /// <summary> The instrumentation key of the Application Insights component. </summary>
+        [WirePath("InstrumentationKey")]
         public string InstrumentationKey { get; }
         /// <summary> This comma separated list of document types that will be exported. The possible values include 'Requests', 'Event', 'Exceptions', 'Metrics', 'PageViews', 'PageViewPerformance', 'Rdd', 'PerformanceCounters', 'Availability', 'Messages'. </summary>
+        [WirePath("RecordTypes")]
         public string RecordTypes { get; }
         /// <summary> The name of the Application Insights component. </summary>
+        [WirePath("ApplicationName")]
         public string ApplicationName { get; }
         /// <summary> The subscription of the Application Insights component. </summary>
+        [WirePath("SubscriptionId")]
         public string SubscriptionId { get; }
         /// <summary> The resource group of the Application Insights component. </summary>
+        [WirePath("ResourceGroup")]
         public string ResourceGroup { get; }
         /// <summary> The destination storage account subscription ID. </summary>
+        [WirePath("DestinationStorageSubscriptionId")]
         public string DestinationStorageSubscriptionId { get; }
         /// <summary> The destination account location ID. </summary>
+        [WirePath("DestinationStorageLocationId")]
         public string DestinationStorageLocationId { get; }
         /// <summary> The name of destination account. </summary>
+        [WirePath("DestinationAccountId")]
         public string DestinationAccountId { get; }
         /// <summary> The destination type. </summary>
+        [WirePath("DestinationType")]
         public string DestinationType { get; }
         /// <summary> This will be 'true' if the Continuous Export configuration is enabled, otherwise it will be 'false'. </summary>
+        [WirePath("IsUserEnabled")]
         public string IsUserEnabled { get; }
         /// <summary> Last time the Continuous Export configuration was updated. </summary>
+        [WirePath("LastUserUpdate")]
         public string LastUserUpdate { get; }
         /// <summary> Deprecated. </summary>
+        [WirePath("NotificationQueueEnabled")]
         public string NotificationQueueEnabled { get; }
         /// <summary> This indicates current Continuous Export configuration status. The possible values are 'Preparing', 'Success', 'Failure'. </summary>
+        [WirePath("ExportStatus")]
         public string ExportStatus { get; }
         /// <summary> The last time data was successfully delivered to the destination storage container for this Continuous Export configuration. </summary>
+        [WirePath("LastSuccessTime")]
         public string LastSuccessTime { get; }
         /// <summary> The last time the Continuous Export configuration started failing. </summary>
+        [WirePath("LastGapTime")]
         public string LastGapTime { get; }
         /// <summary> This is the reason the Continuous Export configuration started failing. It can be 'AzureStorageNotFound' or 'AzureStorageAccessDenied'. </summary>
+        [WirePath("PermanentErrorReason")]
         public string PermanentErrorReason { get; }
         /// <summary> The name of the destination storage account. </summary>
+        [WirePath("StorageName")]
         public string StorageName { get; }
         /// <summary> The name of the destination storage container. </summary>
+        [WirePath("ContainerName")]
         public string ContainerName { get; }
     }
 }

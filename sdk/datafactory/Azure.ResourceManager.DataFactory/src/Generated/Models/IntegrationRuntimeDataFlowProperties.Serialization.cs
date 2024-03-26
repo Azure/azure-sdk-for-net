@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IntegrationRuntimeDataFlowCustomItem>(item, options);
                 }
                 writer.WriteEndArray();
             }

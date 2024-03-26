@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in AssessmentResult)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ComplianceSegment>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.NetApp
             if (Optional.IsDefined(GroupMetaData))
             {
                 writer.WritePropertyName("groupMetaData"u8);
-                writer.WriteObjectValue(GroupMetaData);
+                writer.WriteObjectValue<NetAppVolumeGroupMetadata>(GroupMetaData, options);
             }
             if (Optional.IsCollectionDefined(Volumes))
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NetApp
                 writer.WriteStartArray();
                 foreach (var item in Volumes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetAppVolumeGroupVolume>(item, options);
                 }
                 writer.WriteEndArray();
             }

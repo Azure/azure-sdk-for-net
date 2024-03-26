@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> A collection of NetworkSecurityPerimeterConfigurations. </summary>
+        [WirePath("value")]
         public IReadOnlyList<EventHubsNetworkSecurityPerimeterConfiguration> Value { get; }
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             writer.WriteStartArray();
             foreach (var item in Authorizations)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ManagedServicesAuthorization>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(EligibleAuthorizations))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 writer.WriteStartArray();
                 foreach (var item in EligibleAuthorizations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedServicesEligibleAuthorization>(item, options);
                 }
                 writer.WriteEndArray();
             }

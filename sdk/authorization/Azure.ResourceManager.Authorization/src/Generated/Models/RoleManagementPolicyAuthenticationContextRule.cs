@@ -34,8 +34,10 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> The value indicating if rule is enabled. </summary>
+        [WirePath("isEnabled")]
         public bool? IsEnabled { get; set; }
         /// <summary> The claim value. </summary>
+        [WirePath("claimValue")]
         public string ClaimValue { get; set; }
     }
 }

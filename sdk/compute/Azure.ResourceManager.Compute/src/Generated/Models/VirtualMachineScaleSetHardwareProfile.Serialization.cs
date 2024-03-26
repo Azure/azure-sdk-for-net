@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(VmSizeProperties))
             {
                 writer.WritePropertyName("vmSizeProperties"u8);
-                writer.WriteObjectValue(VmSizeProperties);
+                writer.WriteObjectValue<VirtualMachineSizeProperties>(VmSizeProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

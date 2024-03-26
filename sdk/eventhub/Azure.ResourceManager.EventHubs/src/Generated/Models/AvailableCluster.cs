@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Location fo the Available Cluster. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
     }
 }

@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(IotDeviceDetails))
             {
                 writer.WritePropertyName("ioTDeviceDetails"u8);
-                writer.WriteObjectValue(IotDeviceDetails);
+                writer.WriteObjectValue<EdgeIotDeviceInfo>(IotDeviceDetails, options);
             }
             if (Optional.IsDefined(IotEdgeDeviceDetails))
             {
                 writer.WritePropertyName("ioTEdgeDeviceDetails"u8);
-                writer.WriteObjectValue(IotEdgeDeviceDetails);
+                writer.WriteObjectValue<EdgeIotDeviceInfo>(IotEdgeDeviceDetails, options);
             }
             if (Optional.IsCollectionDefined(ShareMappings))
             {
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in ShareMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataBoxEdgeMountPointMap>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(IotEdgeAgentInfo))
             {
                 writer.WritePropertyName("ioTEdgeAgentInfo"u8);
-                writer.WriteObjectValue(IotEdgeAgentInfo);
+                writer.WriteObjectValue<IotEdgeAgentInfo>(IotEdgeAgentInfo, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HostPlatformType))
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(ComputeResource))
             {
                 writer.WritePropertyName("computeResource"u8);
-                writer.WriteObjectValue(ComputeResource);
+                writer.WriteObjectValue<EdgeComputeResourceInfo>(ComputeResource, options);
             }
             if (Optional.IsDefined(RoleStatus))
             {

@@ -70,10 +70,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The name of the send key. </summary>
+        [WirePath("properties.sendKeyName")]
         public string SendKeyName { get; }
         /// <summary> The value of the send key. </summary>
+        [WirePath("properties.sendKeyValue")]
         public string SendKeyValue { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

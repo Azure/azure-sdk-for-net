@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WritePropertyName("dataNetwork"u8);
             JsonSerializer.Serialize(writer, DataNetwork);
             writer.WritePropertyName("sessionAmbr"u8);
-            writer.WriteObjectValue(SessionAmbr);
+            writer.WriteObjectValue<Ambr>(SessionAmbr, options);
             if (Optional.IsDefined(FiveQi))
             {
                 writer.WritePropertyName("5qi"u8);

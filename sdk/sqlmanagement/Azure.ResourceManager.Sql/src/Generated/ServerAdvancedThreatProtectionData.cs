@@ -72,8 +72,10 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Specifies the state of the Advanced Threat Protection, whether it is enabled or disabled or a state has not been applied yet on the specific database or server. </summary>
+        [WirePath("properties.state")]
         public AdvancedThreatProtectionState? State { get; set; }
         /// <summary> Specifies the UTC creation time of the policy. </summary>
+        [WirePath("properties.creationTime")]
         public DateTimeOffset? CreatedOn { get; }
     }
 }

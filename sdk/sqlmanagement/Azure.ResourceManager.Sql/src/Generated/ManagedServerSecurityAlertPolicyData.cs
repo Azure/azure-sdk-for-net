@@ -86,20 +86,28 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Specifies the state of the policy, whether it is enabled or disabled or a policy has not been applied yet on the specific database. </summary>
+        [WirePath("properties.state")]
         public SecurityAlertsPolicyState? State { get; set; }
         /// <summary> Specifies an array of alerts that are disabled. Allowed values are: Sql_Injection, Sql_Injection_Vulnerability, Access_Anomaly, Data_Exfiltration, Unsafe_Action, Brute_Force. </summary>
+        [WirePath("properties.disabledAlerts")]
         public IList<string> DisabledAlerts { get; }
         /// <summary> Specifies an array of e-mail addresses to which the alert is sent. </summary>
+        [WirePath("properties.emailAddresses")]
         public IList<string> EmailAddresses { get; }
         /// <summary> Specifies that the alert is sent to the account administrators. </summary>
+        [WirePath("properties.emailAccountAdmins")]
         public bool? SendToEmailAccountAdmins { get; set; }
         /// <summary> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). This blob storage will hold all Threat Detection audit logs. </summary>
+        [WirePath("properties.storageEndpoint")]
         public string StorageEndpoint { get; set; }
         /// <summary> Specifies the identifier key of the Threat Detection audit storage account. </summary>
+        [WirePath("properties.storageAccountAccessKey")]
         public string StorageAccountAccessKey { get; set; }
         /// <summary> Specifies the number of days to keep in the Threat Detection audit logs. </summary>
+        [WirePath("properties.retentionDays")]
         public int? RetentionDays { get; set; }
         /// <summary> Specifies the UTC creation time of the policy. </summary>
+        [WirePath("properties.creationTime")]
         public DateTimeOffset? CreatedOn { get; }
     }
 }

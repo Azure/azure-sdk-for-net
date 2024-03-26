@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(EncryptionKeyReference))
             {
                 writer.WritePropertyName("encryptionKeyReference"u8);
-                writer.WriteObjectValue(EncryptionKeyReference);
+                writer.WriteObjectValue<IntegrationServiceEnvironmenEncryptionKeyReference>(EncryptionKeyReference, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

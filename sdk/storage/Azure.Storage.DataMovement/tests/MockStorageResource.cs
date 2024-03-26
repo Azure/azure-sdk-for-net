@@ -44,7 +44,10 @@ namespace Azure.Storage.DataMovement.Tests
             return new MockStorageResource(default, uri, failAfter, transferOrder);
         }
 
-        protected internal override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
+        protected internal override Task CompleteTransferAsync(
+            bool overwrite,
+            StorageResourceCompleteTransferOptions completeTransferOptions = default,
+            CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }

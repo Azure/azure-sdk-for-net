@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The related metadata items for the function. </summary>
+        [WirePath("related")]
         public LogAnalyticsQuerySearchRelatedMetadata Related { get; set; }
         /// <summary> Tags associated with the query. </summary>
+        [WirePath("tags")]
         public IDictionary<string, IList<string>> Tags { get; }
     }
 }

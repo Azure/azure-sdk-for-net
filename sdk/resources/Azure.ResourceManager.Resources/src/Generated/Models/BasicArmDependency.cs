@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The ID of the dependency. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> The dependency resource type. </summary>
+        [WirePath("resourceType")]
         public ResourceType? ResourceType { get; }
         /// <summary> The dependency resource name. </summary>
+        [WirePath("resourceName")]
         public string ResourceName { get; }
     }
 }

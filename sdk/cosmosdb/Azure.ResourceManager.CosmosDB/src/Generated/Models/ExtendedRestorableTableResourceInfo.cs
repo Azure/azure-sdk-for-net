@@ -72,18 +72,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>
+        [WirePath("_rid")]
         public string Rid { get; }
         /// <summary> The operation type of this table event. </summary>
+        [WirePath("operationType")]
         public CosmosDBOperationType? OperationType { get; }
         /// <summary> A state of this table to identify if this table is restorable in same account. </summary>
+        [WirePath("canUndelete")]
         public string CanUndelete { get; }
         /// <summary> The reason why this table can not be restored in same account. </summary>
+        [WirePath("canUndeleteReason")]
         public string CanUndeleteReason { get; }
         /// <summary> The time when this table event happened. </summary>
+        [WirePath("eventTimestamp")]
         public string EventTimestamp { get; }
         /// <summary> The name of this Table. </summary>
+        [WirePath("ownerId")]
         public string TableName { get; }
         /// <summary> The resource ID of this Table. </summary>
+        [WirePath("ownerResourceId")]
         public string TableId { get; }
     }
 }

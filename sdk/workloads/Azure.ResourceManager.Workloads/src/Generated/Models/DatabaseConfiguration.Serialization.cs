@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
             writer.WritePropertyName("virtualMachineConfiguration"u8);
-            writer.WriteObjectValue(VirtualMachineConfiguration);
+            writer.WriteObjectValue<SapVirtualMachineConfiguration>(VirtualMachineConfiguration, options);
             writer.WritePropertyName("instanceCount"u8);
             writer.WriteNumberValue(InstanceCount);
             if (Optional.IsDefined(DiskConfiguration))
             {
                 writer.WritePropertyName("diskConfiguration"u8);
-                writer.WriteObjectValue(DiskConfiguration);
+                writer.WriteObjectValue<DiskConfiguration>(DiskConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

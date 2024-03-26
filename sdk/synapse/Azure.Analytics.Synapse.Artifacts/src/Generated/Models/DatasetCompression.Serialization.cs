@@ -20,16 +20,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteObjectValue(Type);
+            writer.WriteObjectValue<object>(Type);
             if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
-                writer.WriteObjectValue(Level);
+                writer.WriteObjectValue<object>(Level);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, DatasetCompression model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DatasetCompression>(model);
             }
             public override DatasetCompression Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

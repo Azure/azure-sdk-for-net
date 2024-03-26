@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStartArray();
             foreach (var item in FieldMappings)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<RelationshipTypeFieldMapping>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

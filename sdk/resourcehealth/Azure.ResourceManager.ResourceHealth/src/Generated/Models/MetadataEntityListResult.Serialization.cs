@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceHealthMetadataEntityData>(item, options);
                 }
                 writer.WriteEndArray();
             }

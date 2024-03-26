@@ -32,7 +32,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in FailedImportInfoList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ImportInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in SuccessImportInfoList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ImportInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -170,7 +170,7 @@ namespace Azure.Analytics.Purview.DataMap
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<BulkImportResult>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

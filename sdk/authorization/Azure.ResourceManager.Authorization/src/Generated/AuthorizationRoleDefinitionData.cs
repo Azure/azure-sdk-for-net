@@ -80,14 +80,19 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary> The role name. </summary>
+        [WirePath("properties.roleName")]
         public string RoleName { get; set; }
         /// <summary> The role definition description. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> The role type. </summary>
+        [WirePath("properties.type")]
         public AuthorizationRoleType? RoleType { get; set; }
         /// <summary> Role definition permissions. </summary>
+        [WirePath("properties.permissions")]
         public IList<RoleDefinitionPermission> Permissions { get; }
         /// <summary> Role definition assignable scopes. </summary>
+        [WirePath("properties.assignableScopes")]
         public IList<string> AssignableScopes { get; }
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MoverResourceData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 if (SummaryCollection != null)
                 {
                     writer.WritePropertyName("summaryCollection"u8);
-                    writer.WriteObjectValue(SummaryCollection);
+                    writer.WriteObjectValue<MoverSummaryList>(SummaryCollection, options);
                 }
                 else
                 {

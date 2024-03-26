@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in BillingMeters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HDInsightBillingMeters>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in DiskBillingMeters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HDInsightDiskBillingMeters>(item, options);
                 }
                 writer.WriteEndArray();
             }

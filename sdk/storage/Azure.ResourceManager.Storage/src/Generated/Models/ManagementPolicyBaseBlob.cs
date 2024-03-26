@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The function to tier blobs to cool storage. </summary>
+        [WirePath("tierToCool")]
         public DateAfterModification TierToCool { get; set; }
         /// <summary> The function to tier blobs to archive storage. </summary>
+        [WirePath("tierToArchive")]
         public DateAfterModification TierToArchive { get; set; }
         /// <summary> The function to tier blobs to cold storage. </summary>
+        [WirePath("tierToCold")]
         public DateAfterModification TierToCold { get; set; }
         /// <summary> The function to tier blobs to hot storage. This action can only be used with Premium Block Blob Storage Accounts. </summary>
+        [WirePath("tierToHot")]
         public DateAfterModification TierToHot { get; set; }
         /// <summary> The function to delete the blob. </summary>
+        [WirePath("delete")]
         public DateAfterModification Delete { get; set; }
         /// <summary> This property enables auto tiering of a blob from cool to hot on a blob access. This property requires tierToCool.daysAfterLastAccessTimeGreaterThan. </summary>
+        [WirePath("enableAutoTierToHotFromCool")]
         public bool? EnableAutoTierToHotFromCool { get; set; }
     }
 }

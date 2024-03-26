@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(DriverShare))
             {
                 writer.WritePropertyName("driverShare"u8);
-                writer.WriteObjectValue(DriverShare);
+                writer.WriteObjectValue<FileShare>(DriverShare, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

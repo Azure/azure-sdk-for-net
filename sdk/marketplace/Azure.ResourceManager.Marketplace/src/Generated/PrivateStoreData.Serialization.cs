@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WriteStartArray();
                 foreach (var item in Recipients)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NotificationRecipient>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Ticket number for the role eligibility. </summary>
+        [WirePath("ticketNumber")]
         public string TicketNumber { get; set; }
         /// <summary> Ticket system name for the role eligibility. </summary>
+        [WirePath("ticketSystem")]
         public string TicketSystem { get; set; }
     }
 }

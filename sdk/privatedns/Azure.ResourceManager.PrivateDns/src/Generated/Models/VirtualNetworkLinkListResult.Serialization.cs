@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VirtualNetworkLinkData>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -77,12 +77,16 @@ namespace Azure.ResourceManager.OperationalInsights
         }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> The resource id of the resource that will be linked to the workspace. This should be used for linking resources which require read access. </summary>
+        [WirePath("properties.resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The resource id of the resource that will be linked to the workspace. This should be used for linking resources which require write access. </summary>
+        [WirePath("properties.writeAccessResourceId")]
         public ResourceIdentifier WriteAccessResourceId { get; set; }
         /// <summary> The provisioning state of the linked service. </summary>
+        [WirePath("properties.provisioningState")]
         public OperationalInsightsLinkedServiceEntityStatus? ProvisioningState { get; set; }
     }
 }

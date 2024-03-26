@@ -55,7 +55,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, Resource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<Resource>(model);
             }
             public override Resource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

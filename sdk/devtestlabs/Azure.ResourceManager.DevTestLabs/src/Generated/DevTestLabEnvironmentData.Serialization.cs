@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(DeploymentProperties))
             {
                 writer.WritePropertyName("deploymentProperties"u8);
-                writer.WriteObjectValue(DeploymentProperties);
+                writer.WriteObjectValue<DevTestLabEnvironmentDeployment>(DeploymentProperties, options);
             }
             if (Optional.IsDefined(ArmTemplateDisplayName))
             {

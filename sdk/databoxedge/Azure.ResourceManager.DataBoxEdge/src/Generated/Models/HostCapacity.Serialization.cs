@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 foreach (var item in VmUsedMemory)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<DataBoxEdgeVmMemory>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in NumaNodesData)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NumaNodeInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

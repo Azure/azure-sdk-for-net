@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The Key Vault uri which holds they key associated with the Log Analytics cluster. </summary>
+        [WirePath("keyVaultUri")]
         public Uri KeyVaultUri { get; set; }
         /// <summary> The name of the key associated with the Log Analytics cluster. </summary>
+        [WirePath("keyName")]
         public string KeyName { get; set; }
         /// <summary> The version of the key associated with the Log Analytics cluster. </summary>
+        [WirePath("keyVersion")]
         public string KeyVersion { get; set; }
         /// <summary> Selected key minimum required size. </summary>
+        [WirePath("keyRsaSize")]
         public int? KeyRsaSize { get; set; }
     }
 }

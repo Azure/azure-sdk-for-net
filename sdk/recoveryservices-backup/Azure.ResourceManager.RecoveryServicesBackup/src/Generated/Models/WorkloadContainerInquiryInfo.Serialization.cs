@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ErrorDetail))
             {
                 writer.WritePropertyName("errorDetail"u8);
-                writer.WriteObjectValue(ErrorDetail);
+                writer.WriteObjectValue<BackupErrorDetail>(ErrorDetail, options);
             }
             if (Optional.IsCollectionDefined(InquiryDetails))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in InquiryDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WorkloadInquiryDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }

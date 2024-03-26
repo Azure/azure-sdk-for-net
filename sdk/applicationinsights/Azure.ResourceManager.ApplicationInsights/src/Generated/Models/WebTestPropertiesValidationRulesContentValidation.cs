@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Content to look for in the return of the WebTest.  Must not be null or empty. </summary>
+        [WirePath("ContentMatch")]
         public string ContentMatch { get; set; }
         /// <summary> When set, this value makes the ContentMatch validation case insensitive. </summary>
+        [WirePath("IgnoreCase")]
         public bool? IgnoreCase { get; set; }
         /// <summary> When true, validation will pass if there is a match for the ContentMatch string.  If false, validation will fail if there is a match. </summary>
+        [WirePath("PassIfTextFound")]
         public bool? PassIfTextFound { get; set; }
     }
 }

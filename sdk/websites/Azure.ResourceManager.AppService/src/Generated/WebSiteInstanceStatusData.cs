@@ -80,18 +80,25 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Gets or sets the state. </summary>
+        [WirePath("properties.state")]
         public SiteRuntimeState? State { get; set; }
         /// <summary> Link to the GetStatusApi in Kudu. </summary>
+        [WirePath("properties.statusUrl")]
         public Uri StatusUri { get; set; }
         /// <summary> Link to the Diagnose and Solve Portal. </summary>
+        [WirePath("properties.detectorUrl")]
         public Uri DetectorUri { get; set; }
         /// <summary> Link to the console to web app instance. </summary>
+        [WirePath("properties.consoleUrl")]
         public Uri ConsoleUri { get; set; }
         /// <summary> Link to the console to web app instance. </summary>
+        [WirePath("properties.healthCheckUrl")]
         public string HealthCheckUrlString { get; set; }
         /// <summary> Dictionary of &lt;ContainerInfo&gt;. </summary>
+        [WirePath("properties.containers")]
         public IDictionary<string, ContainerInfo> Containers { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

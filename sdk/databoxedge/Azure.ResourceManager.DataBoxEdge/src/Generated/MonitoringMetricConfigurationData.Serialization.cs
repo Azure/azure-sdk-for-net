@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             writer.WriteStartArray();
             foreach (var item in MetricConfigurations)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DataBoxEdgeMetricConfiguration>(item, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

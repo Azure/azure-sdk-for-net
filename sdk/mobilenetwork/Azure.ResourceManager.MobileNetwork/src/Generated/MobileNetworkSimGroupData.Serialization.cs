@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MobileNetwork
             if (Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(UserAssignedIdentity);
+                writer.WriteObjectValue<MobileNetworkManagedServiceIdentity>(UserAssignedIdentity, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MobileNetwork
             if (Optional.IsDefined(EncryptionKey))
             {
                 writer.WritePropertyName("encryptionKey"u8);
-                writer.WriteObjectValue(EncryptionKey);
+                writer.WriteObjectValue<KeyVaultKey>(EncryptionKey, options);
             }
             if (Optional.IsDefined(MobileNetwork))
             {

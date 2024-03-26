@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The server URL for the container registry where the build will be hosted. </summary>
+        [WirePath("serverUrl")]
         public Uri ServerUri { get; set; }
         /// <summary> The image name for the build. </summary>
+        [WirePath("imageName")]
         public string ImageName { get; set; }
         /// <summary> The username used to upload the image to the container registry. </summary>
+        [WirePath("username")]
         public string Username { get; set; }
         /// <summary> The password used to upload the image to the container registry. </summary>
+        [WirePath("password")]
         public string Password { get; set; }
     }
 }

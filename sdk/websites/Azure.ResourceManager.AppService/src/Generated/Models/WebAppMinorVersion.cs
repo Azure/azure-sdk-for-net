@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Web App stack minor version (display only). </summary>
+        [WirePath("displayText")]
         public string DisplayText { get; }
         /// <summary> Web App stack major version name. </summary>
+        [WirePath("value")]
         public string Value { get; }
         /// <summary> Settings associated with the minor version. </summary>
+        [WirePath("stackSettings")]
         public WebAppRuntimes StackSettings { get; }
     }
 }

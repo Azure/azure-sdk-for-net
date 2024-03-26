@@ -87,22 +87,31 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> An identifier for the static site build. </summary>
+        [WirePath("properties.buildId")]
         public string BuildId { get; }
         /// <summary> The source branch. </summary>
+        [WirePath("properties.sourceBranch")]
         public string SourceBranch { get; }
         /// <summary> The title of a pull request that a static site build is related to. </summary>
+        [WirePath("properties.pullRequestTitle")]
         public string PullRequestTitle { get; }
         /// <summary> The hostname for a static site build. </summary>
+        [WirePath("properties.hostname")]
         public string Hostname { get; }
         /// <summary> When this build was created. </summary>
+        [WirePath("properties.createdTimeUtc")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> When this build was updated. </summary>
+        [WirePath("properties.lastUpdatedOn")]
         public DateTimeOffset? LastUpdatedOn { get; }
         /// <summary> The status of the static site build. </summary>
+        [WirePath("properties.status")]
         public StaticSiteBuildStatus? Status { get; }
         /// <summary> User provided function apps registered with the static site build. </summary>
+        [WirePath("properties.userProvidedFunctionApps")]
         public IReadOnlyList<StaticSiteUserProvidedFunctionAppData> UserProvidedFunctionApps { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

@@ -33,12 +33,12 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(ContentFilterResults))
             {
                 writer.WritePropertyName("content_filter_results"u8);
-                writer.WriteObjectValue(ContentFilterResults);
+                writer.WriteObjectValue<ContentFilterResultsForChoice>(ContentFilterResults, options);
             }
             if (LogProbabilityModel != null)
             {
                 writer.WritePropertyName("logprobs"u8);
-                writer.WriteObjectValue(LogProbabilityModel);
+                writer.WriteObjectValue<CompletionsLogProbabilityModel>(LogProbabilityModel, options);
             }
             else
             {
@@ -197,7 +197,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<Choice>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

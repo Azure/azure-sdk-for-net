@@ -72,12 +72,16 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Operation Mode. </summary>
+        [WirePath("properties.operationMode")]
         public DatabaseExtensionOperationMode? OperationMode { get; set; }
         /// <summary> Storage key type. </summary>
+        [WirePath("properties.storageKeyType")]
         public StorageKeyType? StorageKeyType { get; set; }
         /// <summary> Storage key. </summary>
+        [WirePath("properties.storageKey")]
         public string StorageKey { get; set; }
         /// <summary> Storage Uri. </summary>
+        [WirePath("properties.storageUri")]
         public Uri StorageUri { get; set; }
     }
 }

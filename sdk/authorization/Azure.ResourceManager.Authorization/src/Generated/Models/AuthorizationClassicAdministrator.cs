@@ -68,8 +68,10 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> The email address of the administrator. </summary>
+        [WirePath("properties.emailAddress")]
         public string EmailAddress { get; }
         /// <summary> The role of the administrator. </summary>
+        [WirePath("properties.role")]
         public string Role { get; }
     }
 }

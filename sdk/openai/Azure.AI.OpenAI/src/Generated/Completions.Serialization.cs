@@ -35,7 +35,7 @@ namespace Azure.AI.OpenAI
                 writer.WriteStartArray();
                 foreach (var item in PromptFilterResults)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContentFilterResultsForPrompt>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -43,11 +43,11 @@ namespace Azure.AI.OpenAI
             writer.WriteStartArray();
             foreach (var item in Choices)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<Choice>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("usage"u8);
-            writer.WriteObjectValue(Usage);
+            writer.WriteObjectValue<CompletionsUsage>(Usage, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -121,7 +121,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<Completions>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

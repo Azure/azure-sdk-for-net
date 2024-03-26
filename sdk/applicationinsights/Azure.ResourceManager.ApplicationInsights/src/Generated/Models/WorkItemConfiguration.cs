@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Connector identifier where work item is created. </summary>
+        [WirePath("ConnectorId")]
         public string ConnectorId { get; }
         /// <summary> Configuration friendly name. </summary>
+        [WirePath("ConfigDisplayName")]
         public string ConfigDisplayName { get; }
         /// <summary> Boolean value indicating whether configuration is default. </summary>
+        [WirePath("IsDefault")]
         public bool? IsDefault { get; }
         /// <summary> Unique Id for work item. </summary>
+        [WirePath("Id")]
         public string Id { get; }
         /// <summary> Serialized JSON object for detailed properties. </summary>
+        [WirePath("ConfigProperties")]
         public string ConfigProperties { get; }
     }
 }

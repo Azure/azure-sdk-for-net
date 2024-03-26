@@ -49,7 +49,7 @@ namespace Azure.Communication.JobRouter
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
-                writer.WriteObjectValue(Mode);
+                writer.WriteObjectValue<DistributionMode>(Mode, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

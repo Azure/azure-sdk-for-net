@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Minimum value. </summary>
+        [WirePath("minValue")]
         public MaxSizeCapability MinValue { get; }
         /// <summary> Maximum value. </summary>
+        [WirePath("maxValue")]
         public MaxSizeCapability MaxValue { get; }
         /// <summary> Scale/step size for discrete values between the minimum value and the maximum value. </summary>
+        [WirePath("scaleSize")]
         public MaxSizeCapability ScaleSize { get; }
         /// <summary> Size of transaction log. </summary>
+        [WirePath("logSize")]
         public LogSizeCapability LogSize { get; }
         /// <summary> The status of the capability. </summary>
+        [WirePath("status")]
         public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
     }
 }

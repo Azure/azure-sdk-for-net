@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(CustomPersistentDiskProperties))
             {
                 writer.WritePropertyName("customPersistentDiskProperties"u8);
-                writer.WriteObjectValue(CustomPersistentDiskProperties);
+                writer.WriteObjectValue<AppCustomPersistentDiskProperties>(CustomPersistentDiskProperties, options);
             }
             writer.WritePropertyName("storageId"u8);
             writer.WriteStringValue(StorageId);

@@ -12,8 +12,14 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     internal abstract class StorageResourceItemInternal : StorageResourceItem
     {
-        internal Task CompleteTransferInternalAsync(bool overwrite, CancellationToken cancellationToken = default)
-            => CompleteTransferAsync(overwrite, cancellationToken);
+        internal Task CompleteTransferInternalAsync(
+            bool overwrite,
+            StorageResourceCompleteTransferOptions completeTransferOptions,
+            CancellationToken cancellationToken = default)
+            => CompleteTransferAsync(
+                overwrite,
+                completeTransferOptions,
+                cancellationToken);
 
         internal Task CopyBlockFromUriInternalAsync(
             StorageResourceItem sourceResource,

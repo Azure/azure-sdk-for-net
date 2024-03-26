@@ -36,14 +36,14 @@ namespace Azure.Communication.Messages
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MessageTemplateValue>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Bindings))
             {
                 writer.WritePropertyName("bindings"u8);
-                writer.WriteObjectValue(Bindings);
+                writer.WriteObjectValue<MessageTemplateBindings>(Bindings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -176,7 +176,7 @@ namespace Azure.Communication.Messages
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<MessageTemplate>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.HealthcareApis
             if (Optional.IsDefined(IngestionEndpointConfiguration))
             {
                 writer.WritePropertyName("ingestionEndpointConfiguration"u8);
-                writer.WriteObjectValue(IngestionEndpointConfiguration);
+                writer.WriteObjectValue<HealthcareApisIotConnectorEventHubIngestionConfiguration>(IngestionEndpointConfiguration, options);
             }
             if (Optional.IsDefined(DeviceMapping))
             {
                 writer.WritePropertyName("deviceMapping"u8);
-                writer.WriteObjectValue(DeviceMapping);
+                writer.WriteObjectValue<HealthcareApisIotMappingProperties>(DeviceMapping, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

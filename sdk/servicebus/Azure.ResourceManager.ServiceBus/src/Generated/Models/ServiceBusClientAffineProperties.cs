@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.ServiceBus.Models
         }
 
         /// <summary> Indicates the Client ID of the application that created the client-affine subscription. </summary>
+        [WirePath("clientId")]
         public string ClientId { get; set; }
         /// <summary> For client-affine subscriptions, this value indicates whether the subscription is durable or not. </summary>
+        [WirePath("isDurable")]
         public bool? IsDurable { get; set; }
         /// <summary> For client-affine subscriptions, this value indicates whether the subscription is shared or not. </summary>
+        [WirePath("isShared")]
         public bool? IsShared { get; set; }
     }
 }

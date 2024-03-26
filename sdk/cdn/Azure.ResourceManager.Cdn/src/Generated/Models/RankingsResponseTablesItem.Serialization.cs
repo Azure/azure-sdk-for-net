@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RankingsResponseTablesPropertiesItemsItem>(item, options);
                 }
                 writer.WriteEndArray();
             }

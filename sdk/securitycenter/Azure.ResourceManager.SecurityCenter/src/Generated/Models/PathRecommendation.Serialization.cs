@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(PublisherInfo))
             {
                 writer.WritePropertyName("publisherInfo"u8);
-                writer.WriteObjectValue(PublisherInfo);
+                writer.WriteObjectValue<SecurityCenterPublisherInfo>(PublisherInfo, options);
             }
             if (Optional.IsDefined(IsCommon))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Usernames)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UserRecommendation>(item, options);
                 }
                 writer.WriteEndArray();
             }

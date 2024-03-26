@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EffectiveBaseSecurityAdminRule>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (options.Format != "W" && Optional.IsDefined(PanoramaStatus))
             {
                 writer.WritePropertyName("panoramaStatus"u8);
-                writer.WriteObjectValue(PanoramaStatus);
+                writer.WriteObjectValue<FirewallPanoramaStatus>(PanoramaStatus, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

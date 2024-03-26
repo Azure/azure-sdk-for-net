@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 foreach (var item in WaitStats)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<WaitStatistics>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

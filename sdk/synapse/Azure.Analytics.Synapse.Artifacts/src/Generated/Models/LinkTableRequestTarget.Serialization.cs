@@ -31,12 +31,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(DistributionOptions))
             {
                 writer.WritePropertyName("distributionOptions"u8);
-                writer.WriteObjectValue(DistributionOptions);
+                writer.WriteObjectValue<LinkTableRequestTargetDistributionOptions>(DistributionOptions);
             }
             if (Optional.IsDefined(StructureOptions))
             {
                 writer.WritePropertyName("structureOptions"u8);
-                writer.WriteObjectValue(StructureOptions);
+                writer.WriteObjectValue<LinkTableRequestTargetStructureOptions>(StructureOptions);
             }
             writer.WriteEndObject();
         }
@@ -89,7 +89,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, LinkTableRequestTarget model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<LinkTableRequestTarget>(model);
             }
             public override LinkTableRequestTarget Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

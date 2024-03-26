@@ -20,7 +20,7 @@ namespace Azure.Maps.Routing.Models
             writer.WriteStartArray();
             foreach (var item in Geometries)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<GeoJsonGeometry>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

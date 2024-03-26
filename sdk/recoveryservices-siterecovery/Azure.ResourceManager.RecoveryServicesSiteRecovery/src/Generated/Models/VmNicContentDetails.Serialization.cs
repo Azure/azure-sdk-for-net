@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in IPConfigs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HyperVFailoverIPConfigDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }

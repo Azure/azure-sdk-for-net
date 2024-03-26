@@ -118,44 +118,64 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> The SKU (pricing tier) of the server. </summary>
+        [WirePath("sku")]
         public PostgreSqlFlexibleServerSku Sku { get; set; }
         /// <summary> Describes the identity of the application. </summary>
+        [WirePath("identity")]
         public PostgreSqlFlexibleServerUserAssignedIdentity Identity { get; set; }
         /// <summary> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </summary>
+        [WirePath("properties.administratorLogin")]
         public string AdministratorLogin { get; set; }
         /// <summary> The administrator login password (required for server creation). </summary>
+        [WirePath("properties.administratorLoginPassword")]
         public string AdministratorLoginPassword { get; set; }
         /// <summary> PostgreSQL Server version. </summary>
+        [WirePath("properties.version")]
         public PostgreSqlFlexibleServerVersion? Version { get; set; }
         /// <summary> The minor version of the server. </summary>
+        [WirePath("properties.minorVersion")]
         public string MinorVersion { get; }
         /// <summary> A state of a server that is visible to user. </summary>
+        [WirePath("properties.state")]
         public PostgreSqlFlexibleServerState? State { get; }
         /// <summary> The fully qualified domain name of a server. </summary>
+        [WirePath("properties.fullyQualifiedDomainName")]
         public string FullyQualifiedDomainName { get; }
         /// <summary> Storage properties of a server. </summary>
+        [WirePath("properties.storage")]
         public PostgreSqlFlexibleServerStorage Storage { get; set; }
         /// <summary> AuthConfig properties of a server. </summary>
+        [WirePath("properties.authConfig")]
         public PostgreSqlFlexibleServerAuthConfig AuthConfig { get; set; }
         /// <summary> Data encryption properties of a server. </summary>
+        [WirePath("properties.dataEncryption")]
         public PostgreSqlFlexibleServerDataEncryption DataEncryption { get; set; }
         /// <summary> Backup properties of a server. </summary>
+        [WirePath("properties.backup")]
         public PostgreSqlFlexibleServerBackupProperties Backup { get; set; }
         /// <summary> Network properties of a server. This Network property is required to be passed only in case you want the server to be Private access server. </summary>
+        [WirePath("properties.network")]
         public PostgreSqlFlexibleServerNetwork Network { get; set; }
         /// <summary> High availability properties of a server. </summary>
+        [WirePath("properties.highAvailability")]
         public PostgreSqlFlexibleServerHighAvailability HighAvailability { get; set; }
         /// <summary> Maintenance window properties of a server. </summary>
+        [WirePath("properties.maintenanceWindow")]
         public PostgreSqlFlexibleServerMaintenanceWindow MaintenanceWindow { get; set; }
         /// <summary> The source server resource ID to restore from. It's required when 'createMode' is 'PointInTimeRestore' or 'GeoRestore' or 'Replica' or 'ReviveDropped'. This property is returned only for Replica server. </summary>
+        [WirePath("properties.sourceServerResourceId")]
         public ResourceIdentifier SourceServerResourceId { get; set; }
         /// <summary> Restore point creation time (ISO8601 format), specifying the time to restore from. It's required when 'createMode' is 'PointInTimeRestore' or 'GeoRestore' or 'ReviveDropped'. </summary>
+        [WirePath("properties.pointInTimeUTC")]
         public DateTimeOffset? PointInTimeUtc { get; set; }
         /// <summary> availability zone information of the server. </summary>
+        [WirePath("properties.availabilityZone")]
         public string AvailabilityZone { get; set; }
         /// <summary> Replication role of the server. </summary>
+        [WirePath("properties.replicationRole")]
         public PostgreSqlFlexibleServerReplicationRole? ReplicationRole { get; set; }
         /// <summary> The mode to create a new PostgreSQL server. </summary>
+        [WirePath("properties.createMode")]
         public PostgreSqlFlexibleServerCreateMode? CreateMode { get; set; }
     }
 }

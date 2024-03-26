@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(NetworkInterfaceAssociation))
             {
                 writer.WritePropertyName("networkInterfaceAssociation"u8);
-                writer.WriteObjectValue(NetworkInterfaceAssociation);
+                writer.WriteObjectValue<NetworkInterfaceAssociation>(NetworkInterfaceAssociation, options);
             }
             if (Optional.IsDefined(SubnetAssociation))
             {
                 writer.WritePropertyName("subnetAssociation"u8);
-                writer.WriteObjectValue(SubnetAssociation);
+                writer.WriteObjectValue<SubnetAssociation>(SubnetAssociation, options);
             }
             if (Optional.IsCollectionDefined(DefaultSecurityRules))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in DefaultSecurityRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SecurityRuleData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in EffectiveSecurityRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EffectiveNetworkSecurityRule>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(TerminalSize))
             {
                 writer.WritePropertyName("terminalSize"u8);
-                writer.WriteObjectValue(TerminalSize);
+                writer.WriteObjectValue<ContainerExecRequestTerminalSize>(TerminalSize, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

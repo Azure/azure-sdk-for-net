@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Subclasses)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteObjectValue<LabelClass>(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }

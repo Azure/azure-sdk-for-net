@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ComputeRuntime))
             {
                 writer.WritePropertyName("computeRuntime"u8);
-                writer.WriteObjectValue(ComputeRuntime);
+                writer.WriteObjectValue<ComputeRuntimeDto>(ComputeRuntime, options);
             }
             if (Optional.IsDefined(OfflineStoreConnectionName))
             {

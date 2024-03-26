@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Location ID for the WebTest to run from. </summary>
+        [WirePath("Id")]
         public AzureLocation? Location { get; set; }
     }
 }

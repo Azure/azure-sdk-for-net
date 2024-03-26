@@ -76,22 +76,31 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The name information for the metric. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The UI appropriate name for the metric. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
         /// <summary> The unit of the metric. </summary>
+        [WirePath("unit")]
         public QueryMetricUnitType? Unit { get; }
         /// <summary> The value of the metric. </summary>
+        [WirePath("value")]
         public double? Value { get; }
         /// <summary> Metric value when min() aggregate function is used over the interval. </summary>
+        [WirePath("min")]
         public double? Min { get; }
         /// <summary> Metric value when max() aggregate function is used over the interval. </summary>
+        [WirePath("max")]
         public double? Max { get; }
         /// <summary> Metric value when avg() aggregate function is used over the interval. </summary>
+        [WirePath("avg")]
         public double? Avg { get; }
         /// <summary> Metric value when sum() aggregate function is used over the interval. </summary>
+        [WirePath("sum")]
         public double? Sum { get; }
         /// <summary> Metric value when stdev aggregate function is used over the interval. </summary>
+        [WirePath("stdev")]
         public double? Stdev { get; }
     }
 }

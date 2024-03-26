@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("osDisk"u8);
-            writer.WriteObjectValue(OSDisk);
+            writer.WriteObjectValue<NetworkCloudOSDisk>(OSDisk, options);
             if (Optional.IsCollectionDefined(VolumeAttachments))
             {
                 writer.WritePropertyName("volumeAttachments"u8);

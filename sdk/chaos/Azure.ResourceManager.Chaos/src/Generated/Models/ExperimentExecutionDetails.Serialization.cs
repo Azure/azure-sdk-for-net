@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Chaos.Models
             if (options.Format != "W" && Optional.IsDefined(RunInformation))
             {
                 writer.WritePropertyName("runInformation"u8);
-                writer.WriteObjectValue(RunInformation);
+                writer.WriteObjectValue<ChaosExperimentRunInformation>(RunInformation, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

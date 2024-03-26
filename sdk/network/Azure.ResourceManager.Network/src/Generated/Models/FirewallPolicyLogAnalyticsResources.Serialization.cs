@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Workspaces)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FirewallPolicyLogAnalyticsWorkspace>(item, options);
                 }
                 writer.WriteEndArray();
             }

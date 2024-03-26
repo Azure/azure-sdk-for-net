@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Container for array of commands. </summary>
+        [WirePath("value")]
         public IReadOnlyList<CassandraClusterCommand> Value { get; }
     }
 }

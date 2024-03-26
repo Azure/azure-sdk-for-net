@@ -79,14 +79,19 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Active status of managed instance DTC. </summary>
+        [WirePath("properties.dtcEnabled")]
         public bool? DtcEnabled { get; set; }
         /// <summary> Security settings of managed instance DTC. </summary>
+        [WirePath("properties.securitySettings")]
         public ManagedInstanceDtcSecuritySettings SecuritySettings { get; set; }
         /// <summary> External dns suffix search list of managed instance DTC. </summary>
+        [WirePath("properties.externalDnsSuffixSearchList")]
         public IList<string> ExternalDnsSuffixSearchList { get; }
         /// <summary> Host name dns suffix of managed instance DTC. </summary>
+        [WirePath("properties.dtcHostNameDnsSuffix")]
         public string DtcHostNameDnsSuffix { get; }
         /// <summary> Provisioning state of managed instance DTC. </summary>
+        [WirePath("properties.provisioningState")]
         public JobExecutionProvisioningState? ProvisioningState { get; }
     }
 }

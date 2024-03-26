@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(RampUpStartTime))
             {
                 writer.WritePropertyName("rampUpStartTime"u8);
-                writer.WriteObjectValue(RampUpStartTime);
+                writer.WriteObjectValue<ScalingActionTime>(RampUpStartTime, options);
             }
             if (Optional.IsDefined(RampUpAutoStartHosts))
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(PeakStartTime))
             {
                 writer.WritePropertyName("peakStartTime"u8);
-                writer.WriteObjectValue(PeakStartTime);
+                writer.WriteObjectValue<ScalingActionTime>(PeakStartTime, options);
             }
             if (Optional.IsDefined(PeakStartVmOnConnect))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(RampDownStartTime))
             {
                 writer.WritePropertyName("rampDownStartTime"u8);
-                writer.WriteObjectValue(RampDownStartTime);
+                writer.WriteObjectValue<ScalingActionTime>(RampDownStartTime, options);
             }
             if (Optional.IsDefined(RampDownStartVmOnConnect))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(OffPeakStartTime))
             {
                 writer.WritePropertyName("offPeakStartTime"u8);
-                writer.WriteObjectValue(OffPeakStartTime);
+                writer.WriteObjectValue<ScalingActionTime>(OffPeakStartTime, options);
             }
             if (Optional.IsDefined(OffPeakStartVmOnConnect))
             {

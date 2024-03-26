@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The array of Jit request definition. </summary>
+        [WirePath("value")]
         public IReadOnlyList<JitRequestData> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

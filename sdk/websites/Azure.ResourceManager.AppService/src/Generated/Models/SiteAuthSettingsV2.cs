@@ -76,16 +76,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The configuration settings of the platform of App Service Authentication/Authorization. </summary>
+        [WirePath("properties.platform")]
         public AuthPlatform Platform { get; set; }
         /// <summary> The configuration settings that determines the validation flow of users using App Service Authentication/Authorization. </summary>
+        [WirePath("properties.globalValidation")]
         public GlobalValidation GlobalValidation { get; set; }
         /// <summary> The configuration settings of each of the identity providers used to configure App Service Authentication/Authorization. </summary>
+        [WirePath("properties.identityProviders")]
         public AppServiceIdentityProviders IdentityProviders { get; set; }
         /// <summary> The configuration settings of the login flow of users using App Service Authentication/Authorization. </summary>
+        [WirePath("properties.login")]
         public WebAppLoginInfo Login { get; set; }
         /// <summary> The configuration settings of the HTTP requests for authentication and authorization requests made against App Service Authentication/Authorization. </summary>
+        [WirePath("properties.httpSettings")]
         public AppServiceHttpSettings HttpSettings { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

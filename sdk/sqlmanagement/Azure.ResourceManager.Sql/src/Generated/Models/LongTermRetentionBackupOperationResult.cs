@@ -78,18 +78,25 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Request Id. </summary>
+        [WirePath("properties.requestId")]
         public Guid? RequestId { get; }
         /// <summary> Operation type. </summary>
+        [WirePath("properties.operationType")]
         public string OperationType { get; }
         /// <summary> Source backup resource id. </summary>
+        [WirePath("properties.fromBackupResourceId")]
         public ResourceIdentifier FromBackupResourceId { get; }
         /// <summary> Target backup resource id. </summary>
+        [WirePath("properties.toBackupResourceId")]
         public ResourceIdentifier ToBackupResourceId { get; }
         /// <summary> The storage redundancy type of the copied backup. </summary>
+        [WirePath("properties.targetBackupStorageRedundancy")]
         public SqlBackupStorageRedundancy? TargetBackupStorageRedundancy { get; }
         /// <summary> Operation status. </summary>
+        [WirePath("properties.status")]
         public string Status { get; }
         /// <summary> Progress message. </summary>
+        [WirePath("properties.message")]
         public string Message { get; }
     }
 }

@@ -5,6 +5,8 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using System;
 
+#nullable disable
+
 namespace Azure.ResourceManager.TestFramework
 {
     public class MockTestEnvironment : TestEnvironment

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.BotService.Models
             if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                writer.WriteObjectValue<ServiceProviderParameterMetadata>(Metadata, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

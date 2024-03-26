@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The unique identifier of the region in which the database account replicates to. Example: &lt;accountName&gt;-&lt;locationName&gt;. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> The name of the region in which the database account exists. </summary>
+        [WirePath("locationName")]
         public AzureLocation? LocationName { get; set; }
         /// <summary> The failover priority of the region. A failover priority of 0 indicates a write region. The maximum value for a failover priority = (total number of regions - 1). Failover priority values must be unique for each of the regions in which the database account exists. </summary>
+        [WirePath("failoverPriority")]
         public int? FailoverPriority { get; set; }
     }
 }

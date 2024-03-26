@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Describes the ServerVersion of an a MongoDB account. </summary>
+        [WirePath("serverVersion")]
         public CosmosDBServerVersion? ServerVersion { get; set; }
     }
 }

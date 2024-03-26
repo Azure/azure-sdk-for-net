@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The resource sku for the node group. This defines the size of CPU and memory that is provisioned for each node. Example values: 'M30', 'M40'. </summary>
+        [WirePath("sku")]
         public string Sku { get; set; }
         /// <summary> The disk storage size for the node group in GB. Example values: 128, 256, 512, 1024. </summary>
+        [WirePath("diskSizeGB")]
         public long? DiskSizeInGB { get; set; }
         /// <summary> Whether high availability is enabled on the node group. </summary>
+        [WirePath("enableHa")]
         public bool? EnableHa { get; set; }
     }
 }

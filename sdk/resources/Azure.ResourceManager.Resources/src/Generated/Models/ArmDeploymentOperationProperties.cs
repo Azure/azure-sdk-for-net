@@ -78,20 +78,28 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The name of the current provisioning operation. </summary>
+        [WirePath("provisioningOperation")]
         public ProvisioningOperationKind? ProvisioningOperation { get; }
         /// <summary> The state of the provisioning. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
         /// <summary> The date and time of the operation. </summary>
+        [WirePath("timestamp")]
         public DateTimeOffset? Timestamp { get; }
         /// <summary> The duration of the operation. </summary>
+        [WirePath("duration")]
         public TimeSpan? Duration { get; }
         /// <summary> Deployment operation service request id. </summary>
+        [WirePath("serviceRequestId")]
         public string ServiceRequestId { get; }
         /// <summary> Operation status code from the resource provider. This property may not be set if a response has not yet been received. </summary>
+        [WirePath("statusCode")]
         public string StatusCode { get; }
         /// <summary> Operation status message from the resource provider. This property is optional.  It will only be provided if an error was received from the resource provider. </summary>
+        [WirePath("statusMessage")]
         public StatusMessage StatusMessage { get; }
         /// <summary> The target resource. </summary>
+        [WirePath("targetResource")]
         public TargetResource TargetResource { get; }
         /// <summary> The HTTP request message. </summary>
         internal HttpMessage Request { get; }
@@ -125,6 +133,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("request.content")]
         public BinaryData RequestContent
         {
             get => Request?.Content;
@@ -162,6 +171,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("response.content")]
         public BinaryData ResponseContent
         {
             get => Response?.Content;

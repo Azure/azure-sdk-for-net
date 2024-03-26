@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The port an endpoint is connected to. </summary>
+        [WirePath("port")]
         public int? Port { get; }
     }
 }

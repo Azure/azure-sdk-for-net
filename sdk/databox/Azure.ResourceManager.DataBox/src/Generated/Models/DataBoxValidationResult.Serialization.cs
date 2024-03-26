@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in IndividualResponseDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataBoxValidationInputResult>(item, options);
                 }
                 writer.WriteEndArray();
             }

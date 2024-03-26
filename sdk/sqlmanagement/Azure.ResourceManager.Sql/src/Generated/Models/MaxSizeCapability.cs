@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The maximum size limit (see 'unit' for the units). </summary>
+        [WirePath("limit")]
         public int? Limit { get; }
         /// <summary> The units that the limit is expressed in. </summary>
+        [WirePath("unit")]
         public MaxSizeUnit? Unit { get; }
     }
 }

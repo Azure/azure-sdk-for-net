@@ -50,17 +50,17 @@ namespace Azure.ResourceManager.Dynatrace.Models
             if (Optional.IsDefined(DynatraceEnvironmentProperties))
             {
                 writer.WritePropertyName("dynatraceEnvironmentProperties"u8);
-                writer.WriteObjectValue(DynatraceEnvironmentProperties);
+                writer.WriteObjectValue<DynatraceEnvironmentProperties>(DynatraceEnvironmentProperties, options);
             }
             if (Optional.IsDefined(UserInfo))
             {
                 writer.WritePropertyName("userInfo"u8);
-                writer.WriteObjectValue(UserInfo);
+                writer.WriteObjectValue<DynatraceMonitorUserInfo>(UserInfo, options);
             }
             if (Optional.IsDefined(PlanData))
             {
                 writer.WritePropertyName("planData"u8);
-                writer.WriteObjectValue(PlanData);
+                writer.WriteObjectValue<DynatraceBillingPlanInfo>(PlanData, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

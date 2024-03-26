@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Quantum
                 writer.WriteStartArray();
                 foreach (var item in Providers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<QuantumProvider>(item, options);
                 }
                 writer.WriteEndArray();
             }

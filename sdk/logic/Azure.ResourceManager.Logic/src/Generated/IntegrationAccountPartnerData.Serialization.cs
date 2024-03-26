@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Logic
 #endif
             }
             writer.WritePropertyName("content"u8);
-            writer.WriteObjectValue(Content);
+            writer.WriteObjectValue<IntegrationAccountPartnerContent>(Content, options);
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

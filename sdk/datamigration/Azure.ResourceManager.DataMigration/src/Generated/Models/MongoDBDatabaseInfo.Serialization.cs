@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartArray();
             foreach (var item in Collections)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MongoDBCollectionInfo>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("supportsSharding"u8);

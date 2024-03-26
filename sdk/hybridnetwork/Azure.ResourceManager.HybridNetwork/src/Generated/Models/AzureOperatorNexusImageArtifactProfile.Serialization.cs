@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(ImageArtifactProfile))
             {
                 writer.WritePropertyName("imageArtifactProfile"u8);
-                writer.WriteObjectValue(ImageArtifactProfile);
+                writer.WriteObjectValue<ImageArtifactProfile>(ImageArtifactProfile, options);
             }
             if (Optional.IsDefined(ArtifactStore))
             {

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HealthMonitorStateChangeData>(item, options);
                 }
                 writer.WriteEndArray();
             }

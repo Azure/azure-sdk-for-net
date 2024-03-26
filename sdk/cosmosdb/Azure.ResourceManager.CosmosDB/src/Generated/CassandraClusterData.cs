@@ -80,8 +80,10 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Properties of a managed Cassandra cluster. </summary>
+        [WirePath("properties")]
         public CassandraClusterProperties Properties { get; set; }
         /// <summary> Identity for the resource. Current supported identity types: SystemAssigned, None. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
     }
 }

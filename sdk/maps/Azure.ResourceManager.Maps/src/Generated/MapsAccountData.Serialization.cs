@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Maps
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            writer.WriteObjectValue<MapsSku>(Sku, options);
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Maps
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<MapsAccountProperties>(Properties, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {

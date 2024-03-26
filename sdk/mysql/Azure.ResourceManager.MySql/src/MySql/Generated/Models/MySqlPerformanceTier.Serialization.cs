@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MySql.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceLevelObjectives)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MySqlPerformanceTierServiceLevelObjectives>(item, options);
                 }
                 writer.WriteEndArray();
             }

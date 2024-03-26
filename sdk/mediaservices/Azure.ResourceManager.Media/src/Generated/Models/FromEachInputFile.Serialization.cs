@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in IncludedTracks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TrackDescriptor>(item, options);
                 }
                 writer.WriteEndArray();
             }

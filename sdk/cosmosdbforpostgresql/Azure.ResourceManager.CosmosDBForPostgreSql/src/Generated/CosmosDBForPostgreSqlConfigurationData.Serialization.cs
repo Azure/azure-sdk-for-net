@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 writer.WriteStartArray();
                 foreach (var item in ServerRoleGroupConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CosmosDBForPostgreSqlServerRoleGroupConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }

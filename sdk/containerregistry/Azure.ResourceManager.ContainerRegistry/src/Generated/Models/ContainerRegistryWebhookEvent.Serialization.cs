@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(EventRequestMessage))
             {
                 writer.WritePropertyName("eventRequestMessage"u8);
-                writer.WriteObjectValue(EventRequestMessage);
+                writer.WriteObjectValue<ContainerRegistryWebhookEventRequestMessage>(EventRequestMessage, options);
             }
             if (Optional.IsDefined(EventResponseMessage))
             {
                 writer.WritePropertyName("eventResponseMessage"u8);
-                writer.WriteObjectValue(EventResponseMessage);
+                writer.WriteObjectValue<ContainerRegistryWebhookEventResponseMessage>(EventResponseMessage, options);
             }
             if (Optional.IsDefined(Id))
             {

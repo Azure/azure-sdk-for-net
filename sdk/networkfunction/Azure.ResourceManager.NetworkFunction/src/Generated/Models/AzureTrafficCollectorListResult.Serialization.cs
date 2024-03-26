@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AzureTrafficCollectorData>(item, options);
                 }
                 writer.WriteEndArray();
             }

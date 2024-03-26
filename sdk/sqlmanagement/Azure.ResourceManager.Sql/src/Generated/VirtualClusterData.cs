@@ -82,10 +82,13 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Subnet resource ID for the virtual cluster. </summary>
+        [WirePath("properties.subnetId")]
         public ResourceIdentifier SubnetId { get; }
         /// <summary> Virtual cluster version. </summary>
+        [WirePath("properties.version")]
         public string Version { get; set; }
         /// <summary> List of resources in this virtual cluster. </summary>
+        [WirePath("properties.childResources")]
         public IReadOnlyList<string> ChildResources { get; }
     }
 }

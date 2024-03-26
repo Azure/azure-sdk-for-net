@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DiskPoolZoneInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

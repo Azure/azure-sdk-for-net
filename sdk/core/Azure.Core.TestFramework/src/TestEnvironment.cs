@@ -206,7 +206,7 @@ namespace Azure.Core.TestFramework
                 }
                 else
                 {
-                    var clientSecret = ClientSecret;
+                    var clientSecret = GetOptionalVariable("CLIENT_SECRET");
                     if (string.IsNullOrWhiteSpace(clientSecret))
                     {
                         _credential = new DefaultAzureCredential(

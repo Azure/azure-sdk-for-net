@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in EnvironmentRefs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SsisEnvironmentReference>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SsisParameterInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ProductLink>(item, options);
                 }
                 writer.WriteEndArray();
             }

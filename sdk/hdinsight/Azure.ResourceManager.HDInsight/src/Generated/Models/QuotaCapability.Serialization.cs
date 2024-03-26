@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in RegionalQuotas)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RegionalQuotaCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }

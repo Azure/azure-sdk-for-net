@@ -53,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, ManagedVirtualNetworkReference model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<ManagedVirtualNetworkReference>(model);
             }
             public override ManagedVirtualNetworkReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

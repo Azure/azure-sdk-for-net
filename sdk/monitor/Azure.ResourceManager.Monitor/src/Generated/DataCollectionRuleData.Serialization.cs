@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Monitor
             if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                writer.WriteObjectValue<DataCollectionRuleMetadata>(Metadata, options);
             }
             if (Optional.IsCollectionDefined(StreamDeclarations))
             {
@@ -105,19 +105,19 @@ namespace Azure.ResourceManager.Monitor
                 foreach (var item in StreamDeclarations)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<DataStreamDeclaration>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(DataSources))
             {
                 writer.WritePropertyName("dataSources"u8);
-                writer.WriteObjectValue(DataSources);
+                writer.WriteObjectValue<DataCollectionRuleDataSources>(DataSources, options);
             }
             if (Optional.IsDefined(Destinations))
             {
                 writer.WritePropertyName("destinations"u8);
-                writer.WriteObjectValue(Destinations);
+                writer.WriteObjectValue<DataCollectionRuleDestinations>(Destinations, options);
             }
             if (Optional.IsCollectionDefined(DataFlows))
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in DataFlows)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataFlow>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in Summary)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MoverSummaryItemInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

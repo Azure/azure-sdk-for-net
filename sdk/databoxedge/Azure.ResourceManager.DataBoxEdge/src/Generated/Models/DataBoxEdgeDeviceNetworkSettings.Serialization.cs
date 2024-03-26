@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkAdapters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataBoxEdgeNetworkAdapter>(item, options);
                 }
                 writer.WriteEndArray();
             }

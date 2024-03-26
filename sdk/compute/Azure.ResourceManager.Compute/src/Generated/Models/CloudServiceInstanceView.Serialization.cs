@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(RoleInstance))
             {
                 writer.WritePropertyName("roleInstance"u8);
-                writer.WriteObjectValue(RoleInstance);
+                writer.WriteObjectValue<InstanceViewStatusesSummary>(RoleInstance, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SdkVersion))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceInstanceViewStatus>(item, options);
                 }
                 writer.WriteEndArray();
             }

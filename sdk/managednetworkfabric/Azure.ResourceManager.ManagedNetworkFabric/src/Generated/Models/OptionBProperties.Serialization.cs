@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(RouteTargets))
             {
                 writer.WritePropertyName("routeTargets"u8);
-                writer.WriteObjectValue(RouteTargets);
+                writer.WriteObjectValue<RouteTargetInformation>(RouteTargets, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

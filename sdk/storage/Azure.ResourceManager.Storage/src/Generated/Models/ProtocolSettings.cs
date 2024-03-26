@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Setting for SMB protocol. </summary>
+        [WirePath("smb")]
         public SmbSetting SmbSetting { get; set; }
     }
 }

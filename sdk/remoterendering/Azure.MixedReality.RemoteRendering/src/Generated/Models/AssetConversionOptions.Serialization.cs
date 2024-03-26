@@ -16,9 +16,9 @@ namespace Azure.MixedReality.RemoteRendering
         {
             writer.WriteStartObject();
             writer.WritePropertyName("inputLocation"u8);
-            writer.WriteObjectValue(InputOptions);
+            writer.WriteObjectValue<AssetConversionInputOptions>(InputOptions);
             writer.WritePropertyName("outputLocation"u8);
-            writer.WriteObjectValue(OutputOptions);
+            writer.WriteObjectValue<AssetConversionOutputOptions>(OutputOptions);
             writer.WriteEndObject();
         }
 

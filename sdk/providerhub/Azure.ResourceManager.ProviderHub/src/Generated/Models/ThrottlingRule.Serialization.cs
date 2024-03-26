@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartArray();
             foreach (var item in Metrics)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ThrottlingMetric>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(RequiredFeatures))

@@ -69,6 +69,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The backup retention period in days. This is how many days Point-in-Time Restore will be supported. </summary>
+        [WirePath("properties.retentionDays")]
         public int? RetentionDays { get; set; }
     }
 }

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<ResourceHealthAvailabilityStatusProperties>(Properties, options);
             }
             if (options.Format != "W")
             {

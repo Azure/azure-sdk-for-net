@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AttestationPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }

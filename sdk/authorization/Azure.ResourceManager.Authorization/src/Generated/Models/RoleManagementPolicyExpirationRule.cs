@@ -34,8 +34,10 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> The value indicating whether expiration is required. </summary>
+        [WirePath("isExpirationRequired")]
         public bool? IsExpirationRequired { get; set; }
         /// <summary> The maximum duration of expiration in timespan. </summary>
+        [WirePath("maximumDuration")]
         public TimeSpan? MaximumDuration { get; set; }
     }
 }

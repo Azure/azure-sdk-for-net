@@ -78,14 +78,19 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary> Represents the filter actions which are allowed for the transformation of a message that have been matched by a filter expression. </summary>
+        [WirePath("properties.action")]
         public ServiceBusFilterAction Action { get; set; }
         /// <summary> Filter type that is evaluated against a BrokeredMessage. </summary>
+        [WirePath("properties.filterType")]
         public ServiceBusFilterType? FilterType { get; set; }
         /// <summary> Properties of sqlFilter. </summary>
+        [WirePath("properties.sqlFilter")]
         public ServiceBusSqlFilter SqlFilter { get; set; }
         /// <summary> Properties of correlationFilter. </summary>
+        [WirePath("properties.correlationFilter")]
         public ServiceBusCorrelationFilter CorrelationFilter { get; set; }
         /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
     }
 }

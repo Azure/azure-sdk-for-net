@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(LaunchProperties))
             {
                 writer.WritePropertyName("launchProperties"u8);
-                writer.WriteObjectValue(LaunchProperties);
+                writer.WriteObjectValue<BuildpackBindingLaunchProperties>(LaunchProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

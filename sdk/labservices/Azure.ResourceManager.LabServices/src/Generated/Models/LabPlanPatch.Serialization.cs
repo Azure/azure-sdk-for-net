@@ -47,17 +47,17 @@ namespace Azure.ResourceManager.LabServices.Models
             if (Optional.IsDefined(DefaultConnectionProfile))
             {
                 writer.WritePropertyName("defaultConnectionProfile"u8);
-                writer.WriteObjectValue(DefaultConnectionProfile);
+                writer.WriteObjectValue<LabConnectionProfile>(DefaultConnectionProfile, options);
             }
             if (Optional.IsDefined(DefaultAutoShutdownProfile))
             {
                 writer.WritePropertyName("defaultAutoShutdownProfile"u8);
-                writer.WriteObjectValue(DefaultAutoShutdownProfile);
+                writer.WriteObjectValue<LabAutoShutdownProfile>(DefaultAutoShutdownProfile, options);
             }
             if (Optional.IsDefined(DefaultNetworkProfile))
             {
                 writer.WritePropertyName("defaultNetworkProfile"u8);
-                writer.WriteObjectValue(DefaultNetworkProfile);
+                writer.WriteObjectValue<LabPlanNetworkProfile>(DefaultNetworkProfile, options);
             }
             if (Optional.IsCollectionDefined(AllowedRegions))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.LabServices.Models
             if (Optional.IsDefined(SupportInfo))
             {
                 writer.WritePropertyName("supportInfo"u8);
-                writer.WriteObjectValue(SupportInfo);
+                writer.WriteObjectValue<LabPlanSupportInfo>(SupportInfo, options);
             }
             if (Optional.IsDefined(LinkedLmsInstance))
             {

@@ -31,7 +31,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Finding))
             {
                 writer.WritePropertyName("finding"u8);
-                writer.WriteObjectValue(Finding);
+                writer.WriteObjectValue<FhirR4Observation>(Finding, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -143,7 +143,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<CriticalResult>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

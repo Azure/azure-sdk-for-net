@@ -22,7 +22,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                writer.WriteObjectValue<DetectionIncidentFilterCondition>(Filter);
             }
             writer.WriteEndObject();
         }

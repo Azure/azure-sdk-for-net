@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Name of the workbook template in the gallery. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Category for the gallery. </summary>
+        [WirePath("category")]
         public string Category { get; set; }
         /// <summary> Type of workbook supported by the workbook template. </summary>
+        [WirePath("type")]
         public string WorkbookTemplateGalleryType { get; set; }
         /// <summary> Order of the template within the gallery. </summary>
+        [WirePath("order")]
         public int? Order { get; set; }
         /// <summary> Azure resource type supported by the gallery. </summary>
+        [WirePath("resourceType")]
         public string ResourceType { get; set; }
     }
 }

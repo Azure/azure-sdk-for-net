@@ -68,14 +68,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> SAS url to a azure blob container with read/write/list/delete permissions. </summary>
+        [WirePath("sasUrl")]
         public Uri SasUri { get; set; }
         /// <summary>
         /// Retention in days.
         /// Remove blobs older than X days.
         /// 0 or lower means no retention.
         /// </summary>
+        [WirePath("retentionInDays")]
         public int? RetentionInDays { get; set; }
         /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
+        [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
     }
 }

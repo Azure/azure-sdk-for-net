@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(GallerySource))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(GallerySource);
+                writer.WriteObjectValue<GalleryDiskImageSource>(GallerySource, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

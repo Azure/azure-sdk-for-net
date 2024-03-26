@@ -18,12 +18,12 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(SymmetricKey))
             {
                 writer.WritePropertyName("symmetricKey"u8);
-                writer.WriteObjectValue(SymmetricKey);
+                writer.WriteObjectValue<SymmetricKey>(SymmetricKey);
             }
             if (Optional.IsDefined(X509Thumbprint))
             {
                 writer.WritePropertyName("x509Thumbprint"u8);
-                writer.WriteObjectValue(X509Thumbprint);
+                writer.WriteObjectValue<X509Thumbprint>(X509Thumbprint);
             }
             if (Optional.IsDefined(Type))
             {

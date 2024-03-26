@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(VCpus))
             {
                 writer.WritePropertyName("vCPUs"u8);
-                writer.WriteObjectValue(VCpus);
+                writer.WriteObjectValue<ResourceRange>(VCpus, options);
             }
             if (Optional.IsDefined(Memory))
             {
                 writer.WritePropertyName("memory"u8);
-                writer.WriteObjectValue(Memory);
+                writer.WriteObjectValue<ResourceRange>(Memory, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

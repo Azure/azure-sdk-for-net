@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WriteStartArray();
                 foreach (var item in DnsServers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IPAddressInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

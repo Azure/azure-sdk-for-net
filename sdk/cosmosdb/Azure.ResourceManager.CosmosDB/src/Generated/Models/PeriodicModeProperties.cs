@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> An integer representing the interval in minutes between two backups. </summary>
+        [WirePath("backupIntervalInMinutes")]
         public int? BackupIntervalInMinutes { get; set; }
         /// <summary> An integer representing the time (in hours) that each backup is retained. </summary>
+        [WirePath("backupRetentionIntervalInHours")]
         public int? BackupRetentionIntervalInHours { get; set; }
         /// <summary> Enum to indicate type of backup residency. </summary>
+        [WirePath("backupStorageRedundancy")]
         public CosmosDBBackupStorageRedundancy? BackupStorageRedundancy { get; set; }
     }
 }

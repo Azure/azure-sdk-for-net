@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Responses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TroubleshooterResult>(item, options);
                 }
                 writer.WriteEndArray();
             }

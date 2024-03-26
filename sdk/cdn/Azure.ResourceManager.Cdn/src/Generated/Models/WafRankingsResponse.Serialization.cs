@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WafRankingsResponseDataItem>(item, options);
                 }
                 writer.WriteEndArray();
             }

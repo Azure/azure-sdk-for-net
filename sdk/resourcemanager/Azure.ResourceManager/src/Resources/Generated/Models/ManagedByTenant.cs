@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The tenant ID of the managing tenant. This is a GUID. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; }
     }
 }

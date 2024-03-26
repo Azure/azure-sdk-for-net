@@ -88,16 +88,22 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Properties of the cluster SKU. </summary>
+        [WirePath("sku")]
         public EventHubsClusterSku Sku { get; set; }
         /// <summary> The UTC time when the Event Hubs Cluster was created. </summary>
+        [WirePath("properties.createdAt")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The UTC time when the Event Hubs Cluster was last updated. </summary>
+        [WirePath("properties.updatedAt")]
         public DateTimeOffset? UpdatedOn { get; }
         /// <summary> The metric ID of the cluster resource. Provided by the service and not modifiable by the user. </summary>
+        [WirePath("properties.metricId")]
         public string MetricId { get; }
         /// <summary> Status of the Cluster resource. </summary>
+        [WirePath("properties.status")]
         public string Status { get; }
         /// <summary> A value that indicates whether Scaling is Supported. </summary>
+        [WirePath("properties.supportsScaling")]
         public bool? SupportsScaling { get; set; }
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MoverUnresolvedDependency>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             if (options.Format != "W" && Optional.IsDefined(SummaryCollection))
             {
                 writer.WritePropertyName("summaryCollection"u8);
-                writer.WriteObjectValue(SummaryCollection);
+                writer.WriteObjectValue<MoverSummaryList>(SummaryCollection, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TotalCount))
             {

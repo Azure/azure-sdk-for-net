@@ -127,7 +127,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in SriChecks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SubResourceIntegrityCheck>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -469,7 +469,7 @@ namespace Azure.Analytics.Defender.Easm
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<DependentResource>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

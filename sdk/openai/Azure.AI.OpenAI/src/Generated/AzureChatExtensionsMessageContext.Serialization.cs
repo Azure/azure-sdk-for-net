@@ -32,7 +32,7 @@ namespace Azure.AI.OpenAI
                 writer.WriteStartArray();
                 foreach (var item in Citations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AzureChatExtensionDataSourceResponseCitation>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -156,7 +156,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AzureChatExtensionsMessageContext>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartArray();
             foreach (var item in MetricThresholds)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<GenerationSafetyQualityMetricThreshold>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(ProductionData))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in ProductionData)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<MonitoringInputDataBase>(item, options);
                     }
                     writer.WriteEndArray();
                 }

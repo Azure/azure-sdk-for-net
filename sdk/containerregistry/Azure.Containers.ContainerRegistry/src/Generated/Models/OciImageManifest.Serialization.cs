@@ -22,7 +22,7 @@ namespace Azure.Containers.ContainerRegistry
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("config"u8);
-                writer.WriteObjectValue(Configuration);
+                writer.WriteObjectValue<OciDescriptor>(Configuration);
             }
             if (Optional.IsCollectionDefined(Layers))
             {
@@ -30,7 +30,7 @@ namespace Azure.Containers.ContainerRegistry
                 writer.WriteStartArray();
                 foreach (var item in Layers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OciDescriptor>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -39,7 +39,7 @@ namespace Azure.Containers.ContainerRegistry
                 if (Annotations != null)
                 {
                     writer.WritePropertyName("annotations"u8);
-                    writer.WriteObjectValue(Annotations);
+                    writer.WriteObjectValue<OciAnnotations>(Annotations);
                 }
                 else
                 {
@@ -109,7 +109,7 @@ namespace Azure.Containers.ContainerRegistry
         {
             public override void Write(Utf8JsonWriter writer, OciImageManifest model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<OciImageManifest>(model);
             }
             public override OciImageManifest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

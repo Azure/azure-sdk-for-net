@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in BusinessIdentities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IntegrationAccountBusinessIdentity>(item, options);
                 }
                 writer.WriteEndArray();
             }

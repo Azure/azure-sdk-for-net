@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                writer.WriteObjectValue(Subnet);
+                writer.WriteObjectValue<SubnetReferenceInfo>(Subnet, options);
             }
             if (Optional.IsDefined(IsPrimary))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerBackendAddressPools)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LoadBalancerBackendAddressPoolReferenceInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -67,14 +67,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerNatRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LoadBalancerNatRuleReferenceInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PublicIP))
             {
                 writer.WritePropertyName("publicIp"u8);
-                writer.WriteObjectValue(PublicIP);
+                writer.WriteObjectValue<PublicIPReferenceInfo>(PublicIP, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

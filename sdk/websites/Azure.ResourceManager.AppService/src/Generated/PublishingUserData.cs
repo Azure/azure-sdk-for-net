@@ -79,16 +79,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Username used for publishing. </summary>
+        [WirePath("properties.publishingUserName")]
         public string PublishingUserName { get; set; }
         /// <summary> Password used for publishing. </summary>
+        [WirePath("properties.publishingPassword")]
         public string PublishingPassword { get; set; }
         /// <summary> Password hash used for publishing. </summary>
+        [WirePath("properties.publishingPasswordHash")]
         public string PublishingPasswordHash { get; set; }
         /// <summary> Password hash salt used for publishing. </summary>
+        [WirePath("properties.publishingPasswordHashSalt")]
         public string PublishingPasswordHashSalt { get; set; }
         /// <summary> Url of SCM site. </summary>
+        [WirePath("properties.scmUri")]
         public Uri ScmUri { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

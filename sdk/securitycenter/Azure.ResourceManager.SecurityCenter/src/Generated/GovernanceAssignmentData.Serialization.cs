@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(RemediationEta))
             {
                 writer.WritePropertyName("remediationEta"u8);
-                writer.WriteObjectValue(RemediationEta);
+                writer.WriteObjectValue<RemediationEta>(RemediationEta, options);
             }
             if (Optional.IsDefined(IsGracePeriod))
             {
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(GovernanceEmailNotification))
             {
                 writer.WritePropertyName("governanceEmailNotification"u8);
-                writer.WriteObjectValue(GovernanceEmailNotification);
+                writer.WriteObjectValue<GovernanceEmailNotification>(GovernanceEmailNotification, options);
             }
             if (Optional.IsDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
-                writer.WriteObjectValue(AdditionalData);
+                writer.WriteObjectValue<GovernanceAssignmentAdditionalInfo>(AdditionalData, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

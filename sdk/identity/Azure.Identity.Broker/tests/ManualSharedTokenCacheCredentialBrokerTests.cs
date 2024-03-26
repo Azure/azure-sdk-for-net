@@ -47,7 +47,7 @@ namespace Azure.Identity.Broker.Tests
         [Ignore("This test is an integration test which can only be run with user interaction")]
         public async Task AuthenticateWithBrokerWithUseOperatingSystemAccount_DoesNotPrompt()
         {
-            var cred = new SharedTokenCacheCredential(new SharedTokenCacheCredentialBrokerOptions() { UseOperatingSystemAccount = true });
+            var cred = new SharedTokenCacheCredential(new SharedTokenCacheCredentialBrokerOptions() { UseDefaultBrokerAccount = true });
 
             AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
 

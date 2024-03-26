@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MixedReality.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RemoteRenderingAccountData>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (Optional.IsDefined(Results))
             {
                 writer.WritePropertyName("results"u8);
-                writer.WriteObjectValue(Results);
+                writer.WriteObjectValue<PolicySummaryResults>(Results, options);
             }
             if (Optional.IsCollectionDefined(PolicyAssignments))
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in PolicyAssignments)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PolicyAssignmentSummary>(item, options);
                 }
                 writer.WriteEndArray();
             }

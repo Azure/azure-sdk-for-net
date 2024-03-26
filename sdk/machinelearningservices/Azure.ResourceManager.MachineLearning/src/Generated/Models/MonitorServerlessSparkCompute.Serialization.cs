@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("computeIdentity"u8);
-            writer.WriteObjectValue(ComputeIdentity);
+            writer.WriteObjectValue<MonitorComputeIdentityBase>(ComputeIdentity, options);
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WritePropertyName("runtimeVersion"u8);

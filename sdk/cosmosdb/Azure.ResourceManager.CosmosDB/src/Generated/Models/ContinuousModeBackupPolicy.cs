@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Configuration values for continuous mode backup. </summary>
         internal ContinuousModeProperties ContinuousModeProperties { get; set; }
         /// <summary> Enum to indicate type of Continuos backup mode. </summary>
+        [WirePath("continuousModeProperties.tier")]
         public ContinuousTier? ContinuousModeTier
         {
             get => ContinuousModeProperties is null ? default : ContinuousModeProperties.Tier;

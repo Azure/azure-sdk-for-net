@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 writer.WriteStartArray();
                 foreach (var item in Facets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<Facet>(item, options);
                 }
                 writer.WriteEndArray();
             }

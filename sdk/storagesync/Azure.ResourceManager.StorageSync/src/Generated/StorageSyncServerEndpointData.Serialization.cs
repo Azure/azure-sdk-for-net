@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.StorageSync
             if (options.Format != "W" && Optional.IsDefined(SyncStatus))
             {
                 writer.WritePropertyName("syncStatus"u8);
-                writer.WriteObjectValue(SyncStatus);
+                writer.WriteObjectValue<ServerEndpointSyncStatus>(SyncStatus, options);
             }
             if (Optional.IsDefined(OfflineDataTransfer))
             {
@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.StorageSync
             if (options.Format != "W" && Optional.IsDefined(CloudTieringStatus))
             {
                 writer.WritePropertyName("cloudTieringStatus"u8);
-                writer.WriteObjectValue(CloudTieringStatus);
+                writer.WriteObjectValue<ServerEndpointCloudTieringStatus>(CloudTieringStatus, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RecallStatus))
             {
                 writer.WritePropertyName("recallStatus"u8);
-                writer.WriteObjectValue(RecallStatus);
+                writer.WriteObjectValue<ServerEndpointRecallStatus>(RecallStatus, options);
             }
             if (Optional.IsDefined(InitialDownloadPolicy))
             {

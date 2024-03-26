@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Exclusions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorPrivateLinkAccessModeSettingsExclusion>(item, options);
                 }
                 writer.WriteEndArray();
             }

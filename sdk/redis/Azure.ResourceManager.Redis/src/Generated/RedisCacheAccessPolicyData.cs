@@ -74,10 +74,13 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> Provisioning state of access policy. </summary>
+        [WirePath("properties.provisioningState")]
         public AccessPolicyProvisioningState? ProvisioningState { get; }
         /// <summary> Built-In or Custom access policy. </summary>
+        [WirePath("properties.type")]
         public AccessPolicyType? TypePropertiesType { get; }
         /// <summary> Permissions for the access policy. Learn how to configure permissions at https://aka.ms/redis/AADPreRequisites. </summary>
+        [WirePath("properties.permissions")]
         public string Permissions { get; set; }
     }
 }

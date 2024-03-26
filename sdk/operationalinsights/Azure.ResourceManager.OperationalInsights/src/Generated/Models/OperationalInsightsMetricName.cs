@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The system name of the metric. </summary>
+        [WirePath("value")]
         public string Value { get; }
         /// <summary> The localized name of the metric. </summary>
+        [WirePath("localizedValue")]
         public string LocalizedValue { get; }
     }
 }

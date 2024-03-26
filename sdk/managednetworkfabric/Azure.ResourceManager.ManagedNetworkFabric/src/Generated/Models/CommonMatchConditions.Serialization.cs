@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(VlanMatchCondition))
             {
                 writer.WritePropertyName("vlanMatchCondition"u8);
-                writer.WriteObjectValue(VlanMatchCondition);
+                writer.WriteObjectValue<VlanMatchCondition>(VlanMatchCondition, options);
             }
             if (Optional.IsDefined(IPCondition))
             {
                 writer.WritePropertyName("ipCondition"u8);
-                writer.WriteObjectValue(IPCondition);
+                writer.WriteObjectValue<IPMatchCondition>(IPCondition, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BatchAccountPoolData>(item, options);
                 }
                 writer.WriteEndArray();
             }

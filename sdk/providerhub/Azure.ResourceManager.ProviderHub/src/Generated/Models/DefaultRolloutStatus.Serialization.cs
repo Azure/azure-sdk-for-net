@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 foreach (var item in FailedOrSkippedRegions)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ExtendedErrorInfo>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

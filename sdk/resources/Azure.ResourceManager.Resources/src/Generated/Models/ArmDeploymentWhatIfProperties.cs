@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Optional What-If operation settings. </summary>
         internal ArmDeploymentWhatIfSettings WhatIfSettings { get; set; }
         /// <summary> The format of the What-If results. </summary>
+        [WirePath("whatIfSettings.resultFormat")]
         public WhatIfResultFormat? WhatIfResultFormat
         {
             get => WhatIfSettings is null ? default : WhatIfSettings.ResultFormat;

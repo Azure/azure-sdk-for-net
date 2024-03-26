@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(PublicIPs))
             {
                 writer.WritePropertyName("publicIPs"u8);
-                writer.WriteObjectValue(PublicIPs);
+                writer.WriteObjectValue<HubPublicIPAddresses>(PublicIPs, options);
             }
             if (Optional.IsDefined(PrivateIPAddress))
             {

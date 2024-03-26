@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> IP Mask. </summary>
+        [WirePath("ipMask")]
         public string IPMask { get; set; }
         /// <summary> The IP Filter Action. </summary>
+        [WirePath("action")]
         public EventHubsNetworkRuleIPAction? Action { get; set; }
     }
 }

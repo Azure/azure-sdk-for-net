@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(TimeAndCapacity))
             {
                 writer.WritePropertyName("timeAndCapacity"u8);
-                writer.WriteObjectValue(TimeAndCapacity);
+                writer.WriteObjectValue<HDInsightAutoScaleTimeAndCapacity>(TimeAndCapacity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

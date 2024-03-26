@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in ControlFamilies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ControlFamily>(item, options);
                 }
                 writer.WriteEndArray();
             }

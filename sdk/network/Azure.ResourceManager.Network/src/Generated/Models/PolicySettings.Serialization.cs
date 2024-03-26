@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(LogScrubbing))
             {
                 writer.WritePropertyName("logScrubbing"u8);
-                writer.WriteObjectValue(LogScrubbing);
+                writer.WriteObjectValue<PolicySettingsLogScrubbing>(LogScrubbing, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

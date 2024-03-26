@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The tag value ID. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> The tag value. </summary>
+        [WirePath("tagValue")]
         public string TagValue { get; }
         /// <summary> The tag value count. </summary>
+        [WirePath("count")]
         public PredefinedTagCount Count { get; }
     }
 }

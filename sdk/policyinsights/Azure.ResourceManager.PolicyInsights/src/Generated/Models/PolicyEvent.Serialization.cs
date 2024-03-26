@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Components)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ComponentEventDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }

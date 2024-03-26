@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(TlsSettings))
             {
                 writer.WritePropertyName("tlsSettings"u8);
-                writer.WriteObjectValue(TlsSettings);
+                writer.WriteObjectValue<FrontDoorCustomDomainHttpsContent>(TlsSettings, options);
             }
             if (Optional.IsDefined(DnsZone))
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (PreValidatedCustomDomainResource != null)
                 {
                     writer.WritePropertyName("preValidatedCustomDomainResourceId"u8);
-                    writer.WriteObjectValue(PreValidatedCustomDomainResource);
+                    writer.WriteObjectValue<FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId>(PreValidatedCustomDomainResource, options);
                 }
                 else
                 {

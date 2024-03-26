@@ -88,8 +88,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         }
 
         /// <summary> Priority of the template. Determines which template to open when a workbook gallery is opened in viewer mode. </summary>
+        [WirePath("properties.priority")]
         public int? Priority { get; set; }
         /// <summary> Information about the author of the workbook template. </summary>
+        [WirePath("properties.author")]
         public string Author { get; set; }
         /// <summary>
         /// Valid JSON object containing workbook template payload.
@@ -121,10 +123,13 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.templateData")]
         public BinaryData TemplateData { get; set; }
         /// <summary> Workbook galleries supported by the template. </summary>
+        [WirePath("properties.galleries")]
         public IList<WorkbookTemplateGallery> Galleries { get; }
         /// <summary> Key value pair of localized gallery. Each key is the locale code of languages supported by the Azure portal. </summary>
+        [WirePath("properties.localized")]
         public IDictionary<string, IList<WorkbookTemplateLocalizedGallery>> LocalizedGalleries { get; }
     }
 }

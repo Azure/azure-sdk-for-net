@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteObjectValue(Scope);
+                writer.WriteObjectValue<KubernetesClusterExtensionScope>(Scope, options);
             }
             if (Optional.IsCollectionDefined(ConfigurationSettings))
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteStartArray();
                     foreach (var item in Statuses)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<KubernetesClusterExtensionStatus>(item, options);
                     }
                     writer.WriteEndArray();
                 }

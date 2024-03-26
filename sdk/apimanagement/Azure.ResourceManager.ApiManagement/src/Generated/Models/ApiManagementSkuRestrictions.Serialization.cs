@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (options.Format != "W" && Optional.IsDefined(RestrictionInfo))
             {
                 writer.WritePropertyName("restrictionInfo"u8);
-                writer.WriteObjectValue(RestrictionInfo);
+                writer.WriteObjectValue<ApiManagementSkuRestrictionInfo>(RestrictionInfo, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReasonCode))
             {

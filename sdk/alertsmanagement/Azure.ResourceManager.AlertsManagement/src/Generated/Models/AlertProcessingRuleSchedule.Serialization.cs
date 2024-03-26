@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Recurrences)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AlertProcessingRuleRecurrence>(item, options);
                 }
                 writer.WriteEndArray();
             }

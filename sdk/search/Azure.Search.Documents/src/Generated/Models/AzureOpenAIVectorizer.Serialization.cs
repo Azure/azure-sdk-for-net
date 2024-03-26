@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(AzureOpenAIParameters))
             {
                 writer.WritePropertyName("azureOpenAIParameters"u8);
-                writer.WriteObjectValue(AzureOpenAIParameters);
+                writer.WriteObjectValue<AzureOpenAIParameters>(AzureOpenAIParameters);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);

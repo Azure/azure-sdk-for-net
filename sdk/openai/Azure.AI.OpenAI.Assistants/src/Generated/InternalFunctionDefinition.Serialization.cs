@@ -154,7 +154,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<InternalFunctionDefinition>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

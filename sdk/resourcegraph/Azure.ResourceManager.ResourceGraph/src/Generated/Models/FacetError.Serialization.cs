@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             writer.WriteStartArray();
             foreach (var item in Errors)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<FacetErrorDetails>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("expression"u8);

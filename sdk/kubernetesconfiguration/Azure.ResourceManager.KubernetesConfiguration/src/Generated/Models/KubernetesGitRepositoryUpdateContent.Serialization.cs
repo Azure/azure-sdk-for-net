@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (RepositoryRef != null)
                 {
                     writer.WritePropertyName("repositoryRef"u8);
-                    writer.WriteObjectValue(RepositoryRef);
+                    writer.WriteObjectValue<KubernetesGitRepositoryRef>(RepositoryRef, options);
                 }
                 else
                 {

@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The function to tier blob snapshot to cool storage. </summary>
+        [WirePath("tierToCool")]
         public DateAfterCreation TierToCool { get; set; }
         /// <summary> The function to tier blob snapshot to archive storage. </summary>
+        [WirePath("tierToArchive")]
         public DateAfterCreation TierToArchive { get; set; }
         /// <summary> The function to tier blobs to cold storage. </summary>
+        [WirePath("tierToCold")]
         public DateAfterCreation TierToCold { get; set; }
         /// <summary> The function to tier blobs to hot storage. This action can only be used with Premium Block Blob Storage Accounts. </summary>
+        [WirePath("tierToHot")]
         public DateAfterCreation TierToHot { get; set; }
         /// <summary> The function to delete the blob snapshot. </summary>
+        [WirePath("delete")]
         public DateAfterCreation Delete { get; set; }
     }
 }

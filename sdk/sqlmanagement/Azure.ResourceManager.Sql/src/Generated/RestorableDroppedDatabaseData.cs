@@ -93,20 +93,28 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The name and tier of the SKU. </summary>
+        [WirePath("sku")]
         public SqlSku Sku { get; set; }
         /// <summary> The name of the database. </summary>
+        [WirePath("properties.databaseName")]
         public string DatabaseName { get; }
         /// <summary> The max size of the database expressed in bytes. </summary>
+        [WirePath("properties.maxSizeBytes")]
         public long? MaxSizeBytes { get; }
         /// <summary> The creation date of the database (ISO8601 format). </summary>
+        [WirePath("properties.creationDate")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The deletion date of the database (ISO8601 format). </summary>
+        [WirePath("properties.deletionDate")]
         public DateTimeOffset? DeletedOn { get; }
         /// <summary> The earliest restore date of the database (ISO8601 format). </summary>
+        [WirePath("properties.earliestRestoreDate")]
         public DateTimeOffset? EarliestRestoreOn { get; }
         /// <summary> The storage account type used to store backups for this database. </summary>
+        [WirePath("properties.backupStorageRedundancy")]
         public SqlBackupStorageRedundancy? BackupStorageRedundancy { get; }
         /// <summary> The resource ids of the user assigned identities to use. </summary>
+        [WirePath("properties.keys")]
         public IDictionary<string, SqlDatabaseKey> Keys { get; }
     }
 }

@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StoragePoolSkuCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(LocationInfo))
             {
                 writer.WritePropertyName("locationInfo"u8);
-                writer.WriteObjectValue(LocationInfo);
+                writer.WriteObjectValue<StoragePoolSkuLocationInfo>(LocationInfo, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WriteStartArray();
                 foreach (var item in Restrictions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StoragePoolSkuRestrictions>(item, options);
                 }
                 writer.WriteEndArray();
             }

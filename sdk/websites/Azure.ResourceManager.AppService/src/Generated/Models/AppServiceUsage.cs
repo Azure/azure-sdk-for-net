@@ -82,22 +82,31 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Friendly name shown in the UI. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; }
         /// <summary> Name of the quota resource. </summary>
+        [WirePath("properties.resourceName")]
         public string ResourceName { get; }
         /// <summary> Units of measurement for the quota resource. </summary>
+        [WirePath("properties.unit")]
         public string Unit { get; }
         /// <summary> The current value of the resource counter. </summary>
+        [WirePath("properties.currentValue")]
         public long? CurrentValue { get; }
         /// <summary> The resource limit. </summary>
+        [WirePath("properties.limit")]
         public long? Limit { get; }
         /// <summary> Next reset time for the resource counter. </summary>
+        [WirePath("properties.nextResetTime")]
         public DateTimeOffset? NextResetOn { get; }
         /// <summary> Compute mode used for this usage. </summary>
+        [WirePath("properties.computeMode")]
         public ComputeModeOption? ComputeMode { get; }
         /// <summary> Site mode used for this usage. </summary>
+        [WirePath("properties.siteMode")]
         public string SiteMode { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }
