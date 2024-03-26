@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Request body for CanMigrate operation. </summary>
-    public partial class CanMigrateContent
+    /// <summary> Defines rules that scrub sensitive fields in the Azure Front Door profile logs. </summary>
+    public partial class ProfileLogScrubbing
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,36 +45,26 @@ namespace Azure.ResourceManager.Cdn.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CanMigrateContent"/>. </summary>
-        /// <param name="classicResourceReference"> Resource reference of the classic cdn profile or classic frontdoor that need to be migrated. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classicResourceReference"/> is null. </exception>
-        public CanMigrateContent(WritableSubResource classicResourceReference)
+        /// <summary> Initializes a new instance of <see cref="ProfileLogScrubbing"/>. </summary>
+        public ProfileLogScrubbing()
         {
-            Argument.AssertNotNull(classicResourceReference, nameof(classicResourceReference));
-
-            ClassicResourceReference = classicResourceReference;
+            ScrubbingRules = new ChangeTrackingList<ProfileScrubbingRules>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CanMigrateContent"/>. </summary>
-        /// <param name="classicResourceReference"> Resource reference of the classic cdn profile or classic frontdoor that need to be migrated. </param>
+        /// <summary> Initializes a new instance of <see cref="ProfileLogScrubbing"/>. </summary>
+        /// <param name="state"> State of the log scrubbing config. Default value is Enabled. </param>
+        /// <param name="scrubbingRules"> List of log scrubbing rules applied to the Azure Front Door profile logs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CanMigrateContent(WritableSubResource classicResourceReference, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProfileLogScrubbing(ProfileScrubbingState? state, IList<ProfileScrubbingRules> scrubbingRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ClassicResourceReference = classicResourceReference;
+            State = state;
+            ScrubbingRules = scrubbingRules;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CanMigrateContent"/> for deserialization. </summary>
-        internal CanMigrateContent()
-        {
-        }
-
-        /// <summary> Resource reference of the classic cdn profile or classic frontdoor that need to be migrated. </summary>
-        internal WritableSubResource ClassicResourceReference { get; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier ClassicResourceReferenceId
-        {
-            get => ClassicResourceReference?.Id;
-        }
+        /// <summary> State of the log scrubbing config. Default value is Enabled. </summary>
+        public ProfileScrubbingState? State { get; set; }
+        /// <summary> List of log scrubbing rules applied to the Azure Front Door profile logs. </summary>
+        public IList<ProfileScrubbingRules> ScrubbingRules { get; }
     }
 }
