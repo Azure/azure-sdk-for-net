@@ -4,7 +4,6 @@
 using System;
 using Azure.Core;
 using Azure.Provisioning.ResourceManager;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Storage.Models;
 
