@@ -59,15 +59,25 @@ namespace Azure.AI.Translation.Document
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.SupportedStorageSources"/>. </summary>
+        /// <param name="value"> list of objects. </param>
+        /// <returns> A new <see cref="Models.SupportedStorageSources"/> instance for mocking. </returns>
+        public static SupportedStorageSources SupportedStorageSources(IEnumerable<StorageSource> value = null)
+        {
+            value ??= new List<StorageSource>();
+
+            return new SupportedStorageSources(value?.ToList(), serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.DocumentTranslateContent"/>. </summary>
         /// <param name="document"> Document to be translated in the form. </param>
         /// <param name="glossary"> Glossary-translation memory will be used during translation in the form. </param>
         /// <returns> A new <see cref="Models.DocumentTranslateContent"/> instance for mocking. </returns>
-        public static DocumentTranslateContent DocumentTranslateContent(BinaryData document = null, IEnumerable<BinaryData> glossary = null)
+        public static Models.DocumentTranslateContent DocumentTranslateContent(BinaryData document = null, IEnumerable<BinaryData> glossary = null)
         {
             glossary ??= new List<BinaryData>();
 
-            return new DocumentTranslateContent(document, glossary?.ToList(), serializedAdditionalRawData: null);
+            return new Models.DocumentTranslateContent(document, glossary?.ToList(), serializedAdditionalRawData: null);
         }
     }
 }
