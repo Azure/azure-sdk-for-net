@@ -1621,7 +1621,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="isEnabled"> Status of the custom alert. </param>
         /// <param name="ruleType"> The type of the custom alert rule. </param>
         /// <returns> A new <see cref="Models.CustomAlertRule"/> instance for mocking. </returns>
-        public static CustomAlertRule CustomAlertRule(string displayName = null, string description = null, bool isEnabled = default, string ruleType = null)
+        public static CustomAlertRule CustomAlertRule(string displayName = null, string description = null, bool isEnabled = default, string ruleType = "Unknown")
         {
             return new UnknownCustomAlertRule(displayName, description, isEnabled, ruleType, serializedAdditionalRawData: null);
         }
