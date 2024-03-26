@@ -142,7 +142,7 @@ type = "note",
 clinicalType = "consultation",
 id = "<id>",
 language = "<language>",
-createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
+createdDateTime = "2022-05-10T18:57:31.2311892Z",
 content = new
 {
 sourceType = "inline",
@@ -223,7 +223,7 @@ type = "note",
 clinicalType = "consultation",
 id = "<id>",
 language = "<language>",
-createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
+createdDateTime = "2022-05-10T18:57:31.2311892Z",
 content = new
 {
 sourceType = "inline",
@@ -292,7 +292,7 @@ Data = {new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(Docum
 {
 ClinicalType = ClinicalDocumentType.Consultation,
 Language = "<language>",
-CreatedDateTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
 }},
 }
             })
@@ -335,7 +335,7 @@ Data = {new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(Docum
 {
 ClinicalType = ClinicalDocumentType.Consultation,
 Language = "<language>",
-CreatedDateTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
 }},
 }
             })

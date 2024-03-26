@@ -27,7 +27,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             if (Optional.IsCollectionDefined(Extension))
             {
                 writer.WritePropertyName("extension"u8);

@@ -26,8 +26,11 @@ namespace Azure.AI.DocumentIntelligence
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("operationId"u8);
-            writer.WriteStringValue(OperationId);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("operationId"u8);
+                writer.WriteStringValue(OperationId);
+            }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             if (Optional.IsDefined(PercentCompleted))
@@ -106,8 +109,8 @@ namespace Azure.AI.DocumentIntelligence
             {
                 switch (discriminator.GetString())
                 {
+                    case null: return DocumentModelBuildOperationDetails.DeserializeDocumentModelBuildOperationDetails(element, options);
                     case "documentClassifierBuild": return DocumentClassifierBuildOperationDetails.DeserializeDocumentClassifierBuildOperationDetails(element, options);
-                    case "documentModelBuild": return DocumentModelBuildOperationDetails.DeserializeDocumentModelBuildOperationDetails(element, options);
                     case "documentModelCompose": return DocumentModelComposeOperationDetails.DeserializeDocumentModelComposeOperationDetails(element, options);
                     case "documentModelCopyTo": return DocumentModelCopyToOperationDetails.DeserializeDocumentModelCopyToOperationDetails(element, options);
                 }

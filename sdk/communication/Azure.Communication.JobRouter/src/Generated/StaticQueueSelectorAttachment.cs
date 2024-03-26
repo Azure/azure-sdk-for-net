@@ -28,6 +28,6 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> The queue selector to attach. </summary>
-        public RouterQueueSelector QueueSelector { get; }
+        public RouterQueueSelector QueueSelector { get; set; }
     }
 }
