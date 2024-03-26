@@ -5,8 +5,8 @@ param enableSoftDelete string = 'True'
 param STORAGE_KIND string
 
 
-resource storageAccount_UTndXtFYD 'Microsoft.Storage/storageAccounts@2022-09-01' = {
-  name: toLower(take(concat('sa', uniqueString(resourceGroup().id)), 24))
+resource storageAccount_TtwZtKQQ1 'Microsoft.Storage/storageAccounts@2022-09-01' = {
+  name: toLower(take('sa${uniqueString(resourceGroup().id)}', 24))
   location: 'westus'
   sku: {
     name: 'Standard_GRS'

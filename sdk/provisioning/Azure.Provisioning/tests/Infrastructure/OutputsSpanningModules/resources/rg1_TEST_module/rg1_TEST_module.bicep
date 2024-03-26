@@ -2,8 +2,8 @@
 param enableSoftDelete string = 'True'
 
 
-resource storageAccount_yKzpwi6Qr 'Microsoft.Storage/storageAccounts@2022-09-01' = {
-  name: toLower(take(concat('sa', uniqueString(resourceGroup().id)), 24))
+resource storageAccount_HrOuDaeNb 'Microsoft.Storage/storageAccounts@2022-09-01' = {
+  name: toLower(take('sa${uniqueString(resourceGroup().id)}', 24))
   location: 'westus'
   sku: {
     name: 'Standard_GRS'
@@ -13,8 +13,8 @@ resource storageAccount_yKzpwi6Qr 'Microsoft.Storage/storageAccounts@2022-09-01'
   }
 }
 
-resource keyVault_aUw0nRbmu 'Microsoft.KeyVault/vaults@2022-07-01' = {
-  name: toLower(take(concat('kv', uniqueString(resourceGroup().id)), 24))
+resource keyVault_67efR8a7Y 'Microsoft.KeyVault/vaults@2022-07-01' = {
+  name: toLower(take('kv${uniqueString(resourceGroup().id)}', 24))
   location: 'westus'
   properties: {
     tenantId: tenant().tenantId
@@ -27,4 +27,4 @@ resource keyVault_aUw0nRbmu 'Microsoft.KeyVault/vaults@2022-07-01' = {
   }
 }
 
-output STORAGE_KIND string = storageAccount_yKzpwi6Qr.kind
+output STORAGE_KIND string = storageAccount_HrOuDaeNb.kind
