@@ -667,8 +667,11 @@ namespace Azure.Storage
 
         internal static class StructuredMessage
         {
+            public const string CrcStructuredMessageHeader = "x-ms-structured-body";
+            public const string CrcStructuredContentLength = "x-ms-structured-content-length";
             public const string CrcStructuredMessage = "XSM/1.0; properties=crc64";
             public const int DefaultSegmentContentLength = 4 * MB;
+            public const int MaxDownloadCrcWithHeader = 4 * MB;
         }
 
         internal static class ClientSideEncryption

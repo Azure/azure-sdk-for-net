@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -145,6 +146,36 @@ namespace Azure.Storage.Blobs.Tests
             // Assert
             // unvalidated stream type is private; just check we didn't get back a buffered stream
             Assert.AreNotEqual(typeof(MemoryStream), response.Value.Content.GetType());
+        }
+
+        [Test]
+        public virtual async Task OlderServiceVersionThrowsOnStructuredMessage()
+        {
+            // use service version before structured message was introduced
+            await using DisposingContainer disposingContainer = await ClientBuilder.GetTestContainerAsync(
+                service: ClientBuilder.GetServiceClient_SharedKey(
+                    InstrumentClientOptions(new BlobClientOptions(BlobClientOptions.ServiceVersion.V2024_11_04))),
+                publicAccessType: PublicAccessType.None);
+
+            // Arrange
+            const int dataLength = Constants.KB;
+            var data = GetRandomBuffer(dataLength);
+
+            var resourceName = GetNewResourceName();
+            var blob = InstrumentClient(disposingContainer.Container.GetBlobClient(GetNewResourceName()));
+            await blob.UploadAsync(BinaryData.FromBytes(data));
+
+            var validationOptions = new DownloadTransferValidationOptions
+            {
+                ChecksumAlgorithm = StorageChecksumAlgorithm.StorageCrc64
+            };
+            AsyncTestDelegate operation = async () => await (await blob.DownloadStreamingAsync(
+                new BlobDownloadOptions
+                {
+                    Range = new HttpRange(length: Constants.StructuredMessage.MaxDownloadCrcWithHeader + 1),
+                    TransferValidation = validationOptions,
+                })).Value.Content.CopyToAsync(Stream.Null);
+            Assert.That(operation, Throws.TypeOf<RequestFailedException>());
         }
         #endregion
     }

@@ -1578,7 +1578,11 @@ namespace Azure.Storage.Blobs.Specialized
                      * Buffer response stream and ensure it matches the transactional checksum if any.
                      * Storage will not return a checksum for payload >4MB, so this buffer is capped similarly.
                      * Checksum validation is opt-in, so this buffer is part of that opt-in. */
-                    if (validationOptions != default && validationOptions.ChecksumAlgorithm != StorageChecksumAlgorithm.None && validationOptions.AutoValidateChecksum)
+                    if (validationOptions != default &&
+                        validationOptions.ChecksumAlgorithm != StorageChecksumAlgorithm.None &&
+                        validationOptions.AutoValidateChecksum &&
+                        // structured message decoding does the validation for us
+                        !response.GetRawResponse().Headers.Contains(Constants.StructuredMessage.CrcStructuredMessageHeader))
                     {
                         // safe-buffer; transactional hash download limit well below maxInt
                         var readDestStream = new MemoryStream((int)response.Value.Details.ContentLength);
@@ -1689,13 +1693,36 @@ namespace Azure.Storage.Blobs.Specialized
                 operationName: nameof(BlobBaseClient.Download),
                 parameterName: nameof(conditions));
 
+            bool? rangeGetContentMD5 = null;
+            bool? rangeGetContentCRC64 = null;
+            string structuredBodyType = null;
+            switch (validationOptions?.ChecksumAlgorithm.ResolveAuto())
+            {
+                case StorageChecksumAlgorithm.MD5:
+                    rangeGetContentMD5 = true;
+                    break;
+                case StorageChecksumAlgorithm.StorageCrc64:
+                    if (pageRange?.Length <= Constants.StructuredMessage.MaxDownloadCrcWithHeader)
+                    {
+                        rangeGetContentCRC64 = true;
+                    }
+                    else
+                    {
+                        structuredBodyType = Constants.StructuredMessage.CrcStructuredMessage;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
             if (async)
             {
                 response = await BlobRestClient.DownloadAsync(
                     range: pageRange?.ToString(),
                     leaseId: conditions?.LeaseId,
-                    rangeGetContentMD5: validationOptions?.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.MD5 ? true : null,
-                    rangeGetContentCRC64: validationOptions?.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64 ? true : null,
+                    rangeGetContentMD5: rangeGetContentMD5,
+                    rangeGetContentCRC64: rangeGetContentCRC64,
+                    structuredBodyType: structuredBodyType,
                     encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                     encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                     encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
@@ -1712,8 +1739,9 @@ namespace Azure.Storage.Blobs.Specialized
                 response = BlobRestClient.Download(
                     range: pageRange?.ToString(),
                     leaseId: conditions?.LeaseId,
-                    rangeGetContentMD5: validationOptions?.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.MD5 ? true : null,
-                    rangeGetContentCRC64: validationOptions?.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64 ? true : null,
+                    rangeGetContentMD5: rangeGetContentMD5,
+                    rangeGetContentCRC64: rangeGetContentCRC64,
+                    structuredBodyType: structuredBodyType,
                     encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                     encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                     encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
@@ -1729,8 +1757,24 @@ namespace Azure.Storage.Blobs.Specialized
             long length = response.IsUnavailable() ? 0 : response.Headers.ContentLength ?? 0;
             ClientConfiguration.Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {length}");
 
+            BlobDownloadStreamingResult result = response.ToBlobDownloadStreamingResult();
+            if (response.GetRawResponse().Headers.TryGetValue(Constants.StructuredMessage.CrcStructuredMessageHeader, out string _) &&
+                response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ContentLength, out string rawContentLength))
+            {
+                result.Content = new StructuredMessageDecodingStream(result.Content, long.Parse(rawContentLength));
+            }
+            // if not null, we expected a structured message response
+            // but we didn't find one in the above condition
+            else if (structuredBodyType != null)
+            {
+                // okay to throw here. due to 4MB checksum limit on service downloads, and how we don't
+                // request structured message until we exceed that, we are not throwing on a request
+                // that would have otherwise succeeded and still gotten the desired checksum
+                throw Errors.ExpectedStructuredMessage();
+            }
+
             return Response.FromValue(
-                response.ToBlobDownloadStreamingResult(),
+                result,
                 response.GetRawResponse());
         }
         #endregion
