@@ -99,7 +99,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(RoundingMode))
             {
                 writer.WritePropertyName("roundingMode"u8);
-                writer.WriteStringValue(RoundingMode.Value.ToString());
+                writer.WriteStringValue(RoundingMode.Value.ToSerialString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -281,7 +281,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    roundingMode = new RoundingMode(property.Value.GetString());
+                    roundingMode = property.Value.GetString().ToRoundingMode();
                     continue;
                 }
                 if (options.Format != "W")

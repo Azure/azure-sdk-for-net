@@ -34,7 +34,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(ImportStatus))
             {
                 writer.WritePropertyName("importStatus"u8);
-                writer.WriteStringValue(ImportStatus.Value.ToString());
+                writer.WriteStringValue(ImportStatus.Value.ToSerialString());
             }
             if (Optional.IsDefined(ParentObjectName))
             {
@@ -103,7 +103,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    importStatus = new ImportStatus(property.Value.GetString());
+                    importStatus = property.Value.GetString().ToImportStatus();
                     continue;
                 }
                 if (property.NameEquals("parentObjectName"u8))

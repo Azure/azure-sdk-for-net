@@ -29,7 +29,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(Cardinality))
             {
                 writer.WritePropertyName("cardinality"u8);
-                writer.WriteStringValue(Cardinality.Value.ToString());
+                writer.WriteStringValue(Cardinality.Value.ToSerialString());
             }
             if (Optional.IsDefined(Description))
             {
@@ -110,7 +110,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    cardinality = new CardinalityValue(property.Value.GetString());
+                    cardinality = property.Value.GetString().ToCardinalityValue();
                     continue;
                 }
                 if (property.NameEquals("description"u8))

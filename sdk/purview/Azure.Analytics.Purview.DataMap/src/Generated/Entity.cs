@@ -81,7 +81,7 @@ namespace Azure.Analytics.Purview.DataMap
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasEntityWithExtInfo.ToRequestContent();
-            Response response = await CreateOrUpdateAsync(content, businessAttributeUpdateBehavior?.ToString(), collectionId, context).ConfigureAwait(false);
+            Response response = await CreateOrUpdateAsync(content, businessAttributeUpdateBehavior?.ToSerialString(), collectionId, context).ConfigureAwait(false);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
 
@@ -115,7 +115,7 @@ namespace Azure.Analytics.Purview.DataMap
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasEntityWithExtInfo.ToRequestContent();
-            Response response = CreateOrUpdate(content, businessAttributeUpdateBehavior?.ToString(), collectionId, context);
+            Response response = CreateOrUpdate(content, businessAttributeUpdateBehavior?.ToSerialString(), collectionId, context);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
 
@@ -370,7 +370,7 @@ namespace Azure.Analytics.Purview.DataMap
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasEntitiesWithExtInfo.ToRequestContent();
-            Response response = await BatchCreateOrUpdateAsync(content, collectionId, businessAttributeUpdateBehavior?.ToString(), context).ConfigureAwait(false);
+            Response response = await BatchCreateOrUpdateAsync(content, collectionId, businessAttributeUpdateBehavior?.ToSerialString(), context).ConfigureAwait(false);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
 
@@ -405,7 +405,7 @@ namespace Azure.Analytics.Purview.DataMap
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasEntitiesWithExtInfo.ToRequestContent();
-            Response response = BatchCreateOrUpdate(content, collectionId, businessAttributeUpdateBehavior?.ToString(), context);
+            Response response = BatchCreateOrUpdate(content, collectionId, businessAttributeUpdateBehavior?.ToSerialString(), context);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
 

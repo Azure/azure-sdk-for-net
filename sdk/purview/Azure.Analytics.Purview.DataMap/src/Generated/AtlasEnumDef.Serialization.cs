@@ -29,7 +29,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
-                writer.WriteStringValue(Category.Value.ToString());
+                writer.WriteStringValue(Category.Value.ToSerialString());
             }
             if (Optional.IsDefined(CreateTime))
             {
@@ -181,7 +181,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    category = new TypeCategory(property.Value.GetString());
+                    category = property.Value.GetString().ToTypeCategory();
                     continue;
                 }
                 if (property.NameEquals("createTime"u8))

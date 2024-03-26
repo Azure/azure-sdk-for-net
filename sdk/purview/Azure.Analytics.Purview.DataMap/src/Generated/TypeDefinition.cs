@@ -1675,7 +1675,7 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual async Task<Response<AtlasTypesDef>> GetTypeDefinitionAsync(bool? includeTermTemplate = null, TypeCategory? type = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetTypeDefinitionAsync(includeTermTemplate, type?.ToString(), context).ConfigureAwait(false);
+            Response response = await GetTypeDefinitionAsync(includeTermTemplate, type?.ToSerialString(), context).ConfigureAwait(false);
             return Response.FromValue(AtlasTypesDef.FromResponse(response), response);
         }
 
@@ -1691,7 +1691,7 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual Response<AtlasTypesDef> GetTypeDefinition(bool? includeTermTemplate = null, TypeCategory? type = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetTypeDefinition(includeTermTemplate, type?.ToString(), context);
+            Response response = GetTypeDefinition(includeTermTemplate, type?.ToSerialString(), context);
             return Response.FromValue(AtlasTypesDef.FromResponse(response), response);
         }
 
@@ -2133,7 +2133,7 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual async Task<Response<IReadOnlyList<AtlasTypeDefHeader>>> GetHeadersAsync(bool? includeTermTemplate = null, TypeCategory? type = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetHeadersAsync(includeTermTemplate, type?.ToString(), context).ConfigureAwait(false);
+            Response response = await GetHeadersAsync(includeTermTemplate, type?.ToSerialString(), context).ConfigureAwait(false);
             IReadOnlyList<AtlasTypeDefHeader> value = default;
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             List<AtlasTypeDefHeader> array = new List<AtlasTypeDefHeader>();
@@ -2157,7 +2157,7 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual Response<IReadOnlyList<AtlasTypeDefHeader>> GetHeaders(bool? includeTermTemplate = null, TypeCategory? type = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetHeaders(includeTermTemplate, type?.ToString(), context);
+            Response response = GetHeaders(includeTermTemplate, type?.ToSerialString(), context);
             IReadOnlyList<AtlasTypeDefHeader> value = default;
             using var document = JsonDocument.Parse(response.ContentStream);
             List<AtlasTypeDefHeader> array = new List<AtlasTypeDefHeader>();

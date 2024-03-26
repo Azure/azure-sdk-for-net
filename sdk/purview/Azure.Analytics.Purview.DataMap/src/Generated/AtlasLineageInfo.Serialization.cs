@@ -94,7 +94,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(LineageDirection))
             {
                 writer.WritePropertyName("lineageDirection"u8);
-                writer.WriteStringValue(LineageDirection.Value.ToString());
+                writer.WriteStringValue(LineageDirection.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(ParentRelations))
             {
@@ -252,7 +252,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    lineageDirection = new LineageDirection(property.Value.GetString());
+                    lineageDirection = property.Value.GetString().ToLineageDirection();
                     continue;
                 }
                 if (property.NameEquals("parentRelations"u8))

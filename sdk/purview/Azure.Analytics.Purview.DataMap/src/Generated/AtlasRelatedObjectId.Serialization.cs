@@ -67,7 +67,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(EntityStatus))
             {
                 writer.WritePropertyName("entityStatus"u8);
-                writer.WriteStringValue(EntityStatus.Value.ToString());
+                writer.WriteStringValue(EntityStatus.Value.ToSerialString());
             }
             if (Optional.IsDefined(RelationshipType))
             {
@@ -87,7 +87,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(RelationshipStatus))
             {
                 writer.WritePropertyName("relationshipStatus"u8);
-                writer.WriteStringValue(RelationshipStatus.Value.ToString());
+                writer.WriteStringValue(RelationshipStatus.Value.ToSerialString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -182,7 +182,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    entityStatus = new EntityStatus(property.Value.GetString());
+                    entityStatus = property.Value.GetString().ToEntityStatus();
                     continue;
                 }
                 if (property.NameEquals("relationshipType"u8))
@@ -214,7 +214,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    relationshipStatus = new StatusAtlasRelationship(property.Value.GetString());
+                    relationshipStatus = property.Value.GetString().ToStatusAtlasRelationship();
                     continue;
                 }
                 if (options.Format != "W")

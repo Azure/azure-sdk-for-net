@@ -61,7 +61,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(SortType))
             {
                 writer.WritePropertyName("sortType"u8);
-                writer.WriteStringValue(SortType.Value.ToString());
+                writer.WriteStringValue(SortType.Value.ToSerialString());
             }
             if (Optional.IsDefined(StartIndex))
             {
@@ -162,7 +162,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    sortType = new AtlasSortType(property.Value.GetString());
+                    sortType = property.Value.GetString().ToAtlasSortType();
                     continue;
                 }
                 if (property.NameEquals("startIndex"u8))

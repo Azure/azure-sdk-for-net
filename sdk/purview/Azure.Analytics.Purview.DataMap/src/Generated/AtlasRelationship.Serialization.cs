@@ -102,7 +102,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WriteStringValue(Status.Value.ToSerialString());
             }
             if (Optional.IsDefined(UpdateTime))
             {
@@ -269,7 +269,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    status = new StatusAtlasRelationship(property.Value.GetString());
+                    status = property.Value.GetString().ToStatusAtlasRelationship();
                     continue;
                 }
                 if (property.NameEquals("updateTime"u8))

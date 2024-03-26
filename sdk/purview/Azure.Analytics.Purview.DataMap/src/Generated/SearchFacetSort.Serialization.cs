@@ -29,12 +29,12 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
-                writer.WriteStringValue(Count.Value.ToString());
+                writer.WriteStringValue(Count.Value.ToSerialString());
             }
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteStringValue(Value.Value.ToString());
+                writer.WriteStringValue(Value.Value.ToSerialString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -86,7 +86,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    count = new SearchSortOrder(property.Value.GetString());
+                    count = property.Value.GetString().ToSearchSortOrder();
                     continue;
                 }
                 if (property.NameEquals("value"u8))
@@ -95,7 +95,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    value = new SearchSortOrder(property.Value.GetString());
+                    value = property.Value.GetString().ToSearchSortOrder();
                     continue;
                 }
                 if (options.Format != "W")

@@ -62,7 +62,7 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetLineageAsync(guid, direction.ToString(), depth, context).ConfigureAwait(false);
+            Response response = await GetLineageAsync(guid, direction.ToSerialString(), depth, context).ConfigureAwait(false);
             return Response.FromValue(AtlasLineageInfo.FromResponse(response), response);
         }
 
@@ -79,7 +79,7 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetLineage(guid, direction.ToString(), depth, context);
+            Response response = GetLineage(guid, direction.ToSerialString(), depth, context);
             return Response.FromValue(AtlasLineageInfo.FromResponse(response), response);
         }
 
@@ -183,7 +183,7 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetNextPageAsync(guid, direction.ToString(), offset, limit, context).ConfigureAwait(false);
+            Response response = await GetNextPageAsync(guid, direction.ToSerialString(), offset, limit, context).ConfigureAwait(false);
             return Response.FromValue(AtlasLineageInfo.FromResponse(response), response);
         }
 
@@ -201,7 +201,7 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetNextPage(guid, direction.ToString(), offset, limit, context);
+            Response response = GetNextPage(guid, direction.ToSerialString(), offset, limit, context);
             return Response.FromValue(AtlasLineageInfo.FromResponse(response), response);
         }
 
@@ -327,7 +327,7 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetByUniqueAttributeAsync(typeName, direction.ToString(), depth, attribute, context).ConfigureAwait(false);
+            Response response = await GetByUniqueAttributeAsync(typeName, direction.ToSerialString(), depth, attribute, context).ConfigureAwait(false);
             return Response.FromValue(AtlasLineageInfo.FromResponse(response), response);
         }
 
@@ -365,7 +365,7 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetByUniqueAttribute(typeName, direction.ToString(), depth, attribute, context);
+            Response response = GetByUniqueAttribute(typeName, direction.ToSerialString(), depth, attribute, context);
             return Response.FromValue(AtlasLineageInfo.FromResponse(response), response);
         }
 

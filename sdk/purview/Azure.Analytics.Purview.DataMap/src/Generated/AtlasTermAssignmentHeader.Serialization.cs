@@ -59,7 +59,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WriteStringValue(Status.Value.ToSerialString());
             }
             if (Optional.IsDefined(Steward))
             {
@@ -166,7 +166,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    status = new AtlasTermAssignmentStatus(property.Value.GetString());
+                    status = property.Value.GetString().ToAtlasTermAssignmentStatus();
                     continue;
                 }
                 if (property.NameEquals("steward"u8))

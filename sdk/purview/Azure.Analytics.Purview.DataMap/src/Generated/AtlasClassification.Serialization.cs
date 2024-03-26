@@ -67,7 +67,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(EntityStatus))
             {
                 writer.WritePropertyName("entityStatus"u8);
-                writer.WriteStringValue(EntityStatus.Value.ToString());
+                writer.WriteStringValue(EntityStatus.Value.ToSerialString());
             }
             if (Optional.IsDefined(RemovePropagationsOnEntityDelete))
             {
@@ -175,7 +175,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    entityStatus = new EntityStatus(property.Value.GetString());
+                    entityStatus = property.Value.GetString().ToEntityStatus();
                     continue;
                 }
                 if (property.NameEquals("removePropagationsOnEntityDelete"u8))

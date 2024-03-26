@@ -29,7 +29,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
-                writer.WriteStringValue(Category.Value.ToString());
+                writer.WriteStringValue(Category.Value.ToSerialString());
             }
             if (Optional.IsDefined(CreateTime))
             {
@@ -125,7 +125,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(RelationshipCategory))
             {
                 writer.WritePropertyName("relationshipCategory"u8);
-                writer.WriteStringValue(RelationshipCategory.Value.ToString());
+                writer.WriteStringValue(RelationshipCategory.Value.ToSerialString());
             }
             if (Optional.IsDefined(RelationshipLabel))
             {
@@ -199,7 +199,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    category = new TypeCategory(property.Value.GetString());
+                    category = property.Value.GetString().ToTypeCategory();
                     continue;
                 }
                 if (property.NameEquals("createTime"u8))
@@ -330,7 +330,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    relationshipCategory = new RelationshipCategory(property.Value.GetString());
+                    relationshipCategory = property.Value.GetString().ToRelationshipCategory();
                     continue;
                 }
                 if (property.NameEquals("relationshipLabel"u8))
