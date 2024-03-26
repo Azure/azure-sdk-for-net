@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="location"> Specifies the location of the resource. </param>
         /// <returns> A new <see cref="Models.BotChannelProperties"/> instance for mocking. </returns>
-        public static BotChannelProperties BotChannelProperties(string channelName = null, ETag? etag = null, string provisioningState = null, AzureLocation? location = null)
+        public static BotChannelProperties BotChannelProperties(string channelName = "Unknown", ETag? etag = null, string provisioningState = null, AzureLocation? location = null)
         {
             return new UnknownChannel(channelName, etag, provisioningState, location, serializedAdditionalRawData: null);
         }
