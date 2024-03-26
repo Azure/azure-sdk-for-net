@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,19 +23,19 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<FunctionAppRuntimes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FunctionAppRuntimes)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FunctionAppRuntimes)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(LinuxRuntimeSettings))
             {
                 writer.WritePropertyName("linuxRuntimeSettings"u8);
-                writer.WriteObjectValue(LinuxRuntimeSettings);
+                writer.WriteObjectValue<FunctionAppRuntimeSettings>(LinuxRuntimeSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(WindowsRuntimeSettings))
             {
                 writer.WritePropertyName("windowsRuntimeSettings"u8);
-                writer.WriteObjectValue(WindowsRuntimeSettings);
+                writer.WriteObjectValue<FunctionAppRuntimeSettings>(WindowsRuntimeSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<FunctionAppRuntimes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FunctionAppRuntimes)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FunctionAppRuntimes)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -107,6 +108,49 @@ namespace Azure.ResourceManager.AppService.Models
             return new FunctionAppRuntimes(linuxRuntimeSettings, windowsRuntimeSettings, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinuxRuntimeSettings), out propertyOverride);
+            if (Optional.IsDefined(LinuxRuntimeSettings) || hasPropertyOverride)
+            {
+                builder.Append("  linuxRuntimeSettings: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, LinuxRuntimeSettings, options, 2, false, "  linuxRuntimeSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WindowsRuntimeSettings), out propertyOverride);
+            if (Optional.IsDefined(WindowsRuntimeSettings) || hasPropertyOverride)
+            {
+                builder.Append("  windowsRuntimeSettings: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, WindowsRuntimeSettings, options, 2, false, "  windowsRuntimeSettings: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<FunctionAppRuntimes>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FunctionAppRuntimes>)this).GetFormatFromOptions(options) : options.Format;
@@ -115,8 +159,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(FunctionAppRuntimes)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FunctionAppRuntimes)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +178,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeFunctionAppRuntimes(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FunctionAppRuntimes)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FunctionAppRuntimes)} does not support reading '{options.Format}' format.");
             }
         }
 

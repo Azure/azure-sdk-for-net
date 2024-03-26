@@ -22,7 +22,7 @@ namespace Azure.AI.Translation.Text
             var format = options.Format == "W" ? ((IPersistableModel<DictionaryExample>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DictionaryExample)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DictionaryExample)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.AI.Translation.Text
             var format = options.Format == "W" ? ((IPersistableModel<DictionaryExample>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DictionaryExample)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DictionaryExample)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +141,7 @@ namespace Azure.AI.Translation.Text
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DictionaryExample)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DictionaryExample)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.AI.Translation.Text
                         return DeserializeDictionaryExample(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DictionaryExample)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DictionaryExample)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.AI.Translation.Text
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<DictionaryExample>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

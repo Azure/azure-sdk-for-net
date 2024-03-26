@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataStreamDeclaration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataStreamDeclaration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataStreamDeclaration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Columns)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataColumnDefinition>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataStreamDeclaration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataStreamDeclaration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataStreamDeclaration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataStreamDeclaration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataStreamDeclaration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeDataStreamDeclaration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataStreamDeclaration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataStreamDeclaration)} does not support reading '{options.Format}' format.");
             }
         }
 

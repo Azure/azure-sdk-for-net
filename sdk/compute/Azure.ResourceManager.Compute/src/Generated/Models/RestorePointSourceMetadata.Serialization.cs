@@ -22,29 +22,29 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestorePointSourceMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestorePointSourceMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile);
+                writer.WriteObjectValue<VirtualMachineHardwareProfile>(HardwareProfile, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                writer.WriteObjectValue<RestorePointSourceVmStorageProfile>(StorageProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile);
+                writer.WriteObjectValue<VirtualMachineOSProfile>(OSProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DiagnosticsProfile))
             {
                 writer.WritePropertyName("diagnosticsProfile"u8);
-                writer.WriteObjectValue(DiagnosticsProfile);
+                writer.WriteObjectValue<DiagnosticsProfile>(DiagnosticsProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LicenseType))
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                writer.WriteObjectValue<SecurityProfile>(SecurityProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestorePointSourceMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestorePointSourceMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RestorePointSourceMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestorePointSourceMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeRestorePointSourceMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RestorePointSourceMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestorePointSourceMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 

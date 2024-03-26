@@ -19,11 +19,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("username"u8);
-            writer.WriteObjectValue(Username);
+            writer.WriteObjectValue<object>(Username);
             writer.WritePropertyName("password"u8);
-            writer.WriteObjectValue(Password);
+            writer.WriteObjectValue<SecretBase>(Password);
             writer.WritePropertyName("url"u8);
-            writer.WriteObjectValue(Url);
+            writer.WriteObjectValue<object>(Url);
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
             writer.WriteEndObject();
@@ -69,7 +69,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, WebBasicAuthentication model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<WebBasicAuthentication>(model);
             }
             public override WebBasicAuthentication Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

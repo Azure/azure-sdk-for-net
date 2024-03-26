@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventGridNamespacePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventGridNamespacePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridNamespacePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,14 +46,14 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<NamespaceSku>(Sku, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(TopicSpacesConfiguration))
             {
                 writer.WritePropertyName("topicSpacesConfiguration"u8);
-                writer.WriteObjectValue(TopicSpacesConfiguration);
+                writer.WriteObjectValue<UpdateTopicSpacesConfigurationInfo>(TopicSpacesConfiguration, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in InboundIPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EventGridInboundIPRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventGridNamespacePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventGridNamespacePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridNamespacePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventGridNamespacePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridNamespacePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeEventGridNamespacePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventGridNamespacePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridNamespacePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

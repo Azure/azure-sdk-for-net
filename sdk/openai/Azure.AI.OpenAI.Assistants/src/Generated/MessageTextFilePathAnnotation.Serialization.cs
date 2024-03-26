@@ -22,12 +22,12 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<MessageTextFilePathAnnotation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MessageTextFilePathAnnotation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MessageTextFilePathAnnotation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("file_path"u8);
-            writer.WriteObjectValue(InternalDetails);
+            writer.WriteObjectValue<InternalMessageTextFilePathDetails>(InternalDetails, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("text"u8);
@@ -59,7 +59,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<MessageTextFilePathAnnotation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MessageTextFilePathAnnotation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MessageTextFilePathAnnotation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,7 +132,7 @@ namespace Azure.AI.OpenAI.Assistants
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MessageTextFilePathAnnotation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MessageTextFilePathAnnotation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.AI.OpenAI.Assistants
                         return DeserializeMessageTextFilePathAnnotation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MessageTextFilePathAnnotation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MessageTextFilePathAnnotation)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -166,7 +166,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<MessageTextFilePathAnnotation>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

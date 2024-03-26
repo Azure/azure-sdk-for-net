@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<SessionHostAgentUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SessionHostAgentUpdateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SessionHostAgentUpdateProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WriteStartArray();
                 foreach (var item in MaintenanceWindows)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SessionHostMaintenanceWindowProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<SessionHostAgentUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SessionHostAgentUpdateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SessionHostAgentUpdateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SessionHostAgentUpdateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SessionHostAgentUpdateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         return DeserializeSessionHostAgentUpdateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SessionHostAgentUpdateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SessionHostAgentUpdateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

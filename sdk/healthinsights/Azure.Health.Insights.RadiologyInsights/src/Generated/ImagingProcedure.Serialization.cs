@@ -22,28 +22,28 @@ namespace Azure.Health.Insights.RadiologyInsights
             var format = options.Format == "W" ? ((IPersistableModel<ImagingProcedure>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImagingProcedure)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImagingProcedure)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("modality"u8);
-            writer.WriteObjectValue(Modality);
+            writer.WriteObjectValue<FhirR4CodeableConcept>(Modality, options);
             writer.WritePropertyName("anatomy"u8);
-            writer.WriteObjectValue(Anatomy);
+            writer.WriteObjectValue<FhirR4CodeableConcept>(Anatomy, options);
             if (Optional.IsDefined(Laterality))
             {
                 writer.WritePropertyName("laterality"u8);
-                writer.WriteObjectValue(Laterality);
+                writer.WriteObjectValue<FhirR4CodeableConcept>(Laterality, options);
             }
             if (Optional.IsDefined(Contrast))
             {
                 writer.WritePropertyName("contrast"u8);
-                writer.WriteObjectValue(Contrast);
+                writer.WriteObjectValue<RadiologyCodeWithTypes>(Contrast, options);
             }
             if (Optional.IsDefined(View))
             {
                 writer.WritePropertyName("view"u8);
-                writer.WriteObjectValue(View);
+                writer.WriteObjectValue<RadiologyCodeWithTypes>(View, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,7 +68,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             var format = options.Format == "W" ? ((IPersistableModel<ImagingProcedure>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImagingProcedure)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImagingProcedure)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -153,7 +153,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImagingProcedure)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImagingProcedure)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +169,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                         return DeserializeImagingProcedure(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImagingProcedure)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImagingProcedure)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -187,7 +187,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ImagingProcedure>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

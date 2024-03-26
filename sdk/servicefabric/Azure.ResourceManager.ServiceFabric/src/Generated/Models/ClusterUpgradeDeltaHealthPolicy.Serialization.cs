@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterUpgradeDeltaHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterUpgradeDeltaHealthPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterUpgradeDeltaHealthPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 foreach (var item in ApplicationDeltaHealthPolicies)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ApplicationDeltaHealthPolicy>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterUpgradeDeltaHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterUpgradeDeltaHealthPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterUpgradeDeltaHealthPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterUpgradeDeltaHealthPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterUpgradeDeltaHealthPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         return DeserializeClusterUpgradeDeltaHealthPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterUpgradeDeltaHealthPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterUpgradeDeltaHealthPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

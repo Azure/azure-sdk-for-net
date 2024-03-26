@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationTask>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataReplicationTask)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataReplicationTask)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             if (Optional.IsDefined(CustomProperties))
             {
                 writer.WritePropertyName("customProperties"u8);
-                writer.WriteObjectValue(CustomProperties);
+                writer.WriteObjectValue<TaskModelCustomProperties>(CustomProperties, options);
             }
             if (Optional.IsCollectionDefined(ChildrenWorkflows))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in ChildrenWorkflows)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataReplicationWorkflowData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationTask>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataReplicationTask)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataReplicationTask)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataReplicationTask)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataReplicationTask)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeDataReplicationTask(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataReplicationTask)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataReplicationTask)} does not support reading '{options.Format}' format.");
             }
         }
 

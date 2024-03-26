@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadSapHanaPointInTimeRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadSapHanaPointInTimeRecoveryPoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadSapHanaPointInTimeRecoveryPoint)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in TimeRanges)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PointInTimeRange>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in RecoveryPointTierDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RecoveryPointTierInformationV2>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 foreach (var item in RecoveryPointMoveReadinessInfo)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<RecoveryPointMoveReadinessInfo>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(RecoveryPointProperties))
             {
                 writer.WritePropertyName("recoveryPointProperties"u8);
-                writer.WriteObjectValue(RecoveryPointProperties);
+                writer.WriteObjectValue<RecoveryPointProperties>(RecoveryPointProperties, options);
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadSapHanaPointInTimeRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadSapHanaPointInTimeRecoveryPoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadSapHanaPointInTimeRecoveryPoint)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadSapHanaPointInTimeRecoveryPoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadSapHanaPointInTimeRecoveryPoint)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeWorkloadSapHanaPointInTimeRecoveryPoint(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadSapHanaPointInTimeRecoveryPoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadSapHanaPointInTimeRecoveryPoint)} does not support reading '{options.Format}' format.");
             }
         }
 

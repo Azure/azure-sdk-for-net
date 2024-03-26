@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExecutionStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 foreach (var item in WaitStats)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<WaitStatistics>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExecutionStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeExecutionStatistics(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Tenant Id. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; set; }
         /// <summary> Resource Id. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
     }
 }

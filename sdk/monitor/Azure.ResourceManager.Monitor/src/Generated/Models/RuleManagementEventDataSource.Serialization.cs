@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<RuleManagementEventDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuleManagementEventDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RuleManagementEventDataSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Claims))
             {
                 writer.WritePropertyName("claims"u8);
-                writer.WriteObjectValue(Claims);
+                writer.WriteObjectValue<RuleManagementEventClaimsDataSource>(Claims, options);
             }
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<RuleManagementEventDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuleManagementEventDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RuleManagementEventDataSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RuleManagementEventDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RuleManagementEventDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeRuleManagementEventDataSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RuleManagementEventDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RuleManagementEventDataSource)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerSecurityContextDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerSecurityContextDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerSecurityContextDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
-                writer.WriteObjectValue(Capabilities);
+                writer.WriteObjectValue<ContainerSecurityContextCapabilitiesDefinition>(Capabilities, options);
             }
             if (Optional.IsDefined(RunAsGroup))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerSecurityContextDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerSecurityContextDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerSecurityContextDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerSecurityContextDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerSecurityContextDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeContainerSecurityContextDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerSecurityContextDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerSecurityContextDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

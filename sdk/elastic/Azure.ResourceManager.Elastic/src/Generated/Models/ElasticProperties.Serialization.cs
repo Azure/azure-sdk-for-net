@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.Elastic.Models
             var format = options.Format == "W" ? ((IPersistableModel<ElasticProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ElasticCloudUser))
             {
                 writer.WritePropertyName("elasticCloudUser"u8);
-                writer.WriteObjectValue(ElasticCloudUser);
+                writer.WriteObjectValue<ElasticCloudUser>(ElasticCloudUser, options);
             }
             if (Optional.IsDefined(ElasticCloudDeployment))
             {
                 writer.WritePropertyName("elasticCloudDeployment"u8);
-                writer.WriteObjectValue(ElasticCloudDeployment);
+                writer.WriteObjectValue<ElasticCloudDeployment>(ElasticCloudDeployment, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Elastic.Models
             var format = options.Format == "W" ? ((IPersistableModel<ElasticProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ElasticProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Elastic.Models
                         return DeserializeElasticProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ElasticProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

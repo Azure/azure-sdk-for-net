@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MaterializationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaterializationSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaterializationSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Notification != null)
                 {
                     writer.WritePropertyName("notification"u8);
-                    writer.WriteObjectValue(Notification);
+                    writer.WriteObjectValue<NotificationSetting>(Notification, options);
                 }
                 else
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Resource != null)
                 {
                     writer.WritePropertyName("resource"u8);
-                    writer.WriteObjectValue(Resource);
+                    writer.WriteObjectValue<MaterializationComputeResource>(Resource, options);
                 }
                 else
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Schedule != null)
                 {
                     writer.WritePropertyName("schedule"u8);
-                    writer.WriteObjectValue(Schedule);
+                    writer.WriteObjectValue<MachineLearningRecurrenceTrigger>(Schedule, options);
                 }
                 else
                 {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MaterializationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaterializationSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaterializationSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MaterializationSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaterializationSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMaterializationSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MaterializationSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaterializationSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

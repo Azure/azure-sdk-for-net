@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateLinkConnectionApprovalRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateLinkConnectionApprovalRequest)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateLinkConnectionApprovalRequest)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState);
+                writer.WriteObjectValue<PrivateLinkConnectionState>(PrivateLinkServiceConnectionState, options);
             }
             if (Optional.IsDefined(PrivateEndpoint))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateLinkConnectionApprovalRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateLinkConnectionApprovalRequest)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateLinkConnectionApprovalRequest)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateLinkConnectionApprovalRequest)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateLinkConnectionApprovalRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializePrivateLinkConnectionApprovalRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateLinkConnectionApprovalRequest)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateLinkConnectionApprovalRequest)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyFilterRuleCollectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallPolicyFilterRuleCollectionInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPolicyFilterRuleCollectionInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteObjectValue(Action);
+                writer.WriteObjectValue<FirewallPolicyFilterRuleCollectionAction>(Action, options);
             }
             if (Optional.IsCollectionDefined(Rules))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FirewallPolicyRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyFilterRuleCollectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallPolicyFilterRuleCollectionInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPolicyFilterRuleCollectionInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallPolicyFilterRuleCollectionInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPolicyFilterRuleCollectionInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeFirewallPolicyFilterRuleCollectionInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallPolicyFilterRuleCollectionInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPolicyFilterRuleCollectionInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

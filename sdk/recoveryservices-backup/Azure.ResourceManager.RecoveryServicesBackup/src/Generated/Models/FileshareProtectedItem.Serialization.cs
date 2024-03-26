@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<FileshareProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileshareProtectedItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FileshareProtectedItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,14 +58,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 foreach (var item in KpisHealths)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<KpiResourceHealthDetails>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo);
+                writer.WriteObjectValue<FileshareProtectedItemExtendedInfo>(ExtendedInfo, options);
             }
             writer.WritePropertyName("protectedItemType"u8);
             writer.WriteStringValue(ProtectedItemType);
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<FileshareProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileshareProtectedItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FileshareProtectedItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FileshareProtectedItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileshareProtectedItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeFileshareProtectedItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FileshareProtectedItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileshareProtectedItem)} does not support reading '{options.Format}' format.");
             }
         }
 

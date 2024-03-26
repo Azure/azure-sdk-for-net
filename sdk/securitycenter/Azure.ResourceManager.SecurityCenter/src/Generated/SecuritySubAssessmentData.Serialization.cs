@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<SecuritySubAssessmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecuritySubAssessmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecuritySubAssessmentData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<SubAssessmentStatus>(Status, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Remediation))
             {
@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(ResourceDetails))
             {
                 writer.WritePropertyName("resourceDetails"u8);
-                writer.WriteObjectValue(ResourceDetails);
+                writer.WriteObjectValue<SecurityCenterResourceDetails>(ResourceDetails, options);
             }
             if (Optional.IsDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
-                writer.WriteObjectValue(AdditionalData);
+                writer.WriteObjectValue<SecuritySubAssessmentAdditionalInfo>(AdditionalData, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<SecuritySubAssessmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecuritySubAssessmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecuritySubAssessmentData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecuritySubAssessmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecuritySubAssessmentData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         return DeserializeSecuritySubAssessmentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecuritySubAssessmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecuritySubAssessmentData)} does not support reading '{options.Format}' format.");
             }
         }
 

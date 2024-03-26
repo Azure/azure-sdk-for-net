@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryLogSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryLogSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryLogSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CopyActivityLogSettings))
             {
                 writer.WritePropertyName("copyActivityLogSettings"u8);
-                writer.WriteObjectValue(CopyActivityLogSettings);
+                writer.WriteObjectValue<CopyActivityLogSettings>(CopyActivityLogSettings, options);
             }
             writer.WritePropertyName("logLocationSettings"u8);
-            writer.WriteObjectValue(LogLocationSettings);
+            writer.WriteObjectValue<LogLocationSettings>(LogLocationSettings, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryLogSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryLogSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryLogSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryLogSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryLogSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeDataFactoryLogSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryLogSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryLogSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

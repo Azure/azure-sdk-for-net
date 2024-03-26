@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceEnvironmenEncryptionKeyReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmenEncryptionKeyReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmenEncryptionKeyReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyVault))
             {
                 writer.WritePropertyName("keyVault"u8);
-                writer.WriteObjectValue(KeyVault);
+                writer.WriteObjectValue<LogicResourceReference>(KeyVault, options);
             }
             if (Optional.IsDefined(KeyName))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceEnvironmenEncryptionKeyReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmenEncryptionKeyReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmenEncryptionKeyReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationServiceEnvironmenEncryptionKeyReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationServiceEnvironmenEncryptionKeyReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeIntegrationServiceEnvironmenEncryptionKeyReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationServiceEnvironmenEncryptionKeyReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationServiceEnvironmenEncryptionKeyReference)} does not support reading '{options.Format}' format.");
             }
         }
 

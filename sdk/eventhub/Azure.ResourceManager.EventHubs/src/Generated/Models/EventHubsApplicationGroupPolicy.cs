@@ -76,6 +76,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> The Name of this policy. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Application Group Policy types. </summary>
         internal ApplicationGroupPolicyType ApplicationGroupPolicyType { get; set; }

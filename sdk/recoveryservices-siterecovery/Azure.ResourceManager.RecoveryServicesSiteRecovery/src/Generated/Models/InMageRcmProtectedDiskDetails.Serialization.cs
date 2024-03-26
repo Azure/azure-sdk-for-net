@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmProtectedDiskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmProtectedDiskDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(IrDetails))
             {
                 writer.WritePropertyName("irDetails"u8);
-                writer.WriteObjectValue(IrDetails);
+                writer.WriteObjectValue<InMageRcmSyncDetails>(IrDetails, options);
             }
             if (Optional.IsDefined(ResyncDetails))
             {
                 writer.WritePropertyName("resyncDetails"u8);
-                writer.WriteObjectValue(ResyncDetails);
+                writer.WriteObjectValue<InMageRcmSyncDetails>(ResyncDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmProtectedDiskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmProtectedDiskDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmProtectedDiskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmProtectedDiskDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageRcmProtectedDiskDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmProtectedDiskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmProtectedDiskDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefenderForDatabasesAwsOfferingArcAutoProvisioning>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderForDatabasesAwsOfferingArcAutoProvisioning)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderForDatabasesAwsOfferingArcAutoProvisioning)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration);
+                writer.WriteObjectValue<DefenderFoDatabasesAwsOfferingArcAutoProvisioningConfiguration>(Configuration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefenderForDatabasesAwsOfferingArcAutoProvisioning>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderForDatabasesAwsOfferingArcAutoProvisioning)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderForDatabasesAwsOfferingArcAutoProvisioning)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DefenderForDatabasesAwsOfferingArcAutoProvisioning)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderForDatabasesAwsOfferingArcAutoProvisioning)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeDefenderForDatabasesAwsOfferingArcAutoProvisioning(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DefenderForDatabasesAwsOfferingArcAutoProvisioning)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderForDatabasesAwsOfferingArcAutoProvisioning)} does not support reading '{options.Format}' format.");
             }
         }
 

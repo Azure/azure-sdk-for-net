@@ -22,7 +22,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<ComposeDocumentModelContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComposeDocumentModelContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComposeDocumentModelContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartArray();
             foreach (var item in ComponentModels)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ComponentDocumentModelDetails>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Tags))
@@ -74,7 +74,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<ComposeDocumentModelContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComposeDocumentModelContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComposeDocumentModelContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -149,7 +149,7 @@ namespace Azure.AI.DocumentIntelligence
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ComposeDocumentModelContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComposeDocumentModelContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.AI.DocumentIntelligence
                         return DeserializeComposeDocumentModelContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComposeDocumentModelContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComposeDocumentModelContent)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.AI.DocumentIntelligence
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ComposeDocumentModelContent>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

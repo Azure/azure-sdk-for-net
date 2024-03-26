@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseCustomerManagedKeyEncryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisEnterpriseCustomerManagedKeyEncryption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisEnterpriseCustomerManagedKeyEncryption)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyEncryptionKeyIdentity))
             {
                 writer.WritePropertyName("keyEncryptionKeyIdentity"u8);
-                writer.WriteObjectValue(KeyEncryptionKeyIdentity);
+                writer.WriteObjectValue<RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity>(KeyEncryptionKeyIdentity, options);
             }
             if (Optional.IsDefined(KeyEncryptionKeyUri))
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseCustomerManagedKeyEncryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisEnterpriseCustomerManagedKeyEncryption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisEnterpriseCustomerManagedKeyEncryption)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RedisEnterpriseCustomerManagedKeyEncryption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisEnterpriseCustomerManagedKeyEncryption)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                         return DeserializeRedisEnterpriseCustomerManagedKeyEncryption(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RedisEnterpriseCustomerManagedKeyEncryption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisEnterpriseCustomerManagedKeyEncryption)} does not support reading '{options.Format}' format.");
             }
         }
 

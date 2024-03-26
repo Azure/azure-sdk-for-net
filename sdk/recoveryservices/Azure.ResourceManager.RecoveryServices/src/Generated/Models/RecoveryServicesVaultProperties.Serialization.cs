@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryServicesVaultProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryServicesVaultProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(UpgradeDetails))
             {
                 writer.WritePropertyName("upgradeDetails"u8);
-                writer.WriteObjectValue(UpgradeDetails);
+                writer.WriteObjectValue<VaultUpgradeDetails>(UpgradeDetails, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RecoveryServicesPrivateEndpointConnectionVaultProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<VaultPropertiesEncryption>(Encryption, options);
             }
             if (Optional.IsDefined(MoveDetails))
             {
                 writer.WritePropertyName("moveDetails"u8);
-                writer.WriteObjectValue(MoveDetails);
+                writer.WriteObjectValue<VaultPropertiesMoveDetails>(MoveDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MoveState))
             {
@@ -84,22 +84,22 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(MonitoringSettings))
             {
                 writer.WritePropertyName("monitoringSettings"u8);
-                writer.WriteObjectValue(MonitoringSettings);
+                writer.WriteObjectValue<VaultMonitoringSettings>(MonitoringSettings, options);
             }
             if (Optional.IsDefined(RestoreSettings))
             {
                 writer.WritePropertyName("restoreSettings"u8);
-                writer.WriteObjectValue(RestoreSettings);
+                writer.WriteObjectValue<RestoreSettings>(RestoreSettings, options);
             }
             if (Optional.IsDefined(RedundancySettings))
             {
                 writer.WritePropertyName("redundancySettings"u8);
-                writer.WriteObjectValue(RedundancySettings);
+                writer.WriteObjectValue<VaultPropertiesRedundancySettings>(RedundancySettings, options);
             }
             if (Optional.IsDefined(SecuritySettings))
             {
                 writer.WritePropertyName("securitySettings"u8);
-                writer.WriteObjectValue(SecuritySettings);
+                writer.WriteObjectValue<RecoveryServicesSecuritySettings>(SecuritySettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SecureScore))
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryServicesVaultProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryServicesVaultProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryServicesVaultProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryServicesVaultProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         return DeserializeRecoveryServicesVaultProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryServicesVaultProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryServicesVaultProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

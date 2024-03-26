@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogFilesDataSourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogFilesDataSourceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogFilesDataSourceSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
-                writer.WriteObjectValue(Text);
+                writer.WriteObjectValue<LogFileSettingsText>(Text, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogFilesDataSourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogFilesDataSourceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogFilesDataSourceSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogFilesDataSourceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogFilesDataSourceSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeLogFilesDataSourceSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogFilesDataSourceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogFilesDataSourceSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

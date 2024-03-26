@@ -33,7 +33,7 @@ namespace Azure.Security.KeyVault.Storage.Models
             if (Optional.IsDefined(SasDefinitionAttributes))
             {
                 writer.WritePropertyName("attributes"u8);
-                writer.WriteObjectValue(SasDefinitionAttributes);
+                writer.WriteObjectValue<SasDefinitionAttributes>(SasDefinitionAttributes);
             }
             if (Optional.IsCollectionDefined(Tags))
             {

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ServiceFabric
             var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricApplicationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceFabricApplicationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricApplicationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ServiceFabric
             if (Optional.IsDefined(UpgradePolicy))
             {
                 writer.WritePropertyName("upgradePolicy"u8);
-                writer.WriteObjectValue(UpgradePolicy);
+                writer.WriteObjectValue<ApplicationUpgradePolicy>(UpgradePolicy, options);
             }
             if (Optional.IsDefined(MinimumNodes))
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WriteStartArray();
                 foreach (var item in Metrics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplicationMetricDescription>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WriteStartArray();
                 foreach (var item in ManagedIdentities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplicationUserAssignedIdentity>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ServiceFabric
             var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricApplicationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceFabricApplicationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricApplicationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceFabricApplicationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricApplicationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.ServiceFabric
                         return DeserializeServiceFabricApplicationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceFabricApplicationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricApplicationData)} does not support reading '{options.Format}' format.");
             }
         }
 

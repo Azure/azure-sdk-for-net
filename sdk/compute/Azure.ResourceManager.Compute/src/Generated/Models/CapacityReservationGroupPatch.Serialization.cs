@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapacityReservationGroupPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CapacityReservationGroupPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                writer.WriteObjectValue<CapacityReservationGroupInstanceView>(InstanceView, options);
             }
             if (Optional.IsDefined(SharingProfile))
             {
                 writer.WritePropertyName("sharingProfile"u8);
-                writer.WriteObjectValue(SharingProfile);
+                writer.WriteObjectValue<ResourceSharingProfile>(SharingProfile, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapacityReservationGroupPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CapacityReservationGroupPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CapacityReservationGroupPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapacityReservationGroupPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeCapacityReservationGroupPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CapacityReservationGroupPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapacityReservationGroupPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

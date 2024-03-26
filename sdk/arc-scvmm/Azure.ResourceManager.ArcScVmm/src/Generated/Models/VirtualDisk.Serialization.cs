@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualDisk)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualDisk)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             if (Optional.IsDefined(StorageQoSPolicy))
             {
                 writer.WritePropertyName("storageQoSPolicy"u8);
-                writer.WriteObjectValue(StorageQoSPolicy);
+                writer.WriteObjectValue<StorageQoSPolicyDetails>(StorageQoSPolicy, options);
             }
             if (Optional.IsDefined(CreateDiffDisk))
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualDisk)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualDisk)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualDisk)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualDisk)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                         return DeserializeVirtualDisk(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualDisk)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualDisk)} does not support reading '{options.Format}' format.");
             }
         }
 

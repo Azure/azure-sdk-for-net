@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<McasDataConnector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(McasDataConnector)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(McasDataConnector)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(DataTypes))
             {
                 writer.WritePropertyName("dataTypes"u8);
-                writer.WriteObjectValue(DataTypes);
+                writer.WriteObjectValue<McasDataConnectorDataTypes>(DataTypes, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<McasDataConnector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(McasDataConnector)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(McasDataConnector)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(McasDataConnector)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(McasDataConnector)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeMcasDataConnector(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(McasDataConnector)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(McasDataConnector)} does not support reading '{options.Format}' format.");
             }
         }
 

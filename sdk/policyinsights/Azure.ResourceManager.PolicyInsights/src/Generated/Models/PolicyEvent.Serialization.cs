@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyEvent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyEvent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Components)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ComponentEventDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyEvent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyEvent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicyEvent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyEvent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializePolicyEvent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicyEvent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyEvent)} does not support reading '{options.Format}' format.");
             }
         }
 

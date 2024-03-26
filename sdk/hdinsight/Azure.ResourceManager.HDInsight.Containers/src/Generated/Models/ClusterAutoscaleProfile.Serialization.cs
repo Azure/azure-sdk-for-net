@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterAutoscaleProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterAutoscaleProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterAutoscaleProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(ScheduleBasedConfig))
             {
                 writer.WritePropertyName("scheduleBasedConfig"u8);
-                writer.WriteObjectValue(ScheduleBasedConfig);
+                writer.WriteObjectValue<ScheduleBasedConfig>(ScheduleBasedConfig, options);
             }
             if (Optional.IsDefined(LoadBasedConfig))
             {
                 writer.WritePropertyName("loadBasedConfig"u8);
-                writer.WriteObjectValue(LoadBasedConfig);
+                writer.WriteObjectValue<LoadBasedConfig>(LoadBasedConfig, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterAutoscaleProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterAutoscaleProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterAutoscaleProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterAutoscaleProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterAutoscaleProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeClusterAutoscaleProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterAutoscaleProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterAutoscaleProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapHanaSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapHanaSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapHanaSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PartitionSettings))
             {
                 writer.WritePropertyName("partitionSettings"u8);
-                writer.WriteObjectValue(PartitionSettings);
+                writer.WriteObjectValue<SapHanaPartitionSettings>(PartitionSettings, options);
             }
             if (Optional.IsDefined(QueryTimeout))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapHanaSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapHanaSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapHanaSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SapHanaSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapHanaSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeSapHanaSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SapHanaSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapHanaSource)} does not support reading '{options.Format}' format.");
             }
         }
 

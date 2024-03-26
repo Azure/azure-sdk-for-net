@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<CheckManagementGroupPolicyRestrictionsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CheckManagementGroupPolicyRestrictionsContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CheckManagementGroupPolicyRestrictionsContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceDetails))
             {
                 writer.WritePropertyName("resourceDetails"u8);
-                writer.WriteObjectValue(ResourceDetails);
+                writer.WriteObjectValue<CheckRestrictionsResourceDetails>(ResourceDetails, options);
             }
             if (Optional.IsCollectionDefined(PendingFields))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in PendingFields)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PendingField>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<CheckManagementGroupPolicyRestrictionsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CheckManagementGroupPolicyRestrictionsContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CheckManagementGroupPolicyRestrictionsContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CheckManagementGroupPolicyRestrictionsContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CheckManagementGroupPolicyRestrictionsContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializeCheckManagementGroupPolicyRestrictionsContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CheckManagementGroupPolicyRestrictionsContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CheckManagementGroupPolicyRestrictionsContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatadogMonitorResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogMonitorResourcePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogMonitorResourcePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<MonitorUpdateProperties>(Properties, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Datadog.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<ResourceSku>(Sku, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatadogMonitorResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogMonitorResourcePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogMonitorResourcePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatadogMonitorResourcePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogMonitorResourcePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Datadog.Models
                         return DeserializeDatadogMonitorResourcePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatadogMonitorResourcePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogMonitorResourcePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

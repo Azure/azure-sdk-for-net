@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterProjectEnvironmentPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             if (Optional.IsDefined(CreatorRoleAssignment))
             {
                 writer.WritePropertyName("creatorRoleAssignment"u8);
-                writer.WriteObjectValue(CreatorRoleAssignment);
+                writer.WriteObjectValue<ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment>(CreatorRoleAssignment, options);
             }
             if (Optional.IsCollectionDefined(UserRoleAssignments))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 foreach (var item in UserRoleAssignments)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<DevCenterUserRoleAssignments>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterProjectEnvironmentPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                         return DeserializeDevCenterProjectEnvironmentPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

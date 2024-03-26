@@ -22,7 +22,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<AzureChatExtensionsMessageContext>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureChatExtensionsMessageContext)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureChatExtensionsMessageContext)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.AI.OpenAI
                 writer.WriteStartArray();
                 foreach (var item in Citations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AzureChatExtensionDataSourceResponseCitation>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<AzureChatExtensionsMessageContext>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureChatExtensionsMessageContext)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureChatExtensionsMessageContext)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureChatExtensionsMessageContext)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureChatExtensionsMessageContext)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeAzureChatExtensionsMessageContext(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureChatExtensionsMessageContext)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureChatExtensionsMessageContext)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -156,7 +156,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AzureChatExtensionsMessageContext>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudVirtualMachineConsolePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudVirtualMachineConsolePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudVirtualMachineConsolePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(SshPublicKey))
             {
                 writer.WritePropertyName("sshPublicKey"u8);
-                writer.WriteObjectValue(SshPublicKey);
+                writer.WriteObjectValue<NetworkCloudSshPublicKey>(SshPublicKey, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudVirtualMachineConsolePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudVirtualMachineConsolePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudVirtualMachineConsolePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudVirtualMachineConsolePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudVirtualMachineConsolePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeNetworkCloudVirtualMachineConsolePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudVirtualMachineConsolePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudVirtualMachineConsolePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

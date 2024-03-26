@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplianceClusterUserKeysResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplianceClusterUserKeysResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplianceClusterUserKeysResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 foreach (var item in ArtifactProfiles)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ApplianceArtifactProfile>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 writer.WriteStartArray();
                 foreach (var item in Kubeconfigs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplianceCredentialKubeconfig>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 foreach (var item in SshKeys)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ApplianceSshKey>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplianceClusterUserKeysResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplianceClusterUserKeysResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplianceClusterUserKeysResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplianceClusterUserKeysResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplianceClusterUserKeysResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                         return DeserializeApplianceClusterUserKeysResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplianceClusterUserKeysResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplianceClusterUserKeysResult)} does not support reading '{options.Format}' format.");
             }
         }
 

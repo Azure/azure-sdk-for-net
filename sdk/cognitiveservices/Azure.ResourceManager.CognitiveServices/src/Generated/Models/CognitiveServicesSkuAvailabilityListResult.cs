@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Check SKU availability result list. </summary>
+        [WirePath("value")]
         public IReadOnlyList<CognitiveServicesSkuAvailabilityList> Value { get; }
     }
 }

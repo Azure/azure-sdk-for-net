@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudNic>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudNic)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudNic)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(LldpNeighbor))
             {
                 writer.WritePropertyName("lldpNeighbor"u8);
-                writer.WriteObjectValue(LldpNeighbor);
+                writer.WriteObjectValue<LldpNeighbor>(LldpNeighbor, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MacAddress))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudNic>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudNic)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudNic)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudNic)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudNic)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeNetworkCloudNic(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudNic)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudNic)} does not support reading '{options.Format}' format.");
             }
         }
 

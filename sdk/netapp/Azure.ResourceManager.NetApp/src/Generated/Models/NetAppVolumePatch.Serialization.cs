@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppVolumePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(ExportPolicy))
             {
                 writer.WritePropertyName("exportPolicy"u8);
-                writer.WriteObjectValue(ExportPolicy);
+                writer.WriteObjectValue<VolumePatchPropertiesExportPolicy>(ExportPolicy, options);
             }
             if (Optional.IsDefined(ThroughputMibps))
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(DataProtection))
             {
                 writer.WritePropertyName("dataProtection"u8);
-                writer.WriteObjectValue(DataProtection);
+                writer.WriteObjectValue<NetAppVolumePatchDataProtection>(DataProtection, options);
             }
             if (Optional.IsDefined(IsDefaultQuotaEnabled))
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppVolumePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppVolumePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetAppVolumePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppVolumePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

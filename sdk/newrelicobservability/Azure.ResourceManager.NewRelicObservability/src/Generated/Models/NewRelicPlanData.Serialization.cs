@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             var format = options.Format == "W" ? ((IPersistableModel<NewRelicPlanData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NewRelicPlanData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NewRelicPlanData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             if (Optional.IsDefined(PlanData))
             {
                 writer.WritePropertyName("planData"u8);
-                writer.WriteObjectValue(PlanData);
+                writer.WriteObjectValue<NewRelicPlanDetails>(PlanData, options);
             }
             if (Optional.IsDefined(OrgCreationSource))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             var format = options.Format == "W" ? ((IPersistableModel<NewRelicPlanData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NewRelicPlanData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NewRelicPlanData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NewRelicPlanData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewRelicPlanData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                         return DeserializeNewRelicPlanData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NewRelicPlanData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewRelicPlanData)} does not support reading '{options.Format}' format.");
             }
         }
 

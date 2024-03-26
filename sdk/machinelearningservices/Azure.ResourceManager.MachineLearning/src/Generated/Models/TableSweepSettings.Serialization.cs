@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<TableSweepSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TableSweepSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TableSweepSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (EarlyTermination != null)
                 {
                     writer.WritePropertyName("earlyTermination"u8);
-                    writer.WriteObjectValue(EarlyTermination);
+                    writer.WriteObjectValue<MachineLearningEarlyTerminationPolicy>(EarlyTermination, options);
                 }
                 else
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<TableSweepSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TableSweepSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TableSweepSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TableSweepSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TableSweepSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeTableSweepSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TableSweepSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TableSweepSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

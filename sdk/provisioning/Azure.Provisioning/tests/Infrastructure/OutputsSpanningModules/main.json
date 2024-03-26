@@ -1,0 +1,411 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.25.53.49325",
+      "templateHash": "1797052236819955027"
+    }
+  },
+  "parameters": {
+    "enableSoftDelete": {
+      "type": "string",
+      "defaultValue": "True",
+      "metadata": {
+        "description": "Enable soft delete"
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/resourceGroups",
+      "apiVersion": "2023-07-01",
+      "name": "rg1-TEST",
+      "location": "westus",
+      "tags": {
+        "azd-env-name": "TEST"
+      }
+    },
+    {
+      "type": "Microsoft.Resources/resourceGroups",
+      "apiVersion": "2023-07-01",
+      "name": "rg2-TEST",
+      "location": "westus",
+      "tags": {
+        "azd-env-name": "TEST"
+      }
+    },
+    {
+      "type": "Microsoft.Resources/resourceGroups",
+      "apiVersion": "2023-07-01",
+      "name": "rg3-TEST",
+      "location": "westus",
+      "tags": {
+        "azd-env-name": "TEST"
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "rg1_TEST_module",
+      "resourceGroup": "rg1-TEST",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "enableSoftDelete": {
+            "value": "[parameters('enableSoftDelete')]"
+          },
+          "SERVICE_API_IDENTITY_PRINCIPAL_ID": {
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, 'rg3-TEST'), 'Microsoft.Resources/deployments', 'rg3_TEST_module'), '2022-09-01').outputs.SERVICE_API_IDENTITY_PRINCIPAL_ID.value]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.25.53.49325",
+              "templateHash": "16416484690521483733"
+            }
+          },
+          "parameters": {
+            "enableSoftDelete": {
+              "type": "string",
+              "defaultValue": "True",
+              "metadata": {
+                "description": "Enable soft delete"
+              }
+            },
+            "SERVICE_API_IDENTITY_PRINCIPAL_ID": {
+              "type": "securestring",
+              "metadata": {
+                "description": ""
+              }
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Web/serverfarms",
+              "apiVersion": "2021-02-01",
+              "name": "appServicePlan-TEST",
+              "location": "westus",
+              "sku": {
+                "name": "B1"
+              },
+              "properties": {
+                "reserved": true
+              }
+            },
+            {
+              "type": "Microsoft.Web/sites",
+              "apiVersion": "2021-02-01",
+              "name": "frontEnd-TEST",
+              "location": "westus",
+              "identity": {
+                "type": "SystemAssigned"
+              },
+              "kind": "app,linux",
+              "properties": {
+                "serverFarmId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1-TEST/providers/Microsoft.Web/serverfarms/appServicePlan-TEST",
+                "siteConfig": {
+                  "linuxFxVersion": "node|18-lts",
+                  "alwaysOn": true,
+                  "appCommandLine": "./entrypoint.sh -o ./env-config.js && pm2 serve /home/site/wwwroot --no-daemon --spa",
+                  "cors": {
+                    "allowedOrigins": [
+                      "https://portal.azure.com",
+                      "https://ms.portal.azure.com"
+                    ]
+                  },
+                  "minTlsVersion": "1.2",
+                  "ftpsState": "FtpsOnly"
+                },
+                "httpsOnly": true
+              }
+            },
+            {
+              "type": "Microsoft.Web/sites/config",
+              "apiVersion": "2021-02-01",
+              "name": "[format('{0}/{1}', 'frontEnd-TEST', 'appsettings')]",
+              "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', 'frontEnd-TEST')]"
+              ]
+            },
+            {
+              "type": "Microsoft.KeyVault/vaults",
+              "apiVersion": "2022-07-01",
+              "name": "[toLower(take(concat('kv', uniqueString(resourceGroup().id)), 24))]",
+              "location": "westus",
+              "properties": {
+                "tenantId": "[tenant().tenantId]",
+                "sku": {
+                  "family": "A",
+                  "name": "standard"
+                },
+                "enableSoftDelete": "[parameters('enableSoftDelete')]",
+                "enableRbacAuthorization": true
+              }
+            },
+            {
+              "type": "Microsoft.KeyVault/vaults/accessPolicies",
+              "apiVersion": "2023-02-01",
+              "name": "[format('{0}/{1}', toLower(take(concat('kv', uniqueString(resourceGroup().id)), 24)), 'add')]",
+              "properties": {
+                "accessPolicies": [
+                  {
+                    "tenantId": "00000000-0000-0000-0000-000000000000",
+                    "objectId": "[parameters('SERVICE_API_IDENTITY_PRINCIPAL_ID')]",
+                    "permissions": {
+                      "secrets": [
+                        "get",
+                        "list"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.KeyVault/vaults', toLower(take(concat('kv', uniqueString(resourceGroup().id)), 24)))]"
+              ]
+            }
+          ],
+          "outputs": {
+            "STORAGE_PRINCIPAL_ID": {
+              "type": "string",
+              "value": "[reference(resourceId('Microsoft.Web/sites', 'frontEnd-TEST'), '2021-02-01', 'full').identity.principalId]"
+            },
+            "LOCATION": {
+              "type": "string",
+              "value": "[reference(resourceId('Microsoft.Web/sites', 'frontEnd-TEST'), '2021-02-01', 'full').location]"
+            },
+            "vaultUri": {
+              "type": "string",
+              "value": "[reference(resourceId('Microsoft.KeyVault/vaults', toLower(take(concat('kv', uniqueString(resourceGroup().id)), 24))), '2022-07-01').vaultUri]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', 'rg1-TEST')]",
+        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, 'rg3-TEST'), 'Microsoft.Resources/deployments', 'rg3_TEST_module')]"
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "rg2_TEST_module",
+      "resourceGroup": "rg2-TEST",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "enableSoftDelete": {
+            "value": "[parameters('enableSoftDelete')]"
+          },
+          "STORAGE_PRINCIPAL_ID": {
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, 'rg1-TEST'), 'Microsoft.Resources/deployments', 'rg1_TEST_module'), '2022-09-01').outputs.STORAGE_PRINCIPAL_ID.value]"
+          },
+          "SERVICE_API_IDENTITY_PRINCIPAL_ID": {
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, 'rg3-TEST'), 'Microsoft.Resources/deployments', 'rg3_TEST_module'), '2022-09-01').outputs.SERVICE_API_IDENTITY_PRINCIPAL_ID.value]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.25.53.49325",
+              "templateHash": "15136582529514007876"
+            }
+          },
+          "parameters": {
+            "enableSoftDelete": {
+              "type": "string",
+              "defaultValue": "True",
+              "metadata": {
+                "description": "Enable soft delete"
+              }
+            },
+            "STORAGE_PRINCIPAL_ID": {
+              "type": "string",
+              "metadata": {
+                "description": ""
+              }
+            },
+            "SERVICE_API_IDENTITY_PRINCIPAL_ID": {
+              "type": "securestring",
+              "metadata": {
+                "description": ""
+              }
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Web/sites",
+              "apiVersion": "2021-02-01",
+              "name": "frontEnd-TEST",
+              "location": "westus",
+              "identity": {
+                "type": "SystemAssigned"
+              },
+              "kind": "app,linux",
+              "properties": {
+                "serverFarmId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1-TEST/providers/Microsoft.Web/serverfarms/appServicePlan-TEST",
+                "siteConfig": {
+                  "linuxFxVersion": "node|18-lts",
+                  "alwaysOn": true,
+                  "appCommandLine": "./entrypoint.sh -o ./env-config.js && pm2 serve /home/site/wwwroot --no-daemon --spa",
+                  "cors": {
+                    "allowedOrigins": [
+                      "https://portal.azure.com",
+                      "https://ms.portal.azure.com"
+                    ]
+                  },
+                  "minTlsVersion": "1.2",
+                  "ftpsState": "FtpsOnly"
+                },
+                "httpsOnly": true
+              }
+            },
+            {
+              "type": "Microsoft.Web/sites/config",
+              "apiVersion": "2021-02-01",
+              "name": "[format('{0}/{1}', 'frontEnd-TEST', 'appsettings')]",
+              "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', 'frontEnd-TEST')]"
+              ]
+            }
+          ]
+        }
+      },
+      "dependsOn": [
+        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', 'rg2-TEST')]",
+        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, 'rg1-TEST'), 'Microsoft.Resources/deployments', 'rg1_TEST_module')]",
+        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, 'rg3-TEST'), 'Microsoft.Resources/deployments', 'rg3_TEST_module')]"
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "rg3_TEST_module",
+      "resourceGroup": "rg3-TEST",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.25.53.49325",
+              "templateHash": "15439198252130968950"
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Web/sites",
+              "apiVersion": "2021-02-01",
+              "name": "frontEnd-TEST",
+              "location": "westus",
+              "identity": {
+                "type": "SystemAssigned"
+              },
+              "kind": "app,linux",
+              "properties": {
+                "serverFarmId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1-TEST/providers/Microsoft.Web/serverfarms/appServicePlan-TEST",
+                "siteConfig": {
+                  "linuxFxVersion": "node|18-lts",
+                  "alwaysOn": true,
+                  "appCommandLine": "./entrypoint.sh -o ./env-config.js && pm2 serve /home/site/wwwroot --no-daemon --spa",
+                  "cors": {
+                    "allowedOrigins": [
+                      "https://portal.azure.com",
+                      "https://ms.portal.azure.com"
+                    ]
+                  },
+                  "minTlsVersion": "1.2",
+                  "ftpsState": "FtpsOnly"
+                },
+                "httpsOnly": true
+              }
+            },
+            {
+              "type": "Microsoft.Web/sites/config",
+              "apiVersion": "2021-02-01",
+              "name": "[format('{0}/{1}', 'frontEnd-TEST', 'appsettings')]",
+              "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', 'frontEnd-TEST')]"
+              ]
+            },
+            {
+              "type": "Microsoft.Web/sites/config",
+              "apiVersion": "2021-02-01",
+              "name": "[format('{0}/{1}', 'frontEnd-TEST', 'logs')]",
+              "properties": {
+                "applicationLogs": {
+                  "fileSystem": {
+                    "level": "Verbose"
+                  }
+                },
+                "httpLogs": {
+                  "fileSystem": {
+                    "retentionInMb": 35,
+                    "retentionInDays": 1,
+                    "enabled": true
+                  }
+                },
+                "failedRequestsTracing": {
+                  "enabled": true
+                },
+                "detailedErrorMessages": {
+                  "enabled": true
+                }
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', 'frontEnd-TEST')]"
+              ]
+            }
+          ],
+          "outputs": {
+            "SERVICE_API_IDENTITY_PRINCIPAL_ID": {
+              "type": "string",
+              "value": "[reference(resourceId('Microsoft.Web/sites', 'frontEnd-TEST'), '2021-02-01', 'full').identity.principalId]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', 'rg3-TEST')]"
+      ]
+    }
+  ],
+  "outputs": {
+    "STORAGE_PRINCIPAL_ID": {
+      "type": "string",
+      "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, 'rg1-TEST'), 'Microsoft.Resources/deployments', 'rg1_TEST_module'), '2022-09-01').outputs.STORAGE_PRINCIPAL_ID.value]"
+    },
+    "LOCATION": {
+      "type": "string",
+      "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, 'rg1-TEST'), 'Microsoft.Resources/deployments', 'rg1_TEST_module'), '2022-09-01').outputs.LOCATION.value]"
+    },
+    "vaultUri": {
+      "type": "string",
+      "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, 'rg1-TEST'), 'Microsoft.Resources/deployments', 'rg1_TEST_module'), '2022-09-01').outputs.vaultUri.value]"
+    },
+    "SERVICE_API_IDENTITY_PRINCIPAL_ID": {
+      "type": "string",
+      "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, 'rg3-TEST'), 'Microsoft.Resources/deployments', 'rg3_TEST_module'), '2022-09-01').outputs.SERVICE_API_IDENTITY_PRINCIPAL_ID.value]"
+    }
+  }
+}

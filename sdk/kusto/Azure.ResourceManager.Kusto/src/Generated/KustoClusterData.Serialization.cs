@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.Kusto
             var format = options.Format == "W" ? ((IPersistableModel<KustoClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoClusterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoClusterData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            writer.WriteObjectValue<KustoSku>(Sku, options);
             if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
@@ -116,14 +116,14 @@ namespace Azure.ResourceManager.Kusto
                 writer.WriteStartArray();
                 foreach (var item in TrustedExternalTenants)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KustoClusterTrustedExternalTenant>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OptimizedAutoscale))
             {
                 writer.WritePropertyName("optimizedAutoscale"u8);
-                writer.WriteObjectValue(OptimizedAutoscale);
+                writer.WriteObjectValue<OptimizedAutoscale>(OptimizedAutoscale, options);
             }
             if (Optional.IsDefined(IsDiskEncryptionEnabled))
             {
@@ -138,12 +138,12 @@ namespace Azure.ResourceManager.Kusto
             if (Optional.IsDefined(VirtualNetworkConfiguration))
             {
                 writer.WritePropertyName("virtualNetworkConfiguration"u8);
-                writer.WriteObjectValue(VirtualNetworkConfiguration);
+                writer.WriteObjectValue<KustoClusterVirtualNetworkConfiguration>(VirtualNetworkConfiguration, options);
             }
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties);
+                writer.WriteObjectValue<KustoKeyVaultProperties>(KeyVaultProperties, options);
             }
             if (Optional.IsDefined(IsPurgeEnabled))
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Kusto
             if (Optional.IsDefined(LanguageExtensions))
             {
                 writer.WritePropertyName("languageExtensions"u8);
-                writer.WriteObjectValue(LanguageExtensions);
+                writer.WriteObjectValue<KustoLanguageExtensionList>(LanguageExtensions, options);
             }
             if (Optional.IsDefined(IsDoubleEncryptionEnabled))
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Kusto
                 writer.WriteStartArray();
                 foreach (var item in AcceptedAudiences)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AcceptedAudience>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -226,14 +226,14 @@ namespace Azure.ResourceManager.Kusto
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KustoPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(MigrationCluster))
             {
                 writer.WritePropertyName("migrationCluster"u8);
-                writer.WriteObjectValue(MigrationCluster);
+                writer.WriteObjectValue<MigrationClusterProperties>(MigrationCluster, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Kusto
             var format = options.Format == "W" ? ((IPersistableModel<KustoClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoClusterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoClusterData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -701,7 +701,7 @@ namespace Azure.ResourceManager.Kusto
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KustoClusterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoClusterData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.Kusto
                         return DeserializeKustoClusterData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KustoClusterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoClusterData)} does not support reading '{options.Format}' format.");
             }
         }
 

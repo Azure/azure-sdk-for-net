@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<CdnEndpointPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CdnEndpointPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CdnEndpointPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in GeoFilters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GeoFilter>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (DefaultOriginGroup != null)
                 {
                     writer.WritePropertyName("defaultOriginGroup"u8);
-                    writer.WriteObjectValue(DefaultOriginGroup);
+                    writer.WriteObjectValue<EndpointPropertiesUpdateParametersDefaultOriginGroup>(DefaultOriginGroup, options);
                 }
                 else
                 {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteStartArray();
                     foreach (var item in UriSigningKeys)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<UriSigningKey>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (DeliveryPolicy != null)
                 {
                     writer.WritePropertyName("deliveryPolicy"u8);
-                    writer.WriteObjectValue(DeliveryPolicy);
+                    writer.WriteObjectValue<EndpointDeliveryPolicy>(DeliveryPolicy, options);
                 }
                 else
                 {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (WebApplicationFirewallPolicyLink != null)
                 {
                     writer.WritePropertyName("webApplicationFirewallPolicyLink"u8);
-                    writer.WriteObjectValue(WebApplicationFirewallPolicyLink);
+                    writer.WriteObjectValue<EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink>(WebApplicationFirewallPolicyLink, options);
                 }
                 else
                 {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<CdnEndpointPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CdnEndpointPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CdnEndpointPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CdnEndpointPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CdnEndpointPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeCdnEndpointPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CdnEndpointPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CdnEndpointPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

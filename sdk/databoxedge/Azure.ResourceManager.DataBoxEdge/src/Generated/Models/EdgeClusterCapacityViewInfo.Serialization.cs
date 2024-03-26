@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeClusterCapacityViewInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeClusterCapacityViewInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeClusterCapacityViewInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(GpuCapacity))
             {
                 writer.WritePropertyName("gpuCapacity"u8);
-                writer.WriteObjectValue(GpuCapacity);
+                writer.WriteObjectValue<EdgeClusterGpuCapacity>(GpuCapacity, options);
             }
             if (Optional.IsDefined(MemoryCapacity))
             {
                 writer.WritePropertyName("memoryCapacity"u8);
-                writer.WriteObjectValue(MemoryCapacity);
+                writer.WriteObjectValue<EdgeClusterMemoryCapacity>(MemoryCapacity, options);
             }
             if (Optional.IsDefined(LastRefreshedOn))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeClusterCapacityViewInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeClusterCapacityViewInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeClusterCapacityViewInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeClusterCapacityViewInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeClusterCapacityViewInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeEdgeClusterCapacityViewInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeClusterCapacityViewInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeClusterCapacityViewInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

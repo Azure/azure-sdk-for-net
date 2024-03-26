@@ -22,7 +22,7 @@ namespace Azure.Analytics.Purview.DataMap
             var format = options.Format == "W" ? ((IPersistableModel<SearchResultValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchResultValue)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchResultValue)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(SearchHighlights))
             {
                 writer.WritePropertyName("@search.highlights"u8);
-                writer.WriteObjectValue(SearchHighlights);
+                writer.WriteObjectValue<SearchHighlights>(SearchHighlights, options);
             }
             if (Optional.IsDefined(ObjectType))
             {
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Term)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TermSearchResultValue>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +122,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Contact)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContactSearchResultValue>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -189,7 +189,7 @@ namespace Azure.Analytics.Purview.DataMap
             var format = options.Format == "W" ? ((IPersistableModel<SearchResultValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchResultValue)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchResultValue)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -451,7 +451,7 @@ namespace Azure.Analytics.Purview.DataMap
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SearchResultValue)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchResultValue)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -467,7 +467,7 @@ namespace Azure.Analytics.Purview.DataMap
                         return DeserializeSearchResultValue(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SearchResultValue)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchResultValue)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -485,7 +485,7 @@ namespace Azure.Analytics.Purview.DataMap
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<SearchResultValue>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

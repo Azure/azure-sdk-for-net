@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.DataFactory
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryTriggerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryTriggerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryTriggerData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            writer.WriteObjectValue<DataFactoryTriggerProperties>(Properties, options);
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryTriggerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryTriggerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryTriggerData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataFactory
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryTriggerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryTriggerData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DataFactory
                         return DeserializeDataFactoryTriggerData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryTriggerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryTriggerData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<JitNetworkAccessPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JitNetworkAccessPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JitNetworkAccessPolicyData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter
             writer.WriteStartArray();
             foreach (var item in VirtualMachines)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<JitNetworkAccessPolicyVirtualMachine>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Requests))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Requests)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<JitNetworkAccessRequestInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<JitNetworkAccessPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JitNetworkAccessPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JitNetworkAccessPolicyData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JitNetworkAccessPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JitNetworkAccessPolicyData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         return DeserializeJitNetworkAccessPolicyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JitNetworkAccessPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JitNetworkAccessPolicyData)} does not support reading '{options.Format}' format.");
             }
         }
 

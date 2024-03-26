@@ -348,6 +348,8 @@ namespace Azure.AI.OpenAI
         /// <param name="toolCalls">
         /// The tool calls that must be resolved and have their outputs appended to subsequent input messages for the chat
         /// completions request to resolve as configured.
+        /// Please note <see cref="ChatCompletionsToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ChatCompletionsFunctionToolCall"/>.
         /// </param>
         /// <param name="functionCall">
         /// The function call that must be resolved and have its output appended to subsequent input messages for the chat
@@ -685,6 +687,8 @@ namespace Azure.AI.OpenAI
         /// <param name="toolCalls">
         /// The tool calls that must be resolved and have their outputs appended to subsequent input messages for the chat
         /// completions request to resolve as configured.
+        /// Please note <see cref="ChatCompletionsToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ChatCompletionsFunctionToolCall"/>.
         /// </param>
         /// <param name="functionCall">
         /// The function call that must be resolved and have its output appended to subsequent input messages for the chat
@@ -781,7 +785,11 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataEndpointVectorizationSource"/>. </summary>
         /// <param name="endpoint"> Specifies the resource endpoint URL from which embeddings should be retrieved. It should be in the format of https://YOUR_RESOURCE_NAME.openai.azure.com/openai/deployments/YOUR_DEPLOYMENT_NAME/embeddings. The api-version query parameter is not allowed. </param>
-        /// <param name="authentication"> Specifies the authentication options to use when retrieving embeddings from the specified endpoint. </param>
+        /// <param name="authentication">
+        /// Specifies the authentication options to use when retrieving embeddings from the specified endpoint.
+        /// Please note <see cref="OnYourDataAuthenticationOptions"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="OpenAI.OnYourDataAccessTokenAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataApiKeyAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataConnectionStringAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataKeyAndKeyIdAuthenticationOptions"/>, <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/> and <see cref="OpenAI.OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>.
+        /// </param>
         /// <returns> A new <see cref="OpenAI.OnYourDataEndpointVectorizationSource"/> instance for mocking. </returns>
         public static OnYourDataEndpointVectorizationSource OnYourDataEndpointVectorizationSource(Uri endpoint = null, OnYourDataAuthenticationOptions authentication = null)
         {

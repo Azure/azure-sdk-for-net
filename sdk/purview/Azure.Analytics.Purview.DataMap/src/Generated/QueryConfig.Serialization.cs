@@ -22,7 +22,7 @@ namespace Azure.Analytics.Purview.DataMap
             var format = options.Format == "W" ? ((IPersistableModel<QueryConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -81,14 +81,14 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Facets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SearchFacetItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(TaxonomySetting))
             {
                 writer.WritePropertyName("taxonomySetting"u8);
-                writer.WriteObjectValue(TaxonomySetting);
+                writer.WriteObjectValue<SearchTaxonomySetting>(TaxonomySetting, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -113,7 +113,7 @@ namespace Azure.Analytics.Purview.DataMap
             var format = options.Format == "W" ? ((IPersistableModel<QueryConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -237,7 +237,7 @@ namespace Azure.Analytics.Purview.DataMap
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QueryConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -253,7 +253,7 @@ namespace Azure.Analytics.Purview.DataMap
                         return DeserializeQueryConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QueryConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryConfig)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -271,7 +271,7 @@ namespace Azure.Analytics.Purview.DataMap
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<QueryConfig>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

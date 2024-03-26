@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTaskRunData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryTaskRunData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryTaskRunData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(RunRequest))
             {
                 writer.WritePropertyName("runRequest"u8);
-                writer.WriteObjectValue(RunRequest);
+                writer.WriteObjectValue<ContainerRegistryRunContent>(RunRequest, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RunResult))
             {
                 writer.WritePropertyName("runResult"u8);
-                writer.WriteObjectValue(RunResult);
+                writer.WriteObjectValue<ContainerRegistryRunData>(RunResult, options);
             }
             if (Optional.IsDefined(ForceUpdateTag))
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTaskRunData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryTaskRunData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryTaskRunData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryTaskRunData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryTaskRunData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                         return DeserializeContainerRegistryTaskRunData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryTaskRunData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryTaskRunData)} does not support reading '{options.Format}' format.");
             }
         }
 

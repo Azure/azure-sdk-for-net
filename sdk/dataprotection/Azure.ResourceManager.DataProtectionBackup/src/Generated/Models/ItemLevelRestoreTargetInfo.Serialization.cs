@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<ItemLevelRestoreTargetInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ItemLevelRestoreTargetInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ItemLevelRestoreTargetInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,20 +30,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartArray();
             foreach (var item in RestoreCriteria)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ItemLevelRestoreCriteria>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("datasourceInfo"u8);
-            writer.WriteObjectValue(DatasourceInfo);
+            writer.WriteObjectValue<DataSourceInfo>(DatasourceInfo, options);
             if (Optional.IsDefined(DatasourceSetInfo))
             {
                 writer.WritePropertyName("datasourceSetInfo"u8);
-                writer.WriteObjectValue(DatasourceSetInfo);
+                writer.WriteObjectValue<DataSourceSetInfo>(DatasourceSetInfo, options);
             }
             if (Optional.IsDefined(DatasourceAuthCredentials))
             {
                 writer.WritePropertyName("datasourceAuthCredentials"u8);
-                writer.WriteObjectValue(DatasourceAuthCredentials);
+                writer.WriteObjectValue<DataProtectionBackupAuthCredentials>(DatasourceAuthCredentials, options);
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<ItemLevelRestoreTargetInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ItemLevelRestoreTargetInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ItemLevelRestoreTargetInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ItemLevelRestoreTargetInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ItemLevelRestoreTargetInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeItemLevelRestoreTargetInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ItemLevelRestoreTargetInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ItemLevelRestoreTargetInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

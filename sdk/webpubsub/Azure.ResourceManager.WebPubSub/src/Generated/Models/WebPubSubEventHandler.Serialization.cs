@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebPubSubEventHandler>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebPubSubEventHandler)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebPubSubEventHandler)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             if (Optional.IsDefined(Auth))
             {
                 writer.WritePropertyName("auth"u8);
-                writer.WriteObjectValue(Auth);
+                writer.WriteObjectValue<UpstreamAuthSettings>(Auth, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebPubSubEventHandler>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebPubSubEventHandler)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebPubSubEventHandler)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WebPubSubEventHandler)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebPubSubEventHandler)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                         return DeserializeWebPubSubEventHandler(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebPubSubEventHandler)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebPubSubEventHandler)} does not support reading '{options.Format}' format.");
             }
         }
 

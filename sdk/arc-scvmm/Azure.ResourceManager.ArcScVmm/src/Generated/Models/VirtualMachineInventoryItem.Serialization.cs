@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInventoryItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineInventoryItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineInventoryItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             if (Optional.IsDefined(Cloud))
             {
                 writer.WritePropertyName("cloud"u8);
-                writer.WriteObjectValue(Cloud);
+                writer.WriteObjectValue<InventoryItemDetails>(Cloud, options);
             }
             writer.WritePropertyName("inventoryType"u8);
             writer.WriteStringValue(InventoryType.ToString());
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInventoryItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineInventoryItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineInventoryItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineInventoryItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineInventoryItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                         return DeserializeVirtualMachineInventoryItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineInventoryItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineInventoryItem)} does not support reading '{options.Format}' format.");
             }
         }
 

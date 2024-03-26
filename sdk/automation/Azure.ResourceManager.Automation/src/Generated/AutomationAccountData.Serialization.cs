@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Automation
             var format = options.Format == "W" ? ((IPersistableModel<AutomationAccountData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationAccountData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationAccountData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<AutomationSku>(Sku, options);
             }
             if (Optional.IsDefined(LastModifiedBy))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<AutomationEncryptionProperties>(Encryption, options);
             }
             if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Automation
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AutomationPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Automation
             var format = options.Format == "W" ? ((IPersistableModel<AutomationAccountData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationAccountData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationAccountData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Automation
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationAccountData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationAccountData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Automation
                         return DeserializeAutomationAccountData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationAccountData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationAccountData)} does not support reading '{options.Format}' format.");
             }
         }
 

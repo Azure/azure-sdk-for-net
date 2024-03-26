@@ -24,7 +24,7 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Contexts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SummaryContextInternal>(item);
                 }
                 writer.WriteEndArray();
             }

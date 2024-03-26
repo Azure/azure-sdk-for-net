@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureDatabricksDeltaLakeSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeSink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeSink)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ImportSettings))
             {
                 writer.WritePropertyName("importSettings"u8);
-                writer.WriteObjectValue(ImportSettings);
+                writer.WriteObjectValue<AzureDatabricksDeltaLakeImportCommand>(ImportSettings, options);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySinkType);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureDatabricksDeltaLakeSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeSink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeSink)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeSink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeSink)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeAzureDatabricksDeltaLakeSink(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeSink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeSink)} does not support reading '{options.Format}' format.");
             }
         }
 

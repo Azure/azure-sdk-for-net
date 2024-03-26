@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<AdaptiveApplicationControlGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdaptiveApplicationControlGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdaptiveApplicationControlGroupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(ProtectionMode))
             {
                 writer.WritePropertyName("protectionMode"u8);
-                writer.WriteObjectValue(ProtectionMode);
+                writer.WriteObjectValue<SecurityCenterFileProtectionMode>(ProtectionMode, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ConfigurationStatus))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Issues)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AdaptiveApplicationControlIssueSummary>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in VmRecommendations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VmRecommendation>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in PathRecommendations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PathRecommendation>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<AdaptiveApplicationControlGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdaptiveApplicationControlGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdaptiveApplicationControlGroupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AdaptiveApplicationControlGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdaptiveApplicationControlGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         return DeserializeAdaptiveApplicationControlGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AdaptiveApplicationControlGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdaptiveApplicationControlGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 

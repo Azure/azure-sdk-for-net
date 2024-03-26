@@ -24,7 +24,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStartArray();
                 foreach (var item in OutputSelectors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OutputSelector>(item);
                 }
                 writer.WriteEndArray();
             }

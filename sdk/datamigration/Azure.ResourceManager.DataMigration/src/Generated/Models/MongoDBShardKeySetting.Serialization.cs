@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBShardKeySetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBShardKeySetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBShardKeySetting)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartArray();
             foreach (var item in Fields)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MongoDBShardKeyField>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(IsUnique))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBShardKeySetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBShardKeySetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBShardKeySetting)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBShardKeySetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBShardKeySetting)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMongoDBShardKeySetting(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBShardKeySetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBShardKeySetting)} does not support reading '{options.Format}' format.");
             }
         }
 

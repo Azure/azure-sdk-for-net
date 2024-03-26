@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureArcKubernetesArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureArcKubernetesArtifactProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureArcKubernetesArtifactProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(HelmArtifactProfile))
             {
                 writer.WritePropertyName("helmArtifactProfile"u8);
-                writer.WriteObjectValue(HelmArtifactProfile);
+                writer.WriteObjectValue<HelmArtifactProfile>(HelmArtifactProfile, options);
             }
             if (Optional.IsDefined(ArtifactStore))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureArcKubernetesArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureArcKubernetesArtifactProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureArcKubernetesArtifactProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureArcKubernetesArtifactProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureArcKubernetesArtifactProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeAzureArcKubernetesArtifactProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureArcKubernetesArtifactProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureArcKubernetesArtifactProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

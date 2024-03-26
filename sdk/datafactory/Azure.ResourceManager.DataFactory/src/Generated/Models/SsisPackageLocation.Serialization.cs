@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SsisPackageLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SsisPackageLocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SsisPackageLocation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AccessCredential))
             {
                 writer.WritePropertyName("accessCredential"u8);
-                writer.WriteObjectValue(AccessCredential);
+                writer.WriteObjectValue<SsisAccessCredential>(AccessCredential, options);
             }
             if (Optional.IsDefined(ConfigurationPath))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConfigurationAccessCredential))
             {
                 writer.WritePropertyName("configurationAccessCredential"u8);
-                writer.WriteObjectValue(ConfigurationAccessCredential);
+                writer.WriteObjectValue<SsisAccessCredential>(ConfigurationAccessCredential, options);
             }
             if (Optional.IsDefined(PackageName))
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in ChildPackages)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SsisChildPackage>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SsisPackageLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SsisPackageLocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SsisPackageLocation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SsisPackageLocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SsisPackageLocation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeSsisPackageLocation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SsisPackageLocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SsisPackageLocation)} does not support reading '{options.Format}' format.");
             }
         }
 

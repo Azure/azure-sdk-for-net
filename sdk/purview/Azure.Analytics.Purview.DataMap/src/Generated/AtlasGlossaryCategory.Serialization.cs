@@ -22,7 +22,7 @@ namespace Azure.Analytics.Purview.DataMap
             var format = options.Format == "W" ? ((IPersistableModel<AtlasGlossaryCategory>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AtlasGlossaryCategory)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AtlasGlossaryCategory)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Classifications)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AtlasClassification>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(Anchor))
             {
                 writer.WritePropertyName("anchor"u8);
-                writer.WriteObjectValue(Anchor);
+                writer.WriteObjectValue<AtlasGlossaryHeader>(Anchor, options);
             }
             if (Optional.IsCollectionDefined(ChildrenCategories))
             {
@@ -97,14 +97,14 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in ChildrenCategories)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AtlasRelatedCategoryHeader>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ParentCategory))
             {
                 writer.WritePropertyName("parentCategory"u8);
-                writer.WriteObjectValue(ParentCategory);
+                writer.WriteObjectValue<AtlasRelatedCategoryHeader>(ParentCategory, options);
             }
             if (Optional.IsCollectionDefined(Terms))
             {
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Terms)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AtlasRelatedTermHeader>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -139,7 +139,7 @@ namespace Azure.Analytics.Purview.DataMap
             var format = options.Format == "W" ? ((IPersistableModel<AtlasGlossaryCategory>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AtlasGlossaryCategory)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AtlasGlossaryCategory)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -325,7 +325,7 @@ namespace Azure.Analytics.Purview.DataMap
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AtlasGlossaryCategory)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AtlasGlossaryCategory)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -341,7 +341,7 @@ namespace Azure.Analytics.Purview.DataMap
                         return DeserializeAtlasGlossaryCategory(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AtlasGlossaryCategory)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AtlasGlossaryCategory)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -359,7 +359,7 @@ namespace Azure.Analytics.Purview.DataMap
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AtlasGlossaryCategory>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

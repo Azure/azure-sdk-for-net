@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevOpsConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevOpsConfigurationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevOpsConfigurationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
-                writer.WriteObjectValue(Authorization);
+                writer.WriteObjectValue<DevOpsAuthorization>(Authorization, options);
             }
             if (Optional.IsDefined(AutoDiscovery))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevOpsConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevOpsConfigurationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevOpsConfigurationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevOpsConfigurationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevOpsConfigurationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeDevOpsConfigurationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevOpsConfigurationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevOpsConfigurationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

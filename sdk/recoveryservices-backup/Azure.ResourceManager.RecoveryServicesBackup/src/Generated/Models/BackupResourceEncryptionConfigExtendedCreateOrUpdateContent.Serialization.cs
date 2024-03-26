@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupResourceEncryptionConfigExtendedCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupResourceEncryptionConfigExtendedCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupResourceEncryptionConfigExtendedCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<BackupResourceEncryptionConfig>(Properties, options);
             }
             if (Optional.IsDefined(ETag))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupResourceEncryptionConfigExtendedCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupResourceEncryptionConfigExtendedCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupResourceEncryptionConfigExtendedCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupResourceEncryptionConfigExtendedCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupResourceEncryptionConfigExtendedCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeBackupResourceEncryptionConfigExtendedCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupResourceEncryptionConfigExtendedCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupResourceEncryptionConfigExtendedCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseSensitivityLabelUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseSensitivityLabelUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseSensitivityLabelUpdate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(SensitivityLabel))
             {
                 writer.WritePropertyName("sensitivityLabel"u8);
-                writer.WriteObjectValue(SensitivityLabel);
+                writer.WriteObjectValue<SynapseSensitivityLabelData>(SensitivityLabel, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseSensitivityLabelUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseSensitivityLabelUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseSensitivityLabelUpdate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseSensitivityLabelUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseSensitivityLabelUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeSynapseSensitivityLabelUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseSensitivityLabelUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseSensitivityLabelUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 

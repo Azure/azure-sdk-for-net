@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Maps.Models
             var format = options.Format == "W" ? ((IPersistableModel<MapsAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MapsAccountPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MapsAccountPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Maps.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<MapsSku>(Sku, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -76,14 +76,14 @@ namespace Azure.ResourceManager.Maps.Models
                 writer.WriteStartArray();
                 foreach (var item in LinkedResources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MapsLinkedResource>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Cors))
             {
                 writer.WritePropertyName("cors"u8);
-                writer.WriteObjectValue(Cors);
+                writer.WriteObjectValue<CorsRules>(Cors, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Maps.Models
             var format = options.Format == "W" ? ((IPersistableModel<MapsAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MapsAccountPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MapsAccountPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Maps.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MapsAccountPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MapsAccountPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Maps.Models
                         return DeserializeMapsAccountPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MapsAccountPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MapsAccountPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

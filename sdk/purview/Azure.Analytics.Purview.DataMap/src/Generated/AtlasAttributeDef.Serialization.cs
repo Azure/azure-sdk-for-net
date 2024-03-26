@@ -22,7 +22,7 @@ namespace Azure.Analytics.Purview.DataMap
             var format = options.Format == "W" ? ((IPersistableModel<AtlasAttributeDef>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AtlasAttributeDef)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AtlasAttributeDef)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Constraints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AtlasConstraintDef>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -125,7 +125,7 @@ namespace Azure.Analytics.Purview.DataMap
             var format = options.Format == "W" ? ((IPersistableModel<AtlasAttributeDef>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AtlasAttributeDef)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AtlasAttributeDef)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -300,7 +300,7 @@ namespace Azure.Analytics.Purview.DataMap
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AtlasAttributeDef)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AtlasAttributeDef)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -316,7 +316,7 @@ namespace Azure.Analytics.Purview.DataMap
                         return DeserializeAtlasAttributeDef(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AtlasAttributeDef)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AtlasAttributeDef)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -334,7 +334,7 @@ namespace Azure.Analytics.Purview.DataMap
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AtlasAttributeDef>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

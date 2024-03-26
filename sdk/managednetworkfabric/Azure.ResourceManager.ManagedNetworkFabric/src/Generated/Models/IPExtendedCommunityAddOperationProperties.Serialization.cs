@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<IPExtendedCommunityAddOperationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPExtendedCommunityAddOperationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IPExtendedCommunityAddOperationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Add))
             {
                 writer.WritePropertyName("add"u8);
-                writer.WriteObjectValue(Add);
+                writer.WriteObjectValue<IPExtendedCommunityIdList>(Add, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<IPExtendedCommunityAddOperationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPExtendedCommunityAddOperationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IPExtendedCommunityAddOperationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IPExtendedCommunityAddOperationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPExtendedCommunityAddOperationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeIPExtendedCommunityAddOperationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IPExtendedCommunityAddOperationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPExtendedCommunityAddOperationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

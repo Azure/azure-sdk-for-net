@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSyncCompleteCommandProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSyncCompleteCommandProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSyncCompleteCommandProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
-                writer.WriteObjectValue(Input);
+                writer.WriteObjectValue<MigrateSyncCompleteCommandInput>(Input, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
-                writer.WriteObjectValue(Output);
+                writer.WriteObjectValue<MigrateSyncCompleteCommandOutput>(Output, options);
             }
             if (Optional.IsDefined(CommandId))
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ODataError>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSyncCompleteCommandProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSyncCompleteCommandProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSyncCompleteCommandProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSyncCompleteCommandProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSyncCompleteCommandProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrateSyncCompleteCommandProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSyncCompleteCommandProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSyncCompleteCommandProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationRegistrationListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationRegistrationListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationRegistrationListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NotificationRegistrationData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationRegistrationListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationRegistrationListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationRegistrationListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NotificationRegistrationListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationRegistrationListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeNotificationRegistrationListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NotificationRegistrationListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationRegistrationListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

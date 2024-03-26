@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<PaloAltoNetworksFirewallListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PaloAltoNetworksFirewallListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PaloAltoNetworksFirewallListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<PaloAltoNetworksFirewallData>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<PaloAltoNetworksFirewallListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PaloAltoNetworksFirewallListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PaloAltoNetworksFirewallListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PaloAltoNetworksFirewallListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PaloAltoNetworksFirewallListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         return DeserializePaloAltoNetworksFirewallListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PaloAltoNetworksFirewallListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PaloAltoNetworksFirewallListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

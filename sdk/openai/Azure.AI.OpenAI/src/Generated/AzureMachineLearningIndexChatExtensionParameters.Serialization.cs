@@ -22,14 +22,14 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<AzureMachineLearningIndexChatExtensionParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureMachineLearningIndexChatExtensionParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureMachineLearningIndexChatExtensionParameters)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication);
+                writer.WriteObjectValue<OnYourDataAuthenticationOptions>(Authentication, options);
             }
             if (Optional.IsDefined(DocumentCount))
             {
@@ -85,7 +85,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<AzureMachineLearningIndexChatExtensionParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureMachineLearningIndexChatExtensionParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureMachineLearningIndexChatExtensionParameters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -202,7 +202,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureMachineLearningIndexChatExtensionParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureMachineLearningIndexChatExtensionParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -218,7 +218,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeAzureMachineLearningIndexChatExtensionParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureMachineLearningIndexChatExtensionParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureMachineLearningIndexChatExtensionParameters)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -236,7 +236,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AzureMachineLearningIndexChatExtensionParameters>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

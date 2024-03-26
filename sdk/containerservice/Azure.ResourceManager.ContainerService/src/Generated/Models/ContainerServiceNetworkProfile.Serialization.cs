@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceNetworkProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(LoadBalancerProfile))
             {
                 writer.WritePropertyName("loadBalancerProfile"u8);
-                writer.WriteObjectValue(LoadBalancerProfile);
+                writer.WriteObjectValue<ManagedClusterLoadBalancerProfile>(LoadBalancerProfile, options);
             }
             if (Optional.IsDefined(NatGatewayProfile))
             {
                 writer.WritePropertyName("natGatewayProfile"u8);
-                writer.WriteObjectValue(NatGatewayProfile);
+                writer.WriteObjectValue<ManagedClusterNatGatewayProfile>(NatGatewayProfile, options);
             }
             if (Optional.IsCollectionDefined(PodCidrs))
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceNetworkProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceNetworkProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeContainerServiceNetworkProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceNetworkProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

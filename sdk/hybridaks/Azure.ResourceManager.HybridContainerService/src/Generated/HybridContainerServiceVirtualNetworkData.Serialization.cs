@@ -24,19 +24,19 @@ namespace Azure.ResourceManager.HybridContainerService
             var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceVirtualNetworkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<HybridContainerServiceVirtualNetworkProperties>(Properties, options);
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation);
+                writer.WriteObjectValue<HybridContainerServiceExtendedLocation>(ExtendedLocation, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HybridContainerService
             var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceVirtualNetworkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.HybridContainerService
                         return DeserializeHybridContainerServiceVirtualNetworkData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkData)} does not support reading '{options.Format}' format.");
             }
         }
 

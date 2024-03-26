@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(BodyLink))
             {
                 writer.WritePropertyName("bodyLink"u8);
-                writer.WriteObjectValue(BodyLink);
+                writer.WriteObjectValue<LogicContentLink>(BodyLink, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeLogicWorkflowResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

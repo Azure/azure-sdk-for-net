@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.NetworkCloud
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudRackSkuData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudRackSkuData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudRackSkuData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in ComputeMachines)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineSkuSlot>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in ControllerMachines)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineSkuSlot>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in StorageAppliances)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StorageApplianceSkuSlot>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.NetworkCloud
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudRackSkuData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudRackSkuData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudRackSkuData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudRackSkuData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudRackSkuData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.NetworkCloud
                         return DeserializeNetworkCloudRackSkuData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudRackSkuData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudRackSkuData)} does not support reading '{options.Format}' format.");
             }
         }
 

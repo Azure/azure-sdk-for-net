@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<IstioServiceMesh>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IstioServiceMesh)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IstioServiceMesh)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Components))
             {
                 writer.WritePropertyName("components"u8);
-                writer.WriteObjectValue(Components);
+                writer.WriteObjectValue<IstioComponents>(Components, options);
             }
             if (Optional.IsDefined(CertificateAuthority))
             {
                 writer.WritePropertyName("certificateAuthority"u8);
-                writer.WriteObjectValue(CertificateAuthority);
+                writer.WriteObjectValue<IstioCertificateAuthority>(CertificateAuthority, options);
             }
             if (Optional.IsCollectionDefined(Revisions))
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<IstioServiceMesh>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IstioServiceMesh)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IstioServiceMesh)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IstioServiceMesh)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IstioServiceMesh)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeIstioServiceMesh(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IstioServiceMesh)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IstioServiceMesh)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationHubNamespaceCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationHubNamespaceCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubNamespaceCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<NotificationHubSku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationHubNamespaceCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationHubNamespaceCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubNamespaceCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NotificationHubNamespaceCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubNamespaceCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         return DeserializeNotificationHubNamespaceCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NotificationHubNamespaceCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubNamespaceCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

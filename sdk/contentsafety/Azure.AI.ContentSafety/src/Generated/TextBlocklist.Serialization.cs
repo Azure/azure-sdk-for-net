@@ -22,7 +22,7 @@ namespace Azure.AI.ContentSafety
             var format = options.Format == "W" ? ((IPersistableModel<TextBlocklist>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TextBlocklist)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TextBlocklist)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.AI.ContentSafety
             var format = options.Format == "W" ? ((IPersistableModel<TextBlocklist>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TextBlocklist)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TextBlocklist)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,7 +105,7 @@ namespace Azure.AI.ContentSafety
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TextBlocklist)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TextBlocklist)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.AI.ContentSafety
                         return DeserializeTextBlocklist(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TextBlocklist)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TextBlocklist)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.AI.ContentSafety
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<TextBlocklist>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             var format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedNetworkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedNetworkData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.ManagedNetwork
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteObjectValue(Scope);
+                writer.WriteObjectValue<Scope>(Scope, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Connectivity))
             {
                 writer.WritePropertyName("connectivity"u8);
-                writer.WriteObjectValue(Connectivity);
+                writer.WriteObjectValue<ConnectivityCollection>(Connectivity, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             var format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedNetworkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedNetworkData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedNetworkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedNetworkData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                         return DeserializeManagedNetworkData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedNetworkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedNetworkData)} does not support reading '{options.Format}' format.");
             }
         }
 

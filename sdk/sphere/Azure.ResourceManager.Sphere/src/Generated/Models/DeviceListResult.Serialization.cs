@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeviceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sphere.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<SphereDeviceData>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(NextLink))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeviceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeviceListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Sphere.Models
                         return DeserializeDeviceListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeviceListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

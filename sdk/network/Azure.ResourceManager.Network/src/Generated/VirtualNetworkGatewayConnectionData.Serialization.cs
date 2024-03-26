@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkGatewayConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkGatewayConnectionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,16 +72,16 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStringValue(AuthorizationKey);
             }
             writer.WritePropertyName("virtualNetworkGateway1"u8);
-            writer.WriteObjectValue(VirtualNetworkGateway1);
+            writer.WriteObjectValue<VirtualNetworkGatewayData>(VirtualNetworkGateway1, options);
             if (Optional.IsDefined(VirtualNetworkGateway2))
             {
                 writer.WritePropertyName("virtualNetworkGateway2"u8);
-                writer.WriteObjectValue(VirtualNetworkGateway2);
+                writer.WriteObjectValue<VirtualNetworkGatewayData>(VirtualNetworkGateway2, options);
             }
             if (Optional.IsDefined(LocalNetworkGateway2))
             {
                 writer.WritePropertyName("localNetworkGateway2"u8);
-                writer.WriteObjectValue(LocalNetworkGateway2);
+                writer.WriteObjectValue<LocalNetworkGatewayData>(LocalNetworkGateway2, options);
             }
             if (Optional.IsCollectionDefined(IngressNatRules))
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in TunnelConnectionStatus)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TunnelConnectionHealth>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in GatewayCustomBgpIPAddresses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GatewayCustomBgpIPAddressIPConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPsecPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IPsecPolicy>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in TrafficSelectorPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TrafficSelectorPolicy>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkGatewayConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkGatewayConnectionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayConnectionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeVirtualNetworkGatewayConnectionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayConnectionData)} does not support reading '{options.Format}' format.");
             }
         }
 

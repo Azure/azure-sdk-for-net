@@ -52,7 +52,7 @@ namespace Azure.IoT.Hub.Service
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(jobProperties);
+            content.JsonWriter.WriteObjectValue<JobProperties>(jobProperties);
             request.Content = content;
             return message;
         }
@@ -327,7 +327,7 @@ namespace Azure.IoT.Hub.Service
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(jobRequest);
+            content.JsonWriter.WriteObjectValue<JobRequest>(jobRequest);
             request.Content = content;
             return message;
         }

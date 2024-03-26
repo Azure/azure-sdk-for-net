@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverOperationErrorAdditionalInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverOperationErrorAdditionalInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverOperationErrorAdditionalInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             if (options.Format != "W" && Optional.IsDefined(Info))
             {
                 writer.WritePropertyName("info"u8);
-                writer.WriteObjectValue(Info);
+                writer.WriteObjectValue<MoveErrorInfo>(Info, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverOperationErrorAdditionalInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverOperationErrorAdditionalInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverOperationErrorAdditionalInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MoverOperationErrorAdditionalInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverOperationErrorAdditionalInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeMoverOperationErrorAdditionalInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MoverOperationErrorAdditionalInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverOperationErrorAdditionalInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

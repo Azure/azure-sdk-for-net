@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,17 +54,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (options.Format != "W" && Optional.IsDefined(DataIntegrityValidationResult))
             {
                 writer.WritePropertyName("dataIntegrityValidationResult"u8);
-                writer.WriteObjectValue(DataIntegrityValidationResult);
+                writer.WriteObjectValue<DataIntegrityValidationResult>(DataIntegrityValidationResult, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SchemaValidationResult))
             {
                 writer.WritePropertyName("schemaValidationResult"u8);
-                writer.WriteObjectValue(SchemaValidationResult);
+                writer.WriteObjectValue<SchemaComparisonValidationResult>(SchemaValidationResult, options);
             }
             if (options.Format != "W" && Optional.IsDefined(QueryAnalysisValidationResult))
             {
                 writer.WritePropertyName("queryAnalysisValidationResult"u8);
-                writer.WriteObjectValue(QueryAnalysisValidationResult);
+                writer.WriteObjectValue<QueryAnalysisValidationResult>(QueryAnalysisValidationResult, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult)} does not support reading '{options.Format}' format.");
             }
         }
 

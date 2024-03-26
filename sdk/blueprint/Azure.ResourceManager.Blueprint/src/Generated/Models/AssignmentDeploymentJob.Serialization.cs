@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             var format = options.Format == "W" ? ((IPersistableModel<AssignmentDeploymentJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssignmentDeploymentJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssignmentDeploymentJob)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             if (Optional.IsDefined(Result))
             {
                 writer.WritePropertyName("result"u8);
-                writer.WriteObjectValue(Result);
+                writer.WriteObjectValue<AssignmentDeploymentJobResult>(Result, options);
             }
             if (Optional.IsCollectionDefined(History))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 writer.WriteStartArray();
                 foreach (var item in History)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AssignmentDeploymentJobResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             var format = options.Format == "W" ? ((IPersistableModel<AssignmentDeploymentJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssignmentDeploymentJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssignmentDeploymentJob)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AssignmentDeploymentJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssignmentDeploymentJob)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                         return DeserializeAssignmentDeploymentJob(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssignmentDeploymentJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssignmentDeploymentJob)} does not support reading '{options.Format}' format.");
             }
         }
 

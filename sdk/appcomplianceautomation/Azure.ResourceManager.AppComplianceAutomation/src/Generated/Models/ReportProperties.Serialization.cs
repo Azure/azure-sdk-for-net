@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReportProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReportProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReportProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,13 +79,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             writer.WriteStartArray();
             foreach (var item in Resources)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ResourceMetadata>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
             {
                 writer.WritePropertyName("complianceStatus"u8);
-                writer.WriteObjectValue(ComplianceStatus);
+                writer.WriteObjectValue<ReportComplianceStatus>(ComplianceStatus, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReportProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReportProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReportProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReportProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReportProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                         return DeserializeReportProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReportProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReportProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

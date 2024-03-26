@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<NamespaceTopicEventSubscriptionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NamespaceTopicEventSubscriptionPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NamespaceTopicEventSubscriptionPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(DeliveryConfiguration))
             {
                 writer.WritePropertyName("deliveryConfiguration"u8);
-                writer.WriteObjectValue(DeliveryConfiguration);
+                writer.WriteObjectValue<DeliveryConfiguration>(DeliveryConfiguration, options);
             }
             if (Optional.IsDefined(EventDeliverySchema))
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(FiltersConfiguration))
             {
                 writer.WritePropertyName("filtersConfiguration"u8);
-                writer.WriteObjectValue(FiltersConfiguration);
+                writer.WriteObjectValue<FiltersConfiguration>(FiltersConfiguration, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<NamespaceTopicEventSubscriptionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NamespaceTopicEventSubscriptionPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NamespaceTopicEventSubscriptionPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NamespaceTopicEventSubscriptionPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NamespaceTopicEventSubscriptionPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeNamespaceTopicEventSubscriptionPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NamespaceTopicEventSubscriptionPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NamespaceTopicEventSubscriptionPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

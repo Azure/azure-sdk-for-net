@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.EdgeOrder
             var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderItemData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeOrderItemData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeOrderItemData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.EdgeOrder
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("orderItemDetails"u8);
-            writer.WriteObjectValue(OrderItemDetails);
+            writer.WriteObjectValue<EdgeOrderItemDetails>(OrderItemDetails, options);
             writer.WritePropertyName("addressDetails"u8);
-            writer.WriteObjectValue(AddressDetails);
+            writer.WriteObjectValue<EdgeOrderItemAddressDetails>(AddressDetails, options);
             if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.EdgeOrder
             var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderItemData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeOrderItemData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeOrderItemData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeOrderItemData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeOrderItemData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return DeserializeEdgeOrderItemData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeOrderItemData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeOrderItemData)} does not support reading '{options.Format}' format.");
             }
         }
 

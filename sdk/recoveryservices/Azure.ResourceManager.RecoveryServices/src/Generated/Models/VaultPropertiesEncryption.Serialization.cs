@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<VaultPropertiesEncryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VaultPropertiesEncryption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VaultPropertiesEncryption)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties);
+                writer.WriteObjectValue<CmkKeyVaultProperties>(KeyVaultProperties, options);
             }
             if (Optional.IsDefined(KekIdentity))
             {
                 writer.WritePropertyName("kekIdentity"u8);
-                writer.WriteObjectValue(KekIdentity);
+                writer.WriteObjectValue<CmkKekIdentity>(KekIdentity, options);
             }
             if (Optional.IsDefined(InfrastructureEncryption))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<VaultPropertiesEncryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VaultPropertiesEncryption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VaultPropertiesEncryption)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VaultPropertiesEncryption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VaultPropertiesEncryption)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         return DeserializeVaultPropertiesEncryption(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VaultPropertiesEncryption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VaultPropertiesEncryption)} does not support reading '{options.Format}' format.");
             }
         }
 

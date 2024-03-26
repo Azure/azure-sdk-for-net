@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationPurchaseContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationPurchaseContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationPurchaseContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<ReservationsSkuName>(Sku, options);
             }
             if (Optional.IsDefined(Location))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue(AppliedScopeProperties);
+                writer.WriteObjectValue<AppliedScopeProperties>(AppliedScopeProperties, options);
             }
             if (Optional.IsDefined(IsRenewEnabled))
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(ReservedResourceProperties))
             {
                 writer.WritePropertyName("reservedResourceProperties"u8);
-                writer.WriteObjectValue(ReservedResourceProperties);
+                writer.WriteObjectValue<PurchaseRequestPropertiesReservedResourceProperties>(ReservedResourceProperties, options);
             }
             if (Optional.IsDefined(ReviewOn))
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationPurchaseContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationPurchaseContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationPurchaseContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReservationPurchaseContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationPurchaseContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeReservationPurchaseContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReservationPurchaseContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationPurchaseContent)} does not support reading '{options.Format}' format.");
             }
         }
 

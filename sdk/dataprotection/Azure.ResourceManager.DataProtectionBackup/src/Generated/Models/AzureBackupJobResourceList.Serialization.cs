@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureBackupJobResourceList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureBackupJobResourceList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureBackupJobResourceList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataProtectionBackupJobData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureBackupJobResourceList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureBackupJobResourceList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureBackupJobResourceList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureBackupJobResourceList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureBackupJobResourceList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeAzureBackupJobResourceList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureBackupJobResourceList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureBackupJobResourceList)} does not support reading '{options.Format}' format.");
             }
         }
 

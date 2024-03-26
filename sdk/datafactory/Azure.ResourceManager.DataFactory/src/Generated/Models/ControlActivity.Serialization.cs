@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ControlActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ControlActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ControlActivity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivityDependency>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivityUserProperty>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ControlActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ControlActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ControlActivity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ControlActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ControlActivity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeControlActivity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ControlActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ControlActivity)} does not support reading '{options.Format}' format.");
             }
         }
 

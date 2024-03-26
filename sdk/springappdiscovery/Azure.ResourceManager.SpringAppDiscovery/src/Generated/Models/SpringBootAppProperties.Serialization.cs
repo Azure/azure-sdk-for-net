@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SpringBootAppProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ApplicationConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SpringBootAppApplicationConfigurationsItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Miscs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SpringBootAppMiscsItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Instances)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SpringBootAppInstancesItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SpringBootSiteError>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SpringBootAppProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                         return DeserializeSpringBootAppProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppAccountPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppAccountPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,14 +79,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStartArray();
                 foreach (var item in ActiveDirectories)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetAppAccountActiveDirectory>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<NetAppAccountEncryption>(Encryption, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DisableShowmount))
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppAccountPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppAccountPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppAccountPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppAccountPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetAppAccountPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppAccountPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppAccountPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

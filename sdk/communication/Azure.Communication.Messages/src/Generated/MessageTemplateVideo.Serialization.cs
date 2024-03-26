@@ -22,7 +22,7 @@ namespace Azure.Communication.Messages
             var format = options.Format == "W" ? ((IPersistableModel<MessageTemplateVideo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MessageTemplateVideo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MessageTemplateVideo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.Communication.Messages
             var format = options.Format == "W" ? ((IPersistableModel<MessageTemplateVideo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MessageTemplateVideo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MessageTemplateVideo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.Communication.Messages
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MessageTemplateVideo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MessageTemplateVideo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.Communication.Messages
                         return DeserializeMessageTemplateVideo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MessageTemplateVideo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MessageTemplateVideo)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.Communication.Messages
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<MessageTemplateVideo>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

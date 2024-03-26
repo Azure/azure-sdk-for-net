@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageBackupJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageBackupJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageBackupJob)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in ErrorDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StorageErrorInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo);
+                writer.WriteObjectValue<StorageBackupJobExtendedInfo>(ExtendedInfo, options);
             }
             if (Optional.IsDefined(IsUserTriggered))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageBackupJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageBackupJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageBackupJob)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageBackupJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageBackupJob)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeStorageBackupJob(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageBackupJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageBackupJob)} does not support reading '{options.Format}' format.");
             }
         }
 

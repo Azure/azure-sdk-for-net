@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VngClientConnectionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VngClientConnectionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VngClientConnectionConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(VpnClientAddressPool))
             {
                 writer.WritePropertyName("vpnClientAddressPool"u8);
-                writer.WriteObjectValue(VpnClientAddressPool);
+                writer.WriteObjectValue<AddressSpace>(VpnClientAddressPool, options);
             }
             if (Optional.IsCollectionDefined(VirtualNetworkGatewayPolicyGroups))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VngClientConnectionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VngClientConnectionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VngClientConnectionConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VngClientConnectionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VngClientConnectionConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeVngClientConnectionConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VngClientConnectionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VngClientConnectionConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesGitRepositoryUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesGitRepositoryUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesGitRepositoryUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (RepositoryRef != null)
                 {
                     writer.WritePropertyName("repositoryRef"u8);
-                    writer.WriteObjectValue(RepositoryRef);
+                    writer.WriteObjectValue<KubernetesGitRepositoryRef>(RepositoryRef, options);
                 }
                 else
                 {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesGitRepositoryUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesGitRepositoryUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesGitRepositoryUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesGitRepositoryUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesGitRepositoryUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         return DeserializeKubernetesGitRepositoryUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesGitRepositoryUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesGitRepositoryUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

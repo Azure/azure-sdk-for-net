@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterVaultTierRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesClusterVaultTierRestoreCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesClusterVaultTierRestoreCriteria)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in RestoreHookReferences)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NamespacedName>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterVaultTierRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesClusterVaultTierRestoreCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesClusterVaultTierRestoreCriteria)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterVaultTierRestoreCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesClusterVaultTierRestoreCriteria)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeKubernetesClusterVaultTierRestoreCriteria(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterVaultTierRestoreCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesClusterVaultTierRestoreCriteria)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeepCreatedOriginGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeepCreatedOriginGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeepCreatedOriginGroup)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (HealthProbeSettings != null)
                 {
                     writer.WritePropertyName("healthProbeSettings"u8);
-                    writer.WriteObjectValue(HealthProbeSettings);
+                    writer.WriteObjectValue<HealthProbeSettings>(HealthProbeSettings, options);
                 }
                 else
                 {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (ResponseBasedOriginErrorDetectionSettings != null)
                 {
                     writer.WritePropertyName("responseBasedOriginErrorDetectionSettings"u8);
-                    writer.WriteObjectValue(ResponseBasedOriginErrorDetectionSettings);
+                    writer.WriteObjectValue<ResponseBasedOriginErrorDetectionSettings>(ResponseBasedOriginErrorDetectionSettings, options);
                 }
                 else
                 {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeepCreatedOriginGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeepCreatedOriginGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeepCreatedOriginGroup)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeepCreatedOriginGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeepCreatedOriginGroup)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeDeepCreatedOriginGroup(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeepCreatedOriginGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeepCreatedOriginGroup)} does not support reading '{options.Format}' format.");
             }
         }
 

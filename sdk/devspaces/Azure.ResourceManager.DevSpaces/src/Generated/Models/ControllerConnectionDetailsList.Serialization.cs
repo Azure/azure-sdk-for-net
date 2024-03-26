@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             var format = options.Format == "W" ? ((IPersistableModel<ControllerConnectionDetailsList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ControllerConnectionDetailsList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ControllerConnectionDetailsList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 writer.WriteStartArray();
                 foreach (var item in ConnectionDetailsList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ControllerConnectionDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             var format = options.Format == "W" ? ((IPersistableModel<ControllerConnectionDetailsList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ControllerConnectionDetailsList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ControllerConnectionDetailsList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ControllerConnectionDetailsList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ControllerConnectionDetailsList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                         return DeserializeControllerConnectionDetailsList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ControllerConnectionDetailsList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ControllerConnectionDetailsList)} does not support reading '{options.Format}' format.");
             }
         }
 

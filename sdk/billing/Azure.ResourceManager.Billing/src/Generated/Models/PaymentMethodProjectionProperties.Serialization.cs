@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Billing.Models
             var format = options.Format == "W" ? ((IPersistableModel<PaymentMethodProjectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in Logos)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PaymentMethodLogo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Billing.Models
             var format = options.Format == "W" ? ((IPersistableModel<PaymentMethodProjectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Billing.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Billing.Models
                         return DeserializePaymentMethodProjectionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

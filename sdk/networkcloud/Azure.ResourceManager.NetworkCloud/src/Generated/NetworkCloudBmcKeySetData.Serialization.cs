@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.NetworkCloud
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudBmcKeySetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudBmcKeySetData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudBmcKeySetData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation);
+            writer.WriteObjectValue<ExtendedLocation>(ExtendedLocation, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartArray();
             foreach (var item in UserList)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<KeySetUser>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsCollectionDefined(UserListStatus))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in UserListStatus)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KeySetUserStatus>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.NetworkCloud
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudBmcKeySetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudBmcKeySetData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudBmcKeySetData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudBmcKeySetData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudBmcKeySetData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.NetworkCloud
                         return DeserializeNetworkCloudBmcKeySetData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudBmcKeySetData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudBmcKeySetData)} does not support reading '{options.Format}' format.");
             }
         }
 

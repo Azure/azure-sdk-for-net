@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<MabFileFolderProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MabFileFolderProtectedItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MabFileFolderProtectedItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo);
+                writer.WriteObjectValue<MabFileFolderProtectedItemExtendedInfo>(ExtendedInfo, options);
             }
             writer.WritePropertyName("protectedItemType"u8);
             writer.WriteStringValue(ProtectedItemType);
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<MabFileFolderProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MabFileFolderProtectedItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MabFileFolderProtectedItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MabFileFolderProtectedItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MabFileFolderProtectedItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeMabFileFolderProtectedItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MabFileFolderProtectedItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MabFileFolderProtectedItem)} does not support reading '{options.Format}' format.");
             }
         }
 

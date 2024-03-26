@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareDatastoreListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareDatastoreListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareDatastoreListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<VMwareDatastoreData>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareDatastoreListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareDatastoreListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareDatastoreListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareDatastoreListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareDatastoreListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                         return DeserializeVMwareDatastoreListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareDatastoreListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareDatastoreListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

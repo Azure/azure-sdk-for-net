@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DevTestLabs
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabCostData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabCostData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabCostData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(TargetCost))
             {
                 writer.WritePropertyName("targetCost"u8);
-                writer.WriteObjectValue(TargetCost);
+                writer.WriteObjectValue<DevTestLabTargetCost>(TargetCost, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LabCostSummary))
             {
                 writer.WritePropertyName("labCostSummary"u8);
-                writer.WriteObjectValue(LabCostSummary);
+                writer.WriteObjectValue<LabCostSummaryProperties>(LabCostSummary, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(LabCostDetails))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WriteStartArray();
                 foreach (var item in LabCostDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DevTestLabCostDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WriteStartArray();
                 foreach (var item in ResourceCosts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DevTestLabResourceCost>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DevTestLabs
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabCostData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabCostData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabCostData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabCostData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabCostData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.DevTestLabs
                         return DeserializeDevTestLabCostData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabCostData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabCostData)} does not support reading '{options.Format}' format.");
             }
         }
 

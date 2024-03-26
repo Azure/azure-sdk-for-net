@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.HealthcareApis
             var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareApisServiceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthcareApisServiceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<HealthcareApisServiceProperties>(Properties, options);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToSerialString());
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.HealthcareApis
             var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareApisServiceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthcareApisServiceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareApisServiceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthcareApisServiceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.HealthcareApis
                         return DeserializeHealthcareApisServiceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareApisServiceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthcareApisServiceData)} does not support reading '{options.Format}' format.");
             }
         }
 

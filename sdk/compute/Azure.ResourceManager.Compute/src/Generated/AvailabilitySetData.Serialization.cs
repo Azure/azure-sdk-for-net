@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<AvailabilitySetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailabilitySetData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailabilitySetData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<ComputeSku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InstanceViewStatus>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<AvailabilitySetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailabilitySetData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailabilitySetData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Compute
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvailabilitySetData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailabilitySetData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Compute
                         return DeserializeAvailabilitySetData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvailabilitySetData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailabilitySetData)} does not support reading '{options.Format}' format.");
             }
         }
 

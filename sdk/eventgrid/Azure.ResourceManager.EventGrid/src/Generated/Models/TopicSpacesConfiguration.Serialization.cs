@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<TopicSpacesConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TopicSpacesConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TopicSpacesConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(RoutingEnrichments))
             {
                 writer.WritePropertyName("routingEnrichments"u8);
-                writer.WriteObjectValue(RoutingEnrichments);
+                writer.WriteObjectValue<RoutingEnrichments>(RoutingEnrichments, options);
             }
             if (Optional.IsDefined(ClientAuthentication))
             {
                 writer.WritePropertyName("clientAuthentication"u8);
-                writer.WriteObjectValue(ClientAuthentication);
+                writer.WriteObjectValue<ClientAuthenticationSettings>(ClientAuthentication, options);
             }
             if (Optional.IsDefined(MaximumSessionExpiryInHours))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(RoutingIdentityInfo))
             {
                 writer.WritePropertyName("routingIdentityInfo"u8);
-                writer.WriteObjectValue(RoutingIdentityInfo);
+                writer.WriteObjectValue<RoutingIdentityInfo>(RoutingIdentityInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<TopicSpacesConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TopicSpacesConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TopicSpacesConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TopicSpacesConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TopicSpacesConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeTopicSpacesConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TopicSpacesConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TopicSpacesConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

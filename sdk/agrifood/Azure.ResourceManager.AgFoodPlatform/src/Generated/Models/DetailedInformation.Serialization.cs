@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<DetailedInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DetailedInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DetailedInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             if (Optional.IsDefined(UnitsSupported))
             {
                 writer.WritePropertyName("unitsSupported"u8);
-                writer.WriteObjectValue(UnitsSupported);
+                writer.WriteObjectValue<UnitSystemsInfo>(UnitsSupported, options);
             }
             if (Optional.IsCollectionDefined(ApiInputParameters))
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<DetailedInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DetailedInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DetailedInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DetailedInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DetailedInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                         return DeserializeDetailedInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DetailedInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DetailedInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

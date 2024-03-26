@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesPod>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesPod)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesPod)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PodEvent>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesPod>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesPod)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesPod)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesPod)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesPod)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeKubernetesPod(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesPod)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesPod)} does not support reading '{options.Format}' format.");
             }
         }
 

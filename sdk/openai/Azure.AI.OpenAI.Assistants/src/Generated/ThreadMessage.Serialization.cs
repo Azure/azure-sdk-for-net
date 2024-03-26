@@ -22,7 +22,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<ThreadMessage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThreadMessage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreadMessage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,7 +40,7 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStartArray();
             foreach (var item in ContentItems)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MessageContent>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(AssistantId))
@@ -98,7 +98,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<ThreadMessage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThreadMessage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreadMessage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -226,7 +226,7 @@ namespace Azure.AI.OpenAI.Assistants
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ThreadMessage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreadMessage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -242,7 +242,7 @@ namespace Azure.AI.OpenAI.Assistants
                         return DeserializeThreadMessage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ThreadMessage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreadMessage)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -260,7 +260,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ThreadMessage>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningBatchDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningBatchDeploymentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningBatchDeploymentProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (DeploymentConfiguration != null)
                 {
                     writer.WritePropertyName("deploymentConfiguration"u8);
-                    writer.WriteObjectValue(DeploymentConfiguration);
+                    writer.WriteObjectValue<BatchDeploymentConfiguration>(DeploymentConfiguration, options);
                 }
                 else
                 {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Model != null)
                 {
                     writer.WritePropertyName("model"u8);
-                    writer.WriteObjectValue(Model);
+                    writer.WriteObjectValue<MachineLearningAssetReferenceBase>(Model, options);
                 }
                 else
                 {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Resources != null)
                 {
                     writer.WritePropertyName("resources"u8);
-                    writer.WriteObjectValue(Resources);
+                    writer.WriteObjectValue<MachineLearningDeploymentResourceConfiguration>(Resources, options);
                 }
                 else
                 {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (RetrySettings != null)
                 {
                     writer.WritePropertyName("retrySettings"u8);
-                    writer.WriteObjectValue(RetrySettings);
+                    writer.WriteObjectValue<MachineLearningBatchRetrySettings>(RetrySettings, options);
                 }
                 else
                 {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (CodeConfiguration != null)
                 {
                     writer.WritePropertyName("codeConfiguration"u8);
-                    writer.WriteObjectValue(CodeConfiguration);
+                    writer.WriteObjectValue<MachineLearningCodeConfiguration>(CodeConfiguration, options);
                 }
                 else
                 {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningBatchDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningBatchDeploymentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningBatchDeploymentProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningBatchDeploymentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningBatchDeploymentProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningBatchDeploymentProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningBatchDeploymentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningBatchDeploymentProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

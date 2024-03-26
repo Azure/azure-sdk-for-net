@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<NetworkProfileData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkProfileData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkProfileData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ContainerNetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerNetworkInterface>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ContainerNetworkInterfaceConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerNetworkInterfaceConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<NetworkProfileData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkProfileData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkProfileData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkProfileData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkProfileData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeNetworkProfileData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkProfileData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkProfileData)} does not support reading '{options.Format}' format.");
             }
         }
 

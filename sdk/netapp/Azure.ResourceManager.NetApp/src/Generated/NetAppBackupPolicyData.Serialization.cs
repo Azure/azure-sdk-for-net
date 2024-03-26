@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.NetApp
             var format = options.Format == "W" ? ((IPersistableModel<NetAppBackupPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppBackupPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppBackupPolicyData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.NetApp
                 writer.WriteStartArray();
                 foreach (var item in VolumeBackups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetAppVolumeBackupDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.NetApp
             var format = options.Format == "W" ? ((IPersistableModel<NetAppBackupPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppBackupPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppBackupPolicyData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.NetApp
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppBackupPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppBackupPolicyData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.NetApp
                         return DeserializeNetAppBackupPolicyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppBackupPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppBackupPolicyData)} does not support reading '{options.Format}' format.");
             }
         }
 

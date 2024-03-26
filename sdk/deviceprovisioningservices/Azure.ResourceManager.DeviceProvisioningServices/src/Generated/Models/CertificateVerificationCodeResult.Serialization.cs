@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CertificateVerificationCodeResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CertificateVerificationCodeResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CertificateVerificationCodeResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<CertificateVerificationCodeProperties>(Properties, options);
             }
             if (options.Format != "W")
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CertificateVerificationCodeResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CertificateVerificationCodeResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CertificateVerificationCodeResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CertificateVerificationCodeResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CertificateVerificationCodeResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                         return DeserializeCertificateVerificationCodeResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CertificateVerificationCodeResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CertificateVerificationCodeResult)} does not support reading '{options.Format}' format.");
             }
         }
 

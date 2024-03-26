@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<CommonExportProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommonExportProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommonExportProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,13 +32,13 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStringValue(Format.Value.ToString());
             }
             writer.WritePropertyName("deliveryInfo"u8);
-            writer.WriteObjectValue(DeliveryInfo);
+            writer.WriteObjectValue<ExportDeliveryInfo>(DeliveryInfo, options);
             writer.WritePropertyName("definition"u8);
-            writer.WriteObjectValue(Definition);
+            writer.WriteObjectValue<ExportDefinition>(Definition, options);
             if (Optional.IsDefined(RunHistory))
             {
                 writer.WritePropertyName("runHistory"u8);
-                writer.WriteObjectValue(RunHistory);
+                writer.WriteObjectValue<ExportExecutionListResult>(RunHistory, options);
             }
             if (Optional.IsDefined(PartitionData))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<CommonExportProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommonExportProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommonExportProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CommonExportProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommonExportProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeCommonExportProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CommonExportProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommonExportProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

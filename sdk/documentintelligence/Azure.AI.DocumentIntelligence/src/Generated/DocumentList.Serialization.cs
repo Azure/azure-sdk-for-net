@@ -22,7 +22,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,14 +30,14 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartArray();
             foreach (var item in Spans)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DocumentSpan>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("items"u8);
             writer.WriteStartArray();
             foreach (var item in Items)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DocumentListItem>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -63,7 +63,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.AI.DocumentIntelligence
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.AI.DocumentIntelligence
                         return DeserializeDocumentList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentList)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -156,7 +156,7 @@ namespace Azure.AI.DocumentIntelligence
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<DocumentList>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

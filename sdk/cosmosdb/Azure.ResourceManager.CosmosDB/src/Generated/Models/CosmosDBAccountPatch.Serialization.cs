@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBAccountPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBAccountPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(ConsistencyPolicy))
             {
                 writer.WritePropertyName("consistencyPolicy"u8);
-                writer.WriteObjectValue(ConsistencyPolicy);
+                writer.WriteObjectValue<ConsistencyPolicy>(ConsistencyPolicy, options);
             }
             if (Optional.IsCollectionDefined(Locations))
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CosmosDBAccountLocation>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CosmosDBIPAddressOrRange>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CosmosDBAccountCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CosmosDBVirtualNetworkRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(ApiProperties))
             {
                 writer.WritePropertyName("apiProperties"u8);
-                writer.WriteObjectValue(ApiProperties);
+                writer.WriteObjectValue<ApiProperties>(ApiProperties, options);
             }
             if (Optional.IsDefined(IsAnalyticalStorageEnabled))
             {
@@ -159,12 +159,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(AnalyticalStorageConfiguration))
             {
                 writer.WritePropertyName("analyticalStorageConfiguration"u8);
-                writer.WriteObjectValue(AnalyticalStorageConfiguration);
+                writer.WriteObjectValue<AnalyticalStorageConfiguration>(AnalyticalStorageConfiguration, options);
             }
             if (Optional.IsDefined(BackupPolicy))
             {
                 writer.WritePropertyName("backupPolicy"u8);
-                writer.WriteObjectValue(BackupPolicy);
+                writer.WriteObjectValue<CosmosDBAccountBackupPolicy>(BackupPolicy, options);
             }
             if (Optional.IsCollectionDefined(Cors))
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Cors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CosmosDBAccountCorsPolicy>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(DiagnosticLogSettings))
             {
                 writer.WritePropertyName("diagnosticLogSettings"u8);
-                writer.WriteObjectValue(DiagnosticLogSettings);
+                writer.WriteObjectValue<DiagnosticLogSettings>(DiagnosticLogSettings, options);
             }
             if (Optional.IsDefined(DisableLocalAuth))
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity);
+                writer.WriteObjectValue<CosmosDBAccountCapacity>(Capacity, options);
             }
             if (Optional.IsDefined(EnableMaterializedViews))
             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (options.Format != "W" && Optional.IsDefined(KeysMetadata))
             {
                 writer.WritePropertyName("keysMetadata"u8);
-                writer.WriteObjectValue(KeysMetadata);
+                writer.WriteObjectValue<DatabaseAccountKeysMetadata>(KeysMetadata, options);
             }
             if (Optional.IsDefined(EnablePartitionMerge))
             {
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(CustomerManagedKeyStatus))
             {
                 writer.WritePropertyName("customerManagedKeyStatus"u8);
-                writer.WriteStringValue(CustomerManagedKeyStatus.Value.ToString());
+                writer.WriteStringValue(CustomerManagedKeyStatus);
             }
             if (Optional.IsDefined(EnablePriorityBasedExecution))
             {
@@ -250,6 +250,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("defaultPriorityLevel"u8);
                 writer.WriteStringValue(DefaultPriorityLevel.Value.ToString());
+            }
+            if (Optional.IsDefined(EnablePerRegionPerPartitionAutoscale))
+            {
+                writer.WritePropertyName("enablePerRegionPerPartitionAutoscale"u8);
+                writer.WriteBooleanValue(EnablePerRegionPerPartitionAutoscale.Value);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -275,7 +280,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBAccountPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBAccountPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -323,9 +328,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             bool? enablePartitionMerge = default;
             bool? enableBurstCapacity = default;
             CosmosDBMinimalTlsVersion? minimalTlsVersion = default;
-            CustomerManagedKeyStatus? customerManagedKeyStatus = default;
+            string customerManagedKeyStatus = default;
             bool? enablePriorityBasedExecution = default;
             DefaultPriorityLevel? defaultPriorityLevel = default;
+            bool? enablePerRegionPerPartitionAutoscale = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -677,11 +683,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         }
                         if (property0.NameEquals("customerManagedKeyStatus"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            customerManagedKeyStatus = new CustomerManagedKeyStatus(property0.Value.GetString());
+                            customerManagedKeyStatus = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("enablePriorityBasedExecution"u8))
@@ -700,6 +702,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                                 continue;
                             }
                             defaultPriorityLevel = new DefaultPriorityLevel(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("enablePerRegionPerPartitionAutoscale"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enablePerRegionPerPartitionAutoscale = property0.Value.GetBoolean();
                             continue;
                         }
                     }
@@ -748,6 +759,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 customerManagedKeyStatus,
                 enablePriorityBasedExecution,
                 defaultPriorityLevel,
+                enablePerRegionPerPartitionAutoscale,
                 serializedAdditionalRawData);
         }
 
@@ -760,7 +772,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBAccountPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBAccountPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -776,7 +788,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCosmosDBAccountPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBAccountPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBAccountPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

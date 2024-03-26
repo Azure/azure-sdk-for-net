@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedNetworkSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedNetworkSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in OutboundRules)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteObjectValue<MachineLearningOutboundRule>(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<ManagedNetworkProvisionStatus>(Status, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedNetworkSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedNetworkSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedNetworkSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedNetworkSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeManagedNetworkSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedNetworkSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedNetworkSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ModelPackageInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ModelPackageInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ModelPackageInput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("path"u8);
-            writer.WriteObjectValue(Path);
+            writer.WriteObjectValue<PackageInputPathBase>(Path, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ModelPackageInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ModelPackageInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ModelPackageInput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ModelPackageInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ModelPackageInput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeModelPackageInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ModelPackageInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ModelPackageInput)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<PreferencesValidationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PreferencesValidationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PreferencesValidationContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Preference))
             {
                 writer.WritePropertyName("preference"u8);
-                writer.WriteObjectValue(Preference);
+                writer.WriteObjectValue<DataBoxOrderPreferences>(Preference, options);
             }
             writer.WritePropertyName("deviceType"u8);
             writer.WriteStringValue(DeviceType.ToSerialString());
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<PreferencesValidationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PreferencesValidationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PreferencesValidationContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PreferencesValidationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PreferencesValidationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializePreferencesValidationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PreferencesValidationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PreferencesValidationContent)} does not support reading '{options.Format}' format.");
             }
         }
 

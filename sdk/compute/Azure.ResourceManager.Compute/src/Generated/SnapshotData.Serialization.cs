@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<SnapshotData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnapshotData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnapshotData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<SnapshotSku>(Sku, options);
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
@@ -97,17 +97,17 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(PurchasePlan))
             {
                 writer.WritePropertyName("purchasePlan"u8);
-                writer.WriteObjectValue(PurchasePlan);
+                writer.WriteObjectValue<DiskPurchasePlan>(PurchasePlan, options);
             }
             if (Optional.IsDefined(SupportedCapabilities))
             {
                 writer.WritePropertyName("supportedCapabilities"u8);
-                writer.WriteObjectValue(SupportedCapabilities);
+                writer.WriteObjectValue<SupportedCapabilities>(SupportedCapabilities, options);
             }
             if (Optional.IsDefined(CreationData))
             {
                 writer.WritePropertyName("creationData"u8);
-                writer.WriteObjectValue(CreationData);
+                writer.WriteObjectValue<DiskCreationData>(CreationData, options);
             }
             if (Optional.IsDefined(DiskSizeGB))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(EncryptionSettingsGroup))
             {
                 writer.WritePropertyName("encryptionSettingsCollection"u8);
-                writer.WriteObjectValue(EncryptionSettingsGroup);
+                writer.WriteObjectValue<EncryptionSettingsGroup>(EncryptionSettingsGroup, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<DiskEncryption>(Encryption, options);
             }
             if (Optional.IsDefined(NetworkAccessPolicy))
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                writer.WriteObjectValue<DiskSecurityProfile>(SecurityProfile, options);
             }
             if (Optional.IsDefined(SupportsHibernation))
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(CopyCompletionError))
             {
                 writer.WritePropertyName("copyCompletionError"u8);
-                writer.WriteObjectValue(CopyCompletionError);
+                writer.WriteObjectValue<CopyCompletionError>(CopyCompletionError, options);
             }
             if (Optional.IsDefined(DataAccessAuthMode))
             {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<SnapshotData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnapshotData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnapshotData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.Compute
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SnapshotData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnapshotData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.Compute
                         return DeserializeSnapshotData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SnapshotData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnapshotData)} does not support reading '{options.Format}' format.");
             }
         }
 

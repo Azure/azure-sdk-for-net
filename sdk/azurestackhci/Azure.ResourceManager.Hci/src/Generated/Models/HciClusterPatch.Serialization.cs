@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<HciClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciClusterPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HciClusterPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(DesiredProperties))
             {
                 writer.WritePropertyName("desiredProperties"u8);
-                writer.WriteObjectValue(DesiredProperties);
+                writer.WriteObjectValue<HciClusterDesiredProperties>(DesiredProperties, options);
             }
             writer.WriteEndObject();
             writer.WritePropertyName("identity"u8);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<HciClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciClusterPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HciClusterPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HciClusterPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciClusterPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeHciClusterPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HciClusterPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciClusterPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<OrcSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrcSink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OrcSink)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(StoreSettings))
             {
                 writer.WritePropertyName("storeSettings"u8);
-                writer.WriteObjectValue(StoreSettings);
+                writer.WriteObjectValue<StoreWriteSettings>(StoreSettings, options);
             }
             if (Optional.IsDefined(FormatSettings))
             {
                 writer.WritePropertyName("formatSettings"u8);
-                writer.WriteObjectValue(FormatSettings);
+                writer.WriteObjectValue<OrcWriteSettings>(FormatSettings, options);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySinkType);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<OrcSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrcSink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OrcSink)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OrcSink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OrcSink)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeOrcSink(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OrcSink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OrcSink)} does not support reading '{options.Format}' format.");
             }
         }
 

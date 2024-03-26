@@ -22,7 +22,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<InternalOpenAIPageableListOfAssistantFile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalOpenAIPageableListOfAssistantFile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InternalOpenAIPageableListOfAssistantFile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStartArray();
             foreach (var item in Data)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<AssistantFile>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("first_id"u8);
@@ -64,7 +64,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<InternalOpenAIPageableListOfAssistantFile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalOpenAIPageableListOfAssistantFile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InternalOpenAIPageableListOfAssistantFile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +142,7 @@ namespace Azure.AI.OpenAI.Assistants
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InternalOpenAIPageableListOfAssistantFile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InternalOpenAIPageableListOfAssistantFile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.AI.OpenAI.Assistants
                         return DeserializeInternalOpenAIPageableListOfAssistantFile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalOpenAIPageableListOfAssistantFile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InternalOpenAIPageableListOfAssistantFile)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -176,7 +176,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<InternalOpenAIPageableListOfAssistantFile>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

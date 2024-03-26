@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkPrivateLinkServiceConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkPrivateLinkServiceConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkPrivateLinkServiceConnection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState);
+                writer.WriteObjectValue<NetworkPrivateLinkServiceConnectionState>(ConnectionState, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkPrivateLinkServiceConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkPrivateLinkServiceConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkPrivateLinkServiceConnection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkPrivateLinkServiceConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkPrivateLinkServiceConnection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeNetworkPrivateLinkServiceConnection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkPrivateLinkServiceConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkPrivateLinkServiceConnection)} does not support reading '{options.Format}' format.");
             }
         }
 

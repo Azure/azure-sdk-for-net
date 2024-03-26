@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Confluent.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiKeySpecEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiKeySpecEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiKeySpecEntity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue(Resource);
+                writer.WriteObjectValue<ApiKeyResourceEntity>(Resource, options);
             }
             if (Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
-                writer.WriteObjectValue(Owner);
+                writer.WriteObjectValue<ApiKeyOwnerEntity>(Owner, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Confluent.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiKeySpecEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiKeySpecEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiKeySpecEntity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiKeySpecEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiKeySpecEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Confluent.Models
                         return DeserializeApiKeySpecEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiKeySpecEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiKeySpecEntity)} does not support reading '{options.Format}' format.");
             }
         }
 

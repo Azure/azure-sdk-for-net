@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeletedDataProtectionBackupInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeletedDataProtectionBackupInstanceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeletedDataProtectionBackupInstanceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(DeletionInfo))
             {
                 writer.WritePropertyName("deletionInfo"u8);
-                writer.WriteObjectValue(DeletionInfo);
+                writer.WriteObjectValue<BackupInstanceDeletionInfo>(DeletionInfo, options);
             }
             if (Optional.IsDefined(FriendlyName))
             {
@@ -37,18 +37,18 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStringValue(FriendlyName);
             }
             writer.WritePropertyName("dataSourceInfo"u8);
-            writer.WriteObjectValue(DataSourceInfo);
+            writer.WriteObjectValue<DataSourceInfo>(DataSourceInfo, options);
             if (Optional.IsDefined(DataSourceSetInfo))
             {
                 writer.WritePropertyName("dataSourceSetInfo"u8);
-                writer.WriteObjectValue(DataSourceSetInfo);
+                writer.WriteObjectValue<DataSourceSetInfo>(DataSourceSetInfo, options);
             }
             writer.WritePropertyName("policyInfo"u8);
-            writer.WriteObjectValue(PolicyInfo);
+            writer.WriteObjectValue<BackupInstancePolicyInfo>(PolicyInfo, options);
             if (options.Format != "W" && Optional.IsDefined(ProtectionStatus))
             {
                 writer.WritePropertyName("protectionStatus"u8);
-                writer.WriteObjectValue(ProtectionStatus);
+                writer.WriteObjectValue<BackupInstanceProtectionStatusDetails>(ProtectionStatus, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CurrentProtectionState))
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(DataSourceAuthCredentials))
             {
                 writer.WritePropertyName("datasourceAuthCredentials"u8);
-                writer.WriteObjectValue(DataSourceAuthCredentials);
+                writer.WriteObjectValue<DataProtectionBackupAuthCredentials>(DataSourceAuthCredentials, options);
             }
             if (Optional.IsDefined(ValidationType))
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(IdentityDetails))
             {
                 writer.WritePropertyName("identityDetails"u8);
-                writer.WriteObjectValue(IdentityDetails);
+                writer.WriteObjectValue<DataProtectionIdentityDetails>(IdentityDetails, options);
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeletedDataProtectionBackupInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeletedDataProtectionBackupInstanceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeletedDataProtectionBackupInstanceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeletedDataProtectionBackupInstanceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeletedDataProtectionBackupInstanceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeDeletedDataProtectionBackupInstanceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeletedDataProtectionBackupInstanceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeletedDataProtectionBackupInstanceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

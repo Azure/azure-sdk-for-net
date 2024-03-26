@@ -22,7 +22,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             var format = options.Format == "W" ? ((IPersistableModel<Encounter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Encounter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Encounter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Period))
             {
                 writer.WritePropertyName("period"u8);
-                writer.WriteObjectValue(Period);
+                writer.WriteObjectValue<TimePeriod>(Period, options);
             }
             if (Optional.IsDefined(Class))
             {
@@ -61,7 +61,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             var format = options.Format == "W" ? ((IPersistableModel<Encounter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Encounter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Encounter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Encounter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Encounter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                         return DeserializeEncounter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Encounter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Encounter)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<Encounter>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

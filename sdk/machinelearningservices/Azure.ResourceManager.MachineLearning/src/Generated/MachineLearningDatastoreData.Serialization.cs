@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.MachineLearning
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDatastoreData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningDatastoreData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningDatastoreData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            writer.WriteObjectValue<MachineLearningDatastoreProperties>(Properties, options);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDatastoreData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningDatastoreData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningDatastoreData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningDatastoreData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningDatastoreData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.MachineLearning
                         return DeserializeMachineLearningDatastoreData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningDatastoreData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningDatastoreData)} does not support reading '{options.Format}' format.");
             }
         }
 

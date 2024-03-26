@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<StepInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StepInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StepInput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             if (Optional.IsDefined(ResponseValidationProperties))
             {
                 writer.WritePropertyName("responseValidationProperties"u8);
-                writer.WriteObjectValue(ResponseValidationProperties);
+                writer.WriteObjectValue<ResponseValidationProperties>(ResponseValidationProperties, options);
             }
             if (Optional.IsCollectionDefined(ResponseOptions))
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in ResponseOptions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResponseConfig>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<StepInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StepInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StepInput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StepInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StepInput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         return DeserializeStepInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StepInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StepInput)} does not support reading '{options.Format}' format.");
             }
         }
 

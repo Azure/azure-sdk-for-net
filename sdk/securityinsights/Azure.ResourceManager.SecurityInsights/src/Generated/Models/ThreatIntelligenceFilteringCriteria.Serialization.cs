@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceFilteringCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThreatIntelligenceFilteringCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreatIntelligenceFilteringCriteria)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in SortBy)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ThreatIntelligenceSortingCriteria>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceFilteringCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThreatIntelligenceFilteringCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreatIntelligenceFilteringCriteria)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ThreatIntelligenceFilteringCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreatIntelligenceFilteringCriteria)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeThreatIntelligenceFilteringCriteria(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ThreatIntelligenceFilteringCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreatIntelligenceFilteringCriteria)} does not support reading '{options.Format}' format.");
             }
         }
 

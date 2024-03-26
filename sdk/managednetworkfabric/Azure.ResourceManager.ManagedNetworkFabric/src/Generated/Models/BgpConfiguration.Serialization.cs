@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<BgpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BgpConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BgpConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(BfdConfiguration))
             {
                 writer.WritePropertyName("bfdConfiguration"u8);
-                writer.WriteObjectValue(BfdConfiguration);
+                writer.WriteObjectValue<BfdConfiguration>(BfdConfiguration, options);
             }
             if (Optional.IsDefined(DefaultRouteOriginate))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in IPv4NeighborAddress)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NeighborAddress>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in IPv6NeighborAddress)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NeighborAddress>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<BgpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BgpConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BgpConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BgpConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BgpConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeBgpConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BgpConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BgpConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

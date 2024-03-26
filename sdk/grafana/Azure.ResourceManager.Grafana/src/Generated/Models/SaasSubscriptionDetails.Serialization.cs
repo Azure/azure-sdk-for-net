@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Grafana.Models
             var format = options.Format == "W" ? ((IPersistableModel<SaasSubscriptionDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SaasSubscriptionDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SaasSubscriptionDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Grafana.Models
             if (Optional.IsDefined(Term))
             {
                 writer.WritePropertyName("term"u8);
-                writer.WriteObjectValue(Term);
+                writer.WriteObjectValue<SubscriptionTerm>(Term, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Grafana.Models
             var format = options.Format == "W" ? ((IPersistableModel<SaasSubscriptionDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SaasSubscriptionDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SaasSubscriptionDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SaasSubscriptionDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SaasSubscriptionDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Grafana.Models
                         return DeserializeSaasSubscriptionDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SaasSubscriptionDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SaasSubscriptionDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

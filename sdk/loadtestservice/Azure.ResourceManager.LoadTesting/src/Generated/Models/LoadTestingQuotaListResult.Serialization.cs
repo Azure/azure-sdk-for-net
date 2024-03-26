@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadTestingQuotaListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadTestingQuotaListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadTestingQuotaListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LoadTestingQuotaData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadTestingQuotaListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadTestingQuotaListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadTestingQuotaListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LoadTestingQuotaListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadTestingQuotaListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                         return DeserializeLoadTestingQuotaListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LoadTestingQuotaListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadTestingQuotaListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

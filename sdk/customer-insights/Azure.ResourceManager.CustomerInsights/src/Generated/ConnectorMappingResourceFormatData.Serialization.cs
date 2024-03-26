@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CustomerInsights
             var format = options.Format == "W" ? ((IPersistableModel<ConnectorMappingResourceFormatData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectorMappingResourceFormatData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectorMappingResourceFormatData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.CustomerInsights
             if (Optional.IsDefined(MappingProperties))
             {
                 writer.WritePropertyName("mappingProperties"u8);
-                writer.WriteObjectValue(MappingProperties);
+                writer.WriteObjectValue<ConnectorMappingProperties>(MappingProperties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(NextRunOn))
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CustomerInsights
             var format = options.Format == "W" ? ((IPersistableModel<ConnectorMappingResourceFormatData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectorMappingResourceFormatData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectorMappingResourceFormatData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectorMappingResourceFormatData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectorMappingResourceFormatData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.CustomerInsights
                         return DeserializeConnectorMappingResourceFormatData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectorMappingResourceFormatData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectorMappingResourceFormatData)} does not support reading '{options.Format}' format.");
             }
         }
 

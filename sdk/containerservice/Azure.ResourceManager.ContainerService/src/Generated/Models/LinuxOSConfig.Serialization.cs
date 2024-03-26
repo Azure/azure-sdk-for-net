@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<LinuxOSConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinuxOSConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LinuxOSConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sysctls))
             {
                 writer.WritePropertyName("sysctls"u8);
-                writer.WriteObjectValue(Sysctls);
+                writer.WriteObjectValue<SysctlConfig>(Sysctls, options);
             }
             if (Optional.IsDefined(TransparentHugePageEnabled))
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<LinuxOSConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinuxOSConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LinuxOSConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LinuxOSConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinuxOSConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeLinuxOSConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LinuxOSConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinuxOSConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

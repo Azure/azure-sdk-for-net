@@ -70,10 +70,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The name for the function. </summary>
+        [WirePath("properties.functionName")]
         public string FunctionName { get; }
         /// <summary> The trigger type of the function. </summary>
+        [WirePath("properties.triggerType")]
         public FunctionTriggerType? TriggerType { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

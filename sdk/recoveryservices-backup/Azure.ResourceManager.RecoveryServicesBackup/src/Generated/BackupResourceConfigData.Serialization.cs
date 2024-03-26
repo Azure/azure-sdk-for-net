@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             var format = options.Format == "W" ? ((IPersistableModel<BackupResourceConfigData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupResourceConfigData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupResourceConfigData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<BackupResourceConfigProperties>(Properties, options);
             }
             if (Optional.IsDefined(ETag))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             var format = options.Format == "W" ? ((IPersistableModel<BackupResourceConfigData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupResourceConfigData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupResourceConfigData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupResourceConfigData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupResourceConfigData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                         return DeserializeBackupResourceConfigData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupResourceConfigData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupResourceConfigData)} does not support reading '{options.Format}' format.");
             }
         }
 

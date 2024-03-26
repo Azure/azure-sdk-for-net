@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.StreamAnalytics
             var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsPrivateEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamAnalyticsPrivateEndpointData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamAnalyticsPrivateEndpointData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<StreamAnalyticsPrivateEndpointProperties>(Properties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsPrivateEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamAnalyticsPrivateEndpointData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamAnalyticsPrivateEndpointData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamAnalyticsPrivateEndpointData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamAnalyticsPrivateEndpointData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                         return DeserializeStreamAnalyticsPrivateEndpointData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamAnalyticsPrivateEndpointData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamAnalyticsPrivateEndpointData)} does not support reading '{options.Format}' format.");
             }
         }
 

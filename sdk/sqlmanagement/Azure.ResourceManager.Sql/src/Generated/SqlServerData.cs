@@ -113,40 +113,58 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The Azure Active Directory identity of the server. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Kind of sql server. This is metadata used for the Azure portal experience. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
         /// <summary> Administrator username for the server. Once created it cannot be changed. </summary>
+        [WirePath("properties.administratorLogin")]
         public string AdministratorLogin { get; set; }
         /// <summary> The administrator login password (required for server creation). </summary>
+        [WirePath("properties.administratorLoginPassword")]
         public string AdministratorLoginPassword { get; set; }
         /// <summary> The version of the server. </summary>
+        [WirePath("properties.version")]
         public string Version { get; set; }
         /// <summary> The state of the server. </summary>
+        [WirePath("properties.state")]
         public string State { get; }
         /// <summary> The fully qualified domain name of the server. </summary>
+        [WirePath("properties.fullyQualifiedDomainName")]
         public string FullyQualifiedDomainName { get; }
         /// <summary> List of private endpoint connections on a server. </summary>
+        [WirePath("properties.privateEndpointConnections")]
         public IReadOnlyList<SqlServerPrivateEndpointConnection> PrivateEndpointConnections { get; }
         /// <summary> Minimal TLS version. Allowed values: 'None', 1.0', '1.1', '1.2', '1.3'. </summary>
+        [WirePath("properties.minimalTlsVersion")]
         public SqlMinimalTlsVersion? MinTlsVersion { get; set; }
         /// <summary> Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled' or 'SecuredByPerimeter'. </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public ServerNetworkAccessFlag? PublicNetworkAccess { get; set; }
         /// <summary> Whether or not existing server has a workspace created and if it allows connection from workspace. </summary>
+        [WirePath("properties.workspaceFeature")]
         public ServerWorkspaceFeature? WorkspaceFeature { get; }
         /// <summary> The resource id of a user assigned identity to be used by default. </summary>
+        [WirePath("properties.primaryUserAssignedIdentityId")]
         public ResourceIdentifier PrimaryUserAssignedIdentityId { get; set; }
         /// <summary> The Client id used for cross tenant CMK scenario. </summary>
+        [WirePath("properties.federatedClientId")]
         public Guid? FederatedClientId { get; set; }
         /// <summary> A CMK URI of the key to use for encryption. </summary>
+        [WirePath("properties.keyId")]
         public Uri KeyId { get; set; }
         /// <summary> The Azure Active Directory administrator of the server. This can only be used at server create time. If used for server update, it will be ignored or it will result in an error. For updates individual APIs will need to be used. </summary>
+        [WirePath("properties.administrators")]
         public ServerExternalAdministrator Administrators { get; set; }
         /// <summary> Whether or not to restrict outbound network access for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
+        [WirePath("properties.restrictOutboundNetworkAccess")]
         public ServerNetworkAccessFlag? RestrictOutboundNetworkAccess { get; set; }
         /// <summary> Whether or not to enable IPv6 support for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
+        [WirePath("properties.isIPv6Enabled")]
         public ServerNetworkAccessFlag? IsIPv6Enabled { get; set; }
         /// <summary> Status of external governance. </summary>
+        [WirePath("properties.externalGovernanceStatus")]
         public ExternalGovernanceStatus? ExternalGovernanceStatus { get; }
     }
 }

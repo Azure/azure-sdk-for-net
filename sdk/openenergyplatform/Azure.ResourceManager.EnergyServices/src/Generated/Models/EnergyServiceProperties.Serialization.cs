@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<EnergyServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnergyServiceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EnergyServiceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 writer.WriteStartArray();
                 foreach (var item in DataPartitionNames)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataPartitionName>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<EnergyServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnergyServiceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EnergyServiceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EnergyServiceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnergyServiceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                         return DeserializeEnergyServiceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EnergyServiceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnergyServiceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

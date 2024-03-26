@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<CloudServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudServiceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudServiceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -106,22 +106,22 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(RoleProfile))
             {
                 writer.WritePropertyName("roleProfile"u8);
-                writer.WriteObjectValue(RoleProfile);
+                writer.WriteObjectValue<CloudServiceRoleProfile>(RoleProfile, options);
             }
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile);
+                writer.WriteObjectValue<CloudServiceOSProfile>(OSProfile, options);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue<CloudServiceNetworkProfile>(NetworkProfile, options);
             }
             if (Optional.IsDefined(ExtensionProfile))
             {
                 writer.WritePropertyName("extensionProfile"u8);
-                writer.WriteObjectValue(ExtensionProfile);
+                writer.WriteObjectValue<CloudServiceExtensionProfile>(ExtensionProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<CloudServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudServiceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudServiceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Compute
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CloudServiceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudServiceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Compute
                         return DeserializeCloudServiceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloudServiceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudServiceData)} does not support reading '{options.Format}' format.");
             }
         }
 

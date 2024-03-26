@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ElasticPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticPoolPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticPoolPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<SqlSku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(PerDatabaseSettings))
             {
                 writer.WritePropertyName("perDatabaseSettings"u8);
-                writer.WriteObjectValue(PerDatabaseSettings);
+                writer.WriteObjectValue<ElasticPoolPerDatabaseSettings>(PerDatabaseSettings, options);
             }
             if (Optional.IsDefined(IsZoneRedundant))
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ElasticPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticPoolPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticPoolPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ElasticPoolPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticPoolPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeElasticPoolPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ElasticPoolPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticPoolPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeGroupVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppVolumeGroupVolume)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeGroupVolume)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(ExportPolicy))
             {
                 writer.WritePropertyName("exportPolicy"u8);
-                writer.WriteObjectValue(ExportPolicy);
+                writer.WriteObjectValue<VolumePropertiesExportPolicy>(ExportPolicy, options);
             }
             if (Optional.IsCollectionDefined(ProtocolTypes))
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStartArray();
                 foreach (var item in MountTargets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetAppVolumeMountTarget>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(DataProtection))
             {
                 writer.WritePropertyName("dataProtection"u8);
-                writer.WriteObjectValue(DataProtection);
+                writer.WriteObjectValue<NetAppVolumeDataProtection>(DataProtection, options);
             }
             if (Optional.IsDefined(IsRestoring))
             {
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStartArray();
                 foreach (var item in PlacementRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetAppVolumePlacementRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeGroupVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppVolumeGroupVolume)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeGroupVolume)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -1134,7 +1134,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeGroupVolume)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeGroupVolume)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -1150,7 +1150,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetAppVolumeGroupVolume(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeGroupVolume)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeGroupVolume)} does not support reading '{options.Format}' format.");
             }
         }
 

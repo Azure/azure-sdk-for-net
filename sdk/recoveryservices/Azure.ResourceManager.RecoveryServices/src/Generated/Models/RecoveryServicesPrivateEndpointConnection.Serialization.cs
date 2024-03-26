@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryServicesPrivateEndpointConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryServicesPrivateEndpointConnection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (options.Format != "W" && Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState);
+                writer.WriteObjectValue<RecoveryServicesPrivateLinkServiceConnectionState>(PrivateLinkServiceConnectionState, options);
             }
             if (Optional.IsCollectionDefined(GroupIds))
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryServicesPrivateEndpointConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryServicesPrivateEndpointConnection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryServicesPrivateEndpointConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryServicesPrivateEndpointConnection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         return DeserializeRecoveryServicesPrivateEndpointConnection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryServicesPrivateEndpointConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryServicesPrivateEndpointConnection)} does not support reading '{options.Format}' format.");
             }
         }
 

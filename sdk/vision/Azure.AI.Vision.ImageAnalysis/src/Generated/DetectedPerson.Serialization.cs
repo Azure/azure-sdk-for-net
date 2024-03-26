@@ -22,14 +22,14 @@ namespace Azure.AI.Vision.ImageAnalysis
             var format = options.Format == "W" ? ((IPersistableModel<DetectedPerson>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DetectedPerson)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DetectedPerson)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (options.Format != "W")
             {
                 writer.WritePropertyName("boundingBox"u8);
-                writer.WriteObjectValue(BoundingBox);
+                writer.WriteObjectValue<ImageBoundingBox>(BoundingBox, options);
             }
             if (options.Format != "W")
             {
@@ -59,7 +59,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             var format = options.Format == "W" ? ((IPersistableModel<DetectedPerson>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DetectedPerson)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DetectedPerson)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DetectedPerson)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DetectedPerson)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                         return DeserializeDetectedPerson(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DetectedPerson)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DetectedPerson)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<DetectedPerson>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefenderForDatabasesGcpOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderForDatabasesGcpOffering)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderForDatabasesGcpOffering)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ArcAutoProvisioning))
             {
                 writer.WritePropertyName("arcAutoProvisioning"u8);
-                writer.WriteObjectValue(ArcAutoProvisioning);
+                writer.WriteObjectValue<DefenderForDatabasesGcpOfferingArcAutoProvisioning>(ArcAutoProvisioning, options);
             }
             if (Optional.IsDefined(DefenderForDatabasesArcAutoProvisioning))
             {
                 writer.WritePropertyName("defenderForDatabasesArcAutoProvisioning"u8);
-                writer.WriteObjectValue(DefenderForDatabasesArcAutoProvisioning);
+                writer.WriteObjectValue<GcpDefenderForDatabasesArcAutoProvisioning>(DefenderForDatabasesArcAutoProvisioning, options);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefenderForDatabasesGcpOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderForDatabasesGcpOffering)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderForDatabasesGcpOffering)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DefenderForDatabasesGcpOffering)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderForDatabasesGcpOffering)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeDefenderForDatabasesGcpOffering(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DefenderForDatabasesGcpOffering)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderForDatabasesGcpOffering)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterUpgradePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterUpgradePolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             if (Optional.IsDefined(HealthPolicy))
             {
                 writer.WritePropertyName("healthPolicy"u8);
-                writer.WriteObjectValue(HealthPolicy);
+                writer.WriteObjectValue<ManagedClusterHealthPolicy>(HealthPolicy, options);
             }
             if (Optional.IsDefined(DeltaHealthPolicy))
             {
                 writer.WritePropertyName("deltaHealthPolicy"u8);
-                writer.WriteObjectValue(DeltaHealthPolicy);
+                writer.WriteObjectValue<ManagedClusterUpgradeDeltaHealthPolicy>(DeltaHealthPolicy, options);
             }
             if (Optional.IsDefined(MonitoringPolicy))
             {
                 writer.WritePropertyName("monitoringPolicy"u8);
-                writer.WriteObjectValue(MonitoringPolicy);
+                writer.WriteObjectValue<ManagedClusterMonitoringPolicy>(MonitoringPolicy, options);
             }
             if (Optional.IsDefined(UpgradeReplicaSetCheckTimeout))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterUpgradePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterUpgradePolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterUpgradePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterUpgradePolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         return DeserializeManagedClusterUpgradePolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterUpgradePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterUpgradePolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

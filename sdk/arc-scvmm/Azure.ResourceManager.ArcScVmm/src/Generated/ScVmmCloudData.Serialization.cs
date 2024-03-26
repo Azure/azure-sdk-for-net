@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ArcScVmm
             var format = options.Format == "W" ? ((IPersistableModel<ScVmmCloudData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScVmmCloudData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScVmmCloudData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ArcScVmm
             if (options.Format != "W" && Optional.IsDefined(CloudCapacity))
             {
                 writer.WritePropertyName("cloudCapacity"u8);
-                writer.WriteObjectValue(CloudCapacity);
+                writer.WriteObjectValue<CloudCapacity>(CloudCapacity, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(StorageQoSPolicies))
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ArcScVmm
                 writer.WriteStartArray();
                 foreach (var item in StorageQoSPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StorageQoSPolicy>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ArcScVmm
             var format = options.Format == "W" ? ((IPersistableModel<ScVmmCloudData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScVmmCloudData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScVmmCloudData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.ArcScVmm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScVmmCloudData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScVmmCloudData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.ArcScVmm
                         return DeserializeScVmmCloudData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScVmmCloudData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScVmmCloudData)} does not support reading '{options.Format}' format.");
             }
         }
 

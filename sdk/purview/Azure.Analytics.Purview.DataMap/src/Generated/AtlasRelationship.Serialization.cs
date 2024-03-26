@@ -22,7 +22,7 @@ namespace Azure.Analytics.Purview.DataMap
             var format = options.Format == "W" ? ((IPersistableModel<AtlasRelationship>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AtlasRelationship)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AtlasRelationship)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,12 +72,12 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(End1))
             {
                 writer.WritePropertyName("end1"u8);
-                writer.WriteObjectValue(End1);
+                writer.WriteObjectValue<AtlasObjectId>(End1, options);
             }
             if (Optional.IsDefined(End2))
             {
                 writer.WritePropertyName("end2"u8);
-                writer.WriteObjectValue(End2);
+                writer.WriteObjectValue<AtlasObjectId>(End2, options);
             }
             if (Optional.IsDefined(Guid))
             {
@@ -142,7 +142,7 @@ namespace Azure.Analytics.Purview.DataMap
             var format = options.Format == "W" ? ((IPersistableModel<AtlasRelationship>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AtlasRelationship)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AtlasRelationship)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -329,7 +329,7 @@ namespace Azure.Analytics.Purview.DataMap
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AtlasRelationship)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AtlasRelationship)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -345,7 +345,7 @@ namespace Azure.Analytics.Purview.DataMap
                         return DeserializeAtlasRelationship(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AtlasRelationship)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AtlasRelationship)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -363,7 +363,7 @@ namespace Azure.Analytics.Purview.DataMap
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AtlasRelationship>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

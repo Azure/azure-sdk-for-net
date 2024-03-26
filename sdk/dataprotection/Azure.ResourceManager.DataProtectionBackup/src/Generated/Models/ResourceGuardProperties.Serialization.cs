@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceGuardProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceGuardProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceGuardProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceGuardOperations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceGuardOperationDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceGuardProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceGuardProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceGuardProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceGuardProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceGuardProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeResourceGuardProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceGuardProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceGuardProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

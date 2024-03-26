@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Automation
             var format = options.Format == "W" ? ((IPersistableModel<AutomationConnectionTypeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationConnectionTypeData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationConnectionTypeData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Automation
                 foreach (var item in FieldDefinitions)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<AutomationConnectionFieldDefinition>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Automation
             var format = options.Format == "W" ? ((IPersistableModel<AutomationConnectionTypeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationConnectionTypeData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationConnectionTypeData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Automation
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationConnectionTypeData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationConnectionTypeData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Automation
                         return DeserializeAutomationConnectionTypeData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationConnectionTypeData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationConnectionTypeData)} does not support reading '{options.Format}' format.");
             }
         }
 

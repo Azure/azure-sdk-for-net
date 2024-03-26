@@ -22,7 +22,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<PineconeFieldMappingOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PineconeFieldMappingOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PineconeFieldMappingOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -76,7 +76,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<PineconeFieldMappingOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PineconeFieldMappingOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PineconeFieldMappingOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -154,7 +154,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PineconeFieldMappingOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PineconeFieldMappingOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -170,7 +170,7 @@ namespace Azure.AI.OpenAI
                         return DeserializePineconeFieldMappingOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PineconeFieldMappingOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PineconeFieldMappingOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -188,7 +188,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<PineconeFieldMappingOptions>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

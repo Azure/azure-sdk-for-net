@@ -22,7 +22,7 @@ namespace Azure.Communication.JobRouter
             var format = options.Format == "W" ? ((IPersistableModel<WeightedAllocationWorkerSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WeightedAllocationWorkerSelectorAttachment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WeightedAllocationWorkerSelectorAttachment)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.Communication.JobRouter
             writer.WriteStartArray();
             foreach (var item in Allocations)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<WorkerWeightedAllocation>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("kind"u8);
@@ -58,7 +58,7 @@ namespace Azure.Communication.JobRouter
             var format = options.Format == "W" ? ((IPersistableModel<WeightedAllocationWorkerSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WeightedAllocationWorkerSelectorAttachment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WeightedAllocationWorkerSelectorAttachment)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.Communication.JobRouter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WeightedAllocationWorkerSelectorAttachment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WeightedAllocationWorkerSelectorAttachment)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.Communication.JobRouter
                         return DeserializeWeightedAllocationWorkerSelectorAttachment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WeightedAllocationWorkerSelectorAttachment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WeightedAllocationWorkerSelectorAttachment)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.Communication.JobRouter
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<WeightedAllocationWorkerSelectorAttachment>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

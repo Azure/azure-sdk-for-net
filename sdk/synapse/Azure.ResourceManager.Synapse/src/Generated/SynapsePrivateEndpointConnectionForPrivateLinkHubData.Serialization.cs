@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.Synapse
             var format = options.Format == "W" ? ((IPersistableModel<SynapsePrivateEndpointConnectionForPrivateLinkHubData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapsePrivateEndpointConnectionForPrivateLinkHubData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapsePrivateEndpointConnectionForPrivateLinkHubData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<SynapsePrivateEndpointConnectionProperties>(Properties, options);
             }
             if (options.Format != "W")
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Synapse
             var format = options.Format == "W" ? ((IPersistableModel<SynapsePrivateEndpointConnectionForPrivateLinkHubData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapsePrivateEndpointConnectionForPrivateLinkHubData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapsePrivateEndpointConnectionForPrivateLinkHubData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Synapse
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapsePrivateEndpointConnectionForPrivateLinkHubData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapsePrivateEndpointConnectionForPrivateLinkHubData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Synapse
                         return DeserializeSynapsePrivateEndpointConnectionForPrivateLinkHubData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapsePrivateEndpointConnectionForPrivateLinkHubData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapsePrivateEndpointConnectionForPrivateLinkHubData)} does not support reading '{options.Format}' format.");
             }
         }
 

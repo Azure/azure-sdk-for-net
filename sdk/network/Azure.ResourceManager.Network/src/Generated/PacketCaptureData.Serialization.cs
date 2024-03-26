@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<PacketCaptureData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PacketCaptureData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PacketCaptureData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteObjectValue(Scope);
+                writer.WriteObjectValue<PacketCaptureMachineScope>(Scope, options);
             }
             if (Optional.IsDefined(TargetType))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(StorageLocation))
             {
                 writer.WritePropertyName("storageLocation"u8);
-                writer.WriteObjectValue(StorageLocation);
+                writer.WriteObjectValue<PacketCaptureStorageLocation>(StorageLocation, options);
             }
             if (Optional.IsCollectionDefined(Filters))
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Filters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PacketCaptureFilter>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<PacketCaptureData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PacketCaptureData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PacketCaptureData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PacketCaptureData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PacketCaptureData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializePacketCaptureData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PacketCaptureData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PacketCaptureData)} does not support reading '{options.Format}' format.");
             }
         }
 

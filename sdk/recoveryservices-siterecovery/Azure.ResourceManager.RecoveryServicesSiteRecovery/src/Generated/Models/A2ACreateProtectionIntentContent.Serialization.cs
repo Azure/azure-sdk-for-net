@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2ACreateProtectionIntentContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2ACreateProtectionIntentContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2ACreateProtectionIntentContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,29 +39,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(ProtectionProfileCustomContent))
             {
                 writer.WritePropertyName("protectionProfileCustomInput"u8);
-                writer.WriteObjectValue(ProtectionProfileCustomContent);
+                writer.WriteObjectValue<ProtectionProfileCustomDetails>(ProtectionProfileCustomContent, options);
             }
             writer.WritePropertyName("recoveryResourceGroupId"u8);
             writer.WriteStringValue(RecoveryResourceGroupId);
             if (Optional.IsDefined(PrimaryStagingStorageAccountCustomContent))
             {
                 writer.WritePropertyName("primaryStagingStorageAccountCustomInput"u8);
-                writer.WriteObjectValue(PrimaryStagingStorageAccountCustomContent);
+                writer.WriteObjectValue<StorageAccountCustomDetails>(PrimaryStagingStorageAccountCustomContent, options);
             }
             if (Optional.IsDefined(RecoveryAvailabilitySetCustomContent))
             {
                 writer.WritePropertyName("recoveryAvailabilitySetCustomInput"u8);
-                writer.WriteObjectValue(RecoveryAvailabilitySetCustomContent);
+                writer.WriteObjectValue<RecoveryAvailabilitySetCustomDetails>(RecoveryAvailabilitySetCustomContent, options);
             }
             if (Optional.IsDefined(RecoveryVirtualNetworkCustomContent))
             {
                 writer.WritePropertyName("recoveryVirtualNetworkCustomInput"u8);
-                writer.WriteObjectValue(RecoveryVirtualNetworkCustomContent);
+                writer.WriteObjectValue<RecoveryVirtualNetworkCustomDetails>(RecoveryVirtualNetworkCustomContent, options);
             }
             if (Optional.IsDefined(RecoveryProximityPlacementGroupCustomContent))
             {
                 writer.WritePropertyName("recoveryProximityPlacementGroupCustomInput"u8);
-                writer.WriteObjectValue(RecoveryProximityPlacementGroupCustomContent);
+                writer.WriteObjectValue<RecoveryProximityPlacementGroupCustomDetails>(RecoveryProximityPlacementGroupCustomContent, options);
             }
             if (Optional.IsDefined(AutoProtectionOfDataDisk))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<A2AProtectionIntentDiskDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmManagedDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<A2AProtectionIntentManagedDiskDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -101,12 +101,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(RecoveryBootDiagStorageAccount))
             {
                 writer.WritePropertyName("recoveryBootDiagStorageAccount"u8);
-                writer.WriteObjectValue(RecoveryBootDiagStorageAccount);
+                writer.WriteObjectValue<StorageAccountCustomDetails>(RecoveryBootDiagStorageAccount, options);
             }
             if (Optional.IsDefined(DiskEncryptionInfo))
             {
                 writer.WritePropertyName("diskEncryptionInfo"u8);
-                writer.WriteObjectValue(DiskEncryptionInfo);
+                writer.WriteObjectValue<SiteRecoveryDiskEncryptionInfo>(DiskEncryptionInfo, options);
             }
             if (Optional.IsDefined(RecoveryAvailabilityZone))
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2ACreateProtectionIntentContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2ACreateProtectionIntentContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2ACreateProtectionIntentContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(A2ACreateProtectionIntentContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2ACreateProtectionIntentContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeA2ACreateProtectionIntentContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(A2ACreateProtectionIntentContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2ACreateProtectionIntentContent)} does not support reading '{options.Format}' format.");
             }
         }
 

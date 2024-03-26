@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.Relay
             var format = options.Format == "W" ? ((IPersistableModel<RelayNamespaceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelayNamespaceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RelayNamespaceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<RelaySku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Relay
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RelayPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Relay
             var format = options.Format == "W" ? ((IPersistableModel<RelayNamespaceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelayNamespaceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RelayNamespaceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Relay
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RelayNamespaceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RelayNamespaceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Relay
                         return DeserializeRelayNamespaceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RelayNamespaceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RelayNamespaceData)} does not support reading '{options.Format}' format.");
             }
         }
 

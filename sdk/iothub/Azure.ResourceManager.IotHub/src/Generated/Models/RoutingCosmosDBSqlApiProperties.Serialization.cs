@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoutingCosmosDBSqlApiProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingCosmosDBSqlApiProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingCosmosDBSqlApiProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue<ManagedIdentity>(Identity, options);
             }
             if (Optional.IsDefined(PrimaryKey))
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoutingCosmosDBSqlApiProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingCosmosDBSqlApiProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingCosmosDBSqlApiProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RoutingCosmosDBSqlApiProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingCosmosDBSqlApiProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeRoutingCosmosDBSqlApiProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoutingCosmosDBSqlApiProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingCosmosDBSqlApiProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkbookTemplatePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkbookTemplatePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkbookTemplatePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Galleries)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WorkbookTemplateGallery>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     writer.WriteStartArray();
                     foreach (var item0 in item.Value)
                     {
-                        writer.WriteObjectValue(item0);
+                        writer.WriteObjectValue<WorkbookTemplateLocalizedGallery>(item0, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkbookTemplatePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkbookTemplatePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkbookTemplatePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WorkbookTemplatePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkbookTemplatePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                         return DeserializeWorkbookTemplatePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkbookTemplatePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkbookTemplatePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

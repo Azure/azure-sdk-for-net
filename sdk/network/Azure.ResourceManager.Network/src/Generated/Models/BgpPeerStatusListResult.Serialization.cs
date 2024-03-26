@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<BgpPeerStatusListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BgpPeerStatusListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BgpPeerStatusListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BgpPeerStatus>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<BgpPeerStatusListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BgpPeerStatusListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BgpPeerStatusListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BgpPeerStatusListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BgpPeerStatusListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeBgpPeerStatusListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BgpPeerStatusListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BgpPeerStatusListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

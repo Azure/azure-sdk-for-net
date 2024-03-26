@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -24,7 +26,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<RecommendedActionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecommendedActionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecommendedActionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -78,7 +80,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
-                writer.WriteObjectValue(State);
+                writer.WriteObjectValue<RecommendedActionStateInfo>(State, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsExecutableAction))
             {
@@ -143,12 +145,12 @@ namespace Azure.ResourceManager.Sql
             if (options.Format != "W" && Optional.IsDefined(ImplementationDetails))
             {
                 writer.WritePropertyName("implementationDetails"u8);
-                writer.WriteObjectValue(ImplementationDetails);
+                writer.WriteObjectValue<RecommendedActionImplementationInfo>(ImplementationDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
-                writer.WriteObjectValue(ErrorDetails);
+                writer.WriteObjectValue<RecommendedActionErrorInfo>(ErrorDetails, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(EstimatedImpact))
             {
@@ -156,7 +158,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in EstimatedImpact)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RecommendedActionImpactRecord>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -166,7 +168,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in ObservedImpact)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RecommendedActionImpactRecord>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -176,7 +178,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in TimeSeries)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RecommendedActionMetricInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -237,7 +239,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<RecommendedActionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecommendedActionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecommendedActionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -609,6 +611,510 @@ namespace Azure.ResourceManager.Sql
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
+            if (Optional.IsDefined(Location) || hasPropertyOverride)
+            {
+                builder.Append("  location: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Location.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (Optional.IsDefined(Kind) || hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Kind}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RecommendationReason), out propertyOverride);
+            if (Optional.IsDefined(RecommendationReason) || hasPropertyOverride)
+            {
+                builder.Append("    recommendationReason: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (RecommendationReason.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RecommendationReason}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RecommendationReason}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidSince), out propertyOverride);
+            if (Optional.IsDefined(ValidSince) || hasPropertyOverride)
+            {
+                builder.Append("    validSince: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(ValidSince.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastRefresh), out propertyOverride);
+            if (Optional.IsDefined(LastRefresh) || hasPropertyOverride)
+            {
+                builder.Append("    lastRefresh: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(LastRefresh.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
+            if (Optional.IsDefined(State) || hasPropertyOverride)
+            {
+                builder.Append("    state: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, State, options, 4, false, "    state: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsExecutableAction), out propertyOverride);
+            if (Optional.IsDefined(IsExecutableAction) || hasPropertyOverride)
+            {
+                builder.Append("    isExecutableAction: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsExecutableAction.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRevertableAction), out propertyOverride);
+            if (Optional.IsDefined(IsRevertableAction) || hasPropertyOverride)
+            {
+                builder.Append("    isRevertableAction: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsRevertableAction.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsArchivedAction), out propertyOverride);
+            if (Optional.IsDefined(IsArchivedAction) || hasPropertyOverride)
+            {
+                builder.Append("    isArchivedAction: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsArchivedAction.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExecuteActionStartOn), out propertyOverride);
+            if (Optional.IsDefined(ExecuteActionStartOn) || hasPropertyOverride)
+            {
+                builder.Append("    executeActionStartTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(ExecuteActionStartOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExecuteActionDuration), out propertyOverride);
+            if (Optional.IsDefined(ExecuteActionDuration) || hasPropertyOverride)
+            {
+                builder.Append("    executeActionDuration: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedTimeSpan = TypeFormatters.ToString(ExecuteActionDuration.Value, "P");
+                    builder.AppendLine($"'{formattedTimeSpan}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RevertActionStartOn), out propertyOverride);
+            if (Optional.IsDefined(RevertActionStartOn) || hasPropertyOverride)
+            {
+                builder.Append("    revertActionStartTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(RevertActionStartOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RevertActionDuration), out propertyOverride);
+            if (Optional.IsDefined(RevertActionDuration) || hasPropertyOverride)
+            {
+                builder.Append("    revertActionDuration: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedTimeSpan = TypeFormatters.ToString(RevertActionDuration.Value, "P");
+                    builder.AppendLine($"'{formattedTimeSpan}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExecuteActionInitiatedBy), out propertyOverride);
+            if (Optional.IsDefined(ExecuteActionInitiatedBy) || hasPropertyOverride)
+            {
+                builder.Append("    executeActionInitiatedBy: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ExecuteActionInitiatedBy.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExecuteActionInitiatedOn), out propertyOverride);
+            if (Optional.IsDefined(ExecuteActionInitiatedOn) || hasPropertyOverride)
+            {
+                builder.Append("    executeActionInitiatedTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(ExecuteActionInitiatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RevertActionInitiatedBy), out propertyOverride);
+            if (Optional.IsDefined(RevertActionInitiatedBy) || hasPropertyOverride)
+            {
+                builder.Append("    revertActionInitiatedBy: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{RevertActionInitiatedBy.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RevertActionInitiatedOn), out propertyOverride);
+            if (Optional.IsDefined(RevertActionInitiatedOn) || hasPropertyOverride)
+            {
+                builder.Append("    revertActionInitiatedTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(RevertActionInitiatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Score), out propertyOverride);
+            if (Optional.IsDefined(Score) || hasPropertyOverride)
+            {
+                builder.Append("    score: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{Score.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ImplementationDetails), out propertyOverride);
+            if (Optional.IsDefined(ImplementationDetails) || hasPropertyOverride)
+            {
+                builder.Append("    implementationDetails: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, ImplementationDetails, options, 4, false, "    implementationDetails: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorDetails), out propertyOverride);
+            if (Optional.IsDefined(ErrorDetails) || hasPropertyOverride)
+            {
+                builder.Append("    errorDetails: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, ErrorDetails, options, 4, false, "    errorDetails: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EstimatedImpact), out propertyOverride);
+            if (Optional.IsCollectionDefined(EstimatedImpact) || hasPropertyOverride)
+            {
+                if (EstimatedImpact.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    estimatedImpact: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in EstimatedImpact)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    estimatedImpact: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ObservedImpact), out propertyOverride);
+            if (Optional.IsCollectionDefined(ObservedImpact) || hasPropertyOverride)
+            {
+                if (ObservedImpact.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    observedImpact: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in ObservedImpact)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    observedImpact: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeSeries), out propertyOverride);
+            if (Optional.IsCollectionDefined(TimeSeries) || hasPropertyOverride)
+            {
+                if (TimeSeries.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    timeSeries: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in TimeSeries)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    timeSeries: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkedObjects), out propertyOverride);
+            if (Optional.IsCollectionDefined(LinkedObjects) || hasPropertyOverride)
+            {
+                if (LinkedObjects.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    linkedObjects: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in LinkedObjects)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Details), out propertyOverride);
+            if (Optional.IsCollectionDefined(Details) || hasPropertyOverride)
+            {
+                if (Details.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    details: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("{");
+                        foreach (var item in Details)
+                        {
+                            builder.Append($"        '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($"'{item.Value.ToString()}'");
+                        }
+                        builder.AppendLine("    }");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<RecommendedActionData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RecommendedActionData>)this).GetFormatFromOptions(options) : options.Format;
@@ -617,8 +1123,10 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(RecommendedActionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecommendedActionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -634,7 +1142,7 @@ namespace Azure.ResourceManager.Sql
                         return DeserializeRecommendedActionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecommendedActionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecommendedActionData)} does not support reading '{options.Format}' format.");
             }
         }
 

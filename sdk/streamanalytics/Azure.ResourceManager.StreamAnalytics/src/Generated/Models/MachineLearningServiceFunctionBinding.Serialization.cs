@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServiceFunctionBinding>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningServiceFunctionBinding)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningServiceFunctionBinding)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineLearningServiceInputColumn>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineLearningServiceOutputColumn>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServiceFunctionBinding>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningServiceFunctionBinding)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningServiceFunctionBinding)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningServiceFunctionBinding)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningServiceFunctionBinding)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeMachineLearningServiceFunctionBinding(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningServiceFunctionBinding)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningServiceFunctionBinding)} does not support reading '{options.Format}' format.");
             }
         }
 

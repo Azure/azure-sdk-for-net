@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<TelephonyChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TelephonyChannelProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TelephonyChannelProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WriteStartArray();
                 foreach (var item in PhoneNumbers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TelephonyPhoneNumbers>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WriteStartArray();
                 foreach (var item in ApiConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TelephonyChannelResourceApiConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<TelephonyChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TelephonyChannelProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TelephonyChannelProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TelephonyChannelProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TelephonyChannelProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeTelephonyChannelProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TelephonyChannelProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TelephonyChannelProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

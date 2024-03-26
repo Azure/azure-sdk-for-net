@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecommendedMachineConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecommendedMachineConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecommendedMachineConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(VCpus))
             {
                 writer.WritePropertyName("vCPUs"u8);
-                writer.WriteObjectValue(VCpus);
+                writer.WriteObjectValue<ResourceRange>(VCpus, options);
             }
             if (Optional.IsDefined(Memory))
             {
                 writer.WritePropertyName("memory"u8);
-                writer.WriteObjectValue(Memory);
+                writer.WriteObjectValue<ResourceRange>(Memory, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecommendedMachineConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecommendedMachineConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecommendedMachineConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecommendedMachineConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecommendedMachineConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeRecommendedMachineConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecommendedMachineConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecommendedMachineConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GlobalServiceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GlobalServiceConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GlobalServiceConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             if (Optional.IsDefined(Ssl))
             {
                 writer.WritePropertyName("ssl"u8);
-                writer.WriteObjectValue(Ssl);
+                writer.WriteObjectValue<SslConfiguration>(Ssl, options);
             }
             if (Optional.IsDefined(ServiceAuth))
             {
                 writer.WritePropertyName("serviceAuth"u8);
-                writer.WriteObjectValue(ServiceAuth);
+                writer.WriteObjectValue<ServiceAuthConfiguration>(ServiceAuth, options);
             }
             if (Optional.IsDefined(AutoScale))
             {
                 writer.WritePropertyName("autoScale"u8);
-                writer.WriteObjectValue(AutoScale);
+                writer.WriteObjectValue<AutoScaleConfiguration>(AutoScale, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GlobalServiceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GlobalServiceConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GlobalServiceConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GlobalServiceConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GlobalServiceConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                         return DeserializeGlobalServiceConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GlobalServiceConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GlobalServiceConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingJobData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingJobData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<StreamAnalyticsSku>(Sku, options);
             }
             if (options.Format != "W" && Optional.IsDefined(JobId))
             {
@@ -150,14 +150,14 @@ namespace Azure.ResourceManager.StreamAnalytics
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StreamingJobInputData>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Transformation))
             {
                 writer.WritePropertyName("transformation"u8);
-                writer.WriteObjectValue(Transformation);
+                writer.WriteObjectValue<StreamingJobTransformationData>(Transformation, options);
             }
             if (Optional.IsCollectionDefined(Outputs))
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StreamingJobOutputData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 writer.WriteStartArray();
                 foreach (var item in Functions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StreamingJobFunctionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 if (JobStorageAccount != null)
                 {
                     writer.WritePropertyName("jobStorageAccount"u8);
-                    writer.WriteObjectValue(JobStorageAccount);
+                    writer.WriteObjectValue<StreamingJobStorageAccount>(JobStorageAccount, options);
                 }
                 else
                 {
@@ -204,14 +204,14 @@ namespace Azure.ResourceManager.StreamAnalytics
             if (Optional.IsDefined(Externals))
             {
                 writer.WritePropertyName("externals"u8);
-                writer.WriteObjectValue(Externals);
+                writer.WriteObjectValue<StreamingJobExternal>(Externals, options);
             }
             if (Optional.IsDefined(Cluster))
             {
                 if (Cluster != null)
                 {
                     writer.WritePropertyName("cluster"u8);
-                    writer.WriteObjectValue(Cluster);
+                    writer.WriteObjectValue<ClusterInfo>(Cluster, options);
                 }
                 else
                 {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingJobData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingJobData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingJobData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingJobData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                         return DeserializeStreamingJobData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingJobData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingJobData)} does not support reading '{options.Format}' format.");
             }
         }
 

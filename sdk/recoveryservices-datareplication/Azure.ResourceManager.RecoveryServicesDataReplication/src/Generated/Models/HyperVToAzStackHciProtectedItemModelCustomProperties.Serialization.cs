@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedItemModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedItemModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedItemModelCustomProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,14 +46,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStartArray();
             foreach (var item in DisksToInclude)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<HyperVToAzStackHciDiskInput>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("nicsToInclude"u8);
             writer.WriteStartArray();
             foreach (var item in NicsToInclude)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<HyperVToAzStackHciNicInput>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(SourceVmName))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             if (Optional.IsDefined(DynamicMemoryConfig))
             {
                 writer.WritePropertyName("dynamicMemoryConfig"u8);
-                writer.WriteObjectValue(DynamicMemoryConfig);
+                writer.WriteObjectValue<ProtectedItemDynamicMemoryConfig>(DynamicMemoryConfig, options);
             }
             if (Optional.IsDefined(TargetMemoryInMegaBytes))
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HyperVToAzStackHciProtectedDiskProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedNics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HyperVToAzStackHciProtectedNicProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedItemModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedItemModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedItemModelCustomProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedItemModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedItemModelCustomProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeHyperVToAzStackHciProtectedItemModelCustomProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedItemModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedItemModelCustomProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

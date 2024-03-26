@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CostManagement
             var format = options.Format == "W" ? ((IPersistableModel<CostManagementViewData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CostManagementViewData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CostManagementViewData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.CostManagement
                 writer.WriteStartArray();
                 foreach (var item in Kpis)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ViewKpiProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.CostManagement
                 writer.WriteStartArray();
                 foreach (var item in Pivots)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ViewPivotProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(TimePeriod))
             {
                 writer.WritePropertyName("timePeriod"u8);
-                writer.WriteObjectValue(TimePeriod);
+                writer.WriteObjectValue<ReportConfigTimePeriod>(TimePeriod, options);
             }
             if (Optional.IsDefined(DataSet))
             {
                 writer.WritePropertyName("dataSet"u8);
-                writer.WriteObjectValue(DataSet);
+                writer.WriteObjectValue<ReportConfigDataset>(DataSet, options);
             }
             if (Optional.IsDefined(IncludeMonetaryCommitment))
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CostManagement
             var format = options.Format == "W" ? ((IPersistableModel<CostManagementViewData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CostManagementViewData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CostManagementViewData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.CostManagement
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CostManagementViewData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CostManagementViewData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.CostManagement
                         return DeserializeCostManagementViewData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CostManagementViewData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CostManagementViewData)} does not support reading '{options.Format}' format.");
             }
         }
 

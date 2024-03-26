@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Support
             var format = options.Format == "W" ? ((IPersistableModel<ProblemClassificationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProblemClassificationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProblemClassificationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Support
                 writer.WriteStartArray();
                 foreach (var item in SecondaryConsentEnabled)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SecondaryConsentEnabled>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Support
             if (Optional.IsDefined(ParentProblemClassification))
             {
                 writer.WritePropertyName("parentProblemClassification"u8);
-                writer.WriteObjectValue(ParentProblemClassification);
+                writer.WriteObjectValue<ProblemClassificationData>(ParentProblemClassification, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Support
             var format = options.Format == "W" ? ((IPersistableModel<ProblemClassificationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProblemClassificationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProblemClassificationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Support
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProblemClassificationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProblemClassificationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Support
                         return DeserializeProblemClassificationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProblemClassificationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProblemClassificationData)} does not support reading '{options.Format}' format.");
             }
         }
 

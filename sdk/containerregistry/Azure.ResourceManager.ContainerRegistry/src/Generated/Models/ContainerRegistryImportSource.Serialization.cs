@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryImportSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryImportSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryImportSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                writer.WriteObjectValue<ContainerRegistryImportSourceCredentials>(Credentials, options);
             }
             writer.WritePropertyName("sourceImage"u8);
             writer.WriteStringValue(SourceImage);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryImportSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryImportSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryImportSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryImportSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryImportSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryImportSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryImportSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryImportSource)} does not support reading '{options.Format}' format.");
             }
         }
 

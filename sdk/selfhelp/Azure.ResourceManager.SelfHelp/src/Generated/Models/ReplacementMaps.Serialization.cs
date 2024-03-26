@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReplacementMaps>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplacementMaps)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReplacementMaps)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in WebResults)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WebResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Diagnostics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SolutionsDiagnostic>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Troubleshooters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SolutionsTroubleshooters>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in MetricsBasedCharts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MetricsBasedChart>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Videos)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SelfHelpVideo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in VideoGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VideoGroup>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReplacementMaps>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplacementMaps)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReplacementMaps)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReplacementMaps)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReplacementMaps)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         return DeserializeReplacementMaps(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReplacementMaps)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReplacementMaps)} does not support reading '{options.Format}' format.");
             }
         }
 

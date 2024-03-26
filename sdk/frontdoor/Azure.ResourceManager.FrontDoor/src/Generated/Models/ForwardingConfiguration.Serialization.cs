@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ForwardingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ForwardingConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ForwardingConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 if (CacheConfiguration != null)
                 {
                     writer.WritePropertyName("cacheConfiguration"u8);
-                    writer.WriteObjectValue(CacheConfiguration);
+                    writer.WriteObjectValue<FrontDoorCacheConfiguration>(CacheConfiguration, options);
                 }
                 else
                 {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ForwardingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ForwardingConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ForwardingConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ForwardingConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ForwardingConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         return DeserializeForwardingConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ForwardingConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ForwardingConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

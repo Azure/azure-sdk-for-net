@@ -185,7 +185,7 @@ namespace Azure.Search.Documents
                 writer.WriteStartArray();
                 foreach (var item in VectorQueries)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VectorQuery>(item);
                 }
                 writer.WriteEndArray();
             }

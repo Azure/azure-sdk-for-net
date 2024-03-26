@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentityProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserAssignedIdentityProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserAssignedIdentityProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentityProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserAssignedIdentityProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserAssignedIdentityProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,6 +89,43 @@ namespace Azure.ResourceManager.EventHubs.Models
             return new UserAssignedIdentityProperties(userAssignedIdentity, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserAssignedIdentity), out propertyOverride);
+            if (Optional.IsDefined(UserAssignedIdentity) || hasPropertyOverride)
+            {
+                builder.Append("  userAssignedIdentity: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (UserAssignedIdentity.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UserAssignedIdentity}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UserAssignedIdentity}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<UserAssignedIdentityProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentityProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -96,8 +134,10 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(UserAssignedIdentityProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserAssignedIdentityProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +153,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                         return DeserializeUserAssignedIdentityProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UserAssignedIdentityProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserAssignedIdentityProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

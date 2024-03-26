@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Confluent.Models
             var format = options.Format == "W" ? ((IPersistableModel<SchemaRegistryClusterSpecEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SchemaRegistryClusterSpecEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SchemaRegistryClusterSpecEntity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
-                writer.WriteObjectValue(Region);
+                writer.WriteObjectValue<SchemaRegistryClusterEnvironmentRegionEntity>(Region, options);
             }
             if (Optional.IsDefined(Environment))
             {
                 writer.WritePropertyName("environment"u8);
-                writer.WriteObjectValue(Environment);
+                writer.WriteObjectValue<SchemaRegistryClusterEnvironmentRegionEntity>(Environment, options);
             }
             if (Optional.IsDefined(Cloud))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Confluent.Models
             var format = options.Format == "W" ? ((IPersistableModel<SchemaRegistryClusterSpecEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SchemaRegistryClusterSpecEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SchemaRegistryClusterSpecEntity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SchemaRegistryClusterSpecEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SchemaRegistryClusterSpecEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Confluent.Models
                         return DeserializeSchemaRegistryClusterSpecEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SchemaRegistryClusterSpecEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SchemaRegistryClusterSpecEntity)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingPolicyContentKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingPolicyContentKeys)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingPolicyContentKeys)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultKey))
             {
                 writer.WritePropertyName("defaultKey"u8);
-                writer.WriteObjectValue(DefaultKey);
+                writer.WriteObjectValue<EncryptionSchemeDefaultKey>(DefaultKey, options);
             }
             if (Optional.IsCollectionDefined(KeyToTrackMappings))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in KeyToTrackMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StreamingPolicyContentKey>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingPolicyContentKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingPolicyContentKeys)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingPolicyContentKeys)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingPolicyContentKeys)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingPolicyContentKeys)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeStreamingPolicyContentKeys(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingPolicyContentKeys)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingPolicyContentKeys)} does not support reading '{options.Format}' format.");
             }
         }
 

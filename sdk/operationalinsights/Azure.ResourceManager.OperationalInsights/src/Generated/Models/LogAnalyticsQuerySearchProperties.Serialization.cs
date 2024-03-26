@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsQuerySearchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogAnalyticsQuerySearchProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogAnalyticsQuerySearchProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Related))
             {
                 writer.WritePropertyName("related"u8);
-                writer.WriteObjectValue(Related);
+                writer.WriteObjectValue<LogAnalyticsQuerySearchRelatedMetadata>(Related, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsQuerySearchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogAnalyticsQuerySearchProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogAnalyticsQuerySearchProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsQuerySearchProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogAnalyticsQuerySearchProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         return DeserializeLogAnalyticsQuerySearchProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsQuerySearchProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogAnalyticsQuerySearchProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Confluent.Models
             var format = options.Format == "W" ? ((IPersistableModel<AccessServiceAccountRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessServiceAccountRecord)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AccessServiceAccountRecord)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                writer.WriteObjectValue<MetadataEntity>(Metadata, options);
             }
             if (Optional.IsDefined(DisplayName))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Confluent.Models
             var format = options.Format == "W" ? ((IPersistableModel<AccessServiceAccountRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessServiceAccountRecord)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AccessServiceAccountRecord)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AccessServiceAccountRecord)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AccessServiceAccountRecord)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Confluent.Models
                         return DeserializeAccessServiceAccountRecord(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AccessServiceAccountRecord)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AccessServiceAccountRecord)} does not support reading '{options.Format}' format.");
             }
         }
 

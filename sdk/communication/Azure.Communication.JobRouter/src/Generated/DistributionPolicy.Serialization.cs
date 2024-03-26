@@ -22,7 +22,7 @@ namespace Azure.Communication.JobRouter
             var format = options.Format == "W" ? ((IPersistableModel<DistributionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DistributionPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DistributionPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.Communication.JobRouter
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
-                writer.WriteObjectValue(Mode);
+                writer.WriteObjectValue<DistributionMode>(Mode, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.Communication.JobRouter
             var format = options.Format == "W" ? ((IPersistableModel<DistributionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DistributionPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DistributionPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -151,7 +151,7 @@ namespace Azure.Communication.JobRouter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DistributionPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DistributionPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.Communication.JobRouter
                         return DeserializeDistributionPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DistributionPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DistributionPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

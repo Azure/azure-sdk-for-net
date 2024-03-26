@@ -22,7 +22,7 @@ namespace Azure.Communication.JobRouter
             var format = options.Format == "W" ? ((IPersistableModel<ClassificationPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClassificationPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClassificationPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,14 +52,14 @@ namespace Azure.Communication.JobRouter
                 writer.WriteStartArray();
                 foreach (var item in QueueSelectorAttachments)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<QueueSelectorAttachment>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PrioritizationRule))
             {
                 writer.WritePropertyName("prioritizationRule"u8);
-                writer.WriteObjectValue(PrioritizationRule);
+                writer.WriteObjectValue<RouterRule>(PrioritizationRule, options);
             }
             if (Optional.IsCollectionDefined(WorkerSelectorAttachments))
             {
@@ -67,7 +67,7 @@ namespace Azure.Communication.JobRouter
                 writer.WriteStartArray();
                 foreach (var item in WorkerSelectorAttachments)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WorkerSelectorAttachment>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.Communication.JobRouter
             var format = options.Format == "W" ? ((IPersistableModel<ClassificationPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClassificationPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClassificationPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -203,7 +203,7 @@ namespace Azure.Communication.JobRouter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClassificationPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClassificationPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -219,7 +219,7 @@ namespace Azure.Communication.JobRouter
                         return DeserializeClassificationPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClassificationPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClassificationPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

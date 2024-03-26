@@ -22,7 +22,7 @@ namespace Azure.AI.ContentSafety
             var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalyzeTextResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalyzeTextResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.AI.ContentSafety
                 writer.WriteStartArray();
                 foreach (var item in BlocklistsMatch)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TextBlocklistMatch>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -40,7 +40,7 @@ namespace Azure.AI.ContentSafety
             writer.WriteStartArray();
             foreach (var item in CategoriesAnalysis)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<TextCategoriesAnalysis>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -66,7 +66,7 @@ namespace Azure.AI.ContentSafety
             var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalyzeTextResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalyzeTextResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -129,7 +129,7 @@ namespace Azure.AI.ContentSafety
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeTextResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalyzeTextResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -145,7 +145,7 @@ namespace Azure.AI.ContentSafety
                         return DeserializeAnalyzeTextResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeTextResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalyzeTextResult)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.AI.ContentSafety
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AnalyzeTextResult>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

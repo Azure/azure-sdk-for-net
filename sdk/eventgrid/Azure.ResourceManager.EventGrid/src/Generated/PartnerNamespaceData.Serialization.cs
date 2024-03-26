@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.EventGrid
             var format = options.Format == "W" ? ((IPersistableModel<PartnerNamespaceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PartnerNamespaceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PartnerNamespaceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EventGridPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WriteStartArray();
                 foreach (var item in InboundIPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EventGridInboundIPRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.EventGrid
             var format = options.Format == "W" ? ((IPersistableModel<PartnerNamespaceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PartnerNamespaceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PartnerNamespaceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.EventGrid
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PartnerNamespaceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PartnerNamespaceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.EventGrid
                         return DeserializePartnerNamespaceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PartnerNamespaceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PartnerNamespaceData)} does not support reading '{options.Format}' format.");
             }
         }
 

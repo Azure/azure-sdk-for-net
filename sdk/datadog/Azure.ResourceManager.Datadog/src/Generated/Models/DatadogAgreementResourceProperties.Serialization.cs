@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatadogAgreementResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogAgreementResourceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogAgreementResourceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<DatadogAgreementProperties>(Properties, options);
             }
             if (options.Format != "W")
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatadogAgreementResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogAgreementResourceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogAgreementResourceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatadogAgreementResourceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogAgreementResourceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Datadog.Models
                         return DeserializeDatadogAgreementResourceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatadogAgreementResourceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogAgreementResourceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

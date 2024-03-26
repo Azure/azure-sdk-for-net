@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<BastionHostData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BastionHostData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BastionHostData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<NetworkSku>(Sku, options);
             }
             if (Optional.IsDefined(Id))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BastionHostIPConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue(NetworkAcls);
+                writer.WriteObjectValue<BastionHostPropertiesFormatNetworkAcls>(NetworkAcls, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<BastionHostData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BastionHostData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BastionHostData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BastionHostData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BastionHostData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeBastionHostData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BastionHostData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BastionHostData)} does not support reading '{options.Format}' format.");
             }
         }
 

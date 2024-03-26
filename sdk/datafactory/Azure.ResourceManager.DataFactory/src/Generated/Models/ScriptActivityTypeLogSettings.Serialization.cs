@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScriptActivityTypeLogSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScriptActivityTypeLogSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScriptActivityTypeLogSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(LogLocationSettings))
             {
                 writer.WritePropertyName("logLocationSettings"u8);
-                writer.WriteObjectValue(LogLocationSettings);
+                writer.WriteObjectValue<LogLocationSettings>(LogLocationSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScriptActivityTypeLogSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScriptActivityTypeLogSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScriptActivityTypeLogSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScriptActivityTypeLogSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScriptActivityTypeLogSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeScriptActivityTypeLogSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScriptActivityTypeLogSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScriptActivityTypeLogSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryFabricProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryFabricProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryFabricProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(EncryptionDetails))
             {
                 writer.WritePropertyName("encryptionDetails"u8);
-                writer.WriteObjectValue(EncryptionDetails);
+                writer.WriteObjectValue<SiteRecoveryEncryptionDetails>(EncryptionDetails, options);
             }
             if (Optional.IsDefined(RolloverEncryptionDetails))
             {
                 writer.WritePropertyName("rolloverEncryptionDetails"u8);
-                writer.WriteObjectValue(RolloverEncryptionDetails);
+                writer.WriteObjectValue<SiteRecoveryEncryptionDetails>(RolloverEncryptionDetails, options);
             }
             if (Optional.IsDefined(InternalIdentifier))
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(CustomDetails))
             {
                 writer.WritePropertyName("customDetails"u8);
-                writer.WriteObjectValue(CustomDetails);
+                writer.WriteObjectValue<FabricSpecificDetails>(CustomDetails, options);
             }
             if (Optional.IsCollectionDefined(HealthErrorDetails))
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrorDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryHealthError>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryFabricProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryFabricProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryFabricProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryFabricProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryFabricProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSiteRecoveryFabricProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryFabricProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryFabricProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<P2SConnectionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(P2SConnectionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(P2SConnectionConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(VpnClientAddressPool))
             {
                 writer.WritePropertyName("vpnClientAddressPool"u8);
-                writer.WriteObjectValue(VpnClientAddressPool);
+                writer.WriteObjectValue<AddressSpace>(VpnClientAddressPool, options);
             }
             if (Optional.IsDefined(RoutingConfiguration))
             {
                 writer.WritePropertyName("routingConfiguration"u8);
-                writer.WriteObjectValue(RoutingConfiguration);
+                writer.WriteObjectValue<RoutingConfiguration>(RoutingConfiguration, options);
             }
             if (Optional.IsDefined(EnableInternetSecurity))
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in PreviousConfigurationPolicyGroupAssociations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VpnServerConfigurationPolicyGroupData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<P2SConnectionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(P2SConnectionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(P2SConnectionConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(P2SConnectionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(P2SConnectionConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeP2SConnectionConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(P2SConnectionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(P2SConnectionConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

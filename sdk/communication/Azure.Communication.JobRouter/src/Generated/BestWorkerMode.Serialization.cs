@@ -22,19 +22,19 @@ namespace Azure.Communication.JobRouter
             var format = options.Format == "W" ? ((IPersistableModel<BestWorkerMode>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BestWorkerMode)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BestWorkerMode)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ScoringRule))
             {
                 writer.WritePropertyName("scoringRule"u8);
-                writer.WriteObjectValue(ScoringRule);
+                writer.WriteObjectValue<RouterRule>(ScoringRule, options);
             }
             if (Optional.IsDefined(ScoringRuleOptions))
             {
                 writer.WritePropertyName("scoringRuleOptions"u8);
-                writer.WriteObjectValue(ScoringRuleOptions);
+                writer.WriteObjectValue<ScoringRuleOptions>(ScoringRuleOptions, options);
             }
             writer.WritePropertyName("minConcurrentOffers"u8);
             writer.WriteNumberValue(MinConcurrentOffers);
@@ -70,7 +70,7 @@ namespace Azure.Communication.JobRouter
             var format = options.Format == "W" ? ((IPersistableModel<BestWorkerMode>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BestWorkerMode)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BestWorkerMode)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -170,7 +170,7 @@ namespace Azure.Communication.JobRouter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BestWorkerMode)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BestWorkerMode)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -186,7 +186,7 @@ namespace Azure.Communication.JobRouter
                         return DeserializeBestWorkerMode(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BestWorkerMode)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BestWorkerMode)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -204,7 +204,7 @@ namespace Azure.Communication.JobRouter
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<BestWorkerMode>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionLotSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(OriginalAmount))
             {
                 writer.WritePropertyName("originalAmount"u8);
-                writer.WriteObjectValue(OriginalAmount);
+                writer.WriteObjectValue<ConsumptionAmount>(OriginalAmount, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ClosedBalance))
             {
                 writer.WritePropertyName("closedBalance"u8);
-                writer.WriteObjectValue(ClosedBalance);
+                writer.WriteObjectValue<ConsumptionAmount>(ClosedBalance, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Source))
             {
@@ -107,17 +107,17 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(OriginalAmountInBillingCurrency))
             {
                 writer.WritePropertyName("originalAmountInBillingCurrency"u8);
-                writer.WriteObjectValue(OriginalAmountInBillingCurrency);
+                writer.WriteObjectValue<ConsumptionAmountWithExchangeRate>(OriginalAmountInBillingCurrency, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ClosedBalanceInBillingCurrency))
             {
                 writer.WritePropertyName("closedBalanceInBillingCurrency"u8);
-                writer.WriteObjectValue(ClosedBalanceInBillingCurrency);
+                writer.WriteObjectValue<ConsumptionAmountWithExchangeRate>(ClosedBalanceInBillingCurrency, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Reseller))
             {
                 writer.WritePropertyName("reseller"u8);
-                writer.WriteObjectValue(Reseller);
+                writer.WriteObjectValue<ConsumptionReseller>(Reseller, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionLotSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeConsumptionLotSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

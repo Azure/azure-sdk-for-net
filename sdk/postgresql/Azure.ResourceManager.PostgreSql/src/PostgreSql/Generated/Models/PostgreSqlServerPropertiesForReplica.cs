@@ -47,6 +47,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> The master server id to create replica from. </summary>
+        [WirePath("sourceServerId")]
         public ResourceIdentifier SourceServerId { get; }
     }
 }
