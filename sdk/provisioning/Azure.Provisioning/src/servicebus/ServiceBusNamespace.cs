@@ -15,10 +15,10 @@ namespace Azure.Provisioning.ServiceBus
     /// </summary>
     public class ServiceBusNamespace : Resource<ServiceBusNamespaceData>
     {
-        // https://learn.microsoft.com/azure/templates/microsoft.servicebus/2022-10-01-preview/namespaces?pivots=deployment-language-bicep
+        // https://learn.microsoft.com/azure/templates/microsoft.servicebus/2021-11-01/namespaces?pivots=deployment-language-bicep
         private const string ResourceTypeName = "Microsoft.ServiceBus/namespaces";
-        // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.ResourceManager.ServiceBus/src/Generated/RestOperations/NamespacesRestOperations.cs#L36C42-L36C60
-        internal const string DefaultVersion = "2022-10-01-preview";
+        // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.ResourceManager.ServiceBus/src/Generated/RestOperations/NamespacesRestOperations.cs#L36
+        internal const string DefaultVersion = "2021-11-01";
 
         private static ServiceBusNamespaceData Empty(string name) => ArmServiceBusModelFactory.ServiceBusNamespaceData();
 
@@ -41,8 +41,7 @@ namespace Azure.Provisioning.ServiceBus
                 name: name,
                 resourceType: ResourceTypeName,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
-                sku: sku ?? new ServiceBusSku(ServiceBusSkuName.Standard),
-                minimumTlsVersion: ServiceBusMinimumTlsVersion.Tls1_2))
+                sku: sku ?? new ServiceBusSku(ServiceBusSkuName.Standard)))
         {
             AssignProperty(data => data.Name, GetAzureName(scope, name));
         }
