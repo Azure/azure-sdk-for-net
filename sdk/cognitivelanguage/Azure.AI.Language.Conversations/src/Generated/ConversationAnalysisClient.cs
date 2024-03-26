@@ -330,12 +330,12 @@ namespace Azure.AI.Language.Conversations
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/:analyze-conversations", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
@@ -347,12 +347,12 @@ namespace Azure.AI.Language.Conversations
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/analyze-conversations/jobs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
@@ -364,7 +364,7 @@ namespace Azure.AI.Language.Conversations
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/analyze-conversations/jobs/", false);
@@ -374,7 +374,7 @@ namespace Azure.AI.Language.Conversations
             {
                 uri.AppendQuery("showStats", showStats.Value, true);
             }
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -384,14 +384,14 @@ namespace Azure.AI.Language.Conversations
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/analyze-conversations/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath(":cancel", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }

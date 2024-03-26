@@ -1511,12 +1511,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/query-knowledgebases/projects", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -1526,13 +1526,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -1542,13 +1542,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
@@ -1560,13 +1560,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -1576,13 +1576,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/query-knowledgebases/projects/deletion-jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -1592,7 +1592,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/query-knowledgebases/projects/", false);
@@ -1607,7 +1607,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 uri.AppendQuery("assetKind", assetKind, true);
             }
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -1617,7 +1617,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/query-knowledgebases/projects/", false);
@@ -1625,7 +1625,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/export/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -1635,7 +1635,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/query-knowledgebases/projects/", false);
@@ -1650,7 +1650,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 uri.AppendQuery("assetKind", assetKind, true);
             }
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
@@ -1662,7 +1662,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/query-knowledgebases/projects/", false);
@@ -1670,7 +1670,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/import/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -1680,7 +1680,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/query-knowledgebases/projects/", false);
@@ -1688,7 +1688,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/deployments/", false);
             uri.AppendPath(deploymentName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -1698,7 +1698,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/query-knowledgebases/projects/", false);
@@ -1708,7 +1708,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -1718,14 +1718,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/deployments", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -1735,14 +1735,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/synonyms", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -1752,14 +1752,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/synonyms", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
@@ -1771,14 +1771,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/sources", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -1788,14 +1788,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/sources", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
@@ -1807,7 +1807,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/query-knowledgebases/projects/", false);
@@ -1815,7 +1815,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/sources/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -1825,7 +1825,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/query-knowledgebases/projects/", false);
@@ -1836,7 +1836,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 uri.AppendQuery("source", source, true);
             }
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -1846,14 +1846,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/qnas", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
@@ -1865,7 +1865,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/query-knowledgebases/projects/", false);
@@ -1873,7 +1873,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/qnas/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -1883,14 +1883,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/feedback", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
@@ -1902,11 +1902,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -1916,11 +1916,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -1930,11 +1930,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -1944,11 +1944,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -1958,11 +1958,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -1972,11 +1972,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -1986,11 +1986,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }

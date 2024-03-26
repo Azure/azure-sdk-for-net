@@ -2123,12 +2123,12 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2138,13 +2138,13 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
             request.Content = content;
@@ -2156,13 +2156,13 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2172,13 +2172,13 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2188,7 +2188,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2208,7 +2208,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 uri.AppendQuery("trainedModelLabel", trainedModelLabel, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2218,7 +2218,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2229,7 +2229,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 uri.AppendQuery("format", exportedProjectFormat, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
@@ -2241,14 +2241,14 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/:train", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
@@ -2260,14 +2260,14 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/deployments", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2277,14 +2277,14 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/deployments/:swap", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
@@ -2296,7 +2296,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2304,7 +2304,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendPath("/deployments/", false);
             uri.AppendPath(deploymentName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2314,7 +2314,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2322,7 +2322,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendPath("/deployments/", false);
             uri.AppendPath(deploymentName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
@@ -2334,7 +2334,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2342,7 +2342,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendPath("/deployments/", false);
             uri.AppendPath(deploymentName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2352,7 +2352,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2362,7 +2362,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2372,7 +2372,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2380,7 +2380,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendPath("/deployments/swap/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2390,7 +2390,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2398,7 +2398,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendPath("/export/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2408,7 +2408,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2416,7 +2416,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendPath("/import/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2426,14 +2426,14 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/models", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2443,7 +2443,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2451,7 +2451,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendPath("/models/", false);
             uri.AppendPath(trainedModelLabel, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2461,7 +2461,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2469,7 +2469,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendPath("/models/", false);
             uri.AppendPath(trainedModelLabel, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2479,7 +2479,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2488,7 +2488,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendPath(trainedModelLabel, true);
             uri.AppendPath("/:load-snapshot", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2498,7 +2498,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2508,7 +2508,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendPath("/evaluation/result", false);
             uri.AppendQuery("stringIndexType", stringIndexType, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2518,7 +2518,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2527,7 +2527,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendPath(trainedModelLabel, true);
             uri.AppendPath("/evaluation/summary-result", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2537,7 +2537,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2547,7 +2547,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendPath("/load-snapshot/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2557,14 +2557,14 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/train/jobs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2574,7 +2574,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2582,7 +2582,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendPath("/train/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2592,7 +2592,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2601,7 +2601,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendPath(jobId, true);
             uri.AppendPath("/:cancel", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2611,13 +2611,13 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/global/deletion-jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2627,13 +2627,13 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/global/languages", false);
             uri.AppendQuery("projectKind", projectKind, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2643,7 +2643,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/global/prebuilt-entities", false);
@@ -2656,7 +2656,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 uri.AppendQuery("multilingual", multilingual.Value, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2666,13 +2666,13 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/global/training-config-versions", false);
             uri.AppendQuery("projectKind", projectKind, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2682,11 +2682,11 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2696,11 +2696,11 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2710,11 +2710,11 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2724,11 +2724,11 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2738,11 +2738,11 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2752,11 +2752,11 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2766,11 +2766,11 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -2780,11 +2780,11 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
