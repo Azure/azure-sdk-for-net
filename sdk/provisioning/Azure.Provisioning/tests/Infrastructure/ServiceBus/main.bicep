@@ -4,18 +4,17 @@ targetScope = 'resourceGroup'
 param location string = resourceGroup().location
 
 
-resource serviceBusNamespace_VkKO9fgDH 'Microsoft.ServiceBus/namespaces@2022-10-01-preview' = {
+resource serviceBusNamespace_VkKO9fgDH 'Microsoft.ServiceBus/namespaces@2021-11-01' = {
   name: toLower(take(concat('sb', uniqueString(resourceGroup().id)), 24))
   location: location
   sku: {
     name: 'Standard'
   }
   properties: {
-    minimumTlsVersion: '1.2'
   }
 }
 
-resource serviceBusQueue_uYoIiE5UI 'Microsoft.ServiceBus/namespaces/queues@2022-10-01-preview' = {
+resource serviceBusQueue_uYoIiE5UI 'Microsoft.ServiceBus/namespaces/queues@2021-11-01' = {
   parent: serviceBusNamespace_VkKO9fgDH
   name: 'queue'
   location: location
@@ -23,7 +22,7 @@ resource serviceBusQueue_uYoIiE5UI 'Microsoft.ServiceBus/namespaces/queues@2022-
   }
 }
 
-resource serviceBusTopic_tFhNONTR4 'Microsoft.ServiceBus/namespaces/topics@2022-10-01-preview' = {
+resource serviceBusTopic_tFhNONTR4 'Microsoft.ServiceBus/namespaces/topics@2021-11-01' = {
   parent: serviceBusNamespace_VkKO9fgDH
   name: 'topic'
   location: location
@@ -31,7 +30,7 @@ resource serviceBusTopic_tFhNONTR4 'Microsoft.ServiceBus/namespaces/topics@2022-
   }
 }
 
-resource serviceBusSubscription_7i3B7P44X 'Microsoft.ServiceBus/namespaces/topics/subscriptions@2022-10-01-preview' = {
+resource serviceBusSubscription_7i3B7P44X 'Microsoft.ServiceBus/namespaces/topics/subscriptions@2021-11-01' = {
   parent: serviceBusTopic_tFhNONTR4
   name: 'subscription'
   location: location
