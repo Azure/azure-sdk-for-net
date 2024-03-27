@@ -42,6 +42,47 @@ namespace System.ClientModel
         public static implicit operator T (System.ClientModel.ClientResult<T> result) { throw null; }
     }
 }
+namespace System.ClientModel.Diagnostics
+{
+    public partial class ClientEventSourceListener : System.Diagnostics.Tracing.EventListener
+    {
+        public const string TraitName = "ClientEventSource";
+        public const string TraitValue = "true";
+        public ClientEventSourceListener(System.Action<System.Diagnostics.Tracing.EventWrittenEventArgs, string> log, System.Diagnostics.Tracing.EventLevel level) { }
+        public static System.ClientModel.Diagnostics.ClientEventSourceListener CreateConsoleLogger(System.Diagnostics.Tracing.EventLevel level = System.Diagnostics.Tracing.EventLevel.Informational) { throw null; }
+        public static System.ClientModel.Diagnostics.ClientEventSourceListener CreateTraceLogger(System.Diagnostics.Tracing.EventLevel level = System.Diagnostics.Tracing.EventLevel.Informational) { throw null; }
+        protected sealed override void OnEventSourceCreated(System.Diagnostics.Tracing.EventSource eventSource) { }
+        protected sealed override void OnEventWritten(System.Diagnostics.Tracing.EventWrittenEventArgs eventData) { }
+    }
+}
+namespace System.ClientModel.Options
+{
+    public partial class ClientDiagnosticsOptions
+    {
+        public ClientDiagnosticsOptions() { }
+        public string ClientRequestIdHeaderName { get { throw null; } set { } }
+        public bool IsLoggingContentEnabled { get { throw null; } set { } }
+        public bool IsLoggingEnabled { get { throw null; } set { } }
+        public int LoggedContentSizeLimit { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> LoggedHeaderNames { get { throw null; } }
+        public System.Collections.Generic.IList<string> LoggedQueryParameters { get { throw null; } }
+    }
+}
+namespace System.ClientModel.Pipeline
+{
+    public partial class ClientLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy
+    {
+        internal ClientLoggingPolicy() { }
+        public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
+    }
+    public partial class PipelineMessageSanitizer
+    {
+        public PipelineMessageSanitizer(string[] allowedQueryParameters, string[] allowedHeaders, string redactedPlaceholder = "REDACTED") { }
+        public string SanitizeHeader(string name, string value) { throw null; }
+        public string SanitizeUrl(string url) { throw null; }
+    }
+}
 namespace System.ClientModel.Primitives
 {
     public partial class ApiKeyAuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy
@@ -71,6 +112,7 @@ namespace System.ClientModel.Primitives
     public partial class ClientPipelineOptions
     {
         public ClientPipelineOptions() { }
+        public System.ClientModel.Options.ClientDiagnosticsOptions? Diagnostics { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelineTransport? Transport { get { throw null; } set { } }
