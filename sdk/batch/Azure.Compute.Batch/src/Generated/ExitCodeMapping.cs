@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.Compute.Batch
 {
@@ -16,7 +16,39 @@ namespace Azure.Compute.Batch
     /// </summary>
     public partial class ExitCodeMapping
     {
-        /// <summary> Initializes a new instance of ExitCodeMapping. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExitCodeMapping"/>. </summary>
         /// <param name="code"> A process exit code. </param>
         /// <param name="exitOptions"> How the Batch service should respond if the Task exits with this exit code. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="exitOptions"/> is null. </exception>
@@ -26,6 +58,22 @@ namespace Azure.Compute.Batch
 
             Code = code;
             ExitOptions = exitOptions;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExitCodeMapping"/>. </summary>
+        /// <param name="code"> A process exit code. </param>
+        /// <param name="exitOptions"> How the Batch service should respond if the Task exits with this exit code. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExitCodeMapping(int code, ExitOptions exitOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Code = code;
+            ExitOptions = exitOptions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExitCodeMapping"/> for deserialization. </summary>
+        internal ExitCodeMapping()
+        {
         }
 
         /// <summary> A process exit code. </summary>

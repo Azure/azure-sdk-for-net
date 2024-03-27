@@ -5,17 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class MultiInstanceSettings : IUtf8JsonSerializable
+    public partial class MultiInstanceSettings : IUtf8JsonSerializable, IJsonModel<MultiInstanceSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MultiInstanceSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MultiInstanceSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MultiInstanceSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MultiInstanceSettings)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(NumberOfInstances))
             {
@@ -30,22 +39,53 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in CommonResourceFiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceFile>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static MultiInstanceSettings DeserializeMultiInstanceSettings(JsonElement element)
+        MultiInstanceSettings IJsonModel<MultiInstanceSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MultiInstanceSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MultiInstanceSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMultiInstanceSettings(document.RootElement, options);
+        }
+
+        internal static MultiInstanceSettings DeserializeMultiInstanceSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> numberOfInstances = default;
+            int? numberOfInstances = default;
             string coordinationCommandLine = default;
-            Optional<IList<ResourceFile>> commonResourceFiles = default;
+            IList<ResourceFile> commonResourceFiles = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("numberOfInstances"u8))
@@ -71,14 +111,50 @@ namespace Azure.Compute.Batch
                     List<ResourceFile> array = new List<ResourceFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceFile.DeserializeResourceFile(item));
+                        array.Add(ResourceFile.DeserializeResourceFile(item, options));
                     }
                     commonResourceFiles = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MultiInstanceSettings(Optional.ToNullable(numberOfInstances), coordinationCommandLine, Optional.ToList(commonResourceFiles));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MultiInstanceSettings(numberOfInstances, coordinationCommandLine, commonResourceFiles ?? new ChangeTrackingList<ResourceFile>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MultiInstanceSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MultiInstanceSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MultiInstanceSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MultiInstanceSettings IPersistableModel<MultiInstanceSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MultiInstanceSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMultiInstanceSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MultiInstanceSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MultiInstanceSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -92,7 +168,7 @@ namespace Azure.Compute.Batch
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<MultiInstanceSettings>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

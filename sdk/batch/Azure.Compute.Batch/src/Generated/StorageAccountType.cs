@@ -24,11 +24,14 @@ namespace Azure.Compute.Batch
 
         private const string StandardLRSValue = "standard_lrs";
         private const string PremiumLRSValue = "premium_lrs";
+        private const string StandardSSDLRSValue = "standardssd_lrs";
 
         /// <summary> The data disk should use standard locally redundant storage. </summary>
         public static StorageAccountType StandardLRS { get; } = new StorageAccountType(StandardLRSValue);
         /// <summary> The data disk should use premium locally redundant storage. </summary>
         public static StorageAccountType PremiumLRS { get; } = new StorageAccountType(PremiumLRSValue);
+        /// <summary> The data disk / OS disk should use standard SSD locally redundant storage. </summary>
+        public static StorageAccountType StandardSSDLRS { get; } = new StorageAccountType(StandardSSDLRSValue);
         /// <summary> Determines if two <see cref="StorageAccountType"/> values are the same. </summary>
         public static bool operator ==(StorageAccountType left, StorageAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageAccountType"/> values are not the same. </summary>

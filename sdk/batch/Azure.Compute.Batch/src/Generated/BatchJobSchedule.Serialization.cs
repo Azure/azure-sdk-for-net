@@ -6,56 +6,158 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class BatchJobSchedule : IUtf8JsonSerializable
+    public partial class BatchJobSchedule : IUtf8JsonSerializable, IJsonModel<BatchJobSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchJobSchedule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BatchJobSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchJobSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchJobSchedule)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            writer.WritePropertyName("schedule"u8);
-            writer.WriteObjectValue(Schedule);
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Url))
+            {
+                writer.WritePropertyName("url"u8);
+                writer.WriteStringValue(Url);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("eTag"u8);
+                writer.WriteStringValue(ETag);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastModified))
+            {
+                writer.WritePropertyName("lastModified"u8);
+                writer.WriteStringValue(LastModified.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreationTime))
+            {
+                writer.WritePropertyName("creationTime"u8);
+                writer.WriteStringValue(CreationTime.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(StateTransitionTime))
+            {
+                writer.WritePropertyName("stateTransitionTime"u8);
+                writer.WriteStringValue(StateTransitionTime.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(PreviousState))
+            {
+                writer.WritePropertyName("previousState"u8);
+                writer.WriteStringValue(PreviousState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(PreviousStateTransitionTime))
+            {
+                writer.WritePropertyName("previousStateTransitionTime"u8);
+                writer.WriteStringValue(PreviousStateTransitionTime.Value, "O");
+            }
+            if (Optional.IsDefined(Schedule))
+            {
+                writer.WritePropertyName("schedule"u8);
+                writer.WriteObjectValue<BatchJobScheduleConfiguration>(Schedule, options);
+            }
             writer.WritePropertyName("jobSpecification"u8);
-            writer.WriteObjectValue(JobSpecification);
+            writer.WriteObjectValue<BatchJobSpecification>(JobSpecification, options);
+            if (options.Format != "W" && Optional.IsDefined(ExecutionInfo))
+            {
+                writer.WritePropertyName("executionInfo"u8);
+                writer.WriteObjectValue<BatchJobScheduleExecutionInfo>(ExecutionInfo, options);
+            }
             if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
                 foreach (var item in Metadata)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MetadataItem>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Stats))
+            {
+                writer.WritePropertyName("stats"u8);
+                writer.WriteObjectValue<BatchJobScheduleStatistics>(Stats, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static BatchJobSchedule DeserializeBatchJobSchedule(JsonElement element)
+        BatchJobSchedule IJsonModel<BatchJobSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchJobSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchJobSchedule)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchJobSchedule(document.RootElement, options);
+        }
+
+        internal static BatchJobSchedule DeserializeBatchJobSchedule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> displayName = default;
-            Optional<string> url = default;
-            Optional<string> eTag = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<JobScheduleState> state = default;
-            Optional<DateTimeOffset> stateTransitionTime = default;
-            Optional<JobScheduleState> previousState = default;
-            Optional<DateTimeOffset> previousStateTransitionTime = default;
-            Schedule schedule = default;
-            JobSpecification jobSpecification = default;
-            Optional<JobScheduleExecutionInformation> executionInfo = default;
-            Optional<IList<MetadataItem>> metadata = default;
-            Optional<JobScheduleStatistics> stats = default;
+            string id = default;
+            string displayName = default;
+            string url = default;
+            string eTag = default;
+            DateTimeOffset? lastModified = default;
+            DateTimeOffset? creationTime = default;
+            BatchJobScheduleState? state = default;
+            DateTimeOffset? stateTransitionTime = default;
+            BatchJobScheduleState? previousState = default;
+            DateTimeOffset? previousStateTransitionTime = default;
+            BatchJobScheduleConfiguration schedule = default;
+            BatchJobSpecification jobSpecification = default;
+            BatchJobScheduleExecutionInfo executionInfo = default;
+            IList<MetadataItem> metadata = default;
+            BatchJobScheduleStatistics stats = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -102,7 +204,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    state = new JobScheduleState(property.Value.GetString());
+                    state = new BatchJobScheduleState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("stateTransitionTime"u8))
@@ -120,7 +222,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    previousState = new JobScheduleState(property.Value.GetString());
+                    previousState = new BatchJobScheduleState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("previousStateTransitionTime"u8))
@@ -134,12 +236,16 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("schedule"u8))
                 {
-                    schedule = Schedule.DeserializeSchedule(property.Value);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    schedule = BatchJobScheduleConfiguration.DeserializeBatchJobScheduleConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("jobSpecification"u8))
                 {
-                    jobSpecification = JobSpecification.DeserializeJobSpecification(property.Value);
+                    jobSpecification = BatchJobSpecification.DeserializeBatchJobSpecification(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("executionInfo"u8))
@@ -148,7 +254,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    executionInfo = JobScheduleExecutionInformation.DeserializeJobScheduleExecutionInformation(property.Value);
+                    executionInfo = BatchJobScheduleExecutionInfo.DeserializeBatchJobScheduleExecutionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))
@@ -160,7 +266,7 @@ namespace Azure.Compute.Batch
                     List<MetadataItem> array = new List<MetadataItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetadataItem.DeserializeMetadataItem(item));
+                        array.Add(MetadataItem.DeserializeMetadataItem(item, options));
                     }
                     metadata = array;
                     continue;
@@ -171,12 +277,64 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    stats = JobScheduleStatistics.DeserializeJobScheduleStatistics(property.Value);
+                    stats = BatchJobScheduleStatistics.DeserializeBatchJobScheduleStatistics(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BatchJobSchedule(id.Value, displayName.Value, url.Value, eTag.Value, Optional.ToNullable(lastModified), Optional.ToNullable(creationTime), Optional.ToNullable(state), Optional.ToNullable(stateTransitionTime), Optional.ToNullable(previousState), Optional.ToNullable(previousStateTransitionTime), schedule, jobSpecification, executionInfo.Value, Optional.ToList(metadata), stats.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BatchJobSchedule(
+                id,
+                displayName,
+                url,
+                eTag,
+                lastModified,
+                creationTime,
+                state,
+                stateTransitionTime,
+                previousState,
+                previousStateTransitionTime,
+                schedule,
+                jobSpecification,
+                executionInfo,
+                metadata ?? new ChangeTrackingList<MetadataItem>(),
+                stats,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BatchJobSchedule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchJobSchedule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BatchJobSchedule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BatchJobSchedule IPersistableModel<BatchJobSchedule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchJobSchedule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBatchJobSchedule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchJobSchedule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BatchJobSchedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -190,7 +348,7 @@ namespace Azure.Compute.Batch
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<BatchJobSchedule>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -5,15 +5,47 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
     /// <summary> The configuration for container-enabled Pools. </summary>
     public partial class ContainerConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerConfiguration"/>. </summary>
         /// <param name="type"> The container technology to be used. </param>
         public ContainerConfiguration(ContainerType type)
         {
@@ -22,15 +54,22 @@ namespace Azure.Compute.Batch
             ContainerRegistries = new ChangeTrackingList<ContainerRegistry>();
         }
 
-        /// <summary> Initializes a new instance of ContainerConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerConfiguration"/>. </summary>
         /// <param name="type"> The container technology to be used. </param>
         /// <param name="containerImageNames"> The collection of container Image names. This is the full Image reference, as would be specified to "docker pull". An Image will be sourced from the default Docker registry unless the Image is fully qualified with an alternative registry. </param>
         /// <param name="containerRegistries"> Additional private registries from which containers can be pulled. If any Images must be downloaded from a private registry which requires credentials, then those credentials must be provided here. </param>
-        internal ContainerConfiguration(ContainerType type, IList<string> containerImageNames, IList<ContainerRegistry> containerRegistries)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerConfiguration(ContainerType type, IList<string> containerImageNames, IList<ContainerRegistry> containerRegistries, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             ContainerImageNames = containerImageNames;
             ContainerRegistries = containerRegistries;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerConfiguration"/> for deserialization. </summary>
+        internal ContainerConfiguration()
+        {
         }
 
         /// <summary> The container technology to be used. </summary>

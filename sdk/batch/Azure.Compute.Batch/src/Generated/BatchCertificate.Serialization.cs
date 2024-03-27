@@ -6,23 +6,67 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class BatchCertificate : IUtf8JsonSerializable
+    public partial class BatchCertificate : IUtf8JsonSerializable, IJsonModel<BatchCertificate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchCertificate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BatchCertificate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchCertificate>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchCertificate)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("thumbprint"u8);
             writer.WriteStringValue(Thumbprint);
             writer.WritePropertyName("thumbprintAlgorithm"u8);
             writer.WriteStringValue(ThumbprintAlgorithm);
+            if (options.Format != "W" && Optional.IsDefined(Url))
+            {
+                writer.WritePropertyName("url"u8);
+                writer.WriteStringValue(Url);
+            }
+            if (options.Format != "W" && Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(StateTransitionTime))
+            {
+                writer.WritePropertyName("stateTransitionTime"u8);
+                writer.WriteStringValue(StateTransitionTime.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(PreviousState))
+            {
+                writer.WritePropertyName("previousState"u8);
+                writer.WriteStringValue(PreviousState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(PreviousStateTransitionTime))
+            {
+                writer.WritePropertyName("previousStateTransitionTime"u8);
+                writer.WriteStringValue(PreviousStateTransitionTime.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(PublicData))
+            {
+                writer.WritePropertyName("publicData"u8);
+                writer.WriteStringValue(PublicData);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DeleteCertificateError))
+            {
+                writer.WritePropertyName("deleteCertificateError"u8);
+                writer.WriteObjectValue<DeleteBatchCertificateError>(DeleteCertificateError, options);
+            }
             writer.WritePropertyName("data"u8);
-            writer.WriteBase64StringValue(Data.ToArray(), "D");
+            writer.WriteStringValue(Data);
             if (Optional.IsDefined(CertificateFormat))
             {
                 writer.WritePropertyName("certificateFormat"u8);
@@ -33,27 +77,58 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BatchCertificate DeserializeBatchCertificate(JsonElement element)
+        BatchCertificate IJsonModel<BatchCertificate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchCertificate>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchCertificate)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchCertificate(document.RootElement, options);
+        }
+
+        internal static BatchCertificate DeserializeBatchCertificate(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string thumbprint = default;
             string thumbprintAlgorithm = default;
-            Optional<string> url = default;
-            Optional<CertificateState> state = default;
-            Optional<DateTimeOffset> stateTransitionTime = default;
-            Optional<CertificateState> previousState = default;
-            Optional<DateTimeOffset> previousStateTransitionTime = default;
-            Optional<BinaryData> publicData = default;
-            Optional<DeleteCertificateError> deleteCertificateError = default;
-            BinaryData data = default;
-            Optional<CertificateFormat> certificateFormat = default;
-            Optional<string> password = default;
+            string url = default;
+            BatchCertificateState? state = default;
+            DateTimeOffset? stateTransitionTime = default;
+            BatchCertificateState? previousState = default;
+            DateTimeOffset? previousStateTransitionTime = default;
+            string publicData = default;
+            DeleteBatchCertificateError deleteCertificateError = default;
+            string data = default;
+            BatchCertificateFormat? certificateFormat = default;
+            string password = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("thumbprint"u8))
@@ -77,7 +152,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    state = new CertificateState(property.Value.GetString());
+                    state = new BatchCertificateState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("stateTransitionTime"u8))
@@ -95,7 +170,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    previousState = new CertificateState(property.Value.GetString());
+                    previousState = new BatchCertificateState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("previousStateTransitionTime"u8))
@@ -109,11 +184,7 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("publicData"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    publicData = BinaryData.FromBytes(property.Value.GetBytesFromBase64("D"));
+                    publicData = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("deleteCertificateError"u8))
@@ -122,12 +193,12 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    deleteCertificateError = DeleteCertificateError.DeserializeDeleteCertificateError(property.Value);
+                    deleteCertificateError = DeleteBatchCertificateError.DeserializeDeleteBatchCertificateError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("data"u8))
                 {
-                    data = BinaryData.FromBytes(property.Value.GetBytesFromBase64("D"));
+                    data = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("certificateFormat"u8))
@@ -136,7 +207,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    certificateFormat = new CertificateFormat(property.Value.GetString());
+                    certificateFormat = new BatchCertificateFormat(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("password"u8))
@@ -144,9 +215,58 @@ namespace Azure.Compute.Batch
                     password = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BatchCertificate(thumbprint, thumbprintAlgorithm, url.Value, Optional.ToNullable(state), Optional.ToNullable(stateTransitionTime), Optional.ToNullable(previousState), Optional.ToNullable(previousStateTransitionTime), publicData.Value, deleteCertificateError.Value, data, Optional.ToNullable(certificateFormat), password.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BatchCertificate(
+                thumbprint,
+                thumbprintAlgorithm,
+                url,
+                state,
+                stateTransitionTime,
+                previousState,
+                previousStateTransitionTime,
+                publicData,
+                deleteCertificateError,
+                data,
+                certificateFormat,
+                password,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BatchCertificate>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchCertificate>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BatchCertificate)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BatchCertificate IPersistableModel<BatchCertificate>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchCertificate>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBatchCertificate(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchCertificate)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BatchCertificate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -160,7 +280,7 @@ namespace Azure.Compute.Batch
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<BatchCertificate>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

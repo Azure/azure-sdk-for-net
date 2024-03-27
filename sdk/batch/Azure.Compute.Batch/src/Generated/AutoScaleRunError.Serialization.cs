@@ -5,24 +5,90 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class AutoScaleRunError
+    public partial class AutoScaleRunError : IUtf8JsonSerializable, IJsonModel<AutoScaleRunError>
     {
-        internal static AutoScaleRunError DeserializeAutoScaleRunError(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoScaleRunError>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AutoScaleRunError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoScaleRunError>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutoScaleRunError)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Code))
+            {
+                writer.WritePropertyName("code"u8);
+                writer.WriteStringValue(Code);
+            }
+            if (Optional.IsDefined(Message))
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
+            }
+            if (Optional.IsCollectionDefined(Values))
+            {
+                writer.WritePropertyName("values"u8);
+                writer.WriteStartArray();
+                foreach (var item in Values)
+                {
+                    writer.WriteObjectValue<NameValuePair>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AutoScaleRunError IJsonModel<AutoScaleRunError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoScaleRunError>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutoScaleRunError)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutoScaleRunError(document.RootElement, options);
+        }
+
+        internal static AutoScaleRunError DeserializeAutoScaleRunError(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<IReadOnlyList<NameValuePair>> values = default;
+            string code = default;
+            string message = default;
+            IReadOnlyList<NameValuePair> values = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -44,14 +110,50 @@ namespace Azure.Compute.Batch
                     List<NameValuePair> array = new List<NameValuePair>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NameValuePair.DeserializeNameValuePair(item));
+                        array.Add(NameValuePair.DeserializeNameValuePair(item, options));
                     }
                     values = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AutoScaleRunError(code.Value, message.Value, Optional.ToList(values));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AutoScaleRunError(code, message, values ?? new ChangeTrackingList<NameValuePair>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AutoScaleRunError>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoScaleRunError>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AutoScaleRunError)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AutoScaleRunError IPersistableModel<AutoScaleRunError>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoScaleRunError>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAutoScaleRunError(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutoScaleRunError)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AutoScaleRunError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -59,6 +161,14 @@ namespace Azure.Compute.Batch
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeAutoScaleRunError(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AutoScaleRunError>(this, new ModelReaderWriterOptions("W"));
+            return content;
         }
     }
 }

@@ -7,14 +7,45 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
     /// <summary> The configuration for virtual machine extensions. </summary>
     public partial class VMExtension
     {
-        /// <summary> Initializes a new instance of VMExtension. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VMExtension"/>. </summary>
         /// <param name="name"> The name of the virtual machine extension. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="type"> The type of the extension. </param>
@@ -33,7 +64,7 @@ namespace Azure.Compute.Batch
             ProvisionAfterExtensions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VMExtension. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMExtension"/>. </summary>
         /// <param name="name"> The name of the virtual machine extension. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="type"> The type of the extension. </param>
@@ -43,7 +74,8 @@ namespace Azure.Compute.Batch
         /// <param name="settings"> JSON formatted public settings for the extension. </param>
         /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
         /// <param name="provisionAfterExtensions"> The collection of extension names. Collection of extension names after which this extension needs to be provisioned. </param>
-        internal VMExtension(string name, string publisher, string type, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, IDictionary<string, string> settings, IDictionary<string, string> protectedSettings, IList<string> provisionAfterExtensions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VMExtension(string name, string publisher, string type, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, IDictionary<string, string> settings, IDictionary<string, string> protectedSettings, IList<string> provisionAfterExtensions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Publisher = publisher;
@@ -54,6 +86,12 @@ namespace Azure.Compute.Batch
             Settings = settings;
             ProtectedSettings = protectedSettings;
             ProvisionAfterExtensions = provisionAfterExtensions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMExtension"/> for deserialization. </summary>
+        internal VMExtension()
+        {
         }
 
         /// <summary> The name of the virtual machine extension. </summary>

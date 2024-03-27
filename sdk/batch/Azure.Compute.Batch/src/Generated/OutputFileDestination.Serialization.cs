@@ -5,32 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class OutputFileDestination : IUtf8JsonSerializable
+    public partial class OutputFileDestination : IUtf8JsonSerializable, IJsonModel<OutputFileDestination>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OutputFileDestination>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<OutputFileDestination>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OutputFileDestination>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OutputFileDestination)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Container))
             {
                 writer.WritePropertyName("container"u8);
-                writer.WriteObjectValue(Container);
+                writer.WriteObjectValue<OutputFileBlobContainerDestination>(Container, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static OutputFileDestination DeserializeOutputFileDestination(JsonElement element)
+        OutputFileDestination IJsonModel<OutputFileDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OutputFileDestination>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OutputFileDestination)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOutputFileDestination(document.RootElement, options);
+        }
+
+        internal static OutputFileDestination DeserializeOutputFileDestination(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<OutputFileBlobContainerDestination> container = default;
+            OutputFileBlobContainerDestination container = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("container"u8))
@@ -39,12 +80,48 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    container = OutputFileBlobContainerDestination.DeserializeOutputFileBlobContainerDestination(property.Value);
+                    container = OutputFileBlobContainerDestination.DeserializeOutputFileBlobContainerDestination(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OutputFileDestination(container.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new OutputFileDestination(container, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<OutputFileDestination>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OutputFileDestination>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(OutputFileDestination)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        OutputFileDestination IPersistableModel<OutputFileDestination>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OutputFileDestination>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOutputFileDestination(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OutputFileDestination)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OutputFileDestination>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -58,7 +135,7 @@ namespace Azure.Compute.Batch
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<OutputFileDestination>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

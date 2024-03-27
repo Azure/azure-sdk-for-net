@@ -7,26 +7,58 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
     /// <summary> A Pool in the Azure Batch service. </summary>
     public partial class BatchPool
     {
-        /// <summary> Initializes a new instance of BatchPool. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchPool"/>. </summary>
         internal BatchPool()
         {
             ResizeErrors = new ChangeTrackingList<ResizeError>();
-            CertificateReferences = new ChangeTrackingList<CertificateReference>();
-            ApplicationPackageReferences = new ChangeTrackingList<ApplicationPackageReference>();
+            ResourceTags = new ChangeTrackingDictionary<string, string>();
+            CertificateReferences = new ChangeTrackingList<BatchCertificateReference>();
+            ApplicationPackageReferences = new ChangeTrackingList<BatchApplicationPackageReference>();
             ApplicationLicenses = new ChangeTrackingList<string>();
             UserAccounts = new ChangeTrackingList<UserAccount>();
             Metadata = new ChangeTrackingList<MetadataItem>();
             MountConfiguration = new ChangeTrackingList<MountConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of BatchPool. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchPool"/>. </summary>
         /// <param name="id"> A string that uniquely identifies the Pool within the Account. The ID can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 64 characters. The ID is case-preserving and case-insensitive (that is, you may not have two IDs within an Account that differ only by case). </param>
         /// <param name="displayName"> The display name for the Pool. The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </param>
         /// <param name="url"> The URL of the Pool. </param>
@@ -42,6 +74,7 @@ namespace Azure.Compute.Batch
         /// <param name="virtualMachineConfiguration"> The virtual machine configuration for the Pool. This property and cloudServiceConfiguration are mutually exclusive and one of the properties must be specified. </param>
         /// <param name="resizeTimeout"> The timeout for allocation of Compute Nodes to the Pool. This is the timeout for the most recent resize operation. (The initial sizing when the Pool is created counts as a resize.) The default value is 15 minutes. </param>
         /// <param name="resizeErrors"> A list of errors encountered while performing the last resize on the Pool. This property is set only if one or more errors occurred during the last Pool resize, and only when the Pool allocationState is Steady. </param>
+        /// <param name="resourceTags"> The user-specified tags associated with the pool. The user-defined tags to be associated with the Azure Batch Pool. When specified, these tags are propagated to the backing Azure resources associated with the pool. This property can only be specified when the Batch account was created with the poolAllocationMode property set to 'UserSubscription'. </param>
         /// <param name="currentDedicatedNodes"> The number of dedicated Compute Nodes currently in the Pool. </param>
         /// <param name="currentLowPriorityNodes"> The number of Spot/Low-priority Compute Nodes currently in the Pool. Spot/Low-priority Compute Nodes which have been preempted are included in this count. </param>
         /// <param name="targetDedicatedNodes"> The desired number of dedicated Compute Nodes in the Pool. </param>
@@ -70,7 +103,9 @@ namespace Azure.Compute.Batch
         /// <param name="identity"> The identity of the Batch pool, if configured. The list of user identities associated with the Batch pool. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
         /// <param name="targetNodeCommunicationMode"> The desired node communication mode for the pool. If omitted, the default value is Default. </param>
         /// <param name="currentNodeCommunicationMode"> The current state of the pool communication mode. </param>
-        internal BatchPool(string id, string displayName, string url, string eTag, DateTimeOffset? lastModified, DateTimeOffset? creationTime, PoolState? state, DateTimeOffset? stateTransitionTime, AllocationState? allocationState, DateTimeOffset? allocationStateTransitionTime, string vmSize, CloudServiceConfiguration cloudServiceConfiguration, VirtualMachineConfiguration virtualMachineConfiguration, TimeSpan? resizeTimeout, IReadOnlyList<ResizeError> resizeErrors, int? currentDedicatedNodes, int? currentLowPriorityNodes, int? targetDedicatedNodes, int? targetLowPriorityNodes, bool? enableAutoScale, string autoScaleFormula, TimeSpan? autoScaleEvaluationInterval, AutoScaleRun autoScaleRun, bool? enableInterNodeCommunication, NetworkConfiguration networkConfiguration, StartTask startTask, IReadOnlyList<CertificateReference> certificateReferences, IReadOnlyList<ApplicationPackageReference> applicationPackageReferences, IReadOnlyList<string> applicationLicenses, int? taskSlotsPerNode, TaskSchedulingPolicy taskSchedulingPolicy, IReadOnlyList<UserAccount> userAccounts, IReadOnlyList<MetadataItem> metadata, PoolStatistics stats, IReadOnlyList<MountConfiguration> mountConfiguration, BatchPoolIdentity identity, NodeCommunicationMode? targetNodeCommunicationMode, NodeCommunicationMode? currentNodeCommunicationMode)
+        /// <param name="upgradePolicy"> The upgrade policy for the Pool. Describes an upgrade policy - automatic, manual, or rolling. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchPool(string id, string displayName, string url, string eTag, DateTimeOffset? lastModified, DateTimeOffset? creationTime, BatchPoolState? state, DateTimeOffset? stateTransitionTime, AllocationState? allocationState, DateTimeOffset? allocationStateTransitionTime, string vmSize, CloudServiceConfiguration cloudServiceConfiguration, VirtualMachineConfiguration virtualMachineConfiguration, TimeSpan? resizeTimeout, IReadOnlyList<ResizeError> resizeErrors, IReadOnlyDictionary<string, string> resourceTags, int? currentDedicatedNodes, int? currentLowPriorityNodes, int? targetDedicatedNodes, int? targetLowPriorityNodes, bool? enableAutoScale, string autoScaleFormula, TimeSpan? autoScaleEvaluationInterval, AutoScaleRun autoScaleRun, bool? enableInterNodeCommunication, NetworkConfiguration networkConfiguration, BatchStartTask startTask, IReadOnlyList<BatchCertificateReference> certificateReferences, IReadOnlyList<BatchApplicationPackageReference> applicationPackageReferences, IReadOnlyList<string> applicationLicenses, int? taskSlotsPerNode, BatchTaskSchedulingPolicy taskSchedulingPolicy, IReadOnlyList<UserAccount> userAccounts, IReadOnlyList<MetadataItem> metadata, BatchPoolStatistics stats, IReadOnlyList<MountConfiguration> mountConfiguration, BatchPoolIdentity identity, BatchNodeCommunicationMode? targetNodeCommunicationMode, BatchNodeCommunicationMode? currentNodeCommunicationMode, UpgradePolicy upgradePolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             DisplayName = displayName;
@@ -87,6 +122,7 @@ namespace Azure.Compute.Batch
             VirtualMachineConfiguration = virtualMachineConfiguration;
             ResizeTimeout = resizeTimeout;
             ResizeErrors = resizeErrors;
+            ResourceTags = resourceTags;
             CurrentDedicatedNodes = currentDedicatedNodes;
             CurrentLowPriorityNodes = currentLowPriorityNodes;
             TargetDedicatedNodes = targetDedicatedNodes;
@@ -110,6 +146,8 @@ namespace Azure.Compute.Batch
             Identity = identity;
             TargetNodeCommunicationMode = targetNodeCommunicationMode;
             CurrentNodeCommunicationMode = currentNodeCommunicationMode;
+            UpgradePolicy = upgradePolicy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A string that uniquely identifies the Pool within the Account. The ID can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 64 characters. The ID is case-preserving and case-insensitive (that is, you may not have two IDs within an Account that differ only by case). </summary>
@@ -125,7 +163,7 @@ namespace Azure.Compute.Batch
         /// <summary> The creation time of the Pool. </summary>
         public DateTimeOffset? CreationTime { get; }
         /// <summary> The current state of the Pool. </summary>
-        public PoolState? State { get; }
+        public BatchPoolState? State { get; }
         /// <summary> The time at which the Pool entered its current state. </summary>
         public DateTimeOffset? StateTransitionTime { get; }
         /// <summary> Whether the Pool is resizing. </summary>
@@ -142,6 +180,8 @@ namespace Azure.Compute.Batch
         public TimeSpan? ResizeTimeout { get; }
         /// <summary> A list of errors encountered while performing the last resize on the Pool. This property is set only if one or more errors occurred during the last Pool resize, and only when the Pool allocationState is Steady. </summary>
         public IReadOnlyList<ResizeError> ResizeErrors { get; }
+        /// <summary> The user-specified tags associated with the pool. The user-defined tags to be associated with the Azure Batch Pool. When specified, these tags are propagated to the backing Azure resources associated with the pool. This property can only be specified when the Batch account was created with the poolAllocationMode property set to 'UserSubscription'. </summary>
+        public IReadOnlyDictionary<string, string> ResourceTags { get; }
         /// <summary> The number of dedicated Compute Nodes currently in the Pool. </summary>
         public int? CurrentDedicatedNodes { get; }
         /// <summary> The number of Spot/Low-priority Compute Nodes currently in the Pool. Spot/Low-priority Compute Nodes which have been preempted are included in this count. </summary>
@@ -163,35 +203,37 @@ namespace Azure.Compute.Batch
         /// <summary> The network configuration for the Pool. </summary>
         public NetworkConfiguration NetworkConfiguration { get; }
         /// <summary> A Task specified to run on each Compute Node as it joins the Pool. </summary>
-        public StartTask StartTask { get; }
+        public BatchStartTask StartTask { get; }
         /// <summary>
         /// For Windows Nodes, the Batch service installs the Certificates to the specified Certificate store and location.
         /// For Linux Compute Nodes, the Certificates are stored in a directory inside the Task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the Task to query for this location.
         /// For Certificates with visibility of 'remoteUser', a 'certs' directory is created in the user's home directory (e.g., /home/{user-name}/certs) and Certificates are placed in that directory.
         /// Warning: This property is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
         /// </summary>
-        public IReadOnlyList<CertificateReference> CertificateReferences { get; }
+        public IReadOnlyList<BatchCertificateReference> CertificateReferences { get; }
         /// <summary> The list of Packages to be installed on each Compute Node in the Pool. Changes to Package references affect all new Nodes joining the Pool, but do not affect Compute Nodes that are already in the Pool until they are rebooted or reimaged. There is a maximum of 10 Package references on any given Pool. </summary>
-        public IReadOnlyList<ApplicationPackageReference> ApplicationPackageReferences { get; }
+        public IReadOnlyList<BatchApplicationPackageReference> ApplicationPackageReferences { get; }
         /// <summary> The list of application licenses the Batch service will make available on each Compute Node in the Pool. The list of application licenses must be a subset of available Batch service application licenses. If a license is requested which is not supported, Pool creation will fail. </summary>
         public IReadOnlyList<string> ApplicationLicenses { get; }
         /// <summary> The number of task slots that can be used to run concurrent tasks on a single compute node in the pool. The default value is 1. The maximum value is the smaller of 4 times the number of cores of the vmSize of the pool or 256. </summary>
         public int? TaskSlotsPerNode { get; }
         /// <summary> How Tasks are distributed across Compute Nodes in a Pool. If not specified, the default is spread. </summary>
-        public TaskSchedulingPolicy TaskSchedulingPolicy { get; }
+        public BatchTaskSchedulingPolicy TaskSchedulingPolicy { get; }
         /// <summary> The list of user Accounts to be created on each Compute Node in the Pool. </summary>
         public IReadOnlyList<UserAccount> UserAccounts { get; }
         /// <summary> A list of name-value pairs associated with the Pool as metadata. </summary>
         public IReadOnlyList<MetadataItem> Metadata { get; }
         /// <summary> Utilization and resource usage statistics for the entire lifetime of the Pool. This property is populated only if the CloudPool was retrieved with an expand clause including the 'stats' attribute; otherwise it is null. The statistics may not be immediately available. The Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes. </summary>
-        public PoolStatistics Stats { get; }
+        public BatchPoolStatistics Stats { get; }
         /// <summary> A list of file systems to mount on each node in the pool. This supports Azure Files, NFS, CIFS/SMB, and Blobfuse. </summary>
         public IReadOnlyList<MountConfiguration> MountConfiguration { get; }
         /// <summary> The identity of the Batch pool, if configured. The list of user identities associated with the Batch pool. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </summary>
         public BatchPoolIdentity Identity { get; }
         /// <summary> The desired node communication mode for the pool. If omitted, the default value is Default. </summary>
-        public NodeCommunicationMode? TargetNodeCommunicationMode { get; }
+        public BatchNodeCommunicationMode? TargetNodeCommunicationMode { get; }
         /// <summary> The current state of the pool communication mode. </summary>
-        public NodeCommunicationMode? CurrentNodeCommunicationMode { get; }
+        public BatchNodeCommunicationMode? CurrentNodeCommunicationMode { get; }
+        /// <summary> The upgrade policy for the Pool. Describes an upgrade policy - automatic, manual, or rolling. </summary>
+        public UpgradePolicy UpgradePolicy { get; }
     }
 }

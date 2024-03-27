@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.Compute.Batch
 {
@@ -16,7 +16,39 @@ namespace Azure.Compute.Batch
     /// </summary>
     public partial class UserAccount
     {
-        /// <summary> Initializes a new instance of UserAccount. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UserAccount"/>. </summary>
         /// <param name="name"> The name of the user Account. Names can contain any Unicode characters up to a maximum length of 20. </param>
         /// <param name="password"> The password for the user Account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="password"/> is null. </exception>
@@ -29,19 +61,26 @@ namespace Azure.Compute.Batch
             Password = password;
         }
 
-        /// <summary> Initializes a new instance of UserAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserAccount"/>. </summary>
         /// <param name="name"> The name of the user Account. Names can contain any Unicode characters up to a maximum length of 20. </param>
         /// <param name="password"> The password for the user Account. </param>
         /// <param name="elevationLevel"> The elevation level of the user Account. The default value is nonAdmin. </param>
         /// <param name="linuxUserConfiguration"> The Linux-specific user configuration for the user Account. This property is ignored if specified on a Windows Pool. If not specified, the user is created with the default options. </param>
         /// <param name="windowsUserConfiguration"> The Windows-specific user configuration for the user Account. This property can only be specified if the user is on a Windows Pool. If not specified and on a Windows Pool, the user is created with the default options. </param>
-        internal UserAccount(string name, string password, ElevationLevel? elevationLevel, LinuxUserConfiguration linuxUserConfiguration, WindowsUserConfiguration windowsUserConfiguration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UserAccount(string name, string password, ElevationLevel? elevationLevel, LinuxUserConfiguration linuxUserConfiguration, WindowsUserConfiguration windowsUserConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Password = password;
             ElevationLevel = elevationLevel;
             LinuxUserConfiguration = linuxUserConfiguration;
             WindowsUserConfiguration = windowsUserConfiguration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UserAccount"/> for deserialization. </summary>
+        internal UserAccount()
+        {
         }
 
         /// <summary> The name of the user Account. Names can contain any Unicode characters up to a maximum length of 20. </summary>

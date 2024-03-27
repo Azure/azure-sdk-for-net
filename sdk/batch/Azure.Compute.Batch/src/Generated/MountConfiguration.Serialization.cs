@@ -5,50 +5,91 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class MountConfiguration : IUtf8JsonSerializable
+    public partial class MountConfiguration : IUtf8JsonSerializable, IJsonModel<MountConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MountConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MountConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MountConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MountConfiguration)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AzureBlobFileSystemConfiguration))
             {
                 writer.WritePropertyName("azureBlobFileSystemConfiguration"u8);
-                writer.WriteObjectValue(AzureBlobFileSystemConfiguration);
+                writer.WriteObjectValue<AzureBlobFileSystemConfiguration>(AzureBlobFileSystemConfiguration, options);
             }
             if (Optional.IsDefined(NfsMountConfiguration))
             {
                 writer.WritePropertyName("nfsMountConfiguration"u8);
-                writer.WriteObjectValue(NfsMountConfiguration);
+                writer.WriteObjectValue<NfsMountConfiguration>(NfsMountConfiguration, options);
             }
             if (Optional.IsDefined(CifsMountConfiguration))
             {
                 writer.WritePropertyName("cifsMountConfiguration"u8);
-                writer.WriteObjectValue(CifsMountConfiguration);
+                writer.WriteObjectValue<CifsMountConfiguration>(CifsMountConfiguration, options);
             }
             if (Optional.IsDefined(AzureFileShareConfiguration))
             {
                 writer.WritePropertyName("azureFileShareConfiguration"u8);
-                writer.WriteObjectValue(AzureFileShareConfiguration);
+                writer.WriteObjectValue<AzureFileShareConfiguration>(AzureFileShareConfiguration, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static MountConfiguration DeserializeMountConfiguration(JsonElement element)
+        MountConfiguration IJsonModel<MountConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MountConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MountConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMountConfiguration(document.RootElement, options);
+        }
+
+        internal static MountConfiguration DeserializeMountConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AzureBlobFileSystemConfiguration> azureBlobFileSystemConfiguration = default;
-            Optional<NfsMountConfiguration> nfsMountConfiguration = default;
-            Optional<CifsMountConfiguration> cifsMountConfiguration = default;
-            Optional<AzureFileShareConfiguration> azureFileShareConfiguration = default;
+            AzureBlobFileSystemConfiguration azureBlobFileSystemConfiguration = default;
+            NfsMountConfiguration nfsMountConfiguration = default;
+            CifsMountConfiguration cifsMountConfiguration = default;
+            AzureFileShareConfiguration azureFileShareConfiguration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureBlobFileSystemConfiguration"u8))
@@ -57,7 +98,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    azureBlobFileSystemConfiguration = AzureBlobFileSystemConfiguration.DeserializeAzureBlobFileSystemConfiguration(property.Value);
+                    azureBlobFileSystemConfiguration = AzureBlobFileSystemConfiguration.DeserializeAzureBlobFileSystemConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nfsMountConfiguration"u8))
@@ -66,7 +107,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    nfsMountConfiguration = NfsMountConfiguration.DeserializeNfsMountConfiguration(property.Value);
+                    nfsMountConfiguration = NfsMountConfiguration.DeserializeNfsMountConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("cifsMountConfiguration"u8))
@@ -75,7 +116,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    cifsMountConfiguration = CifsMountConfiguration.DeserializeCifsMountConfiguration(property.Value);
+                    cifsMountConfiguration = CifsMountConfiguration.DeserializeCifsMountConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("azureFileShareConfiguration"u8))
@@ -84,12 +125,48 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    azureFileShareConfiguration = AzureFileShareConfiguration.DeserializeAzureFileShareConfiguration(property.Value);
+                    azureFileShareConfiguration = AzureFileShareConfiguration.DeserializeAzureFileShareConfiguration(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MountConfiguration(azureBlobFileSystemConfiguration.Value, nfsMountConfiguration.Value, cifsMountConfiguration.Value, azureFileShareConfiguration.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MountConfiguration(azureBlobFileSystemConfiguration, nfsMountConfiguration, cifsMountConfiguration, azureFileShareConfiguration, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MountConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MountConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MountConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MountConfiguration IPersistableModel<MountConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MountConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMountConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MountConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MountConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -103,7 +180,7 @@ namespace Azure.Compute.Batch
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<MountConfiguration>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

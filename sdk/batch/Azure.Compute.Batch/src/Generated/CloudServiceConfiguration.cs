@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.Compute.Batch
 {
@@ -16,7 +16,39 @@ namespace Azure.Compute.Batch
     /// </summary>
     public partial class CloudServiceConfiguration
     {
-        /// <summary> Initializes a new instance of CloudServiceConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudServiceConfiguration"/>. </summary>
         /// <param name="osFamily">
         /// Possible values are:
         /// 2 - OS Family 2, equivalent to Windows Server 2008 R2
@@ -38,7 +70,7 @@ namespace Azure.Compute.Batch
             OsFamily = osFamily;
         }
 
-        /// <summary> Initializes a new instance of CloudServiceConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceConfiguration"/>. </summary>
         /// <param name="osFamily">
         /// Possible values are:
         /// 2 - OS Family 2, equivalent to Windows Server 2008 R2
@@ -53,10 +85,17 @@ namespace Azure.Compute.Batch
         /// (https://azure.microsoft.com/documentation/articles/cloud-services-guestos-update-matrix/#releases).
         /// </param>
         /// <param name="osVersion"> The Azure Guest OS version to be installed on the virtual machines in the Pool. The default value is * which specifies the latest operating system version for the specified OS family. </param>
-        internal CloudServiceConfiguration(string osFamily, string osVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudServiceConfiguration(string osFamily, string osVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OsFamily = osFamily;
             OsVersion = osVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CloudServiceConfiguration"/> for deserialization. </summary>
+        internal CloudServiceConfiguration()
+        {
         }
 
         /// <summary>

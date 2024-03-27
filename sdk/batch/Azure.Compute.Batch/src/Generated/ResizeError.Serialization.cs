@@ -5,24 +5,90 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class ResizeError
+    public partial class ResizeError : IUtf8JsonSerializable, IJsonModel<ResizeError>
     {
-        internal static ResizeError DeserializeResizeError(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResizeError>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ResizeError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ResizeError>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResizeError)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Code))
+            {
+                writer.WritePropertyName("code"u8);
+                writer.WriteStringValue(Code);
+            }
+            if (Optional.IsDefined(Message))
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
+            }
+            if (Optional.IsCollectionDefined(Values))
+            {
+                writer.WritePropertyName("values"u8);
+                writer.WriteStartArray();
+                foreach (var item in Values)
+                {
+                    writer.WriteObjectValue<NameValuePair>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ResizeError IJsonModel<ResizeError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResizeError>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResizeError)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeResizeError(document.RootElement, options);
+        }
+
+        internal static ResizeError DeserializeResizeError(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<IReadOnlyList<NameValuePair>> values = default;
+            string code = default;
+            string message = default;
+            IReadOnlyList<NameValuePair> values = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -44,14 +110,50 @@ namespace Azure.Compute.Batch
                     List<NameValuePair> array = new List<NameValuePair>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NameValuePair.DeserializeNameValuePair(item));
+                        array.Add(NameValuePair.DeserializeNameValuePair(item, options));
                     }
                     values = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ResizeError(code.Value, message.Value, Optional.ToList(values));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ResizeError(code, message, values ?? new ChangeTrackingList<NameValuePair>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ResizeError>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResizeError>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ResizeError)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ResizeError IPersistableModel<ResizeError>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResizeError>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeResizeError(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResizeError)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ResizeError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -59,6 +161,14 @@ namespace Azure.Compute.Batch
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeResizeError(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ResizeError>(this, new ModelReaderWriterOptions("W"));
+            return content;
         }
     }
 }

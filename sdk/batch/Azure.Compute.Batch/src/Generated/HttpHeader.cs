@@ -6,14 +6,46 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.Compute.Batch
 {
     /// <summary> An HTTP header name-value pair. </summary>
     public partial class HttpHeader
     {
-        /// <summary> Initializes a new instance of HttpHeader. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HttpHeader"/>. </summary>
         /// <param name="name"> The case-insensitive name of the header to be used while uploading output files. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public HttpHeader(string name)
@@ -23,13 +55,20 @@ namespace Azure.Compute.Batch
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of HttpHeader. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpHeader"/>. </summary>
         /// <param name="name"> The case-insensitive name of the header to be used while uploading output files. </param>
         /// <param name="value"> The value of the header to be used while uploading output files. </param>
-        internal HttpHeader(string name, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HttpHeader(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HttpHeader"/> for deserialization. </summary>
+        internal HttpHeader()
+        {
         }
 
         /// <summary> The case-insensitive name of the header to be used while uploading output files. </summary>

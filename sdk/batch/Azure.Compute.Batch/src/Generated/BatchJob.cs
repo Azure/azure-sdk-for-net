@@ -7,17 +7,48 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
     /// <summary> An Azure Batch Job. </summary>
     public partial class BatchJob
     {
-        /// <summary> Initializes a new instance of BatchJob. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchJob"/>. </summary>
         /// <param name="poolInfo"> The Pool settings associated with the Job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolInfo"/> is null. </exception>
-        public BatchJob(PoolInformation poolInfo)
+        public BatchJob(BatchPoolInfo poolInfo)
         {
             Argument.AssertNotNull(poolInfo, nameof(poolInfo));
 
@@ -26,7 +57,7 @@ namespace Azure.Compute.Batch
             Metadata = new ChangeTrackingList<MetadataItem>();
         }
 
-        /// <summary> Initializes a new instance of BatchJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchJob"/>. </summary>
         /// <param name="id"> A string that uniquely identifies the Job within the Account. The ID is case-preserving and case-insensitive (that is, you may not have two IDs within an Account that differ only by case). </param>
         /// <param name="displayName"> The display name for the Job. </param>
         /// <param name="usesTaskDependencies"> Whether Tasks in the Job can define dependencies on each other. The default is false. </param>
@@ -53,7 +84,8 @@ namespace Azure.Compute.Batch
         /// <param name="metadata"> A list of name-value pairs associated with the Job as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </param>
         /// <param name="executionInfo"> The execution information for the Job. </param>
         /// <param name="stats"> Resource usage statistics for the entire lifetime of the Job. This property is populated only if the CloudJob was retrieved with an expand clause including the 'stats' attribute; otherwise it is null. The statistics may not be immediately available. The Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes. </param>
-        internal BatchJob(string id, string displayName, bool? usesTaskDependencies, string url, string eTag, DateTimeOffset? lastModified, DateTimeOffset? creationTime, JobState? state, DateTimeOffset? stateTransitionTime, JobState? previousState, DateTimeOffset? previousStateTransitionTime, int? priority, bool? allowTaskPreemption, int? maxParallelTasks, JobConstraints constraints, JobManagerTask jobManagerTask, JobPreparationTask jobPreparationTask, JobReleaseTask jobReleaseTask, IReadOnlyList<EnvironmentSetting> commonEnvironmentSettings, PoolInformation poolInfo, OnAllTasksComplete? onAllTasksComplete, OnTaskFailure? onTaskFailure, JobNetworkConfiguration networkConfiguration, IList<MetadataItem> metadata, JobExecutionInformation executionInfo, JobStatistics stats)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchJob(string id, string displayName, bool? usesTaskDependencies, string url, string eTag, DateTimeOffset? lastModified, DateTimeOffset? creationTime, BatchJobState? state, DateTimeOffset? stateTransitionTime, BatchJobState? previousState, DateTimeOffset? previousStateTransitionTime, int? priority, bool? allowTaskPreemption, int? maxParallelTasks, BatchJobConstraints constraints, BatchJobManagerTask jobManagerTask, BatchJobPreparationTask jobPreparationTask, BatchJobReleaseTask jobReleaseTask, IReadOnlyList<EnvironmentSetting> commonEnvironmentSettings, BatchPoolInfo poolInfo, OnAllBatchTasksComplete? onAllTasksComplete, OnBatchTaskFailure? onTaskFailure, BatchJobNetworkConfiguration networkConfiguration, IList<MetadataItem> metadata, BatchJobExecutionInfo executionInfo, BatchJobStatistics stats, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             DisplayName = displayName;
@@ -81,6 +113,12 @@ namespace Azure.Compute.Batch
             Metadata = metadata;
             ExecutionInfo = executionInfo;
             Stats = stats;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchJob"/> for deserialization. </summary>
+        internal BatchJob()
+        {
         }
 
         /// <summary> A string that uniquely identifies the Job within the Account. The ID is case-preserving and case-insensitive (that is, you may not have two IDs within an Account that differ only by case). </summary>
@@ -98,11 +136,11 @@ namespace Azure.Compute.Batch
         /// <summary> The creation time of the Job. </summary>
         public DateTimeOffset? CreationTime { get; }
         /// <summary> The current state of the Job. </summary>
-        public JobState? State { get; }
+        public BatchJobState? State { get; }
         /// <summary> The time at which the Job entered its current state. </summary>
         public DateTimeOffset? StateTransitionTime { get; }
         /// <summary> The previous state of the Job. This property is not set if the Job is in its initial Active state. </summary>
-        public JobState? PreviousState { get; }
+        public BatchJobState? PreviousState { get; }
         /// <summary> The time at which the Job entered its previous state. This property is not set if the Job is in its initial Active state. </summary>
         public DateTimeOffset? PreviousStateTransitionTime { get; }
         /// <summary> The priority of the Job. Priority values can range from -1000 to 1000, with -1000 being the lowest priority and 1000 being the highest priority. The default value is 0. </summary>
@@ -112,28 +150,28 @@ namespace Azure.Compute.Batch
         /// <summary> The maximum number of tasks that can be executed in parallel for the job. The value of maxParallelTasks must be -1 or greater than 0 if specified. If not specified, the default value is -1, which means there's no limit to the number of tasks that can be run at once. You can update a job's maxParallelTasks after it has been created using the update job API. </summary>
         public int? MaxParallelTasks { get; set; }
         /// <summary> The execution constraints for the Job. </summary>
-        public JobConstraints Constraints { get; set; }
+        public BatchJobConstraints Constraints { get; set; }
         /// <summary> Details of a Job Manager Task to be launched when the Job is started. </summary>
-        public JobManagerTask JobManagerTask { get; }
+        public BatchJobManagerTask JobManagerTask { get; }
         /// <summary> The Job Preparation Task. The Job Preparation Task is a special Task run on each Compute Node before any other Task of the Job. </summary>
-        public JobPreparationTask JobPreparationTask { get; }
+        public BatchJobPreparationTask JobPreparationTask { get; }
         /// <summary> The Job Release Task. The Job Release Task is a special Task run at the end of the Job on each Compute Node that has run any other Task of the Job. </summary>
-        public JobReleaseTask JobReleaseTask { get; }
+        public BatchJobReleaseTask JobReleaseTask { get; }
         /// <summary> The list of common environment variable settings. These environment variables are set for all Tasks in the Job (including the Job Manager, Job Preparation and Job Release Tasks). Individual Tasks can override an environment setting specified here by specifying the same setting name with a different value. </summary>
         public IReadOnlyList<EnvironmentSetting> CommonEnvironmentSettings { get; }
         /// <summary> The Pool settings associated with the Job. </summary>
-        public PoolInformation PoolInfo { get; set; }
+        public BatchPoolInfo PoolInfo { get; set; }
         /// <summary> The action the Batch service should take when all Tasks in the Job are in the completed state. The default is noaction. </summary>
-        public OnAllTasksComplete? OnAllTasksComplete { get; set; }
+        public OnAllBatchTasksComplete? OnAllTasksComplete { get; set; }
         /// <summary> The action the Batch service should take when any Task in the Job fails. A Task is considered to have failed if has a failureInfo. A failureInfo is set if the Task completes with a non-zero exit code after exhausting its retry count, or if there was an error starting the Task, for example due to a resource file download error. The default is noaction. </summary>
-        public OnTaskFailure? OnTaskFailure { get; }
+        public OnBatchTaskFailure? OnTaskFailure { get; }
         /// <summary> The network configuration for the Job. </summary>
-        public JobNetworkConfiguration NetworkConfiguration { get; }
+        public BatchJobNetworkConfiguration NetworkConfiguration { get; }
         /// <summary> A list of name-value pairs associated with the Job as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </summary>
         public IList<MetadataItem> Metadata { get; }
         /// <summary> The execution information for the Job. </summary>
-        public JobExecutionInformation ExecutionInfo { get; }
+        public BatchJobExecutionInfo ExecutionInfo { get; }
         /// <summary> Resource usage statistics for the entire lifetime of the Job. This property is populated only if the CloudJob was retrieved with an expand clause including the 'stats' attribute; otherwise it is null. The statistics may not be immediately available. The Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes. </summary>
-        public JobStatistics Stats { get; }
+        public BatchJobStatistics Stats { get; }
     }
 }

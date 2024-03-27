@@ -6,18 +6,81 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class BatchJob : IUtf8JsonSerializable
+    public partial class BatchJob : IUtf8JsonSerializable, IJsonModel<BatchJob>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchJob>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BatchJob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchJob>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchJob)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UsesTaskDependencies))
+            {
+                writer.WritePropertyName("usesTaskDependencies"u8);
+                writer.WriteBooleanValue(UsesTaskDependencies.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Url))
+            {
+                writer.WritePropertyName("url"u8);
+                writer.WriteStringValue(Url);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("eTag"u8);
+                writer.WriteStringValue(ETag);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastModified))
+            {
+                writer.WritePropertyName("lastModified"u8);
+                writer.WriteStringValue(LastModified.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreationTime))
+            {
+                writer.WritePropertyName("creationTime"u8);
+                writer.WriteStringValue(CreationTime.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(StateTransitionTime))
+            {
+                writer.WritePropertyName("stateTransitionTime"u8);
+                writer.WriteStringValue(StateTransitionTime.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(PreviousState))
+            {
+                writer.WritePropertyName("previousState"u8);
+                writer.WriteStringValue(PreviousState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(PreviousStateTransitionTime))
+            {
+                writer.WritePropertyName("previousStateTransitionTime"u8);
+                writer.WriteStringValue(PreviousStateTransitionTime.Value, "O");
+            }
             if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
@@ -36,14 +99,49 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(Constraints))
             {
                 writer.WritePropertyName("constraints"u8);
-                writer.WriteObjectValue(Constraints);
+                writer.WriteObjectValue<BatchJobConstraints>(Constraints, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(JobManagerTask))
+            {
+                writer.WritePropertyName("jobManagerTask"u8);
+                writer.WriteObjectValue<BatchJobManagerTask>(JobManagerTask, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(JobPreparationTask))
+            {
+                writer.WritePropertyName("jobPreparationTask"u8);
+                writer.WriteObjectValue<BatchJobPreparationTask>(JobPreparationTask, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(JobReleaseTask))
+            {
+                writer.WritePropertyName("jobReleaseTask"u8);
+                writer.WriteObjectValue<BatchJobReleaseTask>(JobReleaseTask, options);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(CommonEnvironmentSettings))
+            {
+                writer.WritePropertyName("commonEnvironmentSettings"u8);
+                writer.WriteStartArray();
+                foreach (var item in CommonEnvironmentSettings)
+                {
+                    writer.WriteObjectValue<EnvironmentSetting>(item, options);
+                }
+                writer.WriteEndArray();
             }
             writer.WritePropertyName("poolInfo"u8);
-            writer.WriteObjectValue(PoolInfo);
+            writer.WriteObjectValue<BatchPoolInfo>(PoolInfo, options);
             if (Optional.IsDefined(OnAllTasksComplete))
             {
                 writer.WritePropertyName("onAllTasksComplete"u8);
                 writer.WriteStringValue(OnAllTasksComplete.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(OnTaskFailure))
+            {
+                writer.WritePropertyName("onTaskFailure"u8);
+                writer.WriteStringValue(OnTaskFailure.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(NetworkConfiguration))
+            {
+                writer.WritePropertyName("networkConfiguration"u8);
+                writer.WriteObjectValue<BatchJobNetworkConfiguration>(NetworkConfiguration, options);
             }
             if (Optional.IsCollectionDefined(Metadata))
             {
@@ -51,45 +149,86 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in Metadata)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MetadataItem>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExecutionInfo))
+            {
+                writer.WritePropertyName("executionInfo"u8);
+                writer.WriteObjectValue<BatchJobExecutionInfo>(ExecutionInfo, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Stats))
+            {
+                writer.WritePropertyName("stats"u8);
+                writer.WriteObjectValue<BatchJobStatistics>(Stats, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static BatchJob DeserializeBatchJob(JsonElement element)
+        BatchJob IJsonModel<BatchJob>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchJob>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchJob)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchJob(document.RootElement, options);
+        }
+
+        internal static BatchJob DeserializeBatchJob(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> displayName = default;
-            Optional<bool> usesTaskDependencies = default;
-            Optional<string> url = default;
-            Optional<string> eTag = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<JobState> state = default;
-            Optional<DateTimeOffset> stateTransitionTime = default;
-            Optional<JobState> previousState = default;
-            Optional<DateTimeOffset> previousStateTransitionTime = default;
-            Optional<int> priority = default;
-            Optional<bool> allowTaskPreemption = default;
-            Optional<int> maxParallelTasks = default;
-            Optional<JobConstraints> constraints = default;
-            Optional<JobManagerTask> jobManagerTask = default;
-            Optional<JobPreparationTask> jobPreparationTask = default;
-            Optional<JobReleaseTask> jobReleaseTask = default;
-            Optional<IReadOnlyList<EnvironmentSetting>> commonEnvironmentSettings = default;
-            PoolInformation poolInfo = default;
-            Optional<OnAllTasksComplete> onAllTasksComplete = default;
-            Optional<OnTaskFailure> onTaskFailure = default;
-            Optional<JobNetworkConfiguration> networkConfiguration = default;
-            Optional<IList<MetadataItem>> metadata = default;
-            Optional<JobExecutionInformation> executionInfo = default;
-            Optional<JobStatistics> stats = default;
+            string id = default;
+            string displayName = default;
+            bool? usesTaskDependencies = default;
+            string url = default;
+            string eTag = default;
+            DateTimeOffset? lastModified = default;
+            DateTimeOffset? creationTime = default;
+            BatchJobState? state = default;
+            DateTimeOffset? stateTransitionTime = default;
+            BatchJobState? previousState = default;
+            DateTimeOffset? previousStateTransitionTime = default;
+            int? priority = default;
+            bool? allowTaskPreemption = default;
+            int? maxParallelTasks = default;
+            BatchJobConstraints constraints = default;
+            BatchJobManagerTask jobManagerTask = default;
+            BatchJobPreparationTask jobPreparationTask = default;
+            BatchJobReleaseTask jobReleaseTask = default;
+            IReadOnlyList<EnvironmentSetting> commonEnvironmentSettings = default;
+            BatchPoolInfo poolInfo = default;
+            OnAllBatchTasksComplete? onAllTasksComplete = default;
+            OnBatchTaskFailure? onTaskFailure = default;
+            BatchJobNetworkConfiguration networkConfiguration = default;
+            IList<MetadataItem> metadata = default;
+            BatchJobExecutionInfo executionInfo = default;
+            BatchJobStatistics stats = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -145,7 +284,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    state = new JobState(property.Value.GetString());
+                    state = new BatchJobState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("stateTransitionTime"u8))
@@ -163,7 +302,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    previousState = new JobState(property.Value.GetString());
+                    previousState = new BatchJobState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("previousStateTransitionTime"u8))
@@ -208,7 +347,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    constraints = JobConstraints.DeserializeJobConstraints(property.Value);
+                    constraints = BatchJobConstraints.DeserializeBatchJobConstraints(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("jobManagerTask"u8))
@@ -217,7 +356,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    jobManagerTask = JobManagerTask.DeserializeJobManagerTask(property.Value);
+                    jobManagerTask = BatchJobManagerTask.DeserializeBatchJobManagerTask(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("jobPreparationTask"u8))
@@ -226,7 +365,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    jobPreparationTask = JobPreparationTask.DeserializeJobPreparationTask(property.Value);
+                    jobPreparationTask = BatchJobPreparationTask.DeserializeBatchJobPreparationTask(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("jobReleaseTask"u8))
@@ -235,7 +374,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    jobReleaseTask = JobReleaseTask.DeserializeJobReleaseTask(property.Value);
+                    jobReleaseTask = BatchJobReleaseTask.DeserializeBatchJobReleaseTask(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("commonEnvironmentSettings"u8))
@@ -247,14 +386,14 @@ namespace Azure.Compute.Batch
                     List<EnvironmentSetting> array = new List<EnvironmentSetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EnvironmentSetting.DeserializeEnvironmentSetting(item));
+                        array.Add(EnvironmentSetting.DeserializeEnvironmentSetting(item, options));
                     }
                     commonEnvironmentSettings = array;
                     continue;
                 }
                 if (property.NameEquals("poolInfo"u8))
                 {
-                    poolInfo = PoolInformation.DeserializePoolInformation(property.Value);
+                    poolInfo = BatchPoolInfo.DeserializeBatchPoolInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("onAllTasksComplete"u8))
@@ -263,7 +402,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    onAllTasksComplete = new OnAllTasksComplete(property.Value.GetString());
+                    onAllTasksComplete = new OnAllBatchTasksComplete(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("onTaskFailure"u8))
@@ -272,7 +411,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    onTaskFailure = new OnTaskFailure(property.Value.GetString());
+                    onTaskFailure = new OnBatchTaskFailure(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("networkConfiguration"u8))
@@ -281,7 +420,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    networkConfiguration = JobNetworkConfiguration.DeserializeJobNetworkConfiguration(property.Value);
+                    networkConfiguration = BatchJobNetworkConfiguration.DeserializeBatchJobNetworkConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))
@@ -293,7 +432,7 @@ namespace Azure.Compute.Batch
                     List<MetadataItem> array = new List<MetadataItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetadataItem.DeserializeMetadataItem(item));
+                        array.Add(MetadataItem.DeserializeMetadataItem(item, options));
                     }
                     metadata = array;
                     continue;
@@ -304,7 +443,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    executionInfo = JobExecutionInformation.DeserializeJobExecutionInformation(property.Value);
+                    executionInfo = BatchJobExecutionInfo.DeserializeBatchJobExecutionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("stats"u8))
@@ -313,12 +452,75 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    stats = JobStatistics.DeserializeJobStatistics(property.Value);
+                    stats = BatchJobStatistics.DeserializeBatchJobStatistics(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BatchJob(id.Value, displayName.Value, Optional.ToNullable(usesTaskDependencies), url.Value, eTag.Value, Optional.ToNullable(lastModified), Optional.ToNullable(creationTime), Optional.ToNullable(state), Optional.ToNullable(stateTransitionTime), Optional.ToNullable(previousState), Optional.ToNullable(previousStateTransitionTime), Optional.ToNullable(priority), Optional.ToNullable(allowTaskPreemption), Optional.ToNullable(maxParallelTasks), constraints.Value, jobManagerTask.Value, jobPreparationTask.Value, jobReleaseTask.Value, Optional.ToList(commonEnvironmentSettings), poolInfo, Optional.ToNullable(onAllTasksComplete), Optional.ToNullable(onTaskFailure), networkConfiguration.Value, Optional.ToList(metadata), executionInfo.Value, stats.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BatchJob(
+                id,
+                displayName,
+                usesTaskDependencies,
+                url,
+                eTag,
+                lastModified,
+                creationTime,
+                state,
+                stateTransitionTime,
+                previousState,
+                previousStateTransitionTime,
+                priority,
+                allowTaskPreemption,
+                maxParallelTasks,
+                constraints,
+                jobManagerTask,
+                jobPreparationTask,
+                jobReleaseTask,
+                commonEnvironmentSettings ?? new ChangeTrackingList<EnvironmentSetting>(),
+                poolInfo,
+                onAllTasksComplete,
+                onTaskFailure,
+                networkConfiguration,
+                metadata ?? new ChangeTrackingList<MetadataItem>(),
+                executionInfo,
+                stats,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BatchJob>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchJob>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BatchJob)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BatchJob IPersistableModel<BatchJob>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchJob>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBatchJob(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchJob)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BatchJob>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -332,7 +534,7 @@ namespace Azure.Compute.Batch
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<BatchJob>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

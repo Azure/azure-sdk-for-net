@@ -6,59 +6,248 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class BatchTask : IUtf8JsonSerializable
+    public partial class BatchTask : IUtf8JsonSerializable, IJsonModel<BatchTask>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchTask>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BatchTask>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchTask>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchTask)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Url))
+            {
+                writer.WritePropertyName("url"u8);
+                writer.WriteStringValue(Url);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("eTag"u8);
+                writer.WriteStringValue(ETag);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastModified))
+            {
+                writer.WritePropertyName("lastModified"u8);
+                writer.WriteStringValue(LastModified.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreationTime))
+            {
+                writer.WritePropertyName("creationTime"u8);
+                writer.WriteStringValue(CreationTime.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExitConditions))
+            {
+                writer.WritePropertyName("exitConditions"u8);
+                writer.WriteObjectValue<ExitConditions>(ExitConditions, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(StateTransitionTime))
+            {
+                writer.WritePropertyName("stateTransitionTime"u8);
+                writer.WriteStringValue(StateTransitionTime.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(PreviousState))
+            {
+                writer.WritePropertyName("previousState"u8);
+                writer.WriteStringValue(PreviousState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(PreviousStateTransitionTime))
+            {
+                writer.WritePropertyName("previousStateTransitionTime"u8);
+                writer.WriteStringValue(PreviousStateTransitionTime.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(CommandLine))
+            {
+                writer.WritePropertyName("commandLine"u8);
+                writer.WriteStringValue(CommandLine);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ContainerSettings))
+            {
+                writer.WritePropertyName("containerSettings"u8);
+                writer.WriteObjectValue<BatchTaskContainerSettings>(ContainerSettings, options);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceFiles))
+            {
+                writer.WritePropertyName("resourceFiles"u8);
+                writer.WriteStartArray();
+                foreach (var item in ResourceFiles)
+                {
+                    writer.WriteObjectValue<ResourceFile>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(OutputFiles))
+            {
+                writer.WritePropertyName("outputFiles"u8);
+                writer.WriteStartArray();
+                foreach (var item in OutputFiles)
+                {
+                    writer.WriteObjectValue<OutputFile>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(EnvironmentSettings))
+            {
+                writer.WritePropertyName("environmentSettings"u8);
+                writer.WriteStartArray();
+                foreach (var item in EnvironmentSettings)
+                {
+                    writer.WriteObjectValue<EnvironmentSetting>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(AffinityInfo))
+            {
+                writer.WritePropertyName("affinityInfo"u8);
+                writer.WriteObjectValue<AffinityInfo>(AffinityInfo, options);
+            }
             if (Optional.IsDefined(Constraints))
             {
                 writer.WritePropertyName("constraints"u8);
-                writer.WriteObjectValue(Constraints);
+                writer.WriteObjectValue<BatchTaskConstraints>(Constraints, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RequiredSlots))
+            {
+                writer.WritePropertyName("requiredSlots"u8);
+                writer.WriteNumberValue(RequiredSlots.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UserIdentity))
+            {
+                writer.WritePropertyName("userIdentity"u8);
+                writer.WriteObjectValue<UserIdentity>(UserIdentity, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExecutionInfo))
+            {
+                writer.WritePropertyName("executionInfo"u8);
+                writer.WriteObjectValue<BatchTaskExecutionInfo>(ExecutionInfo, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NodeInfo))
+            {
+                writer.WritePropertyName("nodeInfo"u8);
+                writer.WriteObjectValue<BatchNodeInfo>(NodeInfo, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MultiInstanceSettings))
+            {
+                writer.WritePropertyName("multiInstanceSettings"u8);
+                writer.WriteObjectValue<MultiInstanceSettings>(MultiInstanceSettings, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Stats))
+            {
+                writer.WritePropertyName("stats"u8);
+                writer.WriteObjectValue<BatchTaskStatistics>(Stats, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DependsOn))
+            {
+                writer.WritePropertyName("dependsOn"u8);
+                writer.WriteObjectValue<BatchTaskDependencies>(DependsOn, options);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ApplicationPackageReferences))
+            {
+                writer.WritePropertyName("applicationPackageReferences"u8);
+                writer.WriteStartArray();
+                foreach (var item in ApplicationPackageReferences)
+                {
+                    writer.WriteObjectValue<BatchApplicationPackageReference>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(AuthenticationTokenSettings))
+            {
+                writer.WritePropertyName("authenticationTokenSettings"u8);
+                writer.WriteObjectValue<AuthenticationTokenSettings>(AuthenticationTokenSettings, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static BatchTask DeserializeBatchTask(JsonElement element)
+        BatchTask IJsonModel<BatchTask>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchTask>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchTask)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchTask(document.RootElement, options);
+        }
+
+        internal static BatchTask DeserializeBatchTask(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> displayName = default;
-            Optional<string> url = default;
-            Optional<string> eTag = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<ExitConditions> exitConditions = default;
-            Optional<TaskState> state = default;
-            Optional<DateTimeOffset> stateTransitionTime = default;
-            Optional<TaskState> previousState = default;
-            Optional<DateTimeOffset> previousStateTransitionTime = default;
-            Optional<string> commandLine = default;
-            Optional<TaskContainerSettings> containerSettings = default;
-            Optional<IReadOnlyList<ResourceFile>> resourceFiles = default;
-            Optional<IReadOnlyList<OutputFile>> outputFiles = default;
-            Optional<IReadOnlyList<EnvironmentSetting>> environmentSettings = default;
-            Optional<AffinityInformation> affinityInfo = default;
-            Optional<TaskConstraints> constraints = default;
-            Optional<int> requiredSlots = default;
-            Optional<UserIdentity> userIdentity = default;
-            Optional<TaskExecutionInformation> executionInfo = default;
-            Optional<BatchNodeInformation> nodeInfo = default;
-            Optional<MultiInstanceSettings> multiInstanceSettings = default;
-            Optional<TaskStatistics> stats = default;
-            Optional<TaskDependencies> dependsOn = default;
-            Optional<IReadOnlyList<ApplicationPackageReference>> applicationPackageReferences = default;
-            Optional<AuthenticationTokenSettings> authenticationTokenSettings = default;
+            string id = default;
+            string displayName = default;
+            string url = default;
+            string eTag = default;
+            DateTimeOffset? lastModified = default;
+            DateTimeOffset? creationTime = default;
+            ExitConditions exitConditions = default;
+            BatchTaskState? state = default;
+            DateTimeOffset? stateTransitionTime = default;
+            BatchTaskState? previousState = default;
+            DateTimeOffset? previousStateTransitionTime = default;
+            string commandLine = default;
+            BatchTaskContainerSettings containerSettings = default;
+            IReadOnlyList<ResourceFile> resourceFiles = default;
+            IReadOnlyList<OutputFile> outputFiles = default;
+            IReadOnlyList<EnvironmentSetting> environmentSettings = default;
+            AffinityInfo affinityInfo = default;
+            BatchTaskConstraints constraints = default;
+            int? requiredSlots = default;
+            UserIdentity userIdentity = default;
+            BatchTaskExecutionInfo executionInfo = default;
+            BatchNodeInfo nodeInfo = default;
+            MultiInstanceSettings multiInstanceSettings = default;
+            BatchTaskStatistics stats = default;
+            BatchTaskDependencies dependsOn = default;
+            IReadOnlyList<BatchApplicationPackageReference> applicationPackageReferences = default;
+            AuthenticationTokenSettings authenticationTokenSettings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -105,7 +294,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    exitConditions = ExitConditions.DeserializeExitConditions(property.Value);
+                    exitConditions = ExitConditions.DeserializeExitConditions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("state"u8))
@@ -114,7 +303,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    state = new TaskState(property.Value.GetString());
+                    state = new BatchTaskState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("stateTransitionTime"u8))
@@ -132,7 +321,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    previousState = new TaskState(property.Value.GetString());
+                    previousState = new BatchTaskState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("previousStateTransitionTime"u8))
@@ -155,7 +344,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    containerSettings = TaskContainerSettings.DeserializeTaskContainerSettings(property.Value);
+                    containerSettings = BatchTaskContainerSettings.DeserializeBatchTaskContainerSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceFiles"u8))
@@ -167,7 +356,7 @@ namespace Azure.Compute.Batch
                     List<ResourceFile> array = new List<ResourceFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceFile.DeserializeResourceFile(item));
+                        array.Add(ResourceFile.DeserializeResourceFile(item, options));
                     }
                     resourceFiles = array;
                     continue;
@@ -181,7 +370,7 @@ namespace Azure.Compute.Batch
                     List<OutputFile> array = new List<OutputFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutputFile.DeserializeOutputFile(item));
+                        array.Add(OutputFile.DeserializeOutputFile(item, options));
                     }
                     outputFiles = array;
                     continue;
@@ -195,7 +384,7 @@ namespace Azure.Compute.Batch
                     List<EnvironmentSetting> array = new List<EnvironmentSetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EnvironmentSetting.DeserializeEnvironmentSetting(item));
+                        array.Add(EnvironmentSetting.DeserializeEnvironmentSetting(item, options));
                     }
                     environmentSettings = array;
                     continue;
@@ -206,7 +395,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    affinityInfo = AffinityInformation.DeserializeAffinityInformation(property.Value);
+                    affinityInfo = AffinityInfo.DeserializeAffinityInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("constraints"u8))
@@ -215,7 +404,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    constraints = TaskConstraints.DeserializeTaskConstraints(property.Value);
+                    constraints = BatchTaskConstraints.DeserializeBatchTaskConstraints(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("requiredSlots"u8))
@@ -233,7 +422,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    userIdentity = UserIdentity.DeserializeUserIdentity(property.Value);
+                    userIdentity = UserIdentity.DeserializeUserIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("executionInfo"u8))
@@ -242,7 +431,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    executionInfo = TaskExecutionInformation.DeserializeTaskExecutionInformation(property.Value);
+                    executionInfo = BatchTaskExecutionInfo.DeserializeBatchTaskExecutionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nodeInfo"u8))
@@ -251,7 +440,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    nodeInfo = BatchNodeInformation.DeserializeBatchNodeInformation(property.Value);
+                    nodeInfo = BatchNodeInfo.DeserializeBatchNodeInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("multiInstanceSettings"u8))
@@ -260,7 +449,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    multiInstanceSettings = MultiInstanceSettings.DeserializeMultiInstanceSettings(property.Value);
+                    multiInstanceSettings = MultiInstanceSettings.DeserializeMultiInstanceSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("stats"u8))
@@ -269,7 +458,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    stats = TaskStatistics.DeserializeTaskStatistics(property.Value);
+                    stats = BatchTaskStatistics.DeserializeBatchTaskStatistics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dependsOn"u8))
@@ -278,7 +467,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    dependsOn = TaskDependencies.DeserializeTaskDependencies(property.Value);
+                    dependsOn = BatchTaskDependencies.DeserializeBatchTaskDependencies(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("applicationPackageReferences"u8))
@@ -287,10 +476,10 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    List<ApplicationPackageReference> array = new List<ApplicationPackageReference>();
+                    List<BatchApplicationPackageReference> array = new List<BatchApplicationPackageReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationPackageReference.DeserializeApplicationPackageReference(item));
+                        array.Add(BatchApplicationPackageReference.DeserializeBatchApplicationPackageReference(item, options));
                     }
                     applicationPackageReferences = array;
                     continue;
@@ -301,12 +490,76 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    authenticationTokenSettings = AuthenticationTokenSettings.DeserializeAuthenticationTokenSettings(property.Value);
+                    authenticationTokenSettings = AuthenticationTokenSettings.DeserializeAuthenticationTokenSettings(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BatchTask(id.Value, displayName.Value, url.Value, eTag.Value, Optional.ToNullable(lastModified), Optional.ToNullable(creationTime), exitConditions.Value, Optional.ToNullable(state), Optional.ToNullable(stateTransitionTime), Optional.ToNullable(previousState), Optional.ToNullable(previousStateTransitionTime), commandLine.Value, containerSettings.Value, Optional.ToList(resourceFiles), Optional.ToList(outputFiles), Optional.ToList(environmentSettings), affinityInfo.Value, constraints.Value, Optional.ToNullable(requiredSlots), userIdentity.Value, executionInfo.Value, nodeInfo.Value, multiInstanceSettings.Value, stats.Value, dependsOn.Value, Optional.ToList(applicationPackageReferences), authenticationTokenSettings.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BatchTask(
+                id,
+                displayName,
+                url,
+                eTag,
+                lastModified,
+                creationTime,
+                exitConditions,
+                state,
+                stateTransitionTime,
+                previousState,
+                previousStateTransitionTime,
+                commandLine,
+                containerSettings,
+                resourceFiles ?? new ChangeTrackingList<ResourceFile>(),
+                outputFiles ?? new ChangeTrackingList<OutputFile>(),
+                environmentSettings ?? new ChangeTrackingList<EnvironmentSetting>(),
+                affinityInfo,
+                constraints,
+                requiredSlots,
+                userIdentity,
+                executionInfo,
+                nodeInfo,
+                multiInstanceSettings,
+                stats,
+                dependsOn,
+                applicationPackageReferences ?? new ChangeTrackingList<BatchApplicationPackageReference>(),
+                authenticationTokenSettings,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BatchTask>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchTask>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BatchTask)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BatchTask IPersistableModel<BatchTask>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchTask>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBatchTask(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchTask)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BatchTask>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -320,7 +573,7 @@ namespace Azure.Compute.Batch
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<BatchTask>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

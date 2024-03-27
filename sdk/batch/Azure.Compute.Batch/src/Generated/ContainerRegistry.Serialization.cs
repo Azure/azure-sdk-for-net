@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class ContainerRegistry : IUtf8JsonSerializable
+    public partial class ContainerRegistry : IUtf8JsonSerializable, IJsonModel<ContainerRegistry>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistry>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerRegistry>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistry>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistry)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Username))
             {
@@ -34,21 +44,52 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(IdentityReference))
             {
                 writer.WritePropertyName("identityReference"u8);
-                writer.WriteObjectValue(IdentityReference);
+                writer.WriteObjectValue<BatchNodeIdentityReference>(IdentityReference, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ContainerRegistry DeserializeContainerRegistry(JsonElement element)
+        ContainerRegistry IJsonModel<ContainerRegistry>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistry>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistry)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRegistry(document.RootElement, options);
+        }
+
+        internal static ContainerRegistry DeserializeContainerRegistry(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> username = default;
-            Optional<string> password = default;
-            Optional<string> registryServer = default;
-            Optional<BatchNodeIdentityReference> identityReference = default;
+            string username = default;
+            string password = default;
+            string registryServer = default;
+            BatchNodeIdentityReference identityReference = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("username"u8))
@@ -72,12 +113,48 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    identityReference = BatchNodeIdentityReference.DeserializeBatchNodeIdentityReference(property.Value);
+                    identityReference = BatchNodeIdentityReference.DeserializeBatchNodeIdentityReference(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerRegistry(username.Value, password.Value, registryServer.Value, identityReference.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerRegistry(username, password, registryServer, identityReference, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerRegistry>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistry>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerRegistry)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContainerRegistry IPersistableModel<ContainerRegistry>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistry>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerRegistry(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerRegistry)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerRegistry>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -91,7 +168,7 @@ namespace Azure.Compute.Batch
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ContainerRegistry>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

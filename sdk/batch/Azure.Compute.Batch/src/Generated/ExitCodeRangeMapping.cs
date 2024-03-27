@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.Compute.Batch
 {
@@ -16,7 +16,39 @@ namespace Azure.Compute.Batch
     /// </summary>
     public partial class ExitCodeRangeMapping
     {
-        /// <summary> Initializes a new instance of ExitCodeRangeMapping. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExitCodeRangeMapping"/>. </summary>
         /// <param name="start"> The first exit code in the range. </param>
         /// <param name="end"> The last exit code in the range. </param>
         /// <param name="exitOptions"> How the Batch service should respond if the Task exits with an exit code in the range start to end (inclusive). </param>
@@ -28,6 +60,24 @@ namespace Azure.Compute.Batch
             Start = start;
             End = end;
             ExitOptions = exitOptions;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExitCodeRangeMapping"/>. </summary>
+        /// <param name="start"> The first exit code in the range. </param>
+        /// <param name="end"> The last exit code in the range. </param>
+        /// <param name="exitOptions"> How the Batch service should respond if the Task exits with an exit code in the range start to end (inclusive). </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExitCodeRangeMapping(int start, int end, ExitOptions exitOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Start = start;
+            End = end;
+            ExitOptions = exitOptions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExitCodeRangeMapping"/> for deserialization. </summary>
+        internal ExitCodeRangeMapping()
+        {
         }
 
         /// <summary> The first exit code in the range. </summary>

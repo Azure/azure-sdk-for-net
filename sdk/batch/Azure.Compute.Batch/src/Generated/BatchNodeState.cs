@@ -35,6 +35,7 @@ namespace Azure.Compute.Batch
         private const string LeavingPoolValue = "leavingpool";
         private const string OfflineValue = "offline";
         private const string PreemptedValue = "preempted";
+        private const string UpgradingOSValue = "upgradingos";
 
         /// <summary> The Compute Node is not currently running a Task. </summary>
         public static BatchNodeState Idle { get; } = new BatchNodeState(IdleValue);
@@ -62,6 +63,8 @@ namespace Azure.Compute.Batch
         public static BatchNodeState Offline { get; } = new BatchNodeState(OfflineValue);
         /// <summary> The Spot/Low-priority Compute Node has been preempted. Tasks which were running on the Compute Node when it was preempted will be rescheduled when another Compute Node becomes available. </summary>
         public static BatchNodeState Preempted { get; } = new BatchNodeState(PreemptedValue);
+        /// <summary> The Compute Node is undergoing an OS upgrade operation. </summary>
+        public static BatchNodeState UpgradingOS { get; } = new BatchNodeState(UpgradingOSValue);
         /// <summary> Determines if two <see cref="BatchNodeState"/> values are the same. </summary>
         public static bool operator ==(BatchNodeState left, BatchNodeState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BatchNodeState"/> values are not the same. </summary>

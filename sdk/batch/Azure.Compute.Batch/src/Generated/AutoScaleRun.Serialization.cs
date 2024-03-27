@@ -6,23 +6,81 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class AutoScaleRun
+    public partial class AutoScaleRun : IUtf8JsonSerializable, IJsonModel<AutoScaleRun>
     {
-        internal static AutoScaleRun DeserializeAutoScaleRun(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoScaleRun>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AutoScaleRun>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoScaleRun>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutoScaleRun)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("timestamp"u8);
+            writer.WriteStringValue(Timestamp, "O");
+            if (Optional.IsDefined(Results))
+            {
+                writer.WritePropertyName("results"u8);
+                writer.WriteStringValue(Results);
+            }
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue<AutoScaleRunError>(Error, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AutoScaleRun IJsonModel<AutoScaleRun>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoScaleRun>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutoScaleRun)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutoScaleRun(document.RootElement, options);
+        }
+
+        internal static AutoScaleRun DeserializeAutoScaleRun(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DateTimeOffset timestamp = default;
-            Optional<string> results = default;
-            Optional<AutoScaleRunError> error = default;
+            string results = default;
+            AutoScaleRunError error = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamp"u8))
@@ -41,12 +99,48 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    error = AutoScaleRunError.DeserializeAutoScaleRunError(property.Value);
+                    error = AutoScaleRunError.DeserializeAutoScaleRunError(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AutoScaleRun(timestamp, results.Value, error.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AutoScaleRun(timestamp, results, error, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AutoScaleRun>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoScaleRun>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AutoScaleRun)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AutoScaleRun IPersistableModel<AutoScaleRun>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoScaleRun>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAutoScaleRun(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutoScaleRun)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AutoScaleRun>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -54,6 +148,14 @@ namespace Azure.Compute.Batch
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeAutoScaleRun(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AutoScaleRun>(this, new ModelReaderWriterOptions("W"));
+            return content;
         }
     }
 }

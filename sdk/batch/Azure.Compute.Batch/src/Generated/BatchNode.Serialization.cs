@@ -6,44 +6,219 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class BatchNode
+    public partial class BatchNode : IUtf8JsonSerializable, IJsonModel<BatchNode>
     {
-        internal static BatchNode DeserializeBatchNode(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchNode>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BatchNode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchNode>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchNode)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Url))
+            {
+                writer.WritePropertyName("url"u8);
+                writer.WriteStringValue(Url);
+            }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (Optional.IsDefined(SchedulingState))
+            {
+                writer.WritePropertyName("schedulingState"u8);
+                writer.WriteStringValue(SchedulingState.Value.ToString());
+            }
+            if (Optional.IsDefined(StateTransitionTime))
+            {
+                writer.WritePropertyName("stateTransitionTime"u8);
+                writer.WriteStringValue(StateTransitionTime.Value, "O");
+            }
+            if (Optional.IsDefined(LastBootTime))
+            {
+                writer.WritePropertyName("lastBootTime"u8);
+                writer.WriteStringValue(LastBootTime.Value, "O");
+            }
+            if (Optional.IsDefined(AllocationTime))
+            {
+                writer.WritePropertyName("allocationTime"u8);
+                writer.WriteStringValue(AllocationTime.Value, "O");
+            }
+            if (Optional.IsDefined(IpAddress))
+            {
+                writer.WritePropertyName("ipAddress"u8);
+                writer.WriteStringValue(IpAddress);
+            }
+            if (Optional.IsDefined(AffinityId))
+            {
+                writer.WritePropertyName("affinityId"u8);
+                writer.WriteStringValue(AffinityId);
+            }
+            if (Optional.IsDefined(VmSize))
+            {
+                writer.WritePropertyName("vmSize"u8);
+                writer.WriteStringValue(VmSize);
+            }
+            if (Optional.IsDefined(TotalTasksRun))
+            {
+                writer.WritePropertyName("totalTasksRun"u8);
+                writer.WriteNumberValue(TotalTasksRun.Value);
+            }
+            if (Optional.IsDefined(RunningTasksCount))
+            {
+                writer.WritePropertyName("runningTasksCount"u8);
+                writer.WriteNumberValue(RunningTasksCount.Value);
+            }
+            if (Optional.IsDefined(RunningTaskSlotsCount))
+            {
+                writer.WritePropertyName("runningTaskSlotsCount"u8);
+                writer.WriteNumberValue(RunningTaskSlotsCount.Value);
+            }
+            if (Optional.IsDefined(TotalTasksSucceeded))
+            {
+                writer.WritePropertyName("totalTasksSucceeded"u8);
+                writer.WriteNumberValue(TotalTasksSucceeded.Value);
+            }
+            if (Optional.IsCollectionDefined(RecentTasks))
+            {
+                writer.WritePropertyName("recentTasks"u8);
+                writer.WriteStartArray();
+                foreach (var item in RecentTasks)
+                {
+                    writer.WriteObjectValue<BatchTaskInfo>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(StartTask))
+            {
+                writer.WritePropertyName("startTask"u8);
+                writer.WriteObjectValue<BatchStartTask>(StartTask, options);
+            }
+            if (Optional.IsDefined(StartTaskInfo))
+            {
+                writer.WritePropertyName("startTaskInfo"u8);
+                writer.WriteObjectValue<BatchStartTaskInfo>(StartTaskInfo, options);
+            }
+            if (Optional.IsCollectionDefined(CertificateReferences))
+            {
+                writer.WritePropertyName("certificateReferences"u8);
+                writer.WriteStartArray();
+                foreach (var item in CertificateReferences)
+                {
+                    writer.WriteObjectValue<BatchCertificateReference>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Errors))
+            {
+                writer.WritePropertyName("errors"u8);
+                writer.WriteStartArray();
+                foreach (var item in Errors)
+                {
+                    writer.WriteObjectValue<BatchNodeError>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(IsDedicated))
+            {
+                writer.WritePropertyName("isDedicated"u8);
+                writer.WriteBooleanValue(IsDedicated.Value);
+            }
+            if (Optional.IsDefined(EndpointConfiguration))
+            {
+                writer.WritePropertyName("endpointConfiguration"u8);
+                writer.WriteObjectValue<BatchNodeEndpointConfiguration>(EndpointConfiguration, options);
+            }
+            if (Optional.IsDefined(NodeAgentInfo))
+            {
+                writer.WritePropertyName("nodeAgentInfo"u8);
+                writer.WriteObjectValue<BatchNodeAgentInfo>(NodeAgentInfo, options);
+            }
+            if (Optional.IsDefined(VirtualMachineInfo))
+            {
+                writer.WritePropertyName("virtualMachineInfo"u8);
+                writer.WriteObjectValue<VirtualMachineInfo>(VirtualMachineInfo, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        BatchNode IJsonModel<BatchNode>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchNode>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchNode)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchNode(document.RootElement, options);
+        }
+
+        internal static BatchNode DeserializeBatchNode(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> url = default;
-            Optional<BatchNodeState> state = default;
-            Optional<SchedulingState> schedulingState = default;
-            Optional<DateTimeOffset> stateTransitionTime = default;
-            Optional<DateTimeOffset> lastBootTime = default;
-            Optional<DateTimeOffset> allocationTime = default;
-            Optional<string> ipAddress = default;
-            Optional<string> affinityId = default;
-            Optional<string> vmSize = default;
-            Optional<int> totalTasksRun = default;
-            Optional<int> runningTasksCount = default;
-            Optional<int> runningTaskSlotsCount = default;
-            Optional<int> totalTasksSucceeded = default;
-            Optional<IReadOnlyList<TaskInformation>> recentTasks = default;
-            Optional<StartTask> startTask = default;
-            Optional<StartTaskInformation> startTaskInfo = default;
-            Optional<IReadOnlyList<CertificateReference>> certificateReferences = default;
-            Optional<IReadOnlyList<BatchNodeError>> errors = default;
-            Optional<bool> isDedicated = default;
-            Optional<BatchNodeEndpointConfiguration> endpointConfiguration = default;
-            Optional<NodeAgentInformation> nodeAgentInfo = default;
-            Optional<VirtualMachineInfo> virtualMachineInfo = default;
+            string id = default;
+            string url = default;
+            BatchNodeState? state = default;
+            SchedulingState? schedulingState = default;
+            DateTimeOffset? stateTransitionTime = default;
+            DateTimeOffset? lastBootTime = default;
+            DateTimeOffset? allocationTime = default;
+            string ipAddress = default;
+            string affinityId = default;
+            string vmSize = default;
+            int? totalTasksRun = default;
+            int? runningTasksCount = default;
+            int? runningTaskSlotsCount = default;
+            int? totalTasksSucceeded = default;
+            IReadOnlyList<BatchTaskInfo> recentTasks = default;
+            BatchStartTask startTask = default;
+            BatchStartTaskInfo startTaskInfo = default;
+            IReadOnlyList<BatchCertificateReference> certificateReferences = default;
+            IReadOnlyList<BatchNodeError> errors = default;
+            bool? isDedicated = default;
+            BatchNodeEndpointConfiguration endpointConfiguration = default;
+            BatchNodeAgentInfo nodeAgentInfo = default;
+            VirtualMachineInfo virtualMachineInfo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -158,10 +333,10 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    List<TaskInformation> array = new List<TaskInformation>();
+                    List<BatchTaskInfo> array = new List<BatchTaskInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TaskInformation.DeserializeTaskInformation(item));
+                        array.Add(BatchTaskInfo.DeserializeBatchTaskInfo(item, options));
                     }
                     recentTasks = array;
                     continue;
@@ -172,7 +347,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    startTask = StartTask.DeserializeStartTask(property.Value);
+                    startTask = BatchStartTask.DeserializeBatchStartTask(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("startTaskInfo"u8))
@@ -181,7 +356,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    startTaskInfo = StartTaskInformation.DeserializeStartTaskInformation(property.Value);
+                    startTaskInfo = BatchStartTaskInfo.DeserializeBatchStartTaskInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("certificateReferences"u8))
@@ -190,10 +365,10 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    List<CertificateReference> array = new List<CertificateReference>();
+                    List<BatchCertificateReference> array = new List<BatchCertificateReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CertificateReference.DeserializeCertificateReference(item));
+                        array.Add(BatchCertificateReference.DeserializeBatchCertificateReference(item, options));
                     }
                     certificateReferences = array;
                     continue;
@@ -207,7 +382,7 @@ namespace Azure.Compute.Batch
                     List<BatchNodeError> array = new List<BatchNodeError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchNodeError.DeserializeBatchNodeError(item));
+                        array.Add(BatchNodeError.DeserializeBatchNodeError(item, options));
                     }
                     errors = array;
                     continue;
@@ -227,7 +402,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    endpointConfiguration = BatchNodeEndpointConfiguration.DeserializeBatchNodeEndpointConfiguration(property.Value);
+                    endpointConfiguration = BatchNodeEndpointConfiguration.DeserializeBatchNodeEndpointConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nodeAgentInfo"u8))
@@ -236,7 +411,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    nodeAgentInfo = NodeAgentInformation.DeserializeNodeAgentInformation(property.Value);
+                    nodeAgentInfo = BatchNodeAgentInfo.DeserializeBatchNodeAgentInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("virtualMachineInfo"u8))
@@ -245,12 +420,72 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    virtualMachineInfo = VirtualMachineInfo.DeserializeVirtualMachineInfo(property.Value);
+                    virtualMachineInfo = VirtualMachineInfo.DeserializeVirtualMachineInfo(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BatchNode(id.Value, url.Value, Optional.ToNullable(state), Optional.ToNullable(schedulingState), Optional.ToNullable(stateTransitionTime), Optional.ToNullable(lastBootTime), Optional.ToNullable(allocationTime), ipAddress.Value, affinityId.Value, vmSize.Value, Optional.ToNullable(totalTasksRun), Optional.ToNullable(runningTasksCount), Optional.ToNullable(runningTaskSlotsCount), Optional.ToNullable(totalTasksSucceeded), Optional.ToList(recentTasks), startTask.Value, startTaskInfo.Value, Optional.ToList(certificateReferences), Optional.ToList(errors), Optional.ToNullable(isDedicated), endpointConfiguration.Value, nodeAgentInfo.Value, virtualMachineInfo.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BatchNode(
+                id,
+                url,
+                state,
+                schedulingState,
+                stateTransitionTime,
+                lastBootTime,
+                allocationTime,
+                ipAddress,
+                affinityId,
+                vmSize,
+                totalTasksRun,
+                runningTasksCount,
+                runningTaskSlotsCount,
+                totalTasksSucceeded,
+                recentTasks ?? new ChangeTrackingList<BatchTaskInfo>(),
+                startTask,
+                startTaskInfo,
+                certificateReferences ?? new ChangeTrackingList<BatchCertificateReference>(),
+                errors ?? new ChangeTrackingList<BatchNodeError>(),
+                isDedicated,
+                endpointConfiguration,
+                nodeAgentInfo,
+                virtualMachineInfo,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BatchNode>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchNode>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BatchNode)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BatchNode IPersistableModel<BatchNode>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchNode>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBatchNode(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchNode)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BatchNode>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -258,6 +493,14 @@ namespace Azure.Compute.Batch
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeBatchNode(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<BatchNode>(this, new ModelReaderWriterOptions("W"));
+            return content;
         }
     }
 }

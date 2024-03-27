@@ -5,23 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class UserAssignedIdentity
+    public partial class UserAssignedIdentity : IUtf8JsonSerializable, IJsonModel<UserAssignedIdentity>
     {
-        internal static UserAssignedIdentity DeserializeUserAssignedIdentity(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserAssignedIdentity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<UserAssignedIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UserAssignedIdentity)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("resourceId"u8);
+            writer.WriteStringValue(ResourceId);
+            if (options.Format != "W" && Optional.IsDefined(ClientId))
+            {
+                writer.WritePropertyName("clientId"u8);
+                writer.WriteStringValue(ClientId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PrincipalId))
+            {
+                writer.WritePropertyName("principalId"u8);
+                writer.WriteStringValue(PrincipalId);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        UserAssignedIdentity IJsonModel<UserAssignedIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UserAssignedIdentity)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUserAssignedIdentity(document.RootElement, options);
+        }
+
+        internal static UserAssignedIdentity DeserializeUserAssignedIdentity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string resourceId = default;
-            Optional<string> clientId = default;
-            Optional<string> principalId = default;
+            string clientId = default;
+            string principalId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -39,9 +98,45 @@ namespace Azure.Compute.Batch
                     principalId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UserAssignedIdentity(resourceId, clientId.Value, principalId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UserAssignedIdentity(resourceId, clientId, principalId, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<UserAssignedIdentity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(UserAssignedIdentity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        UserAssignedIdentity IPersistableModel<UserAssignedIdentity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeUserAssignedIdentity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UserAssignedIdentity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<UserAssignedIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -49,6 +144,14 @@ namespace Azure.Compute.Batch
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeUserAssignedIdentity(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<UserAssignedIdentity>(this, new ModelReaderWriterOptions("W"));
+            return content;
         }
     }
 }

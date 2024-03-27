@@ -5,16 +5,72 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
+using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class BatchApplication
+    public partial class BatchApplication : IUtf8JsonSerializable, IJsonModel<BatchApplication>
     {
-        internal static BatchApplication DeserializeBatchApplication(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchApplication>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BatchApplication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchApplication>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchApplication)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            writer.WritePropertyName("displayName"u8);
+            writer.WriteStringValue(DisplayName);
+            writer.WritePropertyName("versions"u8);
+            writer.WriteStartArray();
+            foreach (var item in Versions)
+            {
+                writer.WriteStringValue(item);
+            }
+            writer.WriteEndArray();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        BatchApplication IJsonModel<BatchApplication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchApplication>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchApplication)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchApplication(document.RootElement, options);
+        }
+
+        internal static BatchApplication DeserializeBatchApplication(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +78,8 @@ namespace Azure.Compute.Batch
             string id = default;
             string displayName = default;
             IReadOnlyList<string> versions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -44,9 +102,45 @@ namespace Azure.Compute.Batch
                     versions = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BatchApplication(id, displayName, versions);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BatchApplication(id, displayName, versions, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BatchApplication>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchApplication>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BatchApplication)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BatchApplication IPersistableModel<BatchApplication>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchApplication>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBatchApplication(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchApplication)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BatchApplication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -54,6 +148,14 @@ namespace Azure.Compute.Batch
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeBatchApplication(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<BatchApplication>(this, new ModelReaderWriterOptions("W"));
+            return content;
         }
     }
 }

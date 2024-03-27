@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class UserAccount : IUtf8JsonSerializable
+    public partial class UserAccount : IUtf8JsonSerializable, IJsonModel<UserAccount>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserAccount>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<UserAccount>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<UserAccount>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UserAccount)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -28,27 +38,58 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(LinuxUserConfiguration))
             {
                 writer.WritePropertyName("linuxUserConfiguration"u8);
-                writer.WriteObjectValue(LinuxUserConfiguration);
+                writer.WriteObjectValue<LinuxUserConfiguration>(LinuxUserConfiguration, options);
             }
             if (Optional.IsDefined(WindowsUserConfiguration))
             {
                 writer.WritePropertyName("windowsUserConfiguration"u8);
-                writer.WriteObjectValue(WindowsUserConfiguration);
+                writer.WriteObjectValue<WindowsUserConfiguration>(WindowsUserConfiguration, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static UserAccount DeserializeUserAccount(JsonElement element)
+        UserAccount IJsonModel<UserAccount>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<UserAccount>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UserAccount)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUserAccount(document.RootElement, options);
+        }
+
+        internal static UserAccount DeserializeUserAccount(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
             string password = default;
-            Optional<ElevationLevel> elevationLevel = default;
-            Optional<LinuxUserConfiguration> linuxUserConfiguration = default;
-            Optional<WindowsUserConfiguration> windowsUserConfiguration = default;
+            ElevationLevel? elevationLevel = default;
+            LinuxUserConfiguration linuxUserConfiguration = default;
+            WindowsUserConfiguration windowsUserConfiguration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -76,7 +117,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    linuxUserConfiguration = LinuxUserConfiguration.DeserializeLinuxUserConfiguration(property.Value);
+                    linuxUserConfiguration = LinuxUserConfiguration.DeserializeLinuxUserConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("windowsUserConfiguration"u8))
@@ -85,12 +126,54 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    windowsUserConfiguration = WindowsUserConfiguration.DeserializeWindowsUserConfiguration(property.Value);
+                    windowsUserConfiguration = WindowsUserConfiguration.DeserializeWindowsUserConfiguration(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UserAccount(name, password, Optional.ToNullable(elevationLevel), linuxUserConfiguration.Value, windowsUserConfiguration.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UserAccount(
+                name,
+                password,
+                elevationLevel,
+                linuxUserConfiguration,
+                windowsUserConfiguration,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<UserAccount>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UserAccount>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(UserAccount)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        UserAccount IPersistableModel<UserAccount>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UserAccount>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeUserAccount(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UserAccount)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<UserAccount>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -104,7 +187,7 @@ namespace Azure.Compute.Batch
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<UserAccount>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

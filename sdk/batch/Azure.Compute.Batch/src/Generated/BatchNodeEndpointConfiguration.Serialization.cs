@@ -5,21 +5,75 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
+using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class BatchNodeEndpointConfiguration
+    public partial class BatchNodeEndpointConfiguration : IUtf8JsonSerializable, IJsonModel<BatchNodeEndpointConfiguration>
     {
-        internal static BatchNodeEndpointConfiguration DeserializeBatchNodeEndpointConfiguration(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchNodeEndpointConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BatchNodeEndpointConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchNodeEndpointConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchNodeEndpointConfiguration)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("inboundEndpoints"u8);
+            writer.WriteStartArray();
+            foreach (var item in InboundEndpoints)
+            {
+                writer.WriteObjectValue<InboundEndpoint>(item, options);
+            }
+            writer.WriteEndArray();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        BatchNodeEndpointConfiguration IJsonModel<BatchNodeEndpointConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchNodeEndpointConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchNodeEndpointConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchNodeEndpointConfiguration(document.RootElement, options);
+        }
+
+        internal static BatchNodeEndpointConfiguration DeserializeBatchNodeEndpointConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<InboundEndpoint> inboundEndpoints = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inboundEndpoints"u8))
@@ -27,14 +81,50 @@ namespace Azure.Compute.Batch
                     List<InboundEndpoint> array = new List<InboundEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InboundEndpoint.DeserializeInboundEndpoint(item));
+                        array.Add(InboundEndpoint.DeserializeInboundEndpoint(item, options));
                     }
                     inboundEndpoints = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BatchNodeEndpointConfiguration(inboundEndpoints);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BatchNodeEndpointConfiguration(inboundEndpoints, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BatchNodeEndpointConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchNodeEndpointConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BatchNodeEndpointConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BatchNodeEndpointConfiguration IPersistableModel<BatchNodeEndpointConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchNodeEndpointConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBatchNodeEndpointConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchNodeEndpointConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BatchNodeEndpointConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -42,6 +132,14 @@ namespace Azure.Compute.Batch
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeBatchNodeEndpointConfiguration(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<BatchNodeEndpointConfiguration>(this, new ModelReaderWriterOptions("W"));
+            return content;
         }
     }
 }

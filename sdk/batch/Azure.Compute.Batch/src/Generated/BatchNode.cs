@@ -7,22 +7,53 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
     /// <summary> A Compute Node in the Batch service. </summary>
     public partial class BatchNode
     {
-        /// <summary> Initializes a new instance of BatchNode. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchNode"/>. </summary>
         internal BatchNode()
         {
-            RecentTasks = new ChangeTrackingList<TaskInformation>();
-            CertificateReferences = new ChangeTrackingList<CertificateReference>();
+            RecentTasks = new ChangeTrackingList<BatchTaskInfo>();
+            CertificateReferences = new ChangeTrackingList<BatchCertificateReference>();
             Errors = new ChangeTrackingList<BatchNodeError>();
         }
 
-        /// <summary> Initializes a new instance of BatchNode. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchNode"/>. </summary>
         /// <param name="id"> The ID of the Compute Node. Every Compute Node that is added to a Pool is assigned a unique ID. Whenever a Compute Node is removed from a Pool, all of its local files are deleted, and the ID is reclaimed and could be reused for new Compute Nodes. </param>
         /// <param name="url"> The URL of the Compute Node. </param>
         /// <param name="state"> The current state of the Compute Node. The Spot/Low-priority Compute Node has been preempted. Tasks which were running on the Compute Node when it was preempted will be rescheduled when another Compute Node becomes available. </param>
@@ -51,7 +82,8 @@ namespace Azure.Compute.Batch
         /// <param name="endpointConfiguration"> The endpoint configuration for the Compute Node. </param>
         /// <param name="nodeAgentInfo"> Information about the Compute Node agent version and the time the Compute Node upgraded to a new version. </param>
         /// <param name="virtualMachineInfo"> Info about the current state of the virtual machine. </param>
-        internal BatchNode(string id, string url, BatchNodeState? state, SchedulingState? schedulingState, DateTimeOffset? stateTransitionTime, DateTimeOffset? lastBootTime, DateTimeOffset? allocationTime, string ipAddress, string affinityId, string vmSize, int? totalTasksRun, int? runningTasksCount, int? runningTaskSlotsCount, int? totalTasksSucceeded, IReadOnlyList<TaskInformation> recentTasks, StartTask startTask, StartTaskInformation startTaskInfo, IReadOnlyList<CertificateReference> certificateReferences, IReadOnlyList<BatchNodeError> errors, bool? isDedicated, BatchNodeEndpointConfiguration endpointConfiguration, NodeAgentInformation nodeAgentInfo, VirtualMachineInfo virtualMachineInfo)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchNode(string id, string url, BatchNodeState? state, SchedulingState? schedulingState, DateTimeOffset? stateTransitionTime, DateTimeOffset? lastBootTime, DateTimeOffset? allocationTime, string ipAddress, string affinityId, string vmSize, int? totalTasksRun, int? runningTasksCount, int? runningTaskSlotsCount, int? totalTasksSucceeded, IReadOnlyList<BatchTaskInfo> recentTasks, BatchStartTask startTask, BatchStartTaskInfo startTaskInfo, IReadOnlyList<BatchCertificateReference> certificateReferences, IReadOnlyList<BatchNodeError> errors, bool? isDedicated, BatchNodeEndpointConfiguration endpointConfiguration, BatchNodeAgentInfo nodeAgentInfo, VirtualMachineInfo virtualMachineInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Url = url;
@@ -76,6 +108,7 @@ namespace Azure.Compute.Batch
             EndpointConfiguration = endpointConfiguration;
             NodeAgentInfo = nodeAgentInfo;
             VirtualMachineInfo = virtualMachineInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ID of the Compute Node. Every Compute Node that is added to a Pool is assigned a unique ID. Whenever a Compute Node is removed from a Pool, all of its local files are deleted, and the ID is reclaimed and could be reused for new Compute Nodes. </summary>
@@ -107,18 +140,18 @@ namespace Azure.Compute.Batch
         /// <summary> The total number of Job Tasks which completed successfully (with exitCode 0) on the Compute Node. This includes Job Manager Tasks and normal Tasks, but not Job Preparation, Job Release or Start Tasks. </summary>
         public int? TotalTasksSucceeded { get; }
         /// <summary> A list of Tasks whose state has recently changed. This property is present only if at least one Task has run on this Compute Node since it was assigned to the Pool. </summary>
-        public IReadOnlyList<TaskInformation> RecentTasks { get; }
+        public IReadOnlyList<BatchTaskInfo> RecentTasks { get; }
         /// <summary> The Task specified to run on the Compute Node as it joins the Pool. </summary>
-        public StartTask StartTask { get; }
+        public BatchStartTask StartTask { get; }
         /// <summary> Runtime information about the execution of the StartTask on the Compute Node. </summary>
-        public StartTaskInformation StartTaskInfo { get; }
+        public BatchStartTaskInfo StartTaskInfo { get; }
         /// <summary>
         /// For Windows Nodes, the Batch service installs the Certificates to the specified Certificate store and location.
         /// For Linux Compute Nodes, the Certificates are stored in a directory inside the Task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the Task to query for this location.
         /// For Certificates with visibility of 'remoteUser', a 'certs' directory is created in the user's home directory (e.g., /home/{user-name}/certs) and Certificates are placed in that directory.
         /// Warning: This property is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
         /// </summary>
-        public IReadOnlyList<CertificateReference> CertificateReferences { get; }
+        public IReadOnlyList<BatchCertificateReference> CertificateReferences { get; }
         /// <summary> The list of errors that are currently being encountered by the Compute Node. </summary>
         public IReadOnlyList<BatchNodeError> Errors { get; }
         /// <summary> Whether this Compute Node is a dedicated Compute Node. If false, the Compute Node is a Spot/Low-priority Compute Node. </summary>
@@ -126,7 +159,7 @@ namespace Azure.Compute.Batch
         /// <summary> The endpoint configuration for the Compute Node. </summary>
         public BatchNodeEndpointConfiguration EndpointConfiguration { get; }
         /// <summary> Information about the Compute Node agent version and the time the Compute Node upgraded to a new version. </summary>
-        public NodeAgentInformation NodeAgentInfo { get; }
+        public BatchNodeAgentInfo NodeAgentInfo { get; }
         /// <summary> Info about the current state of the virtual machine. </summary>
         public VirtualMachineInfo VirtualMachineInfo { get; }
     }
