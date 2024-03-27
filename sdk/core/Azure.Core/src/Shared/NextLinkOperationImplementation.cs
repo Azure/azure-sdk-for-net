@@ -61,7 +61,12 @@ namespace Azure.Core
             {
                 return new CompletedOperation(failureState ?? GetOperationStateFromFinalResponse(requestMethod, response));
             }
-            response.Headers.TryGetValue("Location", out var lastKnownLocation);
+
+            string? lastKnownLocation;
+            if (!response.Headers.TryGetValue("Location", out lastKnownLocation))
+            {
+                lastKnownLocation = null;
+            }
             return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, apiVersionStr);
         }
 
@@ -206,8 +211,13 @@ namespace Azure.Core
             {
                 apiVersionStr = !skipApiVersionOverride && TryGetApiVersion(startRequestUri, out ReadOnlySpan<char> apiVersion) ? apiVersion.ToString() : null;
             }
+
             var headerSource = GetHeaderSource(requestMethod, startRequestUri, response, apiVersionStr, out var nextRequestUri);
-            response.Headers.TryGetValue("Location", out var lastKnownLocation);
+            string? lastKnownLocation;
+            if (!response.Headers.TryGetValue("Location", out lastKnownLocation))
+            {
+                lastKnownLocation = null;
+            }
             return GetRehydrationToken(requestMethod, startRequestUri, nextRequestUri, headerSource.ToString(), lastKnownLocation, finalStateVia.ToString(), null);
         }
 
