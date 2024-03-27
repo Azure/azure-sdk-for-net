@@ -3,7 +3,7 @@
     <PackageReference Include="Azure.Storage.Blobs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="TestData\**" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="TestData/**" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.MigrationDiscoverySap.csproj" />

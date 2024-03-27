@@ -52,7 +52,7 @@ public class MigrationSapDiscoveryTests : MigrationDiscoverySapManagementTestBas
         string sapDiscoverySiteId = sapDiscoverySiteResource.Id.ToString();
 
         // Upload Excel to Sap DiscoverySite
-        string excelPathToImport = @"TestData\ExcelSDKTesting.xlsx";
+        string excelPathToImport = @"TestData/ExcelSDKTesting.xlsx";
         await SapDiscoveryTestsHelpers.PostImportEntities(Client, sapDiscoverySiteResource, excelPathToImport);
 
         // Get List Sap Instances
@@ -61,7 +61,7 @@ public class MigrationSapDiscoveryTests : MigrationDiscoverySapManagementTestBas
 
         Assert.IsNotNull(listSapInstances);
 
-        const string expectedSapInstancesListPath = @"TestData\ExpectedGetSapInstanceList.json";
+        const string expectedSapInstancesListPath = @"TestData/ExpectedGetSapInstanceList.json";
 
         List<SapInstanceData> expectedListSapInstances = SapDiscoveryTestsHelpers.GetExpectedSapInstancesListFromJson(
             sapDiscoverySiteId,
@@ -82,7 +82,7 @@ public class MigrationSapDiscoveryTests : MigrationDiscoverySapManagementTestBas
         List<SapDiscoveryServerInstanceData> serverInstancesList = await SapDiscoveryTestsHelpers.GetServerInstancesList(sapInstance);
         Assert.IsNotNull(serverInstancesList);
 
-        const string expectedServerInstanceListPath = @"TestData\ExpectedGetServerInstancesList.json";
+        const string expectedServerInstanceListPath = @"TestData/ExpectedGetServerInstancesList.json";
 
         List<SapDiscoveryServerInstanceData> expectedServerInstancesList = SapDiscoveryTestsHelpers
             .GetExpectedServerInstancesListFromJson(sapDiscoverySiteId, expectedServerInstanceListPath);

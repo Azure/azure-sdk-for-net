@@ -28,7 +28,7 @@ public static class SapDiscoveryTestsHelpers
         string discoverySiteName)
     {
         // Create discoverySiteData payload
-        string createSapDiscoverySitePayloadPath = @"TestData\CreateSapDiscoverySiteData.json";
+        string createSapDiscoverySitePayloadPath = @"TestData/CreateSapDiscoverySiteData.json";
         JsonElement discoverySiteDataElement = JsonDocument.Parse(
             File.ReadAllText(createSapDiscoverySitePayloadPath)
                 .Replace("__MigrateProjectId__", migrateProjectId)
