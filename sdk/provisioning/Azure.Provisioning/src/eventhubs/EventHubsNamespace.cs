@@ -14,10 +14,10 @@ namespace Azure.Provisioning.EventHubs
     /// </summary>
     public class EventHubsNamespace : Resource<EventHubsNamespaceData>
     {
-        // https://learn.microsoft.com/azure/templates/microsoft.eventhub/2022-10-01-preview/namespaces?pivots=deployment-language-bicep
+        // https://learn.microsoft.com/azure/templates/microsoft.eventhub/2021-11-01/namespaces?pivots=deployment-language-bicep
         private const string ResourceTypeName = "Microsoft.EventHub/namespaces";
-        // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.ResourceManager.EventHubs/src/Generated/RestOperations/NamespacesRestOperations.cs#L36
-        internal const string DefaultVersion = "2022-10-01-preview";
+        // https://github.com/Azure/azure-sdk-for-net/blob/Azure.ResourceManager.EventHubs_1.0.1/sdk/eventhub/Azure.ResourceManager.EventHubs/src/Generated/RestOperations/NamespacesRestOperations.cs#L36C42-L36C52
+        internal const string DefaultVersion = "2021-11-01";
 
         private static EventHubsNamespaceData Empty(string name) => ArmEventHubsModelFactory.EventHubsNamespaceData();
 
@@ -41,8 +41,7 @@ namespace Azure.Provisioning.EventHubs
                 name: name,
                 resourceType: ResourceTypeName,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
-                sku: sku ?? new EventHubsSku(EventHubsSkuName.Standard),
-                minimumTlsVersion: EventHubsTlsVersion.Tls1_2))
+                sku: sku ?? new EventHubsSku(EventHubsSkuName.Standard)))
         {
             AssignProperty(data => data.Name, GetAzureName(scope, name));
         }
