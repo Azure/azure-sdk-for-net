@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="ApiVersionListResult"/>. </summary>
         /// <param name="value"> The ApiVersion items on this page. </param>
-        internal ApiVersionListResult(IEnumerable<ApiVersionData> value)
+        internal ApiVersionListResult(IEnumerable<ApiVersionEntityData> value)
         {
             Value = value.ToList();
         }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// <param name="value"> The ApiVersion items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiVersionListResult(IReadOnlyList<ApiVersionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiVersionListResult(IReadOnlyList<ApiVersionEntityData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         }
 
         /// <summary> The ApiVersion items on this page. </summary>
-        public IReadOnlyList<ApiVersionData> Value { get; }
+        public IReadOnlyList<ApiVersionEntityData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

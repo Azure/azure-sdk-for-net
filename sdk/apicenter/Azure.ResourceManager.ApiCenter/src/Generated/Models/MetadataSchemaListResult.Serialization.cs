@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<MetadataSchemaData>(item, options);
+                    writer.WriteObjectValue<MetadataSchemaEntityData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             {
                 return null;
             }
-            IReadOnlyList<MetadataSchemaData> value = default;
+            IReadOnlyList<MetadataSchemaEntityData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.ApiCenter.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<MetadataSchemaData> array = new List<MetadataSchemaData>();
+                    List<MetadataSchemaEntityData> array = new List<MetadataSchemaEntityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetadataSchemaData.DeserializeMetadataSchemaData(item, options));
+                        array.Add(MetadataSchemaEntityData.DeserializeMetadataSchemaEntityData(item, options));
                     }
                     value = array;
                     continue;
