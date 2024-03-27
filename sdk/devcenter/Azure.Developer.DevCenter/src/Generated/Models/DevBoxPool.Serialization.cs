@@ -22,7 +22,7 @@ namespace Azure.Developer.DevCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevBoxPool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevBoxPool)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevBoxPool)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -41,7 +41,7 @@ namespace Azure.Developer.DevCenter.Models
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile);
+                writer.WriteObjectValue<DevBoxHardwareProfile>(HardwareProfile, options);
             }
             if (Optional.IsDefined(HibernateSupport))
             {
@@ -51,12 +51,12 @@ namespace Azure.Developer.DevCenter.Models
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                writer.WriteObjectValue<DevBoxStorageProfile>(StorageProfile, options);
             }
             if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
-                writer.WriteObjectValue(ImageReference);
+                writer.WriteObjectValue<DevBoxImageReference>(ImageReference, options);
             }
             if (Optional.IsDefined(LocalAdministratorStatus))
             {
@@ -66,7 +66,7 @@ namespace Azure.Developer.DevCenter.Models
             if (Optional.IsDefined(StopOnDisconnect))
             {
                 writer.WritePropertyName("stopOnDisconnect"u8);
-                writer.WriteObjectValue(StopOnDisconnect);
+                writer.WriteObjectValue<StopOnDisconnectConfiguration>(StopOnDisconnect, options);
             }
             writer.WritePropertyName("healthStatus"u8);
             writer.WriteStringValue(HealthStatus.ToString());
@@ -93,7 +93,7 @@ namespace Azure.Developer.DevCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevBoxPool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevBoxPool)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevBoxPool)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -229,7 +229,7 @@ namespace Azure.Developer.DevCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevBoxPool)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevBoxPool)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -245,7 +245,7 @@ namespace Azure.Developer.DevCenter.Models
                         return DeserializeDevBoxPool(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevBoxPool)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevBoxPool)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -263,7 +263,7 @@ namespace Azure.Developer.DevCenter.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<DevBoxPool>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }
