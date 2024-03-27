@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.ApiCenter.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string AzureAPIManagementValue = "Azure API Management";
+        private const string AzureApiManagementValue = "Azure API Management";
         private const string AzureComputeServiceValue = "Azure compute service";
-        private const string ApigeeAPIManagementValue = "Apigee API Management";
-        private const string AWSAPIGatewayValue = "AWS API Gateway";
-        private const string KongAPIGatewayValue = "Kong API Gateway";
+        private const string ApigeeApiManagementValue = "Apigee API Management";
+        private const string AwsApiGatewayValue = "AWS API Gateway";
+        private const string KongApiGatewayValue = "Kong API Gateway";
         private const string KubernetesValue = "Kubernetes";
-        private const string MuleSoftAPIManagementValue = "MuleSoft API Management";
+        private const string MuleSoftApiManagementValue = "MuleSoft API Management";
 
         /// <summary> Api Management Server. </summary>
-        public static EnvironmentServerType AzureAPIManagement { get; } = new EnvironmentServerType(AzureAPIManagementValue);
+        public static EnvironmentServerType AzureApiManagement { get; } = new EnvironmentServerType(AzureApiManagementValue);
         /// <summary> Compute server. </summary>
         public static EnvironmentServerType AzureComputeService { get; } = new EnvironmentServerType(AzureComputeServiceValue);
         /// <summary> Apigee server. </summary>
-        public static EnvironmentServerType ApigeeAPIManagement { get; } = new EnvironmentServerType(ApigeeAPIManagementValue);
+        public static EnvironmentServerType ApigeeApiManagement { get; } = new EnvironmentServerType(ApigeeApiManagementValue);
         /// <summary> AWS Api Gateway server. </summary>
-        public static EnvironmentServerType AWSAPIGateway { get; } = new EnvironmentServerType(AWSAPIGatewayValue);
+        public static EnvironmentServerType AwsApiGateway { get; } = new EnvironmentServerType(AwsApiGatewayValue);
         /// <summary> Kong API Gateway server. </summary>
-        public static EnvironmentServerType KongAPIGateway { get; } = new EnvironmentServerType(KongAPIGatewayValue);
+        public static EnvironmentServerType KongApiGateway { get; } = new EnvironmentServerType(KongApiGatewayValue);
         /// <summary> Kubernetes server. </summary>
         public static EnvironmentServerType Kubernetes { get; } = new EnvironmentServerType(KubernetesValue);
         /// <summary> Mulesoft Api Management server. </summary>
-        public static EnvironmentServerType MuleSoftAPIManagement { get; } = new EnvironmentServerType(MuleSoftAPIManagementValue);
+        public static EnvironmentServerType MuleSoftApiManagement { get; } = new EnvironmentServerType(MuleSoftApiManagementValue);
         /// <summary> Determines if two <see cref="EnvironmentServerType"/> values are the same. </summary>
         public static bool operator ==(EnvironmentServerType left, EnvironmentServerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EnvironmentServerType"/> values are not the same. </summary>
