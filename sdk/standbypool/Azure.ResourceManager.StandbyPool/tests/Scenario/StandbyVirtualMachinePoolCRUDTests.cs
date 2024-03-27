@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.StandbyPool.Models;
 using NUnit.Framework;
 using System.Threading.Tasks;
 
@@ -37,8 +37,9 @@ namespace Azure.ResourceManager.StandbyPool.Tests
             Assert.AreEqual(standbyVirtualMachinePool.Id, standbyVirtualMachinePool2.Value.Id);
 
             // Update
-            var standbyVirtualMachinePoolUpdate = await this.CreateStandbyVirtualMachinePoolResource(resourceGroup, standbyPoolName, increasedMaxReadyCapacity, location, createVirtualMachineScaleSet.Result.Id);
-            Assert.AreEqual(increasedMaxReadyCapacity, standbyVirtualMachinePoolUpdate.Data.ElasticityMaxReadyCapacity);
+            var standbyVirtualMachinePoolUpdate =
+                await standbyVirtualMachinePool.UpdateAsync(new StandbyVirtualMachinePoolResourcePatch() { ElasticityMaxReadyCapacity = increasedMaxReadyCapacity });
+            Assert.AreEqual(increasedMaxReadyCapacity, standbyVirtualMachinePoolUpdate.Value.Data.ElasticityMaxReadyCapacity);
             Assert.AreEqual(standbyPoolName, standbyVirtualMachinePool.Data.Name);
 
             // Delete
