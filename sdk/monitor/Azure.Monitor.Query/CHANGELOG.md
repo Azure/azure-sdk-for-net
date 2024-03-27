@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0 (2024-04-09)
+## 1.3.0 (2024-03-27)
 
 ### Other Changes
 - Enable national cloud support for US Gov and China clouds
