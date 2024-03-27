@@ -1,4 +1,4 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-[assembly: Azure.Core.AzureResourceProviderNamespace("Microsoft.Programmableconnectivity")]
+[assembly: Azure.Core.AzureResourceProviderNamespace("Microsoft.Communication")]

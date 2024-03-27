@@ -187,7 +187,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             baseClient = InstrumentClient(new ProgrammableConnectivityClient(_endpoint, _credential, clientOptions));
 #endif
             var client = baseClient.GetDeviceNetworkClient();
-            var networkIdentifier = new NetworkIdentifier("IPv4", "189.88.1.1");
+            var networkIdentifier = new NetworkIdentifier("IPv4", "127.0.0.1");
 
             Response<NetworkRetrievalResult> response = client.Retrieve(ApcGatewayId, networkIdentifier);
             Console.WriteLine(response.Value.NetworkCode);
@@ -211,7 +211,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             baseClient = InstrumentClient(new ProgrammableConnectivityClient(_endpoint, _credential, clientOptions));
 #endif
             var client = baseClient.GetDeviceNetworkClient();
-            var networkIdentifier = new NetworkIdentifier("IPv5", "189.88.1.1");
+            var networkIdentifier = new NetworkIdentifier("IPv5", "127.0.0.1");
             try
             {
                 Response<NetworkRetrievalResult> response = client.Retrieve(ApcGatewayId, networkIdentifier);
