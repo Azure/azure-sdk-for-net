@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue(Credential);
+                writer.WriteObjectValue<RunAsCredentialAssociationProperty>(Credential, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

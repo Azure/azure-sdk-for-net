@@ -21,14 +21,14 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WriteStartArray();
                 foreach (var item in DimensionFilter)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DimensionKey>(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SeverityFilter))
             {
                 writer.WritePropertyName("severityFilter"u8);
-                writer.WriteObjectValue(SeverityFilter);
+                writer.WriteObjectValue<SeverityFilterCondition>(SeverityFilter);
             }
             writer.WriteEndObject();
         }

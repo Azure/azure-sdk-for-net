@@ -136,7 +136,7 @@ namespace Azure.AI.Translation.Text
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<TransliteratedText>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

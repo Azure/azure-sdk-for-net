@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                writer.WriteObjectValue<AutomationUsageCounterName>(Name, options);
             }
             if (Optional.IsDefined(Unit))
             {

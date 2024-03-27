@@ -29,23 +29,23 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("capacity"u8);
-            writer.WriteObjectValue(Capacity);
+            writer.WriteObjectValue<MonitorScaleCapacity>(Capacity, options);
             writer.WritePropertyName("rules"u8);
             writer.WriteStartArray();
             foreach (var item in Rules)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<AutoscaleRule>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(FixedDate))
             {
                 writer.WritePropertyName("fixedDate"u8);
-                writer.WriteObjectValue(FixedDate);
+                writer.WriteObjectValue<MonitorTimeWindow>(FixedDate, options);
             }
             if (Optional.IsDefined(Recurrence))
             {
                 writer.WritePropertyName("recurrence"u8);
-                writer.WriteObjectValue(Recurrence);
+                writer.WriteObjectValue<MonitorRecurrence>(Recurrence, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

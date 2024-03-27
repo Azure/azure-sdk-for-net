@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             if (Optional.IsDefined(CustomerManagedKeyEncryption))
             {
                 writer.WritePropertyName("customerManagedKeyEncryption"u8);
-                writer.WriteObjectValue(CustomerManagedKeyEncryption);
+                writer.WriteObjectValue<RedisEnterpriseCustomerManagedKeyEncryption>(CustomerManagedKeyEncryption, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 writer.WriteStartArray();
                 foreach (var item in Regions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TrafficManagerRegion>(item, options);
                 }
                 writer.WriteEndArray();
             }

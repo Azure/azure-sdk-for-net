@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                writer.WriteObjectValue<ContainerRegistryTokenCredentials>(Credentials, options);
             }
             if (Optional.IsDefined(Status))
             {

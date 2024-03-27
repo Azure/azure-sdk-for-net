@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties);
+                writer.WriteObjectValue<KeyVaultProperties>(KeyVaultProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

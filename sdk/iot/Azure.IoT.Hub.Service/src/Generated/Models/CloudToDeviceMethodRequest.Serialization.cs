@@ -23,7 +23,7 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(Payload))
             {
                 writer.WritePropertyName("payload"u8);
-                writer.WriteObjectValue(Payload);
+                writer.WriteObjectValue<object>(Payload);
             }
             if (Optional.IsDefined(ResponseTimeoutInSeconds))
             {

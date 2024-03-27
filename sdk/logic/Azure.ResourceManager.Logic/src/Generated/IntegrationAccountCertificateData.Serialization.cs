@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
-                writer.WriteObjectValue(Key);
+                writer.WriteObjectValue<IntegrationAccountKeyVaultKeyReference>(Key, options);
             }
             if (Optional.IsDefined(PublicCertificate))
             {

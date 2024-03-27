@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in PhysicalPartitionStorageInfoCollectionValue)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PhysicalPartitionStorageInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,6 +104,43 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new PhysicalPartitionStorageInfoCollection(physicalPartitionStorageInfoCollection ?? new ChangeTrackingList<PhysicalPartitionStorageInfo>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PhysicalPartitionStorageInfoCollectionValue), out propertyOverride);
+            if (Optional.IsCollectionDefined(PhysicalPartitionStorageInfoCollectionValue) || hasPropertyOverride)
+            {
+                if (PhysicalPartitionStorageInfoCollectionValue.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  physicalPartitionStorageInfoCollection: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in PhysicalPartitionStorageInfoCollectionValue)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  physicalPartitionStorageInfoCollection: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<PhysicalPartitionStorageInfoCollection>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PhysicalPartitionStorageInfoCollection>)this).GetFormatFromOptions(options) : options.Format;
@@ -110,6 +149,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PhysicalPartitionStorageInfoCollection)} does not support writing '{options.Format}' format.");
             }

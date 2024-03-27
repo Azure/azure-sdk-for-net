@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration);
+                writer.WriteObjectValue<ArtifactStorePropertiesFormatManagedResourceGroupConfiguration>(ManagedResourceGroupConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(StorageResourceId))
             {

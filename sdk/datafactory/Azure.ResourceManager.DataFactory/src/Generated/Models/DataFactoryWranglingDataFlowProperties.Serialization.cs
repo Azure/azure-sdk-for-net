@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                writer.WriteObjectValue<DataFlowFolder>(Folder, options);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Sources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PowerQuerySource>(item, options);
                 }
                 writer.WriteEndArray();
             }

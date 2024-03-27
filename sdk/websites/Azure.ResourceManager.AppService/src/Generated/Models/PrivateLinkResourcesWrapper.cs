@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Gets the value. </summary>
+        [WirePath("value")]
         public IReadOnlyList<AppServicePrivateLinkResourceData> Value { get; }
     }
 }

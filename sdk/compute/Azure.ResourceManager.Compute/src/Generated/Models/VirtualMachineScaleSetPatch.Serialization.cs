@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<ComputeSku>(Sku, options);
             }
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                writer.WriteObjectValue(Plan);
+                writer.WriteObjectValue<ComputePlan>(Plan, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -59,17 +59,17 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(UpgradePolicy))
             {
                 writer.WritePropertyName("upgradePolicy"u8);
-                writer.WriteObjectValue(UpgradePolicy);
+                writer.WriteObjectValue<VirtualMachineScaleSetUpgradePolicy>(UpgradePolicy, options);
             }
             if (Optional.IsDefined(AutomaticRepairsPolicy))
             {
                 writer.WritePropertyName("automaticRepairsPolicy"u8);
-                writer.WriteObjectValue(AutomaticRepairsPolicy);
+                writer.WriteObjectValue<AutomaticRepairsPolicy>(AutomaticRepairsPolicy, options);
             }
             if (Optional.IsDefined(VirtualMachineProfile))
             {
                 writer.WritePropertyName("virtualMachineProfile"u8);
-                writer.WriteObjectValue(VirtualMachineProfile);
+                writer.WriteObjectValue<VirtualMachineScaleSetUpdateVmProfile>(VirtualMachineProfile, options);
             }
             if (Optional.IsDefined(Overprovision))
             {
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(AdditionalCapabilities))
             {
                 writer.WritePropertyName("additionalCapabilities"u8);
-                writer.WriteObjectValue(AdditionalCapabilities);
+                writer.WriteObjectValue<AdditionalCapabilities>(AdditionalCapabilities, options);
             }
             if (Optional.IsDefined(ScaleInPolicy))
             {
                 writer.WritePropertyName("scaleInPolicy"u8);
-                writer.WriteObjectValue(ScaleInPolicy);
+                writer.WriteObjectValue<ScaleInPolicy>(ScaleInPolicy, options);
             }
             if (Optional.IsDefined(ProximityPlacementGroup))
             {
@@ -104,17 +104,17 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PriorityMixPolicy))
             {
                 writer.WritePropertyName("priorityMixPolicy"u8);
-                writer.WriteObjectValue(PriorityMixPolicy);
+                writer.WriteObjectValue<VirtualMachineScaleSetPriorityMixPolicy>(PriorityMixPolicy, options);
             }
             if (Optional.IsDefined(SpotRestorePolicy))
             {
                 writer.WritePropertyName("spotRestorePolicy"u8);
-                writer.WriteObjectValue(SpotRestorePolicy);
+                writer.WriteObjectValue<SpotRestorePolicy>(SpotRestorePolicy, options);
             }
             if (Optional.IsDefined(ResiliencyPolicy))
             {
                 writer.WritePropertyName("resiliencyPolicy"u8);
-                writer.WriteObjectValue(ResiliencyPolicy);
+                writer.WriteObjectValue<ResiliencyPolicy>(ResiliencyPolicy, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

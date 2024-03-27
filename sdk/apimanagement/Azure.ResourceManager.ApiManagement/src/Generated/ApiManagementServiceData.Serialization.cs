@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApiManagement
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            writer.WriteObjectValue<ApiManagementServiceSkuProperties>(Sku, options);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WriteStartArray();
                 foreach (var item in HostnameConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HostnameConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(VirtualNetworkConfiguration))
             {
                 writer.WritePropertyName("virtualNetworkConfiguration"u8);
-                writer.WriteObjectValue(VirtualNetworkConfiguration);
+                writer.WriteObjectValue<VirtualNetworkConfiguration>(VirtualNetworkConfiguration, options);
             }
             if (Optional.IsCollectionDefined(AdditionalLocations))
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WriteStartArray();
                 foreach (var item in AdditionalLocations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AdditionalLocation>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WriteStartArray();
                 foreach (var item in Certificates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CertificateConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(ApiVersionConstraint))
             {
                 writer.WritePropertyName("apiVersionConstraint"u8);
-                writer.WriteObjectValue(ApiVersionConstraint);
+                writer.WriteObjectValue<ApiVersionConstraint>(ApiVersionConstraint, options);
             }
             if (Optional.IsDefined(Restore))
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RemotePrivateEndpointConnectionWrapper>(item, options);
                 }
                 writer.WriteEndArray();
             }

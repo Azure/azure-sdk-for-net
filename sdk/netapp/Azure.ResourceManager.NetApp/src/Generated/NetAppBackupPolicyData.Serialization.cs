@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.NetApp
                 writer.WriteStartArray();
                 foreach (var item in VolumeBackups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetAppVolumeBackupDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Issues)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConnectivityIssue>(item, options);
                 }
                 writer.WriteEndArray();
             }

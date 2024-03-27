@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WriteStartArray();
                 foreach (var item in AvailabilityZonePairs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SapAvailabilityZonePair>(item, options);
                 }
                 writer.WriteEndArray();
             }

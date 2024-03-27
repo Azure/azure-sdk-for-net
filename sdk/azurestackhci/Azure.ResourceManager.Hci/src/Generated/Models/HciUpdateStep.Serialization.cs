@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in Steps)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HciUpdateStep>(item, options);
                 }
                 writer.WriteEndArray();
             }

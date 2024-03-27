@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(EndpointConfiguration))
             {
                 writer.WritePropertyName("endpointConfiguration"u8);
-                writer.WriteObjectValue(EndpointConfiguration);
+                writer.WriteObjectValue<PoolEndpointConfiguration>(EndpointConfiguration, options);
             }
             if (Optional.IsDefined(PublicIPAddressConfiguration))
             {
                 writer.WritePropertyName("publicIPAddressConfiguration"u8);
-                writer.WriteObjectValue(PublicIPAddressConfiguration);
+                writer.WriteObjectValue<BatchPublicIPAddressConfiguration>(PublicIPAddressConfiguration, options);
             }
             if (Optional.IsDefined(EnableAcceleratedNetworking))
             {

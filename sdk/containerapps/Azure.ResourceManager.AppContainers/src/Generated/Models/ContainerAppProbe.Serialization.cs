@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(HttpGet))
             {
                 writer.WritePropertyName("httpGet"u8);
-                writer.WriteObjectValue(HttpGet);
+                writer.WriteObjectValue<ContainerAppHttpRequestInfo>(HttpGet, options);
             }
             if (Optional.IsDefined(InitialDelaySeconds))
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(TcpSocket))
             {
                 writer.WritePropertyName("tcpSocket"u8);
-                writer.WriteObjectValue(TcpSocket);
+                writer.WriteObjectValue<ContainerAppTcpSocketRequestInfo>(TcpSocket, options);
             }
             if (Optional.IsDefined(TerminationGracePeriodSeconds))
             {

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HDInsightStorageAccountInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

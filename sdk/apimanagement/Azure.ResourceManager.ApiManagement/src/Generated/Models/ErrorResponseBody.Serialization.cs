@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ErrorFieldContract>(item, options);
                 }
                 writer.WriteEndArray();
             }

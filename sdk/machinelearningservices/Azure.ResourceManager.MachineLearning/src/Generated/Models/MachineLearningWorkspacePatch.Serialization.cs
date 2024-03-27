@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<MachineLearningSku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<EncryptionUpdateProperties>(Encryption, options);
             }
             if (Optional.IsDefined(FeatureStoreSettings))
             {
                 writer.WritePropertyName("featureStoreSettings"u8);
-                writer.WriteObjectValue(FeatureStoreSettings);
+                writer.WriteObjectValue<FeatureStoreSettings>(FeatureStoreSettings, options);
             }
             if (Optional.IsDefined(FriendlyName))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ManagedNetwork))
             {
                 writer.WritePropertyName("managedNetwork"u8);
-                writer.WriteObjectValue(ManagedNetwork);
+                writer.WriteObjectValue<ManagedNetworkSettings>(ManagedNetwork, options);
             }
             if (Optional.IsDefined(PrimaryUserAssignedIdentity))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ServiceManagedResourcesSettings))
             {
                 writer.WritePropertyName("serviceManagedResourcesSettings"u8);
-                writer.WriteObjectValue(ServiceManagedResourcesSettings);
+                writer.WriteObjectValue<ServiceManagedResourcesSettings>(ServiceManagedResourcesSettings, options);
             }
             if (Optional.IsDefined(SoftDeleteRetentionInDays))
             {

@@ -27,7 +27,7 @@ namespace Azure.Analytics.Defender.Easm
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            writer.WriteObjectValue<AzureDataExplorerDataConnectionProperties>(Properties, options);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (Optional.IsDefined(Name))
@@ -199,7 +199,7 @@ namespace Azure.Analytics.Defender.Easm
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AzureDataExplorerDataConnectionPayload>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

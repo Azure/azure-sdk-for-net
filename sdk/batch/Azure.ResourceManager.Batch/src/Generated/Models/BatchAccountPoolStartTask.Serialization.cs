@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceFiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BatchResourceFile>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in EnvironmentSettings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BatchEnvironmentSetting>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(UserIdentity))
             {
                 writer.WritePropertyName("userIdentity"u8);
-                writer.WriteObjectValue(UserIdentity);
+                writer.WriteObjectValue<BatchUserIdentity>(UserIdentity, options);
             }
             if (Optional.IsDefined(MaxTaskRetryCount))
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(ContainerSettings))
             {
                 writer.WritePropertyName("containerSettings"u8);
-                writer.WriteObjectValue(ContainerSettings);
+                writer.WriteObjectValue<BatchTaskContainerSettings>(ContainerSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RecommendedSecurityRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in EffectiveNetworkSecurityGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EffectiveNetworkSecurityGroups>(item, options);
                 }
                 writer.WriteEndArray();
             }

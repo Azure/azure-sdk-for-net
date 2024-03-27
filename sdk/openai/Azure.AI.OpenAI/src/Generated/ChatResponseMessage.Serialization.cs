@@ -43,19 +43,19 @@ namespace Azure.AI.OpenAI
                 writer.WriteStartArray();
                 foreach (var item in ToolCalls)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ChatCompletionsToolCall>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(FunctionCall))
             {
                 writer.WritePropertyName("function_call"u8);
-                writer.WriteObjectValue(FunctionCall);
+                writer.WriteObjectValue<FunctionCall>(FunctionCall, options);
             }
             if (Optional.IsDefined(AzureExtensionsContext))
             {
                 writer.WritePropertyName("context"u8);
-                writer.WriteObjectValue(AzureExtensionsContext);
+                writer.WriteObjectValue<AzureChatExtensionsMessageContext>(AzureExtensionsContext, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -209,7 +209,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ChatResponseMessage>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

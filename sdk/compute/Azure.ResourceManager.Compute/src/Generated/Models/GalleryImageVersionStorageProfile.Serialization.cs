@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(GallerySource))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(GallerySource);
+                writer.WriteObjectValue<GalleryArtifactVersionFullSource>(GallerySource, options);
             }
             if (Optional.IsDefined(OSDiskImage))
             {
                 writer.WritePropertyName("osDiskImage"u8);
-                writer.WriteObjectValue(OSDiskImage);
+                writer.WriteObjectValue<GalleryOSDiskImage>(OSDiskImage, options);
             }
             if (Optional.IsCollectionDefined(DataDiskImages))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDiskImages)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GalleryDataDiskImage>(item, options);
                 }
                 writer.WriteEndArray();
             }

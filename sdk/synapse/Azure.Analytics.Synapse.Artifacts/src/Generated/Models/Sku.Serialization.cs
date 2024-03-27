@@ -74,7 +74,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, Sku model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<Sku>(model);
             }
             public override Sku Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

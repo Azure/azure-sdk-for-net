@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VirtualMachineNetworkInterfaceReference>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaceConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VirtualMachineNetworkInterfaceConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }

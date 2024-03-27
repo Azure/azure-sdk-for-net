@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -96,6 +98,43 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new RetrieveThroughputPropertiesResource(physicalPartitionIds, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PhysicalPartitionIds), out propertyOverride);
+            if (Optional.IsCollectionDefined(PhysicalPartitionIds) || hasPropertyOverride)
+            {
+                if (PhysicalPartitionIds.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  physicalPartitionIds: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in PhysicalPartitionIds)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  physicalPartitionIds: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<RetrieveThroughputPropertiesResource>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RetrieveThroughputPropertiesResource>)this).GetFormatFromOptions(options) : options.Format;
@@ -104,6 +143,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RetrieveThroughputPropertiesResource)} does not support writing '{options.Format}' format.");
             }

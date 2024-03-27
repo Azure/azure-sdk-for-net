@@ -41,7 +41,7 @@ namespace Azure.AI.OpenAI.Assistants
                 if (RequiredAction != null)
                 {
                     writer.WritePropertyName("required_action"u8);
-                    writer.WriteObjectValue(RequiredAction);
+                    writer.WriteObjectValue<RequiredAction>(RequiredAction, options);
                 }
                 else
                 {
@@ -51,7 +51,7 @@ namespace Azure.AI.OpenAI.Assistants
             if (LastError != null)
             {
                 writer.WritePropertyName("last_error"u8);
-                writer.WriteObjectValue(LastError);
+                writer.WriteObjectValue<RunError>(LastError, options);
             }
             else
             {
@@ -65,7 +65,7 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStartArray();
             foreach (var item in Tools)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ToolDefinition>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("file_ids"u8);
@@ -388,7 +388,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ThreadRun>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

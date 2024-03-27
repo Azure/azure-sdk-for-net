@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PodEvent>(item, options);
                 }
                 writer.WriteEndArray();
             }

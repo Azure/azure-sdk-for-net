@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(InitialPrimaryExtendedLocation))
             {
                 writer.WritePropertyName("initialPrimaryExtendedLocation"u8);
-                writer.WriteObjectValue(InitialPrimaryExtendedLocation);
+                writer.WriteObjectValue<SiteRecoveryExtendedLocation>(InitialPrimaryExtendedLocation, options);
             }
             if (Optional.IsDefined(InitialRecoveryExtendedLocation))
             {
                 writer.WritePropertyName("initialRecoveryExtendedLocation"u8);
-                writer.WriteObjectValue(InitialRecoveryExtendedLocation);
+                writer.WriteObjectValue<SiteRecoveryExtendedLocation>(InitialRecoveryExtendedLocation, options);
             }
             if (Optional.IsDefined(InitialPrimaryFabricLocation))
             {
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(PrimaryExtendedLocation))
             {
                 writer.WritePropertyName("primaryExtendedLocation"u8);
-                writer.WriteObjectValue(PrimaryExtendedLocation);
+                writer.WriteObjectValue<SiteRecoveryExtendedLocation>(PrimaryExtendedLocation, options);
             }
             if (Optional.IsDefined(RecoveryExtendedLocation))
             {
                 writer.WritePropertyName("recoveryExtendedLocation"u8);
-                writer.WriteObjectValue(RecoveryExtendedLocation);
+                writer.WriteObjectValue<SiteRecoveryExtendedLocation>(RecoveryExtendedLocation, options);
             }
             if (Optional.IsDefined(PrimaryFabricLocation))
             {

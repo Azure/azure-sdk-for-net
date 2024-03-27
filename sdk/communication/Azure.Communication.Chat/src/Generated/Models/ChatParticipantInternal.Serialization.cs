@@ -17,7 +17,7 @@ namespace Azure.Communication.Chat
         {
             writer.WriteStartObject();
             writer.WritePropertyName("communicationIdentifier"u8);
-            writer.WriteObjectValue(CommunicationIdentifier);
+            writer.WriteObjectValue<CommunicationIdentifierModel>(CommunicationIdentifier);
             if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);

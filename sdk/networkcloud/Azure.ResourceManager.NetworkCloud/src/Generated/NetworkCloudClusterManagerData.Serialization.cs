@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in ClusterVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ClusterAvailableVersion>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.NetworkCloud
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration);
+                writer.WriteObjectValue<ManagedResourceGroupConfiguration>(ManagedResourceGroupConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ManagerExtendedLocation))
             {
                 writer.WritePropertyName("managerExtendedLocation"u8);
-                writer.WriteObjectValue(ManagerExtendedLocation);
+                writer.WriteObjectValue<ExtendedLocation>(ManagerExtendedLocation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

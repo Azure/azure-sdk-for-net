@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartArray();
             foreach (var item in FrontendIPConfigurations)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<LoadBalancerFrontendIPConfiguration>(item, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FrontDoorCustomDomainData>(item, options);
                 }
                 writer.WriteEndArray();
             }

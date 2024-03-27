@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HybridComputeExtensionValueData>(item, options);
                 }
                 writer.WriteEndArray();
             }

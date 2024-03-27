@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MySqlFlexibleServerBackupV2Data>(item, options);
                 }
                 writer.WriteEndArray();
             }

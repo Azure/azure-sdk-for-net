@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StreamAnalyticsQueryCompilationError>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(ContentLink))
             {
                 writer.WritePropertyName("contentLink"u8);
-                writer.WriteObjectValue(ContentLink);
+                writer.WriteObjectValue<LogicContentLink>(ContentLink, options);
             }
             if (Optional.IsDefined(CreatedOn))
             {

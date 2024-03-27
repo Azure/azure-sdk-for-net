@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Results)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TroubleshootingDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }

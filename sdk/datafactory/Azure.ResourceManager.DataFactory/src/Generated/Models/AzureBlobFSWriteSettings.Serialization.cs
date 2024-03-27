@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Metadata)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataFactoryMetadataItemInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

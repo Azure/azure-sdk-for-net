@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(ArcAutoProvisioning))
             {
                 writer.WritePropertyName("arcAutoProvisioning"u8);
-                writer.WriteObjectValue(ArcAutoProvisioning);
+                writer.WriteObjectValue<DefenderForDatabasesAwsOfferingArcAutoProvisioning>(ArcAutoProvisioning, options);
             }
             if (Optional.IsDefined(Rds))
             {
                 writer.WritePropertyName("rds"u8);
-                writer.WriteObjectValue(Rds);
+                writer.WriteObjectValue<DefenderForDatabasesAwsOfferingRds>(Rds, options);
             }
             if (Optional.IsDefined(DatabasesDspm))
             {
                 writer.WritePropertyName("databasesDspm"u8);
-                writer.WriteObjectValue(DatabasesDspm);
+                writer.WriteObjectValue<DefenderFoDatabasesAwsOfferingDatabasesDspm>(DatabasesDspm, options);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());

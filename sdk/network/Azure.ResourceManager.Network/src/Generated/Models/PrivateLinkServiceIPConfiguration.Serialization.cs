@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                writer.WriteObjectValue(Subnet);
+                writer.WriteObjectValue<SubnetData>(Subnet, options);
             }
             if (Optional.IsDefined(Primary))
             {

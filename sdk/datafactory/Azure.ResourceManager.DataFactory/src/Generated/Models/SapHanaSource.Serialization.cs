@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PartitionSettings))
             {
                 writer.WritePropertyName("partitionSettings"u8);
-                writer.WriteObjectValue(PartitionSettings);
+                writer.WriteObjectValue<SapHanaPartitionSettings>(PartitionSettings, options);
             }
             if (Optional.IsDefined(QueryTimeout))
             {

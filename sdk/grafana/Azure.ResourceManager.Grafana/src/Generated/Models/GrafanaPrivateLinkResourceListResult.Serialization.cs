@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GrafanaPrivateLinkResourceData>(item, options);
                 }
                 writer.WriteEndArray();
             }

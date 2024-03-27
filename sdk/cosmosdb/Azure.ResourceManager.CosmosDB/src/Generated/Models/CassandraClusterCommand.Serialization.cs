@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterCommand>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraClusterCommand)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraClusterCommand)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterCommand>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraClusterCommand)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraClusterCommand)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -226,6 +226,204 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Command), out propertyOverride);
+            if (Optional.IsDefined(Command) || hasPropertyOverride)
+            {
+                builder.Append("  command: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Command.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Command}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Command}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CommandId), out propertyOverride);
+            if (Optional.IsDefined(CommandId) || hasPropertyOverride)
+            {
+                builder.Append("  commandId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (CommandId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CommandId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CommandId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Arguments), out propertyOverride);
+            if (Optional.IsDefined(Arguments) || hasPropertyOverride)
+            {
+                builder.Append("  arguments: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Arguments.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Host), out propertyOverride);
+            if (Optional.IsDefined(Host) || hasPropertyOverride)
+            {
+                builder.Append("  host: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Host.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Host}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Host}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAdmin), out propertyOverride);
+            if (Optional.IsDefined(IsAdmin) || hasPropertyOverride)
+            {
+                builder.Append("  isAdmin: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsAdmin.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ShouldStopCassandraBeforeStart), out propertyOverride);
+            if (Optional.IsDefined(ShouldStopCassandraBeforeStart) || hasPropertyOverride)
+            {
+                builder.Append("  cassandraStopStart: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = ShouldStopCassandraBeforeStart.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsReadWrite), out propertyOverride);
+            if (Optional.IsDefined(IsReadWrite) || hasPropertyOverride)
+            {
+                builder.Append("  readWrite: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsReadWrite.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Result), out propertyOverride);
+            if (Optional.IsDefined(Result) || hasPropertyOverride)
+            {
+                builder.Append("  result: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Result.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Result}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Result}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Status.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OutputFile), out propertyOverride);
+            if (Optional.IsDefined(OutputFile) || hasPropertyOverride)
+            {
+                builder.Append("  outputFile: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (OutputFile.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{OutputFile}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{OutputFile}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<CassandraClusterCommand>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterCommand>)this).GetFormatFromOptions(options) : options.Format;
@@ -234,8 +432,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CassandraClusterCommand)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraClusterCommand)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -251,7 +451,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCassandraClusterCommand(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CassandraClusterCommand)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraClusterCommand)} does not support reading '{options.Format}' format.");
             }
         }
 

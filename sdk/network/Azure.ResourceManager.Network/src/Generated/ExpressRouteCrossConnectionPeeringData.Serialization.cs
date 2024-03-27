@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(MicrosoftPeeringConfig))
             {
                 writer.WritePropertyName("microsoftPeeringConfig"u8);
-                writer.WriteObjectValue(MicrosoftPeeringConfig);
+                writer.WriteObjectValue<ExpressRouteCircuitPeeringConfig>(MicrosoftPeeringConfig, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(IPv6PeeringConfig))
             {
                 writer.WritePropertyName("ipv6PeeringConfig"u8);
-                writer.WriteObjectValue(IPv6PeeringConfig);
+                writer.WriteObjectValue<IPv6ExpressRouteCircuitPeeringConfig>(IPv6PeeringConfig, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

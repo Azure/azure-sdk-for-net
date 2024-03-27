@@ -27,7 +27,7 @@ namespace Azure.Communication.JobRouter
 
             writer.WriteStartObject();
             writer.WritePropertyName("rule"u8);
-            writer.WriteObjectValue(Rule);
+            writer.WriteObjectValue<RouterRule>(Rule, options);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -136,7 +136,7 @@ namespace Azure.Communication.JobRouter
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<RuleEngineQueueSelectorAttachment>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

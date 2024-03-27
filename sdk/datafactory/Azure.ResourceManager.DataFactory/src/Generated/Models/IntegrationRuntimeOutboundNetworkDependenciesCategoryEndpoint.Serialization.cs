@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IntegrationRuntimeOutboundNetworkDependenciesEndpoint>(item, options);
                 }
                 writer.WriteEndArray();
             }

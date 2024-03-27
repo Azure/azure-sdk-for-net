@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Routes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HubRoute>(item, options);
                 }
                 writer.WriteEndArray();
             }

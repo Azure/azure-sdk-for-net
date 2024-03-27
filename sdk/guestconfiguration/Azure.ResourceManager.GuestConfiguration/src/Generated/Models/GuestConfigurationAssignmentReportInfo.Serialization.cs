@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             if (Optional.IsDefined(Assignment))
             {
                 writer.WritePropertyName("assignment"u8);
-                writer.WriteObjectValue(Assignment);
+                writer.WriteObjectValue<GuestConfigurationAssignmentInfo>(Assignment, options);
             }
             if (Optional.IsDefined(Vm))
             {
                 writer.WritePropertyName("vm"u8);
-                writer.WriteObjectValue(Vm);
+                writer.WriteObjectValue<GuestConfigurationVmInfo>(Vm, options);
             }
             if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AssignmentReportResourceInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

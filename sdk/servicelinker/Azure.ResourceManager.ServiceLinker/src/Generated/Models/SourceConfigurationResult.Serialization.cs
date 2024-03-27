@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 writer.WriteStartArray();
                 foreach (var item in Configurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SourceConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }

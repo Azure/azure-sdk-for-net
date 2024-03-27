@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Purview.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<PurviewPrivateLinkResourceData>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

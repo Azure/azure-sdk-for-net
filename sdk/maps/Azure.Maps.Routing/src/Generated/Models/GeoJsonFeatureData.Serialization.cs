@@ -17,11 +17,11 @@ namespace Azure.Maps.Routing.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("geometry"u8);
-            writer.WriteObjectValue(Geometry);
+            writer.WriteObjectValue<GeoJsonGeometry>(Geometry);
             if (Common.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<object>(Properties);
             }
             if (Common.Optional.IsDefined(Id))
             {

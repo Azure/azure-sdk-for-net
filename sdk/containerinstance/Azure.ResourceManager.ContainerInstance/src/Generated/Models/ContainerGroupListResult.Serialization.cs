@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerGroupData>(item, options);
                 }
                 writer.WriteEndArray();
             }

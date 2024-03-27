@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Insights)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SelfHelpDiagnosticInsight>(item, options);
                 }
                 writer.WriteEndArray();
             }

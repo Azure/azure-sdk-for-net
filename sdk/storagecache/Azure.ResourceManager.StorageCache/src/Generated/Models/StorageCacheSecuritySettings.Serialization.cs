@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WriteStartArray();
                 foreach (var item in AccessPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NfsAccessPolicy>(item, options);
                 }
                 writer.WriteEndArray();
             }

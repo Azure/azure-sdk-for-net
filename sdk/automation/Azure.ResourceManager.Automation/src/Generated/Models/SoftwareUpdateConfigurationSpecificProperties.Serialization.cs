@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Windows))
             {
                 writer.WritePropertyName("windows"u8);
-                writer.WriteObjectValue(Windows);
+                writer.WriteObjectValue<WindowsUpdateConfigurationProperties>(Windows, options);
             }
             if (Optional.IsDefined(Linux))
             {
                 writer.WritePropertyName("linux"u8);
-                writer.WriteObjectValue(Linux);
+                writer.WriteObjectValue<LinuxUpdateConfigurationProperties>(Linux, options);
             }
             if (Optional.IsDefined(Duration))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Targets))
             {
                 writer.WritePropertyName("targets"u8);
-                writer.WriteObjectValue(Targets);
+                writer.WriteObjectValue<SoftwareUpdateConfigurationTargetProperties>(Targets, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

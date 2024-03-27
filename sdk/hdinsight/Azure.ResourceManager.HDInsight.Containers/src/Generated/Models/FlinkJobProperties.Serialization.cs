@@ -26,8 +26,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("jobName"u8);
-            writer.WriteStringValue(JobName);
+            if (Optional.IsDefined(RunId))
+            {
+                writer.WritePropertyName("runId"u8);
+                writer.WriteStringValue(RunId);
+            }
+            if (Optional.IsDefined(JobName))
+            {
+                writer.WritePropertyName("jobName"u8);
+                writer.WriteStringValue(JobName);
+            }
             if (Optional.IsDefined(JobJarDirectory))
             {
                 writer.WritePropertyName("jobJarDirectory"u8);
@@ -134,6 +142,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
+            string runId = default;
             string jobName = default;
             string jobJarDirectory = default;
             string jarName = default;
@@ -152,6 +161,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("runId"u8))
+                {
+                    runId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("jobName"u8))
                 {
                     jobName = property.Value.GetString();
@@ -244,6 +258,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             return new FlinkJobProperties(
                 jobType,
                 serializedAdditionalRawData,
+                runId,
                 jobName,
                 jobJarDirectory,
                 jarName,

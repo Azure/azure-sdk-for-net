@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PeeringRegisteredPrefixData>(item, options);
                 }
                 writer.WriteEndArray();
             }

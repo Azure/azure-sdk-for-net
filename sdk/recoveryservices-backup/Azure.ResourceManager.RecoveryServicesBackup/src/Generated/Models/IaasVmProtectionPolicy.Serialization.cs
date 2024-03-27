@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(InstantRPDetails))
             {
                 writer.WritePropertyName("instantRPDetails"u8);
-                writer.WriteObjectValue(InstantRPDetails);
+                writer.WriteObjectValue<InstantRPAdditionalDetails>(InstantRPDetails, options);
             }
             if (Optional.IsDefined(SchedulePolicy))
             {
                 writer.WritePropertyName("schedulePolicy"u8);
-                writer.WriteObjectValue(SchedulePolicy);
+                writer.WriteObjectValue<BackupSchedulePolicy>(SchedulePolicy, options);
             }
             if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
-                writer.WriteObjectValue(RetentionPolicy);
+                writer.WriteObjectValue<BackupRetentionPolicy>(RetentionPolicy, options);
             }
             if (Optional.IsCollectionDefined(TieringPolicy))
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 foreach (var item in TieringPolicy)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<BackupTieringPolicy>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

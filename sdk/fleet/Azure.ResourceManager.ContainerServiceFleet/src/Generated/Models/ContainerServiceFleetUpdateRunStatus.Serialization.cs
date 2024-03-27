@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<ContainerServiceFleetUpdateStatus>(Status, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Stages))
             {
@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 writer.WriteStartArray();
                 foreach (var item in Stages)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerServiceFleetUpdateStageStatus>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(NodeImageSelection))
             {
                 writer.WritePropertyName("nodeImageSelection"u8);
-                writer.WriteObjectValue(NodeImageSelection);
+                writer.WriteObjectValue<NodeImageSelectionStatus>(NodeImageSelection, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

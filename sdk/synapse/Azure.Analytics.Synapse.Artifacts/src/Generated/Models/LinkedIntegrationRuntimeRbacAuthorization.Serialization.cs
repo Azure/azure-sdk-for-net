@@ -53,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, LinkedIntegrationRuntimeRbacAuthorization model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<LinkedIntegrationRuntimeRbacAuthorization>(model);
             }
             public override LinkedIntegrationRuntimeRbacAuthorization Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

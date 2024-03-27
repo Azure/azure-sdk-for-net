@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in CapacityReservations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CapacityReservationInstanceViewWithName>(item, options);
                 }
                 writer.WriteEndArray();
             }

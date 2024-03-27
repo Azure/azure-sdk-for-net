@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RuleGroupOverrides)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedRuleGroupOverride>(item, options);
                 }
                 writer.WriteEndArray();
             }

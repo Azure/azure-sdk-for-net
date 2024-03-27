@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ApiManagementSku>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(NextLink))

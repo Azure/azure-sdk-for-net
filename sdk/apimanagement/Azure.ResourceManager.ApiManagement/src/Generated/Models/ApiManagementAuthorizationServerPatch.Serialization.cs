@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in TokenBodyParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TokenBodyParameterContract>(item, options);
                 }
                 writer.WriteEndArray();
             }

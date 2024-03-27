@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomDomains)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FrontDoorActivatedResourceInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (CacheConfiguration != null)
                 {
                     writer.WritePropertyName("cacheConfiguration"u8);
-                    writer.WriteObjectValue(CacheConfiguration);
+                    writer.WriteObjectValue<FrontDoorRouteCacheConfiguration>(CacheConfiguration, options);
                 }
                 else
                 {

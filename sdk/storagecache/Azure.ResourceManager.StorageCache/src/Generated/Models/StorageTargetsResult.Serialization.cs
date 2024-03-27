@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StorageTargetData>(item, options);
                 }
                 writer.WriteEndArray();
             }

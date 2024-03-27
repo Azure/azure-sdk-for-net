@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("metricThreshold"u8);
-            writer.WriteObjectValue(MetricThreshold);
+            writer.WriteObjectValue<FeatureAttributionMetricThreshold>(MetricThreshold, options);
             writer.WritePropertyName("productionData"u8);
             writer.WriteStartArray();
             foreach (var item in ProductionData)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MonitoringInputDataBase>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("referenceData"u8);
-            writer.WriteObjectValue(ReferenceData);
+            writer.WriteObjectValue<MonitoringInputDataBase>(ReferenceData, options);
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);

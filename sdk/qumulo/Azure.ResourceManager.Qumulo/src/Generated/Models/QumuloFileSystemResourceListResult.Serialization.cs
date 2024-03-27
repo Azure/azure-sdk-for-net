@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Qumulo.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<QumuloFileSystemResourceData>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))

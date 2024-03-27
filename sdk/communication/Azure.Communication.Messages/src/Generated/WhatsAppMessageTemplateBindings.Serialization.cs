@@ -32,7 +32,7 @@ namespace Azure.Communication.Messages.Models.Channels
                 writer.WriteStartArray();
                 foreach (var item in Header)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WhatsAppMessageTemplateBindingsComponent>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.Communication.Messages.Models.Channels
                 writer.WriteStartArray();
                 foreach (var item in Body)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WhatsAppMessageTemplateBindingsComponent>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.Communication.Messages.Models.Channels
                 writer.WriteStartArray();
                 foreach (var item in Footer)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WhatsAppMessageTemplateBindingsComponent>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.Communication.Messages.Models.Channels
                 writer.WriteStartArray();
                 foreach (var item in Buttons)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WhatsAppMessageTemplateBindingsButton>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -234,7 +234,7 @@ namespace Azure.Communication.Messages.Models.Channels
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<WhatsAppMessageTemplateBindings>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

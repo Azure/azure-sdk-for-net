@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AutomationActivityParameterDefinition>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GrafanaAvailablePlugin>(item, options);
                 }
                 writer.WriteEndArray();
             }

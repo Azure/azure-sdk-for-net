@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(RouteTable))
             {
                 writer.WritePropertyName("routeTable"u8);
-                writer.WriteObjectValue(RouteTable);
+                writer.WriteObjectValue<RouteTable>(RouteTable, options);
             }
             if (Optional.IsCollectionDefined(IPPools))
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in IPPools)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IPPool>(item, options);
                 }
                 writer.WriteEndArray();
             }

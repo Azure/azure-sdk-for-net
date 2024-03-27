@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo);
+                writer.WriteObjectValue<MabContainerExtendedInfo>(ExtendedInfo, options);
             }
             if (Optional.IsCollectionDefined(MabContainerHealthDetails))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in MabContainerHealthDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MabContainerHealthDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }

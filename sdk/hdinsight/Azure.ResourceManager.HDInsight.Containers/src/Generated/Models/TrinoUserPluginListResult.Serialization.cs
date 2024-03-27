@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in Plugins)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TrinoUserPlugin>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineLearningServiceInputColumn>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineLearningServiceOutputColumn>(item, options);
                 }
                 writer.WriteEndArray();
             }

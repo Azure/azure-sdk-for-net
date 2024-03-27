@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<PostgreSqlSku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                writer.WriteObjectValue<PostgreSqlStorageProfile>(StorageProfile, options);
             }
             if (Optional.IsDefined(AdministratorLoginPassword))
             {

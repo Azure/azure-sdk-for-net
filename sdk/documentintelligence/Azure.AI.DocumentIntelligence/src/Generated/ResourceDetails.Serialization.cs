@@ -27,9 +27,9 @@ namespace Azure.AI.DocumentIntelligence
 
             writer.WriteStartObject();
             writer.WritePropertyName("customDocumentModels"u8);
-            writer.WriteObjectValue(CustomDocumentModels);
+            writer.WriteObjectValue<CustomDocumentModelsDetails>(CustomDocumentModels, options);
             writer.WritePropertyName("customNeuralDocumentModelBuilds"u8);
-            writer.WriteObjectValue(CustomNeuralDocumentModelBuilds);
+            writer.WriteObjectValue<QuotaDetails>(CustomNeuralDocumentModelBuilds, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -136,7 +136,7 @@ namespace Azure.AI.DocumentIntelligence
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ResourceDetails>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

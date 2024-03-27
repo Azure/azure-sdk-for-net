@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStartArray();
                 foreach (var item in ZoneDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KustoResourceSkuZoneDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }

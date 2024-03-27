@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
-                writer.WriteObjectValue(Platform);
+                writer.WriteObjectValue<ContainerRegistryPlatformUpdateContent>(Platform, options);
             }
             if (Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
-                writer.WriteObjectValue(AgentConfiguration);
+                writer.WriteObjectValue<ContainerRegistryAgentProperties>(AgentConfiguration, options);
             }
             if (Optional.IsDefined(AgentPoolName))
             {
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Step))
             {
                 writer.WritePropertyName("step"u8);
-                writer.WriteObjectValue(Step);
+                writer.WriteObjectValue<ContainerRegistryTaskStepUpdateContent>(Step, options);
             }
             if (Optional.IsDefined(Trigger))
             {
                 writer.WritePropertyName("trigger"u8);
-                writer.WriteObjectValue(Trigger);
+                writer.WriteObjectValue<ContainerRegistryTriggerUpdateContent>(Trigger, options);
             }
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                writer.WriteObjectValue<ContainerRegistryCredentials>(Credentials, options);
             }
             if (Optional.IsDefined(LogTemplate))
             {

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in IPConfiguration)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EdgeKubernetesIPConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }

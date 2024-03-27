@@ -27,7 +27,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 
             writer.WriteStartObject();
             writer.WritePropertyName("code"u8);
-            writer.WriteObjectValue(Code);
+            writer.WriteObjectValue<FhirR4CodeableConcept>(Code, options);
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -147,7 +147,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<GenericProcedureRecommendation>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerRegistryIPRule>(item, options);
                 }
                 writer.WriteEndArray();
             }

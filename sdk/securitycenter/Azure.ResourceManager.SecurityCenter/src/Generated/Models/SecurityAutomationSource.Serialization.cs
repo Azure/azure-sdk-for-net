@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in RuleSets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SecurityAutomationRuleSet>(item, options);
                 }
                 writer.WriteEndArray();
             }

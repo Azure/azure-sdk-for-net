@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Array of private link resources. </summary>
+        [WirePath("value")]
         public IReadOnlyList<StoragePrivateLinkResourceData> Value { get; }
     }
 }

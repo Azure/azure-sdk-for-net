@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in DisksToInclude)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InMageRcmDiskContent>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DisksDefault))
             {
                 writer.WritePropertyName("disksDefault"u8);
-                writer.WriteObjectValue(DisksDefault);
+                writer.WriteObjectValue<InMageRcmDisksDefaultContent>(DisksDefault, options);
             }
             writer.WritePropertyName("targetResourceGroupId"u8);
             writer.WriteStringValue(TargetResourceGroupId);

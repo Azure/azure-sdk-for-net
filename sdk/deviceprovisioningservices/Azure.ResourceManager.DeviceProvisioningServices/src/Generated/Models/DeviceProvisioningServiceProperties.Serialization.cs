@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 writer.WriteStartArray();
                 foreach (var item in IPFilterRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DeviceProvisioningServicesIPFilterRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DeviceProvisioningServicesPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 writer.WriteStartArray();
                 foreach (var item in IotHubs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IotHubDefinitionDescription>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 writer.WriteStartArray();
                 foreach (var item in AuthorizationPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DeviceProvisioningServicesSharedAccessKey>(item, options);
                 }
                 writer.WriteEndArray();
             }

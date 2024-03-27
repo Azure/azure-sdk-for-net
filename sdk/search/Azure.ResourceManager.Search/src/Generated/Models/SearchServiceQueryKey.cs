@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Describes an API key for a given Azure Cognitive Search service that has permissions for query operations only. </summary>
+    /// <summary> Describes an API key for a given search service that has permissions for query operations only. </summary>
     public partial class SearchServiceQueryKey
     {
         /// <summary>
@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> The name of the query API key; may be empty. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The value of the query API key. </summary>
+        [WirePath("key")]
         public string Key { get; }
     }
 }

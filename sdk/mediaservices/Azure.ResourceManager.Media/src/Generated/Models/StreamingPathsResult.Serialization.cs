@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in StreamingPaths)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StreamingPath>(item, options);
                 }
                 writer.WriteEndArray();
             }

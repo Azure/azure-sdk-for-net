@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (SystemCreatedAcrAccount != null)
                 {
                     writer.WritePropertyName("systemCreatedAcrAccount"u8);
-                    writer.WriteObjectValue(SystemCreatedAcrAccount);
+                    writer.WriteObjectValue<SystemCreatedAcrAccount>(SystemCreatedAcrAccount, options);
                 }
                 else
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (UserCreatedAcrAccount != null)
                 {
                     writer.WritePropertyName("userCreatedAcrAccount"u8);
-                    writer.WriteObjectValue(UserCreatedAcrAccount);
+                    writer.WriteObjectValue<UserCreatedAcrAccount>(UserCreatedAcrAccount, options);
                 }
                 else
                 {

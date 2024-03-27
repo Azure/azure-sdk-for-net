@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Datadog.Models
             if (Optional.IsDefined(LogRules))
             {
                 writer.WritePropertyName("logRules"u8);
-                writer.WriteObjectValue(LogRules);
+                writer.WriteObjectValue<LogRules>(LogRules, options);
             }
             if (Optional.IsDefined(MetricRules))
             {
                 writer.WritePropertyName("metricRules"u8);
-                writer.WriteObjectValue(MetricRules);
+                writer.WriteObjectValue<MetricRules>(MetricRules, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

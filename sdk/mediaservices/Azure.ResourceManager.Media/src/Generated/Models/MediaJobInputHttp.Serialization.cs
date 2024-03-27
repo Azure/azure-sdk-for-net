@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Start))
             {
                 writer.WritePropertyName("start"u8);
-                writer.WriteObjectValue(Start);
+                writer.WriteObjectValue<ClipTime>(Start, options);
             }
             if (Optional.IsDefined(End))
             {
                 writer.WritePropertyName("end"u8);
-                writer.WriteObjectValue(End);
+                writer.WriteObjectValue<ClipTime>(End, options);
             }
             if (Optional.IsDefined(Label))
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in InputDefinitions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MediaJobInputDefinition>(item, options);
                 }
                 writer.WriteEndArray();
             }

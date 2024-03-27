@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WriteStartArray();
                 foreach (var item in Branches)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ChaosExperimentRunBranchStatus>(item, options);
                 }
                 writer.WriteEndArray();
             }

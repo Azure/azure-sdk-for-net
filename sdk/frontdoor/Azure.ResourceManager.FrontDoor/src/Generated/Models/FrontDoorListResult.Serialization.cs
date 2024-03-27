@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FrontDoorData>(item, options);
                 }
                 writer.WriteEndArray();
             }

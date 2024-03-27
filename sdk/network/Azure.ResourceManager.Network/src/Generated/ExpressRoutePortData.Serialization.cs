@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ExpressRouteLinkData>(item, options);
                 }
                 writer.WriteEndArray();
             }

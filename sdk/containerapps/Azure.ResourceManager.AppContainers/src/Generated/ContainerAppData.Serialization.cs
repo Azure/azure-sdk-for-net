@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation);
+                writer.WriteObjectValue<ContainerAppExtendedLocation>(ExtendedLocation, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration);
+                writer.WriteObjectValue<ContainerAppConfiguration>(Configuration, options);
             }
             if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
-                writer.WriteObjectValue(Template);
+                writer.WriteObjectValue<ContainerAppTemplate>(Template, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(OutboundIPAddressList))
             {

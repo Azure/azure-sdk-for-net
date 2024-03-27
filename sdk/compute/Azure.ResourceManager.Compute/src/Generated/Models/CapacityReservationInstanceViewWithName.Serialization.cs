@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(UtilizationInfo))
             {
                 writer.WritePropertyName("utilizationInfo"u8);
-                writer.WriteObjectValue(UtilizationInfo);
+                writer.WriteObjectValue<CapacityReservationUtilization>(UtilizationInfo, options);
             }
             if (Optional.IsCollectionDefined(Statuses))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InstanceViewStatus>(item, options);
                 }
                 writer.WriteEndArray();
             }

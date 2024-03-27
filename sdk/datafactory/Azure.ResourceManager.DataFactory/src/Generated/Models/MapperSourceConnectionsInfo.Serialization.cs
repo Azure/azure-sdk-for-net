@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in SourceEntities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MapperTable>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Connection))
             {
                 writer.WritePropertyName("connection"u8);
-                writer.WriteObjectValue(Connection);
+                writer.WriteObjectValue<MapperConnection>(Connection, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

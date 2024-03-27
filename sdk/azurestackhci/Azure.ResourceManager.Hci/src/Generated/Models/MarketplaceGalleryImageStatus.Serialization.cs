@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(ProvisioningStatus))
             {
                 writer.WritePropertyName("provisioningStatus"u8);
-                writer.WriteObjectValue(ProvisioningStatus);
+                writer.WriteObjectValue<MarketplaceGalleryImageStatusProvisioningStatus>(ProvisioningStatus, options);
             }
             if (Optional.IsDefined(DownloadStatus))
             {
                 writer.WritePropertyName("downloadStatus"u8);
-                writer.WriteObjectValue(DownloadStatus);
+                writer.WriteObjectValue<MarketplaceGalleryImageStatusDownloadStatus>(DownloadStatus, options);
             }
             if (Optional.IsDefined(ProgressPercentage))
             {

@@ -76,12 +76,16 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> A provisioning state of the ThroughputPool Account. </summary>
+        [WirePath("properties.provisioningState")]
         public CosmosDBStatus? ProvisioningState { get; set; }
         /// <summary> The resource identifier of global database account in the throughputPool. </summary>
+        [WirePath("properties.accountResourceIdentifier")]
         public string AccountResourceIdentifier { get; set; }
         /// <summary> The location of  global database account in the throughputPool. </summary>
+        [WirePath("properties.accountLocation")]
         public string AccountLocation { get; set; }
         /// <summary> The instance id of global database account in the throughputPool. </summary>
+        [WirePath("properties.accountInstanceId")]
         public string AccountInstanceId { get; }
     }
 }
