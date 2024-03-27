@@ -11,21 +11,25 @@ description: Samples for the Azure.Communication.ProgrammableConnectivity client
 
 # Azure.Communication.ProgrammableConnectivity Samples
 
-See each file for example usage on each API exposed by Azure Programmable Connectivity, as well as examples of how to handle errors.
-<!-- please refer to <https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/samples/README.md> to write sample readme. -->
+See each file for example usage on each API exposed by Azure Programmable Connectivity
+
+This file contains an example of how to handle errors.
+
 
 ## Common patterns
 ### Handling exceptions
 If you'd like to catch exceptions and log out details, do the following
 
-```C#
-...
-...
+```C# Snippet:APC_Sample_NetworkRetrievalBadIdentifierTest
+string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
+Uri _endpoint = new Uri("https://eastus.prod.apcgatewayapi.azure.com");
+TokenCredential _credential = new DefaultAzureCredential();
+ProgrammableConnectivityClient baseClient = new ProgrammableConnectivityClient(_endpoint, _credential);
+var client = baseClient.GetDeviceNetworkClient();
+var networkIdentifier = new NetworkIdentifier("IPv5", "189.88.1.1");
 try
 {
-    // client.Verify(...);
-    // client.Retrieve(...);
-    // etc
+    Response<NetworkRetrievalResult> response = client.Retrieve(ApcGatewayId, networkIdentifier);
 }
 catch (RequestFailedException ex)
 {
@@ -39,9 +43,8 @@ catch (RequestFailedException ex)
 ### Getting headers from response
 To log out a header received from APC, use the following
 
-```C#
-Response<NetworkRetrievalResult> response = client.Retrieve(ApcGatewayId, networkIdentifier);
+```C# Snippet:SimSwapVerifyHeaderRetrievalTest
+Response<SimSwapVerificationResult> response = client.Verify(ApcGatewayId, content);
 var xMsResponseId = response.GetRawResponse().Headers.TryGetValue("x-ms-response-id", out var responseId) ? responseId : "not found";
-
 Console.WriteLine($"x-ms-response-id: {xMsResponseId}");
 ```
