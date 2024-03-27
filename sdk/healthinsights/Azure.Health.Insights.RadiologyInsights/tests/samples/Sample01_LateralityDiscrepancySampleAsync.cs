@@ -14,11 +14,13 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
 {
     internal class Sample01_LateralityDiscrepancySampleAsync : SamplesBase<HealthInsightsTestEnvironment>
     {
+        #region Snippet:Laterality_Discrepancy_Async_Tests_Samples_Doc_Content
         private const string DOC_CONTENT = "Exam:   US LT BREAST TARGETED"
             + "\r\n\r\nTechnique:  Targeted imaging of the  right breast  is performed."
             + "\r\n\r\nFindings:\\r\\n\\r\\nTargeted imaging of the left breast is performed from the 6:00 to the 9:00 position.  "
             + "\r\n\r\nAt the 6:00 position, 5 cm from the nipple, there is a 3 x 2 x 4 mm minimally hypoechoic mass with a peripheral calcification. This may correspond to the mammographic finding. No other cystic or solid masses visualized."
             + "\r\n";
+        #endregion
 
         [Test]
         public async Task RadiologyInsightsLateralityDiscrepancyScenario()
@@ -27,13 +29,18 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
+            #region Snippet:Laterality_Discrepancy_Async_Tests_Samples_CreateClient
             Uri endpointUri = new Uri(endpoint);
             AzureKeyCredential credential = new AzureKeyCredential(apiKey);
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpointUri, credential);
+            #endregion
 
             RadiologyInsightsData radiologyInsightsData = GetRadiologyInsightsData();
 
+            #region Snippet:Laterality_Discrepancy_Async_Tests_Samples_synccall
             Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, radiologyInsightsData);
+            #endregion
+
             RadiologyInsightsInferenceResult responseData = operation.Value;
             IReadOnlyList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
 
@@ -41,6 +48,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             {
                 if (inference is LateralityDiscrepancyInference lateralityDiscrepancyInference)
                 {
+                    #region Snippet:Laterality_Discrepancy_Async_Tests_Samples_LateralityDiscrepancyInference
                     FhirR4CodeableConcept lateralityIndication = lateralityDiscrepancyInference.LateralityIndication;
                     IList<FhirR4Coding> codingList = lateralityIndication.Coding;
                     Console.Write("Laterality Discrepancy Inference found: ");
@@ -49,6 +57,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                     {
                         Console.Write("   Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + "), type: " + discrepancyType);
                     }
+                    #endregion
                 }
             }
         }
@@ -56,9 +65,11 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
         private static RadiologyInsightsData GetRadiologyInsightsData()
         {
             PatientRecord patientRecord = CreatePatientRecord();
+            #region Snippet:Laterality_Discrepancy_Async_Tests_Samples_AddRecordAndConfiguration
             List<PatientRecord> patientRecords = new() { patientRecord };
             RadiologyInsightsData radiologyInsightsData = new(patientRecords);
             radiologyInsightsData.Configuration = CreateConfiguration();
+            #endregion
             return radiologyInsightsData;
         }
 
@@ -66,28 +77,21 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
         {
             RadiologyInsightsInferenceOptions radiologyInsightsInferenceOptions = GetRadiologyInsightsInferenceOptions();
 
+            #region Snippet:Laterality_Discrepancy_Async_Tests_Samples_CreateModelConfiguration
             RadiologyInsightsModelConfiguration radiologyInsightsModelConfiguration = new()
             {
                 Locale = "en-US",
                 IncludeEvidence = true,
                 InferenceOptions = radiologyInsightsInferenceOptions
             };
-            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.Finding);
-            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.AgeMismatch);
             radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.LateralityDiscrepancy);
-            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.SexMismatch);
-            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.CompleteOrderDiscrepancy);
-            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.LimitedOrderDiscrepancy);
-            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.CriticalResult);
-            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.FollowupCommunication);
-            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.FollowupRecommendation);
-            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.RadiologyProcedure);
-
+            #endregion
             return radiologyInsightsModelConfiguration;
         }
 
         private static RadiologyInsightsInferenceOptions GetRadiologyInsightsInferenceOptions()
         {
+            #region Snippet:Laterality_Discrepancy_Async_Tests_Samples_CreateRadiologyInsightsInferenceOptions
             RadiologyInsightsInferenceOptions radiologyInsightsInferenceOptions = new();
             FollowupRecommendationOptions followupRecommendationOptions = new();
             FindingOptions findingOptions = new();
@@ -97,11 +101,13 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             findingOptions.ProvideFocusedSentenceEvidence = true;
             radiologyInsightsInferenceOptions.FollowupRecommendationOptions = followupRecommendationOptions;
             radiologyInsightsInferenceOptions.FindingOptions = findingOptions;
+            #endregion
             return radiologyInsightsInferenceOptions;
         }
 
         private static PatientRecord CreatePatientRecord()
         {
+            #region Snippet:Laterality_Discrepancy_Async_Tests_Samples_CreatePatientRecord
             string id = "patient_id2";
             PatientDetails patientInfo = new()
             {
@@ -129,11 +135,13 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             patientRecord.Info = patientInfo;
             patientRecord.Encounters.Add(encounter);
             patientRecord.PatientDocuments.Add(patientDocument);
+            #endregion
             return patientRecord;
         }
 
         private static DocumentAdministrativeMetadata CreateDocumentAdministrativeMetadata()
         {
+            #region Snippet:Laterality_Discrepancy_Async_Tests_Samples_CreateDocumentAdministrativeMetadata
             DocumentAdministrativeMetadata documentAdministrativeMetadata = new DocumentAdministrativeMetadata();
 
             FhirR4Coding coding = new()
@@ -153,7 +161,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             };
 
             documentAdministrativeMetadata.OrderedProcedures.Add(orderedProcedure);
-
+            #endregion
             return documentAdministrativeMetadata;
         }
     }
