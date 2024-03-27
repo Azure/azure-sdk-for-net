@@ -35,7 +35,7 @@ namespace Azure.Core.Tests
             var pipeline = CreateMockHttpPipeline();
             var operationId = Guid.NewGuid().ToString();
             var requestMethod = RequestMethod.Delete;
-            var rehydrationToken = new RehydrationToken(null, null, "None", $"/subscriptions/subscription-id/providers/Microsoft.Compute/locations/region/operations/{operationId}?api-version=2019-12-01", "https://test", requestMethod, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
+            var rehydrationToken = new RehydrationToken(null, null, "None", $"/operations/{operationId}?api-version=xxx", "https://test", requestMethod, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
             var operation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(pipeline, rehydrationToken);
             Assert.NotNull(operation);
             Assert.AreEqual(operationId, operation.OperationId);
@@ -47,7 +47,7 @@ namespace Azure.Core.Tests
         {
             var operationId = Guid.NewGuid().ToString();
             var requestMethod = RequestMethod.Delete;
-            var rehydrationToken = new RehydrationToken(null, null, "None", $"https://management.azure.com/subscriptions/subscription-id/providers/Microsoft.Compute/locations/region/operations/{operationId}?api-version=2019-12-01", "https://test", requestMethod, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
+            var rehydrationToken = new RehydrationToken(null, null, "None", $"https://test.com/operations/{operationId}?api-version=2019-12-01", "https://test", requestMethod, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
             var operation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(HttpPipelineBuilder.Build(new MockClientOptions()), rehydrationToken);
             Assert.NotNull(operation);
             Assert.AreEqual(operationId, operation.OperationId);
@@ -59,7 +59,7 @@ namespace Azure.Core.Tests
         {
             var operationId = Guid.NewGuid().ToString();
             var requestMethod = RequestMethod.Delete;
-            var rehydrationToken = new RehydrationToken(null, null, "None", $"https://management.azure.com/subscriptions/subscription-id/providers/Microsoft.Compute/locations/region/operations/{operationId}?api-version=2019-12-01", "https://test", requestMethod, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
+            var rehydrationToken = new RehydrationToken(null, null, "None", $"https://test.com/operations/{operationId}?api-version=2019-12-01", "https://test", requestMethod, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
             var operation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(CreateMockHttpPipeline(), rehydrationToken);
             Assert.NotNull(operation);
 
@@ -82,7 +82,7 @@ namespace Azure.Core.Tests
         [Test]
         public void ThrowOnNextLinkOperationImplementationCreateWithNullHttpPipeline()
         {
-            Assert.Throws<ArgumentNullException>(() => NextLinkOperationImplementation.Create(null, new RehydrationToken(null, null, "None", "nextRequestUri", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString()), default));
+            Assert.Throws<ArgumentNullException>(() => NextLinkOperationImplementation.Create(null, new RehydrationToken(null, null, "None", "nextRequestUri", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString())));
         }
 
         private static HttpPipeline CreateMockHttpPipeline()

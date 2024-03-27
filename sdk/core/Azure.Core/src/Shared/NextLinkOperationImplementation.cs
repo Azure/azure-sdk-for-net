@@ -44,7 +44,7 @@ namespace Azure.Core
             bool skipApiVersionOverride = false,
             string? apiVersionOverrideValue = null)
         {
-            string? apiVersionStr;
+            string? apiVersionStr = null;
             if (apiVersionOverrideValue is not null)
             {
                 apiVersionStr = apiVersionOverrideValue;
@@ -83,9 +83,7 @@ namespace Azure.Core
 
         public static IOperation Create(
             HttpPipeline pipeline,
-            RehydrationToken rehydrationToken,
-            bool skipApiVersionOverride = false,
-            string? apiVersionOverrideValue = null)
+            RehydrationToken rehydrationToken)
         {
             AssertNotNull(rehydrationToken, nameof(rehydrationToken));
             AssertNotNull(pipeline, nameof(pipeline));
@@ -95,7 +93,7 @@ namespace Azure.Core
             var initialUri = GetContentFromRehydrationToken(lroDetails, "initialUri");
             if (!Uri.TryCreate(initialUri, UriKind.Absolute, out var startRequestUri))
             {
-                throw new ArgumentException($"\"initialUri\" is invalid Uri from {nameof(rehydrationToken)}");
+                throw new ArgumentException($"\"initialUri\" property on \"rehydrationToken\" is an invalid Uri", nameof(rehydrationToken));
             }
 
             string nextRequestUri = GetContentFromRehydrationToken(lroDetails, "nextRequestUri");
@@ -125,17 +123,7 @@ namespace Azure.Core
                 headerSource = HeaderSource.None;
             }
 
-            string? apiVersionStr;
-            if (apiVersionOverrideValue is not null)
-            {
-                apiVersionStr = apiVersionOverrideValue;
-            }
-            else
-            {
-                apiVersionStr = !skipApiVersionOverride && TryGetApiVersion(startRequestUri, out ReadOnlySpan<char> apiVersion) ? apiVersion.ToString() : null;
-            }
-
-            return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, apiVersionStr);
+            return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, null);
         }
 
         private static string GetContentFromRehydrationToken(Dictionary<string, string> lroDetails, string key)
@@ -186,7 +174,6 @@ namespace Azure.Core
             {
                 return new Uri(startRequestUri, nextRequestUri).Segments.Last();
             }
-            throw new ArgumentException($"\"{nameof(nextRequestUri)}\":{nextRequestUri} is not a valid Uri");
         }
 
         public RehydrationToken GetRehydrationToken()
