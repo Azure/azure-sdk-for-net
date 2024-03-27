@@ -667,9 +667,6 @@
 # ServiceLabel: %Network - Bastion
 # ServiceOwners:                                                   @bastionsuppgithub
 
-# ServiceLabel: %Network - CDN
-# ServiceOwners:                                                   @cdnfdsuppgithub
-
 # ServiceLabel: %Network - DDOS Protection
 # ServiceOwners:                                                   @ddossuppgithub
 
@@ -927,6 +924,10 @@
 # ServiceLabel: %Mgmt
 # AzureSdkOwners:                                                  @ArthurMa1978
 
+# ServiceLabel: %Network - CDN %Mgmt
+# ServiceOwners:                                                   @cdnfdsuppgithub
+
+# PRLabel: %CDN
 /sdk/cdn/                                                          @ptnan7
 
 # PRLabel: %Communication - Resource Manager
