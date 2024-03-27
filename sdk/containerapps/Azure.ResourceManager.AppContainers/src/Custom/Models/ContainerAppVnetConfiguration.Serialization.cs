@@ -19,10 +19,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 infrastructureSubnetId = new ResourceIdentifier(property.Value.GetString());
             }
-            else
-            {
-                throw new ArgumentNullException("infrastructureSubnetId cannot be null or empty.");
-            }
         }
     }
 }
