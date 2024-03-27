@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubCertificatePropertiesWithNonce>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubCertificatePropertiesWithNonce)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubCertificatePropertiesWithNonce)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Subject != null)
+            if (options.Format != "W" && Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (options.Format != "W" && ExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiry"u8);
                 writer.WriteStringValue(ExpireOn.Value, "R");
             }
-            if (options.Format != "W" && ThumbprintString != null)
+            if (options.Format != "W" && Optional.IsDefined(ThumbprintString))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(ThumbprintString);
             }
-            if (options.Format != "W" && IsVerified.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsVerified))
             {
                 writer.WritePropertyName("isVerified"u8);
                 writer.WriteBooleanValue(IsVerified.Value);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "R");
             }
-            if (options.Format != "W" && UpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "R");
             }
-            if (options.Format != "W" && VerificationCode != null)
+            if (options.Format != "W" && Optional.IsDefined(VerificationCode))
             {
                 writer.WritePropertyName("verificationCode"u8);
                 writer.WriteStringValue(VerificationCode);
             }
-            if (options.Format != "W" && Certificate != null)
+            if (options.Format != "W" && Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
 #if NET6_0_OR_GREATER
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubCertificatePropertiesWithNonce>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubCertificatePropertiesWithNonce)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubCertificatePropertiesWithNonce)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotHubCertificatePropertiesWithNonce)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubCertificatePropertiesWithNonce)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeIotHubCertificatePropertiesWithNonce(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotHubCertificatePropertiesWithNonce)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubCertificatePropertiesWithNonce)} does not support reading '{options.Format}' format.");
             }
         }
 

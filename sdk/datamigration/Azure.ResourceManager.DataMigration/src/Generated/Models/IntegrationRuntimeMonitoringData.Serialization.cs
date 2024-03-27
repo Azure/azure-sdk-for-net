@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeMonitoringData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationRuntimeMonitoringData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationRuntimeMonitoringData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && !(Nodes is ChangeTrackingList<NodeMonitoringData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Nodes))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NodeMonitoringData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeMonitoringData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationRuntimeMonitoringData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationRuntimeMonitoringData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationRuntimeMonitoringData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationRuntimeMonitoringData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeIntegrationRuntimeMonitoringData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationRuntimeMonitoringData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationRuntimeMonitoringData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             var format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilityOrganizationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NewRelicObservabilityOrganizationInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NewRelicObservabilityOrganizationInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (OrganizationId != null)
+            if (Optional.IsDefined(OrganizationId))
             {
                 writer.WritePropertyName("organizationId"u8);
                 writer.WriteStringValue(OrganizationId);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             var format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilityOrganizationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NewRelicObservabilityOrganizationInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NewRelicObservabilityOrganizationInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NewRelicObservabilityOrganizationInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewRelicObservabilityOrganizationInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                         return DeserializeNewRelicObservabilityOrganizationInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NewRelicObservabilityOrganizationInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewRelicObservabilityOrganizationInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

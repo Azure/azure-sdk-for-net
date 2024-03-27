@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupFileInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupFileInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupFileInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FileLocation != null)
+            if (Optional.IsDefined(FileLocation))
             {
                 writer.WritePropertyName("fileLocation"u8);
                 writer.WriteStringValue(FileLocation);
             }
-            if (FamilySequenceNumber.HasValue)
+            if (Optional.IsDefined(FamilySequenceNumber))
             {
                 writer.WritePropertyName("familySequenceNumber"u8);
                 writer.WriteNumberValue(FamilySequenceNumber.Value);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupFileInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupFileInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupFileInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupFileInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupFileInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeBackupFileInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupFileInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupFileInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<SecurityCenterPricingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityCenterPricingData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityCenterPricingData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PricingTier.HasValue)
+            if (Optional.IsDefined(PricingTier))
             {
                 writer.WritePropertyName("pricingTier"u8);
                 writer.WriteStringValue(PricingTier.Value.ToString());
             }
-            if (SubPlan != null)
+            if (Optional.IsDefined(SubPlan))
             {
                 writer.WritePropertyName("subPlan"u8);
                 writer.WriteStringValue(SubPlan);
             }
-            if (options.Format != "W" && FreeTrialRemainingTime.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FreeTrialRemainingTime))
             {
                 writer.WritePropertyName("freeTrialRemainingTime"u8);
                 writer.WriteStringValue(FreeTrialRemainingTime.Value, "P");
             }
-            if (options.Format != "W" && EnabledOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EnabledOn))
             {
                 writer.WritePropertyName("enablementTime"u8);
                 writer.WriteStringValue(EnabledOn.Value, "O");
             }
-            if (options.Format != "W" && IsDeprecated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDeprecated))
             {
                 writer.WritePropertyName("deprecated"u8);
                 writer.WriteBooleanValue(IsDeprecated.Value);
             }
-            if (options.Format != "W" && !(ReplacedBy is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ReplacedBy))
             {
                 writer.WritePropertyName("replacedBy"u8);
                 writer.WriteStartArray();
@@ -85,13 +85,13 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (!(Extensions is ChangeTrackingList<PlanExtension> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Extensions))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PlanExtension>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<SecurityCenterPricingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityCenterPricingData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityCenterPricingData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityCenterPricingData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityCenterPricingData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         return DeserializeSecurityCenterPricingData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityCenterPricingData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityCenterPricingData)} does not support reading '{options.Format}' format.");
             }
         }
 

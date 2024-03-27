@@ -8,6 +8,14 @@
 
 ### Bugs Fixed
 
+- Fixed an edge case where a cancellation token signaled while waiting for a throttling delay would cause a failure to reset state and service operations would continue to apply the throttle delay going forward.  ([#42952](https://github.com/Azure/azure-sdk-for-net/issues/42952))
+
+### Other Changes
+
+## 7.17.4 (2024-03-05)
+
+### Bugs Fixed
+
 - When creating a new `ServiceBusMessage` from an existing `ServiceBusReceivedMessage`, diagnostic properties will now be properly reset.  Previously, they were incorrectly retained which led to the new message being indistinguishable from the old in traces.
 
 ### Other Changes

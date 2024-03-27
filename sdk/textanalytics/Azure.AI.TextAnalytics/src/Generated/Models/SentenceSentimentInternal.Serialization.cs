@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -22,28 +21,28 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WritePropertyName("sentiment"u8);
             writer.WriteStringValue(Sentiment);
             writer.WritePropertyName("confidenceScores"u8);
-            writer.WriteObjectValue(ConfidenceScores);
+            writer.WriteObjectValue<SentimentConfidenceScores>(ConfidenceScores);
             writer.WritePropertyName("offset"u8);
             writer.WriteNumberValue(Offset);
             writer.WritePropertyName("length"u8);
             writer.WriteNumberValue(Length);
-            if (!(Targets is ChangeTrackingList<SentenceTarget> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Targets))
             {
                 writer.WritePropertyName("targets"u8);
                 writer.WriteStartArray();
                 foreach (var item in Targets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SentenceTarget>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Assessments is ChangeTrackingList<SentenceAssessment> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Assessments))
             {
                 writer.WritePropertyName("assessments"u8);
                 writer.WriteStartArray();
                 foreach (var item in Assessments)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SentenceAssessment>(item);
                 }
                 writer.WriteEndArray();
             }

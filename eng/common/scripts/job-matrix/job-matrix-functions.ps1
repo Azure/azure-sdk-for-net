@@ -96,7 +96,8 @@ function GenerateMatrix(
     [String]$displayNameFilter = ".*",
     [Array]$filters = @(),
     [Array]$replace = @(),
-    [Array]$nonSparseParameters = @()
+    [Array]$nonSparseParameters = @(),
+    [Switch]$skipEnvironmentVariables
 ) {
     $matrixParameters, $importedMatrix, $combinedDisplayNameLookup = `
         ProcessImport $config.matrixParameters $selectFromMatrixType $nonSparseParameters $config.displayNamesLookup
@@ -124,7 +125,9 @@ function GenerateMatrix(
 
     $matrix = FilterMatrix $matrix $filters
     $matrix = ProcessReplace $matrix $replace $combinedDisplayNameLookup
-    $matrix = ProcessEnvironmentVariableReferences $matrix $combinedDisplayNameLookup
+    if (!$skipEnvironmentVariables) {
+        $matrix = ProcessEnvironmentVariableReferences $matrix $combinedDisplayNameLookup
+    }
     $matrix = FilterMatrixDisplayName $matrix $displayNameFilter
     return $matrix
 }
@@ -338,6 +341,9 @@ function ProcessReplace {
     $replaceMatrix = @()
 
     foreach ($element in $matrix) {
+        if (!$element -or $element.Count -eq 0) {
+            continue
+        }
         $replacement = [MatrixParameter[]]@()
         if (!$element -or $element.Count -eq 0) {
             continue
@@ -424,10 +430,14 @@ function ProcessImport([MatrixParameter[]]$matrix, [String]$selection, [Array]$n
         exit 1
     }
     $importedMatrixConfig = GetMatrixConfigFromFile (Get-Content -Raw $importPath)
+    # Add skipEnvironmentVariables so we don't process environment variables on import
+    # because we want top level filters to work against the the env key, not the value.
+    # The environment variables will get resolved after the import.
     $importedMatrix = GenerateMatrix `
         -config $importedMatrixConfig `
         -selectFromMatrixType $selection `
-        -nonSparseParameters $nonSparseParameters
+        -nonSparseParameters $nonSparseParameters `
+        -skipEnvironmentVariables
 
     $combinedDisplayNameLookup = $importedMatrixConfig.displayNamesLookup
     foreach ($lookup in $displayNamesLookup.GetEnumerator()) {

@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorServerlessSparkCompute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorServerlessSparkCompute)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorServerlessSparkCompute)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("computeIdentity"u8);
-            writer.WriteObjectValue(ComputeIdentity);
+            writer.WriteObjectValue<MonitorComputeIdentityBase>(ComputeIdentity, options);
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WritePropertyName("runtimeVersion"u8);
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorServerlessSparkCompute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorServerlessSparkCompute)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorServerlessSparkCompute)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorServerlessSparkCompute)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorServerlessSparkCompute)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMonitorServerlessSparkCompute(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorServerlessSparkCompute)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorServerlessSparkCompute)} does not support reading '{options.Format}' format.");
             }
         }
 

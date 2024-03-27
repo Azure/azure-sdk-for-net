@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.DevCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Roles is ChangeTrackingDictionary<string, DevCenterEnvironmentRole> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Roles))
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStartObject();
                 foreach (var item in Roles)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<DevCenterEnvironmentRole>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                         return DeserializeProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,32 +22,32 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<HardwareInventory>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HardwareInventory)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HardwareInventory)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AdditionalHostInformation != null)
+            if (options.Format != "W" && Optional.IsDefined(AdditionalHostInformation))
             {
                 writer.WritePropertyName("additionalHostInformation"u8);
                 writer.WriteStringValue(AdditionalHostInformation);
             }
-            if (options.Format != "W" && !(Interfaces is ChangeTrackingList<HardwareInventoryNetworkInterface> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Interfaces))
             {
                 writer.WritePropertyName("interfaces"u8);
                 writer.WriteStartArray();
                 foreach (var item in Interfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HardwareInventoryNetworkInterface>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Nics is ChangeTrackingList<NetworkCloudNic> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Nics))
             {
                 writer.WritePropertyName("nics"u8);
                 writer.WriteStartArray();
                 foreach (var item in Nics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkCloudNic>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<HardwareInventory>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HardwareInventory)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HardwareInventory)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HardwareInventory)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HardwareInventory)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeHardwareInventory(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HardwareInventory)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HardwareInventory)} does not support reading '{options.Format}' format.");
             }
         }
 

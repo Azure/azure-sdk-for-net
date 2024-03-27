@@ -22,24 +22,24 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorRouteCacheConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorRouteCacheConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorRouteCacheConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (QueryStringCachingBehavior.HasValue)
+            if (Optional.IsDefined(QueryStringCachingBehavior))
             {
                 writer.WritePropertyName("queryStringCachingBehavior"u8);
                 writer.WriteStringValue(QueryStringCachingBehavior.Value.ToString());
             }
-            if (QueryParameters != null)
+            if (Optional.IsDefined(QueryParameters))
             {
                 writer.WritePropertyName("queryParameters"u8);
                 writer.WriteStringValue(QueryParameters);
             }
-            if (CompressionSettings != null)
+            if (Optional.IsDefined(CompressionSettings))
             {
                 writer.WritePropertyName("compressionSettings"u8);
-                writer.WriteObjectValue(CompressionSettings);
+                writer.WriteObjectValue<RouteCacheCompressionSettings>(CompressionSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorRouteCacheConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorRouteCacheConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorRouteCacheConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorRouteCacheConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorRouteCacheConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeFrontDoorRouteCacheConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorRouteCacheConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorRouteCacheConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

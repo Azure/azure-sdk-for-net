@@ -22,51 +22,51 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseWorkspaceRepositoryConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseWorkspaceRepositoryConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseWorkspaceRepositoryConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (WorkspaceRepositoryConfigurationType != null)
+            if (Optional.IsDefined(WorkspaceRepositoryConfigurationType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(WorkspaceRepositoryConfigurationType);
             }
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (AccountName != null)
+            if (Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (ProjectName != null)
+            if (Optional.IsDefined(ProjectName))
             {
                 writer.WritePropertyName("projectName"u8);
                 writer.WriteStringValue(ProjectName);
             }
-            if (RepositoryName != null)
+            if (Optional.IsDefined(RepositoryName))
             {
                 writer.WritePropertyName("repositoryName"u8);
                 writer.WriteStringValue(RepositoryName);
             }
-            if (CollaborationBranch != null)
+            if (Optional.IsDefined(CollaborationBranch))
             {
                 writer.WritePropertyName("collaborationBranch"u8);
                 writer.WriteStringValue(CollaborationBranch);
             }
-            if (RootFolder != null)
+            if (Optional.IsDefined(RootFolder))
             {
                 writer.WritePropertyName("rootFolder"u8);
                 writer.WriteStringValue(RootFolder);
             }
-            if (LastCommitId != null)
+            if (Optional.IsDefined(LastCommitId))
             {
                 writer.WritePropertyName("lastCommitId"u8);
                 writer.WriteStringValue(LastCommitId);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseWorkspaceRepositoryConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseWorkspaceRepositoryConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseWorkspaceRepositoryConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseWorkspaceRepositoryConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseWorkspaceRepositoryConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeSynapseWorkspaceRepositoryConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseWorkspaceRepositoryConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseWorkspaceRepositoryConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

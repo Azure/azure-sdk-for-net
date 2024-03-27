@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionKeysContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionKeysContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionKeysContract)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PrimaryKey != null)
+            if (Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (SecondaryKey != null)
+            if (Optional.IsDefined(SecondaryKey))
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionKeysContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionKeysContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionKeysContract)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionKeysContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionKeysContract)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeSubscriptionKeysContract(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionKeysContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionKeysContract)} does not support reading '{options.Format}' format.");
             }
         }
 

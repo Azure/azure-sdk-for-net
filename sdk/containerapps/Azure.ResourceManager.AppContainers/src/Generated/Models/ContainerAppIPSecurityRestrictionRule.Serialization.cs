@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIPSecurityRestrictionRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppIPSecurityRestrictionRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppIPSecurityRestrictionRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIPSecurityRestrictionRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppIPSecurityRestrictionRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppIPSecurityRestrictionRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppIPSecurityRestrictionRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppIPSecurityRestrictionRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppIPSecurityRestrictionRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppIPSecurityRestrictionRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppIPSecurityRestrictionRule)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Subscription.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionName)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionName)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SubscriptionNameValue != null)
+            if (Optional.IsDefined(SubscriptionNameValue))
             {
                 writer.WritePropertyName("subscriptionName"u8);
                 writer.WriteStringValue(SubscriptionNameValue);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Subscription.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionName)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionName)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionName)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionName)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Subscription.Models
                         return DeserializeSubscriptionName(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionName)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionName)} does not support reading '{options.Format}' format.");
             }
         }
 

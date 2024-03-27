@@ -22,29 +22,29 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<SourceCodeRepoUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SourceCodeRepoUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SourceCodeRepoUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SourceControlType.HasValue)
+            if (Optional.IsDefined(SourceControlType))
             {
                 writer.WritePropertyName("sourceControlType"u8);
                 writer.WriteStringValue(SourceControlType.Value.ToString());
             }
-            if (RepositoryUri != null)
+            if (Optional.IsDefined(RepositoryUri))
             {
                 writer.WritePropertyName("repositoryUrl"u8);
                 writer.WriteStringValue(RepositoryUri.AbsoluteUri);
             }
-            if (Branch != null)
+            if (Optional.IsDefined(Branch))
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (SourceControlAuthProperties != null)
+            if (Optional.IsDefined(SourceControlAuthProperties))
             {
                 writer.WritePropertyName("sourceControlAuthProperties"u8);
-                writer.WriteObjectValue(SourceControlAuthProperties);
+                writer.WriteObjectValue<SourceCodeRepoAuthInfoUpdateContent>(SourceControlAuthProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<SourceCodeRepoUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SourceCodeRepoUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SourceCodeRepoUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SourceCodeRepoUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SourceCodeRepoUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeSourceCodeRepoUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SourceCodeRepoUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SourceCodeRepoUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

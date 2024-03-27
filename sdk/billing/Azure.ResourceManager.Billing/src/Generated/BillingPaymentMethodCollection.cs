@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Billing
@@ -81,14 +79,7 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="paymentMethodName"/> is null. </exception>
         public virtual async Task<Response<BillingPaymentMethodResource>> GetAsync(string paymentMethodName, CancellationToken cancellationToken = default)
         {
-            if (paymentMethodName == null)
-            {
-                throw new ArgumentNullException(nameof(paymentMethodName));
-            }
-            if (paymentMethodName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(paymentMethodName));
-            }
+            Argument.AssertNotNullOrEmpty(paymentMethodName, nameof(paymentMethodName));
 
             using var scope = _billingPaymentMethodPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodCollection.Get");
             scope.Start();
@@ -133,14 +124,7 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="paymentMethodName"/> is null. </exception>
         public virtual Response<BillingPaymentMethodResource> Get(string paymentMethodName, CancellationToken cancellationToken = default)
         {
-            if (paymentMethodName == null)
-            {
-                throw new ArgumentNullException(nameof(paymentMethodName));
-            }
-            if (paymentMethodName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(paymentMethodName));
-            }
+            Argument.AssertNotNullOrEmpty(paymentMethodName, nameof(paymentMethodName));
 
             using var scope = _billingPaymentMethodPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodCollection.Get");
             scope.Start();
@@ -245,14 +229,7 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="paymentMethodName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string paymentMethodName, CancellationToken cancellationToken = default)
         {
-            if (paymentMethodName == null)
-            {
-                throw new ArgumentNullException(nameof(paymentMethodName));
-            }
-            if (paymentMethodName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(paymentMethodName));
-            }
+            Argument.AssertNotNullOrEmpty(paymentMethodName, nameof(paymentMethodName));
 
             using var scope = _billingPaymentMethodPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodCollection.Exists");
             scope.Start();
@@ -295,14 +272,7 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="paymentMethodName"/> is null. </exception>
         public virtual Response<bool> Exists(string paymentMethodName, CancellationToken cancellationToken = default)
         {
-            if (paymentMethodName == null)
-            {
-                throw new ArgumentNullException(nameof(paymentMethodName));
-            }
-            if (paymentMethodName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(paymentMethodName));
-            }
+            Argument.AssertNotNullOrEmpty(paymentMethodName, nameof(paymentMethodName));
 
             using var scope = _billingPaymentMethodPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodCollection.Exists");
             scope.Start();
@@ -345,14 +315,7 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="paymentMethodName"/> is null. </exception>
         public virtual async Task<NullableResponse<BillingPaymentMethodResource>> GetIfExistsAsync(string paymentMethodName, CancellationToken cancellationToken = default)
         {
-            if (paymentMethodName == null)
-            {
-                throw new ArgumentNullException(nameof(paymentMethodName));
-            }
-            if (paymentMethodName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(paymentMethodName));
-            }
+            Argument.AssertNotNullOrEmpty(paymentMethodName, nameof(paymentMethodName));
 
             using var scope = _billingPaymentMethodPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodCollection.GetIfExists");
             scope.Start();
@@ -397,14 +360,7 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="paymentMethodName"/> is null. </exception>
         public virtual NullableResponse<BillingPaymentMethodResource> GetIfExists(string paymentMethodName, CancellationToken cancellationToken = default)
         {
-            if (paymentMethodName == null)
-            {
-                throw new ArgumentNullException(nameof(paymentMethodName));
-            }
-            if (paymentMethodName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(paymentMethodName));
-            }
+            Argument.AssertNotNullOrEmpty(paymentMethodName, nameof(paymentMethodName));
 
             using var scope = _billingPaymentMethodPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodCollection.GetIfExists");
             scope.Start();

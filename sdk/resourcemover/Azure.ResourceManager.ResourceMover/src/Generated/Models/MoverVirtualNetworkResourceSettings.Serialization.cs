@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverVirtualNetworkResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverVirtualNetworkResourceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverVirtualNetworkResourceSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 if (Tags != null)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("tags");
                 }
             }
-            if (EnableDdosProtection.HasValue)
+            if (Optional.IsDefined(EnableDdosProtection))
             {
                 if (EnableDdosProtection != null)
                 {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("enableDdosProtection");
                 }
             }
-            if (!(AddressSpace is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AddressSpace))
             {
                 if (AddressSpace != null)
                 {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("addressSpace");
                 }
             }
-            if (!(DnsServers is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(DnsServers))
             {
                 if (DnsServers != null)
                 {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("dnsServers");
                 }
             }
-            if (!(Subnets is ChangeTrackingList<SubnetResourceSettings> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Subnets))
             {
                 if (Subnets != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteStartArray();
                     foreach (var item in Subnets)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<SubnetResourceSettings>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            if (TargetResourceName != null)
+            if (Optional.IsDefined(TargetResourceName))
             {
                 writer.WritePropertyName("targetResourceName"u8);
                 writer.WriteStringValue(TargetResourceName);
             }
-            if (TargetResourceGroupName != null)
+            if (Optional.IsDefined(TargetResourceGroupName))
             {
                 writer.WritePropertyName("targetResourceGroupName"u8);
                 writer.WriteStringValue(TargetResourceGroupName);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverVirtualNetworkResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverVirtualNetworkResourceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverVirtualNetworkResourceSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MoverVirtualNetworkResourceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverVirtualNetworkResourceSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeMoverVirtualNetworkResourceSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MoverVirtualNetworkResourceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverVirtualNetworkResourceSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

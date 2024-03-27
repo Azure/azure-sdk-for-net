@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebAppBackupSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebAppBackupSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebAppBackupSchedule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,12 +35,12 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteBooleanValue(ShouldKeepAtLeastOneBackup);
             writer.WritePropertyName("retentionPeriodInDays"u8);
             writer.WriteNumberValue(RetentionPeriodInDays);
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && LastExecutedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastExecutedOn))
             {
                 writer.WritePropertyName("lastExecutionTime"u8);
                 writer.WriteStringValue(LastExecutedOn.Value, "O");
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebAppBackupSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebAppBackupSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebAppBackupSchedule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,6 +147,96 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FrequencyInterval), out propertyOverride);
+            builder.Append("  frequencyInterval: ");
+            if (hasPropertyOverride)
+            {
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"{FrequencyInterval}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FrequencyUnit), out propertyOverride);
+            builder.Append("  frequencyUnit: ");
+            if (hasPropertyOverride)
+            {
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{FrequencyUnit.ToSerialString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ShouldKeepAtLeastOneBackup), out propertyOverride);
+            builder.Append("  keepAtLeastOneBackup: ");
+            if (hasPropertyOverride)
+            {
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                var boolValue = ShouldKeepAtLeastOneBackup == true ? "true" : "false";
+                builder.AppendLine($"{boolValue}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetentionPeriodInDays), out propertyOverride);
+            builder.Append("  retentionPeriodInDays: ");
+            if (hasPropertyOverride)
+            {
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"{RetentionPeriodInDays}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
+            if (Optional.IsDefined(StartOn) || hasPropertyOverride)
+            {
+                builder.Append("  startTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastExecutedOn), out propertyOverride);
+            if (Optional.IsDefined(LastExecutedOn) || hasPropertyOverride)
+            {
+                builder.Append("  lastExecutionTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(LastExecutedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<WebAppBackupSchedule>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WebAppBackupSchedule>)this).GetFormatFromOptions(options) : options.Format;
@@ -154,8 +245,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(WebAppBackupSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebAppBackupSchedule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +264,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeWebAppBackupSchedule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebAppBackupSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebAppBackupSchedule)} does not support reading '{options.Format}' format.");
             }
         }
 

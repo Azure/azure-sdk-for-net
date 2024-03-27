@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationTriggeringRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAutomationTriggeringRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAutomationTriggeringRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PropertyJPath != null)
+            if (Optional.IsDefined(PropertyJPath))
             {
                 writer.WritePropertyName("propertyJPath"u8);
                 writer.WriteStringValue(PropertyJPath);
             }
-            if (PropertyType.HasValue)
+            if (Optional.IsDefined(PropertyType))
             {
                 writer.WritePropertyName("propertyType"u8);
                 writer.WriteStringValue(PropertyType.Value.ToString());
             }
-            if (ExpectedValue != null)
+            if (Optional.IsDefined(ExpectedValue))
             {
                 writer.WritePropertyName("expectedValue"u8);
                 writer.WriteStringValue(ExpectedValue);
             }
-            if (Operator.HasValue)
+            if (Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationTriggeringRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAutomationTriggeringRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAutomationTriggeringRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAutomationTriggeringRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAutomationTriggeringRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityAutomationTriggeringRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAutomationTriggeringRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAutomationTriggeringRule)} does not support reading '{options.Format}' format.");
             }
         }
 

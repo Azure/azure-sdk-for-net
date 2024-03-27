@@ -15,7 +15,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SharedMemorySizeMiB != null)
+            if (Optional.IsDefined(SharedMemorySizeMiB))
             {
                 writer.WritePropertyName("sharedMemorySizeMiB"u8);
                 writer.WriteStringValue(SharedMemorySizeMiB);

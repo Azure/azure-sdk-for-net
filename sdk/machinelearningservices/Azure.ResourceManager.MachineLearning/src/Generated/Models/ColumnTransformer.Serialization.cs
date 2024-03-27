@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ColumnTransformer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ColumnTransformer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ColumnTransformer)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Fields is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Fields))
             {
                 if (Fields != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("fields");
                 }
             }
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 if (Parameters != null)
                 {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ColumnTransformer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ColumnTransformer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ColumnTransformer)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ColumnTransformer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ColumnTransformer)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeColumnTransformer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ColumnTransformer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ColumnTransformer)} does not support reading '{options.Format}' format.");
             }
         }
 

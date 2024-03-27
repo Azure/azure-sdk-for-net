@@ -17,10 +17,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="livePipeline"/> is null. </exception>
         public LivePipelineSetRequest(LivePipeline livePipeline)
         {
-            if (livePipeline == null)
-            {
-                throw new ArgumentNullException(nameof(livePipeline));
-            }
+            Argument.AssertNotNull(livePipeline, nameof(livePipeline));
 
             LivePipeline = livePipeline;
             MethodName = "livePipelineSet";

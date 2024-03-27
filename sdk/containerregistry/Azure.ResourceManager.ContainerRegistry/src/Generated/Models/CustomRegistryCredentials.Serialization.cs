@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomRegistryCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomRegistryCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomRegistryCredentials)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (UserName != null)
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-                writer.WriteObjectValue(UserName);
+                writer.WriteObjectValue<ContainerRegistrySecretObject>(UserName, options);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password);
+                writer.WriteObjectValue<ContainerRegistrySecretObject>(Password, options);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteStringValue(Identity);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomRegistryCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomRegistryCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomRegistryCredentials)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CustomRegistryCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomRegistryCredentials)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeCustomRegistryCredentials(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomRegistryCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomRegistryCredentials)} does not support reading '{options.Format}' format.");
             }
         }
 

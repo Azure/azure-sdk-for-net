@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryOSVersionWrapper>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryOSVersionWrapper)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryOSVersionWrapper)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (ServicePack != null)
+            if (Optional.IsDefined(ServicePack))
             {
                 writer.WritePropertyName("servicePack"u8);
                 writer.WriteStringValue(ServicePack);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryOSVersionWrapper>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryOSVersionWrapper)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryOSVersionWrapper)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryOSVersionWrapper)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryOSVersionWrapper)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSiteRecoveryOSVersionWrapper(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryOSVersionWrapper)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryOSVersionWrapper)} does not support reading '{options.Format}' format.");
             }
         }
 

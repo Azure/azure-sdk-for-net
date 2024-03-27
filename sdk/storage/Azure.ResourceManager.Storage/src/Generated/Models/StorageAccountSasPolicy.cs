@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sasExpirationPeriod"/> is null. </exception>
         public StorageAccountSasPolicy(string sasExpirationPeriod, ExpirationAction expirationAction)
         {
-            if (sasExpirationPeriod == null)
-            {
-                throw new ArgumentNullException(nameof(sasExpirationPeriod));
-            }
+            Argument.AssertNotNull(sasExpirationPeriod, nameof(sasExpirationPeriod));
 
             SasExpirationPeriod = sasExpirationPeriod;
             ExpirationAction = expirationAction;
@@ -77,8 +74,10 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The SAS expiration period, DD.HH:MM:SS. </summary>
+        [WirePath("sasExpirationPeriod")]
         public string SasExpirationPeriod { get; set; }
         /// <summary> The SAS expiration action. Can only be Log. </summary>
+        [WirePath("expirationAction")]
         public ExpirationAction ExpirationAction { get; set; }
     }
 }

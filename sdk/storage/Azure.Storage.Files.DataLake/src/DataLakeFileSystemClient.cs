@@ -17,6 +17,7 @@ using Azure.Storage.Shared;
 using Azure.Storage.Sas;
 using System.ComponentModel;
 using static Azure.Storage.Constants.Sas;
+using Azure.Storage.Common;
 
 #pragma warning disable SA1402  // File may only contain a single type
 

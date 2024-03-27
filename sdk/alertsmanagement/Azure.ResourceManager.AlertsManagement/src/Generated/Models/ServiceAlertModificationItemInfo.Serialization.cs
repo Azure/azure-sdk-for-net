@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertModificationItemInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAlertModificationItemInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAlertModificationItemInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ModificationEvent.HasValue)
+            if (Optional.IsDefined(ModificationEvent))
             {
                 writer.WritePropertyName("modificationEvent"u8);
                 writer.WriteStringValue(ModificationEvent.Value.ToSerialString());
             }
-            if (OldValue != null)
+            if (Optional.IsDefined(OldValue))
             {
                 writer.WritePropertyName("oldValue"u8);
                 writer.WriteStringValue(OldValue);
             }
-            if (NewValue != null)
+            if (Optional.IsDefined(NewValue))
             {
                 writer.WritePropertyName("newValue"u8);
                 writer.WriteStringValue(NewValue);
             }
-            if (ModifiedAt != null)
+            if (Optional.IsDefined(ModifiedAt))
             {
                 writer.WritePropertyName("modifiedAt"u8);
                 writer.WriteStringValue(ModifiedAt);
             }
-            if (ModifiedBy != null)
+            if (Optional.IsDefined(ModifiedBy))
             {
                 writer.WritePropertyName("modifiedBy"u8);
                 writer.WriteStringValue(ModifiedBy);
             }
-            if (Comments != null)
+            if (Optional.IsDefined(Comments))
             {
                 writer.WritePropertyName("comments"u8);
                 writer.WriteStringValue(Comments);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertModificationItemInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAlertModificationItemInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAlertModificationItemInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAlertModificationItemInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAlertModificationItemInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         return DeserializeServiceAlertModificationItemInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAlertModificationItemInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAlertModificationItemInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

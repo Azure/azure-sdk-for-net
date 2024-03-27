@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
@@ -23,7 +22,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<AnalyzeResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalyzeResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalyzeResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStringValue(ModelId);
             writer.WritePropertyName("stringIndexType"u8);
             writer.WriteStringValue(StringIndexType.ToString());
-            if (ContentFormat.HasValue)
+            if (Optional.IsDefined(ContentFormat))
             {
                 writer.WritePropertyName("contentFormat"u8);
                 writer.WriteStringValue(ContentFormat.Value.ToString());
@@ -44,96 +43,96 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartArray();
             foreach (var item in Pages)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DocumentPage>(item, options);
             }
             writer.WriteEndArray();
-            if (!(Paragraphs is ChangeTrackingList<DocumentParagraph> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Paragraphs))
             {
                 writer.WritePropertyName("paragraphs"u8);
                 writer.WriteStartArray();
                 foreach (var item in Paragraphs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentParagraph>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Tables is ChangeTrackingList<DocumentTable> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tables))
             {
                 writer.WritePropertyName("tables"u8);
                 writer.WriteStartArray();
                 foreach (var item in Tables)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentTable>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Figures is ChangeTrackingList<DocumentFigure> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Figures))
             {
                 writer.WritePropertyName("figures"u8);
                 writer.WriteStartArray();
                 foreach (var item in Figures)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentFigure>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Lists is ChangeTrackingList<DocumentList> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Lists))
             {
                 writer.WritePropertyName("lists"u8);
                 writer.WriteStartArray();
                 foreach (var item in Lists)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentList>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Sections is ChangeTrackingList<DocumentSection> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Sections))
             {
                 writer.WritePropertyName("sections"u8);
                 writer.WriteStartArray();
                 foreach (var item in Sections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentSection>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(KeyValuePairs is ChangeTrackingList<DocumentKeyValuePair> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(KeyValuePairs))
             {
                 writer.WritePropertyName("keyValuePairs"u8);
                 writer.WriteStartArray();
                 foreach (var item in KeyValuePairs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentKeyValuePair>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Styles is ChangeTrackingList<DocumentStyle> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(Styles))
             {
                 writer.WritePropertyName("styles"u8);
                 writer.WriteStartArray();
                 foreach (var item in Styles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentStyle>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Languages is ChangeTrackingList<DocumentLanguage> collection6 && collection6.IsUndefined))
+            if (Optional.IsCollectionDefined(Languages))
             {
                 writer.WritePropertyName("languages"u8);
                 writer.WriteStartArray();
                 foreach (var item in Languages)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentLanguage>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Documents is ChangeTrackingList<AnalyzedDocument> collection7 && collection7.IsUndefined))
+            if (Optional.IsCollectionDefined(Documents))
             {
                 writer.WritePropertyName("documents"u8);
                 writer.WriteStartArray();
                 foreach (var item in Documents)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AnalyzedDocument>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -160,7 +159,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<AnalyzeResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalyzeResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalyzeResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -393,7 +392,7 @@ namespace Azure.AI.DocumentIntelligence
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalyzeResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -409,7 +408,7 @@ namespace Azure.AI.DocumentIntelligence
                         return DeserializeAnalyzeResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalyzeResult)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -427,7 +426,7 @@ namespace Azure.AI.DocumentIntelligence
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AnalyzeResult>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

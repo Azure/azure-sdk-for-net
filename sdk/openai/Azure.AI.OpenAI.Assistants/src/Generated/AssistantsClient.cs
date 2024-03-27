@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -44,10 +43,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="assistantCreationOptions"/> is null. </exception>
         public virtual async Task<Response<Assistant>> CreateAssistantAsync(AssistantCreationOptions assistantCreationOptions, CancellationToken cancellationToken = default)
         {
-            if (assistantCreationOptions == null)
-            {
-                throw new ArgumentNullException(nameof(assistantCreationOptions));
-            }
+            Argument.AssertNotNull(assistantCreationOptions, nameof(assistantCreationOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = assistantCreationOptions.ToRequestContent();
@@ -61,10 +57,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="assistantCreationOptions"/> is null. </exception>
         public virtual Response<Assistant> CreateAssistant(AssistantCreationOptions assistantCreationOptions, CancellationToken cancellationToken = default)
         {
-            if (assistantCreationOptions == null)
-            {
-                throw new ArgumentNullException(nameof(assistantCreationOptions));
-            }
+            Argument.AssertNotNull(assistantCreationOptions, nameof(assistantCreationOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = assistantCreationOptions.ToRequestContent();
@@ -89,10 +82,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> CreateAssistantAsync(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.CreateAssistant");
             scope.Start();
@@ -125,10 +115,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual Response CreateAssistant(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.CreateAssistant");
             scope.Start();
@@ -253,14 +240,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<Assistant>> GetAssistantAsync(string assistantId, CancellationToken cancellationToken = default)
         {
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (assistantId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assistantId));
-            }
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetAssistantAsync(assistantId, context).ConfigureAwait(false);
@@ -274,14 +254,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<Assistant> GetAssistant(string assistantId, CancellationToken cancellationToken = default)
         {
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (assistantId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assistantId));
-            }
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetAssistant(assistantId, context);
@@ -306,14 +279,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> GetAssistantAsync(string assistantId, RequestContext context)
         {
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (assistantId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assistantId));
-            }
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetAssistant");
             scope.Start();
@@ -347,14 +313,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GetAssistant(string assistantId, RequestContext context)
         {
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (assistantId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assistantId));
-            }
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetAssistant");
             scope.Start();
@@ -378,18 +337,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<Assistant>> UpdateAssistantAsync(string assistantId, UpdateAssistantOptions updateAssistantOptions, CancellationToken cancellationToken = default)
         {
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (assistantId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assistantId));
-            }
-            if (updateAssistantOptions == null)
-            {
-                throw new ArgumentNullException(nameof(updateAssistantOptions));
-            }
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
+            Argument.AssertNotNull(updateAssistantOptions, nameof(updateAssistantOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = updateAssistantOptions.ToRequestContent();
@@ -405,18 +354,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<Assistant> UpdateAssistant(string assistantId, UpdateAssistantOptions updateAssistantOptions, CancellationToken cancellationToken = default)
         {
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (assistantId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assistantId));
-            }
-            if (updateAssistantOptions == null)
-            {
-                throw new ArgumentNullException(nameof(updateAssistantOptions));
-            }
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
+            Argument.AssertNotNull(updateAssistantOptions, nameof(updateAssistantOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = updateAssistantOptions.ToRequestContent();
@@ -443,18 +382,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> UpdateAssistantAsync(string assistantId, RequestContent content, RequestContext context = null)
         {
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (assistantId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assistantId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.UpdateAssistant");
             scope.Start();
@@ -489,18 +418,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual Response UpdateAssistant(string assistantId, RequestContent content, RequestContext context = null)
         {
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (assistantId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assistantId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.UpdateAssistant");
             scope.Start();
@@ -523,14 +442,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual async Task<Response<InternalAssistantDeletionStatus>> InternalDeleteAssistantAsync(string assistantId, CancellationToken cancellationToken = default)
         {
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (assistantId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assistantId));
-            }
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await InternalDeleteAssistantAsync(assistantId, context).ConfigureAwait(false);
@@ -544,14 +456,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual Response<InternalAssistantDeletionStatus> InternalDeleteAssistant(string assistantId, CancellationToken cancellationToken = default)
         {
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (assistantId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assistantId));
-            }
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = InternalDeleteAssistant(assistantId, context);
@@ -581,14 +486,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> InternalDeleteAssistantAsync(string assistantId, RequestContext context)
         {
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (assistantId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assistantId));
-            }
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.InternalDeleteAssistant");
             scope.Start();
@@ -627,14 +525,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual Response InternalDeleteAssistant(string assistantId, RequestContext context)
         {
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (assistantId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assistantId));
-            }
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.InternalDeleteAssistant");
             scope.Start();
@@ -658,18 +549,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<AssistantFile>> LinkAssistantFileAsync(string assistantId, string fileId, CancellationToken cancellationToken = default)
         {
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (assistantId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assistantId));
-            }
-            if (fileId == null)
-            {
-                throw new ArgumentNullException(nameof(fileId));
-            }
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
+            Argument.AssertNotNull(fileId, nameof(fileId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             CreateAssistantFileRequest createAssistantFileRequest = new CreateAssistantFileRequest(fileId);
@@ -685,18 +566,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<AssistantFile> LinkAssistantFile(string assistantId, string fileId, CancellationToken cancellationToken = default)
         {
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (assistantId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assistantId));
-            }
-            if (fileId == null)
-            {
-                throw new ArgumentNullException(nameof(fileId));
-            }
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
+            Argument.AssertNotNull(fileId, nameof(fileId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             CreateAssistantFileRequest createAssistantFileRequest = new CreateAssistantFileRequest(fileId);
@@ -723,18 +594,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> LinkAssistantFileAsync(string assistantId, RequestContent content, RequestContext context = null)
         {
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (assistantId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assistantId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.LinkAssistantFile");
             scope.Start();
@@ -769,18 +630,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual Response LinkAssistantFile(string assistantId, RequestContent content, RequestContext context = null)
         {
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (assistantId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assistantId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.LinkAssistantFile");
             scope.Start();
@@ -807,14 +658,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual async Task<Response<InternalOpenAIPageableListOfAssistantFile>> InternalGetAssistantFilesAsync(string assistantId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (assistantId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assistantId));
-            }
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await InternalGetAssistantFilesAsync(assistantId, limit, order?.ToString(), after, before, context).ConfigureAwait(false);
@@ -832,14 +676,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual Response<InternalOpenAIPageableListOfAssistantFile> InternalGetAssistantFiles(string assistantId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (assistantId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assistantId));
-            }
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = InternalGetAssistantFiles(assistantId, limit, order?.ToString(), after, before, context);
@@ -873,14 +710,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> InternalGetAssistantFilesAsync(string assistantId, int? limit, string order, string after, string before, RequestContext context)
         {
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (assistantId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assistantId));
-            }
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.InternalGetAssistantFiles");
             scope.Start();
@@ -923,14 +753,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual Response InternalGetAssistantFiles(string assistantId, int? limit, string order, string after, string before, RequestContext context)
         {
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (assistantId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assistantId));
-            }
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.InternalGetAssistantFiles");
             scope.Start();
@@ -954,22 +777,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<AssistantFile>> GetAssistantFileAsync(string assistantId, string fileId, CancellationToken cancellationToken = default)
         {
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (assistantId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assistantId));
-            }
-            if (fileId == null)
-            {
-                throw new ArgumentNullException(nameof(fileId));
-            }
-            if (fileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileId));
-            }
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetAssistantFileAsync(assistantId, fileId, context).ConfigureAwait(false);
@@ -984,22 +793,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<AssistantFile> GetAssistantFile(string assistantId, string fileId, CancellationToken cancellationToken = default)
         {
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (assistantId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assistantId));
-            }
-            if (fileId == null)
-            {
-                throw new ArgumentNullException(nameof(fileId));
-            }
-            if (fileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileId));
-            }
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetAssistantFile(assistantId, fileId, context);
@@ -1025,22 +820,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> GetAssistantFileAsync(string assistantId, string fileId, RequestContext context)
         {
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (assistantId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assistantId));
-            }
-            if (fileId == null)
-            {
-                throw new ArgumentNullException(nameof(fileId));
-            }
-            if (fileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileId));
-            }
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetAssistantFile");
             scope.Start();
@@ -1075,22 +856,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GetAssistantFile(string assistantId, string fileId, RequestContext context)
         {
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (assistantId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assistantId));
-            }
-            if (fileId == null)
-            {
-                throw new ArgumentNullException(nameof(fileId));
-            }
-            if (fileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileId));
-            }
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetAssistantFile");
             scope.Start();
@@ -1117,22 +884,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual async Task<Response<InternalAssistantFileDeletionStatus>> InternalUnlinkAssistantFileAsync(string assistantId, string fileId, CancellationToken cancellationToken = default)
         {
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (assistantId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assistantId));
-            }
-            if (fileId == null)
-            {
-                throw new ArgumentNullException(nameof(fileId));
-            }
-            if (fileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileId));
-            }
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await InternalUnlinkAssistantFileAsync(assistantId, fileId, context).ConfigureAwait(false);
@@ -1150,22 +903,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual Response<InternalAssistantFileDeletionStatus> InternalUnlinkAssistantFile(string assistantId, string fileId, CancellationToken cancellationToken = default)
         {
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (assistantId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assistantId));
-            }
-            if (fileId == null)
-            {
-                throw new ArgumentNullException(nameof(fileId));
-            }
-            if (fileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileId));
-            }
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = InternalUnlinkAssistantFile(assistantId, fileId, context);
@@ -1197,22 +936,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> InternalUnlinkAssistantFileAsync(string assistantId, string fileId, RequestContext context)
         {
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (assistantId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assistantId));
-            }
-            if (fileId == null)
-            {
-                throw new ArgumentNullException(nameof(fileId));
-            }
-            if (fileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileId));
-            }
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.InternalUnlinkAssistantFile");
             scope.Start();
@@ -1253,22 +978,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual Response InternalUnlinkAssistantFile(string assistantId, string fileId, RequestContext context)
         {
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (assistantId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assistantId));
-            }
-            if (fileId == null)
-            {
-                throw new ArgumentNullException(nameof(fileId));
-            }
-            if (fileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileId));
-            }
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.InternalUnlinkAssistantFile");
             scope.Start();
@@ -1290,10 +1001,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="assistantThreadCreationOptions"/> is null. </exception>
         public virtual async Task<Response<AssistantThread>> CreateThreadAsync(AssistantThreadCreationOptions assistantThreadCreationOptions, CancellationToken cancellationToken = default)
         {
-            if (assistantThreadCreationOptions == null)
-            {
-                throw new ArgumentNullException(nameof(assistantThreadCreationOptions));
-            }
+            Argument.AssertNotNull(assistantThreadCreationOptions, nameof(assistantThreadCreationOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = assistantThreadCreationOptions.ToRequestContent();
@@ -1307,10 +1015,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="assistantThreadCreationOptions"/> is null. </exception>
         public virtual Response<AssistantThread> CreateThread(AssistantThreadCreationOptions assistantThreadCreationOptions, CancellationToken cancellationToken = default)
         {
-            if (assistantThreadCreationOptions == null)
-            {
-                throw new ArgumentNullException(nameof(assistantThreadCreationOptions));
-            }
+            Argument.AssertNotNull(assistantThreadCreationOptions, nameof(assistantThreadCreationOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = assistantThreadCreationOptions.ToRequestContent();
@@ -1335,10 +1040,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> CreateThreadAsync(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.CreateThread");
             scope.Start();
@@ -1371,10 +1073,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual Response CreateThread(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.CreateThread");
             scope.Start();
@@ -1397,14 +1096,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<AssistantThread>> GetThreadAsync(string threadId, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetThreadAsync(threadId, context).ConfigureAwait(false);
@@ -1418,14 +1110,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<AssistantThread> GetThread(string threadId, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetThread(threadId, context);
@@ -1450,14 +1135,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> GetThreadAsync(string threadId, RequestContext context)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetThread");
             scope.Start();
@@ -1491,14 +1169,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GetThread(string threadId, RequestContext context)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetThread");
             scope.Start();
@@ -1522,14 +1193,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<AssistantThread>> UpdateThreadAsync(string threadId, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             UpdateThreadRequest updateThreadRequest = new UpdateThreadRequest()
@@ -1548,14 +1212,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<AssistantThread> UpdateThread(string threadId, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             UpdateThreadRequest updateThreadRequest = new UpdateThreadRequest()
@@ -1585,18 +1242,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> UpdateThreadAsync(string threadId, RequestContent content, RequestContext context = null)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.UpdateThread");
             scope.Start();
@@ -1631,18 +1278,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual Response UpdateThread(string threadId, RequestContent content, RequestContext context = null)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.UpdateThread");
             scope.Start();
@@ -1665,14 +1302,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual async Task<Response<ThreadDeletionStatus>> InternalDeleteThreadAsync(string threadId, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await InternalDeleteThreadAsync(threadId, context).ConfigureAwait(false);
@@ -1686,14 +1316,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual Response<ThreadDeletionStatus> InternalDeleteThread(string threadId, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = InternalDeleteThread(threadId, context);
@@ -1723,14 +1346,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> InternalDeleteThreadAsync(string threadId, RequestContext context)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.InternalDeleteThread");
             scope.Start();
@@ -1769,14 +1385,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual Response InternalDeleteThread(string threadId, RequestContext context)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.InternalDeleteThread");
             scope.Start();
@@ -1803,18 +1412,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ThreadMessage>> CreateMessageAsync(string threadId, MessageRole role, string content, IEnumerable<string> fileIds = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNull(content, nameof(content));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             CreateMessageRequest createMessageRequest = new CreateMessageRequest(role, content)
@@ -1844,18 +1443,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ThreadMessage> CreateMessage(string threadId, MessageRole role, string content, IEnumerable<string> fileIds = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNull(content, nameof(content));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             CreateMessageRequest createMessageRequest = new CreateMessageRequest(role, content)
@@ -1893,18 +1482,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> CreateMessageAsync(string threadId, RequestContent content, RequestContext context = null)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.CreateMessage");
             scope.Start();
@@ -1939,18 +1518,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual Response CreateMessage(string threadId, RequestContent content, RequestContext context = null)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.CreateMessage");
             scope.Start();
@@ -1977,14 +1546,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual async Task<Response<InternalOpenAIPageableListOfThreadMessage>> InternalGetMessagesAsync(string threadId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await InternalGetMessagesAsync(threadId, limit, order?.ToString(), after, before, context).ConfigureAwait(false);
@@ -2002,14 +1564,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual Response<InternalOpenAIPageableListOfThreadMessage> InternalGetMessages(string threadId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = InternalGetMessages(threadId, limit, order?.ToString(), after, before, context);
@@ -2043,14 +1598,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> InternalGetMessagesAsync(string threadId, int? limit, string order, string after, string before, RequestContext context)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.InternalGetMessages");
             scope.Start();
@@ -2093,14 +1641,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual Response InternalGetMessages(string threadId, int? limit, string order, string after, string before, RequestContext context)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.InternalGetMessages");
             scope.Start();
@@ -2124,22 +1665,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ThreadMessage>> GetMessageAsync(string threadId, string messageId, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (messageId == null)
-            {
-                throw new ArgumentNullException(nameof(messageId));
-            }
-            if (messageId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(messageId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetMessageAsync(threadId, messageId, context).ConfigureAwait(false);
@@ -2154,22 +1681,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ThreadMessage> GetMessage(string threadId, string messageId, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (messageId == null)
-            {
-                throw new ArgumentNullException(nameof(messageId));
-            }
-            if (messageId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(messageId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetMessage(threadId, messageId, context);
@@ -2195,22 +1708,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> GetMessageAsync(string threadId, string messageId, RequestContext context)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (messageId == null)
-            {
-                throw new ArgumentNullException(nameof(messageId));
-            }
-            if (messageId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(messageId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetMessage");
             scope.Start();
@@ -2245,22 +1744,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GetMessage(string threadId, string messageId, RequestContext context)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (messageId == null)
-            {
-                throw new ArgumentNullException(nameof(messageId));
-            }
-            if (messageId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(messageId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetMessage");
             scope.Start();
@@ -2285,22 +1770,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ThreadMessage>> UpdateMessageAsync(string threadId, string messageId, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (messageId == null)
-            {
-                throw new ArgumentNullException(nameof(messageId));
-            }
-            if (messageId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(messageId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             UpdateMessageRequest updateMessageRequest = new UpdateMessageRequest()
@@ -2320,22 +1791,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ThreadMessage> UpdateMessage(string threadId, string messageId, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (messageId == null)
-            {
-                throw new ArgumentNullException(nameof(messageId));
-            }
-            if (messageId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(messageId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             UpdateMessageRequest updateMessageRequest = new UpdateMessageRequest()
@@ -2366,26 +1823,9 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> UpdateMessageAsync(string threadId, string messageId, RequestContent content, RequestContext context = null)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (messageId == null)
-            {
-                throw new ArgumentNullException(nameof(messageId));
-            }
-            if (messageId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(messageId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.UpdateMessage");
             scope.Start();
@@ -2421,26 +1861,9 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual Response UpdateMessage(string threadId, string messageId, RequestContent content, RequestContext context = null)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (messageId == null)
-            {
-                throw new ArgumentNullException(nameof(messageId));
-            }
-            if (messageId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(messageId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.UpdateMessage");
             scope.Start();
@@ -2468,22 +1891,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual async Task<Response<InternalOpenAIPageableListOfMessageFile>> InternalGetMessageFilesAsync(string threadId, string messageId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (messageId == null)
-            {
-                throw new ArgumentNullException(nameof(messageId));
-            }
-            if (messageId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(messageId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await InternalGetMessageFilesAsync(threadId, messageId, limit, order?.ToString(), after, before, context).ConfigureAwait(false);
@@ -2502,22 +1911,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual Response<InternalOpenAIPageableListOfMessageFile> InternalGetMessageFiles(string threadId, string messageId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (messageId == null)
-            {
-                throw new ArgumentNullException(nameof(messageId));
-            }
-            if (messageId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(messageId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = InternalGetMessageFiles(threadId, messageId, limit, order?.ToString(), after, before, context);
@@ -2552,22 +1947,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> InternalGetMessageFilesAsync(string threadId, string messageId, int? limit, string order, string after, string before, RequestContext context)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (messageId == null)
-            {
-                throw new ArgumentNullException(nameof(messageId));
-            }
-            if (messageId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(messageId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.InternalGetMessageFiles");
             scope.Start();
@@ -2611,22 +1992,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual Response InternalGetMessageFiles(string threadId, string messageId, int? limit, string order, string after, string before, RequestContext context)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (messageId == null)
-            {
-                throw new ArgumentNullException(nameof(messageId));
-            }
-            if (messageId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(messageId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.InternalGetMessageFiles");
             scope.Start();
@@ -2651,30 +2018,9 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/>, <paramref name="messageId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<MessageFile>> GetMessageFileAsync(string threadId, string messageId, string fileId, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (messageId == null)
-            {
-                throw new ArgumentNullException(nameof(messageId));
-            }
-            if (messageId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(messageId));
-            }
-            if (fileId == null)
-            {
-                throw new ArgumentNullException(nameof(fileId));
-            }
-            if (fileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetMessageFileAsync(threadId, messageId, fileId, context).ConfigureAwait(false);
@@ -2690,30 +2036,9 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/>, <paramref name="messageId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<MessageFile> GetMessageFile(string threadId, string messageId, string fileId, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (messageId == null)
-            {
-                throw new ArgumentNullException(nameof(messageId));
-            }
-            if (messageId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(messageId));
-            }
-            if (fileId == null)
-            {
-                throw new ArgumentNullException(nameof(fileId));
-            }
-            if (fileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetMessageFile(threadId, messageId, fileId, context);
@@ -2740,30 +2065,9 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> GetMessageFileAsync(string threadId, string messageId, string fileId, RequestContext context)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (messageId == null)
-            {
-                throw new ArgumentNullException(nameof(messageId));
-            }
-            if (messageId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(messageId));
-            }
-            if (fileId == null)
-            {
-                throw new ArgumentNullException(nameof(fileId));
-            }
-            if (fileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetMessageFile");
             scope.Start();
@@ -2799,30 +2103,9 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GetMessageFile(string threadId, string messageId, string fileId, RequestContext context)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (messageId == null)
-            {
-                throw new ArgumentNullException(nameof(messageId));
-            }
-            if (messageId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(messageId));
-            }
-            if (fileId == null)
-            {
-                throw new ArgumentNullException(nameof(fileId));
-            }
-            if (fileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetMessageFile");
             scope.Start();
@@ -2846,18 +2129,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ThreadRun>> CreateRunAsync(string threadId, CreateRunOptions createRunOptions, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (createRunOptions == null)
-            {
-                throw new ArgumentNullException(nameof(createRunOptions));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNull(createRunOptions, nameof(createRunOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = createRunOptions.ToRequestContent();
@@ -2873,18 +2146,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ThreadRun> CreateRun(string threadId, CreateRunOptions createRunOptions, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (createRunOptions == null)
-            {
-                throw new ArgumentNullException(nameof(createRunOptions));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNull(createRunOptions, nameof(createRunOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = createRunOptions.ToRequestContent();
@@ -2911,18 +2174,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> CreateRunAsync(string threadId, RequestContent content, RequestContext context = null)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.CreateRun");
             scope.Start();
@@ -2957,18 +2210,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual Response CreateRun(string threadId, RequestContent content, RequestContext context = null)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.CreateRun");
             scope.Start();
@@ -2995,14 +2238,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual async Task<Response<InternalOpenAIPageableListOfThreadRun>> InternalGetRunsAsync(string threadId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await InternalGetRunsAsync(threadId, limit, order?.ToString(), after, before, context).ConfigureAwait(false);
@@ -3020,14 +2256,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual Response<InternalOpenAIPageableListOfThreadRun> InternalGetRuns(string threadId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = InternalGetRuns(threadId, limit, order?.ToString(), after, before, context);
@@ -3061,14 +2290,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> InternalGetRunsAsync(string threadId, int? limit, string order, string after, string before, RequestContext context)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.InternalGetRuns");
             scope.Start();
@@ -3111,14 +2333,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual Response InternalGetRuns(string threadId, int? limit, string order, string after, string before, RequestContext context)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.InternalGetRuns");
             scope.Start();
@@ -3142,22 +2357,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ThreadRun>> GetRunAsync(string threadId, string runId, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
-            if (runId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetRunAsync(threadId, runId, context).ConfigureAwait(false);
@@ -3172,22 +2373,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ThreadRun> GetRun(string threadId, string runId, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
-            if (runId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetRun(threadId, runId, context);
@@ -3213,22 +2400,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> GetRunAsync(string threadId, string runId, RequestContext context)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
-            if (runId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetRun");
             scope.Start();
@@ -3263,22 +2436,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GetRun(string threadId, string runId, RequestContext context)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
-            if (runId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetRun");
             scope.Start();
@@ -3303,22 +2462,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ThreadRun>> UpdateRunAsync(string threadId, string runId, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
-            if (runId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             UpdateRunRequest updateRunRequest = new UpdateRunRequest()
@@ -3338,22 +2483,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ThreadRun> UpdateRun(string threadId, string runId, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
-            if (runId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             UpdateRunRequest updateRunRequest = new UpdateRunRequest()
@@ -3384,26 +2515,9 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> UpdateRunAsync(string threadId, string runId, RequestContent content, RequestContext context = null)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
-            if (runId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.UpdateRun");
             scope.Start();
@@ -3439,26 +2553,9 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual Response UpdateRun(string threadId, string runId, RequestContent content, RequestContext context = null)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
-            if (runId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.UpdateRun");
             scope.Start();
@@ -3483,26 +2580,9 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ThreadRun>> SubmitToolOutputsToRunAsync(string threadId, string runId, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
-            if (runId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
-            }
-            if (toolOutputs == null)
-            {
-                throw new ArgumentNullException(nameof(toolOutputs));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(toolOutputs.ToList());
@@ -3519,26 +2599,9 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ThreadRun> SubmitToolOutputsToRun(string threadId, string runId, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
-            if (runId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
-            }
-            if (toolOutputs == null)
-            {
-                throw new ArgumentNullException(nameof(toolOutputs));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(toolOutputs.ToList());
@@ -3566,26 +2629,9 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> SubmitToolOutputsToRunAsync(string threadId, string runId, RequestContent content, RequestContext context = null)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
-            if (runId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.SubmitToolOutputsToRun");
             scope.Start();
@@ -3621,26 +2667,9 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual Response SubmitToolOutputsToRun(string threadId, string runId, RequestContent content, RequestContext context = null)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
-            if (runId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.SubmitToolOutputsToRun");
             scope.Start();
@@ -3664,22 +2693,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ThreadRun>> CancelRunAsync(string threadId, string runId, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
-            if (runId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CancelRunAsync(threadId, runId, context).ConfigureAwait(false);
@@ -3694,22 +2709,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ThreadRun> CancelRun(string threadId, string runId, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
-            if (runId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CancelRun(threadId, runId, context);
@@ -3735,22 +2736,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> CancelRunAsync(string threadId, string runId, RequestContext context)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
-            if (runId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.CancelRun");
             scope.Start();
@@ -3785,22 +2772,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual Response CancelRun(string threadId, string runId, RequestContext context)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
-            if (runId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.CancelRun");
             scope.Start();
@@ -3822,10 +2795,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="createAndRunThreadOptions"/> is null. </exception>
         public virtual async Task<Response<ThreadRun>> CreateThreadAndRunAsync(CreateAndRunThreadOptions createAndRunThreadOptions, CancellationToken cancellationToken = default)
         {
-            if (createAndRunThreadOptions == null)
-            {
-                throw new ArgumentNullException(nameof(createAndRunThreadOptions));
-            }
+            Argument.AssertNotNull(createAndRunThreadOptions, nameof(createAndRunThreadOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = createAndRunThreadOptions.ToRequestContent();
@@ -3839,10 +2809,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="createAndRunThreadOptions"/> is null. </exception>
         public virtual Response<ThreadRun> CreateThreadAndRun(CreateAndRunThreadOptions createAndRunThreadOptions, CancellationToken cancellationToken = default)
         {
-            if (createAndRunThreadOptions == null)
-            {
-                throw new ArgumentNullException(nameof(createAndRunThreadOptions));
-            }
+            Argument.AssertNotNull(createAndRunThreadOptions, nameof(createAndRunThreadOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = createAndRunThreadOptions.ToRequestContent();
@@ -3867,10 +2834,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> CreateThreadAndRunAsync(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.CreateThreadAndRun");
             scope.Start();
@@ -3903,10 +2867,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual Response CreateThreadAndRun(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.CreateThreadAndRun");
             scope.Start();
@@ -3931,30 +2892,9 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<RunStep>> GetRunStepAsync(string threadId, string runId, string stepId, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
-            if (runId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
-            }
-            if (stepId == null)
-            {
-                throw new ArgumentNullException(nameof(stepId));
-            }
-            if (stepId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(stepId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            Argument.AssertNotNullOrEmpty(stepId, nameof(stepId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetRunStepAsync(threadId, runId, stepId, context).ConfigureAwait(false);
@@ -3970,30 +2910,9 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<RunStep> GetRunStep(string threadId, string runId, string stepId, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
-            if (runId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
-            }
-            if (stepId == null)
-            {
-                throw new ArgumentNullException(nameof(stepId));
-            }
-            if (stepId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(stepId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            Argument.AssertNotNullOrEmpty(stepId, nameof(stepId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetRunStep(threadId, runId, stepId, context);
@@ -4020,30 +2939,9 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> GetRunStepAsync(string threadId, string runId, string stepId, RequestContext context)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
-            if (runId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
-            }
-            if (stepId == null)
-            {
-                throw new ArgumentNullException(nameof(stepId));
-            }
-            if (stepId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(stepId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            Argument.AssertNotNullOrEmpty(stepId, nameof(stepId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetRunStep");
             scope.Start();
@@ -4079,30 +2977,9 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GetRunStep(string threadId, string runId, string stepId, RequestContext context)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
-            if (runId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
-            }
-            if (stepId == null)
-            {
-                throw new ArgumentNullException(nameof(stepId));
-            }
-            if (stepId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(stepId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            Argument.AssertNotNullOrEmpty(stepId, nameof(stepId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetRunStep");
             scope.Start();
@@ -4130,22 +3007,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual async Task<Response<InternalOpenAIPageableListOfRunStep>> InternalGetRunStepsAsync(string threadId, string runId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
-            if (runId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await InternalGetRunStepsAsync(threadId, runId, limit, order?.ToString(), after, before, context).ConfigureAwait(false);
@@ -4164,22 +3027,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual Response<InternalOpenAIPageableListOfRunStep> InternalGetRunSteps(string threadId, string runId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
-            if (runId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = InternalGetRunSteps(threadId, runId, limit, order?.ToString(), after, before, context);
@@ -4214,22 +3063,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> InternalGetRunStepsAsync(string threadId, string runId, int? limit, string order, string after, string before, RequestContext context)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
-            if (runId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.InternalGetRunSteps");
             scope.Start();
@@ -4273,22 +3108,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual Response InternalGetRunSteps(string threadId, string runId, int? limit, string order, string after, string before, RequestContext context)
         {
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (threadId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(threadId));
-            }
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
-            if (runId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
-            }
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.InternalGetRunSteps");
             scope.Start();
@@ -4402,10 +3223,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<OpenAIFile>> UploadFileAsync(BinaryData data, OpenAIFilePurpose purpose, string filename = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose)
@@ -4424,10 +3242,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<OpenAIFile> UploadFile(BinaryData data, OpenAIFilePurpose purpose, string filename = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose)
@@ -4455,10 +3270,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> UploadFileAsync(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.UploadFile");
             scope.Start();
@@ -4491,10 +3303,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual Response UploadFile(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.UploadFile");
             scope.Start();
@@ -4517,14 +3326,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual async Task<Response<InternalFileDeletionStatus>> InternalDeleteFileAsync(string fileId, CancellationToken cancellationToken = default)
         {
-            if (fileId == null)
-            {
-                throw new ArgumentNullException(nameof(fileId));
-            }
-            if (fileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileId));
-            }
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await InternalDeleteFileAsync(fileId, context).ConfigureAwait(false);
@@ -4538,14 +3340,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual Response<InternalFileDeletionStatus> InternalDeleteFile(string fileId, CancellationToken cancellationToken = default)
         {
-            if (fileId == null)
-            {
-                throw new ArgumentNullException(nameof(fileId));
-            }
-            if (fileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileId));
-            }
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = InternalDeleteFile(fileId, context);
@@ -4575,14 +3370,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> InternalDeleteFileAsync(string fileId, RequestContext context)
         {
-            if (fileId == null)
-            {
-                throw new ArgumentNullException(nameof(fileId));
-            }
-            if (fileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileId));
-            }
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.InternalDeleteFile");
             scope.Start();
@@ -4621,14 +3409,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual Response InternalDeleteFile(string fileId, RequestContext context)
         {
-            if (fileId == null)
-            {
-                throw new ArgumentNullException(nameof(fileId));
-            }
-            if (fileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileId));
-            }
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.InternalDeleteFile");
             scope.Start();
@@ -4651,14 +3432,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<OpenAIFile>> GetFileAsync(string fileId, CancellationToken cancellationToken = default)
         {
-            if (fileId == null)
-            {
-                throw new ArgumentNullException(nameof(fileId));
-            }
-            if (fileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileId));
-            }
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetFileAsync(fileId, context).ConfigureAwait(false);
@@ -4672,14 +3446,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<OpenAIFile> GetFile(string fileId, CancellationToken cancellationToken = default)
         {
-            if (fileId == null)
-            {
-                throw new ArgumentNullException(nameof(fileId));
-            }
-            if (fileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileId));
-            }
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetFile(fileId, context);
@@ -4704,14 +3471,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> GetFileAsync(string fileId, RequestContext context)
         {
-            if (fileId == null)
-            {
-                throw new ArgumentNullException(nameof(fileId));
-            }
-            if (fileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileId));
-            }
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetFile");
             scope.Start();
@@ -4745,20 +3505,109 @@ namespace Azure.AI.OpenAI.Assistants
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GetFile(string fileId, RequestContext context)
         {
-            if (fileId == null)
-            {
-                throw new ArgumentNullException(nameof(fileId));
-            }
-            if (fileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileId));
-            }
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetFile");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetFileRequest(fileId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Returns information about a specific file. Does not retrieve file content. </summary>
+        /// <param name="fileId"> The ID of the file to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<BinaryData>> GetFileContentAsync(string fileId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetFileContentAsync(fileId, context).ConfigureAwait(false);
+            return Response.FromValue(response.Content, response);
+        }
+
+        /// <summary> Returns information about a specific file. Does not retrieve file content. </summary>
+        /// <param name="fileId"> The ID of the file to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<BinaryData> GetFileContent(string fileId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetFileContent(fileId, context);
+            return Response.FromValue(response.Content, response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns information about a specific file. Does not retrieve file content.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fileId"> The ID of the file to retrieve. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetFileContentAsync(string fileId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetFileContent");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetFileContentRequest(fileId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns information about a specific file. Does not retrieve file content.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fileId"> The ID of the file to retrieve. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetFileContent(string fileId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetFileContent");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetFileContentRequest(fileId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)

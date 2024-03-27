@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,26 +23,26 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomaticTuningServerOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomaticTuningServerOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomaticTuningServerOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DesiredState.HasValue)
+            if (Optional.IsDefined(DesiredState))
             {
                 writer.WritePropertyName("desiredState"u8);
                 writer.WriteStringValue(DesiredState.Value.ToSerialString());
             }
-            if (options.Format != "W" && ActualState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ActualState))
             {
                 writer.WritePropertyName("actualState"u8);
                 writer.WriteStringValue(ActualState.Value.ToSerialString());
             }
-            if (options.Format != "W" && ReasonCode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReasonCode))
             {
                 writer.WritePropertyName("reasonCode"u8);
                 writer.WriteNumberValue(ReasonCode.Value);
             }
-            if (options.Format != "W" && ReasonDesc.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReasonDesc))
             {
                 writer.WritePropertyName("reasonDesc"u8);
                 writer.WriteStringValue(ReasonDesc.Value.ToSerialString());
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomaticTuningServerOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomaticTuningServerOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomaticTuningServerOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -137,6 +138,77 @@ namespace Azure.ResourceManager.Sql.Models
             return new AutomaticTuningServerOptions(desiredState, actualState, reasonCode, reasonDesc, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DesiredState), out propertyOverride);
+            if (Optional.IsDefined(DesiredState) || hasPropertyOverride)
+            {
+                builder.Append("  desiredState: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{DesiredState.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActualState), out propertyOverride);
+            if (Optional.IsDefined(ActualState) || hasPropertyOverride)
+            {
+                builder.Append("  actualState: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ActualState.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReasonCode), out propertyOverride);
+            if (Optional.IsDefined(ReasonCode) || hasPropertyOverride)
+            {
+                builder.Append("  reasonCode: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{ReasonCode.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReasonDesc), out propertyOverride);
+            if (Optional.IsDefined(ReasonDesc) || hasPropertyOverride)
+            {
+                builder.Append("  reasonDesc: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ReasonDesc.Value.ToSerialString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AutomaticTuningServerOptions>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutomaticTuningServerOptions>)this).GetFormatFromOptions(options) : options.Format;
@@ -145,8 +217,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomaticTuningServerOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomaticTuningServerOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +236,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeAutomaticTuningServerOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomaticTuningServerOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomaticTuningServerOptions)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerRestartParameter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlFlexibleServerRestartParameter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerRestartParameter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RestartWithFailover.HasValue)
+            if (Optional.IsDefined(RestartWithFailover))
             {
                 writer.WritePropertyName("restartWithFailover"u8);
                 writer.WriteStringValue(RestartWithFailover.Value.ToString());
             }
-            if (MaxFailoverSeconds.HasValue)
+            if (Optional.IsDefined(MaxFailoverSeconds))
             {
                 writer.WritePropertyName("maxFailoverSeconds"u8);
                 writer.WriteNumberValue(MaxFailoverSeconds.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerRestartParameter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlFlexibleServerRestartParameter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerRestartParameter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerRestartParameter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerRestartParameter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                         return DeserializeMySqlFlexibleServerRestartParameter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerRestartParameter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerRestartParameter)} does not support reading '{options.Format}' format.");
             }
         }
 

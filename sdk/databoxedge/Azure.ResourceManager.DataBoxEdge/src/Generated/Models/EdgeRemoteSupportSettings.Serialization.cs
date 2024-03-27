@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeRemoteSupportSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeRemoteSupportSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeRemoteSupportSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RemoteApplicationType.HasValue)
+            if (Optional.IsDefined(RemoteApplicationType))
             {
                 writer.WritePropertyName("remoteApplicationType"u8);
                 writer.WriteStringValue(RemoteApplicationType.Value.ToString());
             }
-            if (AccessLevel.HasValue)
+            if (Optional.IsDefined(AccessLevel))
             {
                 writer.WritePropertyName("accessLevel"u8);
                 writer.WriteStringValue(AccessLevel.Value.ToString());
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTimeStampInUTC"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeRemoteSupportSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeRemoteSupportSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeRemoteSupportSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeRemoteSupportSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeRemoteSupportSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeEdgeRemoteSupportSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeRemoteSupportSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeRemoteSupportSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

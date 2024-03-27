@@ -22,33 +22,33 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmApplicationHealthPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmApplicationHealthPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ConsiderWarningAsError.HasValue)
+            if (Optional.IsDefined(ConsiderWarningAsError))
             {
                 writer.WritePropertyName("considerWarningAsError"u8);
                 writer.WriteBooleanValue(ConsiderWarningAsError.Value);
             }
-            if (MaxPercentUnhealthyDeployedApplications.HasValue)
+            if (Optional.IsDefined(MaxPercentUnhealthyDeployedApplications))
             {
                 writer.WritePropertyName("maxPercentUnhealthyDeployedApplications"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyDeployedApplications.Value);
             }
-            if (DefaultServiceTypeHealthPolicy != null)
+            if (Optional.IsDefined(DefaultServiceTypeHealthPolicy))
             {
                 writer.WritePropertyName("defaultServiceTypeHealthPolicy"u8);
-                writer.WriteObjectValue(DefaultServiceTypeHealthPolicy);
+                writer.WriteObjectValue<ArmServiceTypeHealthPolicy>(DefaultServiceTypeHealthPolicy, options);
             }
-            if (!(ServiceTypeHealthPolicyMap is ChangeTrackingDictionary<string, ArmServiceTypeHealthPolicy> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceTypeHealthPolicyMap))
             {
                 writer.WritePropertyName("serviceTypeHealthPolicyMap"u8);
                 writer.WriteStartObject();
                 foreach (var item in ServiceTypeHealthPolicyMap)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ArmServiceTypeHealthPolicy>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmApplicationHealthPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmApplicationHealthPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ArmApplicationHealthPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmApplicationHealthPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         return DeserializeArmApplicationHealthPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArmApplicationHealthPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmApplicationHealthPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

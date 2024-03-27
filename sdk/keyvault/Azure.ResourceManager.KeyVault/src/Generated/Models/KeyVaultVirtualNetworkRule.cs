@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public KeyVaultVirtualNetworkRule(string id)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
         }
@@ -75,8 +72,10 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
         /// <summary> Property to specify whether NRP will ignore the check if parent subnet has serviceEndpoints configured. </summary>
+        [WirePath("ignoreMissingVnetServiceEndpoint")]
         public bool? IgnoreMissingVnetServiceEndpoint { get; set; }
     }
 }

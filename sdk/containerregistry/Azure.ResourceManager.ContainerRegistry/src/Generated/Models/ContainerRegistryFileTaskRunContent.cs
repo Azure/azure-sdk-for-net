@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -20,14 +19,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <exception cref="ArgumentNullException"> <paramref name="taskFilePath"/> or <paramref name="platform"/> is null. </exception>
         public ContainerRegistryFileTaskRunContent(string taskFilePath, ContainerRegistryPlatformProperties platform)
         {
-            if (taskFilePath == null)
-            {
-                throw new ArgumentNullException(nameof(taskFilePath));
-            }
-            if (platform == null)
-            {
-                throw new ArgumentNullException(nameof(platform));
-            }
+            Argument.AssertNotNull(taskFilePath, nameof(taskFilePath));
+            Argument.AssertNotNull(platform, nameof(platform));
 
             TaskFilePath = taskFilePath;
             Values = new ChangeTrackingList<ContainerRegistryTaskOverridableValue>();

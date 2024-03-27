@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AdditionalUnattendContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdditionalUnattendContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdditionalUnattendContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PassName.HasValue)
+            if (Optional.IsDefined(PassName))
             {
                 writer.WritePropertyName("passName"u8);
                 writer.WriteStringValue(PassName.Value.ToString());
             }
-            if (ComponentName.HasValue)
+            if (Optional.IsDefined(ComponentName))
             {
                 writer.WritePropertyName("componentName"u8);
                 writer.WriteStringValue(ComponentName.Value.ToString());
             }
-            if (SettingName.HasValue)
+            if (Optional.IsDefined(SettingName))
             {
                 writer.WritePropertyName("settingName"u8);
                 writer.WriteStringValue(SettingName.Value.ToSerialString());
             }
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AdditionalUnattendContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdditionalUnattendContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdditionalUnattendContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AdditionalUnattendContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdditionalUnattendContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeAdditionalUnattendContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AdditionalUnattendContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdditionalUnattendContent)} does not support reading '{options.Format}' format.");
             }
         }
 

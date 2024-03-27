@@ -22,27 +22,27 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<FlowEndpoints>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FlowEndpoints)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FlowEndpoints)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(OutgoingIPAddresses is ChangeTrackingList<FlowEndpointIPAddress> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(OutgoingIPAddresses))
             {
                 writer.WritePropertyName("outgoingIpAddresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in OutgoingIPAddresses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FlowEndpointIPAddress>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(AccessEndpointIPAddresses is ChangeTrackingList<FlowEndpointIPAddress> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AccessEndpointIPAddresses))
             {
                 writer.WritePropertyName("accessEndpointIpAddresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in AccessEndpointIPAddresses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FlowEndpointIPAddress>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<FlowEndpoints>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FlowEndpoints)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FlowEndpoints)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FlowEndpoints)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FlowEndpoints)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeFlowEndpoints(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FlowEndpoints)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FlowEndpoints)} does not support reading '{options.Format}' format.");
             }
         }
 

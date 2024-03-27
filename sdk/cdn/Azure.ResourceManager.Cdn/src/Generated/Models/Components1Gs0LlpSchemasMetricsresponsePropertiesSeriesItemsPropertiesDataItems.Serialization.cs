@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DateOn.HasValue)
+            if (Optional.IsDefined(DateOn))
             {
                 writer.WritePropertyName("dateTime"u8);
                 writer.WriteStringValue(DateOn.Value, "O");
             }
-            if (Value.HasValue)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeComponents1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems)} does not support reading '{options.Format}' format.");
             }
         }
 

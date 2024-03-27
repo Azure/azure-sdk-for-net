@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<WindowsOSInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WindowsOSInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WindowsOSInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (WindowsOSState.HasValue)
+            if (Optional.IsDefined(WindowsOSState))
             {
                 writer.WritePropertyName("windowsOsState"u8);
                 writer.WriteStringValue(WindowsOSState.Value.ToString());
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<WindowsOSInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WindowsOSInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WindowsOSInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WindowsOSInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WindowsOSInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeWindowsOSInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WindowsOSInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WindowsOSInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

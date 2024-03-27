@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesSourceControlConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesSourceControlConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesSourceControlConfigurationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (RepositoryUri != null)
+            if (Optional.IsDefined(RepositoryUri))
             {
                 writer.WritePropertyName("repositoryUrl"u8);
                 writer.WriteStringValue(RepositoryUri.AbsoluteUri);
             }
-            if (OperatorNamespace != null)
+            if (Optional.IsDefined(OperatorNamespace))
             {
                 writer.WritePropertyName("operatorNamespace"u8);
                 writer.WriteStringValue(OperatorNamespace);
             }
-            if (OperatorInstanceName != null)
+            if (Optional.IsDefined(OperatorInstanceName))
             {
                 writer.WritePropertyName("operatorInstanceName"u8);
                 writer.WriteStringValue(OperatorInstanceName);
             }
-            if (OperatorType.HasValue)
+            if (Optional.IsDefined(OperatorType))
             {
                 writer.WritePropertyName("operatorType"u8);
                 writer.WriteStringValue(OperatorType.Value.ToString());
             }
-            if (OperatorParams != null)
+            if (Optional.IsDefined(OperatorParams))
             {
                 writer.WritePropertyName("operatorParams"u8);
                 writer.WriteStringValue(OperatorParams);
             }
-            if (!(ConfigurationProtectedSettings is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
             {
                 writer.WritePropertyName("configurationProtectedSettings"u8);
                 writer.WriteStartObject();
@@ -86,40 +86,40 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 }
                 writer.WriteEndObject();
             }
-            if (OperatorScope.HasValue)
+            if (Optional.IsDefined(OperatorScope))
             {
                 writer.WritePropertyName("operatorScope"u8);
                 writer.WriteStringValue(OperatorScope.Value.ToString());
             }
-            if (options.Format != "W" && RepositoryPublicKey != null)
+            if (options.Format != "W" && Optional.IsDefined(RepositoryPublicKey))
             {
                 writer.WritePropertyName("repositoryPublicKey"u8);
                 writer.WriteStringValue(RepositoryPublicKey);
             }
-            if (SshKnownHostsContents != null)
+            if (Optional.IsDefined(SshKnownHostsContents))
             {
                 writer.WritePropertyName("sshKnownHostsContents"u8);
                 writer.WriteStringValue(SshKnownHostsContents);
             }
-            if (IsHelmOperatorEnabled.HasValue)
+            if (Optional.IsDefined(IsHelmOperatorEnabled))
             {
                 writer.WritePropertyName("enableHelmOperator"u8);
                 writer.WriteBooleanValue(IsHelmOperatorEnabled.Value);
             }
-            if (HelmOperatorProperties != null)
+            if (Optional.IsDefined(HelmOperatorProperties))
             {
                 writer.WritePropertyName("helmOperatorProperties"u8);
-                writer.WriteObjectValue(HelmOperatorProperties);
+                writer.WriteObjectValue<HelmOperatorProperties>(HelmOperatorProperties, options);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ComplianceStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
             {
                 writer.WritePropertyName("complianceStatus"u8);
-                writer.WriteObjectValue(ComplianceStatus);
+                writer.WriteObjectValue<KubernetesConfigurationComplianceStatus>(ComplianceStatus, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesSourceControlConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesSourceControlConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesSourceControlConfigurationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesSourceControlConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesSourceControlConfigurationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                         return DeserializeKubernetesSourceControlConfigurationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesSourceControlConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesSourceControlConfigurationData)} does not support reading '{options.Format}' format.");
             }
         }
 

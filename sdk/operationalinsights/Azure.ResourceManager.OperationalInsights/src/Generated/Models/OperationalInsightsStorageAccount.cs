@@ -52,14 +52,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="key"/> is null. </exception>
         public OperationalInsightsStorageAccount(ResourceIdentifier id, string key)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(key, nameof(key));
 
             Id = id;
             Key = key;
@@ -82,8 +76,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The Azure Resource Manager ID of the storage account resource. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
         /// <summary> The storage account key. </summary>
+        [WirePath("key")]
         public string Key { get; set; }
     }
 }

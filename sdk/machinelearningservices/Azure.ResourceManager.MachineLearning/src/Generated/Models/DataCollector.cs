@@ -53,10 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="collections"/> is null. </exception>
         public DataCollector(IDictionary<string, DataCollectionConfiguration> collections)
         {
-            if (collections == null)
-            {
-                throw new ArgumentNullException(nameof(collections));
-            }
+            Argument.AssertNotNull(collections, nameof(collections));
 
             Collections = collections;
         }

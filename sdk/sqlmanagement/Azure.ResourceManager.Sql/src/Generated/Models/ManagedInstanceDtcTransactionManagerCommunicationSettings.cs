@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Allow Inbound traffic to managed instance DTC. </summary>
+        [WirePath("allowInboundEnabled")]
         public bool? AllowInboundEnabled { get; set; }
         /// <summary> Allow Outbound traffic of managed instance DTC. </summary>
+        [WirePath("allowOutboundEnabled")]
         public bool? AllowOutboundEnabled { get; set; }
         /// <summary> Authentication type of managed instance DTC. </summary>
+        [WirePath("authentication")]
         public string Authentication { get; set; }
     }
 }

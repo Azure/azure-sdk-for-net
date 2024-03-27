@@ -23,26 +23,26 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventDataHttpRequestInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventDataHttpRequestInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventDataHttpRequestInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ClientRequestId != null)
+            if (Optional.IsDefined(ClientRequestId))
             {
                 writer.WritePropertyName("clientRequestId"u8);
                 writer.WriteStringValue(ClientRequestId);
             }
-            if (ClientIPAddress != null)
+            if (Optional.IsDefined(ClientIPAddress))
             {
                 writer.WritePropertyName("clientIpAddress"u8);
                 writer.WriteStringValue(ClientIPAddress.ToString());
             }
-            if (Method != null)
+            if (Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method);
             }
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventDataHttpRequestInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventDataHttpRequestInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventDataHttpRequestInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventDataHttpRequestInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventDataHttpRequestInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeEventDataHttpRequestInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventDataHttpRequestInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventDataHttpRequestInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

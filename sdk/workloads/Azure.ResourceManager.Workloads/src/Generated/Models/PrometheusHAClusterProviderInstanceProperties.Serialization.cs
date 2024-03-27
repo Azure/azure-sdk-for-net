@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrometheusHAClusterProviderInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrometheusHAClusterProviderInstanceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrometheusHAClusterProviderInstanceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PrometheusUri != null)
+            if (Optional.IsDefined(PrometheusUri))
             {
                 writer.WritePropertyName("prometheusUrl"u8);
                 writer.WriteStringValue(PrometheusUri.AbsoluteUri);
             }
-            if (Hostname != null)
+            if (Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (Sid != null)
+            if (Optional.IsDefined(Sid))
             {
                 writer.WritePropertyName("sid"u8);
                 writer.WriteStringValue(Sid);
             }
-            if (ClusterName != null)
+            if (Optional.IsDefined(ClusterName))
             {
                 writer.WritePropertyName("clusterName"u8);
                 writer.WriteStringValue(ClusterName);
             }
-            if (SslPreference.HasValue)
+            if (Optional.IsDefined(SslPreference))
             {
                 writer.WritePropertyName("sslPreference"u8);
                 writer.WriteStringValue(SslPreference.Value.ToString());
             }
-            if (SslCertificateUri != null)
+            if (Optional.IsDefined(SslCertificateUri))
             {
                 writer.WritePropertyName("sslCertificateUri"u8);
                 writer.WriteStringValue(SslCertificateUri.AbsoluteUri);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrometheusHAClusterProviderInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrometheusHAClusterProviderInstanceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrometheusHAClusterProviderInstanceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrometheusHAClusterProviderInstanceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrometheusHAClusterProviderInstanceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializePrometheusHAClusterProviderInstanceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrometheusHAClusterProviderInstanceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrometheusHAClusterProviderInstanceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

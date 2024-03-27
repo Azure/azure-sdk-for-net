@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RunCommandInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunCommandInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunCommandInput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("commandId"u8);
             writer.WriteStringValue(CommandId);
-            if (!(Script is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Script))
             {
                 writer.WritePropertyName("script"u8);
                 writer.WriteStartArray();
@@ -38,13 +38,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Parameters is ChangeTrackingList<RunCommandInputParameter> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RunCommandInputParameter>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RunCommandInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunCommandInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunCommandInput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RunCommandInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunCommandInput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeRunCommandInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RunCommandInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunCommandInput)} does not support reading '{options.Format}' format.");
             }
         }
 

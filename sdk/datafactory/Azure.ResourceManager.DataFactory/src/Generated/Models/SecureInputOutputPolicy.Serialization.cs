@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecureInputOutputPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecureInputOutputPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecureInputOutputPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsSecureInputEnabled.HasValue)
+            if (Optional.IsDefined(IsSecureInputEnabled))
             {
                 writer.WritePropertyName("secureInput"u8);
                 writer.WriteBooleanValue(IsSecureInputEnabled.Value);
             }
-            if (IsSecureOutputEnabled.HasValue)
+            if (Optional.IsDefined(IsSecureOutputEnabled))
             {
                 writer.WritePropertyName("secureOutput"u8);
                 writer.WriteBooleanValue(IsSecureOutputEnabled.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecureInputOutputPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecureInputOutputPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecureInputOutputPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecureInputOutputPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecureInputOutputPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeSecureInputOutputPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecureInputOutputPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecureInputOutputPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

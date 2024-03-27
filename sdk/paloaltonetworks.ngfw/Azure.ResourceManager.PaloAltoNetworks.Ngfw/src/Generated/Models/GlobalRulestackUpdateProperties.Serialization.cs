@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
@@ -23,26 +22,26 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<GlobalRulestackUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GlobalRulestackUpdateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GlobalRulestackUpdateProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PanETag.HasValue)
+            if (Optional.IsDefined(PanETag))
             {
                 writer.WritePropertyName("panEtag"u8);
                 writer.WriteStringValue(PanETag.Value.ToString());
             }
-            if (PanLocation.HasValue)
+            if (Optional.IsDefined(PanLocation))
             {
                 writer.WritePropertyName("panLocation"u8);
                 writer.WriteStringValue(PanLocation.Value);
             }
-            if (Scope.HasValue)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope.Value.ToString());
             }
-            if (!(AssociatedSubscriptions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AssociatedSubscriptions))
             {
                 writer.WritePropertyName("associatedSubscriptions"u8);
                 writer.WriteStartArray();
@@ -52,25 +51,25 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (DefaultMode.HasValue)
+            if (Optional.IsDefined(DefaultMode))
             {
                 writer.WritePropertyName("defaultMode"u8);
                 writer.WriteStringValue(DefaultMode.Value.ToString());
             }
-            if (MinAppIdVersion != null)
+            if (Optional.IsDefined(MinAppIdVersion))
             {
                 writer.WritePropertyName("minAppIdVersion"u8);
                 writer.WriteStringValue(MinAppIdVersion);
             }
-            if (SecurityServices != null)
+            if (Optional.IsDefined(SecurityServices))
             {
                 writer.WritePropertyName("securityServices"u8);
-                writer.WriteObjectValue(SecurityServices);
+                writer.WriteObjectValue<RulestackSecurityServices>(SecurityServices, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<GlobalRulestackUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GlobalRulestackUpdateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GlobalRulestackUpdateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -218,7 +217,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GlobalRulestackUpdateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GlobalRulestackUpdateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -234,7 +233,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         return DeserializeGlobalRulestackUpdateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GlobalRulestackUpdateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GlobalRulestackUpdateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

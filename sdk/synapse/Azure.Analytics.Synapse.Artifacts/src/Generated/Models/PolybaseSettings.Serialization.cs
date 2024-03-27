@@ -19,30 +19,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (RejectType.HasValue)
+            if (Optional.IsDefined(RejectType))
             {
                 writer.WritePropertyName("rejectType"u8);
                 writer.WriteStringValue(RejectType.Value.ToString());
             }
-            if (RejectValue != null)
+            if (Optional.IsDefined(RejectValue))
             {
                 writer.WritePropertyName("rejectValue"u8);
-                writer.WriteObjectValue(RejectValue);
+                writer.WriteObjectValue<object>(RejectValue);
             }
-            if (RejectSampleValue != null)
+            if (Optional.IsDefined(RejectSampleValue))
             {
                 writer.WritePropertyName("rejectSampleValue"u8);
-                writer.WriteObjectValue(RejectSampleValue);
+                writer.WriteObjectValue<object>(RejectSampleValue);
             }
-            if (UseTypeDefault != null)
+            if (Optional.IsDefined(UseTypeDefault))
             {
                 writer.WritePropertyName("useTypeDefault"u8);
-                writer.WriteObjectValue(UseTypeDefault);
+                writer.WriteObjectValue<object>(UseTypeDefault);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -107,7 +107,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, PolybaseSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<PolybaseSettings>(model);
             }
             public override PolybaseSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

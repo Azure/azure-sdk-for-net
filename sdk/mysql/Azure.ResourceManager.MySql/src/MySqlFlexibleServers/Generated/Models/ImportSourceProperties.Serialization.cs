@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImportSourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImportSourceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImportSourceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (StorageType.HasValue)
+            if (Optional.IsDefined(StorageType))
             {
                 writer.WritePropertyName("storageType"u8);
                 writer.WriteStringValue(StorageType.Value.ToString());
             }
-            if (StorageUri != null)
+            if (Optional.IsDefined(StorageUri))
             {
                 writer.WritePropertyName("storageUrl"u8);
                 writer.WriteStringValue(StorageUri.AbsoluteUri);
             }
-            if (SasToken != null)
+            if (Optional.IsDefined(SasToken))
             {
                 writer.WritePropertyName("sasToken"u8);
                 writer.WriteStringValue(SasToken);
             }
-            if (DataDirPath != null)
+            if (Optional.IsDefined(DataDirPath))
             {
                 writer.WritePropertyName("dataDirPath"u8);
                 writer.WriteStringValue(DataDirPath);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImportSourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImportSourceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImportSourceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImportSourceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImportSourceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                         return DeserializeImportSourceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImportSourceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImportSourceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

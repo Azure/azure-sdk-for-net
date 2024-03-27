@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<MaintenanceRedeployStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceRedeployStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceRedeployStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsCustomerInitiatedMaintenanceAllowed.HasValue)
+            if (Optional.IsDefined(IsCustomerInitiatedMaintenanceAllowed))
             {
                 writer.WritePropertyName("isCustomerInitiatedMaintenanceAllowed"u8);
                 writer.WriteBooleanValue(IsCustomerInitiatedMaintenanceAllowed.Value);
             }
-            if (PreMaintenanceWindowStartOn.HasValue)
+            if (Optional.IsDefined(PreMaintenanceWindowStartOn))
             {
                 writer.WritePropertyName("preMaintenanceWindowStartTime"u8);
                 writer.WriteStringValue(PreMaintenanceWindowStartOn.Value, "O");
             }
-            if (PreMaintenanceWindowEndOn.HasValue)
+            if (Optional.IsDefined(PreMaintenanceWindowEndOn))
             {
                 writer.WritePropertyName("preMaintenanceWindowEndTime"u8);
                 writer.WriteStringValue(PreMaintenanceWindowEndOn.Value, "O");
             }
-            if (MaintenanceWindowStartOn.HasValue)
+            if (Optional.IsDefined(MaintenanceWindowStartOn))
             {
                 writer.WritePropertyName("maintenanceWindowStartTime"u8);
                 writer.WriteStringValue(MaintenanceWindowStartOn.Value, "O");
             }
-            if (MaintenanceWindowEndOn.HasValue)
+            if (Optional.IsDefined(MaintenanceWindowEndOn))
             {
                 writer.WritePropertyName("maintenanceWindowEndTime"u8);
                 writer.WriteStringValue(MaintenanceWindowEndOn.Value, "O");
             }
-            if (LastOperationResultCode.HasValue)
+            if (Optional.IsDefined(LastOperationResultCode))
             {
                 writer.WritePropertyName("lastOperationResultCode"u8);
                 writer.WriteStringValue(LastOperationResultCode.Value.ToSerialString());
             }
-            if (LastOperationMessage != null)
+            if (Optional.IsDefined(LastOperationMessage))
             {
                 writer.WritePropertyName("lastOperationMessage"u8);
                 writer.WriteStringValue(LastOperationMessage);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<MaintenanceRedeployStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceRedeployStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceRedeployStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceRedeployStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceRedeployStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeMaintenanceRedeployStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceRedeployStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceRedeployStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

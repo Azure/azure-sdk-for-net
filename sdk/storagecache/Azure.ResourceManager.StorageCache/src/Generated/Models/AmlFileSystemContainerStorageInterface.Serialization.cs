@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemContainerStorageInterface>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlFileSystemContainerStorageInterface)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlFileSystemContainerStorageInterface)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PersistentVolumeClaim != null)
+            if (options.Format != "W" && Optional.IsDefined(PersistentVolumeClaim))
             {
                 writer.WritePropertyName("persistentVolumeClaim"u8);
                 writer.WriteStringValue(PersistentVolumeClaim);
             }
-            if (options.Format != "W" && PersistentVolume != null)
+            if (options.Format != "W" && Optional.IsDefined(PersistentVolume))
             {
                 writer.WritePropertyName("persistentVolume"u8);
                 writer.WriteStringValue(PersistentVolume);
             }
-            if (options.Format != "W" && StorageClass != null)
+            if (options.Format != "W" && Optional.IsDefined(StorageClass))
             {
                 writer.WritePropertyName("storageClass"u8);
                 writer.WriteStringValue(StorageClass);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemContainerStorageInterface>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlFileSystemContainerStorageInterface)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlFileSystemContainerStorageInterface)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AmlFileSystemContainerStorageInterface)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlFileSystemContainerStorageInterface)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         return DeserializeAmlFileSystemContainerStorageInterface(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AmlFileSystemContainerStorageInterface)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlFileSystemContainerStorageInterface)} does not support reading '{options.Format}' format.");
             }
         }
 

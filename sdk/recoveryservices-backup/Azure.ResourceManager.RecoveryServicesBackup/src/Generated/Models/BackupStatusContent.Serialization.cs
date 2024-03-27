@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupStatusContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupStatusContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupStatusContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ResourceType.HasValue)
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType.Value.ToString());
             }
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (PoLogicalName != null)
+            if (Optional.IsDefined(PoLogicalName))
             {
                 writer.WritePropertyName("poLogicalName"u8);
                 writer.WriteStringValue(PoLogicalName);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupStatusContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupStatusContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupStatusContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupStatusContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupStatusContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeBackupStatusContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupStatusContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupStatusContent)} does not support reading '{options.Format}' format.");
             }
         }
 

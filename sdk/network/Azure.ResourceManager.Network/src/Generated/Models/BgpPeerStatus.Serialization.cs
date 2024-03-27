@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<BgpPeerStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BgpPeerStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BgpPeerStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LocalAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(LocalAddress))
             {
                 writer.WritePropertyName("localAddress"u8);
                 writer.WriteStringValue(LocalAddress);
             }
-            if (options.Format != "W" && Neighbor != null)
+            if (options.Format != "W" && Optional.IsDefined(Neighbor))
             {
                 writer.WritePropertyName("neighbor"u8);
                 writer.WriteStringValue(Neighbor);
             }
-            if (options.Format != "W" && Asn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Asn))
             {
                 writer.WritePropertyName("asn"u8);
                 writer.WriteNumberValue(Asn.Value);
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && ConnectedDuration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConnectedDuration))
             {
                 writer.WritePropertyName("connectedDuration"u8);
                 writer.WriteStringValue(ConnectedDuration.Value, "c");
             }
-            if (options.Format != "W" && RoutesReceived.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RoutesReceived))
             {
                 writer.WritePropertyName("routesReceived"u8);
                 writer.WriteNumberValue(RoutesReceived.Value);
             }
-            if (options.Format != "W" && MessagesSent.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MessagesSent))
             {
                 writer.WritePropertyName("messagesSent"u8);
                 writer.WriteNumberValue(MessagesSent.Value);
             }
-            if (options.Format != "W" && MessagesReceived.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MessagesReceived))
             {
                 writer.WritePropertyName("messagesReceived"u8);
                 writer.WriteNumberValue(MessagesReceived.Value);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<BgpPeerStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BgpPeerStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BgpPeerStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BgpPeerStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BgpPeerStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeBgpPeerStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BgpPeerStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BgpPeerStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

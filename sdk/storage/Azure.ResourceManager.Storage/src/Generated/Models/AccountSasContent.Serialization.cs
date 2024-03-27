@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<AccountSasContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccountSasContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AccountSasContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,24 +32,24 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStringValue(ResourceTypes.ToString());
             writer.WritePropertyName("signedPermission"u8);
             writer.WriteStringValue(Permissions.ToString());
-            if (IPAddressOrRange != null)
+            if (Optional.IsDefined(IPAddressOrRange))
             {
                 writer.WritePropertyName("signedIp"u8);
                 writer.WriteStringValue(IPAddressOrRange);
             }
-            if (Protocols.HasValue)
+            if (Optional.IsDefined(Protocols))
             {
                 writer.WritePropertyName("signedProtocol"u8);
                 writer.WriteStringValue(Protocols.Value.ToSerialString());
             }
-            if (SharedAccessStartOn.HasValue)
+            if (Optional.IsDefined(SharedAccessStartOn))
             {
                 writer.WritePropertyName("signedStart"u8);
                 writer.WriteStringValue(SharedAccessStartOn.Value, "O");
             }
             writer.WritePropertyName("signedExpiry"u8);
             writer.WriteStringValue(SharedAccessExpireOn, "O");
-            if (KeyToSign != null)
+            if (Optional.IsDefined(KeyToSign))
             {
                 writer.WritePropertyName("keyToSign"u8);
                 writer.WriteStringValue(KeyToSign);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<AccountSasContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccountSasContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AccountSasContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Storage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AccountSasContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AccountSasContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeAccountSasContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AccountSasContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AccountSasContent)} does not support reading '{options.Format}' format.");
             }
         }
 

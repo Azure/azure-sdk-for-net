@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -66,10 +65,13 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> The resource type name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The resource type display name. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
         /// <summary> The resource type operations. </summary>
+        [WirePath("operations")]
         public IReadOnlyList<AuthorizationProviderOperationInfo> Operations { get; }
     }
 }

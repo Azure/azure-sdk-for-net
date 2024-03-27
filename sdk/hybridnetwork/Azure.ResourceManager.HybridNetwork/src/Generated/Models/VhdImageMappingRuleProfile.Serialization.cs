@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<VhdImageMappingRuleProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VhdImageMappingRuleProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VhdImageMappingRuleProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (UserConfiguration != null)
+            if (Optional.IsDefined(UserConfiguration))
             {
                 writer.WritePropertyName("userConfiguration"u8);
                 writer.WriteStringValue(UserConfiguration);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<VhdImageMappingRuleProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VhdImageMappingRuleProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VhdImageMappingRuleProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VhdImageMappingRuleProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VhdImageMappingRuleProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeVhdImageMappingRuleProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VhdImageMappingRuleProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VhdImageMappingRuleProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

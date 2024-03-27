@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Consumption.Models;
@@ -70,18 +69,9 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/>, <paramref name="region"/> or <paramref name="product"/> is null. </exception>
         public async Task<Response<ConsumptionReservationRecommendationDetails>> GetAsync(string resourceScope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, CancellationToken cancellationToken = default)
         {
-            if (resourceScope == null)
-            {
-                throw new ArgumentNullException(nameof(resourceScope));
-            }
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
-            if (product == null)
-            {
-                throw new ArgumentNullException(nameof(product));
-            }
+            Argument.AssertNotNull(resourceScope, nameof(resourceScope));
+            Argument.AssertNotNull(region, nameof(region));
+            Argument.AssertNotNull(product, nameof(product));
 
             using var message = CreateGetRequest(resourceScope, reservationScope, region, term, lookBackPeriod, product);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -112,18 +102,9 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/>, <paramref name="region"/> or <paramref name="product"/> is null. </exception>
         public Response<ConsumptionReservationRecommendationDetails> Get(string resourceScope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, CancellationToken cancellationToken = default)
         {
-            if (resourceScope == null)
-            {
-                throw new ArgumentNullException(nameof(resourceScope));
-            }
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
-            if (product == null)
-            {
-                throw new ArgumentNullException(nameof(product));
-            }
+            Argument.AssertNotNull(resourceScope, nameof(resourceScope));
+            Argument.AssertNotNull(region, nameof(region));
+            Argument.AssertNotNull(product, nameof(product));
 
             using var message = CreateGetRequest(resourceScope, reservationScope, region, term, lookBackPeriod, product);
             _pipeline.Send(message, cancellationToken);

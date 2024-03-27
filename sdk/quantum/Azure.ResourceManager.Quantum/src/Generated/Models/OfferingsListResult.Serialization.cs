@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Quantum.Models
             var format = options.Format == "W" ? ((IPersistableModel<OfferingsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OfferingsListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OfferingsListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<ProviderDescription> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<QuantumProviderDescription>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Quantum.Models
             var format = options.Format == "W" ? ((IPersistableModel<OfferingsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OfferingsListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OfferingsListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 return null;
             }
-            IReadOnlyList<ProviderDescription> value = default;
+            IReadOnlyList<QuantumProviderDescription> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Quantum.Models
                     {
                         continue;
                     }
-                    List<ProviderDescription> array = new List<ProviderDescription>();
+                    List<QuantumProviderDescription> array = new List<QuantumProviderDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProviderDescription.DeserializeProviderDescription(item, options));
+                        array.Add(QuantumProviderDescription.DeserializeQuantumProviderDescription(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OfferingsListResult(value ?? new ChangeTrackingList<ProviderDescription>(), nextLink, serializedAdditionalRawData);
+            return new OfferingsListResult(value ?? new ChangeTrackingList<QuantumProviderDescription>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OfferingsListResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OfferingsListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OfferingsListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Quantum.Models
                         return DeserializeOfferingsListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OfferingsListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OfferingsListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

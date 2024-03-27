@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentKey"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<GovernanceAssignmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string assignmentKey, GovernanceAssignmentData data, CancellationToken cancellationToken = default)
         {
-            if (assignmentKey == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentKey));
-            }
-            if (assignmentKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentKey));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(assignmentKey, nameof(assignmentKey));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _governanceAssignmentClientDiagnostics.CreateScope("GovernanceAssignmentCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentKey"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<GovernanceAssignmentResource> CreateOrUpdate(WaitUntil waitUntil, string assignmentKey, GovernanceAssignmentData data, CancellationToken cancellationToken = default)
         {
-            if (assignmentKey == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentKey));
-            }
-            if (assignmentKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentKey));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(assignmentKey, nameof(assignmentKey));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _governanceAssignmentClientDiagnostics.CreateScope("GovernanceAssignmentCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentKey"/> is null. </exception>
         public virtual async Task<Response<GovernanceAssignmentResource>> GetAsync(string assignmentKey, CancellationToken cancellationToken = default)
         {
-            if (assignmentKey == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentKey));
-            }
-            if (assignmentKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentKey));
-            }
+            Argument.AssertNotNullOrEmpty(assignmentKey, nameof(assignmentKey));
 
             using var scope = _governanceAssignmentClientDiagnostics.CreateScope("GovernanceAssignmentCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentKey"/> is null. </exception>
         public virtual Response<GovernanceAssignmentResource> Get(string assignmentKey, CancellationToken cancellationToken = default)
         {
-            if (assignmentKey == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentKey));
-            }
-            if (assignmentKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentKey));
-            }
+            Argument.AssertNotNullOrEmpty(assignmentKey, nameof(assignmentKey));
 
             using var scope = _governanceAssignmentClientDiagnostics.CreateScope("GovernanceAssignmentCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentKey"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string assignmentKey, CancellationToken cancellationToken = default)
         {
-            if (assignmentKey == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentKey));
-            }
-            if (assignmentKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentKey));
-            }
+            Argument.AssertNotNullOrEmpty(assignmentKey, nameof(assignmentKey));
 
             using var scope = _governanceAssignmentClientDiagnostics.CreateScope("GovernanceAssignmentCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentKey"/> is null. </exception>
         public virtual Response<bool> Exists(string assignmentKey, CancellationToken cancellationToken = default)
         {
-            if (assignmentKey == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentKey));
-            }
-            if (assignmentKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentKey));
-            }
+            Argument.AssertNotNullOrEmpty(assignmentKey, nameof(assignmentKey));
 
             using var scope = _governanceAssignmentClientDiagnostics.CreateScope("GovernanceAssignmentCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentKey"/> is null. </exception>
         public virtual async Task<NullableResponse<GovernanceAssignmentResource>> GetIfExistsAsync(string assignmentKey, CancellationToken cancellationToken = default)
         {
-            if (assignmentKey == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentKey));
-            }
-            if (assignmentKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentKey));
-            }
+            Argument.AssertNotNullOrEmpty(assignmentKey, nameof(assignmentKey));
 
             using var scope = _governanceAssignmentClientDiagnostics.CreateScope("GovernanceAssignmentCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentKey"/> is null. </exception>
         public virtual NullableResponse<GovernanceAssignmentResource> GetIfExists(string assignmentKey, CancellationToken cancellationToken = default)
         {
-            if (assignmentKey == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentKey));
-            }
-            if (assignmentKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentKey));
-            }
+            Argument.AssertNotNullOrEmpty(assignmentKey, nameof(assignmentKey));
 
             using var scope = _governanceAssignmentClientDiagnostics.CreateScope("GovernanceAssignmentCollection.GetIfExists");
             scope.Start();

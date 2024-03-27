@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.CostManagement.Models;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CostManagement
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(queryDefinition);
+            content.JsonWriter.WriteObjectValue<QueryDefinition>(queryDefinition, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -65,14 +65,8 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="queryDefinition"/> is null. </exception>
         public async Task<Response<QueryResult>> UsageAsync(string scope, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (queryDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(queryDefinition));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(queryDefinition, nameof(queryDefinition));
 
             using var message = CreateUsageRequest(scope, queryDefinition);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -99,14 +93,8 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="queryDefinition"/> is null. </exception>
         public Response<QueryResult> Usage(string scope, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (queryDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(queryDefinition));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(queryDefinition, nameof(queryDefinition));
 
             using var message = CreateUsageRequest(scope, queryDefinition);
             _pipeline.Send(message, cancellationToken);
@@ -143,7 +131,7 @@ namespace Azure.ResourceManager.CostManagement
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(queryDefinition);
+            content.JsonWriter.WriteObjectValue<QueryDefinition>(queryDefinition, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -158,18 +146,8 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<QueryResult>> UsageByExternalCloudProviderTypeAsync(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
         {
-            if (externalCloudProviderId == null)
-            {
-                throw new ArgumentNullException(nameof(externalCloudProviderId));
-            }
-            if (externalCloudProviderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(externalCloudProviderId));
-            }
-            if (queryDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(queryDefinition));
-            }
+            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
+            Argument.AssertNotNull(queryDefinition, nameof(queryDefinition));
 
             using var message = CreateUsageByExternalCloudProviderTypeRequest(externalCloudProviderType, externalCloudProviderId, queryDefinition);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -196,18 +174,8 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<QueryResult> UsageByExternalCloudProviderType(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
         {
-            if (externalCloudProviderId == null)
-            {
-                throw new ArgumentNullException(nameof(externalCloudProviderId));
-            }
-            if (externalCloudProviderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(externalCloudProviderId));
-            }
-            if (queryDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(queryDefinition));
-            }
+            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
+            Argument.AssertNotNull(queryDefinition, nameof(queryDefinition));
 
             using var message = CreateUsageByExternalCloudProviderTypeRequest(externalCloudProviderType, externalCloudProviderId, queryDefinition);
             _pipeline.Send(message, cancellationToken);

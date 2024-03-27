@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImageStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageStorageProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageStorageProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (OSDisk != null)
+            if (Optional.IsDefined(OSDisk))
             {
                 writer.WritePropertyName("osDisk"u8);
-                writer.WriteObjectValue(OSDisk);
+                writer.WriteObjectValue<ImageOSDisk>(OSDisk, options);
             }
-            if (!(DataDisks is ChangeTrackingList<ImageDataDisk> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DataDisks))
             {
                 writer.WritePropertyName("dataDisks"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ImageDataDisk>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (ZoneResilient.HasValue)
+            if (Optional.IsDefined(ZoneResilient))
             {
                 writer.WritePropertyName("zoneResilient"u8);
                 writer.WriteBooleanValue(ZoneResilient.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImageStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageStorageProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageStorageProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImageStorageProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageStorageProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeImageStorageProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImageStorageProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageStorageProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

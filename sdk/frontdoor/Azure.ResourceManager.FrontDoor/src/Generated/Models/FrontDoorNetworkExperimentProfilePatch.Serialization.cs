@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorNetworkExperimentProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorNetworkExperimentProfilePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorNetworkExperimentProfilePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (EnabledState.HasValue)
+            if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorNetworkExperimentProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorNetworkExperimentProfilePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorNetworkExperimentProfilePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorNetworkExperimentProfilePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorNetworkExperimentProfilePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         return DeserializeFrontDoorNetworkExperimentProfilePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorNetworkExperimentProfilePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorNetworkExperimentProfilePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

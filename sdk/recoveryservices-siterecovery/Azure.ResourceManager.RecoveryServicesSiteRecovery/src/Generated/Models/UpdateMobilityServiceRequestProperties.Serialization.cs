@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdateMobilityServiceRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateMobilityServiceRequestProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateMobilityServiceRequestProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RunAsAccountId != null)
+            if (Optional.IsDefined(RunAsAccountId))
             {
                 writer.WritePropertyName("runAsAccountId"u8);
                 writer.WriteStringValue(RunAsAccountId);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdateMobilityServiceRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateMobilityServiceRequestProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateMobilityServiceRequestProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UpdateMobilityServiceRequestProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateMobilityServiceRequestProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeUpdateMobilityServiceRequestProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpdateMobilityServiceRequestProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateMobilityServiceRequestProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

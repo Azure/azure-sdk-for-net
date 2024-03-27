@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyIntrusionDetectionSignatureSpecification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallPolicyIntrusionDetectionSignatureSpecification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPolicyIntrusionDetectionSignatureSpecification)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyIntrusionDetectionSignatureSpecification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallPolicyIntrusionDetectionSignatureSpecification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPolicyIntrusionDetectionSignatureSpecification)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallPolicyIntrusionDetectionSignatureSpecification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPolicyIntrusionDetectionSignatureSpecification)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeFirewallPolicyIntrusionDetectionSignatureSpecification(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallPolicyIntrusionDetectionSignatureSpecification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPolicyIntrusionDetectionSignatureSpecification)} does not support reading '{options.Format}' format.");
             }
         }
 

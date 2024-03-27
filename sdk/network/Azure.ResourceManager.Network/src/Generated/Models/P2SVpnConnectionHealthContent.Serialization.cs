@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<P2SVpnConnectionHealthContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(P2SVpnConnectionHealthContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(P2SVpnConnectionHealthContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(VpnUserNamesFilter is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VpnUserNamesFilter))
             {
                 writer.WritePropertyName("vpnUserNamesFilter"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OutputBlobSasUri != null)
+            if (Optional.IsDefined(OutputBlobSasUri))
             {
                 writer.WritePropertyName("outputBlobSasUrl"u8);
                 writer.WriteStringValue(OutputBlobSasUri.AbsoluteUri);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<P2SVpnConnectionHealthContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(P2SVpnConnectionHealthContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(P2SVpnConnectionHealthContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(P2SVpnConnectionHealthContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(P2SVpnConnectionHealthContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeP2SVpnConnectionHealthContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(P2SVpnConnectionHealthContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(P2SVpnConnectionHealthContent)} does not support reading '{options.Format}' format.");
             }
         }
 

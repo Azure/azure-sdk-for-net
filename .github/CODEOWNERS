@@ -232,7 +232,7 @@
 # ServiceOwners:                                                   @conhua @mengaims @juaduan @moreOver0
 
 # PRLabel: %Cognitive - Health Insights
-/sdk/healthinsights/                                               @asaflevi-ms
+/sdk/healthinsights/                                               @asaflevi-ms @tomsft @koen-mertens
 
 # ServiceLabel: %Cognitive - Health Insights
 # ServiceOwners:                                                   @asaflevi-ms
@@ -314,9 +314,6 @@
 
 # PRLabel: %Communication - SMS
 /sdk/communication/Azure.Communication.Sms/                        @DimaKolomiiets @gfeitosa-msft @phermanov-msft @ilyapaliakou-msft
-
-# PRLabel: %Communication - Resource Manager
-/sdk/communication/Azure.ResourceManager.Communication/            @archerzz @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Communication - Rooms
 /sdk/communication/Azure.Communication.Rooms/                      @minnieliu @paolamvhz @alexokun @Mrayyan @shwali-msft @allchiang-msft @mikehang-msft
@@ -472,11 +469,11 @@
 # ServiceLabel: %Digital Twins
 # ServiceOwners:                                                   @johngallardo @efriesner @abhinav-ghai @Aashish93-stack @sjiherzig @Satya-Kolluri
 
-# PRLabel: %TimeSeriesInsights
-/sdk/timeseriesinsights/                                           @yeskarthik @rasidhan @dmdenmsft
+# PRLabel: %Defender EASM
+/sdk/easm/Azure.Analytics.Defender.Easm/                           @thang-bit
 
-# ServiceLabel: %TimeSeriesInsights
-# ServiceOwners:                                                   @yeskarthik @rasidhan @dmdenmsft
+# ServiceLabel: %Defender EASM
+# ServiceOwners:                                                   @thang-bit
 
 # PRLabel: %Event Grid
 /sdk/eventgrid/                                                    @Kishp01 @ahamad-MS @jfggdl @JoshLove-msft
@@ -808,7 +805,7 @@
 /sdk/schemaregistry/                                               @jsquire @JoshLove-msft @m-redding
 
 # ServiceLabel: %Schema Registry
-# AzureSdkOwners: @m-redding
+# AzureSdkOwners:                                                  @m-redding
 # ServiceOwners:                                                   @hmlam
 
 # PRLabel: %SignalR
@@ -872,11 +869,14 @@
 /sdk/tables/                                                       @christothes
 
 # ServiceLabel: %Tables
-# AzureSdkOwners: @christothes
+# AzureSdkOwners:                                                  @christothes
 # ServiceOwners:                                                   @sakash279, @sivethe, @ThomasWeiss, @PaulCheng
 
-# ServiceLabel: %TimeseriesInsights
-# ServiceOwners:                                                   @Shipra1Mishra
+# PRLabel: %TimeSeriesInsights
+/sdk/timeseriesinsights/                                           @yeskarthik @rasidhan @dmdenmsft
+
+# ServiceLabel: %TimeSeriesInsights
+# ServiceOwners:                                                   @yeskarthik @rasidhan @dmdenmsft @Shipra1Mishra
 
 # PRLabel: %VideoAnalyzer
 /sdk/videoanalyzer/                                                @giakas
@@ -926,6 +926,15 @@
 # -----------------------------------------------------------------
 # ServiceLabel: %Mgmt
 # AzureSdkOwners:                                                  @ArthurMa1978
+
+# PRLabel: %Communication - Resource Manager
+/sdk/communication/Azure.ResourceManager.Communication/            @archerzz @ArcturusZhang @ArthurMa1978
+
+# PRLabel: %Device Registry
+/sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry/          @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
+
+# ServiceLabel: %Device Registry %Mgmt
+# ServiceOwners:                                                   @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
 
 # PRLabel: %Large Instance
 /sdk/azurelargeinstance/Azure.ResourceManager.*/                   @8Gitbrix @archerzz @ArcturusZhang @ArthurMa1978

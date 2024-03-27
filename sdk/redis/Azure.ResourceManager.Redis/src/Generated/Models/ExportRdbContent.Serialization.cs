@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Redis.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExportRdbContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportRdbContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportRdbContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Format != null)
+            if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format);
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.Redis.Models
             writer.WriteStringValue(Prefix);
             writer.WritePropertyName("container"u8);
             writer.WriteStringValue(Container);
-            if (PreferredDataArchiveAuthMethod != null)
+            if (Optional.IsDefined(PreferredDataArchiveAuthMethod))
             {
                 writer.WritePropertyName("preferred-data-archive-auth-method"u8);
                 writer.WriteStringValue(PreferredDataArchiveAuthMethod);
             }
-            if (StorageSubscriptionId != null)
+            if (Optional.IsDefined(StorageSubscriptionId))
             {
                 writer.WritePropertyName("storage-subscription-id"u8);
                 writer.WriteStringValue(StorageSubscriptionId);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Redis.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExportRdbContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportRdbContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportRdbContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Redis.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExportRdbContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportRdbContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Redis.Models
                         return DeserializeExportRdbContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExportRdbContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportRdbContent)} does not support reading '{options.Format}' format.");
             }
         }
 

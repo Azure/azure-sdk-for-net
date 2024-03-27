@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<MapperAttributeMappings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MapperAttributeMappings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MapperAttributeMappings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(AttributeMappings is ChangeTrackingList<MapperAttributeMapping> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AttributeMappings))
             {
                 writer.WritePropertyName("attributeMappings"u8);
                 writer.WriteStartArray();
                 foreach (var item in AttributeMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MapperAttributeMapping>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<MapperAttributeMappings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MapperAttributeMappings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MapperAttributeMappings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MapperAttributeMappings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MapperAttributeMappings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeMapperAttributeMappings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MapperAttributeMappings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MapperAttributeMappings)} does not support reading '{options.Format}' format.");
             }
         }
 

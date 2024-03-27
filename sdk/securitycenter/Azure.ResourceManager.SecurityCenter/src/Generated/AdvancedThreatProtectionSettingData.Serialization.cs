@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<AdvancedThreatProtectionSettingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdvancedThreatProtectionSettingData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdvancedThreatProtectionSettingData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<AdvancedThreatProtectionSettingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdvancedThreatProtectionSettingData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdvancedThreatProtectionSettingData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AdvancedThreatProtectionSettingData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdvancedThreatProtectionSettingData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         return DeserializeAdvancedThreatProtectionSettingData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AdvancedThreatProtectionSettingData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdvancedThreatProtectionSettingData)} does not support reading '{options.Format}' format.");
             }
         }
 

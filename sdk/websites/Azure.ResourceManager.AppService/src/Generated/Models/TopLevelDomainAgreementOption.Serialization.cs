@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<TopLevelDomainAgreementOption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TopLevelDomainAgreementOption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TopLevelDomainAgreementOption)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IncludePrivacy.HasValue)
+            if (Optional.IsDefined(IncludePrivacy))
             {
                 writer.WritePropertyName("includePrivacy"u8);
                 writer.WriteBooleanValue(IncludePrivacy.Value);
             }
-            if (IsForTransfer.HasValue)
+            if (Optional.IsDefined(IsForTransfer))
             {
                 writer.WritePropertyName("forTransfer"u8);
                 writer.WriteBooleanValue(IsForTransfer.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<TopLevelDomainAgreementOption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TopLevelDomainAgreementOption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TopLevelDomainAgreementOption)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TopLevelDomainAgreementOption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TopLevelDomainAgreementOption)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeTopLevelDomainAgreementOption(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TopLevelDomainAgreementOption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TopLevelDomainAgreementOption)} does not support reading '{options.Format}' format.");
             }
         }
 

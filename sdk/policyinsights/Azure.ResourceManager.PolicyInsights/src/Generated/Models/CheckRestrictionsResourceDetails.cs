@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="resourceContent"/> is null. </exception>
         public CheckRestrictionsResourceDetails(BinaryData resourceContent)
         {
-            if (resourceContent == null)
-            {
-                throw new ArgumentNullException(nameof(resourceContent));
-            }
+            Argument.AssertNotNull(resourceContent, nameof(resourceContent));
 
             ResourceContent = resourceContent;
         }

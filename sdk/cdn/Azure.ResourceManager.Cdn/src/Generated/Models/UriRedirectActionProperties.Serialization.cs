@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<UriRedirectActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UriRedirectActionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UriRedirectActionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,27 +30,27 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(ActionType.ToString());
             writer.WritePropertyName("redirectType"u8);
             writer.WriteStringValue(RedirectType.ToString());
-            if (DestinationProtocol.HasValue)
+            if (Optional.IsDefined(DestinationProtocol))
             {
                 writer.WritePropertyName("destinationProtocol"u8);
                 writer.WriteStringValue(DestinationProtocol.Value.ToString());
             }
-            if (CustomPath != null)
+            if (Optional.IsDefined(CustomPath))
             {
                 writer.WritePropertyName("customPath"u8);
                 writer.WriteStringValue(CustomPath);
             }
-            if (CustomHostname != null)
+            if (Optional.IsDefined(CustomHostname))
             {
                 writer.WritePropertyName("customHostname"u8);
                 writer.WriteStringValue(CustomHostname);
             }
-            if (CustomQueryString != null)
+            if (Optional.IsDefined(CustomQueryString))
             {
                 writer.WritePropertyName("customQueryString"u8);
                 writer.WriteStringValue(CustomQueryString);
             }
-            if (CustomFragment != null)
+            if (Optional.IsDefined(CustomFragment))
             {
                 writer.WritePropertyName("customFragment"u8);
                 writer.WriteStringValue(CustomFragment);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<UriRedirectActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UriRedirectActionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UriRedirectActionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UriRedirectActionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UriRedirectActionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeUriRedirectActionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UriRedirectActionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UriRedirectActionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

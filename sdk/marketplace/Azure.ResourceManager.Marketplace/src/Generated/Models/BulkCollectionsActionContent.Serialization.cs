@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<BulkCollectionsActionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BulkCollectionsActionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BulkCollectionsActionContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(CollectionIds is ChangeTrackingList<Guid> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CollectionIds))
             {
                 writer.WritePropertyName("collectionIds"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Action != null)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<BulkCollectionsActionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BulkCollectionsActionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BulkCollectionsActionContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BulkCollectionsActionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BulkCollectionsActionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializeBulkCollectionsActionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BulkCollectionsActionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BulkCollectionsActionContent)} does not support reading '{options.Format}' format.");
             }
         }
 

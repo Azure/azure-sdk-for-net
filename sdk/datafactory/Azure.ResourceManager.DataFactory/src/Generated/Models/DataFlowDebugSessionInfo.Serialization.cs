@@ -22,51 +22,51 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFlowDebugSessionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFlowDebugSessionInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFlowDebugSessionInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DataFlowName != null)
+            if (Optional.IsDefined(DataFlowName))
             {
                 writer.WritePropertyName("dataFlowName"u8);
                 writer.WriteStringValue(DataFlowName);
             }
-            if (ComputeType != null)
+            if (Optional.IsDefined(ComputeType))
             {
                 writer.WritePropertyName("computeType"u8);
                 writer.WriteStringValue(ComputeType);
             }
-            if (CoreCount.HasValue)
+            if (Optional.IsDefined(CoreCount))
             {
                 writer.WritePropertyName("coreCount"u8);
                 writer.WriteNumberValue(CoreCount.Value);
             }
-            if (NodeCount.HasValue)
+            if (Optional.IsDefined(NodeCount))
             {
                 writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
             }
-            if (IntegrationRuntimeName != null)
+            if (Optional.IsDefined(IntegrationRuntimeName))
             {
                 writer.WritePropertyName("integrationRuntimeName"u8);
                 writer.WriteStringValue(IntegrationRuntimeName);
             }
-            if (SessionId.HasValue)
+            if (Optional.IsDefined(SessionId))
             {
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId.Value);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (TimeToLiveInMinutes.HasValue)
+            if (Optional.IsDefined(TimeToLiveInMinutes))
             {
                 writer.WritePropertyName("timeToLiveInMinutes"u8);
                 writer.WriteNumberValue(TimeToLiveInMinutes.Value);
             }
-            if (LastActivityOn.HasValue)
+            if (Optional.IsDefined(LastActivityOn))
             {
                 writer.WritePropertyName("lastActivityTime"u8);
                 writer.WriteStringValue(LastActivityOn.Value, "O");
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFlowDebugSessionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFlowDebugSessionInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFlowDebugSessionInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataFlowDebugSessionInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFlowDebugSessionInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeDataFlowDebugSessionInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataFlowDebugSessionInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFlowDebugSessionInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

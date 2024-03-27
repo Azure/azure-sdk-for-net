@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackendPoolsSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackendPoolsSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackendPoolsSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EnforceCertificateNameCheck.HasValue)
+            if (Optional.IsDefined(EnforceCertificateNameCheck))
             {
                 writer.WritePropertyName("enforceCertificateNameCheck"u8);
                 writer.WriteStringValue(EnforceCertificateNameCheck.Value.ToString());
             }
-            if (SendRecvTimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(SendRecvTimeoutInSeconds))
             {
                 writer.WritePropertyName("sendRecvTimeoutSeconds"u8);
                 writer.WriteNumberValue(SendRecvTimeoutInSeconds.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackendPoolsSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackendPoolsSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackendPoolsSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackendPoolsSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackendPoolsSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         return DeserializeBackendPoolsSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackendPoolsSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackendPoolsSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<InventoryItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InventoryItemProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InventoryItemProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("inventoryType"u8);
             writer.WriteStringValue(InventoryType.ToString());
-            if (options.Format != "W" && ManagedResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(ManagedResourceId))
             {
                 writer.WritePropertyName("managedResourceId"u8);
                 writer.WriteStringValue(ManagedResourceId);
             }
-            if (options.Format != "W" && Uuid != null)
+            if (options.Format != "W" && Optional.IsDefined(Uuid))
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
             }
-            if (options.Format != "W" && InventoryItemName != null)
+            if (options.Format != "W" && Optional.IsDefined(InventoryItemName))
             {
                 writer.WritePropertyName("inventoryItemName"u8);
                 writer.WriteStringValue(InventoryItemName);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<InventoryItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InventoryItemProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InventoryItemProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InventoryItemProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InventoryItemProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                         return DeserializeInventoryItemProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InventoryItemProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InventoryItemProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

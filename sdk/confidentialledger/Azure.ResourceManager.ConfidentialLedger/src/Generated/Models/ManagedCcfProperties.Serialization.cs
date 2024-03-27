@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedCcfProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedCcfProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedCcfProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AppName != null)
+            if (options.Format != "W" && Optional.IsDefined(AppName))
             {
                 writer.WritePropertyName("appName"u8);
                 writer.WriteStringValue(AppName);
             }
-            if (options.Format != "W" && AppUri != null)
+            if (options.Format != "W" && Optional.IsDefined(AppUri))
             {
                 writer.WritePropertyName("appUri"u8);
                 writer.WriteStringValue(AppUri.AbsoluteUri);
             }
-            if (options.Format != "W" && IdentityServiceUri != null)
+            if (options.Format != "W" && Optional.IsDefined(IdentityServiceUri))
             {
                 writer.WritePropertyName("identityServiceUri"u8);
                 writer.WriteStringValue(IdentityServiceUri.AbsoluteUri);
             }
-            if (!(MemberIdentityCertificates is ChangeTrackingList<ConfidentialLedgerMemberIdentityCertificate> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MemberIdentityCertificates))
             {
                 writer.WritePropertyName("memberIdentityCertificates"u8);
                 writer.WriteStartArray();
                 foreach (var item in MemberIdentityCertificates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConfidentialLedgerMemberIdentityCertificate>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (DeploymentType != null)
+            if (Optional.IsDefined(DeploymentType))
             {
                 writer.WritePropertyName("deploymentType"u8);
-                writer.WriteObjectValue(DeploymentType);
+                writer.WriteObjectValue<ConfidentialLedgerDeploymentType>(DeploymentType, options);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (NodeCount.HasValue)
+            if (Optional.IsDefined(NodeCount))
             {
                 writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedCcfProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedCcfProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedCcfProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedCcfProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedCcfProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                         return DeserializeManagedCcfProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedCcfProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedCcfProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

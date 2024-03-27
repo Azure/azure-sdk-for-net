@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionEndpointsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionEndpointsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionEndpointsProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && IngestionUri != null)
+            if (options.Format != "W" && Optional.IsDefined(IngestionUri))
             {
                 writer.WritePropertyName("ingestionUrl"u8);
                 writer.WriteStringValue(IngestionUri.AbsoluteUri);
             }
-            if (options.Format != "W" && IngestionResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(IngestionResourceId))
             {
                 writer.WritePropertyName("ingestionResourceId"u8);
                 writer.WriteStringValue(IngestionResourceId);
             }
-            if (options.Format != "W" && FileAccessUri != null)
+            if (options.Format != "W" && Optional.IsDefined(FileAccessUri))
             {
                 writer.WritePropertyName("fileAccessUrl"u8);
                 writer.WriteStringValue(FileAccessUri.AbsoluteUri);
             }
-            if (options.Format != "W" && FileAccessResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(FileAccessResourceId))
             {
                 writer.WritePropertyName("fileAccessResourceId"u8);
                 writer.WriteStringValue(FileAccessResourceId);
             }
-            if (options.Format != "W" && QueryUri != null)
+            if (options.Format != "W" && Optional.IsDefined(QueryUri))
             {
                 writer.WritePropertyName("queryUrl"u8);
                 writer.WriteStringValue(QueryUri.AbsoluteUri);
             }
-            if (options.Format != "W" && QueryResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(QueryResourceId))
             {
                 writer.WritePropertyName("queryResourceId"u8);
                 writer.WriteStringValue(QueryResourceId);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionEndpointsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionEndpointsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionEndpointsProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionEndpointsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionEndpointsProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                         return DeserializeConsumptionEndpointsProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionEndpointsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionEndpointsProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

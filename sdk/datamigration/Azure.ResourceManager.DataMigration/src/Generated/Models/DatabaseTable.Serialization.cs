@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseTable>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseTable)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseTable)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && HasRows.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HasRows))
             {
                 writer.WritePropertyName("hasRows"u8);
                 writer.WriteBooleanValue(HasRows.Value);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseTable>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseTable)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseTable)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseTable)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseTable)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeDatabaseTable(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseTable)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseTable)} does not support reading '{options.Format}' format.");
             }
         }
 

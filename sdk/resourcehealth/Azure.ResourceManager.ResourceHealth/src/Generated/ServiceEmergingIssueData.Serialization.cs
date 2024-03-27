@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ResourceHealth
             var format = options.Format == "W" ? ((IPersistableModel<ServiceEmergingIssueData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceEmergingIssueData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceEmergingIssueData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,35 +43,35 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (RefreshedOn.HasValue)
+            if (Optional.IsDefined(RefreshedOn))
             {
                 writer.WritePropertyName("refreshTimestamp"u8);
                 writer.WriteStringValue(RefreshedOn.Value, "O");
             }
-            if (!(StatusBanners is ChangeTrackingList<EmergingIssueBannerType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(StatusBanners))
             {
                 writer.WritePropertyName("statusBanners"u8);
                 writer.WriteStartArray();
                 foreach (var item in StatusBanners)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EmergingIssueBannerType>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(StatusActiveEvents is ChangeTrackingList<EmergingIssueActiveEventType> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(StatusActiveEvents))
             {
                 writer.WritePropertyName("statusActiveEvents"u8);
                 writer.WriteStartArray();
                 foreach (var item in StatusActiveEvents)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EmergingIssueActiveEventType>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ResourceHealth
             var format = options.Format == "W" ? ((IPersistableModel<ServiceEmergingIssueData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceEmergingIssueData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceEmergingIssueData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceEmergingIssueData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceEmergingIssueData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ResourceHealth
                         return DeserializeServiceEmergingIssueData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceEmergingIssueData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceEmergingIssueData)} does not support reading '{options.Format}' format.");
             }
         }
 

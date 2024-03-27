@@ -22,42 +22,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkTapRuleMatchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkTapRuleMatchConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkTapRuleMatchConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MatchConfigurationName != null)
+            if (Optional.IsDefined(MatchConfigurationName))
             {
                 writer.WritePropertyName("matchConfigurationName"u8);
                 writer.WriteStringValue(MatchConfigurationName);
             }
-            if (SequenceNumber.HasValue)
+            if (Optional.IsDefined(SequenceNumber))
             {
                 writer.WritePropertyName("sequenceNumber"u8);
                 writer.WriteNumberValue(SequenceNumber.Value);
             }
-            if (IPAddressType.HasValue)
+            if (Optional.IsDefined(IPAddressType))
             {
                 writer.WritePropertyName("ipAddressType"u8);
                 writer.WriteStringValue(IPAddressType.Value.ToString());
             }
-            if (!(MatchConditions is ChangeTrackingList<NetworkTapRuleMatchCondition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MatchConditions))
             {
                 writer.WritePropertyName("matchConditions"u8);
                 writer.WriteStartArray();
                 foreach (var item in MatchConditions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkTapRuleMatchCondition>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Actions is ChangeTrackingList<NetworkTapRuleAction> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkTapRuleAction>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkTapRuleMatchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkTapRuleMatchConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkTapRuleMatchConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkTapRuleMatchConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkTapRuleMatchConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeNetworkTapRuleMatchConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkTapRuleMatchConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkTapRuleMatchConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

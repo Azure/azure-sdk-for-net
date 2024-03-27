@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
@@ -25,11 +24,11 @@ namespace Azure.ResourceManager.DataFactory
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryPipelineData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryPipelineData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryPipelineData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,56 +48,56 @@ namespace Azure.ResourceManager.DataFactory
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Activities is ChangeTrackingList<PipelineActivity> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Activities))
             {
                 writer.WritePropertyName("activities"u8);
                 writer.WriteStartArray();
                 foreach (var item in Activities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivity>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<EntityParameterSpecification>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (!(Variables is ChangeTrackingDictionary<string, PipelineVariableSpecification> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Variables))
             {
                 writer.WritePropertyName("variables"u8);
                 writer.WriteStartObject();
                 foreach (var item in Variables)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<PipelineVariableSpecification>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (Concurrency.HasValue)
+            if (Optional.IsDefined(Concurrency))
             {
                 writer.WritePropertyName("concurrency"u8);
                 writer.WriteNumberValue(Concurrency.Value);
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory
                 }
                 writer.WriteEndArray();
             }
-            if (!(RunDimensions is ChangeTrackingDictionary<string, BinaryData> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(RunDimensions))
             {
                 writer.WritePropertyName("runDimensions"u8);
                 writer.WriteStartObject();
@@ -143,15 +142,15 @@ namespace Azure.ResourceManager.DataFactory
                 }
                 writer.WriteEndObject();
             }
-            if (Folder != null)
+            if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                writer.WriteObjectValue<PipelineFolder>(Folder, options);
             }
-            if (Policy != null)
+            if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                writer.WriteObjectValue<DataFactoryPipelinePolicy>(Policy, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -174,7 +173,7 @@ namespace Azure.ResourceManager.DataFactory
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryPipelineData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryPipelineData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryPipelineData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -398,7 +397,7 @@ namespace Azure.ResourceManager.DataFactory
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryPipelineData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryPipelineData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -414,7 +413,7 @@ namespace Azure.ResourceManager.DataFactory
                         return DeserializeDataFactoryPipelineData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryPipelineData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryPipelineData)} does not support reading '{options.Format}' format.");
             }
         }
 

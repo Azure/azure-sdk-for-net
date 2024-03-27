@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SnowflakeImportCopyCommand>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnowflakeImportCopyCommand)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnowflakeImportCopyCommand)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(AdditionalCopyOptions is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalCopyOptions))
             {
                 writer.WritePropertyName("additionalCopyOptions"u8);
                 writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(AdditionalFormatOptions is ChangeTrackingDictionary<string, BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalFormatOptions))
             {
                 writer.WritePropertyName("additionalFormatOptions"u8);
                 writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SnowflakeImportCopyCommand>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnowflakeImportCopyCommand)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnowflakeImportCopyCommand)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SnowflakeImportCopyCommand)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnowflakeImportCopyCommand)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeSnowflakeImportCopyCommand(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SnowflakeImportCopyCommand)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnowflakeImportCopyCommand)} does not support reading '{options.Format}' format.");
             }
         }
 

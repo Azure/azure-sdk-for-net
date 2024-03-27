@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             var format = options.Format == "W" ? ((IPersistableModel<GitHubRepoProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GitHubRepoProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GitHubRepoProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (AccountId.HasValue)
+            if (Optional.IsDefined(AccountId))
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteNumberValue(AccountId.Value);
             }
-            if (RepoUri != null)
+            if (Optional.IsDefined(RepoUri))
             {
                 writer.WritePropertyName("repoUrl"u8);
                 writer.WriteStringValue(RepoUri.AbsoluteUri);
             }
-            if (OwnerName != null)
+            if (Optional.IsDefined(OwnerName))
             {
                 writer.WritePropertyName("ownerName"u8);
                 writer.WriteStringValue(OwnerName);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             var format = options.Format == "W" ? ((IPersistableModel<GitHubRepoProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GitHubRepoProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GitHubRepoProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GitHubRepoProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GitHubRepoProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                         return DeserializeGitHubRepoProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GitHubRepoProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GitHubRepoProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

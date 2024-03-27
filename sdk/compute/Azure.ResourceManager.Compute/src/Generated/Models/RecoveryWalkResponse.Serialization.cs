@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryWalkResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryWalkResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryWalkResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && WalkPerformed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(WalkPerformed))
             {
                 writer.WritePropertyName("walkPerformed"u8);
                 writer.WriteBooleanValue(WalkPerformed.Value);
             }
-            if (options.Format != "W" && NextPlatformUpdateDomain.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NextPlatformUpdateDomain))
             {
                 writer.WritePropertyName("nextPlatformUpdateDomain"u8);
                 writer.WriteNumberValue(NextPlatformUpdateDomain.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryWalkResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryWalkResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryWalkResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryWalkResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryWalkResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeRecoveryWalkResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryWalkResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryWalkResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

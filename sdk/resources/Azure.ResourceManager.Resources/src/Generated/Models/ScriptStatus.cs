@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -71,16 +70,22 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> ACI resource Id. </summary>
+        [WirePath("containerInstanceId")]
         public string ContainerInstanceId { get; }
         /// <summary> Storage account resource Id. </summary>
+        [WirePath("storageAccountId")]
         public string StorageAccountId { get; }
         /// <summary> Start time of the script execution. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> End time of the script execution. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
         /// <summary> Time the deployment script resource will expire. </summary>
+        [WirePath("expirationTime")]
         public DateTimeOffset? ExpireOn { get; }
         /// <summary> Error that is relayed from the script execution. </summary>
+        [WirePath("error")]
         public ResponseError Error { get; }
     }
 }

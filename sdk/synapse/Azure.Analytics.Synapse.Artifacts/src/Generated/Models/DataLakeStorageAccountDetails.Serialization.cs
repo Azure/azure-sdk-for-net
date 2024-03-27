@@ -18,12 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AccountUrl != null)
+            if (Optional.IsDefined(AccountUrl))
             {
                 writer.WritePropertyName("accountUrl"u8);
                 writer.WriteStringValue(AccountUrl);
             }
-            if (Filesystem != null)
+            if (Optional.IsDefined(Filesystem))
             {
                 writer.WritePropertyName("filesystem"u8);
                 writer.WriteStringValue(Filesystem);
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, DataLakeStorageAccountDetails model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DataLakeStorageAccountDetails>(model);
             }
             public override DataLakeStorageAccountDetails Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

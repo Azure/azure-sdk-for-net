@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<HelmReleaseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HelmReleaseProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HelmReleaseProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (LastRevisionApplied.HasValue)
+            if (Optional.IsDefined(LastRevisionApplied))
             {
                 if (LastRevisionApplied != null)
                 {
@@ -38,19 +38,19 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("lastRevisionApplied");
                 }
             }
-            if (HelmChartRef != null)
+            if (Optional.IsDefined(HelmChartRef))
             {
                 if (HelmChartRef != null)
                 {
                     writer.WritePropertyName("helmChartRef"u8);
-                    writer.WriteObjectValue(HelmChartRef);
+                    writer.WriteObjectValue<KubernetesObjectReference>(HelmChartRef, options);
                 }
                 else
                 {
                     writer.WriteNull("helmChartRef");
                 }
             }
-            if (FailureCount.HasValue)
+            if (Optional.IsDefined(FailureCount))
             {
                 if (FailureCount != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("failureCount");
                 }
             }
-            if (InstallFailureCount.HasValue)
+            if (Optional.IsDefined(InstallFailureCount))
             {
                 if (InstallFailureCount != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("installFailureCount");
                 }
             }
-            if (UpgradeFailureCount.HasValue)
+            if (Optional.IsDefined(UpgradeFailureCount))
             {
                 if (UpgradeFailureCount != null)
                 {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<HelmReleaseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HelmReleaseProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HelmReleaseProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HelmReleaseProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HelmReleaseProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         return DeserializeHelmReleaseProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HelmReleaseProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HelmReleaseProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

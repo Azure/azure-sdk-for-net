@@ -22,27 +22,27 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AttachDetachDataDisksRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AttachDetachDataDisksRequest)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AttachDetachDataDisksRequest)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(DataDisksToAttach is ChangeTrackingList<DataDisksToAttach> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DataDisksToAttach))
             {
                 writer.WritePropertyName("dataDisksToAttach"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataDisksToAttach)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataDisksToAttach>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(DataDisksToDetach is ChangeTrackingList<DataDisksToDetach> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DataDisksToDetach))
             {
                 writer.WritePropertyName("dataDisksToDetach"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataDisksToDetach)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataDisksToDetach>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AttachDetachDataDisksRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AttachDetachDataDisksRequest)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AttachDetachDataDisksRequest)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AttachDetachDataDisksRequest)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AttachDetachDataDisksRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeAttachDetachDataDisksRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AttachDetachDataDisksRequest)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AttachDetachDataDisksRequest)} does not support reading '{options.Format}' format.");
             }
         }
 

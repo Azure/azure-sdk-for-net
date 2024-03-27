@@ -16,26 +16,26 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("series"u8);
-            writer.WriteObjectValue(Series);
-            if (ConditionOperator.HasValue)
+            writer.WriteObjectValue<SeriesIdentity>(Series);
+            if (Optional.IsDefined(ConditionOperator))
             {
                 writer.WritePropertyName("conditionOperator"u8);
                 writer.WriteStringValue(ConditionOperator.Value.ToString());
             }
-            if (SmartDetectionCondition != null)
+            if (Optional.IsDefined(SmartDetectionCondition))
             {
                 writer.WritePropertyName("smartDetectionCondition"u8);
-                writer.WriteObjectValue(SmartDetectionCondition);
+                writer.WriteObjectValue<SmartDetectionCondition>(SmartDetectionCondition);
             }
-            if (HardThresholdCondition != null)
+            if (Optional.IsDefined(HardThresholdCondition))
             {
                 writer.WritePropertyName("hardThresholdCondition"u8);
-                writer.WriteObjectValue(HardThresholdCondition);
+                writer.WriteObjectValue<HardThresholdCondition>(HardThresholdCondition);
             }
-            if (ChangeThresholdCondition != null)
+            if (Optional.IsDefined(ChangeThresholdCondition))
             {
                 writer.WritePropertyName("changeThresholdCondition"u8);
-                writer.WriteObjectValue(ChangeThresholdCondition);
+                writer.WriteObjectValue<ChangeThresholdCondition>(ChangeThresholdCondition);
             }
             writer.WriteEndObject();
         }

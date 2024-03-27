@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Dns.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsSrvRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsSrvRecordInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsSrvRecordInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Priority.HasValue)
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Weight.HasValue)
+            if (Optional.IsDefined(Weight))
             {
                 writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Target != null)
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Dns.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsSrvRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsSrvRecordInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsSrvRecordInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Dns.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DnsSrvRecordInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsSrvRecordInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Dns.Models
                         return DeserializeDnsSrvRecordInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DnsSrvRecordInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsSrvRecordInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExistingRecoveryResourceGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExistingRecoveryResourceGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExistingRecoveryResourceGroup)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RecoveryResourceGroupId != null)
+            if (Optional.IsDefined(RecoveryResourceGroupId))
             {
                 writer.WritePropertyName("recoveryResourceGroupId"u8);
                 writer.WriteStringValue(RecoveryResourceGroupId);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExistingRecoveryResourceGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExistingRecoveryResourceGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExistingRecoveryResourceGroup)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExistingRecoveryResourceGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExistingRecoveryResourceGroup)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeExistingRecoveryResourceGroup(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExistingRecoveryResourceGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExistingRecoveryResourceGroup)} does not support reading '{options.Format}' format.");
             }
         }
 

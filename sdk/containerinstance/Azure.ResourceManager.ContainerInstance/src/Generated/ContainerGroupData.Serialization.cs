@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.ContainerInstance
             var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerGroupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
                 writer.WriteEndArray();
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -71,14 +71,14 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -87,102 +87,102 @@ namespace Azure.ResourceManager.ContainerInstance
             writer.WriteStartArray();
             foreach (var item in Containers)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ContainerInstanceContainer>(item, options);
             }
             writer.WriteEndArray();
-            if (!(ImageRegistryCredentials is ChangeTrackingList<ContainerGroupImageRegistryCredential> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ImageRegistryCredentials))
             {
                 writer.WritePropertyName("imageRegistryCredentials"u8);
                 writer.WriteStartArray();
                 foreach (var item in ImageRegistryCredentials)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerGroupImageRegistryCredential>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (RestartPolicy.HasValue)
+            if (Optional.IsDefined(RestartPolicy))
             {
                 writer.WritePropertyName("restartPolicy"u8);
                 writer.WriteStringValue(RestartPolicy.Value.ToString());
             }
-            if (IPAddress != null)
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteObjectValue(IPAddress);
+                writer.WriteObjectValue<ContainerGroupIPAddress>(IPAddress, options);
             }
             writer.WritePropertyName("osType"u8);
             writer.WriteStringValue(OSType.ToString());
-            if (!(Volumes is ChangeTrackingList<ContainerVolume> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Volumes))
             {
                 writer.WritePropertyName("volumes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Volumes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerVolume>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && InstanceView != null)
+            if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                writer.WriteObjectValue<ContainerGroupInstanceView>(InstanceView, options);
             }
-            if (Diagnostics != null)
+            if (Optional.IsDefined(Diagnostics))
             {
                 writer.WritePropertyName("diagnostics"u8);
-                writer.WriteObjectValue(Diagnostics);
+                writer.WriteObjectValue<ContainerGroupDiagnostics>(Diagnostics, options);
             }
-            if (!(SubnetIds is ChangeTrackingList<ContainerGroupSubnetId> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(SubnetIds))
             {
                 writer.WritePropertyName("subnetIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in SubnetIds)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerGroupSubnetId>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (DnsConfig != null)
+            if (Optional.IsDefined(DnsConfig))
             {
                 writer.WritePropertyName("dnsConfig"u8);
-                writer.WriteObjectValue(DnsConfig);
+                writer.WriteObjectValue<ContainerGroupDnsConfiguration>(DnsConfig, options);
             }
-            if (Sku.HasValue)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku.Value.ToString());
             }
-            if (EncryptionProperties != null)
+            if (Optional.IsDefined(EncryptionProperties))
             {
                 writer.WritePropertyName("encryptionProperties"u8);
-                writer.WriteObjectValue(EncryptionProperties);
+                writer.WriteObjectValue<ContainerGroupEncryptionProperties>(EncryptionProperties, options);
             }
-            if (!(InitContainers is ChangeTrackingList<InitContainerDefinitionContent> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(InitContainers))
             {
                 writer.WritePropertyName("initContainers"u8);
                 writer.WriteStartArray();
                 foreach (var item in InitContainers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InitContainerDefinitionContent>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Extensions is ChangeTrackingList<DeploymentExtensionSpec> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(Extensions))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DeploymentExtensionSpec>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (ConfidentialComputeProperties != null)
+            if (Optional.IsDefined(ConfidentialComputeProperties))
             {
                 writer.WritePropertyName("confidentialComputeProperties"u8);
-                writer.WriteObjectValue(ConfidentialComputeProperties);
+                writer.WriteObjectValue<ConfidentialComputeProperties>(ConfidentialComputeProperties, options);
             }
-            if (Priority.HasValue)
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteStringValue(Priority.Value.ToString());
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ContainerInstance
             var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerGroupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.ContainerInstance
                         return DeserializeContainerGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 

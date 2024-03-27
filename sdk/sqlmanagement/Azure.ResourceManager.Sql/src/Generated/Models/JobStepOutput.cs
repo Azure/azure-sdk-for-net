@@ -53,22 +53,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="tableName"/> or <paramref name="credential"/> is null. </exception>
         public JobStepOutput(string serverName, string databaseName, string tableName, string credential)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(serverName, nameof(serverName));
+            Argument.AssertNotNull(databaseName, nameof(databaseName));
+            Argument.AssertNotNull(tableName, nameof(tableName));
+            Argument.AssertNotNull(credential, nameof(credential));
 
             ServerName = serverName;
             DatabaseName = databaseName;
@@ -105,20 +93,28 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The output destination type. </summary>
+        [WirePath("type")]
         public JobStepOutputType? OutputType { get; set; }
         /// <summary> The output destination subscription id. </summary>
+        [WirePath("subscriptionId")]
         public Guid? SubscriptionId { get; set; }
         /// <summary> The output destination resource group. </summary>
+        [WirePath("resourceGroupName")]
         public string ResourceGroupName { get; set; }
         /// <summary> The output destination server name. </summary>
+        [WirePath("serverName")]
         public string ServerName { get; set; }
         /// <summary> The output destination database. </summary>
+        [WirePath("databaseName")]
         public string DatabaseName { get; set; }
         /// <summary> The output destination schema. </summary>
+        [WirePath("schemaName")]
         public string SchemaName { get; set; }
         /// <summary> The output destination table. </summary>
+        [WirePath("tableName")]
         public string TableName { get; set; }
         /// <summary> The resource ID of the credential to use to connect to the output destination. </summary>
+        [WirePath("credential")]
         public string Credential { get; set; }
     }
 }

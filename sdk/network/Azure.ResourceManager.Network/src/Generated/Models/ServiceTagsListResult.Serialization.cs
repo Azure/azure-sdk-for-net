@@ -23,31 +23,31 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceTagsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceTagsListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceTagsListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ChangeNumber != null)
+            if (options.Format != "W" && Optional.IsDefined(ChangeNumber))
             {
                 writer.WritePropertyName("changeNumber"u8);
                 writer.WriteStringValue(ChangeNumber);
             }
-            if (options.Format != "W" && Cloud != null)
+            if (options.Format != "W" && Optional.IsDefined(Cloud))
             {
                 writer.WritePropertyName("cloud"u8);
                 writer.WriteStringValue(Cloud);
             }
-            if (options.Format != "W" && !(Values is ChangeTrackingList<ServiceTagInformation> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ServiceTagInformation>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && NextLink != null)
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceTagsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceTagsListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceTagsListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceTagsListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceTagsListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeServiceTagsListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceTagsListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceTagsListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

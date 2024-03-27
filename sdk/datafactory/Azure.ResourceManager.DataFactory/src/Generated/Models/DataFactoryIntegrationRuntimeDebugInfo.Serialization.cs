@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryIntegrationRuntimeDebugInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryIntegrationRuntimeDebugInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryIntegrationRuntimeDebugInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
-            if (Name != null)
+            writer.WriteObjectValue<DataFactoryIntegrationRuntimeProperties>(Properties, options);
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryIntegrationRuntimeDebugInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryIntegrationRuntimeDebugInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryIntegrationRuntimeDebugInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryIntegrationRuntimeDebugInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryIntegrationRuntimeDebugInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeDataFactoryIntegrationRuntimeDebugInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryIntegrationRuntimeDebugInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryIntegrationRuntimeDebugInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

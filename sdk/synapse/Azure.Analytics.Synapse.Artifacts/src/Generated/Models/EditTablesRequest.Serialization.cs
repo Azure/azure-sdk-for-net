@@ -19,13 +19,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(LinkTables is ChangeTrackingList<LinkTableRequest> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(LinkTables))
             {
                 writer.WritePropertyName("linkTables"u8);
                 writer.WriteStartArray();
                 foreach (var item in LinkTables)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LinkTableRequest>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -63,7 +63,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, EditTablesRequest model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<EditTablesRequest>(model);
             }
             public override EditTablesRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

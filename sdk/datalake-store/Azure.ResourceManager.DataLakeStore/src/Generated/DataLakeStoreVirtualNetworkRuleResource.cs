@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DataLakeStore.Models;
 
 namespace Azure.ResourceManager.DataLakeStore
@@ -281,10 +279,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<DataLakeStoreVirtualNetworkRuleResource>> UpdateAsync(DataLakeStoreVirtualNetworkRulePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _dataLakeStoreVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("DataLakeStoreVirtualNetworkRuleResource.Update");
             scope.Start();
@@ -326,10 +321,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<DataLakeStoreVirtualNetworkRuleResource> Update(DataLakeStoreVirtualNetworkRulePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _dataLakeStoreVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("DataLakeStoreVirtualNetworkRuleResource.Update");
             scope.Start();

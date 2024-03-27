@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary> The UnknownScalingMechanism. </summary>
+    /// <summary> Unknown version of ScalingMechanism. </summary>
     internal partial class UnknownScalingMechanism : ManagedServiceScalingMechanism
     {
         /// <summary> Initializes a new instance of <see cref="UnknownScalingMechanism"/>. </summary>

@@ -18,12 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type);
             }
-            if (DistributionColumn != null)
+            if (Optional.IsDefined(DistributionColumn))
             {
                 writer.WritePropertyName("distributionColumn"u8);
                 writer.WriteStringValue(DistributionColumn);
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, LinkTableRequestTargetDistributionOptions model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<LinkTableRequestTargetDistributionOptions>(model);
             }
             public override LinkTableRequestTargetDistributionOptions Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

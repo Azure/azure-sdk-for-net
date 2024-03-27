@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabCostDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabCostDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabCostDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (On.HasValue)
+            if (Optional.IsDefined(On))
             {
                 writer.WritePropertyName("date"u8);
                 writer.WriteStringValue(On.Value, "O");
             }
-            if (Cost.HasValue)
+            if (Optional.IsDefined(Cost))
             {
                 writer.WritePropertyName("cost"u8);
                 writer.WriteNumberValue(Cost.Value);
             }
-            if (CostType.HasValue)
+            if (Optional.IsDefined(CostType))
             {
                 writer.WritePropertyName("costType"u8);
                 writer.WriteStringValue(CostType.Value.ToString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabCostDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabCostDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabCostDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabCostDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabCostDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeDevTestLabCostDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabCostDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabCostDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

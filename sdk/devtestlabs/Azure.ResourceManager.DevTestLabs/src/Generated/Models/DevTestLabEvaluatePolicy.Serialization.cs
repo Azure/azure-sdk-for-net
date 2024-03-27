@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabEvaluatePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabEvaluatePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabEvaluatePolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FactName != null)
+            if (Optional.IsDefined(FactName))
             {
                 writer.WritePropertyName("factName"u8);
                 writer.WriteStringValue(FactName);
             }
-            if (FactData != null)
+            if (Optional.IsDefined(FactData))
             {
                 writer.WritePropertyName("factData"u8);
                 writer.WriteStringValue(FactData);
             }
-            if (ValueOffset != null)
+            if (Optional.IsDefined(ValueOffset))
             {
                 writer.WritePropertyName("valueOffset"u8);
                 writer.WriteStringValue(ValueOffset);
             }
-            if (UserObjectId != null)
+            if (Optional.IsDefined(UserObjectId))
             {
                 writer.WritePropertyName("userObjectId"u8);
                 writer.WriteStringValue(UserObjectId);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabEvaluatePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabEvaluatePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabEvaluatePolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabEvaluatePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabEvaluatePolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeDevTestLabEvaluatePolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabEvaluatePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabEvaluatePolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

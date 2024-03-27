@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaCodecBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaCodecBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaCodecBase)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Label != null)
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaCodecBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaCodecBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaCodecBase)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaCodecBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaCodecBase)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeMediaCodecBase(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaCodecBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaCodecBase)} does not support reading '{options.Format}' format.");
             }
         }
 

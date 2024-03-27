@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<HciInfraVnetProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciInfraVnetProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HciInfraVnetProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MocGroup != null)
+            if (Optional.IsDefined(MocGroup))
             {
                 writer.WritePropertyName("mocGroup"u8);
                 writer.WriteStringValue(MocGroup);
             }
-            if (MocLocation != null)
+            if (Optional.IsDefined(MocLocation))
             {
                 writer.WritePropertyName("mocLocation"u8);
                 writer.WriteStringValue(MocLocation);
             }
-            if (MocVnetName != null)
+            if (Optional.IsDefined(MocVnetName))
             {
                 writer.WritePropertyName("mocVnetName"u8);
                 writer.WriteStringValue(MocVnetName);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<HciInfraVnetProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciInfraVnetProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HciInfraVnetProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HciInfraVnetProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciInfraVnetProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         return DeserializeHciInfraVnetProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HciInfraVnetProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciInfraVnetProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

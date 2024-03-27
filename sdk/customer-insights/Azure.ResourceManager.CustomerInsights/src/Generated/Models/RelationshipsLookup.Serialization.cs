@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<RelationshipsLookup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelationshipsLookup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RelationshipsLookup)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProfileName != null)
+            if (options.Format != "W" && Optional.IsDefined(ProfileName))
             {
                 writer.WritePropertyName("profileName"u8);
                 writer.WriteStringValue(ProfileName);
             }
-            if (options.Format != "W" && !(ProfilePropertyReferences is ChangeTrackingList<ParticipantProfilePropertyReference> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ProfilePropertyReferences))
             {
                 writer.WritePropertyName("profilePropertyReferences"u8);
                 writer.WriteStartArray();
                 foreach (var item in ProfilePropertyReferences)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ParticipantProfilePropertyReference>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && RelatedProfileName != null)
+            if (options.Format != "W" && Optional.IsDefined(RelatedProfileName))
             {
                 writer.WritePropertyName("relatedProfileName"u8);
                 writer.WriteStringValue(RelatedProfileName);
             }
-            if (options.Format != "W" && !(RelatedProfilePropertyReferences is ChangeTrackingList<ParticipantProfilePropertyReference> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RelatedProfilePropertyReferences))
             {
                 writer.WritePropertyName("relatedProfilePropertyReferences"u8);
                 writer.WriteStartArray();
                 foreach (var item in RelatedProfilePropertyReferences)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ParticipantProfilePropertyReference>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ExistingRelationshipName != null)
+            if (options.Format != "W" && Optional.IsDefined(ExistingRelationshipName))
             {
                 writer.WritePropertyName("existingRelationshipName"u8);
                 writer.WriteStringValue(ExistingRelationshipName);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<RelationshipsLookup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelationshipsLookup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RelationshipsLookup)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RelationshipsLookup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RelationshipsLookup)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializeRelationshipsLookup(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RelationshipsLookup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RelationshipsLookup)} does not support reading '{options.Format}' format.");
             }
         }
 

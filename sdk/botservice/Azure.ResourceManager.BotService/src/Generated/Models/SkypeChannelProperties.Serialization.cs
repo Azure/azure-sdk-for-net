@@ -22,51 +22,51 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SkypeChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkypeChannelProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SkypeChannelProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsMessagingEnabled.HasValue)
+            if (Optional.IsDefined(IsMessagingEnabled))
             {
                 writer.WritePropertyName("enableMessaging"u8);
                 writer.WriteBooleanValue(IsMessagingEnabled.Value);
             }
-            if (IsMediaCardsEnabled.HasValue)
+            if (Optional.IsDefined(IsMediaCardsEnabled))
             {
                 writer.WritePropertyName("enableMediaCards"u8);
                 writer.WriteBooleanValue(IsMediaCardsEnabled.Value);
             }
-            if (IsVideoEnabled.HasValue)
+            if (Optional.IsDefined(IsVideoEnabled))
             {
                 writer.WritePropertyName("enableVideo"u8);
                 writer.WriteBooleanValue(IsVideoEnabled.Value);
             }
-            if (IsCallingEnabled.HasValue)
+            if (Optional.IsDefined(IsCallingEnabled))
             {
                 writer.WritePropertyName("enableCalling"u8);
                 writer.WriteBooleanValue(IsCallingEnabled.Value);
             }
-            if (IsScreenSharingEnabled.HasValue)
+            if (Optional.IsDefined(IsScreenSharingEnabled))
             {
                 writer.WritePropertyName("enableScreenSharing"u8);
                 writer.WriteBooleanValue(IsScreenSharingEnabled.Value);
             }
-            if (IsGroupsEnabled.HasValue)
+            if (Optional.IsDefined(IsGroupsEnabled))
             {
                 writer.WritePropertyName("enableGroups"u8);
                 writer.WriteBooleanValue(IsGroupsEnabled.Value);
             }
-            if (GroupsMode != null)
+            if (Optional.IsDefined(GroupsMode))
             {
                 writer.WritePropertyName("groupsMode"u8);
                 writer.WriteStringValue(GroupsMode);
             }
-            if (CallingWebHook != null)
+            if (Optional.IsDefined(CallingWebHook))
             {
                 writer.WritePropertyName("callingWebHook"u8);
                 writer.WriteStringValue(CallingWebHook);
             }
-            if (IncomingCallRoute != null)
+            if (Optional.IsDefined(IncomingCallRoute))
             {
                 writer.WritePropertyName("incomingCallRoute"u8);
                 writer.WriteStringValue(IncomingCallRoute);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SkypeChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkypeChannelProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SkypeChannelProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SkypeChannelProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SkypeChannelProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeSkypeChannelProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SkypeChannelProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SkypeChannelProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

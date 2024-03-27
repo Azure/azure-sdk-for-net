@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CmkKekIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CmkKekIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CmkKekIdentity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (UseSystemAssignedIdentity.HasValue)
+            if (Optional.IsDefined(UseSystemAssignedIdentity))
             {
                 writer.WritePropertyName("useSystemAssignedIdentity"u8);
                 writer.WriteBooleanValue(UseSystemAssignedIdentity.Value);
             }
-            if (UserAssignedIdentity != null)
+            if (Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
                 writer.WriteStringValue(UserAssignedIdentity);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CmkKekIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CmkKekIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CmkKekIdentity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CmkKekIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CmkKekIdentity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         return DeserializeCmkKekIdentity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CmkKekIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CmkKekIdentity)} does not support reading '{options.Format}' format.");
             }
         }
 

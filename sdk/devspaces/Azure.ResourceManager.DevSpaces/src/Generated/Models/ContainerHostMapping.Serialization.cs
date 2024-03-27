@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DevSpaces.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerHostMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerHostMapping)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerHostMapping)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ContainerHostResourceId != null)
+            if (Optional.IsDefined(ContainerHostResourceId))
             {
                 writer.WritePropertyName("containerHostResourceId"u8);
                 writer.WriteStringValue(ContainerHostResourceId);
             }
-            if (options.Format != "W" && MappedControllerResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(MappedControllerResourceId))
             {
                 writer.WritePropertyName("mappedControllerResourceId"u8);
                 writer.WriteStringValue(MappedControllerResourceId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerHostMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerHostMapping)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerHostMapping)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerHostMapping)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerHostMapping)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                         return DeserializeContainerHostMapping(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerHostMapping)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerHostMapping)} does not support reading '{options.Format}' format.");
             }
         }
 

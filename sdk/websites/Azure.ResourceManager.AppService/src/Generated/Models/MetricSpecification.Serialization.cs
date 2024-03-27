@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,96 +24,96 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<MetricSpecification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricSpecification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricSpecification)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (DisplayDescription != null)
+            if (Optional.IsDefined(DisplayDescription))
             {
                 writer.WritePropertyName("displayDescription"u8);
                 writer.WriteStringValue(DisplayDescription);
             }
-            if (Unit != null)
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (AggregationType != null)
+            if (Optional.IsDefined(AggregationType))
             {
                 writer.WritePropertyName("aggregationType"u8);
                 writer.WriteStringValue(AggregationType);
             }
-            if (IsInstanceLevelAggregationSupported.HasValue)
+            if (Optional.IsDefined(IsInstanceLevelAggregationSupported))
             {
                 writer.WritePropertyName("supportsInstanceLevelAggregation"u8);
                 writer.WriteBooleanValue(IsInstanceLevelAggregationSupported.Value);
             }
-            if (IsRegionalMdmAccountEnabled.HasValue)
+            if (Optional.IsDefined(IsRegionalMdmAccountEnabled))
             {
                 writer.WritePropertyName("enableRegionalMdmAccount"u8);
                 writer.WriteBooleanValue(IsRegionalMdmAccountEnabled.Value);
             }
-            if (SourceMdmAccount != null)
+            if (Optional.IsDefined(SourceMdmAccount))
             {
                 writer.WritePropertyName("sourceMdmAccount"u8);
                 writer.WriteStringValue(SourceMdmAccount);
             }
-            if (SourceMdmNamespace != null)
+            if (Optional.IsDefined(SourceMdmNamespace))
             {
                 writer.WritePropertyName("sourceMdmNamespace"u8);
                 writer.WriteStringValue(SourceMdmNamespace);
             }
-            if (MetricFilterPattern != null)
+            if (Optional.IsDefined(MetricFilterPattern))
             {
                 writer.WritePropertyName("metricFilterPattern"u8);
                 writer.WriteStringValue(MetricFilterPattern);
             }
-            if (FillGapWithZero.HasValue)
+            if (Optional.IsDefined(FillGapWithZero))
             {
                 writer.WritePropertyName("fillGapWithZero"u8);
                 writer.WriteBooleanValue(FillGapWithZero.Value);
             }
-            if (IsInternal.HasValue)
+            if (Optional.IsDefined(IsInternal))
             {
                 writer.WritePropertyName("isInternal"u8);
                 writer.WriteBooleanValue(IsInternal.Value);
             }
-            if (!(Dimensions is ChangeTrackingList<MetricDimension> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Dimensions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MetricDimension>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Category != null)
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (!(Availabilities is ChangeTrackingList<MetricAvailability> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Availabilities))
             {
                 writer.WritePropertyName("availabilities"u8);
                 writer.WriteStartArray();
                 foreach (var item in Availabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MetricAvailability>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(SupportedTimeGrainTypes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(SupportedTimeGrainTypes))
             {
                 writer.WritePropertyName("supportedTimeGrainTypes"u8);
                 writer.WriteStartArray();
@@ -121,7 +123,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(SupportedAggregationTypes is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(SupportedAggregationTypes))
             {
                 writer.WritePropertyName("supportedAggregationTypes"u8);
                 writer.WriteStartArray();
@@ -154,7 +156,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<MetricSpecification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricSpecification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricSpecification)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -354,6 +356,393 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
+            if (Optional.IsDefined(DisplayName) || hasPropertyOverride)
+            {
+                builder.Append("  displayName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DisplayName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DisplayName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DisplayName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayDescription), out propertyOverride);
+            if (Optional.IsDefined(DisplayDescription) || hasPropertyOverride)
+            {
+                builder.Append("  displayDescription: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DisplayDescription.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DisplayDescription}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DisplayDescription}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Unit), out propertyOverride);
+            if (Optional.IsDefined(Unit) || hasPropertyOverride)
+            {
+                builder.Append("  unit: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Unit.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Unit}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Unit}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AggregationType), out propertyOverride);
+            if (Optional.IsDefined(AggregationType) || hasPropertyOverride)
+            {
+                builder.Append("  aggregationType: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (AggregationType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AggregationType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AggregationType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsInstanceLevelAggregationSupported), out propertyOverride);
+            if (Optional.IsDefined(IsInstanceLevelAggregationSupported) || hasPropertyOverride)
+            {
+                builder.Append("  supportsInstanceLevelAggregation: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsInstanceLevelAggregationSupported.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRegionalMdmAccountEnabled), out propertyOverride);
+            if (Optional.IsDefined(IsRegionalMdmAccountEnabled) || hasPropertyOverride)
+            {
+                builder.Append("  enableRegionalMdmAccount: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsRegionalMdmAccountEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceMdmAccount), out propertyOverride);
+            if (Optional.IsDefined(SourceMdmAccount) || hasPropertyOverride)
+            {
+                builder.Append("  sourceMdmAccount: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SourceMdmAccount.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SourceMdmAccount}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SourceMdmAccount}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceMdmNamespace), out propertyOverride);
+            if (Optional.IsDefined(SourceMdmNamespace) || hasPropertyOverride)
+            {
+                builder.Append("  sourceMdmNamespace: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SourceMdmNamespace.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SourceMdmNamespace}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SourceMdmNamespace}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MetricFilterPattern), out propertyOverride);
+            if (Optional.IsDefined(MetricFilterPattern) || hasPropertyOverride)
+            {
+                builder.Append("  metricFilterPattern: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (MetricFilterPattern.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MetricFilterPattern}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MetricFilterPattern}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FillGapWithZero), out propertyOverride);
+            if (Optional.IsDefined(FillGapWithZero) || hasPropertyOverride)
+            {
+                builder.Append("  fillGapWithZero: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = FillGapWithZero.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsInternal), out propertyOverride);
+            if (Optional.IsDefined(IsInternal) || hasPropertyOverride)
+            {
+                builder.Append("  isInternal: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsInternal.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Dimensions), out propertyOverride);
+            if (Optional.IsCollectionDefined(Dimensions) || hasPropertyOverride)
+            {
+                if (Dimensions.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  dimensions: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Dimensions)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  dimensions: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Category), out propertyOverride);
+            if (Optional.IsDefined(Category) || hasPropertyOverride)
+            {
+                builder.Append("  category: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Category.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Category}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Category}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Availabilities), out propertyOverride);
+            if (Optional.IsCollectionDefined(Availabilities) || hasPropertyOverride)
+            {
+                if (Availabilities.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  availabilities: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Availabilities)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  availabilities: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedTimeGrainTypes), out propertyOverride);
+            if (Optional.IsCollectionDefined(SupportedTimeGrainTypes) || hasPropertyOverride)
+            {
+                if (SupportedTimeGrainTypes.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  supportedTimeGrainTypes: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedTimeGrainTypes)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedAggregationTypes), out propertyOverride);
+            if (Optional.IsCollectionDefined(SupportedAggregationTypes) || hasPropertyOverride)
+            {
+                if (SupportedAggregationTypes.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  supportedAggregationTypes: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedAggregationTypes)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<MetricSpecification>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MetricSpecification>)this).GetFormatFromOptions(options) : options.Format;
@@ -362,8 +751,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(MetricSpecification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricSpecification)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -379,7 +770,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeMetricSpecification(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MetricSpecification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricSpecification)} does not support reading '{options.Format}' format.");
             }
         }
 

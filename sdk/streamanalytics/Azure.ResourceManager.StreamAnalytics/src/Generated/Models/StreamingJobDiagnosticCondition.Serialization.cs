@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobDiagnosticCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingJobDiagnosticCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingJobDiagnosticCondition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Since.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Since))
             {
                 writer.WritePropertyName("since"u8);
                 writer.WriteStringValue(Since.Value, "O");
             }
-            if (options.Format != "W" && Code != null)
+            if (options.Format != "W" && Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobDiagnosticCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingJobDiagnosticCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingJobDiagnosticCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingJobDiagnosticCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingJobDiagnosticCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeStreamingJobDiagnosticCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingJobDiagnosticCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingJobDiagnosticCondition)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StreamAnalytics.Models;
@@ -25,17 +24,17 @@ namespace Azure.ResourceManager.StreamAnalytics
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingJobData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingJobData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -63,156 +62,156 @@ namespace Azure.ResourceManager.StreamAnalytics
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<StreamAnalyticsSku>(Sku, options);
             }
-            if (options.Format != "W" && JobId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(JobId))
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId.Value);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && JobState != null)
+            if (options.Format != "W" && Optional.IsDefined(JobState))
             {
                 writer.WritePropertyName("jobState"u8);
                 writer.WriteStringValue(JobState);
             }
-            if (JobType.HasValue)
+            if (Optional.IsDefined(JobType))
             {
                 writer.WritePropertyName("jobType"u8);
                 writer.WriteStringValue(JobType.Value.ToString());
             }
-            if (OutputStartMode.HasValue)
+            if (Optional.IsDefined(OutputStartMode))
             {
                 writer.WritePropertyName("outputStartMode"u8);
                 writer.WriteStringValue(OutputStartMode.Value.ToString());
             }
-            if (OutputStartOn.HasValue)
+            if (Optional.IsDefined(OutputStartOn))
             {
                 writer.WritePropertyName("outputStartTime"u8);
                 writer.WriteStringValue(OutputStartOn.Value, "O");
             }
-            if (options.Format != "W" && LastOutputEventOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastOutputEventOn))
             {
                 writer.WritePropertyName("lastOutputEventTime"u8);
                 writer.WriteStringValue(LastOutputEventOn.Value, "O");
             }
-            if (EventsOutOfOrderPolicy.HasValue)
+            if (Optional.IsDefined(EventsOutOfOrderPolicy))
             {
                 writer.WritePropertyName("eventsOutOfOrderPolicy"u8);
                 writer.WriteStringValue(EventsOutOfOrderPolicy.Value.ToString());
             }
-            if (OutputErrorPolicy.HasValue)
+            if (Optional.IsDefined(OutputErrorPolicy))
             {
                 writer.WritePropertyName("outputErrorPolicy"u8);
                 writer.WriteStringValue(OutputErrorPolicy.Value.ToString());
             }
-            if (EventsOutOfOrderMaxDelayInSeconds.HasValue)
+            if (Optional.IsDefined(EventsOutOfOrderMaxDelayInSeconds))
             {
                 writer.WritePropertyName("eventsOutOfOrderMaxDelayInSeconds"u8);
                 writer.WriteNumberValue(EventsOutOfOrderMaxDelayInSeconds.Value);
             }
-            if (EventsLateArrivalMaxDelayInSeconds.HasValue)
+            if (Optional.IsDefined(EventsLateArrivalMaxDelayInSeconds))
             {
                 writer.WritePropertyName("eventsLateArrivalMaxDelayInSeconds"u8);
                 writer.WriteNumberValue(EventsLateArrivalMaxDelayInSeconds.Value);
             }
-            if (DataLocalion.HasValue)
+            if (Optional.IsDefined(DataLocalion))
             {
                 writer.WritePropertyName("dataLocale"u8);
                 writer.WriteStringValue(DataLocalion.Value);
             }
-            if (CompatibilityLevel.HasValue)
+            if (Optional.IsDefined(CompatibilityLevel))
             {
                 writer.WritePropertyName("compatibilityLevel"u8);
                 writer.WriteStringValue(CompatibilityLevel.Value.ToString());
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (!(Inputs is ChangeTrackingList<StreamingJobInputData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StreamingJobInputData>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Transformation != null)
+            if (Optional.IsDefined(Transformation))
             {
                 writer.WritePropertyName("transformation"u8);
-                writer.WriteObjectValue(Transformation);
+                writer.WriteObjectValue<StreamingJobTransformationData>(Transformation, options);
             }
-            if (!(Outputs is ChangeTrackingList<StreamingJobOutputData> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Outputs))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StreamingJobOutputData>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Functions is ChangeTrackingList<StreamingJobFunctionData> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Functions))
             {
                 writer.WritePropertyName("functions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Functions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StreamingJobFunctionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (JobStorageAccount != null)
+            if (Optional.IsDefined(JobStorageAccount))
             {
                 if (JobStorageAccount != null)
                 {
                     writer.WritePropertyName("jobStorageAccount"u8);
-                    writer.WriteObjectValue(JobStorageAccount);
+                    writer.WriteObjectValue<StreamingJobStorageAccount>(JobStorageAccount, options);
                 }
                 else
                 {
                     writer.WriteNull("jobStorageAccount");
                 }
             }
-            if (ContentStoragePolicy.HasValue)
+            if (Optional.IsDefined(ContentStoragePolicy))
             {
                 writer.WritePropertyName("contentStoragePolicy"u8);
                 writer.WriteStringValue(ContentStoragePolicy.Value.ToString());
             }
-            if (Externals != null)
+            if (Optional.IsDefined(Externals))
             {
                 writer.WritePropertyName("externals"u8);
-                writer.WriteObjectValue(Externals);
+                writer.WriteObjectValue<StreamingJobExternal>(Externals, options);
             }
-            if (Cluster != null)
+            if (Optional.IsDefined(Cluster))
             {
                 if (Cluster != null)
                 {
                     writer.WritePropertyName("cluster"u8);
-                    writer.WriteObjectValue(Cluster);
+                    writer.WriteObjectValue<ClusterInfo>(Cluster, options);
                 }
                 else
                 {
@@ -243,7 +242,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingJobData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingJobData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -633,7 +632,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingJobData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingJobData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -649,7 +648,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                         return DeserializeStreamingJobData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingJobData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingJobData)} does not support reading '{options.Format}' format.");
             }
         }
 

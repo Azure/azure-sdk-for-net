@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> is null. </exception>
         public CassandraKeyspaceResourceInfo(string keyspaceName)
         {
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
+            Argument.AssertNotNull(keyspaceName, nameof(keyspaceName));
 
             KeyspaceName = keyspaceName;
         }
@@ -73,6 +70,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Name of the Cosmos DB Cassandra keyspace. </summary>
+        [WirePath("id")]
         public string KeyspaceName { get; set; }
     }
 }

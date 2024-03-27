@@ -18,7 +18,7 @@ namespace Azure.AI.OpenAI;
 /// </summary>
 public partial class AzureChatExtensionsOptions
 {
-    // CUSTOM CODE NOTE: this wrapper type for /extensions/chat/completions data sources is currently "client
+    // CUSTOM CODE NOTE: this wrapper type for /chat/completions data sources is currently "client
     //                      only" and not yet reflected in the REST wire format. This will likely converge in
     //                      future versions but for exists outside of code generation.
 

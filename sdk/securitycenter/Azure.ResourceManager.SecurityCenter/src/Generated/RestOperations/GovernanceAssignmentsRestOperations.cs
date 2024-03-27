@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.SecurityCenter.Models;
@@ -64,18 +64,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<GovernanceAssignmentsList>> ListAsync(string scope, string assessmentName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (assessmentName == null)
-            {
-                throw new ArgumentNullException(nameof(assessmentName));
-            }
-            if (assessmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
 
             using var message = CreateListRequest(scope, assessmentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -101,18 +91,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<GovernanceAssignmentsList> List(string scope, string assessmentName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (assessmentName == null)
-            {
-                throw new ArgumentNullException(nameof(assessmentName));
-            }
-            if (assessmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
 
             using var message = CreateListRequest(scope, assessmentName);
             _pipeline.Send(message, cancellationToken);
@@ -159,26 +139,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> or <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<GovernanceAssignmentData>> GetAsync(string scope, string assessmentName, string assignmentKey, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (assessmentName == null)
-            {
-                throw new ArgumentNullException(nameof(assessmentName));
-            }
-            if (assessmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentName));
-            }
-            if (assignmentKey == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentKey));
-            }
-            if (assignmentKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentKey));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
+            Argument.AssertNotNullOrEmpty(assignmentKey, nameof(assignmentKey));
 
             using var message = CreateGetRequest(scope, assessmentName, assignmentKey);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -207,26 +170,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> or <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<GovernanceAssignmentData> Get(string scope, string assessmentName, string assignmentKey, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (assessmentName == null)
-            {
-                throw new ArgumentNullException(nameof(assessmentName));
-            }
-            if (assessmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentName));
-            }
-            if (assignmentKey == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentKey));
-            }
-            if (assignmentKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentKey));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
+            Argument.AssertNotNullOrEmpty(assignmentKey, nameof(assignmentKey));
 
             using var message = CreateGetRequest(scope, assessmentName, assignmentKey);
             _pipeline.Send(message, cancellationToken);
@@ -264,7 +210,7 @@ namespace Azure.ResourceManager.SecurityCenter
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<GovernanceAssignmentData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -280,30 +226,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> or <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<GovernanceAssignmentData>> CreateOrUpdateAsync(string scope, string assessmentName, string assignmentKey, GovernanceAssignmentData data, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (assessmentName == null)
-            {
-                throw new ArgumentNullException(nameof(assessmentName));
-            }
-            if (assessmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentName));
-            }
-            if (assignmentKey == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentKey));
-            }
-            if (assignmentKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentKey));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
+            Argument.AssertNotNullOrEmpty(assignmentKey, nameof(assignmentKey));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(scope, assessmentName, assignmentKey, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -332,30 +258,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> or <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<GovernanceAssignmentData> CreateOrUpdate(string scope, string assessmentName, string assignmentKey, GovernanceAssignmentData data, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (assessmentName == null)
-            {
-                throw new ArgumentNullException(nameof(assessmentName));
-            }
-            if (assessmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentName));
-            }
-            if (assignmentKey == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentKey));
-            }
-            if (assignmentKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentKey));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
+            Argument.AssertNotNullOrEmpty(assignmentKey, nameof(assignmentKey));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(scope, assessmentName, assignmentKey, data);
             _pipeline.Send(message, cancellationToken);
@@ -402,26 +308,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> or <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string scope, string assessmentName, string assignmentKey, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (assessmentName == null)
-            {
-                throw new ArgumentNullException(nameof(assessmentName));
-            }
-            if (assessmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentName));
-            }
-            if (assignmentKey == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentKey));
-            }
-            if (assignmentKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentKey));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
+            Argument.AssertNotNullOrEmpty(assignmentKey, nameof(assignmentKey));
 
             using var message = CreateDeleteRequest(scope, assessmentName, assignmentKey);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -444,26 +333,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> or <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string scope, string assessmentName, string assignmentKey, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (assessmentName == null)
-            {
-                throw new ArgumentNullException(nameof(assessmentName));
-            }
-            if (assessmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentName));
-            }
-            if (assignmentKey == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentKey));
-            }
-            if (assignmentKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentKey));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
+            Argument.AssertNotNullOrEmpty(assignmentKey, nameof(assignmentKey));
 
             using var message = CreateDeleteRequest(scope, assessmentName, assignmentKey);
             _pipeline.Send(message, cancellationToken);
@@ -500,22 +372,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<GovernanceAssignmentsList>> ListNextPageAsync(string nextLink, string scope, string assessmentName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (assessmentName == null)
-            {
-                throw new ArgumentNullException(nameof(assessmentName));
-            }
-            if (assessmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
 
             using var message = CreateListNextPageRequest(nextLink, scope, assessmentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -542,22 +401,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<GovernanceAssignmentsList> ListNextPage(string nextLink, string scope, string assessmentName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (assessmentName == null)
-            {
-                throw new ArgumentNullException(nameof(assessmentName));
-            }
-            if (assessmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
 
             using var message = CreateListNextPageRequest(nextLink, scope, assessmentName);
             _pipeline.Send(message, cancellationToken);

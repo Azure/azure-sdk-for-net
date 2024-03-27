@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningContainerResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningContainerResourceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningContainerResourceSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Cpu != null)
+            if (Optional.IsDefined(Cpu))
             {
                 if (Cpu != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("cpu");
                 }
             }
-            if (Gpu != null)
+            if (Optional.IsDefined(Gpu))
             {
                 if (Gpu != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("gpu");
                 }
             }
-            if (Memory != null)
+            if (Optional.IsDefined(Memory))
             {
                 if (Memory != null)
                 {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningContainerResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningContainerResourceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningContainerResourceSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningContainerResourceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningContainerResourceSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningContainerResourceSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningContainerResourceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningContainerResourceSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkManagerDeploymentStatusContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkManagerDeploymentStatusContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkManagerDeploymentStatusContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Regions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Regions))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DeploymentTypes is ChangeTrackingList<NetworkConfigurationDeploymentType> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DeploymentTypes))
             {
                 writer.WritePropertyName("deploymentTypes"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SkipToken != null)
+            if (Optional.IsDefined(SkipToken))
             {
                 writer.WritePropertyName("skipToken"u8);
                 writer.WriteStringValue(SkipToken);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkManagerDeploymentStatusContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkManagerDeploymentStatusContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkManagerDeploymentStatusContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkManagerDeploymentStatusContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkManagerDeploymentStatusContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeNetworkManagerDeploymentStatusContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkManagerDeploymentStatusContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkManagerDeploymentStatusContent)} does not support reading '{options.Format}' format.");
             }
         }
 

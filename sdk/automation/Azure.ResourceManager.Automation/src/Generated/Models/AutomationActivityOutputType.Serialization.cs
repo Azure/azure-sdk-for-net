@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationActivityOutputType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationActivityOutputType)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationActivityOutputType)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ActivityOutputType != null)
+            if (Optional.IsDefined(ActivityOutputType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ActivityOutputType);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationActivityOutputType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationActivityOutputType)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationActivityOutputType)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationActivityOutputType)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationActivityOutputType)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeAutomationActivityOutputType(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationActivityOutputType)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationActivityOutputType)} does not support reading '{options.Format}' format.");
             }
         }
 

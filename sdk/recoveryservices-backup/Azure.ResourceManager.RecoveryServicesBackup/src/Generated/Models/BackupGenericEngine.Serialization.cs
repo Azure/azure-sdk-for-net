@@ -22,71 +22,71 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupGenericEngine>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupGenericEngine)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupGenericEngine)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (BackupManagementType.HasValue)
+            if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (RegistrationStatus != null)
+            if (Optional.IsDefined(RegistrationStatus))
             {
                 writer.WritePropertyName("registrationStatus"u8);
                 writer.WriteStringValue(RegistrationStatus);
             }
-            if (BackupEngineState != null)
+            if (Optional.IsDefined(BackupEngineState))
             {
                 writer.WritePropertyName("backupEngineState"u8);
                 writer.WriteStringValue(BackupEngineState);
             }
-            if (HealthStatus != null)
+            if (Optional.IsDefined(HealthStatus))
             {
                 writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus);
             }
             writer.WritePropertyName("backupEngineType"u8);
             writer.WriteStringValue(BackupEngineType.ToString());
-            if (CanReRegister.HasValue)
+            if (Optional.IsDefined(CanReRegister))
             {
                 writer.WritePropertyName("canReRegister"u8);
                 writer.WriteBooleanValue(CanReRegister.Value);
             }
-            if (BackupEngineId != null)
+            if (Optional.IsDefined(BackupEngineId))
             {
                 writer.WritePropertyName("backupEngineId"u8);
                 writer.WriteStringValue(BackupEngineId);
             }
-            if (DpmVersion != null)
+            if (Optional.IsDefined(DpmVersion))
             {
                 writer.WritePropertyName("dpmVersion"u8);
                 writer.WriteStringValue(DpmVersion);
             }
-            if (AzureBackupAgentVersion != null)
+            if (Optional.IsDefined(AzureBackupAgentVersion))
             {
                 writer.WritePropertyName("azureBackupAgentVersion"u8);
                 writer.WriteStringValue(AzureBackupAgentVersion);
             }
-            if (IsAzureBackupAgentUpgradeAvailable.HasValue)
+            if (Optional.IsDefined(IsAzureBackupAgentUpgradeAvailable))
             {
                 writer.WritePropertyName("isAzureBackupAgentUpgradeAvailable"u8);
                 writer.WriteBooleanValue(IsAzureBackupAgentUpgradeAvailable.Value);
             }
-            if (IsDpmUpgradeAvailable.HasValue)
+            if (Optional.IsDefined(IsDpmUpgradeAvailable))
             {
                 writer.WritePropertyName("isDpmUpgradeAvailable"u8);
                 writer.WriteBooleanValue(IsDpmUpgradeAvailable.Value);
             }
-            if (ExtendedInfo != null)
+            if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo);
+                writer.WriteObjectValue<BackupEngineExtendedInfo>(ExtendedInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupGenericEngine>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupGenericEngine)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupGenericEngine)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupGenericEngine)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupGenericEngine)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeBackupGenericEngine(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupGenericEngine)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupGenericEngine)} does not support reading '{options.Format}' format.");
             }
         }
 

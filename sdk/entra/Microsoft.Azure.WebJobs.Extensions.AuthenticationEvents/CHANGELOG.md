@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.0-beta.7 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,28 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.6 (2024-03-13)
+
+### Features Added
+
+- Updated token internal validation to utlizie Microsoft.IdentityModel.Protocols.OpenIdConnect to get OIDC configuration.
+
+### Breaking Changes
+
+- Removing 'TeantId' from the AuthenticationEventTrigger Attribute API configuration
+- Adding 'AuthorizedPartyAppId', 'AuthorityUrl' to the AuthenticationEventTrigger Attribute API configuration
+- Adding 'AuthenticationEvents__ShowPIIDataInLogsKey` (defaults to true) to configuration manager for logging PIIData in logs
+- Updated the Failed and Completed methods to not be async
+
+### Bugs Fixed
+
+- Made the request validation errors return 400 and the response validation errors return 500.
+
+### Other Changes
+
+- Cleaned out unused methods.
+- Renamed MiscTests.cs to RequestResponseModelTests.cs
 
 ## 1.0.0-beta.5 (2023-12-07)
 

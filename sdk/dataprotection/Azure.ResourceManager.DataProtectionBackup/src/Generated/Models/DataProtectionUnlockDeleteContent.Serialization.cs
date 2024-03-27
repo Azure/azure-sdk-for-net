@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionUnlockDeleteContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionUnlockDeleteContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionUnlockDeleteContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(ResourceGuardOperationRequests is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
             {
                 writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ResourceToBeDeleted != null)
+            if (Optional.IsDefined(ResourceToBeDeleted))
             {
                 writer.WritePropertyName("resourceToBeDeleted"u8);
                 writer.WriteStringValue(ResourceToBeDeleted);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionUnlockDeleteContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionUnlockDeleteContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionUnlockDeleteContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionUnlockDeleteContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionUnlockDeleteContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeDataProtectionUnlockDeleteContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionUnlockDeleteContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionUnlockDeleteContent)} does not support reading '{options.Format}' format.");
             }
         }
 

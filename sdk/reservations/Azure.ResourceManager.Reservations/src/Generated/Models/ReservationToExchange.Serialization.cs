@@ -22,29 +22,29 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationToExchange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationToExchange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationToExchange)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ReservationId != null)
+            if (Optional.IsDefined(ReservationId))
             {
                 writer.WritePropertyName("reservationId"u8);
                 writer.WriteStringValue(ReservationId);
             }
-            if (Quantity.HasValue)
+            if (Optional.IsDefined(Quantity))
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (BillingRefundAmount != null)
+            if (Optional.IsDefined(BillingRefundAmount))
             {
                 writer.WritePropertyName("billingRefundAmount"u8);
-                writer.WriteObjectValue(BillingRefundAmount);
+                writer.WriteObjectValue<PurchasePrice>(BillingRefundAmount, options);
             }
-            if (BillingInformation != null)
+            if (Optional.IsDefined(BillingInformation))
             {
                 writer.WritePropertyName("billingInformation"u8);
-                writer.WriteObjectValue(BillingInformation);
+                writer.WriteObjectValue<BillingInformation>(BillingInformation, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationToExchange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationToExchange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationToExchange)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReservationToExchange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationToExchange)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeReservationToExchange(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReservationToExchange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationToExchange)} does not support reading '{options.Format}' format.");
             }
         }
 

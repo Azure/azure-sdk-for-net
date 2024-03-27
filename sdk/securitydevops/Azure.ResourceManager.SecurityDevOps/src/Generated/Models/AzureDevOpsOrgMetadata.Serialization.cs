@@ -22,27 +22,27 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsOrgMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureDevOpsOrgMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureDevOpsOrgMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (AutoDiscovery.HasValue)
+            if (Optional.IsDefined(AutoDiscovery))
             {
                 writer.WritePropertyName("autoDiscovery"u8);
                 writer.WriteStringValue(AutoDiscovery.Value.ToString());
             }
-            if (!(Projects is ChangeTrackingList<AzureDevOpsProjectMetadata> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Projects))
             {
                 writer.WritePropertyName("projects"u8);
                 writer.WriteStartArray();
                 foreach (var item in Projects)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AzureDevOpsProjectMetadata>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsOrgMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureDevOpsOrgMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureDevOpsOrgMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureDevOpsOrgMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureDevOpsOrgMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                         return DeserializeAzureDevOpsOrgMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureDevOpsOrgMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureDevOpsOrgMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Kusto
             var format = options.Format == "W" ? ((IPersistableModel<KustoManagedPrivateEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoManagedPrivateEndpointData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoManagedPrivateEndpointData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.Kusto
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PrivateLinkResourceId != null)
+            if (Optional.IsDefined(PrivateLinkResourceId))
             {
                 writer.WritePropertyName("privateLinkResourceId"u8);
                 writer.WriteStringValue(PrivateLinkResourceId);
             }
-            if (PrivateLinkResourceRegion != null)
+            if (Optional.IsDefined(PrivateLinkResourceRegion))
             {
                 writer.WritePropertyName("privateLinkResourceRegion"u8);
                 writer.WriteStringValue(PrivateLinkResourceRegion);
             }
-            if (GroupId != null)
+            if (Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (RequestMessage != null)
+            if (Optional.IsDefined(RequestMessage))
             {
                 writer.WritePropertyName("requestMessage"u8);
                 writer.WriteStringValue(RequestMessage);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Kusto
             var format = options.Format == "W" ? ((IPersistableModel<KustoManagedPrivateEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoManagedPrivateEndpointData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoManagedPrivateEndpointData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Kusto
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KustoManagedPrivateEndpointData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoManagedPrivateEndpointData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Kusto
                         return DeserializeKustoManagedPrivateEndpointData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KustoManagedPrivateEndpointData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoManagedPrivateEndpointData)} does not support reading '{options.Format}' format.");
             }
         }
 

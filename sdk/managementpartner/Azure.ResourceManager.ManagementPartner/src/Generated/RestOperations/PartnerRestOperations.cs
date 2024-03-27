@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -59,14 +58,7 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <exception cref="ArgumentException"> <paramref name="partnerId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PartnerResponseData>> GetAsync(string partnerId, CancellationToken cancellationToken = default)
         {
-            if (partnerId == null)
-            {
-                throw new ArgumentNullException(nameof(partnerId));
-            }
-            if (partnerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerId));
-            }
+            Argument.AssertNotNullOrEmpty(partnerId, nameof(partnerId));
 
             using var message = CreateGetRequest(partnerId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -93,14 +85,7 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <exception cref="ArgumentException"> <paramref name="partnerId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PartnerResponseData> Get(string partnerId, CancellationToken cancellationToken = default)
         {
-            if (partnerId == null)
-            {
-                throw new ArgumentNullException(nameof(partnerId));
-            }
-            if (partnerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerId));
-            }
+            Argument.AssertNotNullOrEmpty(partnerId, nameof(partnerId));
 
             using var message = CreateGetRequest(partnerId);
             _pipeline.Send(message, cancellationToken);
@@ -143,14 +128,7 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <exception cref="ArgumentException"> <paramref name="partnerId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PartnerResponseData>> CreateAsync(string partnerId, CancellationToken cancellationToken = default)
         {
-            if (partnerId == null)
-            {
-                throw new ArgumentNullException(nameof(partnerId));
-            }
-            if (partnerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerId));
-            }
+            Argument.AssertNotNullOrEmpty(partnerId, nameof(partnerId));
 
             using var message = CreateCreateRequest(partnerId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -175,14 +153,7 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <exception cref="ArgumentException"> <paramref name="partnerId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PartnerResponseData> Create(string partnerId, CancellationToken cancellationToken = default)
         {
-            if (partnerId == null)
-            {
-                throw new ArgumentNullException(nameof(partnerId));
-            }
-            if (partnerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerId));
-            }
+            Argument.AssertNotNullOrEmpty(partnerId, nameof(partnerId));
 
             using var message = CreateCreateRequest(partnerId);
             _pipeline.Send(message, cancellationToken);
@@ -223,14 +194,7 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <exception cref="ArgumentException"> <paramref name="partnerId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PartnerResponseData>> UpdateAsync(string partnerId, CancellationToken cancellationToken = default)
         {
-            if (partnerId == null)
-            {
-                throw new ArgumentNullException(nameof(partnerId));
-            }
-            if (partnerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerId));
-            }
+            Argument.AssertNotNullOrEmpty(partnerId, nameof(partnerId));
 
             using var message = CreateUpdateRequest(partnerId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -255,14 +219,7 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <exception cref="ArgumentException"> <paramref name="partnerId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PartnerResponseData> Update(string partnerId, CancellationToken cancellationToken = default)
         {
-            if (partnerId == null)
-            {
-                throw new ArgumentNullException(nameof(partnerId));
-            }
-            if (partnerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerId));
-            }
+            Argument.AssertNotNullOrEmpty(partnerId, nameof(partnerId));
 
             using var message = CreateUpdateRequest(partnerId);
             _pipeline.Send(message, cancellationToken);
@@ -303,14 +260,7 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <exception cref="ArgumentException"> <paramref name="partnerId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string partnerId, CancellationToken cancellationToken = default)
         {
-            if (partnerId == null)
-            {
-                throw new ArgumentNullException(nameof(partnerId));
-            }
-            if (partnerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerId));
-            }
+            Argument.AssertNotNullOrEmpty(partnerId, nameof(partnerId));
 
             using var message = CreateDeleteRequest(partnerId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -330,14 +280,7 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <exception cref="ArgumentException"> <paramref name="partnerId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string partnerId, CancellationToken cancellationToken = default)
         {
-            if (partnerId == null)
-            {
-                throw new ArgumentNullException(nameof(partnerId));
-            }
-            if (partnerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerId));
-            }
+            Argument.AssertNotNullOrEmpty(partnerId, nameof(partnerId));
 
             using var message = CreateDeleteRequest(partnerId);
             _pipeline.Send(message, cancellationToken);

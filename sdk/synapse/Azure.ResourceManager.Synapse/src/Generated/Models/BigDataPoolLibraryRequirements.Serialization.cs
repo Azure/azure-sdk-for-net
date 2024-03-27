@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<BigDataPoolLibraryRequirements>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BigDataPoolLibraryRequirements)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BigDataPoolLibraryRequirements)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && UpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (Filename != null)
+            if (Optional.IsDefined(Filename))
             {
                 writer.WritePropertyName("filename"u8);
                 writer.WriteStringValue(Filename);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<BigDataPoolLibraryRequirements>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BigDataPoolLibraryRequirements)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BigDataPoolLibraryRequirements)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BigDataPoolLibraryRequirements)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BigDataPoolLibraryRequirements)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeBigDataPoolLibraryRequirements(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BigDataPoolLibraryRequirements)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BigDataPoolLibraryRequirements)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -19,13 +19,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("store"u8);
-            writer.WriteObjectValue(Store);
+            writer.WriteObjectValue<LinkedServiceReference>(Store);
             writer.WritePropertyName("secretName"u8);
-            writer.WriteObjectValue(SecretName);
-            if (SecretVersion != null)
+            writer.WriteObjectValue<object>(SecretName);
+            if (Optional.IsDefined(SecretVersion))
             {
                 writer.WritePropertyName("secretVersion"u8);
-                writer.WriteObjectValue(SecretVersion);
+                writer.WriteObjectValue<object>(SecretVersion);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -76,7 +76,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, AzureKeyVaultSecretReference model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<AzureKeyVaultSecretReference>(model);
             }
             public override AzureKeyVaultSecretReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

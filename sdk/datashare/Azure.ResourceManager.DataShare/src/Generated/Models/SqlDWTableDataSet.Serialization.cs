@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlDWTableDataSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDWTableDataSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlDWTableDataSet)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,34 +44,34 @@ namespace Azure.ResourceManager.DataShare.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && DataSetId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataSetId))
             {
                 writer.WritePropertyName("dataSetId"u8);
                 writer.WriteStringValue(DataSetId.Value);
             }
-            if (DataWarehouseName != null)
+            if (Optional.IsDefined(DataWarehouseName))
             {
                 writer.WritePropertyName("dataWarehouseName"u8);
                 writer.WriteStringValue(DataWarehouseName);
             }
-            if (SchemaName != null)
+            if (Optional.IsDefined(SchemaName))
             {
                 writer.WritePropertyName("schemaName"u8);
                 writer.WriteStringValue(SchemaName);
             }
-            if (SqlServerResourceId != null)
+            if (Optional.IsDefined(SqlServerResourceId))
             {
                 writer.WritePropertyName("sqlServerResourceId"u8);
                 writer.WriteStringValue(SqlServerResourceId);
             }
-            if (TableName != null)
+            if (Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlDWTableDataSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDWTableDataSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlDWTableDataSet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlDWTableDataSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlDWTableDataSet)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         return DeserializeSqlDWTableDataSet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlDWTableDataSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlDWTableDataSet)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServiceFunctionRetrieveDefaultDefinitionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningServiceFunctionRetrieveDefaultDefinitionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningServiceFunctionRetrieveDefaultDefinitionContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(BindingType);
             writer.WritePropertyName("bindingRetrievalProperties"u8);
             writer.WriteStartObject();
-            if (ExecuteEndpoint != null)
+            if (Optional.IsDefined(ExecuteEndpoint))
             {
                 writer.WritePropertyName("executeEndpoint"u8);
                 writer.WriteStringValue(ExecuteEndpoint);
             }
-            if (UdfType.HasValue)
+            if (Optional.IsDefined(UdfType))
             {
                 writer.WritePropertyName("udfType"u8);
                 writer.WriteStringValue(UdfType.Value.ToString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServiceFunctionRetrieveDefaultDefinitionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningServiceFunctionRetrieveDefaultDefinitionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningServiceFunctionRetrieveDefaultDefinitionContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningServiceFunctionRetrieveDefaultDefinitionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningServiceFunctionRetrieveDefaultDefinitionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeMachineLearningServiceFunctionRetrieveDefaultDefinitionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningServiceFunctionRetrieveDefaultDefinitionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningServiceFunctionRetrieveDefaultDefinitionContent)} does not support reading '{options.Format}' format.");
             }
         }
 

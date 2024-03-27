@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SolutionsTroubleshooters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SolutionsTroubleshooters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SolutionsTroubleshooters)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SolutionId != null)
+            if (Optional.IsDefined(SolutionId))
             {
                 writer.WritePropertyName("solutionId"u8);
                 writer.WriteStringValue(SolutionId);
             }
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Summary != null)
+            if (Optional.IsDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SolutionsTroubleshooters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SolutionsTroubleshooters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SolutionsTroubleshooters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SolutionsTroubleshooters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SolutionsTroubleshooters)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         return DeserializeSolutionsTroubleshooters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SolutionsTroubleshooters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SolutionsTroubleshooters)} does not support reading '{options.Format}' format.");
             }
         }
 

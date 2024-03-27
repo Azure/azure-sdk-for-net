@@ -16,18 +16,18 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DefaultConfigurationName != null)
+            if (Optional.IsDefined(DefaultConfigurationName))
             {
                 writer.WritePropertyName("defaultConfiguration"u8);
                 writer.WriteStringValue(DefaultConfigurationName);
             }
-            if (!(Configurations is ChangeTrackingList<SemanticConfiguration> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Configurations))
             {
                 writer.WritePropertyName("configurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Configurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SemanticConfiguration>(item);
                 }
                 writer.WriteEndArray();
             }

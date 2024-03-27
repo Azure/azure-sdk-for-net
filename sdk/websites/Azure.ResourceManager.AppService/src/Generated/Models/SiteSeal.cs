@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="html"/> is null. </exception>
         internal SiteSeal(string html)
         {
-            if (html == null)
-            {
-                throw new ArgumentNullException(nameof(html));
-            }
+            Argument.AssertNotNull(html, nameof(html));
 
             Html = html;
         }
@@ -73,6 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> HTML snippet. </summary>
+        [WirePath("html")]
         public string Html { get; }
     }
 }

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetworkAnalytics
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="dataProductName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataProductResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dataProductName, DataProductData data, CancellationToken cancellationToken = default)
         {
-            if (dataProductName == null)
-            {
-                throw new ArgumentNullException(nameof(dataProductName));
-            }
-            if (dataProductName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataProductName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(dataProductName, nameof(dataProductName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataProductClientDiagnostics.CreateScope("DataProductCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="dataProductName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataProductResource> CreateOrUpdate(WaitUntil waitUntil, string dataProductName, DataProductData data, CancellationToken cancellationToken = default)
         {
-            if (dataProductName == null)
-            {
-                throw new ArgumentNullException(nameof(dataProductName));
-            }
-            if (dataProductName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataProductName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(dataProductName, nameof(dataProductName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataProductClientDiagnostics.CreateScope("DataProductCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="dataProductName"/> is null. </exception>
         public virtual async Task<Response<DataProductResource>> GetAsync(string dataProductName, CancellationToken cancellationToken = default)
         {
-            if (dataProductName == null)
-            {
-                throw new ArgumentNullException(nameof(dataProductName));
-            }
-            if (dataProductName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataProductName));
-            }
+            Argument.AssertNotNullOrEmpty(dataProductName, nameof(dataProductName));
 
             using var scope = _dataProductClientDiagnostics.CreateScope("DataProductCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="dataProductName"/> is null. </exception>
         public virtual Response<DataProductResource> Get(string dataProductName, CancellationToken cancellationToken = default)
         {
-            if (dataProductName == null)
-            {
-                throw new ArgumentNullException(nameof(dataProductName));
-            }
-            if (dataProductName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataProductName));
-            }
+            Argument.AssertNotNullOrEmpty(dataProductName, nameof(dataProductName));
 
             using var scope = _dataProductClientDiagnostics.CreateScope("DataProductCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="dataProductName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dataProductName, CancellationToken cancellationToken = default)
         {
-            if (dataProductName == null)
-            {
-                throw new ArgumentNullException(nameof(dataProductName));
-            }
-            if (dataProductName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataProductName));
-            }
+            Argument.AssertNotNullOrEmpty(dataProductName, nameof(dataProductName));
 
             using var scope = _dataProductClientDiagnostics.CreateScope("DataProductCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="dataProductName"/> is null. </exception>
         public virtual Response<bool> Exists(string dataProductName, CancellationToken cancellationToken = default)
         {
-            if (dataProductName == null)
-            {
-                throw new ArgumentNullException(nameof(dataProductName));
-            }
-            if (dataProductName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataProductName));
-            }
+            Argument.AssertNotNullOrEmpty(dataProductName, nameof(dataProductName));
 
             using var scope = _dataProductClientDiagnostics.CreateScope("DataProductCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="dataProductName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataProductResource>> GetIfExistsAsync(string dataProductName, CancellationToken cancellationToken = default)
         {
-            if (dataProductName == null)
-            {
-                throw new ArgumentNullException(nameof(dataProductName));
-            }
-            if (dataProductName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataProductName));
-            }
+            Argument.AssertNotNullOrEmpty(dataProductName, nameof(dataProductName));
 
             using var scope = _dataProductClientDiagnostics.CreateScope("DataProductCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="dataProductName"/> is null. </exception>
         public virtual NullableResponse<DataProductResource> GetIfExists(string dataProductName, CancellationToken cancellationToken = default)
         {
-            if (dataProductName == null)
-            {
-                throw new ArgumentNullException(nameof(dataProductName));
-            }
-            if (dataProductName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataProductName));
-            }
+            Argument.AssertNotNullOrEmpty(dataProductName, nameof(dataProductName));
 
             using var scope = _dataProductClientDiagnostics.CreateScope("DataProductCollection.GetIfExists");
             scope.Start();

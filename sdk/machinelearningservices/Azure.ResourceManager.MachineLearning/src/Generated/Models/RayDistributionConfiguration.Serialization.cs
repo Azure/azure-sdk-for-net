@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<RayDistributionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RayDistributionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RayDistributionConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Address != null)
+            if (Optional.IsDefined(Address))
             {
                 if (Address != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("address");
                 }
             }
-            if (DashboardPort.HasValue)
+            if (Optional.IsDefined(DashboardPort))
             {
                 if (DashboardPort != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("dashboardPort");
                 }
             }
-            if (HeadNodeAdditionalArgs != null)
+            if (Optional.IsDefined(HeadNodeAdditionalArgs))
             {
                 if (HeadNodeAdditionalArgs != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("headNodeAdditionalArgs");
                 }
             }
-            if (IncludeDashboard.HasValue)
+            if (Optional.IsDefined(IncludeDashboard))
             {
                 if (IncludeDashboard != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("includeDashboard");
                 }
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 if (Port != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("port");
                 }
             }
-            if (WorkerNodeAdditionalArgs != null)
+            if (Optional.IsDefined(WorkerNodeAdditionalArgs))
             {
                 if (WorkerNodeAdditionalArgs != null)
                 {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<RayDistributionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RayDistributionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RayDistributionConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RayDistributionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RayDistributionConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeRayDistributionConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RayDistributionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RayDistributionConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

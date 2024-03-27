@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.Messages.Models.Channels
@@ -23,7 +22,7 @@ namespace Azure.Communication.Messages.Models.Channels
             var format = options.Format == "W" ? ((IPersistableModel<WhatsAppMessageTemplateBindingsComponent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindingsComponent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindingsComponent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +51,7 @@ namespace Azure.Communication.Messages.Models.Channels
             var format = options.Format == "W" ? ((IPersistableModel<WhatsAppMessageTemplateBindingsComponent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindingsComponent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindingsComponent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,7 +94,7 @@ namespace Azure.Communication.Messages.Models.Channels
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindingsComponent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindingsComponent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -111,7 +110,7 @@ namespace Azure.Communication.Messages.Models.Channels
                         return DeserializeWhatsAppMessageTemplateBindingsComponent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindingsComponent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindingsComponent)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -129,7 +128,7 @@ namespace Azure.Communication.Messages.Models.Channels
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<WhatsAppMessageTemplateBindingsComponent>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

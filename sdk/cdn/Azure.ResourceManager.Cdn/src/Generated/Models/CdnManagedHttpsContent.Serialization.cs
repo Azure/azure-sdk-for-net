@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<CdnManagedHttpsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CdnManagedHttpsContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CdnManagedHttpsContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("certificateSourceParameters"u8);
-            writer.WriteObjectValue(CertificateSourceParameters);
+            writer.WriteObjectValue<CdnCertificateSource>(CertificateSourceParameters, options);
             writer.WritePropertyName("certificateSource"u8);
             writer.WriteStringValue(CertificateSource.ToString());
             writer.WritePropertyName("protocolType"u8);
             writer.WriteStringValue(ProtocolType.ToString());
-            if (MinimumTlsVersion.HasValue)
+            if (Optional.IsDefined(MinimumTlsVersion))
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToSerialString());
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<CdnManagedHttpsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CdnManagedHttpsContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CdnManagedHttpsContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CdnManagedHttpsContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CdnManagedHttpsContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeCdnManagedHttpsContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CdnManagedHttpsContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CdnManagedHttpsContent)} does not support reading '{options.Format}' format.");
             }
         }
 

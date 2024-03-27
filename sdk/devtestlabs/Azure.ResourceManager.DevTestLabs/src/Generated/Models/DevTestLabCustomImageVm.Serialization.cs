@@ -22,24 +22,24 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabCustomImageVm>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabCustomImageVm)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabCustomImageVm)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SourceVmId != null)
+            if (Optional.IsDefined(SourceVmId))
             {
                 writer.WritePropertyName("sourceVmId"u8);
                 writer.WriteStringValue(SourceVmId);
             }
-            if (WindowsOSInfo != null)
+            if (Optional.IsDefined(WindowsOSInfo))
             {
                 writer.WritePropertyName("windowsOsInfo"u8);
-                writer.WriteObjectValue(WindowsOSInfo);
+                writer.WriteObjectValue<WindowsOSInfo>(WindowsOSInfo, options);
             }
-            if (LinuxOSInfo != null)
+            if (Optional.IsDefined(LinuxOSInfo))
             {
                 writer.WritePropertyName("linuxOsInfo"u8);
-                writer.WriteObjectValue(LinuxOSInfo);
+                writer.WriteObjectValue<LinuxOSInfo>(LinuxOSInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabCustomImageVm>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabCustomImageVm)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabCustomImageVm)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabCustomImageVm)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabCustomImageVm)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeDevTestLabCustomImageVm(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabCustomImageVm)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabCustomImageVm)} does not support reading '{options.Format}' format.");
             }
         }
 
