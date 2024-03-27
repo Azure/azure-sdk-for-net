@@ -228,6 +228,9 @@
 # PRLabel: %Cognitive - Anomaly Detector
 /sdk/anomalydetector/                                              @conhua @mengaims @juaduan @moreOver0
 
+# ServiceLabel %API Center
+/sdk/apicenter/                                                    @alexyaang @azaslonov
+
 # ServiceLabel: %Cognitive - Anomaly Detector
 # ServiceOwners:                                                   @conhua @mengaims @juaduan @moreOver0
 
