@@ -107,7 +107,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="errorCode"> The error code of the search. </param>
         /// <param name="error"> Mapping Error Messages to Codes. </param>
         /// <returns> A new <see cref="PhoneNumbers.PhoneNumberSearchResult"/> instance for mocking. </returns>
-        public static PhoneNumberSearchResult PhoneNumberSearchResult(string searchId = null, IEnumerable<string> phoneNumbers = null, PhoneNumberType phoneNumberType = default, PhoneNumberAssignmentType assignmentType = default, PhoneNumberCapabilities capabilities = null, PhoneNumberCost cost = null, DateTimeOffset searchExpiresOn = default, int? errorCode = null, PhoneNumberSearchResultError? error = null)
+        public static PhoneNumberSearchResult PhoneNumberSearchResult(string searchId = null, IEnumerable<string> phoneNumbers = null, PhoneNumberType phoneNumberType = default, PhoneNumberAssignmentType assignmentType = default, PhoneNumberCapabilities capabilities = null, PhoneNumberCost cost = null, DateTimeOffset searchExpiresOn = default, int? errorCode = null, ErrorMessage? error = null)
         {
             phoneNumbers ??= new List<string>();
 
@@ -121,6 +121,118 @@ namespace Azure.Communication.PhoneNumbers
                 searchExpiresOn,
                 errorCode,
                 error);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.PhoneNumbersBrowseResult"/>. </summary>
+        /// <param name="phoneNumbers"> The phone numbers that are available for purchase. </param>
+        /// <returns> A new <see cref="PhoneNumbers.PhoneNumbersBrowseResult"/> instance for mocking. </returns>
+        public static PhoneNumbersBrowseResult PhoneNumbersBrowseResult(IEnumerable<AvailablePhoneNumber> phoneNumbers = null)
+        {
+            phoneNumbers ??= new List<AvailablePhoneNumber>();
+
+            return new PhoneNumbersBrowseResult(phoneNumbers?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.AvailablePhoneNumber"/>. </summary>
+        /// <param name="id"> The id of the phone number. </param>
+        /// <param name="countryCode"> The ISO 3166-2 country code, e.g. US. </param>
+        /// <param name="phoneNumber"> The phone number in E.164 format, e.g. +11234567890. </param>
+        /// <param name="capabilities"> Capabilities of a phone number. </param>
+        /// <param name="phoneNumberType"> Represents the number type of the offering. </param>
+        /// <param name="assignmentType"> Represents the assignment type of the offering. Also known as the use case. </param>
+        /// <param name="cost"></param>
+        /// <param name="status"></param>
+        /// <param name="error"> If status is error, this will contain the error details. </param>
+        /// <returns> A new <see cref="PhoneNumbers.AvailablePhoneNumber"/> instance for mocking. </returns>
+        public static AvailablePhoneNumber AvailablePhoneNumber(string id = null, string countryCode = null, string phoneNumber = null, PhoneNumberCapabilities capabilities = null, PhoneNumberType phoneNumberType = default, PhoneNumberAssignmentType assignmentType = default, AvailablePhoneNumberCost cost = null, AvailablePhoneNumberStatus? status = null, AvailablePhoneNumberError error = null)
+        {
+            return new AvailablePhoneNumber(
+                id,
+                countryCode,
+                phoneNumber,
+                capabilities,
+                phoneNumberType,
+                assignmentType,
+                cost,
+                status,
+                error);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.AvailablePhoneNumberCost"/>. </summary>
+        /// <param name="amount"> The cost amount. </param>
+        /// <param name="isoCurrencySymbol"> The ISO 4217 currency code for the cost amount, e.g. USD. </param>
+        /// <param name="billingFrequency"> The frequency with which the cost gets billed. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="isoCurrencySymbol"/> is null. </exception>
+        /// <returns> A new <see cref="PhoneNumbers.AvailablePhoneNumberCost"/> instance for mocking. </returns>
+        public static AvailablePhoneNumberCost AvailablePhoneNumberCost(double amount = default, string isoCurrencySymbol = null, BillingFrequency billingFrequency = default)
+        {
+            if (isoCurrencySymbol == null)
+            {
+                throw new ArgumentNullException(nameof(isoCurrencySymbol));
+            }
+
+            return new AvailablePhoneNumberCost(amount, isoCurrencySymbol, billingFrequency);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.AvailablePhoneNumberError"/>. </summary>
+        /// <param name="code"></param>
+        /// <param name="message"></param>
+        /// <returns> A new <see cref="PhoneNumbers.AvailablePhoneNumberError"/> instance for mocking. </returns>
+        public static AvailablePhoneNumberError AvailablePhoneNumberError(string code = null, string message = null)
+        {
+            return new AvailablePhoneNumberError(code, message);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.PhoneNumbersReservation"/>. </summary>
+        /// <param name="id"> The id of the reservation. </param>
+        /// <param name="expiresAt"> The time at which the reservation will expire. If a reservation is not purchased before this time, all of the reserved phone numbers will be released and made available for others to purchase. </param>
+        /// <param name="phoneNumbers"> Dictionary of &lt;AvailablePhoneNumber&gt;. </param>
+        /// <param name="status"></param>
+        /// <returns> A new <see cref="PhoneNumbers.PhoneNumbersReservation"/> instance for mocking. </returns>
+        public static PhoneNumbersReservation PhoneNumbersReservation(string id = null, DateTimeOffset? expiresAt = null, IDictionary<string, AvailablePhoneNumber> phoneNumbers = null, ReservationStatus? status = null)
+        {
+            phoneNumbers ??= new Dictionary<string, AvailablePhoneNumber>();
+
+            return new PhoneNumbersReservation(id, expiresAt, phoneNumbers, status);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.PurchasedPhoneNumber"/>. </summary>
+        /// <param name="id"> The id of the phone number, e.g. 11234567890. </param>
+        /// <param name="phoneNumber"> String of the E.164 format of the phone number, e.g. +11234567890. </param>
+        /// <param name="countryCode"> The ISO 3166-2 code of the phone number's country, e.g. US. </param>
+        /// <param name="phoneNumberType"> The phone number's type, e.g. geographic, tollFree. </param>
+        /// <param name="capabilities"> Capabilities of a phone number. </param>
+        /// <param name="assignmentType"> The assignment type of the phone number. A phone number can be assigned to a person, or to an application. </param>
+        /// <param name="purchaseDate"> The date and time that the phone number was purchased. </param>
+        /// <param name="cost"> The incurred cost for a single phone number. </param>
+        /// <param name="operatorId"> Id of the operator that provided the number. </param>
+        /// <param name="operatorName"> Name of the operator that provided the number. </param>
+        /// <param name="phoneNumberSource"> Source of the number, e.g. Cloud or OperatorConnect. </param>
+        /// <returns> A new <see cref="PhoneNumbers.PurchasedPhoneNumber"/> instance for mocking. </returns>
+        public static PurchasedPhoneNumber PurchasedPhoneNumber(string id = null, string phoneNumber = null, string countryCode = null, PhoneNumberType phoneNumberType = default, PhoneNumberCapabilities capabilities = null, PhoneNumberAssignmentType assignmentType = default, DateTimeOffset purchaseDate = default, PhoneNumberCost cost = null, string operatorId = null, string operatorName = null, PhoneNumberSource? phoneNumberSource = null)
+        {
+            return new PurchasedPhoneNumber(
+                id,
+                phoneNumber,
+                countryCode,
+                phoneNumberType,
+                capabilities,
+                assignmentType,
+                purchaseDate,
+                cost,
+                operatorId,
+                operatorName,
+                phoneNumberSource);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.PurchasedPhoneNumberCapabilities"/>. </summary>
+        /// <param name="calling"> Capability value for calling. </param>
+        /// <param name="sms"> Capability value for SMS. </param>
+        /// <param name="tenDLCCampaignBriefId"> Ten DLC campaign brief id attached to the number. </param>
+        /// <returns> A new <see cref="PhoneNumbers.PurchasedPhoneNumberCapabilities"/> instance for mocking. </returns>
+        public static PurchasedPhoneNumberCapabilities PurchasedPhoneNumberCapabilities(PhoneNumberCapabilityType calling = default, PhoneNumberCapabilityType sms = default, string tenDLCCampaignBriefId = null)
+        {
+            return new PurchasedPhoneNumberCapabilities(calling, sms, tenDLCCampaignBriefId);
         }
 
         /// <summary> Initializes a new instance of <see cref="PhoneNumbers.OperatorInformationResult"/>. </summary>

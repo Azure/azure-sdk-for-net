@@ -313,6 +313,97 @@ namespace Azure.Communication.PhoneNumbers.Tests
         }
 
         [Test]
+        [SyncOnly]
+        public void CreateSearchPurchaseReleaseDNR()
+        {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests)
+            {
+                Assert.Ignore("Skip phone number live tests flag is on.");
+            }
+            var client = CreateClient();
+            // ToDo replace US with DNR countries "IT","AT","FR","NO","PT" .
+            var searchOperation = client.StartSearchAvailablePhoneNumbers("US", PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application,
+                new PhoneNumberCapabilities(PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.None));
+
+            while (!searchOperation.HasCompleted)
+            {
+                SleepIfNotInPlaybackMode();
+                searchOperation.UpdateStatus();
+            }
+
+            Assert.IsTrue(searchOperation.HasCompleted);
+            Assert.AreEqual(1, searchOperation.Value.PhoneNumbers.Count);
+            Assert.AreEqual(PhoneNumberAssignmentType.Application, searchOperation.Value.AssignmentType);
+            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, searchOperation.Value.Capabilities.Calling);
+            Assert.AreEqual(PhoneNumberCapabilityType.None, searchOperation.Value.Capabilities.Sms);
+            Assert.AreEqual(PhoneNumberType.TollFree, searchOperation.Value.PhoneNumberType);
+
+            var phoneNumber = searchOperation.Value.PhoneNumbers.Single();
+            var searchId = searchOperation.Value.SearchId;
+            var consentToNotResellNumbers = true;
+
+            var purchaseOperation = client.StartPurchasePhoneNumbers(searchId, consentToNotResellNumbers);
+
+            while (!purchaseOperation.HasCompleted)
+            {
+                SleepIfNotInPlaybackMode();
+                purchaseOperation.UpdateStatus();
+            }
+
+            Assert.AreEqual(purchaseOperation.GetRawResponse().Status, 200);
+
+            var releaseOperation = client.StartReleasePhoneNumber(phoneNumber);
+
+            while (!releaseOperation.HasCompleted)
+            {
+                SleepIfNotInPlaybackMode();
+                releaseOperation.UpdateStatus();
+            }
+
+            Assert.IsTrue(releaseOperation.HasCompleted);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void CreateSearchPurchaseFailureDNR()
+        {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests)
+            {
+                Assert.Ignore("Skip phone number live tests flag is on.");
+            }
+            var client = CreateClient();
+            // ToDo replace US with DNR countries "IT","AT","FR","NO","PT" .
+            var searchOperation = client.StartSearchAvailablePhoneNumbers("US", PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application,
+                new PhoneNumberCapabilities(PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.None));
+
+            while (!searchOperation.HasCompleted)
+            {
+                SleepIfNotInPlaybackMode();
+                searchOperation.UpdateStatus();
+            }
+
+            Assert.IsTrue(searchOperation.HasCompleted);
+            Assert.AreEqual(1, searchOperation.Value.PhoneNumbers.Count);
+            Assert.AreEqual(PhoneNumberAssignmentType.Application, searchOperation.Value.AssignmentType);
+            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, searchOperation.Value.Capabilities.Calling);
+            Assert.AreEqual(PhoneNumberCapabilityType.None, searchOperation.Value.Capabilities.Sms);
+            Assert.AreEqual(PhoneNumberType.TollFree, searchOperation.Value.PhoneNumberType);
+
+            var phoneNumber = searchOperation.Value.PhoneNumbers.Single();
+            var searchId = searchOperation.Value.SearchId;
+            var consentToNotResellNumbers = false;
+
+            try
+            {
+                var purchaseOperation = client.StartPurchasePhoneNumbers(searchId, consentToNotResellNumbers);
+            }
+            catch (Exception ex)
+            {
+                Assert.NotNull(ex.Message);
+            }
+        }
+
+        [Test]
         [AsyncOnly]
         public async Task GetPhoneNumberSearchResultWithNullSearchIdAsync()
         {
@@ -473,7 +564,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var client = CreateClient();
             try
             {
-                var purchaseOperation = await client.StartPurchasePhoneNumbersAsync("some-invalid-id");
+                var purchaseOperation = await client.StartPurchasePhoneNumbersAsync("some-invalid-id", true);
             }
             catch (RequestFailedException ex)
             {
@@ -489,7 +580,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var client = CreateClient();
             try
             {
-                var purchaseOperation = client.StartPurchasePhoneNumbers("some-invalid-id");
+                var purchaseOperation = client.StartPurchasePhoneNumbers("some-invalid-id", true);
             }
             catch (RequestFailedException ex)
             {
@@ -616,7 +707,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var client = CreateClient();
             var phoneNumber = await client.GetPurchasedPhoneNumberAsync(number);
             PhoneNumberCapabilityType callingCapabilityType = phoneNumber.Value.Capabilities.Calling == PhoneNumberCapabilityType.Inbound ? PhoneNumberCapabilityType.Outbound : PhoneNumberCapabilityType.Inbound;
-            PhoneNumberCapabilityType smsCapabilityType = phoneNumber.Value.Capabilities.Sms == PhoneNumberCapabilityType.InboundOutbound ? PhoneNumberCapabilityType.Outbound : PhoneNumberCapabilityType.InboundOutbound;
+            PhoneNumberCapabilityType smsCapabilityType = phoneNumber.Value.Capabilities.Sms == PhoneNumberCapabilityType.InboundOutbound ? PhoneNumberCapabilityType.Outbound : PhoneNumberCapabilityType.None;
 
             var updateOperation = await client.StartUpdateCapabilitiesAsync(number, callingCapabilityType, smsCapabilityType);
             await updateOperation.WaitForCompletionAsync();
@@ -641,7 +732,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var client = CreateClient();
             var phoneNumber = client.GetPurchasedPhoneNumber(number);
             PhoneNumberCapabilityType callingCapabilityType = phoneNumber.Value.Capabilities.Calling == PhoneNumberCapabilityType.Inbound ? PhoneNumberCapabilityType.Outbound : PhoneNumberCapabilityType.Inbound;
-            PhoneNumberCapabilityType smsCapabilityType = phoneNumber.Value.Capabilities.Sms == PhoneNumberCapabilityType.InboundOutbound ? PhoneNumberCapabilityType.Outbound : PhoneNumberCapabilityType.InboundOutbound;
+            PhoneNumberCapabilityType smsCapabilityType = phoneNumber.Value.Capabilities.Sms == PhoneNumberCapabilityType.InboundOutbound ? PhoneNumberCapabilityType.Outbound : PhoneNumberCapabilityType.None;
 
             var updateOperation = InstrumentOperation(client.StartUpdateCapabilities(number, callingCapabilityType, smsCapabilityType));
 
@@ -1298,7 +1389,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             var client = CreateClient();
 
-            var results = await client.SearchOperatorInformationAsync(phoneNumbers);
+            var results = await client.SearchOperatorInformationAsync(phoneNumbers, null);
             Assert.AreEqual(phoneNumber, results.Value.Values[0].PhoneNumber);
         }
 
@@ -1311,7 +1402,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             var client = CreateClient();
 
-            var results = client.SearchOperatorInformation(phoneNumbers);
+            var results = client.SearchOperatorInformation(phoneNumbers, null);
             Assert.AreEqual(phoneNumber, results.Value.Values[0].PhoneNumber);
         }
 
@@ -1326,7 +1417,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             try
             {
-                var results = await client.SearchOperatorInformationAsync(phoneNumbers);
+                var results = await client.SearchOperatorInformationAsync(phoneNumbers, null);
             }
             catch (RequestFailedException ex)
             {
@@ -1348,7 +1439,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             try
             {
-                var results = client.SearchOperatorInformation(phoneNumbers);
+                var results = client.SearchOperatorInformation(phoneNumbers, null);
             }
             catch (RequestFailedException ex)
             {

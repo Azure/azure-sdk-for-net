@@ -1,6 +1,6 @@
 {
-  "AssetsRepo": "Azure/azure-sdk-assets",
-  "AssetsRepoPrefixPath": "net",
-  "TagPrefix": "net/communication/Azure.Communication.PhoneNumbers",
-  "Tag": "net/communication/Azure.Communication.PhoneNumbers_862930fd40"
+    "AssetsRepo": "Azure/azure-sdk-assets",
+    "AssetsRepoPrefixPath": "net",
+    "TagPrefix": "net/communication/Azure.Communication.PhoneNumbers",
+    "Tag": "net/communication/Azure.Communication.PhoneNumbers_43aeac8c6a"
 }

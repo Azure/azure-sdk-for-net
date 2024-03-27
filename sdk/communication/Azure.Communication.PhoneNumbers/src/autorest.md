@@ -7,10 +7,10 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 
 ``` yaml
 public-clients: true
-tag: package-phonenumber-2024-03-01-preview
+tag: package-preview-2024-05
 model-namespace: false
 require:
-    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b56afb26c5450157006a3a1d9be57bae429051a2/specification/communication/data-plane/PhoneNumbers/readme.md
+    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/90ed80785885293a5f7401e1e2b03dc9ced63277/specification/communication/data-plane/PhoneNumbers/readme.md
 title: Phone numbers
 payload-flattening-threshold: 3
 generation1-convenience-client: true
@@ -32,13 +32,32 @@ directive:
   transform: >
     $["x-ms-client-name"] = "twoLetterIsoCountryName";
 ```
-
+### Change naming of Error to ErrorMessage
 ``` yaml
 directive:
   from: swagger-document
-  where: $.definitions.PhoneNumberSearchResult.properties.error.x-ms-enum
+  where: "$.definitions.PhoneNumberSearchResult.properties.error"
   transform: >
-    $["name"] = "PhoneNumberSearchResultError";
+    $["x-ms-enum"].name = "ErrorMessage";
+```
+
+### Change naming of PhoneNumberBrowseCapabilitiesRequest to PhoneNumberBrowseCapabilitiesContent
+``` yaml
+directive:
+  from: swagger-document
+  where: "$.definitions.PhoneNumberBrowseCapabilitiesRequest"
+  transform: >
+    $["x-ms-client-name"] = "PhoneNumberBrowseCapabilitiesContent";
+```
+
+
+### Change naming of PhoneNumbersBrowseRequest to PhoneNumbersBrowseContent
+``` yaml
+directive:
+  from: swagger-document
+  where: "$.definitions.PhoneNumbersBrowseRequest"
+  transform: >
+    $["x-ms-client-name"] = "PhoneNumbersBrowseContent";
 ```
 
 ``` yaml
@@ -48,3 +67,4 @@ directive:
   transform: >
     $["format"] = "";
 ```
+

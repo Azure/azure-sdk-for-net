@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    /// <summary> Represents a search result containing format and operator information associated with the requested phone numbers. </summary>
+    /// <summary> Represents a search result containing operator information associated with the requested phone numbers. </summary>
     public partial class OperatorInformationResult
     {
         /// <summary> Initializes a new instance of <see cref="OperatorInformationResult"/>. </summary>
