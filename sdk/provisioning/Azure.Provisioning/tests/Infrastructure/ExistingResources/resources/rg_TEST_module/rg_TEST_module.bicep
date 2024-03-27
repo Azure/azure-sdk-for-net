@@ -25,18 +25,6 @@ resource blobService_KtyZZZEH1 'Microsoft.Storage/storageAccounts/blobServices@2
   name: '${storageAccount_LhqOcwcwC}/existingBlobService'
 }
 
-resource webSite_C2Aq73IJb 'Microsoft.Web/sites@2021-02-01' existing = {
-  name: 'existingWebSite'
-}
-
-resource webSiteConfigLogs_7A7a8DHfx 'Microsoft.Web/sites/config@2021-02-01' existing = {
-  name: '${webSite_C2Aq73IJb}/existingWebSiteConfigLogs'
-}
-
-resource webSitePublishingCredentialPolicy_thziHKVBm 'Microsoft.Web/sites/basicPublishingCredentialsPolicies@2021-02-01' existing = {
-  name: '${webSite_C2Aq73IJb}/existingWebSitePublishingCredentialPolicy'
-}
-
 resource postgreSqlFlexibleServer_0TaJ8imA6 'Microsoft.DBforPostgreSQL/flexibleServers@2023-03-01-preview' existing = {
   name: 'existingPostgreSql'
 }
@@ -69,23 +57,19 @@ resource deploymentScript_QqrJz7yzH 'Microsoft.Resources/deploymentScripts@2020-
   name: 'existingDeploymentScript'
 }
 
-resource appServicePlan_D5p3EVvRT 'Microsoft.Web/serverfarms@2021-02-01' existing = {
-  name: 'existingAppServicePlan'
-}
-
-resource serviceBusNamespace_0J6N7TWQp 'Microsoft.ServiceBus/namespaces@2022-10-01-preview' existing = {
+resource serviceBusNamespace_0J6N7TWQp 'Microsoft.ServiceBus/namespaces@2021-11-01' existing = {
   name: 'existingSbNamespace'
 }
 
-resource serviceBusQueue_YWGfZ7Jp4 'Microsoft.ServiceBus/namespaces/queues@2022-10-01-preview' existing = {
+resource serviceBusQueue_YWGfZ7Jp4 'Microsoft.ServiceBus/namespaces/queues@2021-11-01' existing = {
   name: '${serviceBusNamespace_0J6N7TWQp}/existingSbQueue'
 }
 
-resource serviceBusTopic_xubvxdBtk 'Microsoft.ServiceBus/namespaces/topics@2022-10-01-preview' existing = {
+resource serviceBusTopic_xubvxdBtk 'Microsoft.ServiceBus/namespaces/topics@2021-11-01' existing = {
   name: '${serviceBusNamespace_0J6N7TWQp}/existingSbTopic'
 }
 
-resource serviceBusSubscription_EnDkO3Vba 'Microsoft.ServiceBus/namespaces/topics/subscriptions@2022-10-01-preview' existing = {
+resource serviceBusSubscription_EnDkO3Vba 'Microsoft.ServiceBus/namespaces/topics/subscriptions@2021-11-01' existing = {
   name: '${serviceBusTopic_xubvxdBtk}/existingSbSubscription'
 }
 
@@ -93,15 +77,15 @@ resource searchService_Szsp3FYvd 'Microsoft.Search/searchServices@2023-11-01' ex
   name: 'existingSearch'
 }
 
-resource eventHubsNamespace_dQTmc5DUS 'Microsoft.EventHub/namespaces@2022-10-01-preview' existing = {
+resource eventHubsNamespace_dQTmc5DUS 'Microsoft.EventHub/namespaces@2021-11-01' existing = {
   name: 'existingEhNamespace'
 }
 
-resource eventHub_H6DI0xDvi 'Microsoft.EventHub/namespaces/eventhubs@2022-10-01-preview' existing = {
+resource eventHub_H6DI0xDvi 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' existing = {
   name: '${eventHubsNamespace_dQTmc5DUS}/existingHub'
 }
 
-resource eventHubsConsumerGroup_YKe70TLwz 'Microsoft.EventHub/namespaces/eventhubs/consumergroups@2022-10-01-preview' existing = {
+resource eventHubsConsumerGroup_YKe70TLwz 'Microsoft.EventHub/namespaces/eventhubs/consumergroups@2021-11-01' existing = {
   name: '${eventHub_H6DI0xDvi}/existingEhConsumerGroup'
 }
 
@@ -119,9 +103,4 @@ resource operationalInsightsWorkspace_8Dwma7cn9 'Microsoft.OperationalInsights/w
 
 resource userAssignedIdentity_AHWXCnFeG 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' existing = {
   name: 'existingUserAssignedIdentity'
-}
-
-resource applicationSettingsResource_6DtpuGITF 'Microsoft.Web/sites/config@2021-02-01' = {
-  parent: webSite_C2Aq73IJb
-  name: 'appsettings'
 }

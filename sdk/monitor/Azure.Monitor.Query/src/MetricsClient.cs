@@ -73,7 +73,7 @@ namespace Azure.Monitor.Query
         {
             if (resourceIds.Count() == 0 || metricNames.Count == 0)
             {
-                throw new ArgumentException("Resource IDs or metricNames can not be empty");
+                throw new ArgumentException($"{nameof(resourceIds)} or {nameof(metricNames)} cannot be empty");
             }
             if (metricNamespace == null)
             {
@@ -107,7 +107,7 @@ namespace Azure.Monitor.Query
         {
             if (resourceIds.Count() == 0 || metricNames.Count == 0)
             {
-                throw new ArgumentException("Resource IDs or metricNames can not be empty");
+                throw new ArgumentException($"{nameof(resourceIds)} or {nameof(metricNames)} cannot be empty");
             }
             if (metricNamespace == null)
             {
