@@ -68,6 +68,27 @@ namespace Azure.Security.CodeTransparency.Tests
         }
 
         [Test]
+        public async Task CreateEntryAsync_request_accepted()
+        {
+            var mockedResponse = new MockResponse(202);
+            mockedResponse.SetContent("{\"operationId\": \"foobar\"}");
+            var mockTransport = new MockTransport(mockedResponse);
+            var options = new CodeTransparencyClientOptions
+            {
+                Transport = mockTransport,
+                IdentityClientEndpoint = "https://foo.bar.com"
+            };
+
+            CodeTransparencyClient client = new(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
+            BinaryData content = BinaryData.FromString("Hello World!");
+            Operation<GetOperationResult> response = await client.CreateEntryAsync(content);
+
+            Assert.AreEqual("https://foo.bar.com/entries?api-version=2024-01-11-preview", mockTransport.Requests[0].Uri.ToString());
+            Assert.AreEqual(false, response.HasCompleted);
+            Assert.AreEqual("foobar", response.Id);
+        }
+
+        [Test]
         public async Task CreateEntryAsync_retries_unsuccessful_post()
         {
             var mockedResponse = new MockResponse(200);
