@@ -16,13 +16,13 @@ namespace Azure.Monitor.Query.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MetricNamespaceName"/>. </summary>
-        /// <param name="metricNamespaceNameValue"> The metric namespace name. </param>
-        internal MetricNamespaceName(string metricNamespaceNameValue)
+        /// <param name="metricNamespaceNameProperty"> The metric namespace name. </param>
+        internal MetricNamespaceName(string metricNamespaceNameProperty)
         {
-            MetricNamespaceNameValue = metricNamespaceNameValue;
+            MetricNamespaceNameProperty = metricNamespaceNameProperty;
         }
 
         /// <summary> The metric namespace name. </summary>
-        public string MetricNamespaceNameValue { get; }
+        public string MetricNamespaceNameProperty { get; }
     }
 }
