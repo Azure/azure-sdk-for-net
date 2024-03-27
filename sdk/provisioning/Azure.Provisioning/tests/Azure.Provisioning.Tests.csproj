@@ -16,10 +16,4 @@
     <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="Infrastructure\ContainerApps\main.bicep" />
-    <None Remove="Infrastructure\CanAssignParameterToMultipleResources\main.json" />
-    <None Remove="Infrastructure\AppConfiguration\main.json" />
-  </ItemGroup>
-
 </Project>
