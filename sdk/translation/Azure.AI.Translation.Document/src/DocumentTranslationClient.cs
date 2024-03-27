@@ -261,6 +261,94 @@ namespace Azure.AI.Translation.Document
         }
 
         #region supported formats functions
+        /// <summary>
+        /// Get the list of the document formats supported by the Document Translation service.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual Response<IReadOnlyList<DocumentTranslationFileFormat>> GetSupportedDocumentFormats(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetSupportedDocumentFormats)}");
+            scope.Start();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            try
+            {
+                Response resp = GetDocumentTranslationClient().GetSupportedDocumentFormats(context);
+                var response = Response.FromValue(SupportedFileFormats.FromResponse(resp), resp);
+                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the list of the document formats supported by the Document Translation service.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual async Task<Response<IReadOnlyList<DocumentTranslationFileFormat>>> GetSupportedDocumentFormatsAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetSupportedDocumentFormats)}");
+            scope.Start();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            try
+            {
+                Response resp = await GetDocumentTranslationClient().GetSupportedDocumentFormatsAsync(context).ConfigureAwait(false);
+                var response = Response.FromValue(SupportedFileFormats.FromResponse(resp), resp);
+                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the list of the glossary formats supported by the Document Translation service.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual Response<IReadOnlyList<DocumentTranslationFileFormat>> GetSupportedGlossaryFormats(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetSupportedGlossaryFormats)}");
+            scope.Start();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            try
+            {
+                Response resp = GetDocumentTranslationClient().GetSupportedGlossaryFormats(context);
+                var response = Response.FromValue(SupportedFileFormats.FromResponse(resp), resp);
+                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the list of the glossary formats supported by the Document Translation service.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual async Task<Response<IReadOnlyList<DocumentTranslationFileFormat>>> GetSupportedGlossaryFormatsAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetSupportedGlossaryFormats)}");
+            scope.Start();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            try
+            {
+                Response resp = await GetDocumentTranslationClient().GetSupportedGlossaryFormatsAsync(context).ConfigureAwait(false);
+                var response = Response.FromValue(SupportedFileFormats.FromResponse(resp), resp);
+                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+        /*
         /// <summary> Returns a list of supported document formats. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks>
@@ -321,7 +409,7 @@ namespace Azure.AI.Translation.Document
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetSupportedGlossaryFormats(context);
             return Response.FromValue(SupportedFileFormats.FromResponse(response), response);
-        }
+        } */
         #endregion
 
         #region nobody wants to see these

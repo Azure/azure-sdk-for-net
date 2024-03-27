@@ -776,7 +776,7 @@ StorageUriKind = StorageInputUriKind.Folder,
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            Response<SupportedFileFormats> response = client.GetSupportedDocumentFormats();
+            var response = client.GetSupportedDocumentFormats();
         }
 
         [Test]
@@ -787,7 +787,7 @@ StorageUriKind = StorageInputUriKind.Folder,
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            Response<SupportedFileFormats> response = await client.GetSupportedDocumentFormatsAsync();
+            var response = await client.GetSupportedDocumentFormatsAsync();
         }
 
         [Test]
@@ -834,7 +834,7 @@ StorageUriKind = StorageInputUriKind.Folder,
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            Response<SupportedFileFormats> response = client.GetSupportedDocumentFormats();
+            var response = client.GetSupportedDocumentFormats();
         }
 
         [Test]
@@ -845,7 +845,7 @@ StorageUriKind = StorageInputUriKind.Folder,
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            Response<SupportedFileFormats> response = await client.GetSupportedDocumentFormatsAsync();
+           var response = await client.GetSupportedDocumentFormatsAsync();
         }
 
         [Test]
@@ -888,7 +888,7 @@ StorageUriKind = StorageInputUriKind.Folder,
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            Response<SupportedFileFormats> response = client.GetSupportedGlossaryFormats();
+            var response = client.GetSupportedGlossaryFormats();
         }
 
         [Test]
@@ -899,7 +899,7 @@ StorageUriKind = StorageInputUriKind.Folder,
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            Response<SupportedFileFormats> response = await client.GetSupportedGlossaryFormatsAsync();
+            var response = await client.GetSupportedGlossaryFormatsAsync();
         }
 
         [Test]
@@ -946,7 +946,7 @@ StorageUriKind = StorageInputUriKind.Folder,
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            Response<SupportedFileFormats> response = client.GetSupportedGlossaryFormats();
+            var response = client.GetSupportedGlossaryFormats();
         }
 
         [Test]
@@ -957,7 +957,7 @@ StorageUriKind = StorageInputUriKind.Folder,
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            Response<SupportedFileFormats> response = await client.GetSupportedGlossaryFormatsAsync();
+            var response = await client.GetSupportedGlossaryFormatsAsync();
         }
 
         [Test]

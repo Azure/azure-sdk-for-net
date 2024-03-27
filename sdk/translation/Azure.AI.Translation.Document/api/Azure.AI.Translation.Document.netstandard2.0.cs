@@ -1,14 +1,5 @@
 namespace Azure.AI.Translation.Document
 {
-    public partial class AzureAITranslationDocumentClientOptions : Azure.Core.ClientOptions
-    {
-        public AzureAITranslationDocumentClientOptions(Azure.AI.Translation.Document.AzureAITranslationDocumentClientOptions.ServiceVersion version = Azure.AI.Translation.Document.AzureAITranslationDocumentClientOptions.ServiceVersion.V2024_05_01) { }
-        public Azure.AI.Translation.Document.DocumentTranslationAudience? Audience { get { throw null; } set { } }
-        public enum ServiceVersion
-        {
-            V2024_05_01 = 1,
-        }
-    }
     public partial class DocumentFilterOrder
     {
         public DocumentFilterOrder(Azure.AI.Translation.Document.DocumentFilterProperty property, bool ascending = true) { }
@@ -38,6 +29,10 @@ namespace Azure.AI.Translation.Document
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Document.DocumentStatusResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Document.DocumentStatusResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class DocumentTranslateContent
+    {
+        public DocumentTranslateContent() { }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DocumentTranslationAudience : System.IEquatable<Azure.AI.Translation.Document.DocumentTranslationAudience>
     {
@@ -61,9 +56,9 @@ namespace Azure.AI.Translation.Document
     {
         protected DocumentTranslationClient() { }
         public DocumentTranslationClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
-        public DocumentTranslationClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Translation.Document.AzureAITranslationDocumentClientOptions options) { }
+        public DocumentTranslationClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Translation.Document.DocumentTranslationClientOptions options) { }
         public DocumentTranslationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public DocumentTranslationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Translation.Document.AzureAITranslationDocumentClientOptions options) { }
+        public DocumentTranslationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Translation.Document.DocumentTranslationClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response CancelTranslation(System.Guid id, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.AI.Translation.Document.TranslationStatusResult> CancelTranslation(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -83,13 +78,13 @@ namespace Azure.AI.Translation.Document
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public virtual Azure.Response GetSupportedDocumentFormats(Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Document.DocumentTranslationFileFormat>> GetSupportedDocumentFormats(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Translation.Document.Models.SupportedFileFormats> GetSupportedDocumentFormats(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSupportedDocumentFormatsAsync(Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Document.DocumentTranslationFileFormat>>> GetSupportedDocumentFormatsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Translation.Document.Models.SupportedFileFormats>> GetSupportedDocumentFormatsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetSupportedGlossaryFormats(Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Document.DocumentTranslationFileFormat>> GetSupportedGlossaryFormats(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Translation.Document.Models.SupportedFileFormats> GetSupportedGlossaryFormats(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSupportedGlossaryFormatsAsync(Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Document.DocumentTranslationFileFormat>>> GetSupportedGlossaryFormatsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Translation.Document.Models.SupportedFileFormats>> GetSupportedGlossaryFormatsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetSupportedStorageSources(Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.AI.Translation.Document.Models.SupportedStorageSources> GetSupportedStorageSources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSupportedStorageSourcesAsync(Azure.RequestContext context) { throw null; }
@@ -114,6 +109,15 @@ namespace Azure.AI.Translation.Document
         public virtual System.Threading.Tasks.Task<Azure.AI.Translation.Document.DocumentTranslationOperation> StartTranslationAsync(System.Collections.Generic.IEnumerable<Azure.AI.Translation.Document.DocumentTranslationInput> inputs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
+    }
+    public partial class DocumentTranslationClientOptions : Azure.Core.ClientOptions
+    {
+        public DocumentTranslationClientOptions(Azure.AI.Translation.Document.DocumentTranslationClientOptions.ServiceVersion version = Azure.AI.Translation.Document.DocumentTranslationClientOptions.ServiceVersion.V1_0) { }
+        public Azure.AI.Translation.Document.DocumentTranslationAudience? Audience { get { throw null; } set { } }
+        public enum ServiceVersion
+        {
+            V1_0 = 1,
+        }
     }
     public partial class DocumentTranslationFileFormat : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.DocumentTranslationFileFormat>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Document.DocumentTranslationFileFormat>
     {
@@ -227,18 +231,27 @@ namespace Azure.AI.Translation.Document
         public System.Collections.Generic.IList<Azure.AI.Translation.Document.TranslationFilterOrder> OrderBy { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.Translation.Document.DocumentTranslationStatus> Statuses { get { throw null; } }
     }
+    public partial class MultipartFormFileData
+    {
+        public MultipartFormFileData(string name, System.BinaryData content, string contentType) { }
+        public MultipartFormFileData(string name, System.BinaryData content, string contentType, System.Collections.Generic.IDictionary<string, string> headers) { }
+        public System.BinaryData Content { get { throw null; } }
+        public string ContentType { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Headers { get { throw null; } }
+        public string Name { get { throw null; } }
+    }
     public partial class SingleDocumentTranslationClient
     {
         protected SingleDocumentTranslationClient() { }
         public SingleDocumentTranslationClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
-        public SingleDocumentTranslationClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Translation.Document.AzureAITranslationDocumentClientOptions options) { }
+        public SingleDocumentTranslationClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Translation.Document.DocumentTranslationClientOptions options) { }
         public SingleDocumentTranslationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public SingleDocumentTranslationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Translation.Document.AzureAITranslationDocumentClientOptions options) { }
+        public SingleDocumentTranslationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Translation.Document.DocumentTranslationClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response<System.BinaryData> DocumentTranslate(string targetLanguage, Azure.AI.Translation.Document.Models.DocumentTranslateContent documentTranslateContent, string sourceLanguage = null, string category = null, bool? allowFallback = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response DocumentTranslate(string targetLanguage, Azure.Core.RequestContent content, string sourceLanguage = null, string category = null, bool? allowFallback = default(bool?), Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> DocumentTranslateAsync(string targetLanguage, Azure.AI.Translation.Document.Models.DocumentTranslateContent documentTranslateContent, string sourceLanguage = null, string category = null, bool? allowFallback = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DocumentTranslateAsync(string targetLanguage, Azure.Core.RequestContent content, string sourceLanguage = null, string category = null, bool? allowFallback = default(bool?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<System.BinaryData> DocumentTranslate(string targetLanguage, Azure.AI.Translation.Document.MultipartFormFileData sourceDocument, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Document.MultipartFormFileData> sourceGlossaries = null, string sourceLanguage = null, string category = null, bool? allowFallback = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DocumentTranslate(string targetLanguage, Azure.Core.RequestContent requestContent, string sourceLanguage = null, string category = null, bool? allowFallback = default(bool?), Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> DocumentTranslateAsync(string targetLanguage, Azure.AI.Translation.Document.MultipartFormFileData sourceDocument, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Document.MultipartFormFileData> sourceGlossaries = null, string sourceLanguage = null, string category = null, bool? allowFallback = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DocumentTranslateAsync(string targetLanguage, Azure.Core.RequestContent requestContent, string sourceLanguage = null, string category = null, bool? allowFallback = default(bool?), Azure.RequestContext context = null) { throw null; }
     }
     public enum StorageInputUriKind
     {
@@ -380,11 +393,11 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class AITranslationDocumentClientBuilderExtensions
     {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Translation.Document.DocumentTranslationClient, Azure.AI.Translation.Document.AzureAITranslationDocumentClientOptions> AddDocumentTranslationClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Translation.Document.DocumentTranslationClient, Azure.AI.Translation.Document.AzureAITranslationDocumentClientOptions> AddDocumentTranslationClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Translation.Document.DocumentTranslationClient, Azure.AI.Translation.Document.AzureAITranslationDocumentClientOptions> AddDocumentTranslationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Translation.Document.SingleDocumentTranslationClient, Azure.AI.Translation.Document.AzureAITranslationDocumentClientOptions> AddSingleDocumentTranslationClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Translation.Document.SingleDocumentTranslationClient, Azure.AI.Translation.Document.AzureAITranslationDocumentClientOptions> AddSingleDocumentTranslationClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Translation.Document.SingleDocumentTranslationClient, Azure.AI.Translation.Document.AzureAITranslationDocumentClientOptions> AddSingleDocumentTranslationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Translation.Document.DocumentTranslationClient, Azure.AI.Translation.Document.DocumentTranslationClientOptions> AddDocumentTranslationClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Translation.Document.DocumentTranslationClient, Azure.AI.Translation.Document.DocumentTranslationClientOptions> AddDocumentTranslationClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Translation.Document.DocumentTranslationClient, Azure.AI.Translation.Document.DocumentTranslationClientOptions> AddDocumentTranslationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Translation.Document.SingleDocumentTranslationClient, Azure.AI.Translation.Document.DocumentTranslationClientOptions> AddSingleDocumentTranslationClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Translation.Document.SingleDocumentTranslationClient, Azure.AI.Translation.Document.DocumentTranslationClientOptions> AddSingleDocumentTranslationClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Translation.Document.SingleDocumentTranslationClient, Azure.AI.Translation.Document.DocumentTranslationClientOptions> AddSingleDocumentTranslationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }
