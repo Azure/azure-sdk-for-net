@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
 
             // Update
             var standbyVirtualMachinePoolUpdate =
-                await standbyVirtualMachinePool.UpdateAsync(new StandbyVirtualMachinePoolResourcePatch() { ElasticityMaxReadyCapacity = increasedMaxReadyCapacity });
+                await standbyVirtualMachinePool.UpdateAsync(new StandbyVirtualMachinePoolPatch() { ElasticityMaxReadyCapacity = increasedMaxReadyCapacity });
             Assert.AreEqual(increasedMaxReadyCapacity, standbyVirtualMachinePoolUpdate.Value.Data.ElasticityMaxReadyCapacity);
             Assert.AreEqual(standbyPoolName, standbyVirtualMachinePool.Data.Name);
 

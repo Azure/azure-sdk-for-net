@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<UserAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserAuthentication)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserAuthentication)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,12 +31,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             if (Optional.IsDefined(UsernamePasswordCredentials))
             {
                 writer.WritePropertyName("usernamePasswordCredentials"u8);
-                writer.WriteObjectValue(UsernamePasswordCredentials);
+                writer.WriteObjectValue<UsernamePasswordCredentials>(UsernamePasswordCredentials, options);
             }
             if (Optional.IsDefined(X509Credentials))
             {
                 writer.WritePropertyName("x509Credentials"u8);
-                writer.WriteObjectValue(X509Credentials);
+                writer.WriteObjectValue<X509Credentials>(X509Credentials, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<UserAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserAuthentication)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserAuthentication)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UserAuthentication)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserAuthentication)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -141,7 +140,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                         return DeserializeUserAuthentication(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UserAuthentication)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserAuthentication)} does not support reading '{options.Format}' format.");
             }
         }
 
