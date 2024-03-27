@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Tests.Tests;
 
 public class MigrationSapDiscoveryTests : MigrationDiscoverySapManagementTestBase
 {
-    public MigrationSapDiscoveryTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+    public MigrationSapDiscoveryTests(bool isAsync) : base(isAsync)
     {
     }
 
