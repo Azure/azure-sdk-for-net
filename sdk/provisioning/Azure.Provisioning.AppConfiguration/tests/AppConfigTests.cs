@@ -39,7 +39,7 @@ namespace Azure.Provisioning.AppConfiguration.Tests
 
             infra.Build(GetOutputPath());
 
-            await ValidateBicepAsync();
+            await ValidateBicepAsync(parameters: BinaryData.FromObjectAsJson(new { existingAppConfig = new { value = "existingAppConfig" }}));
         }
     }
 }

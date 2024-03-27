@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Sql.Tests
 {
     public class SqlTests : ProvisioningTestBase
     {
-        protected SqlTests(bool isAsync) : base(isAsync)
+        public SqlTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -29,7 +29,14 @@ namespace Azure.Provisioning.Sql.Tests
             _ = new SqlDatabase(infrastructure, sqlServer);
             infrastructure.Build(GetOutputPath());
 
-            await ValidateBicepAsync();
+            await ValidateBicepAsync(
+                parameters: BinaryData.FromObjectAsJson(
+                    new
+                    {
+                        adminLogin = new { value = "admin" },
+                        adminPassword = new { value = "password" }
+                    }),
+                interactiveMode: true);
         }
 
         [RecordedTest]
@@ -122,12 +129,7 @@ namespace Azure.Provisioning.Sql.Tests
 
             infra.Build(GetOutputPath());
 
-            await ValidateBicepAsync(BinaryData.FromObjectAsJson(
-                new
-                {
-                    existingAppConfig = new { value = "appConfig" },
-                    existingSqlDatabase = new { value = "sqlDatabase" },
-                }));
+            await ValidateBicepAsync();
         }
     }
 }

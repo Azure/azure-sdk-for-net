@@ -27,9 +27,9 @@ namespace Azure.Provisioning.Tests
         }
 
         [RecordedTest]
-        public async Task CanAddCustomLocationParameterInInteractiveMode()
+        public async Task CanAddCustomLocationParameter()
         {
-            var infra = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            var infra = new TestInfrastructure();
             var rg = infra.AddResourceGroup();
             rg.AssignProperty(d => d.Location, new Parameter("myLocationParam"));
 
@@ -39,8 +39,7 @@ namespace Azure.Provisioning.Tests
                 new
                 {
                     myLocationParam = new { value = "eastus" },
-                }),
-                interactiveMode: true);
+                }));
         }
 
         [RecordedTest]

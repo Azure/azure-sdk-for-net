@@ -19,7 +19,7 @@ namespace Azure.Provisioning.Storage.Tests
         {
         }
 
-        [Test]
+        [RecordedTest]
         public async Task StorageBlobDefaults()
         {
             var infra = new TestInfrastructure();

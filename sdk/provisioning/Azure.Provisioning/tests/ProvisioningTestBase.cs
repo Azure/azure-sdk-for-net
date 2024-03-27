@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Tests
     [AsyncOnly]
     public class ProvisioningTestBase : ManagementRecordedTestBase<ProvisioningTestEnvironment>
     {
-        public ProvisioningTestBase(bool async) : base(async)
+        public ProvisioningTestBase(bool async) : base(async, RecordedTestMode.Record)
         {
         }
 

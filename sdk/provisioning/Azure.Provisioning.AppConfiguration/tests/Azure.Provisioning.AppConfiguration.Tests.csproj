@@ -14,16 +14,11 @@
     <ProjectReference Include="..\src\Azure.Provisioning.AppConfiguration.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Include="..\..\Azure.Provisioning\tests\ProvisioningTestBase.cs">
-      <Link>ProvisioningTestBase.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Azure.Provisioning\tests\ProvisioningTestEnvironment.cs">
-      <Link>ProvisioningTestEnvironment.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Azure.Provisioning\tests\TestInfrastructure.cs">
-      <Link>TestInfrastructure.cs</Link>
-    </Compile>
-  </ItemGroup>
+
+<!--  <ItemGroup>-->
+<!--    <Compile Include="..\..\Azure.Provisioning\tests\ProvisioningTestBase.cs" LinkBase="ProvisioningShared" />-->
+<!--    <Compile Include="..\..\Azure.Provisioning\tests\ProvisioningTestEnvironment.cs" LinkBase="ProvisioningShared" />-->
+<!--    <Compile Include="..\..\Azure.Provisioning\tests\TestInfrastructure.cs" LinkBase="ProvisioningShared" />-->
+<!--  </ItemGroup>-->
 
 </Project>
