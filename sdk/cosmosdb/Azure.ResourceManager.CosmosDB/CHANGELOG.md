@@ -1,5 +1,21 @@
 # Release History
 
+## 1.4.0-beta.8 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.4.0-beta.7 (2024-03-26)
+
+### Features Added
+
+- Added experimental Bicep serialization.
+
 ## 1.4.0-beta.6 (2024-03-25)
 
 ### Features Added

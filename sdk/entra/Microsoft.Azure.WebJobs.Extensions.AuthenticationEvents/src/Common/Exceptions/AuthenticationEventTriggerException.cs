@@ -17,6 +17,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         public abstract HttpStatusCode ExceptionStatusCode { get; }
 
         /// <summary>
+        /// Reason phrase when exception is thrown.
+        /// </summary>
+        public abstract string ReasonPhrase { get; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="AuthenticationEventTriggerException"/> class.
         /// </summary>
         /// <param name="message"></param>
