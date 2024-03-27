@@ -65,6 +65,7 @@ trigger:
     - sdk/desktopvirtualization/Azure.ResourceManager.DesktopVirtualization
     - sdk/devcenter/Azure.ResourceManager.DevCenter
     - sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices
+    - sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry
     - sdk/deviceupdate/Azure.ResourceManager.DeviceUpdate
     - sdk/devspaces/Azure.ResourceManager.DevSpaces
     - sdk/devtestlabs/Azure.ResourceManager.DevTestLabs
