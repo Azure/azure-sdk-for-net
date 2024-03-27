@@ -22,7 +22,7 @@ namespace Azure.Developer.DevCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevBoxActionDelayResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevBoxActionDelayResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevBoxActionDelayResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +33,7 @@ namespace Azure.Developer.DevCenter.Models
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteObjectValue(Action);
+                writer.WriteObjectValue<DevBoxAction>(Action, options);
             }
             if (Optional.IsDefined(Error))
             {
@@ -63,7 +63,7 @@ namespace Azure.Developer.DevCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevBoxActionDelayResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevBoxActionDelayResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevBoxActionDelayResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,7 +132,7 @@ namespace Azure.Developer.DevCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevBoxActionDelayResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevBoxActionDelayResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.Developer.DevCenter.Models
                         return DeserializeDevBoxActionDelayResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevBoxActionDelayResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevBoxActionDelayResult)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -166,7 +166,7 @@ namespace Azure.Developer.DevCenter.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<DevBoxActionDelayResult>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }
