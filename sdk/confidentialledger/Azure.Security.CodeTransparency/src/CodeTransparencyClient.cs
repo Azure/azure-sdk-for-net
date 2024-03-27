@@ -148,5 +148,21 @@ namespace Azure.Security.CodeTransparency
                 throw;
             }
         }
+
+        internal HttpMessage CreateCreateEntryRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/entries", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("content-type", "application/cose");
+            request.Content = content;
+            return message;
+        }
     }
 }
