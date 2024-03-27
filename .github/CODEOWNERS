@@ -909,10 +909,10 @@
 # ServiceOwners:                                                   @shreyaanand @mjmadhu
 
 # PRLabel: %Communication - programmableconnectivity
-/sdk/programmableconnectivity/                                     @aronhegedus
+/sdk/programmableconnectivity/                                     @aronhegedusms
 
-# ServiceLabel: %Communication - programmableconnectivit
-# ServiceOwners:                                                   @aronhegedus
+# ServiceLabel: %Communication - programmableconnectivity
+# ServiceOwners:                                                   @aronhegedusms
 
 # ######## Management Plane ########
 
