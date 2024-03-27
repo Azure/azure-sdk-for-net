@@ -20,8 +20,6 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
 {
     public class ProgrammableConnectivityClientTest : RecordedTestBase
     {
-        private const string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
-        private readonly Uri _endpoint = new Uri("https://eastus.prod.apcgatewayapi.azure.com");
         private TokenCredential _credential;
 
         public ProgrammableConnectivityClientTest(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
@@ -30,16 +28,19 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             _credential = new DefaultAzureCredential();
         }
 
-        private ProgrammableConnectivityClient GetClient()
-        {
-            var clientOptions = InstrumentClientOptions(new ProgrammableConnectivityClientOptions());
-            return InstrumentClient(new ProgrammableConnectivityClient(_endpoint, _credential, clientOptions));
-        }
-
         [RecordedTest]
         public void SimSwapVerifyTest()
         {
-            var baseClient = GetClient();
+            #region Snippet:APC_Sample_SimSwapVerifyTest
+            string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
+            Uri _endpoint = new Uri("https://eastus.prod.apcgatewayapi.azure.com");
+#if SNIPPET
+            TokenCredential _credential = new DefaultAzureCredential();
+            ProgrammableConnectivityClient baseClient = InstrumentClient(new ProgrammableConnectivityClient(_endpoint, _credential));
+#else
+            var clientOptions = InstrumentClientOptions(new ProgrammableConnectivityClientOptions());
+            ProgrammableConnectivityClient baseClient = InstrumentClient(new ProgrammableConnectivityClient(_endpoint, _credential, clientOptions));
+#endif
             var client = baseClient.GetSimSwapClient();
             var content = new SimSwapVerificationContent(new NetworkIdentifier("NetworkCode", "Orange_Spain"))
             {
@@ -48,6 +49,8 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             };
 
             Response<SimSwapVerificationResult> response = client.Verify(ApcGatewayId, content);
+            Console.WriteLine(response.Value.VerificationResult);
+            #endregion Snippet:APC_Sample_SimSwapVerifyTest
 
             Assert.IsFalse(response.Value.VerificationResult);
         }
@@ -55,7 +58,15 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
         [RecordedTest]
         public void SimSwapVerifyBadResponseTest()
         {
-            var baseClient = GetClient();
+            string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
+            Uri _endpoint = new Uri("https://eastus.prod.apcgatewayapi.azure.com");
+#if SNIPPET
+            TokenCredential _credential = new DefaultAzureCredential();
+            ProgrammableConnectivityClient baseClient = InstrumentClient(new ProgrammableConnectivityClient(_endpoint, _credential));
+#else
+            var clientOptions = InstrumentClientOptions(new ProgrammableConnectivityClientOptions());
+            ProgrammableConnectivityClient baseClient = InstrumentClient(new ProgrammableConnectivityClient(_endpoint, _credential, clientOptions));
+#endif
             var client = baseClient.GetSimSwapClient();
             var content = new SimSwapVerificationContent(new NetworkIdentifier("NetworkCode", "Orange_Spain"))
             {
@@ -77,7 +88,16 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
         [RecordedTest]
         public void SimSwapRetrieveTest()
         {
-            var baseClient = GetClient();
+            #region Snippet:APC_Sample_SimSwapRetrieveTest
+            string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
+            Uri _endpoint = new Uri("https://eastus.prod.apcgatewayapi.azure.com");
+#if SNIPPET
+            TokenCredential _credential = new DefaultAzureCredential();
+            ProgrammableConnectivityClient baseClient = InstrumentClient(new ProgrammableConnectivityClient(_endpoint, _credential));
+#else
+            var clientOptions = InstrumentClientOptions(new ProgrammableConnectivityClientOptions());
+            ProgrammableConnectivityClient baseClient = InstrumentClient(new ProgrammableConnectivityClient(_endpoint, _credential, clientOptions));
+#endif
             var client = baseClient.GetSimSwapClient();
             var content = new SimSwapRetrievalContent(new NetworkIdentifier("NetworkCode", "Orange_Spain"))
             {
@@ -85,6 +105,9 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             };
 
             Response<SimSwapRetrievalResult> response = client.Retrieve(ApcGatewayId, content);
+            Console.WriteLine(response.Value.Date);
+            #endregion Snippet:APC_Sample_SimSwapRetrieveTest
+
             DateTimeOffset expectedDate = DateTimeOffset.Parse("2023-11-16 14:43:05+00:00", null, System.Globalization.DateTimeStyles.RoundtripKind);
             Assert.AreEqual(expectedDate, response.Value.Date, "The dates should match.");
         }
@@ -92,7 +115,16 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
         [RecordedTest]
         public void LocationVerifyTest()
         {
-            var baseClient = GetClient();
+            #region Snippet:APC_Sample_LocationVerifyTest
+            string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
+            Uri _endpoint = new Uri("https://eastus.prod.apcgatewayapi.azure.com");
+#if SNIPPET
+            TokenCredential _credential = new DefaultAzureCredential();
+            ProgrammableConnectivityClient baseClient = InstrumentClient(new ProgrammableConnectivityClient(_endpoint, _credential));
+#else
+            var clientOptions = InstrumentClientOptions(new ProgrammableConnectivityClientOptions());
+            ProgrammableConnectivityClient baseClient = InstrumentClient(new ProgrammableConnectivityClient(_endpoint, _credential, clientOptions));
+#endif
             var client = baseClient.GetDeviceLocationClient();
             var deviceLocationVerificationContent = new DeviceLocationVerificationContent(new NetworkIdentifier("NetworkCode", "Telefonica_Brazil"), 80.0, 85.1, 50, new LocationDevice
             {
@@ -101,24 +133,48 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
 
             Response<DeviceLocationVerificationResult> result = client.Verify(ApcGatewayId, deviceLocationVerificationContent);
 
+            Console.WriteLine(result.Value.VerificationResult);
+            #endregion Snippet:APC_Sample_LocationVerifyTest
+
             Assert.IsFalse(result.Value.VerificationResult);
         }
 
         [RecordedTest]
         public void NetworkRetrievalTest()
         {
-            var baseClient = GetClient();
+            #region Snippet:APC_Sample_NetworkRetrievalTest
+            string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
+            Uri _endpoint = new Uri("https://eastus.prod.apcgatewayapi.azure.com");
+#if SNIPPET
+            TokenCredential _credential = new DefaultAzureCredential();
+            ProgrammableConnectivityClient baseClient = InstrumentClient(new ProgrammableConnectivityClient(_endpoint, _credential));
+#else
+            var clientOptions = InstrumentClientOptions(new ProgrammableConnectivityClientOptions());
+            ProgrammableConnectivityClient baseClient = InstrumentClient(new ProgrammableConnectivityClient(_endpoint, _credential, clientOptions));
+#endif
             var client = baseClient.GetDeviceNetworkClient();
             var networkIdentifier = new NetworkIdentifier("IPv4", "189.88.1.1");
 
             Response<NetworkRetrievalResult> response = client.Retrieve(ApcGatewayId, networkIdentifier);
+            Console.WriteLine(response.Value.NetworkCode);
+            #endregion Snippet:APC_Sample_NetworkRetrievalTest
+
             Assert.AreEqual(response.Value.NetworkCode, "Claro_Brazil");
         }
 
         [RecordedTest]
         public void NetworkRetrievalBadIdentifierTest()
         {
-            var baseClient = GetClient();
+            #region Snippet:APC_Sample_NetworkRetrievalBadIdentifierTest
+            string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
+            Uri _endpoint = new Uri("https://eastus.prod.apcgatewayapi.azure.com");
+#if SNIPPET
+            TokenCredential _credential = new DefaultAzureCredential();
+            ProgrammableConnectivityClient baseClient = InstrumentClient(new ProgrammableConnectivityClient(_endpoint, _credential));
+#else
+            var clientOptions = InstrumentClientOptions(new ProgrammableConnectivityClientOptions());
+            ProgrammableConnectivityClient baseClient = InstrumentClient(new ProgrammableConnectivityClient(_endpoint, _credential, clientOptions));
+#endif
             var client = baseClient.GetDeviceNetworkClient();
             var networkIdentifier = new NetworkIdentifier("IPv5", "189.88.1.1");
             try
@@ -130,8 +186,11 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
                 Console.WriteLine($"Exception Message: {ex.Message}");
                 Console.WriteLine($"Status Code: {ex.Status}");
                 Console.WriteLine($"Error Code: {ex.ErrorCode}");
+#if !SNIPPET
                 Assert.AreEqual(400, ex.Status);
+#endif
             }
+            #endregion Snippet:APC_Sample_NetworkRetrievalBadIdentifierTest
         }
     }
 }
