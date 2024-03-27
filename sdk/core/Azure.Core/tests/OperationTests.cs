@@ -232,16 +232,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual(ModelReaderWriter.Write(rehydrationToken).ToString(), ModelReaderWriter.Write(token).ToString());
         }
 
-        //private static HttpPipeline CreateMockHttpPipeline(out MockJsonModel mockJsonModel)
-        //{
-        //    var mockResponse = new MockResponse(202);
-        //    mockJsonModel = new MockJsonModel(1, "a");
-        //    mockResponse.SetContent(ModelReaderWriter.Write(mockJsonModel).ToString());
-        //    var transport = new MockTransport(mockResponse);
-        //    var pipeline = new HttpPipeline(transport, default);
-        //    return pipeline;
-        //}
-
         private static HttpPipeline CreateMockHttpPipeline(HttpStatusCode statusCode, out MockJsonModel mockJsonModel)
         {
             var mockResponse = new MockResponse((int)statusCode);
