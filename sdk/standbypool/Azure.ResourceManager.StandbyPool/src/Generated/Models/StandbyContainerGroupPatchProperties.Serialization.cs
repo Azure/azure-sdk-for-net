@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             if (Optional.IsDefined(ContainerGroupProfile))
             {
                 writer.WritePropertyName("containerGroupProfile"u8);
-                writer.WriteObjectValue(ContainerGroupProfile);
+                writer.WriteObjectValue<StandbyContainerGroupPatchProfile>(ContainerGroupProfile, options);
             }
             if (Optional.IsCollectionDefined(SubnetIds))
             {

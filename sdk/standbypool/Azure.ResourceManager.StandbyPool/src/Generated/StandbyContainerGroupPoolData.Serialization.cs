@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.StandbyPool
             if (Optional.IsDefined(ElasticityProfile))
             {
                 writer.WritePropertyName("elasticityProfile"u8);
-                writer.WriteObjectValue(ElasticityProfile);
+                writer.WriteObjectValue<StandbyContainerGroupPoolElasticityProfile>(ElasticityProfile, options);
             }
             if (Optional.IsDefined(ContainerGroupProperties))
             {
                 writer.WritePropertyName("containerGroupProperties"u8);
-                writer.WriteObjectValue(ContainerGroupProperties);
+                writer.WriteObjectValue<StandbyContainerGroupProperties>(ContainerGroupProperties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

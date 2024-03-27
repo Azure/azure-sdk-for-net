@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("containerGroupProfile"u8);
-            writer.WriteObjectValue(ContainerGroupProfile);
+            writer.WriteObjectValue<StandbyContainerGroupProfile>(ContainerGroupProfile, options);
             if (Optional.IsCollectionDefined(SubnetIds))
             {
                 writer.WritePropertyName("subnetIds"u8);
