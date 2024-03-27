@@ -125,7 +125,7 @@ RadiologyInsightsClient client = new RadiologyInsightsClient(endpointUri, creden
 ## Send an asynchronous request to the RadiologyInsights client
 
 ```C# Snippet:Followup_Recommendation_Async_Tests_Samples_synccall
-Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, radiologyInsightsData);
+Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, radiologyInsightsData);
 ```
 
 ## From the result loop over the inferences and display the generic procedure recommendation and the imaging procedure recommendation of the followup recommendation inferences. 

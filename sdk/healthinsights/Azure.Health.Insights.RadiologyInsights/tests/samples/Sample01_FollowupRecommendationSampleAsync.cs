@@ -54,7 +54,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             RadiologyInsightsData radiologyInsightsData = GetRadiologyInsightsData();
 
             #region Snippet:Followup_Recommendation_Async_Tests_Samples_synccall
-            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, radiologyInsightsData);
+            Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, radiologyInsightsData);
             #endregion
 
             RadiologyInsightsInferenceResult responseData = operation.Value;
