@@ -32,10 +32,9 @@ namespace Azure.Identity.Tests
             {
                 TokenFactory = () => { return new AccessToken("secret", DateTimeOffset.UtcNow.AddHours(24)); }
             };
-            var miCredOptions = new ManagedIdentityClientOptions { Pipeline = pipeline};
+            var miCredOptions = new ManagedIdentityClientOptions { Pipeline = pipeline };
             var endpoint = new Uri("https://localhost");
-            // params
-            // az thrown Exception message, expected message, expected  exception
+
             yield return new object[] { new ImdsManagedIdentitySource(new ManagedIdentityClientOptions { Pipeline = pipeline, ClientId = "mock-client-id" }) };
             yield return new object[] { new AppServiceV2017ManagedIdentitySource(pipeline, endpoint, "mysecret", miCredOptions) };
             yield return new object[] { new AppServiceV2019ManagedIdentitySource(pipeline, endpoint, "mysecret", miCredOptions) };
