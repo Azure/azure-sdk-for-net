@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.RecoveryServicesDataReplication;
 using Azure.ResourceManager.RecoveryServicesDataReplication.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
@@ -64,11 +61,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <term>Operation Id</term>
         /// <description>Fabric_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationFabricResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="continuationToken"> Continuation token from the previous call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataReplicationFabricResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataReplicationFabricResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataReplicationFabricResource> GetDataReplicationFabricsAsync(string continuationToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataReplicationFabricFabricRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, continuationToken);
@@ -87,11 +92,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <term>Operation Id</term>
         /// <description>Fabric_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationFabricResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="continuationToken"> Continuation token from the previous call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataReplicationFabricResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataReplicationFabricResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataReplicationFabricResource> GetDataReplicationFabrics(string continuationToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataReplicationFabricFabricRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, continuationToken);
@@ -109,6 +122,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -142,6 +159,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
@@ -174,11 +195,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <term>Operation Id</term>
         /// <description>Vault_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationVaultResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="continuationToken"> Continuation token from the previous call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataReplicationVaultResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataReplicationVaultResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataReplicationVaultResource> GetDataReplicationVaultsAsync(string continuationToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataReplicationVaultVaultRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, continuationToken);
@@ -197,11 +226,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <term>Operation Id</term>
         /// <description>Vault_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationVaultResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="continuationToken"> Continuation token from the previous call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataReplicationVaultResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataReplicationVaultResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataReplicationVaultResource> GetDataReplicationVaults(string continuationToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataReplicationVaultVaultRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, continuationToken);

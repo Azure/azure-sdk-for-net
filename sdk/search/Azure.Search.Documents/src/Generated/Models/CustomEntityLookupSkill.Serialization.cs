@@ -49,7 +49,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteStartArray();
                     foreach (var item in InlineEntitiesDefinition)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<CustomEntity>(item);
                     }
                     writer.WriteEndArray();
                 }
@@ -115,14 +115,14 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<InputFieldMappingEntry>(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("outputs"u8);
             writer.WriteStartArray();
             foreach (var item in Outputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<OutputFieldMappingEntry>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -134,16 +134,16 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<CustomEntityLookupSkillLanguage?> defaultLanguageCode = default;
-            Optional<Uri> entitiesDefinitionUri = default;
-            Optional<IList<CustomEntity>> inlineEntitiesDefinition = default;
-            Optional<bool?> globalDefaultCaseSensitive = default;
-            Optional<bool?> globalDefaultAccentSensitive = default;
-            Optional<int?> globalDefaultFuzzyEditDistance = default;
+            CustomEntityLookupSkillLanguage? defaultLanguageCode = default;
+            Uri entitiesDefinitionUri = default;
+            IList<CustomEntity> inlineEntitiesDefinition = default;
+            bool? globalDefaultCaseSensitive = default;
+            bool? globalDefaultAccentSensitive = default;
+            int? globalDefaultFuzzyEditDistance = default;
             string odataType = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> context = default;
+            string name = default;
+            string description = default;
+            string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
@@ -254,7 +254,19 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CustomEntityLookupSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(defaultLanguageCode), entitiesDefinitionUri.Value, Optional.ToList(inlineEntitiesDefinition), Optional.ToNullable(globalDefaultCaseSensitive), Optional.ToNullable(globalDefaultAccentSensitive), Optional.ToNullable(globalDefaultFuzzyEditDistance));
+            return new CustomEntityLookupSkill(
+                odataType,
+                name,
+                description,
+                context,
+                inputs,
+                outputs,
+                defaultLanguageCode,
+                entitiesDefinitionUri,
+                inlineEntitiesDefinition ?? new ChangeTrackingList<CustomEntity>(),
+                globalDefaultCaseSensitive,
+                globalDefaultAccentSensitive,
+                globalDefaultFuzzyEditDistance);
         }
     }
 }

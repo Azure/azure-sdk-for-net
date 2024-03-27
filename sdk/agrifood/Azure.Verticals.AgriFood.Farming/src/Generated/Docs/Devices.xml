@@ -5,8 +5,9 @@
       <example>
 This sample shows how to call CreateOrUpdateAsync and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Devices client = new FarmBeatsClient(credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
+Devices client = new FarmBeatsClient(endpoint, credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<deviceId>", content);
@@ -16,8 +17,9 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdateAsync with all parameters and request content and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Devices client = new FarmBeatsClient(credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
+Devices client = new FarmBeatsClient(endpoint, credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -68,8 +70,9 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString
       <example>
 This sample shows how to call CreateOrUpdate and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Devices client = new FarmBeatsClient(credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
+Devices client = new FarmBeatsClient(endpoint, credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateOrUpdate("<sensorPartnerId>", "<deviceId>", content);
@@ -79,8 +82,9 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdate with all parameters and request content and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Devices client = new FarmBeatsClient(credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
+Devices client = new FarmBeatsClient(endpoint, credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -131,8 +135,9 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString
       <example>
 This sample shows how to call GetDeviceAsync and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Devices client = new FarmBeatsClient(credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
+Devices client = new FarmBeatsClient(endpoint, credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.GetDeviceAsync("<sensorPartnerId>", "<deviceId>", null);
 
@@ -141,8 +146,9 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetDeviceAsync with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Devices client = new FarmBeatsClient(credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
+Devices client = new FarmBeatsClient(endpoint, credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.GetDeviceAsync("<sensorPartnerId>", "<deviceId>", null);
 
@@ -172,8 +178,9 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString
       <example>
 This sample shows how to call GetDevice and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Devices client = new FarmBeatsClient(credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
+Devices client = new FarmBeatsClient(endpoint, credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.GetDevice("<sensorPartnerId>", "<deviceId>", null);
 
@@ -182,8 +189,9 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetDevice with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Devices client = new FarmBeatsClient(credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
+Devices client = new FarmBeatsClient(endpoint, credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.GetDevice("<sensorPartnerId>", "<deviceId>", null);
 
@@ -213,8 +221,9 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString
       <example>
 This sample shows how to call DeleteAsync.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Devices client = new FarmBeatsClient(credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
+Devices client = new FarmBeatsClient(endpoint, credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.DeleteAsync("<sensorPartnerId>", "<deviceId>");
 
@@ -222,8 +231,9 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteAsync with all parameters.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Devices client = new FarmBeatsClient(credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
+Devices client = new FarmBeatsClient(endpoint, credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.DeleteAsync("<sensorPartnerId>", "<deviceId>");
 
@@ -234,8 +244,9 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call Delete.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Devices client = new FarmBeatsClient(credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
+Devices client = new FarmBeatsClient(endpoint, credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.Delete("<sensorPartnerId>", "<deviceId>");
 
@@ -243,8 +254,9 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call Delete with all parameters.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Devices client = new FarmBeatsClient(credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
+Devices client = new FarmBeatsClient(endpoint, credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.Delete("<sensorPartnerId>", "<deviceId>");
 
@@ -255,8 +267,9 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetDevicesAsync and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Devices client = new FarmBeatsClient(credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
+Devices client = new FarmBeatsClient(endpoint, credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
 
 await foreach (BinaryData item in client.GetDevicesAsync("<sensorPartnerId>", null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -266,8 +279,9 @@ await foreach (BinaryData item in client.GetDevicesAsync("<sensorPartnerId>", nu
 ]]></code>
 This sample shows how to call GetDevicesAsync with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Devices client = new FarmBeatsClient(credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
+Devices client = new FarmBeatsClient(endpoint, credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
 
 await foreach (BinaryData item in client.GetDevicesAsync("<sensorPartnerId>", new string[] { "<parentDeviceIds>" }, new string[] { "<deviceDataModelIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -298,8 +312,9 @@ await foreach (BinaryData item in client.GetDevicesAsync("<sensorPartnerId>", ne
       <example>
 This sample shows how to call GetDevices and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Devices client = new FarmBeatsClient(credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
+Devices client = new FarmBeatsClient(endpoint, credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
 
 foreach (BinaryData item in client.GetDevices("<sensorPartnerId>", null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -309,8 +324,9 @@ foreach (BinaryData item in client.GetDevices("<sensorPartnerId>", null, null, n
 ]]></code>
 This sample shows how to call GetDevices with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Devices client = new FarmBeatsClient(credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
+Devices client = new FarmBeatsClient(endpoint, credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
 
 foreach (BinaryData item in client.GetDevices("<sensorPartnerId>", new string[] { "<parentDeviceIds>" }, new string[] { "<deviceDataModelIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {

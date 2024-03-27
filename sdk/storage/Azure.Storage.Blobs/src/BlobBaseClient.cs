@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Common;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Cryptography.Models;
 using Azure.Storage.Sas;
@@ -3256,7 +3257,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// whether it resides in the same account or in a different account.
         /// </param>
         /// <param name="options">
-        /// Optional parameters.
+        /// Optional parameters.  Note that <see cref="BlobCopyFromUriOptions.CopySourceTagsMode"/> is not applicable to this API.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -3411,7 +3412,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// whether it resides in the same account or in a different account.
         /// </param>
         /// <param name="options">
-        /// Optional parameters.
+        /// Optional parameters.  Note that <see cref="BlobCopyFromUriOptions.CopySourceTagsMode"/> is not applicable to this API.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -6555,7 +6556,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public virtual Uri GenerateSasUri(BlobSasPermissions permissions, DateTimeOffset expiresOn) =>
             GenerateSasUri(new BlobSasBuilder(permissions, expiresOn)
             {
@@ -6589,7 +6590,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Exception"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public virtual Uri GenerateSasUri(BlobSasBuilder builder)
         {
             if (builder == null)

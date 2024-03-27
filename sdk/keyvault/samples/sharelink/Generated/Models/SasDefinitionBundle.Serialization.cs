@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
@@ -19,13 +18,13 @@ namespace Azure.Security.KeyVault.Storage.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> sid = default;
-            Optional<string> templateUri = default;
-            Optional<SasTokenType> sasType = default;
-            Optional<string> validityPeriod = default;
-            Optional<SasDefinitionAttributes> attributes = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            string id = default;
+            string sid = default;
+            string templateUri = default;
+            SasTokenType? sasType = default;
+            string validityPeriod = default;
+            SasDefinitionAttributes attributes = default;
+            IReadOnlyDictionary<string, string> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -81,7 +80,14 @@ namespace Azure.Security.KeyVault.Storage.Models
                     continue;
                 }
             }
-            return new SasDefinitionBundle(id.Value, sid.Value, templateUri.Value, Optional.ToNullable(sasType), validityPeriod.Value, attributes.Value, Optional.ToDictionary(tags));
+            return new SasDefinitionBundle(
+                id,
+                sid,
+                templateUri,
+                sasType,
+                validityPeriod,
+                attributes,
+                tags ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

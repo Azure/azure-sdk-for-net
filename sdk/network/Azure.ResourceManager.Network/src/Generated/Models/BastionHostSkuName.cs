@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.Network.Models
 
         private const string BasicValue = "Basic";
         private const string StandardValue = "Standard";
+        private const string DeveloperValue = "Developer";
 
         /// <summary> Basic. </summary>
         public static BastionHostSkuName Basic { get; } = new BastionHostSkuName(BasicValue);
         /// <summary> Standard. </summary>
         public static BastionHostSkuName Standard { get; } = new BastionHostSkuName(StandardValue);
+        /// <summary> Developer. </summary>
+        public static BastionHostSkuName Developer { get; } = new BastionHostSkuName(DeveloperValue);
         /// <summary> Determines if two <see cref="BastionHostSkuName"/> values are the same. </summary>
         public static bool operator ==(BastionHostSkuName left, BastionHostSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BastionHostSkuName"/> values are not the same. </summary>

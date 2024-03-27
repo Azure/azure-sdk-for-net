@@ -41,13 +41,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         {
             var (payload, expected, expectedStatus) = GetTestData(testType);
 
-            HttpResponseMessage httpResponseMessage = await EventResponseBaseTest(eventsResponseHandler =>
+            HttpResponseMessage httpResponseMessage = await EventResponseBaseTest(async eventsResponseHandler =>
             {
-                eventsResponseHandler.SetValueAsync(payload, CancellationToken.None);
+                await eventsResponseHandler.SetValueAsync(payload, CancellationToken.None);
             });
 
             Assert.AreEqual(expectedStatus, httpResponseMessage.StatusCode);
-            Assert.True(DoesPayloadMatch(expected, httpResponseMessage.Content.ReadAsStringAsync().Result));
+            Assert.True(DoesPayloadMatch(expected, await httpResponseMessage.Content.ReadAsStringAsync()));
         }
 
 
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 case TestTypes.NoAction:
                     return (Payloads.TokenIssuanceStart.TokenIssuanceStart.NoActionResponse, @"{'errors':['No Actions Found. Please supply atleast one action.']}", HttpStatusCode.InternalServerError);
                 case TestTypes.Empty:
-                    return (string.Empty, @"{'errors':['Return type is invalid, please return either an AuthEventResponse, HttpResponse, HttpResponseMessage or string in your function return.']}", HttpStatusCode.InternalServerError);
+                    return (string.Empty, @"{'errors':['Return type is invalid, please return either an AuthEventResponse, HttpResponse, HttpResponseMessage or string in your function return: JSON is null or empty.']}", HttpStatusCode.InternalServerError);
                 case TestTypes.ValidCloudEvent:
                     return (Payloads.TokenIssuanceStart.TokenIssuanceStart.ActionResponse, Payloads.TokenIssuanceStart.TokenIssuanceStart.ExpectedPayload, HttpStatusCode.OK);
                 default:

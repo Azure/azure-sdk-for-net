@@ -7,11 +7,8 @@
 
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Mocking
 {
@@ -69,10 +66,18 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationGroupValues_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfigurationGroupValueResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfigurationGroupValueResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ConfigurationGroupValueResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConfigurationGroupValueResource> GetConfigurationGroupValuesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationGroupValueRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -91,10 +96,18 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationGroupValues_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfigurationGroupValueResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfigurationGroupValueResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ConfigurationGroupValueResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConfigurationGroupValueResource> GetConfigurationGroupValues(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationGroupValueRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -113,10 +126,18 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkFunctions_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFunctionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkFunctionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkFunctionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkFunctionResource> GetNetworkFunctionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFunctionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -135,10 +156,18 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkFunctions_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFunctionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkFunctionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkFunctionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkFunctionResource> GetNetworkFunctions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFunctionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -157,10 +186,18 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>Publishers_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublisherResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PublisherResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PublisherResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PublisherResource> GetPublishersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PublisherRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -179,10 +216,18 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>Publishers_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublisherResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PublisherResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PublisherResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PublisherResource> GetPublishers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PublisherRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -201,10 +246,18 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>Sites_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SiteResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteResource> GetSitesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SiteRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -223,10 +276,18 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>Sites_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SiteResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteResource> GetSites(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SiteRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -245,10 +306,18 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>SiteNetworkServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteNetworkServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteNetworkServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SiteNetworkServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteNetworkServiceResource> GetSiteNetworkServicesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SiteNetworkServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -267,10 +336,18 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>SiteNetworkServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteNetworkServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteNetworkServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SiteNetworkServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteNetworkServiceResource> GetSiteNetworkServices(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SiteNetworkServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);

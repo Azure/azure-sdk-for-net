@@ -12,18 +12,16 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Search.Models;
 
 namespace Azure.ResourceManager.Search
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SharedSearchServicePrivateLinkResource" /> and their operations.
-    /// Each <see cref="SharedSearchServicePrivateLinkResource" /> in the collection will belong to the same instance of <see cref="SearchServiceResource" />.
-    /// To get a <see cref="SharedSearchServicePrivateLinkResourceCollection" /> instance call the GetSharedSearchServicePrivateLinkResources method from an instance of <see cref="SearchServiceResource" />.
+    /// A class representing a collection of <see cref="SharedSearchServicePrivateLinkResource"/> and their operations.
+    /// Each <see cref="SharedSearchServicePrivateLinkResource"/> in the collection will belong to the same instance of <see cref="SearchServiceResource"/>.
+    /// To get a <see cref="SharedSearchServicePrivateLinkResourceCollection"/> instance call the GetSharedSearchServicePrivateLinkResources method from an instance of <see cref="SearchServiceResource"/>.
     /// </summary>
     public partial class SharedSearchServicePrivateLinkResourceCollection : ArmCollection, IEnumerable<SharedSearchServicePrivateLinkResource>, IAsyncEnumerable<SharedSearchServicePrivateLinkResource>
     {
@@ -65,10 +63,18 @@ namespace Azure.ResourceManager.Search
         /// <term>Operation Id</term>
         /// <description>SharedPrivateLinkResources_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SharedSearchServicePrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the Azure Cognitive Search service within the specified resource group. </param>
+        /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the search service within the specified resource group. </param>
         /// <param name="data"> The definition of the shared private link resource to create or update. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -107,10 +113,18 @@ namespace Azure.ResourceManager.Search
         /// <term>Operation Id</term>
         /// <description>SharedPrivateLinkResources_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SharedSearchServicePrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the Azure Cognitive Search service within the specified resource group. </param>
+        /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the search service within the specified resource group. </param>
         /// <param name="data"> The definition of the shared private link resource to create or update. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -149,9 +163,17 @@ namespace Azure.ResourceManager.Search
         /// <term>Operation Id</term>
         /// <description>SharedPrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SharedSearchServicePrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the Azure Cognitive Search service within the specified resource group. </param>
+        /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the search service within the specified resource group. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -187,9 +209,17 @@ namespace Azure.ResourceManager.Search
         /// <term>Operation Id</term>
         /// <description>SharedPrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SharedSearchServicePrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the Azure Cognitive Search service within the specified resource group. </param>
+        /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the search service within the specified resource group. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -225,11 +255,19 @@ namespace Azure.ResourceManager.Search
         /// <term>Operation Id</term>
         /// <description>SharedPrivateLinkResources_ListByService</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SharedSearchServicePrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SharedSearchServicePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SharedSearchServicePrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SharedSearchServicePrivateLinkResource> GetAllAsync(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
@@ -248,11 +286,19 @@ namespace Azure.ResourceManager.Search
         /// <term>Operation Id</term>
         /// <description>SharedPrivateLinkResources_ListByService</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SharedSearchServicePrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SharedSearchServicePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SharedSearchServicePrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SharedSearchServicePrivateLinkResource> GetAll(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
@@ -271,9 +317,17 @@ namespace Azure.ResourceManager.Search
         /// <term>Operation Id</term>
         /// <description>SharedPrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SharedSearchServicePrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the Azure Cognitive Search service within the specified resource group. </param>
+        /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the search service within the specified resource group. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -307,9 +361,17 @@ namespace Azure.ResourceManager.Search
         /// <term>Operation Id</term>
         /// <description>SharedPrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SharedSearchServicePrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the Azure Cognitive Search service within the specified resource group. </param>
+        /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the search service within the specified resource group. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -343,9 +405,17 @@ namespace Azure.ResourceManager.Search
         /// <term>Operation Id</term>
         /// <description>SharedPrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SharedSearchServicePrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the Azure Cognitive Search service within the specified resource group. </param>
+        /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the search service within the specified resource group. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -381,9 +451,17 @@ namespace Azure.ResourceManager.Search
         /// <term>Operation Id</term>
         /// <description>SharedPrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SharedSearchServicePrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the Azure Cognitive Search service within the specified resource group. </param>
+        /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the search service within the specified resource group. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>

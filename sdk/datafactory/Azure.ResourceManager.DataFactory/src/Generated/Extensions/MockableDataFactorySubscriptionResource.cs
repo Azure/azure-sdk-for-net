@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataFactory;
 using Azure.ResourceManager.DataFactory.Models;
 
 namespace Azure.ResourceManager.DataFactory.Mocking
@@ -60,10 +57,18 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <term>Operation Id</term>
         /// <description>Factories_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataFactoryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataFactoryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataFactoryResource> GetDataFactoriesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataFactoryFactoriesRestClient.CreateListRequest(Id.SubscriptionId);
@@ -82,10 +87,18 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <term>Operation Id</term>
         /// <description>Factories_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataFactoryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataFactoryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataFactoryResource> GetDataFactories(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataFactoryFactoriesRestClient.CreateListRequest(Id.SubscriptionId);
@@ -103,6 +116,14 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Factories_ConfigureFactoryRepo</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,6 +160,14 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <term>Operation Id</term>
         /// <description>Factories_ConfigureFactoryRepo</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationId"> The location identifier. </param>
@@ -174,6 +203,10 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <term>Operation Id</term>
         /// <description>ExposureControl_GetFeatureValue</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationId"> The location identifier. </param>
@@ -208,6 +241,10 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExposureControl_GetFeatureValue</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
         /// </item>
         /// </list>
         /// </summary>

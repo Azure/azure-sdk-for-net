@@ -9,14 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Communication.MediaComposition.Models;
-using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
     /// <summary> The AutoGridInputGroup. </summary>
     public partial class AutoGridInputGroup : InputGroup
     {
-        /// <summary> Initializes a new instance of AutoGridInputGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoGridInputGroup"/>. </summary>
         /// <param name="inputIds"> Input and input group ids to be included in this input group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputIds"/> is null. </exception>
         public AutoGridInputGroup(IEnumerable<string> inputIds)
@@ -27,7 +26,7 @@ namespace Azure.Communication.MediaComposition
             Kind = InputGroupType.AutoGridBased;
         }
 
-        /// <summary> Initializes a new instance of AutoGridInputGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoGridInputGroup"/>. </summary>
         /// <param name="kind"> Kind of input group. </param>
         /// <param name="position"> The (x,y) position on scene or input group. </param>
         /// <param name="width"> The width of the input group container. Can be defined as pixels or percentage. </param>

@@ -16,11 +16,11 @@ namespace Azure.Communication.CallAutomation
         {
             writer.WriteStartObject();
             writer.WritePropertyName("targetParticipant"u8);
-            writer.WriteObjectValue(TargetParticipant);
-            if (Optional.IsDefined(CustomContext))
+            writer.WriteObjectValue<CommunicationIdentifierModel>(TargetParticipant);
+            if (Optional.IsDefined(CustomCallingContext))
             {
-                writer.WritePropertyName("customContext"u8);
-                writer.WriteObjectValue(CustomContext);
+                writer.WritePropertyName("customCallingContext"u8);
+                writer.WriteObjectValue<CustomCallingContextInternal>(CustomCallingContext);
             }
             if (Optional.IsDefined(OperationContext))
             {
@@ -30,12 +30,17 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(Transferee))
             {
                 writer.WritePropertyName("transferee"u8);
-                writer.WriteObjectValue(Transferee);
+                writer.WriteObjectValue<CommunicationIdentifierModel>(Transferee);
             }
-            if (Optional.IsDefined(CallbackUri))
+            if (Optional.IsDefined(OperationCallbackUri))
             {
-                writer.WritePropertyName("callbackUri"u8);
-                writer.WriteStringValue(CallbackUri);
+                writer.WritePropertyName("operationCallbackUri"u8);
+                writer.WriteStringValue(OperationCallbackUri);
+            }
+            if (Optional.IsDefined(SourceCallerIdNumber))
+            {
+                writer.WritePropertyName("sourceCallerIdNumber"u8);
+                writer.WriteObjectValue<PhoneNumberIdentifierModel>(SourceCallerIdNumber);
             }
             writer.WriteEndObject();
         }

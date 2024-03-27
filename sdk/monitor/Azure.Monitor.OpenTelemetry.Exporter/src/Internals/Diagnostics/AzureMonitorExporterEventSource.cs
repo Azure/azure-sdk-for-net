@@ -431,5 +431,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(42, Message = "Failed to read environment variables due to an exception. This may prevent the Exporter from initializing. {0}", Level = EventLevel.Warning)]
         public void FailedToReadEnvironmentVariables(string errorMessage) => WriteEvent(42, errorMessage);
+
+        [NonEvent]
+        public void ErrorAddingActivityTagsAsCustomProperties(Exception ex)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                ErrorAddingActivityTagsAsCustomProperties(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(43, Message = "Error while adding activity tags as custom property: {0}", Level = EventLevel.Warning)]
+        public void ErrorAddingActivityTagsAsCustomProperties(string errorMessage) => WriteEvent(43, errorMessage);
     }
 }

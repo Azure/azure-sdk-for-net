@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
 {
@@ -54,6 +51,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <term>Operation Id</term>
         /// <description>GetPrivateDnsZoneSuffix_Execute</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -83,6 +84,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GetPrivateDnsZoneSuffix_Execute</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>

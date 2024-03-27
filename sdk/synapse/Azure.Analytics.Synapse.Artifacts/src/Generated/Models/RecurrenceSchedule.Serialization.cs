@@ -65,14 +65,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in MonthlyOccurrences)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RecurrenceScheduleOccurrence>(item);
                 }
                 writer.WriteEndArray();
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -83,11 +83,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IList<int>> minutes = default;
-            Optional<IList<int>> hours = default;
-            Optional<IList<DayOfWeek>> weekDays = default;
-            Optional<IList<int>> monthDays = default;
-            Optional<IList<RecurrenceScheduleOccurrence>> monthlyOccurrences = default;
+            IList<int> minutes = default;
+            IList<int> hours = default;
+            IList<DayOfWeek> weekDays = default;
+            IList<int> monthDays = default;
+            IList<RecurrenceScheduleOccurrence> monthlyOccurrences = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -165,14 +165,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RecurrenceSchedule(Optional.ToList(minutes), Optional.ToList(hours), Optional.ToList(weekDays), Optional.ToList(monthDays), Optional.ToList(monthlyOccurrences), additionalProperties);
+            return new RecurrenceSchedule(
+                minutes ?? new ChangeTrackingList<int>(),
+                hours ?? new ChangeTrackingList<int>(),
+                weekDays ?? new ChangeTrackingList<DayOfWeek>(),
+                monthDays ?? new ChangeTrackingList<int>(),
+                monthlyOccurrences ?? new ChangeTrackingList<RecurrenceScheduleOccurrence>(),
+                additionalProperties);
         }
 
         internal partial class RecurrenceScheduleConverter : JsonConverter<RecurrenceSchedule>
         {
             public override void Write(Utf8JsonWriter writer, RecurrenceSchedule model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<RecurrenceSchedule>(model);
             }
             public override RecurrenceSchedule Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

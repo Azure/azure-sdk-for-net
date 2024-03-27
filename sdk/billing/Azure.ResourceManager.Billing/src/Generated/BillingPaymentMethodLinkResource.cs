@@ -9,19 +9,17 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Billing
 {
     /// <summary>
     /// A Class representing a BillingPaymentMethodLink along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BillingPaymentMethodLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBillingPaymentMethodLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetBillingPaymentMethodLink method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingPaymentMethodLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBillingPaymentMethodLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetBillingPaymentMethodLink method.
     /// </summary>
     public partial class BillingPaymentMethodLinkResource : ArmResource
     {
@@ -39,12 +37,15 @@ namespace Azure.ResourceManager.Billing
         private readonly PaymentMethodsRestOperations _billingPaymentMethodLinkPaymentMethodsRestClient;
         private readonly BillingPaymentMethodLinkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/billingProfiles/paymentMethodLinks";
+
         /// <summary> Initializes a new instance of the <see cref="BillingPaymentMethodLinkResource"/> class for mocking. </summary>
         protected BillingPaymentMethodLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BillingPaymentMethodLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BillingPaymentMethodLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BillingPaymentMethodLinkResource(ArmClient client, BillingPaymentMethodLinkData data) : this(client, data.Id)
@@ -65,9 +66,6 @@ namespace Azure.ResourceManager.Billing
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/billingProfiles/paymentMethodLinks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +99,14 @@ namespace Azure.ResourceManager.Billing
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByBillingProfile</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingPaymentMethodLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,6 +139,14 @@ namespace Azure.ResourceManager.Billing
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByBillingProfile</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingPaymentMethodLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -164,6 +178,14 @@ namespace Azure.ResourceManager.Billing
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_DeleteAtBillingProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingPaymentMethodLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,6 +220,14 @@ namespace Azure.ResourceManager.Billing
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_DeleteAtBillingProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingPaymentMethodLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -9,10 +9,10 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents
 {
@@ -33,7 +33,7 @@ namespace Azure.Search.Documents
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public IndexersRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2023-11-01")
+        public IndexersRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2024-03-01-Preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -92,6 +92,81 @@ namespace Azure.Search.Documents
             }
 
             using var message = CreateResetRequest(indexerName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateResetDocsRequest(string indexerName, bool? overwrite, ResetDocumentOptions keysOrIds)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/indexers('", false);
+            uri.AppendPath(indexerName, true);
+            uri.AppendPath("')/search.resetdocs", false);
+            if (overwrite != null)
+            {
+                uri.AppendQuery("overwrite", overwrite.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
+            if (keysOrIds != null)
+            {
+                request.Headers.Add("Content-Type", "application/json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue<ResetDocumentOptions>(keysOrIds);
+                request.Content = content;
+            }
+            return message;
+        }
+
+        /// <summary> Resets specific documents in the datasource to be selectively re-ingested by the indexer. </summary>
+        /// <param name="indexerName"> The name of the indexer to reset documents for. </param>
+        /// <param name="overwrite"> If false, keys or ids will be appended to existing ones. If true, only the keys or ids in this payload will be queued to be re-ingested. </param>
+        /// <param name="keysOrIds"> The <see cref="ResetDocumentOptions"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
+        public async Task<Response> ResetDocsAsync(string indexerName, bool? overwrite = null, ResetDocumentOptions keysOrIds = null, CancellationToken cancellationToken = default)
+        {
+            if (indexerName == null)
+            {
+                throw new ArgumentNullException(nameof(indexerName));
+            }
+
+            using var message = CreateResetDocsRequest(indexerName, overwrite, keysOrIds);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Resets specific documents in the datasource to be selectively re-ingested by the indexer. </summary>
+        /// <param name="indexerName"> The name of the indexer to reset documents for. </param>
+        /// <param name="overwrite"> If false, keys or ids will be appended to existing ones. If true, only the keys or ids in this payload will be queued to be re-ingested. </param>
+        /// <param name="keysOrIds"> The <see cref="ResetDocumentOptions"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
+        public Response ResetDocs(string indexerName, bool? overwrite = null, ResetDocumentOptions keysOrIds = null, CancellationToken cancellationToken = default)
+        {
+            if (indexerName == null)
+            {
+                throw new ArgumentNullException(nameof(indexerName));
+            }
+
+            using var message = CreateResetDocsRequest(indexerName, overwrite, keysOrIds);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -162,7 +237,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string indexerName, SearchIndexer indexer, string ifMatch, string ifNoneMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string indexerName, SearchIndexer indexer, string ifMatch, string ifNoneMatch, bool? skipIndexerResetRequirementForCache, bool? disableCacheReprocessingChangeDetection)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -173,6 +248,14 @@ namespace Azure.Search.Documents
             uri.AppendPath(indexerName, true);
             uri.AppendPath("')", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipIndexerResetRequirementForCache != null)
+            {
+                uri.AppendQuery("ignoreResetRequirements", skipIndexerResetRequirementForCache.Value, true);
+            }
+            if (disableCacheReprocessingChangeDetection != null)
+            {
+                uri.AppendQuery("disableCacheReprocessingChangeDetection", disableCacheReprocessingChangeDetection.Value, true);
+            }
             request.Uri = uri;
             if (ifMatch != null)
             {
@@ -186,7 +269,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(indexer);
+            content.JsonWriter.WriteObjectValue<SearchIndexer>(indexer);
             request.Content = content;
             return message;
         }
@@ -196,9 +279,11 @@ namespace Azure.Search.Documents
         /// <param name="indexer"> The definition of the indexer to create or update. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
+        /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
+        /// <param name="disableCacheReprocessingChangeDetection"> Disables cache reprocessing change detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> or <paramref name="indexer"/> is null. </exception>
-        public async Task<Response<SearchIndexer>> CreateOrUpdateAsync(string indexerName, SearchIndexer indexer, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchIndexer>> CreateOrUpdateAsync(string indexerName, SearchIndexer indexer, string ifMatch = null, string ifNoneMatch = null, bool? skipIndexerResetRequirementForCache = null, bool? disableCacheReprocessingChangeDetection = null, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
             {
@@ -209,7 +294,7 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(indexer));
             }
 
-            using var message = CreateCreateOrUpdateRequest(indexerName, indexer, ifMatch, ifNoneMatch);
+            using var message = CreateCreateOrUpdateRequest(indexerName, indexer, ifMatch, ifNoneMatch, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -231,9 +316,11 @@ namespace Azure.Search.Documents
         /// <param name="indexer"> The definition of the indexer to create or update. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
+        /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
+        /// <param name="disableCacheReprocessingChangeDetection"> Disables cache reprocessing change detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> or <paramref name="indexer"/> is null. </exception>
-        public Response<SearchIndexer> CreateOrUpdate(string indexerName, SearchIndexer indexer, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response<SearchIndexer> CreateOrUpdate(string indexerName, SearchIndexer indexer, string ifMatch = null, string ifNoneMatch = null, bool? skipIndexerResetRequirementForCache = null, bool? disableCacheReprocessingChangeDetection = null, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
             {
@@ -244,7 +331,7 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(indexer));
             }
 
-            using var message = CreateCreateOrUpdateRequest(indexerName, indexer, ifMatch, ifNoneMatch);
+            using var message = CreateCreateOrUpdateRequest(indexerName, indexer, ifMatch, ifNoneMatch, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -424,7 +511,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Lists all indexers available for a search service. </summary>
-        /// <param name="select"> Selects which top-level properties of the indexers to retrieve. Specified as a comma-separated list of JSON property names, or `*` for all properties. The default is all properties. </param>
+        /// <param name="select"> Selects which top-level properties of the indexers to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<ListIndexersResult>> ListAsync(string select = null, CancellationToken cancellationToken = default)
         {
@@ -445,7 +532,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Lists all indexers available for a search service. </summary>
-        /// <param name="select"> Selects which top-level properties of the indexers to retrieve. Specified as a comma-separated list of JSON property names, or `*` for all properties. The default is all properties. </param>
+        /// <param name="select"> Selects which top-level properties of the indexers to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<ListIndexersResult> List(string select = null, CancellationToken cancellationToken = default)
         {
@@ -478,7 +565,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(indexer);
+            content.JsonWriter.WriteObjectValue<SearchIndexer>(indexer);
             request.Content = content;
             return message;
         }

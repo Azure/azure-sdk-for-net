@@ -12,12 +12,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Library/package information of a Big Data pool powered by Apache Spark. </summary>
     public partial class LibraryInfo
     {
-        /// <summary> Initializes a new instance of LibraryInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="LibraryInfo"/>. </summary>
         public LibraryInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of LibraryInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="LibraryInfo"/>. </summary>
         /// <param name="name"> Name of the library. </param>
         /// <param name="path"> Storage blob path of library. </param>
         /// <param name="containerName"> Storage blob container name. </param>

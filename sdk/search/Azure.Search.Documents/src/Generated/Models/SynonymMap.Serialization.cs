@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (EncryptionKey != null)
                 {
                     writer.WritePropertyName("encryptionKey"u8);
-                    writer.WriteObjectValue(EncryptionKey);
+                    writer.WriteObjectValue<SearchResourceEncryptionKey>(EncryptionKey);
                 }
                 else
                 {
@@ -50,8 +50,8 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             string format = default;
             string synonyms = default;
-            Optional<SearchResourceEncryptionKey> encryptionKey = default;
-            Optional<string> odataEtag = default;
+            SearchResourceEncryptionKey encryptionKey = default;
+            string odataEtag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -85,7 +85,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SynonymMap(name, format, synonyms, encryptionKey.Value, odataEtag.Value);
+            return new SynonymMap(name, format, synonyms, encryptionKey, odataEtag);
         }
     }
 }

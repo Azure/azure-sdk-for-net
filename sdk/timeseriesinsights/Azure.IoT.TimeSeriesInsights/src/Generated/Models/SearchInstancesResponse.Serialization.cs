@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -19,9 +18,9 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<IReadOnlyList<InstanceHit>> hits = default;
-            Optional<int> hitCount = default;
-            Optional<string> continuationToken = default;
+            IReadOnlyList<InstanceHit> hits = default;
+            int? hitCount = default;
+            string continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hits"u8))
@@ -53,7 +52,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new SearchInstancesResponse(Optional.ToList(hits), Optional.ToNullable(hitCount), continuationToken.Value);
+            return new SearchInstancesResponse(hits ?? new ChangeTrackingList<InstanceHit>(), hitCount, continuationToken);
         }
     }
 }

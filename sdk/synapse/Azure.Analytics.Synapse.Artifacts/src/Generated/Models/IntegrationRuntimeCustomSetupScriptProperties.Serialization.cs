@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(SasToken))
             {
                 writer.WritePropertyName("sasToken"u8);
-                writer.WriteObjectValue(SasToken);
+                writer.WriteObjectValue<SecureString>(SasToken);
             }
             writer.WriteEndObject();
         }
@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> blobContainerUri = default;
-            Optional<SecureString> sasToken = default;
+            string blobContainerUri = default;
+            SecureString sasToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blobContainerUri"u8))
@@ -56,14 +56,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new IntegrationRuntimeCustomSetupScriptProperties(blobContainerUri.Value, sasToken.Value);
+            return new IntegrationRuntimeCustomSetupScriptProperties(blobContainerUri, sasToken);
         }
 
         internal partial class IntegrationRuntimeCustomSetupScriptPropertiesConverter : JsonConverter<IntegrationRuntimeCustomSetupScriptProperties>
         {
             public override void Write(Utf8JsonWriter writer, IntegrationRuntimeCustomSetupScriptProperties model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<IntegrationRuntimeCustomSetupScriptProperties>(model);
             }
             public override IntegrationRuntimeCustomSetupScriptProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

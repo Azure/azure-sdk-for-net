@@ -6,14 +6,14 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
     /// <summary> This object is returned from a successful Search Address Reverse Batch service call. </summary>
     public partial class ReverseSearchAddressBatchResult : BatchResult
     {
-        /// <summary> Initializes a new instance of ReverseSearchAddressBatchResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReverseSearchAddressBatchResult"/>. </summary>
         internal ReverseSearchAddressBatchResult()
         {
             BatchItems = new ChangeTrackingList<ReverseSearchAddressBatchItem>();

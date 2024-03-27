@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
@@ -19,8 +18,8 @@ namespace Azure.Communication.Chat
             {
                 return null;
             }
-            Optional<ChatThreadPropertiesInternal> chatThread = default;
-            Optional<IReadOnlyList<ChatError>> invalidParticipants = default;
+            ChatThreadPropertiesInternal chatThread = default;
+            IReadOnlyList<ChatError> invalidParticipants = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("chatThread"u8))
@@ -47,7 +46,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new CreateChatThreadResultInternal(chatThread.Value, Optional.ToList(invalidParticipants));
+            return new CreateChatThreadResultInternal(chatThread, invalidParticipants ?? new ChangeTrackingList<ChatError>());
         }
     }
 }

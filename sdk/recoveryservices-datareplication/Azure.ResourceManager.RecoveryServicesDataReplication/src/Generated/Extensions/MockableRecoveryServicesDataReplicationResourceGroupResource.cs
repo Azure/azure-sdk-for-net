@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.RecoveryServicesDataReplication;
 using Azure.ResourceManager.RecoveryServicesDataReplication.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
@@ -62,6 +59,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <term>Operation Id</term>
         /// <description>Fabric_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationFabricResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="fabricName"> The fabric name. </param>
@@ -84,6 +89,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Fabric_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationFabricResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,6 +128,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <term>Operation Id</term>
         /// <description>Vault_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationVaultResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The vault name. </param>
@@ -138,6 +159,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <term>Operation Id</term>
         /// <description>Vault_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationVaultResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The vault name. </param>
@@ -160,6 +189,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeploymentPreflight</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,6 +229,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeploymentPreflight</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// </list>
         /// </summary>

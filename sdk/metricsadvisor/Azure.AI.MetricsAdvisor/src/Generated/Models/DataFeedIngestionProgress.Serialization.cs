@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -19,8 +18,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset?> latestSuccessTimestamp = default;
-            Optional<DateTimeOffset?> latestActiveTimestamp = default;
+            DateTimeOffset? latestSuccessTimestamp = default;
+            DateTimeOffset? latestActiveTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("latestSuccessTimestamp"u8))
@@ -44,7 +43,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new DataFeedIngestionProgress(Optional.ToNullable(latestSuccessTimestamp), Optional.ToNullable(latestActiveTimestamp));
+            return new DataFeedIngestionProgress(latestSuccessTimestamp, latestActiveTimestamp);
         }
     }
 }

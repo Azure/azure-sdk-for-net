@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Consumption.Models;
 
 namespace Azure.ResourceManager.Consumption.Mocking
@@ -55,6 +52,10 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <term>Operation Id</term>
         /// <description>PriceSheet_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when returning price sheet. </param>
@@ -87,6 +88,10 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PriceSheet_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// </summary>

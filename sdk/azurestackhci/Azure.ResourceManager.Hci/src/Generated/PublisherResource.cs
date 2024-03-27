@@ -9,18 +9,16 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Hci
 {
     /// <summary>
     /// A Class representing a Publisher along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PublisherResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPublisherResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HciClusterResource" /> using the GetPublisher method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PublisherResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPublisherResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HciClusterResource"/> using the GetPublisher method.
     /// </summary>
     public partial class PublisherResource : ArmResource
     {
@@ -39,12 +37,15 @@ namespace Azure.ResourceManager.Hci
         private readonly PublishersRestOperations _publisherRestClient;
         private readonly PublisherData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/clusters/publishers";
+
         /// <summary> Initializes a new instance of the <see cref="PublisherResource"/> class for mocking. </summary>
         protected PublisherResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PublisherResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PublisherResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PublisherResource(ArmClient client, PublisherData data) : this(client, data.Id)
@@ -65,9 +66,6 @@ namespace Azure.ResourceManager.Hci
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/clusters/publishers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -108,6 +106,14 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>Offers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OfferResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="offerName"> The name of the offer available within HCI cluster. </param>
@@ -132,6 +138,14 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>Offers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OfferResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="offerName"> The name of the offer available within HCI cluster. </param>
@@ -155,6 +169,14 @@ namespace Azure.ResourceManager.Hci
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Publishers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublisherResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -187,6 +209,14 @@ namespace Azure.ResourceManager.Hci
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Publishers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublisherResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

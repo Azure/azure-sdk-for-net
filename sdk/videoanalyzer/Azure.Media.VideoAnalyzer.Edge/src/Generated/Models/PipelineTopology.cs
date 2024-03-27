@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// </summary>
     public partial class PipelineTopology
     {
-        /// <summary> Initializes a new instance of PipelineTopology. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineTopology"/>. </summary>
         /// <param name="name"> Pipeline topology unique identifier. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PipelineTopology(string name)
@@ -30,7 +29,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of PipelineTopology. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineTopology"/>. </summary>
         /// <param name="name"> Pipeline topology unique identifier. </param>
         /// <param name="systemData"> Read-only system metadata associated with this object. </param>
         /// <param name="properties"> Pipeline topology properties. </param>

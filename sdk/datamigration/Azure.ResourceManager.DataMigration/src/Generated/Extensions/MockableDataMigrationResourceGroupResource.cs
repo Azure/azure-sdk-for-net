@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Mocking
 {
@@ -54,9 +51,17 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <term>Operation Id</term>
         /// <description>DatabaseMigrationsSqlDb_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseMigrationSqlDBResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sqlDBInstanceName"> The String to use. </param>
+        /// <param name="sqlDBInstanceName"> The <see cref="string"/> to use. </param>
         /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
@@ -80,9 +85,17 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <term>Operation Id</term>
         /// <description>DatabaseMigrationsSqlDb_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseMigrationSqlDBResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sqlDBInstanceName"> The String to use. </param>
+        /// <param name="sqlDBInstanceName"> The <see cref="string"/> to use. </param>
         /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
@@ -113,9 +126,17 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <term>Operation Id</term>
         /// <description>DatabaseMigrationsSqlMi_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseMigrationSqlMIResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="managedInstanceName"> The String to use. </param>
+        /// <param name="managedInstanceName"> The <see cref="string"/> to use. </param>
         /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
@@ -139,9 +160,17 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <term>Operation Id</term>
         /// <description>DatabaseMigrationsSqlMi_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseMigrationSqlMIResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="managedInstanceName"> The String to use. </param>
+        /// <param name="managedInstanceName"> The <see cref="string"/> to use. </param>
         /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
@@ -172,9 +201,17 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <term>Operation Id</term>
         /// <description>DatabaseMigrationsSqlVm_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseMigrationSqlVmResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sqlVirtualMachineName"> The String to use. </param>
+        /// <param name="sqlVirtualMachineName"> The <see cref="string"/> to use. </param>
         /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
@@ -198,9 +235,17 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <term>Operation Id</term>
         /// <description>DatabaseMigrationsSqlVm_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseMigrationSqlVmResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sqlVirtualMachineName"> The String to use. </param>
+        /// <param name="sqlVirtualMachineName"> The <see cref="string"/> to use. </param>
         /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
@@ -231,6 +276,14 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sqlMigrationServiceName"> Name of the SQL Migration Service. </param>
@@ -253,6 +306,14 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,6 +345,14 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataMigrationServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceName"> Name of the service. </param>
@@ -306,6 +375,14 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

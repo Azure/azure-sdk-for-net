@@ -17,6 +17,22 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         {
             // create a client
             JobRouterClient routerClient = new JobRouterClient("<< CONNECTION STRING >>");
+            JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
+
+            // Create a distribution policy
+            string distributionPolicyId = "distribution-policy";
+            var distributionPolicyOptions = new CreateDistributionPolicyOptions(distributionPolicyId, TimeSpan.FromMinutes(5), new LongestIdleMode());
+            Response<DistributionPolicy> distributionPolicyResponse = await routerAdministrationClient.CreateDistributionPolicyAsync(distributionPolicyOptions);
+            Console.WriteLine($"Created distribution policy with id: {distributionPolicyResponse.Value.Id}");
+
+            // Create queues
+            string[] queueIds = new[] { "worker-q-1", "worker-q-2", "worker-q-3" };
+            foreach (var queueId in queueIds)
+            {
+                var queueOptions = new CreateQueueOptions(queueId, distributionPolicyId);
+                Response<RouterQueue> queueResponse = await routerAdministrationClient.CreateQueueAsync(queueOptions);
+                Console.WriteLine($"Created queue with id: {queueResponse.Value.Id}");
+            }
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CreateRouterWorker_Async
 
@@ -107,7 +123,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetRouterWorkers_Async
 
-            AsyncPageable<RouterWorker> workers = routerClient.GetWorkersAsync();
+            AsyncPageable<RouterWorker> workers = routerClient.GetWorkersAsync(null, null);
             await foreach (Page<RouterWorker> asPage in workers.AsPages(pageSizeHint: 10))
             {
                 foreach (RouterWorker? workerPaged in asPage.Values)
@@ -117,7 +133,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             }
 
             // Additionally workers can be queried with several filters like queueId, capacity, state etc.
-            workers = routerClient.GetWorkersAsync(channelId: "Voip", state: RouterWorkerStateSelector.All);
+            workers = routerClient.GetWorkersAsync(channelId: "Voip", state: RouterWorkerStateSelector.All, queueId: null, hasCapacity: null, cancellationToken: default);
 
             await foreach (Page<RouterWorker> asPage in workers.AsPages(pageSizeHint: 10))
             {

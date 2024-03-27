@@ -10,19 +10,17 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing an AppServicePlanVirtualNetworkConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppServicePlanVirtualNetworkConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppServicePlanVirtualNetworkConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppServicePlanResource" /> using the GetAppServicePlanVirtualNetworkConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppServicePlanVirtualNetworkConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppServicePlanVirtualNetworkConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppServicePlanResource"/> using the GetAppServicePlanVirtualNetworkConnection method.
     /// </summary>
     public partial class AppServicePlanVirtualNetworkConnectionResource : ArmResource
     {
@@ -41,12 +39,15 @@ namespace Azure.ResourceManager.AppService
         private readonly AppServicePlansRestOperations _appServicePlanVirtualNetworkConnectionAppServicePlansRestClient;
         private readonly AppServiceVirtualNetworkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/serverfarms/virtualNetworkConnections";
+
         /// <summary> Initializes a new instance of the <see cref="AppServicePlanVirtualNetworkConnectionResource"/> class for mocking. </summary>
         protected AppServicePlanVirtualNetworkConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppServicePlanVirtualNetworkConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppServicePlanVirtualNetworkConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppServicePlanVirtualNetworkConnectionResource(ArmClient client, AppServiceVirtualNetworkData data) : this(client, data.Id)
@@ -67,9 +68,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/serverfarms/virtualNetworkConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -110,6 +108,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_GetVnetGateway</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServicePlanVirtualNetworkConnectionGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="gatewayName"> Name of the gateway. Only the 'primary' gateway is supported. </param>
@@ -133,6 +139,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_GetVnetGateway</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServicePlanVirtualNetworkConnectionGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="gatewayName"> Name of the gateway. Only the 'primary' gateway is supported. </param>
@@ -155,6 +169,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_GetVnetFromServerFarm</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServicePlanVirtualNetworkConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -188,6 +210,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_GetVnetFromServerFarm</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServicePlanVirtualNetworkConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -220,14 +250,22 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_ListRoutesForVnet</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServicePlanVirtualNetworkConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppServiceVirtualNetworkRoute" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppServiceVirtualNetworkRoute"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServiceVirtualNetworkRoute> GetRoutesForVnetAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServicePlanVirtualNetworkConnectionAppServicePlansRestClient.CreateListRoutesForVnetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute, _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics, Pipeline, "AppServicePlanVirtualNetworkConnectionResource.GetRoutesForVnet", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute(e), _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics, Pipeline, "AppServicePlanVirtualNetworkConnectionResource.GetRoutesForVnet", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -241,14 +279,22 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_ListRoutesForVnet</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServicePlanVirtualNetworkConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppServiceVirtualNetworkRoute" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppServiceVirtualNetworkRoute"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServiceVirtualNetworkRoute> GetRoutesForVnet(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServicePlanVirtualNetworkConnectionAppServicePlansRestClient.CreateListRoutesForVnetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute, _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics, Pipeline, "AppServicePlanVirtualNetworkConnectionResource.GetRoutesForVnet", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute(e), _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics, Pipeline, "AppServicePlanVirtualNetworkConnectionResource.GetRoutesForVnet", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -261,6 +307,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_CreateOrUpdateVnetRoute</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +349,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_CreateOrUpdateVnetRoute</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="routeName"> Name of the Virtual Network route. </param>
@@ -336,6 +390,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_DeleteVnetRoute</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="routeName"> Name of the Virtual Network route. </param>
@@ -371,6 +429,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_DeleteVnetRoute</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="routeName"> Name of the Virtual Network route. </param>
@@ -405,6 +467,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_UpdateVnetRoute</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -442,6 +508,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_UpdateVnetRoute</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>

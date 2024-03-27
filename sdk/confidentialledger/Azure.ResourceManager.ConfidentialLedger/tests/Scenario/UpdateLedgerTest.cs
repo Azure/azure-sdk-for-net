@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         {
             return new ConfidentialLedgerProperties(properties.LedgerName, properties.LedgerUri,
                 properties.IdentityServiceUri, properties.LedgerInternalNamespace, properties.RunningState, properties.LedgerType,
-                properties.ProvisioningState, securityPrincipals, properties.CertBasedSecurityPrincipals);
+                properties.ProvisioningState, securityPrincipals, properties.CertBasedSecurityPrincipals, null);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         {
             IList<AadBasedSecurityPrincipal> securityPrincipals = new List<AadBasedSecurityPrincipal>();
             securityPrincipals.Add(new AadBasedSecurityPrincipal(new Guid(TestEnvironment.TestUserObjectId),
-                new Guid(TestEnvironment.TenantId), new ConfidentialLedgerRoleName("Contributor")));
+                new Guid(TestEnvironment.TenantId), new ConfidentialLedgerRoleName("Contributor"), null));
             return securityPrincipals;
         }
     }

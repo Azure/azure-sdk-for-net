@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -18,13 +17,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// </summary>
     public partial class SynapseIntegrationRuntimeProperties
     {
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeProperties"/>. </summary>
         public SynapseIntegrationRuntimeProperties()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeProperties"/>. </summary>
         /// <param name="integrationRuntimeType"> Type of integration runtime. </param>
         /// <param name="description"> Integration runtime description. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>

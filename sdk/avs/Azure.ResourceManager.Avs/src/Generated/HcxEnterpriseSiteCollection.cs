@@ -12,17 +12,15 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HcxEnterpriseSiteResource" /> and their operations.
-    /// Each <see cref="HcxEnterpriseSiteResource" /> in the collection will belong to the same instance of <see cref="AvsPrivateCloudResource" />.
-    /// To get a <see cref="HcxEnterpriseSiteCollection" /> instance call the GetHcxEnterpriseSites method from an instance of <see cref="AvsPrivateCloudResource" />.
+    /// A class representing a collection of <see cref="HcxEnterpriseSiteResource"/> and their operations.
+    /// Each <see cref="HcxEnterpriseSiteResource"/> in the collection will belong to the same instance of <see cref="AvsPrivateCloudResource"/>.
+    /// To get a <see cref="HcxEnterpriseSiteCollection"/> instance call the GetHcxEnterpriseSites method from an instance of <see cref="AvsPrivateCloudResource"/>.
     /// </summary>
     public partial class HcxEnterpriseSiteCollection : ArmCollection, IEnumerable<HcxEnterpriseSiteResource>, IAsyncEnumerable<HcxEnterpriseSiteResource>
     {
@@ -54,7 +52,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Create or update an HCX Enterprise Site in a private cloud
+        /// Create or update an activation key for on-premises HCX site
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -63,6 +61,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HcxEnterpriseSites_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HcxEnterpriseSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -95,7 +101,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Create or update an HCX Enterprise Site in a private cloud
+        /// Create or update an activation key for on-premises HCX site
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -104,6 +110,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HcxEnterpriseSites_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HcxEnterpriseSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -136,7 +150,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get an HCX Enterprise Site by name in a private cloud
+        /// Get an HCX on-premises key by name in a private cloud
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -145,6 +159,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HcxEnterpriseSites_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HcxEnterpriseSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -173,7 +195,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get an HCX Enterprise Site by name in a private cloud
+        /// Get an HCX on-premises key by name in a private cloud
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -182,6 +204,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HcxEnterpriseSites_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HcxEnterpriseSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,7 +240,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// List HCX Enterprise Sites in a private cloud
+        /// List HCX on-premises key in a private cloud
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -220,10 +250,18 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>HcxEnterpriseSites_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HcxEnterpriseSiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HcxEnterpriseSiteResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HcxEnterpriseSiteResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HcxEnterpriseSiteResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hcxEnterpriseSiteRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -232,7 +270,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// List HCX Enterprise Sites in a private cloud
+        /// List HCX on-premises key in a private cloud
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -242,10 +280,18 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>HcxEnterpriseSites_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HcxEnterpriseSiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HcxEnterpriseSiteResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HcxEnterpriseSiteResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HcxEnterpriseSiteResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hcxEnterpriseSiteRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -263,6 +309,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HcxEnterpriseSites_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HcxEnterpriseSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +353,14 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>HcxEnterpriseSites_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HcxEnterpriseSiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="hcxEnterpriseSiteName"> Name of the HCX Enterprise Site in the private cloud. </param>
@@ -333,6 +395,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HcxEnterpriseSites_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HcxEnterpriseSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -370,6 +440,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HcxEnterpriseSites_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HcxEnterpriseSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

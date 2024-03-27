@@ -9,18 +9,16 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
     /// A Class representing a DataFactoryManagedVirtualNetwork along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataFactoryManagedVirtualNetworkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataFactoryManagedVirtualNetworkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource" /> using the GetDataFactoryManagedVirtualNetwork method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataFactoryManagedVirtualNetworkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataFactoryManagedVirtualNetworkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource"/> using the GetDataFactoryManagedVirtualNetwork method.
     /// </summary>
     public partial class DataFactoryManagedVirtualNetworkResource : ArmResource
     {
@@ -39,12 +37,15 @@ namespace Azure.ResourceManager.DataFactory
         private readonly ManagedVirtualNetworksRestOperations _dataFactoryManagedVirtualNetworkManagedVirtualNetworksRestClient;
         private readonly DataFactoryManagedVirtualNetworkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/managedVirtualNetworks";
+
         /// <summary> Initializes a new instance of the <see cref="DataFactoryManagedVirtualNetworkResource"/> class for mocking. </summary>
         protected DataFactoryManagedVirtualNetworkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataFactoryManagedVirtualNetworkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataFactoryManagedVirtualNetworkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataFactoryManagedVirtualNetworkResource(ArmClient client, DataFactoryManagedVirtualNetworkData data) : this(client, data.Id)
@@ -65,9 +66,6 @@ namespace Azure.ResourceManager.DataFactory
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/managedVirtualNetworks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -108,6 +106,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>ManagedPrivateEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryPrivateEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedPrivateEndpointName"> Managed private endpoint name. </param>
@@ -132,6 +138,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>ManagedPrivateEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryPrivateEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedPrivateEndpointName"> Managed private endpoint name. </param>
@@ -155,6 +169,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedVirtualNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryManagedVirtualNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -189,6 +211,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>ManagedVirtualNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryManagedVirtualNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ifNoneMatch"> ETag of the managed Virtual Network entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
@@ -221,6 +251,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedVirtualNetworks_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryManagedVirtualNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -260,6 +298,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedVirtualNetworks_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryManagedVirtualNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

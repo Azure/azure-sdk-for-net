@@ -15,11 +15,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DocumentType))
-            {
-                writer.WritePropertyName("DocumentType"u8);
-                writer.WriteStringValue(DocumentType.Value.ToString());
-            }
+            writer.WritePropertyName("DocumentType"u8);
+            writer.WriteStringValue(DocumentType.ToString());
             if (Optional.IsCollectionDefined(DocumentStreamIds))
             {
                 writer.WritePropertyName("DocumentStreamIds"u8);
@@ -36,12 +33,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 writer.WriteStartArray();
                 foreach (var item in Properties)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KeyValuePairString>(item);
                 }
                 writer.WriteEndArray();
             }

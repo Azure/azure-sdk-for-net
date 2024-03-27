@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(DataFlow))
             {
                 writer.WritePropertyName("dataFlow"u8);
-                writer.WriteObjectValue(DataFlow);
+                writer.WriteObjectValue<DataFlowDebugResource>(DataFlow);
             }
             if (Optional.IsCollectionDefined(DataFlows))
             {
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DataFlows)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataFlowDebugResource>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -45,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Datasets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DatasetDebugResource>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -55,24 +55,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in LinkedServices)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LinkedServiceDebugResource>(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Staging))
             {
                 writer.WritePropertyName("staging"u8);
-                writer.WriteObjectValue(Staging);
+                writer.WriteObjectValue<DataFlowStagingInfo>(Staging);
             }
             if (Optional.IsDefined(DebugSettings))
             {
                 writer.WritePropertyName("debugSettings"u8);
-                writer.WriteObjectValue(DebugSettings);
+                writer.WriteObjectValue<DataFlowDebugPackageDebugSettings>(DebugSettings);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -83,13 +83,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> sessionId = default;
-            Optional<DataFlowDebugResource> dataFlow = default;
-            Optional<IList<DataFlowDebugResource>> dataFlows = default;
-            Optional<IList<DatasetDebugResource>> datasets = default;
-            Optional<IList<LinkedServiceDebugResource>> linkedServices = default;
-            Optional<DataFlowStagingInfo> staging = default;
-            Optional<DataFlowDebugPackageDebugSettings> debugSettings = default;
+            string sessionId = default;
+            DataFlowDebugResource dataFlow = default;
+            IList<DataFlowDebugResource> dataFlows = default;
+            IList<DatasetDebugResource> datasets = default;
+            IList<LinkedServiceDebugResource> linkedServices = default;
+            DataFlowStagingInfo staging = default;
+            DataFlowDebugPackageDebugSettings debugSettings = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -171,14 +171,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFlowDebugPackage(sessionId.Value, dataFlow.Value, Optional.ToList(dataFlows), Optional.ToList(datasets), Optional.ToList(linkedServices), staging.Value, debugSettings.Value, additionalProperties);
+            return new DataFlowDebugPackage(
+                sessionId,
+                dataFlow,
+                dataFlows ?? new ChangeTrackingList<DataFlowDebugResource>(),
+                datasets ?? new ChangeTrackingList<DatasetDebugResource>(),
+                linkedServices ?? new ChangeTrackingList<LinkedServiceDebugResource>(),
+                staging,
+                debugSettings,
+                additionalProperties);
         }
 
         internal partial class DataFlowDebugPackageConverter : JsonConverter<DataFlowDebugPackage>
         {
             public override void Write(Utf8JsonWriter writer, DataFlowDebugPackage model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DataFlowDebugPackage>(model);
             }
             public override DataFlowDebugPackage Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

@@ -18,12 +18,12 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(SymmetricKey))
             {
                 writer.WritePropertyName("symmetricKey"u8);
-                writer.WriteObjectValue(SymmetricKey);
+                writer.WriteObjectValue<SymmetricKey>(SymmetricKey);
             }
             if (Optional.IsDefined(X509Thumbprint))
             {
                 writer.WritePropertyName("x509Thumbprint"u8);
-                writer.WriteObjectValue(X509Thumbprint);
+                writer.WriteObjectValue<X509Thumbprint>(X509Thumbprint);
             }
             if (Optional.IsDefined(Type))
             {
@@ -39,9 +39,9 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<SymmetricKey> symmetricKey = default;
-            Optional<X509Thumbprint> x509Thumbprint = default;
-            Optional<AuthenticationMechanismType> type = default;
+            SymmetricKey symmetricKey = default;
+            X509Thumbprint x509Thumbprint = default;
+            AuthenticationMechanismType? type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("symmetricKey"u8))
@@ -72,7 +72,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new AuthenticationMechanism(symmetricKey.Value, x509Thumbprint.Value, Optional.ToNullable(type));
+            return new AuthenticationMechanism(symmetricKey, x509Thumbprint, type);
         }
     }
 }

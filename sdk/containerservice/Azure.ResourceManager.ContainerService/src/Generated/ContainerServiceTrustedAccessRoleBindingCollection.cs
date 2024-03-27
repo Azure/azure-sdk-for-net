@@ -12,17 +12,15 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ContainerServiceTrustedAccessRoleBindingResource" /> and their operations.
-    /// Each <see cref="ContainerServiceTrustedAccessRoleBindingResource" /> in the collection will belong to the same instance of <see cref="ContainerServiceManagedClusterResource" />.
-    /// To get a <see cref="ContainerServiceTrustedAccessRoleBindingCollection" /> instance call the GetContainerServiceTrustedAccessRoleBindings method from an instance of <see cref="ContainerServiceManagedClusterResource" />.
+    /// A class representing a collection of <see cref="ContainerServiceTrustedAccessRoleBindingResource"/> and their operations.
+    /// Each <see cref="ContainerServiceTrustedAccessRoleBindingResource"/> in the collection will belong to the same instance of <see cref="ContainerServiceManagedClusterResource"/>.
+    /// To get a <see cref="ContainerServiceTrustedAccessRoleBindingCollection"/> instance call the GetContainerServiceTrustedAccessRoleBindings method from an instance of <see cref="ContainerServiceManagedClusterResource"/>.
     /// </summary>
     public partial class ContainerServiceTrustedAccessRoleBindingCollection : ArmCollection, IEnumerable<ContainerServiceTrustedAccessRoleBindingResource>, IAsyncEnumerable<ContainerServiceTrustedAccessRoleBindingResource>
     {
@@ -64,6 +62,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>TrustedAccessRoleBindings_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceTrustedAccessRoleBindingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -82,7 +88,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = await _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, trustedAccessRoleBindingName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation<ContainerServiceTrustedAccessRoleBindingResource>(Response.FromValue(new ContainerServiceTrustedAccessRoleBindingResource(Client, response), response.GetRawResponse()));
+                var operation = new ContainerServiceArmOperation<ContainerServiceTrustedAccessRoleBindingResource>(new ContainerServiceTrustedAccessRoleBindingOperationSource(Client), _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsClientDiagnostics, Pipeline, _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, trustedAccessRoleBindingName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -105,6 +111,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>TrustedAccessRoleBindings_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceTrustedAccessRoleBindingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -123,7 +137,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, trustedAccessRoleBindingName, data, cancellationToken);
-                var operation = new ContainerServiceArmOperation<ContainerServiceTrustedAccessRoleBindingResource>(Response.FromValue(new ContainerServiceTrustedAccessRoleBindingResource(Client, response), response.GetRawResponse()));
+                var operation = new ContainerServiceArmOperation<ContainerServiceTrustedAccessRoleBindingResource>(new ContainerServiceTrustedAccessRoleBindingOperationSource(Client), _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsClientDiagnostics, Pipeline, _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, trustedAccessRoleBindingName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -145,6 +159,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TrustedAccessRoleBindings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceTrustedAccessRoleBindingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,6 +205,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>TrustedAccessRoleBindings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceTrustedAccessRoleBindingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="trustedAccessRoleBindingName"> The name of trusted access role binding. </param>
@@ -220,10 +250,18 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>TrustedAccessRoleBindings_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceTrustedAccessRoleBindingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerServiceTrustedAccessRoleBindingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerServiceTrustedAccessRoleBindingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerServiceTrustedAccessRoleBindingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -242,10 +280,18 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>TrustedAccessRoleBindings_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceTrustedAccessRoleBindingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerServiceTrustedAccessRoleBindingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerServiceTrustedAccessRoleBindingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerServiceTrustedAccessRoleBindingResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -263,6 +309,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TrustedAccessRoleBindings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceTrustedAccessRoleBindingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +353,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>TrustedAccessRoleBindings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceTrustedAccessRoleBindingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="trustedAccessRoleBindingName"> The name of trusted access role binding. </param>
@@ -333,6 +395,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TrustedAccessRoleBindings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceTrustedAccessRoleBindingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -370,6 +440,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TrustedAccessRoleBindings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceTrustedAccessRoleBindingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

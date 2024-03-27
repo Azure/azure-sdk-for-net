@@ -22,39 +22,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(TreatEmptyAsNull))
             {
                 writer.WritePropertyName("treatEmptyAsNull"u8);
-                writer.WriteObjectValue(TreatEmptyAsNull);
+                writer.WriteObjectValue<object>(TreatEmptyAsNull);
             }
             if (Optional.IsDefined(SkipHeaderLineCount))
             {
                 writer.WritePropertyName("skipHeaderLineCount"u8);
-                writer.WriteObjectValue(SkipHeaderLineCount);
+                writer.WriteObjectValue<object>(SkipHeaderLineCount);
             }
             if (Optional.IsDefined(Recursive))
             {
                 writer.WritePropertyName("recursive"u8);
-                writer.WriteObjectValue(Recursive);
+                writer.WriteObjectValue<object>(Recursive);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
-                writer.WriteObjectValue(SourceRetryCount);
+                writer.WriteObjectValue<object>(SourceRetryCount);
             }
             if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
-                writer.WriteObjectValue(SourceRetryWait);
+                writer.WriteObjectValue<object>(SourceRetryWait);
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-                writer.WriteObjectValue(MaxConcurrentConnections);
+                writer.WriteObjectValue<object>(MaxConcurrentConnections);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -65,13 +65,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> treatEmptyAsNull = default;
-            Optional<object> skipHeaderLineCount = default;
-            Optional<object> recursive = default;
+            object treatEmptyAsNull = default;
+            object skipHeaderLineCount = default;
+            object recursive = default;
             string type = default;
-            Optional<object> sourceRetryCount = default;
-            Optional<object> sourceRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            object sourceRetryCount = default;
+            object sourceRetryWait = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -138,14 +138,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureBlobFSSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, treatEmptyAsNull.Value, skipHeaderLineCount.Value, recursive.Value);
+            return new AzureBlobFSSource(
+                type,
+                sourceRetryCount,
+                sourceRetryWait,
+                maxConcurrentConnections,
+                additionalProperties,
+                treatEmptyAsNull,
+                skipHeaderLineCount,
+                recursive);
         }
 
         internal partial class AzureBlobFSSourceConverter : JsonConverter<AzureBlobFSSource>
         {
             public override void Write(Utf8JsonWriter writer, AzureBlobFSSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<AzureBlobFSSource>(model);
             }
             public override AzureBlobFSSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

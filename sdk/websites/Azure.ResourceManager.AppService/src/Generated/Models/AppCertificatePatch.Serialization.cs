@@ -5,20 +5,53 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppCertificatePatch : IUtf8JsonSerializable
+    public partial class AppCertificatePatch : IUtf8JsonSerializable, IJsonModel<AppCertificatePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppCertificatePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AppCertificatePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppCertificatePatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppCertificatePatch)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -26,6 +59,16 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
+            {
+                writer.WritePropertyName("friendlyName"u8);
+                writer.WriteStringValue(FriendlyName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SubjectName))
+            {
+                writer.WritePropertyName("subjectName"u8);
+                writer.WriteStringValue(SubjectName);
             }
             if (Optional.IsCollectionDefined(HostNames))
             {
@@ -42,6 +85,56 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("pfxBlob"u8);
                 writer.WriteBase64StringValue(PfxBlob, "D");
             }
+            if (options.Format != "W" && Optional.IsDefined(SiteName))
+            {
+                writer.WritePropertyName("siteName"u8);
+                writer.WriteStringValue(SiteName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SelfLink))
+            {
+                writer.WritePropertyName("selfLink"u8);
+                writer.WriteStringValue(SelfLink);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Issuer))
+            {
+                writer.WritePropertyName("issuer"u8);
+                writer.WriteStringValue(Issuer);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IssueOn))
+            {
+                writer.WritePropertyName("issueDate"u8);
+                writer.WriteStringValue(IssueOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            {
+                writer.WritePropertyName("expirationDate"u8);
+                writer.WriteStringValue(ExpireOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ThumbprintString))
+            {
+                writer.WritePropertyName("thumbprint"u8);
+                writer.WriteStringValue(ThumbprintString);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsValid))
+            {
+                writer.WritePropertyName("valid"u8);
+                writer.WriteBooleanValue(IsValid.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CerBlob))
+            {
+                writer.WritePropertyName("cerBlob"u8);
+                writer.WriteBase64StringValue(CerBlob, "D");
+            }
+            if (options.Format != "W" && Optional.IsDefined(PublicKeyHash))
+            {
+                writer.WritePropertyName("publicKeyHash"u8);
+                writer.WriteStringValue(PublicKeyHash);
+            }
+            if (options.Format != "W" && Optional.IsDefined(HostingEnvironmentProfile))
+            {
+                writer.WritePropertyName("hostingEnvironmentProfile"u8);
+                writer.WriteObjectValue<HostingEnvironmentProfile>(HostingEnvironmentProfile, options);
+            }
             if (Optional.IsDefined(KeyVaultId))
             {
                 writer.WritePropertyName("keyVaultId"u8);
@@ -51,6 +144,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("keyVaultSecretName"u8);
                 writer.WriteStringValue(KeyVaultSecretName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(KeyVaultSecretStatus))
+            {
+                writer.WritePropertyName("keyVaultSecretStatus"u8);
+                writer.WriteStringValue(KeyVaultSecretStatus.Value.ToSerialString());
             }
             if (Optional.IsDefined(ServerFarmId))
             {
@@ -68,7 +166,563 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStringValue(DomainValidationMethod);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        AppCertificatePatch IJsonModel<AppCertificatePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppCertificatePatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppCertificatePatch)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppCertificatePatch(document.RootElement, options);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (Optional.IsDefined(Kind) || hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Kind}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Password), out propertyOverride);
+            if (Optional.IsDefined(Password) || hasPropertyOverride)
+            {
+                builder.Append("    password: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Password.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Password}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Password}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FriendlyName), out propertyOverride);
+            if (Optional.IsDefined(FriendlyName) || hasPropertyOverride)
+            {
+                builder.Append("    friendlyName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (FriendlyName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{FriendlyName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{FriendlyName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubjectName), out propertyOverride);
+            if (Optional.IsDefined(SubjectName) || hasPropertyOverride)
+            {
+                builder.Append("    subjectName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SubjectName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SubjectName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SubjectName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostNames), out propertyOverride);
+            if (Optional.IsCollectionDefined(HostNames) || hasPropertyOverride)
+            {
+                if (HostNames.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    hostNames: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in HostNames)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PfxBlob), out propertyOverride);
+            if (Optional.IsDefined(PfxBlob) || hasPropertyOverride)
+            {
+                builder.Append("    pfxBlob: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{PfxBlob.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SiteName), out propertyOverride);
+            if (Optional.IsDefined(SiteName) || hasPropertyOverride)
+            {
+                builder.Append("    siteName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SiteName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SiteName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SiteName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SelfLink), out propertyOverride);
+            if (Optional.IsDefined(SelfLink) || hasPropertyOverride)
+            {
+                builder.Append("    selfLink: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SelfLink.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SelfLink}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SelfLink}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Issuer), out propertyOverride);
+            if (Optional.IsDefined(Issuer) || hasPropertyOverride)
+            {
+                builder.Append("    issuer: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Issuer.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Issuer}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Issuer}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IssueOn), out propertyOverride);
+            if (Optional.IsDefined(IssueOn) || hasPropertyOverride)
+            {
+                builder.Append("    issueDate: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(IssueOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpireOn), out propertyOverride);
+            if (Optional.IsDefined(ExpireOn) || hasPropertyOverride)
+            {
+                builder.Append("    expirationDate: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(ExpireOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThumbprintString), out propertyOverride);
+            if (Optional.IsDefined(ThumbprintString) || hasPropertyOverride)
+            {
+                builder.Append("    thumbprint: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ThumbprintString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ThumbprintString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ThumbprintString}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsValid), out propertyOverride);
+            if (Optional.IsDefined(IsValid) || hasPropertyOverride)
+            {
+                builder.Append("    valid: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsValid.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CerBlob), out propertyOverride);
+            if (Optional.IsDefined(CerBlob) || hasPropertyOverride)
+            {
+                builder.Append("    cerBlob: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{CerBlob.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicKeyHash), out propertyOverride);
+            if (Optional.IsDefined(PublicKeyHash) || hasPropertyOverride)
+            {
+                builder.Append("    publicKeyHash: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (PublicKeyHash.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PublicKeyHash}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PublicKeyHash}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostingEnvironmentProfile), out propertyOverride);
+            if (Optional.IsDefined(HostingEnvironmentProfile) || hasPropertyOverride)
+            {
+                builder.Append("    hostingEnvironmentProfile: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, HostingEnvironmentProfile, options, 4, false, "    hostingEnvironmentProfile: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVaultId), out propertyOverride);
+            if (Optional.IsDefined(KeyVaultId) || hasPropertyOverride)
+            {
+                builder.Append("    keyVaultId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{KeyVaultId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVaultSecretName), out propertyOverride);
+            if (Optional.IsDefined(KeyVaultSecretName) || hasPropertyOverride)
+            {
+                builder.Append("    keyVaultSecretName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (KeyVaultSecretName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{KeyVaultSecretName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{KeyVaultSecretName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVaultSecretStatus), out propertyOverride);
+            if (Optional.IsDefined(KeyVaultSecretStatus) || hasPropertyOverride)
+            {
+                builder.Append("    keyVaultSecretStatus: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{KeyVaultSecretStatus.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerFarmId), out propertyOverride);
+            if (Optional.IsDefined(ServerFarmId) || hasPropertyOverride)
+            {
+                builder.Append("    serverFarmId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ServerFarmId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CanonicalName), out propertyOverride);
+            if (Optional.IsDefined(CanonicalName) || hasPropertyOverride)
+            {
+                builder.Append("    canonicalName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (CanonicalName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CanonicalName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CanonicalName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DomainValidationMethod), out propertyOverride);
+            if (Optional.IsDefined(DomainValidationMethod) || hasPropertyOverride)
+            {
+                builder.Append("    domainValidationMethod: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DomainValidationMethod.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DomainValidationMethod}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DomainValidationMethod}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<AppCertificatePatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppCertificatePatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(AppCertificatePatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AppCertificatePatch IPersistableModel<AppCertificatePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppCertificatePatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppCertificatePatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppCertificatePatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppCertificatePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

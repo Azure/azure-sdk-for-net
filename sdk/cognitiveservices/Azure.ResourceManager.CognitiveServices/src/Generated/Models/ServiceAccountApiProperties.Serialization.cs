@@ -6,16 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class ServiceAccountApiProperties : IUtf8JsonSerializable
+    public partial class ServiceAccountApiProperties : IUtf8JsonSerializable, IJsonModel<ServiceAccountApiProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceAccountApiProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ServiceAccountApiProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountApiProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceAccountApiProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(QnaRuntimeEndpoint))
             {
@@ -82,22 +92,36 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             writer.WriteEndObject();
         }
 
-        internal static ServiceAccountApiProperties DeserializeServiceAccountApiProperties(JsonElement element)
+        ServiceAccountApiProperties IJsonModel<ServiceAccountApiProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountApiProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceAccountApiProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceAccountApiProperties(document.RootElement, options);
+        }
+
+        internal static ServiceAccountApiProperties DeserializeServiceAccountApiProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> qnaRuntimeEndpoint = default;
-            Optional<string> qnaAzureSearchEndpointKey = default;
-            Optional<ResourceIdentifier> qnaAzureSearchEndpointId = default;
-            Optional<bool> statisticsEnabled = default;
-            Optional<string> eventHubConnectionString = default;
-            Optional<string> storageAccountConnectionString = default;
-            Optional<Guid> aadClientId = default;
-            Optional<Guid> aadTenantId = default;
-            Optional<string> superUser = default;
-            Optional<string> websiteName = default;
+            string qnaRuntimeEndpoint = default;
+            string qnaAzureSearchEndpointKey = default;
+            ResourceIdentifier qnaAzureSearchEndpointId = default;
+            bool? statisticsEnabled = default;
+            string eventHubConnectionString = default;
+            string storageAccountConnectionString = default;
+            Guid? aadClientId = default;
+            Guid? aadTenantId = default;
+            string superUser = default;
+            string websiteName = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,7 +195,255 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ServiceAccountApiProperties(qnaRuntimeEndpoint.Value, qnaAzureSearchEndpointKey.Value, qnaAzureSearchEndpointId.Value, Optional.ToNullable(statisticsEnabled), eventHubConnectionString.Value, storageAccountConnectionString.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), superUser.Value, websiteName.Value, additionalProperties);
+            return new ServiceAccountApiProperties(
+                qnaRuntimeEndpoint,
+                qnaAzureSearchEndpointKey,
+                qnaAzureSearchEndpointId,
+                statisticsEnabled,
+                eventHubConnectionString,
+                storageAccountConnectionString,
+                aadClientId,
+                aadTenantId,
+                superUser,
+                websiteName,
+                additionalProperties);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QnaRuntimeEndpoint), out propertyOverride);
+            if (Optional.IsDefined(QnaRuntimeEndpoint) || hasPropertyOverride)
+            {
+                builder.Append("  qnaRuntimeEndpoint: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (QnaRuntimeEndpoint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{QnaRuntimeEndpoint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{QnaRuntimeEndpoint}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QnaAzureSearchEndpointKey), out propertyOverride);
+            if (Optional.IsDefined(QnaAzureSearchEndpointKey) || hasPropertyOverride)
+            {
+                builder.Append("  qnaAzureSearchEndpointKey: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (QnaAzureSearchEndpointKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{QnaAzureSearchEndpointKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{QnaAzureSearchEndpointKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QnaAzureSearchEndpointId), out propertyOverride);
+            if (Optional.IsDefined(QnaAzureSearchEndpointId) || hasPropertyOverride)
+            {
+                builder.Append("  qnaAzureSearchEndpointId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{QnaAzureSearchEndpointId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableStatistics), out propertyOverride);
+            if (Optional.IsDefined(EnableStatistics) || hasPropertyOverride)
+            {
+                builder.Append("  statisticsEnabled: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = EnableStatistics.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EventHubConnectionString), out propertyOverride);
+            if (Optional.IsDefined(EventHubConnectionString) || hasPropertyOverride)
+            {
+                builder.Append("  eventHubConnectionString: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (EventHubConnectionString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EventHubConnectionString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EventHubConnectionString}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAccountConnectionString), out propertyOverride);
+            if (Optional.IsDefined(StorageAccountConnectionString) || hasPropertyOverride)
+            {
+                builder.Append("  storageAccountConnectionString: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (StorageAccountConnectionString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StorageAccountConnectionString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StorageAccountConnectionString}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AadClientId), out propertyOverride);
+            if (Optional.IsDefined(AadClientId) || hasPropertyOverride)
+            {
+                builder.Append("  aadClientId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{AadClientId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AadTenantId), out propertyOverride);
+            if (Optional.IsDefined(AadTenantId) || hasPropertyOverride)
+            {
+                builder.Append("  aadTenantId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{AadTenantId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SuperUser), out propertyOverride);
+            if (Optional.IsDefined(SuperUser) || hasPropertyOverride)
+            {
+                builder.Append("  superUser: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SuperUser.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SuperUser}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SuperUser}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WebsiteName), out propertyOverride);
+            if (Optional.IsDefined(WebsiteName) || hasPropertyOverride)
+            {
+                builder.Append("  websiteName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (WebsiteName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{WebsiteName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{WebsiteName}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ServiceAccountApiProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountApiProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ServiceAccountApiProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ServiceAccountApiProperties IPersistableModel<ServiceAccountApiProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountApiProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeServiceAccountApiProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServiceAccountApiProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ServiceAccountApiProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

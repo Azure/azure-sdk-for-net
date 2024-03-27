@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.MixedReality;
 using Azure.ResourceManager.MixedReality.Models;
 
 namespace Azure.ResourceManager.MixedReality.Mocking
@@ -64,6 +61,10 @@ namespace Azure.ResourceManager.MixedReality.Mocking
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailabilityLocal</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location in which uniqueness will be verified. </param>
@@ -98,6 +99,10 @@ namespace Azure.ResourceManager.MixedReality.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailabilityLocal</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,10 +139,18 @@ namespace Azure.ResourceManager.MixedReality.Mocking
         /// <term>Operation Id</term>
         /// <description>SpatialAnchorsAccounts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpatialAnchorsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SpatialAnchorsAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SpatialAnchorsAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SpatialAnchorsAccountResource> GetSpatialAnchorsAccountsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SpatialAnchorsAccountRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -156,10 +169,18 @@ namespace Azure.ResourceManager.MixedReality.Mocking
         /// <term>Operation Id</term>
         /// <description>SpatialAnchorsAccounts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpatialAnchorsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SpatialAnchorsAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SpatialAnchorsAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SpatialAnchorsAccountResource> GetSpatialAnchorsAccounts(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SpatialAnchorsAccountRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -178,10 +199,18 @@ namespace Azure.ResourceManager.MixedReality.Mocking
         /// <term>Operation Id</term>
         /// <description>RemoteRenderingAccounts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RemoteRenderingAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RemoteRenderingAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RemoteRenderingAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RemoteRenderingAccountResource> GetRemoteRenderingAccountsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RemoteRenderingAccountRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -200,10 +229,18 @@ namespace Azure.ResourceManager.MixedReality.Mocking
         /// <term>Operation Id</term>
         /// <description>RemoteRenderingAccounts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RemoteRenderingAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RemoteRenderingAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RemoteRenderingAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RemoteRenderingAccountResource> GetRemoteRenderingAccounts(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RemoteRenderingAccountRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);

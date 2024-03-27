@@ -173,7 +173,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetRouterJobs
 
-            Pageable<RouterJob> routerJobs = routerClient.GetJobs();
+            Pageable<RouterJob> routerJobs = routerClient.GetJobs(null, null);
             foreach (Page<RouterJob> asPage in routerJobs.AsPages(pageSizeHint: 10))
             {
                 foreach (RouterJob? _job in asPage.Values)

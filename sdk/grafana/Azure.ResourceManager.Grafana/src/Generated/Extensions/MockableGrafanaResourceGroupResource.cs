@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.Grafana.Mocking
         /// <term>Operation Id</term>
         /// <description>Grafana_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.Grafana.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Grafana_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

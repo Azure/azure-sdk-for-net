@@ -10,12 +10,12 @@ namespace Azure.Maps.Search.Models
     /// <summary> Describes the address range on both sides of the street for a search result. Coordinates for the start and end locations of the address range are included. </summary>
     public partial class AddressRanges
     {
-        /// <summary> Initializes a new instance of AddressRanges. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddressRanges"/>. </summary>
         internal AddressRanges()
         {
         }
 
-        /// <summary> Initializes a new instance of AddressRanges. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddressRanges"/>. </summary>
         /// <param name="rangeLeft"> Address range on the left side of the street. </param>
         /// <param name="rangeRight"> Address range on the right side of the street. </param>
         /// <param name="fromInternal"> A location represented as a latitude and longitude using short names 'lat' &amp; 'lon'. </param>

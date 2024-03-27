@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +120,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <term>Operation Id</term>
         /// <description>ScalingPlans_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScalingPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scalingPlanName"> The name of the scaling plan. </param>
@@ -129,6 +150,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScalingPlans_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScalingPlanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -160,6 +189,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplicationGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualApplicationGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationGroupName"> The name of the application group. </param>
@@ -182,6 +219,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplicationGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualApplicationGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,6 +258,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <term>Operation Id</term>
         /// <description>HostPools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
@@ -235,6 +288,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HostPools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

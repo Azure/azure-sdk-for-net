@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AppConfiguration.SnapshotModified event. </summary>
     public partial class AppConfigurationSnapshotModifiedEventData : AppConfigurationSnapshotEventData
     {
-        /// <summary> Initializes a new instance of AppConfigurationSnapshotModifiedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationSnapshotModifiedEventData"/>. </summary>
         internal AppConfigurationSnapshotModifiedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppConfigurationSnapshotModifiedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationSnapshotModifiedEventData"/>. </summary>
         /// <param name="name"> The name of the snapshot. </param>
         /// <param name="eTag"> The etag representing the new state of the snapshot. </param>
         /// <param name="syncToken"> The sync token representing the server state after the event. </param>

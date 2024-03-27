@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -38,7 +37,7 @@ namespace Azure.AI.TextAnalytics.Models
                 return null;
             }
             AnalyzeTextLROResultsKind kind = "Unknown";
-            Optional<string> taskName = default;
+            string taskName = default;
             DateTimeOffset lastUpdateDateTime = default;
             TextAnalyticsOperationStatus status = default;
             foreach (var property in element.EnumerateObject())
@@ -64,7 +63,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new UnknownAnalyzeTextLROResult(lastUpdateDateTime, status, kind, taskName.Value);
+            return new UnknownAnalyzeTextLROResult(lastUpdateDateTime, status, kind, taskName);
         }
     }
 }

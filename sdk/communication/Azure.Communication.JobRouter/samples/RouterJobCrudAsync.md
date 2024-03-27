@@ -170,7 +170,7 @@ Console.WriteLine($"Job has been successfully closed. Current status: {queriedJo
 ## List jobs
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetRouterJobs_Async
-AsyncPageable<RouterJob> routerJobs = routerClient.GetJobsAsync();
+AsyncPageable<RouterJob> routerJobs = routerClient.GetJobsAsync(null, null);
 await foreach (Page<RouterJob> asPage in routerJobs.AsPages(pageSizeHint: 10))
 {
     foreach (RouterJob? _job in asPage.Values)

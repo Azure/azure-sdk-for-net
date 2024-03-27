@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -12,13 +13,13 @@ namespace Azure.Storage.DataMovement.Tests
 {
     public partial class TransferValidator
     {
-        public class ShareResourceEnumerationItem : IResourceEnumerationItem
+        public class ShareFileResourceEnumerationItem : IResourceEnumerationItem
         {
             private readonly ShareFileClient _client;
 
             public string RelativePath { get; }
 
-            public ShareResourceEnumerationItem(ShareFileClient client, string relativePath)
+            public ShareFileResourceEnumerationItem(ShareFileClient client, string relativePath)
             {
                 _client = client;
                 RelativePath = relativePath;
@@ -30,66 +31,39 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        public static ListFilesAsync GetShareFilesLister(ShareClient container, string prefix)
+        public static ListFilesAsync GetShareFileLister(ShareDirectoryClient container)
         {
-            async Task<List<IResourceEnumerationItem>> ListFiles(CancellationToken cancellationToken)
+            async Task<List<IResourceEnumerationItem>> ListFilesRecursive(ShareDirectoryClient dir, CancellationToken cancellationToken)
             {
                 List<IResourceEnumerationItem> result = new();
-                ShareDirectoryClient directory = string.IsNullOrEmpty(prefix) ?
-                    container.GetRootDirectoryClient() :
-                    container.GetDirectoryClient(prefix);
-
-                Queue<ShareDirectoryClient> toScan = new();
-                toScan.Enqueue(directory);
-
-                while (toScan.Count > 0)
+                await foreach (ShareFileItem fileItem in dir.GetFilesAndDirectoriesAsync(cancellationToken: cancellationToken))
                 {
-                    ShareDirectoryClient current = toScan.Dequeue();
-                    await foreach (ShareFileItem item in current.GetFilesAndDirectoriesAsync(
-                        cancellationToken: cancellationToken).ConfigureAwait(false))
+                    if (fileItem.IsDirectory)
                     {
-                        if (item.IsDirectory)
-                        {
-                            ShareDirectoryClient subdir = current.GetSubdirectoryClient(item.Name);
-                            toScan.Enqueue(subdir);
-                        }
-                        else
-                        {
-                            string relativePath = "";
-                            if (string.IsNullOrEmpty(current.Path))
-                            {
-                                relativePath = item.Name;
-                            }
-                            else if (string.IsNullOrEmpty(prefix))
-                            {
-                                relativePath = string.Join("/", current.Path, item.Name);
-                            }
-                            else
-                            {
-                                relativePath =
-                                    prefix != current.Name ?
-                                    string.Join("/", current.Path.Substring(prefix.Length + 1), item.Name) :
-                                    item.Name;
-                            }
-                            result.Add(new ShareResourceEnumerationItem(current.GetFileClient(item.Name), relativePath));
-                        }
+                        result.AddRange(await ListFilesRecursive(dir.GetSubdirectoryClient(fileItem.Name), cancellationToken));
+                    }
+                    else
+                    {
+                        ShareFileClient fileClient = dir.GetFileClient(fileItem.Name);
+                        result.Add(new ShareFileResourceEnumerationItem(
+                            fileClient, fileClient.Path.Substring(container.Path.Length).Trim('/')));
                     }
                 }
                 return result;
             }
-            return ListFiles;
+            return (cancellationToken) => ListFilesRecursive(container, cancellationToken);
         }
 
-        public static ListFilesAsync GetFileListerSingle(ShareFileClient file, string relativePath)
+        public static ListFilesAsync GetShareFileListerSingle(ShareFileClient file, string relativePath)
         {
-            Task<List<IResourceEnumerationItem>> ListFiles(CancellationToken cancellationToken)
+            Task<List<IResourceEnumerationItem>> ListFile(CancellationToken cancellationToken)
             {
                 return Task.FromResult(new List<IResourceEnumerationItem>
                 {
-                    new ShareResourceEnumerationItem(file, relativePath)
+                    new ShareFileResourceEnumerationItem(file, relativePath)
                 });
             }
-            return ListFiles;
+            return ListFile;
         }
     }
 }

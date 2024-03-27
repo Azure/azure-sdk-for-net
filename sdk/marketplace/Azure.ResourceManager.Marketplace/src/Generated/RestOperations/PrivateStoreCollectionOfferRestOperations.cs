@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Marketplace.Models;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(payload);
+                content.JsonWriter.WriteObjectValue<CollectionOffersByAllContextsPayload>(payload, new ModelReaderWriterOptions("W"));
                 request.Content = content;
             }
             _userAgent.Apply(message);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Get a list of all offers in the given collection according to the required contexts. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="collectionId"> The collection ID. </param>
-        /// <param name="payload"> The CollectionOffersByAllContextsPayload to use. </param>
+        /// <param name="payload"> The <see cref="CollectionOffersByAllContextsPayload"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<CollectionOffersByContextList>> ListByContextsAsync(Guid privateStoreId, Guid collectionId, CollectionOffersByAllContextsPayload payload = null, CancellationToken cancellationToken = default)
         {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Get a list of all offers in the given collection according to the required contexts. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="collectionId"> The collection ID. </param>
-        /// <param name="payload"> The CollectionOffersByAllContextsPayload to use. </param>
+        /// <param name="payload"> The <see cref="CollectionOffersByAllContextsPayload"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<CollectionOffersByContextList> ListByContexts(Guid privateStoreId, Guid collectionId, CollectionOffersByAllContextsPayload payload = null, CancellationToken cancellationToken = default)
         {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Marketplace
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<PrivateStoreOfferData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="collectionId"> The collection ID. </param>
         /// <param name="offerId"> The offer ID to update or delete. </param>
-        /// <param name="data"> The PrivateStoreOffer to use. </param>
+        /// <param name="data"> The <see cref="PrivateStoreOfferData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="collectionId"> The collection ID. </param>
         /// <param name="offerId"> The offer ID to update or delete. </param>
-        /// <param name="data"> The PrivateStoreOffer to use. </param>
+        /// <param name="data"> The <see cref="PrivateStoreOfferData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="collectionId"> The collection ID. </param>
         /// <param name="offerId"> The offer ID to update or delete. </param>
-        /// <param name="payload"> The PrivateStoreOperation to use. </param>
+        /// <param name="payload"> The <see cref="PrivateStoreOperation"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="collectionId"> The collection ID. </param>
         /// <param name="offerId"> The offer ID to update or delete. </param>
-        /// <param name="payload"> The PrivateStoreOperation to use. </param>
+        /// <param name="payload"> The <see cref="PrivateStoreOperation"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content);
+                content0.JsonWriter.WriteObjectValue<MultiContextAndPlansContent>(content, new ModelReaderWriterOptions("W"));
                 request.Content = content0;
             }
             _userAgent.Apply(message);
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="collectionId"> The collection ID. </param>
         /// <param name="offerId"> The offer ID to update or delete. </param>
-        /// <param name="content"> The MultiContextAndPlansContent to use. </param>
+        /// <param name="content"> The <see cref="MultiContextAndPlansContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="collectionId"> The collection ID. </param>
         /// <param name="offerId"> The offer ID to update or delete. </param>
-        /// <param name="content"> The MultiContextAndPlansContent to use. </param>
+        /// <param name="content"> The <see cref="MultiContextAndPlansContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="collectionId"> The collection ID. </param>
-        /// <param name="payload"> The CollectionOffersByAllContextsPayload to use. </param>
+        /// <param name="payload"> The <see cref="CollectionOffersByAllContextsPayload"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<CollectionOffersByContextList>> ListByContextsNextPageAsync(string nextLink, Guid privateStoreId, Guid collectionId, CollectionOffersByAllContextsPayload payload = null, CancellationToken cancellationToken = default)
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="collectionId"> The collection ID. </param>
-        /// <param name="payload"> The CollectionOffersByAllContextsPayload to use. </param>
+        /// <param name="payload"> The <see cref="CollectionOffersByAllContextsPayload"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<CollectionOffersByContextList> ListByContextsNextPage(string nextLink, Guid privateStoreId, Guid collectionId, CollectionOffersByAllContextsPayload payload = null, CancellationToken cancellationToken = default)

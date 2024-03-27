@@ -7,20 +7,19 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A managed Virtual Network associated with the Azure Data Factory. </summary>
     public partial class DataFactoryManagedVirtualNetworkProperties
     {
-        /// <summary> Initializes a new instance of DataFactoryManagedVirtualNetworkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryManagedVirtualNetworkProperties"/>. </summary>
         public DataFactoryManagedVirtualNetworkProperties()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryManagedVirtualNetworkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryManagedVirtualNetworkProperties"/>. </summary>
         /// <param name="vnetId"> Managed Virtual Network ID. </param>
         /// <param name="alias"> Managed Virtual Network alias. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>

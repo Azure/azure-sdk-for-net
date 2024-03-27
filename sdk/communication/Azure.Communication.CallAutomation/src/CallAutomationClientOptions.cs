@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The latest version of the CallAutomation service.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2023_01_15_Preview;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2023_10_03_Preview;
 
         internal string ApiVersion { get; }
 
@@ -32,7 +32,10 @@ namespace Azure.Communication.CallAutomation
         {
             ApiVersion = version switch
             {
-                ServiceVersion.V2023_01_15_Preview => "2023-01-15-preview",
+                ServiceVersion.V2023_03_06 => "2023-03-06",
+                ServiceVersion.V2023_06_15_Preview => "2023-06-15-preview",
+                ServiceVersion.V2023_10_15 => "2023-10-15",
+                ServiceVersion.V2023_10_03_Preview => "2023-10-03-preview",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
         }
@@ -42,11 +45,26 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public enum ServiceVersion
         {
-            /// <summary>
-            /// The Beta of the CallAutomation service.
-            /// </summary>
 #pragma warning disable CA1707 // Identifiers should not contain underscores
-            V2023_01_15_Preview = 1
+            /// <summary>
+            /// The GA1 (1.0.0) of the CallAutomation service.
+            /// </summary>
+            V2023_03_06 = 1,
+
+            /// <summary>
+            /// The BETA2 (1.1.0-beta) of the CallAutomation service.
+            /// </summary>
+            V2023_06_15_Preview = 2,
+
+            /// <summary>
+            /// The GA2 (1.1.0) of the CallAutomation service.
+            /// </summary>
+            V2023_10_15 = 3,
+
+            /// <summary>
+            /// Latest ALPHA3 (1.2.0-alpha) preview of the CallAutomation service.
+            /// </summary>
+            V2023_10_03_Preview = 4
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
     }

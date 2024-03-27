@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Communication;
 using Azure.ResourceManager.Communication.Models;
 
 namespace Azure.ResourceManager.Communication.Mocking
@@ -60,6 +57,14 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <term>Operation Id</term>
         /// <description>CommunicationServices_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Parameters supplied to the operation. </param>
@@ -93,6 +98,14 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommunicationServices_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,10 +141,18 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <term>Operation Id</term>
         /// <description>CommunicationServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CommunicationServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CommunicationServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CommunicationServiceResource> GetCommunicationServiceResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CommunicationServiceResourceCommunicationServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -150,10 +171,18 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <term>Operation Id</term>
         /// <description>CommunicationServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CommunicationServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CommunicationServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CommunicationServiceResource> GetCommunicationServiceResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CommunicationServiceResourceCommunicationServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -172,10 +201,18 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <term>Operation Id</term>
         /// <description>EmailServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EmailServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EmailServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EmailServiceResource> GetEmailServiceResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EmailServiceResourceEmailServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -194,10 +231,18 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <term>Operation Id</term>
         /// <description>EmailServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EmailServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EmailServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EmailServiceResource> GetEmailServiceResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EmailServiceResourceEmailServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -216,10 +261,18 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <term>Operation Id</term>
         /// <description>EmailServices_ListVerifiedExchangeOnlineDomains</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EmailServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<string> GetVerifiedExchangeOnlineDomainsEmailServicesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EmailServiceResourceEmailServicesRestClient.CreateListVerifiedExchangeOnlineDomainsRequest(Id.SubscriptionId);
@@ -237,10 +290,18 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <term>Operation Id</term>
         /// <description>EmailServices_ListVerifiedExchangeOnlineDomains</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EmailServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<string> GetVerifiedExchangeOnlineDomainsEmailServices(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EmailServiceResourceEmailServicesRestClient.CreateListVerifiedExchangeOnlineDomainsRequest(Id.SubscriptionId);

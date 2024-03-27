@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.AgFoodPlatform.Models;
@@ -46,28 +45,28 @@ namespace Azure.ResourceManager.AgFoodPlatform
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions", false);
-            if (farmBeatsExtensionIds != null && Optional.IsCollectionDefined(farmBeatsExtensionIds))
+            if (farmBeatsExtensionIds != null && !(farmBeatsExtensionIds is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in farmBeatsExtensionIds)
                 {
                     uri.AppendQuery("farmBeatsExtensionIds", param, true);
                 }
             }
-            if (farmBeatsExtensionNames != null && Optional.IsCollectionDefined(farmBeatsExtensionNames))
+            if (farmBeatsExtensionNames != null && !(farmBeatsExtensionNames is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in farmBeatsExtensionNames)
                 {
                     uri.AppendQuery("farmBeatsExtensionNames", param, true);
                 }
             }
-            if (extensionCategories != null && Optional.IsCollectionDefined(extensionCategories))
+            if (extensionCategories != null && !(extensionCategories is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var param in extensionCategories)
                 {
                     uri.AppendQuery("extensionCategories", param, true);
                 }
             }
-            if (publisherIds != null && Optional.IsCollectionDefined(publisherIds))
+            if (publisherIds != null && !(publisherIds is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 foreach (var param in publisherIds)
                 {

@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Filter and return results from input array based on the conditions. </summary>
     public partial class FilterActivity : ControlActivity
     {
-        /// <summary> Initializes a new instance of FilterActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilterActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="items"> Input array on which filter should be applied. </param>
         /// <param name="condition"> Condition to be used for filtering the input. </param>
@@ -30,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "Filter";
         }
 
-        /// <summary> Initializes a new instance of FilterActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilterActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -46,6 +45,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Items = items;
             Condition = condition;
             ActivityType = activityType ?? "Filter";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FilterActivity"/> for deserialization. </summary>
+        internal FilterActivity()
+        {
         }
 
         /// <summary> Input array on which filter should be applied. </summary>

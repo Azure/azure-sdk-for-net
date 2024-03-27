@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.PostgreSql;
 using Azure.ResourceManager.PostgreSql.Models;
 
 namespace Azure.ResourceManager.PostgreSql.Mocking
@@ -64,10 +61,18 @@ namespace Azure.ResourceManager.PostgreSql.Mocking
         /// <term>Operation Id</term>
         /// <description>Servers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PostgreSqlServerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PostgreSqlServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PostgreSqlServerResource> GetPostgreSqlServersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PostgreSqlServerServersRestClient.CreateListRequest(Id.SubscriptionId);
@@ -85,10 +90,18 @@ namespace Azure.ResourceManager.PostgreSql.Mocking
         /// <term>Operation Id</term>
         /// <description>Servers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PostgreSqlServerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PostgreSqlServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PostgreSqlServerResource> GetPostgreSqlServers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PostgreSqlServerServersRestClient.CreateListRequest(Id.SubscriptionId);
@@ -106,15 +119,19 @@ namespace Azure.ResourceManager.PostgreSql.Mocking
         /// <term>Operation Id</term>
         /// <description>LocationBasedPerformanceTier_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PostgreSqlPerformanceTierProperties" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PostgreSqlPerformanceTierProperties"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PostgreSqlPerformanceTierProperties> GetLocationBasedPerformanceTiersAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationBasedPerformanceTierRestClient.CreateListRequest(Id.SubscriptionId, locationName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PostgreSqlPerformanceTierProperties.DeserializePostgreSqlPerformanceTierProperties, LocationBasedPerformanceTierClientDiagnostics, Pipeline, "MockablePostgreSqlSubscriptionResource.GetLocationBasedPerformanceTiers", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PostgreSqlPerformanceTierProperties.DeserializePostgreSqlPerformanceTierProperties(e), LocationBasedPerformanceTierClientDiagnostics, Pipeline, "MockablePostgreSqlSubscriptionResource.GetLocationBasedPerformanceTiers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -128,15 +145,19 @@ namespace Azure.ResourceManager.PostgreSql.Mocking
         /// <term>Operation Id</term>
         /// <description>LocationBasedPerformanceTier_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PostgreSqlPerformanceTierProperties" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PostgreSqlPerformanceTierProperties"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PostgreSqlPerformanceTierProperties> GetLocationBasedPerformanceTiers(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationBasedPerformanceTierRestClient.CreateListRequest(Id.SubscriptionId, locationName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PostgreSqlPerformanceTierProperties.DeserializePostgreSqlPerformanceTierProperties, LocationBasedPerformanceTierClientDiagnostics, Pipeline, "MockablePostgreSqlSubscriptionResource.GetLocationBasedPerformanceTiers", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PostgreSqlPerformanceTierProperties.DeserializePostgreSqlPerformanceTierProperties(e), LocationBasedPerformanceTierClientDiagnostics, Pipeline, "MockablePostgreSqlSubscriptionResource.GetLocationBasedPerformanceTiers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -149,6 +170,10 @@ namespace Azure.ResourceManager.PostgreSql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailability_Execute</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,6 +208,10 @@ namespace Azure.ResourceManager.PostgreSql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailability_Execute</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DataFactory.Models;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataFactory
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue<DataFactoryPrivateEndpointConnectionCreateOrUpdateContent>(content, new ModelReaderWriterOptions("W"));
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="factoryName"> The factory name. </param>
         /// <param name="privateEndpointConnectionName"> The private endpoint connection name. </param>
-        /// <param name="content"> The DataFactoryPrivateEndpointConnectionCreateOrUpdateContent to use. </param>
+        /// <param name="content"> The <see cref="DataFactoryPrivateEndpointConnectionCreateOrUpdateContent"/> to use. </param>
         /// <param name="ifMatch"> ETag of the private endpoint connection entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="content"/> is null. </exception>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="factoryName"> The factory name. </param>
         /// <param name="privateEndpointConnectionName"> The private endpoint connection name. </param>
-        /// <param name="content"> The DataFactoryPrivateEndpointConnectionCreateOrUpdateContent to use. </param>
+        /// <param name="content"> The <see cref="DataFactoryPrivateEndpointConnectionCreateOrUpdateContent"/> to use. </param>
         /// <param name="ifMatch"> ETag of the private endpoint connection entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="content"/> is null. </exception>

@@ -2,11 +2,17 @@
   "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "TestApplicationId": {
+      "type": "string",
+      "metadata": {
+        "description": "The application client ID used to run tests."
+      }
+    }
   },
   "variables": {
-    "batch_account_name": "dotnotsdkbatchaccount",
+    "batch_account_name": "dotnotsdkbatchaccount1",
     "location": "eastus",
-    "api_version": "2023-05-01"
+    "api_version": "2023-11-01"
   },
   "resources": [
     {
@@ -41,12 +47,12 @@
       "value": "[variables('batch_account_name')]"
     },
     "batch_account_uri": {
-        "type": "string",
-        "value": "[reference(variables('batch_account_name')).accountEndpoint]"
+      "type": "string",
+      "value": "[reference(variables('batch_account_name')).accountEndpoint]"
     },
     "batch_account_key": {
-        "type": "string",
-        "value": "[listKeys(resourceId('Microsoft.Batch/batchAccounts', variables('batch_account_name')), variables('api_version')).primary]"
+      "type": "string",
+      "value": "[listKeys(resourceId('Microsoft.Batch/batchAccounts', variables('batch_account_name')), variables('api_version')).primary]"
     }
   }
 }

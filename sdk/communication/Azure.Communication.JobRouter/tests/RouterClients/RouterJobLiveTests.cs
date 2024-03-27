@@ -125,7 +125,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.AreEqual(RouterJobStatus.Queued, job2Result.Value.Status);
 
             // test get jobs
-            var getJobsResponse = routerClient.GetJobsAsync(channelId: channelId, queueId: createQueue.Id);
+            var getJobsResponse = routerClient.GetJobsAsync(channelId: channelId, queueId: createQueue.Id, status: null, classificationPolicyId: null, scheduledBefore: null, scheduledAfter: null, cancellationToken: default);
             var allJobs = new List<string>();
 
             await foreach (var jobPage in getJobsResponse.AsPages(pageSizeHint: 1))
@@ -140,7 +140,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.IsTrue(allJobs.Contains(createJob2.Id));
 
             // in-test cleanup
-            await routerClient.CancelJobAsync(new CancelJobOptions(jobId1)); // other wise queue deletion will throw error
             await routerClient.CancelJobAsync(new CancelJobOptions(jobId2)); // other wise queue deletion will throw error
         }
 
@@ -168,7 +167,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(jobId1)));
             var createJob1 = createJob1Response.Value;
             // test get jobs
-            var getJobsResponse = routerClient.GetJobsAsync(channelId: channelId, queueId: createQueue.Id, scheduledAfter: timeToEnqueueJob);
+            var getJobsResponse = routerClient.GetJobsAsync(channelId: channelId, queueId: createQueue.Id, scheduledAfter: timeToEnqueueJob, status: null, classificationPolicyId: null, scheduledBefore: null, cancellationToken: default);
             var allJobs = new List<string>();
 
             await foreach (var jobPage in getJobsResponse.AsPages(pageSizeHint: 1))

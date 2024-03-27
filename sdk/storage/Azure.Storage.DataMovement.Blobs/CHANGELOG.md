@@ -1,26 +1,19 @@
 # Release History
 
-## 12.0.0-beta.4 (Unreleased)
+## 12.0.0-beta.5 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
-- [BREAKING CHANGE] Made the following members `public` to `protected` members (including all derived classes):
-    - `BlobStorageResourceContainer.GetStorageResourcesAsync`
-    - `*BlobStorageResource.CanProduceUri`
-    - `*BlobStorageResource.Length`
-    - `*BlobStorageResource.MaxChunkSize`
-    - `*BlobStorageResource.ResourceId`
-    - `*BlobStorageResource.TransferType`
-    - `*BlobStorageResource.CompleteTransferAsync`
-    - `*BlobStorageResource.CopyBlockFromUriAsync`
-    - `*BlobStorageResource.CopyFromUriAsync`
-    - `*BlobStorageResource.DeleteIfExistsAsync`
-    - `*BlobStorageResource.GetCopyAuthorizationHeaderAsync`
-    - `*BlobStorageResource.GetPropertiesAsync`
-    - `*BlobStorageResource.ReadStreamAsync`
-    - `*BlobStorageResource.WriteFromStreamAsync`
-- [BREAKING CHANGE] Renamed `BlobStorageResourceProvider.MakeResourceAsync` to `BlobStorageResourceProvider.CreateResourceAsync`
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.0.0-beta.4 (2023-12-05)
+
+### Breaking Changes
+- [BREAKING CHANGE] Removed `BlobStorageResourceProvider.MakeResourceAsync`. Instead use the appropriate `BlobStorageResourceProvider` constructor to pass credentials, and `.FromBlob()`, `.FromContainer()`, and `.FromClient()` to obtain a Blob `StorageResource`.
 - [BREAKING CHANGE] Renamed `BlobStorageResourceContainerOptions.DirectoryPrefix` to `BlobDirectoryPrefix`
 - [BREAKING CHANGE] Renamed `BlobStorageResourceContainerOptions.ResourceOptions` to `BlobOptions`
 - [BREAKING CHANGE] Moved `BlobContainerClientTransferOptions` to the `Azure.Storage.DataMovement.Blobs` namespace
@@ -28,9 +21,12 @@
 - [BREAKING CHANGE] Made parameter `completeLength` from `*BlobStorageResource.CopyBlockFromUriAsync` mandatory.
 - [BREAKING CHANGE] Removed `StorageResource.CanProduceUri` (including it's derived classes).
 - [BREAKING CHANGE] Removed `StorageResource.Path`, use `StorageResource.Uri` instead.
-### Bugs Fixed
-
-### Other Changes
+- [BREAKING CHANGE] Removed `DestinationImmutabilityPolicy`, `LegalHold`, `UploadTransferValidationOptions`, and `DownloadTransferValidationOptions` from `BlobStorageResourceOptions` as they were not fully supported.
+- [BREAKING CHANGE] Made the following from `public` to `internal` (Use `BlobStorageResourceProvider` instead to create `StorageResource`s):
+    - `AppendBlobStorageResource`
+    - `BlockBlobStorageResource`
+    - `PageBlobStorageResource`
+    - `BlobStorageResourceContainer`
 
 ## 12.0.0-beta.3 (2023-07-11)
 

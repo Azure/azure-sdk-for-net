@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Cmk))
             {
                 writer.WritePropertyName("cmk"u8);
-                writer.WriteObjectValue(Cmk);
+                writer.WriteObjectValue<CustomerManagedKeyDetails>(Cmk);
             }
             writer.WriteEndObject();
         }
@@ -32,8 +32,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<bool> doubleEncryptionEnabled = default;
-            Optional<CustomerManagedKeyDetails> cmk = default;
+            bool? doubleEncryptionEnabled = default;
+            CustomerManagedKeyDetails cmk = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("doubleEncryptionEnabled"u8))
@@ -55,14 +55,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new EncryptionDetails(Optional.ToNullable(doubleEncryptionEnabled), cmk.Value);
+            return new EncryptionDetails(doubleEncryptionEnabled, cmk);
         }
 
         internal partial class EncryptionDetailsConverter : JsonConverter<EncryptionDetails>
         {
             public override void Write(Utf8JsonWriter writer, EncryptionDetails model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<EncryptionDetails>(model);
             }
             public override EncryptionDetails Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

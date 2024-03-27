@@ -30,6 +30,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("retrievable"u8);
                 writer.WriteBooleanValue(IsRetrievable.Value);
             }
+            if (Optional.IsDefined(IsStored))
+            {
+                writer.WritePropertyName("stored"u8);
+                writer.WriteBooleanValue(IsStored.Value);
+            }
             if (Optional.IsDefined(IsSearchable))
             {
                 writer.WritePropertyName("searchable"u8);
@@ -86,6 +91,18 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("indexAnalyzer");
                 }
             }
+            if (Optional.IsDefined(NormalizerName))
+            {
+                if (NormalizerName != null)
+                {
+                    writer.WritePropertyName("normalizer"u8);
+                    writer.WriteStringValue(NormalizerName.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("normalizer");
+                }
+            }
             if (Optional.IsDefined(VectorSearchDimensions))
             {
                 if (VectorSearchDimensions != null)
@@ -126,7 +143,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Fields)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SearchField>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -141,19 +158,21 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string name = default;
             SearchFieldDataType type = default;
-            Optional<bool> key = default;
-            Optional<bool> retrievable = default;
-            Optional<bool> searchable = default;
-            Optional<bool> filterable = default;
-            Optional<bool> sortable = default;
-            Optional<bool> facetable = default;
-            Optional<LexicalAnalyzerName?> analyzer = default;
-            Optional<LexicalAnalyzerName?> searchAnalyzer = default;
-            Optional<LexicalAnalyzerName?> indexAnalyzer = default;
-            Optional<int?> dimensions = default;
-            Optional<string> vectorSearchProfile = default;
-            Optional<IList<string>> synonymMaps = default;
-            Optional<IList<SearchField>> fields = default;
+            bool? key = default;
+            bool? retrievable = default;
+            bool? stored = default;
+            bool? searchable = default;
+            bool? filterable = default;
+            bool? sortable = default;
+            bool? facetable = default;
+            LexicalAnalyzerName? analyzer = default;
+            LexicalAnalyzerName? searchAnalyzer = default;
+            LexicalAnalyzerName? indexAnalyzer = default;
+            LexicalNormalizerName? normalizer = default;
+            int? dimensions = default;
+            string vectorSearchProfile = default;
+            IList<string> synonymMaps = default;
+            IList<SearchField> fields = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -182,6 +201,15 @@ namespace Azure.Search.Documents.Indexes.Models
                         continue;
                     }
                     retrievable = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("stored"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    stored = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("searchable"u8))
@@ -250,6 +278,16 @@ namespace Azure.Search.Documents.Indexes.Models
                     indexAnalyzer = new LexicalAnalyzerName(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("normalizer"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        normalizer = null;
+                        continue;
+                    }
+                    normalizer = new LexicalNormalizerName(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("dimensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -299,7 +337,24 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchField(name, type, Optional.ToNullable(key), Optional.ToNullable(retrievable), Optional.ToNullable(searchable), Optional.ToNullable(filterable), Optional.ToNullable(sortable), Optional.ToNullable(facetable), Optional.ToNullable(analyzer), Optional.ToNullable(searchAnalyzer), Optional.ToNullable(indexAnalyzer), Optional.ToNullable(dimensions), vectorSearchProfile.Value, Optional.ToList(synonymMaps), Optional.ToList(fields));
+            return new SearchField(
+                name,
+                type,
+                key,
+                retrievable,
+                stored,
+                searchable,
+                filterable,
+                sortable,
+                facetable,
+                analyzer,
+                searchAnalyzer,
+                indexAnalyzer,
+                normalizer,
+                dimensions,
+                vectorSearchProfile,
+                synonymMaps ?? new ChangeTrackingList<string>(),
+                fields ?? new ChangeTrackingList<SearchField>());
         }
     }
 }

@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ManagedServices;
 
 namespace Azure.ResourceManager.ManagedServices.Mocking
 {
@@ -59,6 +56,14 @@ namespace Azure.ResourceManager.ManagedServices.Mocking
         /// <term>Operation Id</term>
         /// <description>RegistrationDefinitions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedServicesRegistrationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -82,6 +87,14 @@ namespace Azure.ResourceManager.ManagedServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RegistrationDefinitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedServicesRegistrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,6 +128,14 @@ namespace Azure.ResourceManager.ManagedServices.Mocking
         /// <term>Operation Id</term>
         /// <description>RegistrationAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedServicesRegistrationAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -139,6 +160,14 @@ namespace Azure.ResourceManager.ManagedServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RegistrationAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedServicesRegistrationAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -173,6 +202,14 @@ namespace Azure.ResourceManager.ManagedServices.Mocking
         /// <term>Operation Id</term>
         /// <description>MarketplaceRegistrationDefinitions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedServicesMarketplaceRegistrationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -197,6 +234,14 @@ namespace Azure.ResourceManager.ManagedServices.Mocking
         /// <term>Operation Id</term>
         /// <description>MarketplaceRegistrationDefinitions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedServicesMarketplaceRegistrationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -211,11 +256,11 @@ namespace Azure.ResourceManager.ManagedServices.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedServicesRegistrationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedServicesRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServicesRegistrationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ManagedServicesRegistrationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedServicesRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServicesRegistrationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedServicesRegistrationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ManagedServicesRegistrationResource"/> object. </returns>
         public virtual ManagedServicesRegistrationResource GetManagedServicesRegistrationResource(ResourceIdentifier id)
         {
             ManagedServicesRegistrationResource.ValidateResourceId(id);
@@ -223,11 +268,11 @@ namespace Azure.ResourceManager.ManagedServices.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedServicesRegistrationAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedServicesRegistrationAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServicesRegistrationAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ManagedServicesRegistrationAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedServicesRegistrationAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServicesRegistrationAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedServicesRegistrationAssignmentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ManagedServicesRegistrationAssignmentResource"/> object. </returns>
         public virtual ManagedServicesRegistrationAssignmentResource GetManagedServicesRegistrationAssignmentResource(ResourceIdentifier id)
         {
             ManagedServicesRegistrationAssignmentResource.ValidateResourceId(id);
@@ -235,11 +280,11 @@ namespace Azure.ResourceManager.ManagedServices.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedServicesMarketplaceRegistrationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedServicesMarketplaceRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServicesMarketplaceRegistrationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ManagedServicesMarketplaceRegistrationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedServicesMarketplaceRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServicesMarketplaceRegistrationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedServicesMarketplaceRegistrationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ManagedServicesMarketplaceRegistrationResource"/> object. </returns>
         public virtual ManagedServicesMarketplaceRegistrationResource GetManagedServicesMarketplaceRegistrationResource(ResourceIdentifier id)
         {
             ManagedServicesMarketplaceRegistrationResource.ValidateResourceId(id);

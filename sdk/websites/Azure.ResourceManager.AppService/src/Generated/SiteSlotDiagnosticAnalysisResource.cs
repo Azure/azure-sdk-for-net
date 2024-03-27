@@ -9,19 +9,17 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a SiteSlotDiagnosticAnalysis along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteSlotDiagnosticAnalysisResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteSlotDiagnosticAnalysisResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteSlotDiagnosticResource" /> using the GetSiteSlotDiagnosticAnalysis method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteSlotDiagnosticAnalysisResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteSlotDiagnosticAnalysisResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteSlotDiagnosticResource"/> using the GetSiteSlotDiagnosticAnalysis method.
     /// </summary>
     public partial class SiteSlotDiagnosticAnalysisResource : ArmResource
     {
@@ -42,12 +40,15 @@ namespace Azure.ResourceManager.AppService
         private readonly DiagnosticsRestOperations _siteSlotDiagnosticAnalysisDiagnosticsRestClient;
         private readonly WebSiteAnalysisDefinitionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/diagnostics/analyses";
+
         /// <summary> Initializes a new instance of the <see cref="SiteSlotDiagnosticAnalysisResource"/> class for mocking. </summary>
         protected SiteSlotDiagnosticAnalysisResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteSlotDiagnosticAnalysisResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotDiagnosticAnalysisResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteSlotDiagnosticAnalysisResource(ArmClient client, WebSiteAnalysisDefinitionData data) : this(client, data.Id)
@@ -68,9 +69,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/diagnostics/analyses";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -104,6 +102,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Diagnostics_GetSiteAnalysisSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotDiagnosticAnalysisResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -135,6 +141,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Diagnostics_GetSiteAnalysisSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotDiagnosticAnalysisResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,6 +182,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Diagnostics_ExecuteSiteAnalysisSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotDiagnosticAnalysisResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="startTime"> Start Time. </param>
@@ -200,6 +222,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Diagnostics_ExecuteSiteAnalysisSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotDiagnosticAnalysisResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public partial class IaasVmRestoreContent : RestoreContent
     {
-        /// <summary> Initializes a new instance of IaasVmRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmRestoreContent"/>. </summary>
         public IaasVmRestoreContent()
         {
             RestoreDiskLunList = new ChangeTrackingList<int>();
@@ -26,8 +27,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ObjectType = "IaasVMRestoreRequest";
         }
 
-        /// <summary> Initializes a new instance of IaasVmRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmRestoreContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryPointId"> ID of the backup copy to be recovered. </param>
         /// <param name="recoveryType"> Type of this recovery. </param>
         /// <param name="sourceResourceId"> Fully qualified ARM ID of the VM which is being recovered. </param>
@@ -73,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// </param>
         /// <param name="securedVmDetails"> Stores Secured VM Details. </param>
         /// <param name="targetDiskNetworkAccessSettings"> Specifies target network access settings for disks of VM to be restored,. </param>
-        internal IaasVmRestoreContent(string objectType, string recoveryPointId, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, ResourceIdentifier targetVirtualMachineId, ResourceIdentifier targetResourceGroupId, ResourceIdentifier storageAccountId, ResourceIdentifier virtualNetworkId, ResourceIdentifier subnetId, ResourceIdentifier targetDomainNameId, AzureLocation? region, string affinityGroup, bool? doesCreateNewCloudService, bool? originalStorageAccountOption, VmEncryptionDetails encryptionDetails, IList<int> restoreDiskLunList, bool? doesRestoreWithManagedDisks, string diskEncryptionSetId, IList<string> zones, BackupIdentityInfo identityInfo, IdentityBasedRestoreDetails identityBasedRestoreDetails, ExtendedLocation extendedLocation, SecuredVmDetails securedVmDetails, BackupTargetDiskNetworkAccessSettings targetDiskNetworkAccessSettings) : base(objectType)
+        internal IaasVmRestoreContent(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, string recoveryPointId, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, ResourceIdentifier targetVirtualMachineId, ResourceIdentifier targetResourceGroupId, ResourceIdentifier storageAccountId, ResourceIdentifier virtualNetworkId, ResourceIdentifier subnetId, ResourceIdentifier targetDomainNameId, AzureLocation? region, string affinityGroup, bool? doesCreateNewCloudService, bool? originalStorageAccountOption, VmEncryptionDetails encryptionDetails, IList<int> restoreDiskLunList, bool? doesRestoreWithManagedDisks, string diskEncryptionSetId, IList<string> zones, BackupIdentityInfo identityInfo, IdentityBasedRestoreDetails identityBasedRestoreDetails, ExtendedLocation extendedLocation, SecuredVmDetails securedVmDetails, BackupTargetDiskNetworkAccessSettings targetDiskNetworkAccessSettings) : base(objectType, serializedAdditionalRawData)
         {
             RecoveryPointId = recoveryPointId;
             RecoveryType = recoveryType;

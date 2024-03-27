@@ -35,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<object>(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             DatasetReferenceType type = default;
             string referenceName = default;
-            Optional<IDictionary<string, object>> parameters = default;
+            IDictionary<string, object> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -85,14 +85,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DatasetReference(type, referenceName, Optional.ToDictionary(parameters));
+            return new DatasetReference(type, referenceName, parameters ?? new ChangeTrackingDictionary<string, object>());
         }
 
         internal partial class DatasetReferenceConverter : JsonConverter<DatasetReference>
         {
             public override void Write(Utf8JsonWriter writer, DatasetReference model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DatasetReference>(model);
             }
             public override DatasetReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

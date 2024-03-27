@@ -10,18 +10,16 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WorkloadMonitor
 {
     /// <summary>
     /// A Class representing a HealthMonitorStateChange along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HealthMonitorStateChangeResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHealthMonitorStateChangeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HealthMonitorResource" /> using the GetHealthMonitorStateChange method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HealthMonitorStateChangeResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHealthMonitorStateChangeResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HealthMonitorResource"/> using the GetHealthMonitorStateChange method.
     /// </summary>
     public partial class HealthMonitorStateChangeResource : ArmResource
     {
@@ -43,12 +41,15 @@ namespace Azure.ResourceManager.WorkloadMonitor
         private readonly HealthMonitorsRestOperations _healthMonitorStateChangeHealthMonitorsRestClient;
         private readonly HealthMonitorStateChangeData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.WorkloadMonitor/monitors/history";
+
         /// <summary> Initializes a new instance of the <see cref="HealthMonitorStateChangeResource"/> class for mocking. </summary>
         protected HealthMonitorStateChangeResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HealthMonitorStateChangeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HealthMonitorStateChangeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HealthMonitorStateChangeResource(ArmClient client, HealthMonitorStateChangeData data) : this(client, data.Id)
@@ -69,9 +70,6 @@ namespace Azure.ResourceManager.WorkloadMonitor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.WorkloadMonitor/monitors/history";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -105,6 +103,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_GetStateChange</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorStateChangeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
@@ -137,6 +143,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_GetStateChange</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorStateChangeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

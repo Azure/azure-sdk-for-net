@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -49,13 +48,13 @@ namespace Azure.Analytics.Synapse.Artifacts
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(gitHubAccessTokenRequest);
+            content.JsonWriter.WriteObjectValue<GitHubAccessTokenRequest>(gitHubAccessTokenRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Get the GitHub access token. </summary>
-        /// <param name="gitHubAccessTokenRequest"> The GitHubAccessTokenRequest to use. </param>
+        /// <param name="gitHubAccessTokenRequest"> The <see cref="GitHubAccessTokenRequest"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubAccessTokenRequest"/> is null. </exception>
         public async Task<Response<GitHubAccessTokenResponse>> GetGitHubAccessTokenAsync(GitHubAccessTokenRequest gitHubAccessTokenRequest, CancellationToken cancellationToken = default)
@@ -82,7 +81,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Get the GitHub access token. </summary>
-        /// <param name="gitHubAccessTokenRequest"> The GitHubAccessTokenRequest to use. </param>
+        /// <param name="gitHubAccessTokenRequest"> The <see cref="GitHubAccessTokenRequest"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubAccessTokenRequest"/> is null. </exception>
         public Response<GitHubAccessTokenResponse> GetGitHubAccessToken(GitHubAccessTokenRequest gitHubAccessTokenRequest, CancellationToken cancellationToken = default)

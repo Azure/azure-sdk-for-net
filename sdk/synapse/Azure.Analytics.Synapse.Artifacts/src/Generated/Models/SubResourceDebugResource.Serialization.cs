@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -41,14 +41,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SubResourceDebugResource(name.Value);
+            return new SubResourceDebugResource(name);
         }
 
         internal partial class SubResourceDebugResourceConverter : JsonConverter<SubResourceDebugResource>
         {
             public override void Write(Utf8JsonWriter writer, SubResourceDebugResource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SubResourceDebugResource>(model);
             }
             public override SubResourceDebugResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

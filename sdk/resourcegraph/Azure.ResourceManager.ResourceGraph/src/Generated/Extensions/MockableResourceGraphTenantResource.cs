@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ResourceGraph;
 using Azure.ResourceManager.ResourceGraph.Models;
 
 namespace Azure.ResourceManager.ResourceGraph.Mocking
@@ -55,6 +52,10 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <term>Operation Id</term>
         /// <description>Resources</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Request specifying query and its options. </param>
@@ -88,6 +89,10 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Resources</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,6 +128,10 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <term>Operation Id</term>
         /// <description>ResourcesHistory</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Request specifying the query and its options. </param>
@@ -156,6 +165,10 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourcesHistory</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>

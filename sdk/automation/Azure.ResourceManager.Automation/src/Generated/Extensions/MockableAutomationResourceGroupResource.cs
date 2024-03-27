@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="automationAccountName"> The name of the automation account. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

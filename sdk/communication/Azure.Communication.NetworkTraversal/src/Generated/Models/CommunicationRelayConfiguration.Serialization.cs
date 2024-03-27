@@ -25,7 +25,7 @@ namespace Azure.Communication.NetworkTraversal
             writer.WriteStartArray();
             foreach (var item in IceServers)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<CommunicationIceServer>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -64,7 +64,7 @@ namespace Azure.Communication.NetworkTraversal
         {
             public override void Write(Utf8JsonWriter writer, CommunicationRelayConfiguration model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<CommunicationRelayConfiguration>(model);
             }
             public override CommunicationRelayConfiguration Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

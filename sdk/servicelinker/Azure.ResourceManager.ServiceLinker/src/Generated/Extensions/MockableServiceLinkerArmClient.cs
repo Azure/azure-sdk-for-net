@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ServiceLinker;
 
 namespace Azure.ResourceManager.ServiceLinker.Mocking
 {
@@ -59,6 +56,14 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <term>Operation Id</term>
         /// <description>Linker_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -83,6 +88,14 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <term>Operation Id</term>
         /// <description>Linker_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -97,11 +110,11 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LinkerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LinkerResource.CreateResourceIdentifier" /> to create a <see cref="LinkerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LinkerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LinkerResource.CreateResourceIdentifier" /> to create a <see cref="LinkerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LinkerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LinkerResource"/> object. </returns>
         public virtual LinkerResource GetLinkerResource(ResourceIdentifier id)
         {
             LinkerResource.ValidateResourceId(id);

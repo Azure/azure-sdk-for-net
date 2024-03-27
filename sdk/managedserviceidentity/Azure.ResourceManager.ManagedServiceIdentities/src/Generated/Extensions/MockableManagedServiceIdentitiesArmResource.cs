@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ManagedServiceIdentities;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
 {
@@ -33,7 +31,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
         }
 
         /// <summary> Gets an object representing a SystemAssignedIdentityResource along with the instance operations that can be performed on it in the ArmResource. </summary>
-        /// <returns> Returns a <see cref="SystemAssignedIdentityResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SystemAssignedIdentityResource"/> object. </returns>
         public virtual SystemAssignedIdentityResource GetSystemAssignedIdentity()
         {
             return new SystemAssignedIdentityResource(Client, Id.AppendProviderResource("Microsoft.ManagedIdentity", "identities", "default"));

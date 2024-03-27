@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class MoverResourceSettings : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownResourceSettings))]
+    public partial class MoverResourceSettings : IUtf8JsonSerializable, IJsonModel<MoverResourceSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoverResourceSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MoverResourceSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MoverResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MoverResourceSettings)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
@@ -27,11 +38,40 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WritePropertyName("targetResourceGroupName"u8);
                 writer.WriteStringValue(TargetResourceGroupName);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MoverResourceSettings DeserializeMoverResourceSettings(JsonElement element)
+        MoverResourceSettings IJsonModel<MoverResourceSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MoverResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MoverResourceSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMoverResourceSettings(document.RootElement, options);
+        }
+
+        internal static MoverResourceSettings DeserializeMoverResourceSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,22 +80,53 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Microsoft.Compute/availabilitySets": return MoverAvailabilitySetResourceSettings.DeserializeMoverAvailabilitySetResourceSettings(element);
-                    case "Microsoft.Compute/diskEncryptionSets": return DiskEncryptionSetResourceSettings.DeserializeDiskEncryptionSetResourceSettings(element);
-                    case "Microsoft.Compute/virtualMachines": return VirtualMachineResourceSettings.DeserializeVirtualMachineResourceSettings(element);
-                    case "Microsoft.KeyVault/vaults": return KeyVaultResourceSettings.DeserializeKeyVaultResourceSettings(element);
-                    case "Microsoft.Network/loadBalancers": return LoadBalancerResourceSettings.DeserializeLoadBalancerResourceSettings(element);
-                    case "Microsoft.Network/networkInterfaces": return NetworkInterfaceResourceSettings.DeserializeNetworkInterfaceResourceSettings(element);
-                    case "Microsoft.Network/networkSecurityGroups": return NetworkSecurityGroupResourceSettings.DeserializeNetworkSecurityGroupResourceSettings(element);
-                    case "Microsoft.Network/publicIPAddresses": return PublicIPAddressResourceSettings.DeserializePublicIPAddressResourceSettings(element);
-                    case "Microsoft.Network/virtualNetworks": return MoverVirtualNetworkResourceSettings.DeserializeMoverVirtualNetworkResourceSettings(element);
-                    case "Microsoft.Sql/servers": return SqlServerResourceSettings.DeserializeSqlServerResourceSettings(element);
-                    case "Microsoft.Sql/servers/databases": return SqlDatabaseResourceSettings.DeserializeSqlDatabaseResourceSettings(element);
-                    case "Microsoft.Sql/servers/elasticPools": return SqlElasticPoolResourceSettings.DeserializeSqlElasticPoolResourceSettings(element);
-                    case "resourceGroups": return ResourceGroupResourceSettings.DeserializeResourceGroupResourceSettings(element);
+                    case "Microsoft.Compute/availabilitySets": return MoverAvailabilitySetResourceSettings.DeserializeMoverAvailabilitySetResourceSettings(element, options);
+                    case "Microsoft.Compute/diskEncryptionSets": return DiskEncryptionSetResourceSettings.DeserializeDiskEncryptionSetResourceSettings(element, options);
+                    case "Microsoft.Compute/virtualMachines": return VirtualMachineResourceSettings.DeserializeVirtualMachineResourceSettings(element, options);
+                    case "Microsoft.KeyVault/vaults": return KeyVaultResourceSettings.DeserializeKeyVaultResourceSettings(element, options);
+                    case "Microsoft.Network/loadBalancers": return LoadBalancerResourceSettings.DeserializeLoadBalancerResourceSettings(element, options);
+                    case "Microsoft.Network/networkInterfaces": return NetworkInterfaceResourceSettings.DeserializeNetworkInterfaceResourceSettings(element, options);
+                    case "Microsoft.Network/networkSecurityGroups": return NetworkSecurityGroupResourceSettings.DeserializeNetworkSecurityGroupResourceSettings(element, options);
+                    case "Microsoft.Network/publicIPAddresses": return PublicIPAddressResourceSettings.DeserializePublicIPAddressResourceSettings(element, options);
+                    case "Microsoft.Network/virtualNetworks": return MoverVirtualNetworkResourceSettings.DeserializeMoverVirtualNetworkResourceSettings(element, options);
+                    case "Microsoft.Sql/servers": return SqlServerResourceSettings.DeserializeSqlServerResourceSettings(element, options);
+                    case "Microsoft.Sql/servers/databases": return SqlDatabaseResourceSettings.DeserializeSqlDatabaseResourceSettings(element, options);
+                    case "Microsoft.Sql/servers/elasticPools": return SqlElasticPoolResourceSettings.DeserializeSqlElasticPoolResourceSettings(element, options);
+                    case "resourceGroups": return ResourceGroupResourceSettings.DeserializeResourceGroupResourceSettings(element, options);
                 }
             }
-            return UnknownResourceSettings.DeserializeUnknownResourceSettings(element);
+            return UnknownResourceSettings.DeserializeUnknownResourceSettings(element, options);
         }
+
+        BinaryData IPersistableModel<MoverResourceSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MoverResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MoverResourceSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MoverResourceSettings IPersistableModel<MoverResourceSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MoverResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMoverResourceSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MoverResourceSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MoverResourceSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Sphere;
 
 namespace Azure.ResourceManager.Sphere.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.Sphere.Mocking
         /// <term>Operation Id</term>
         /// <description>Catalogs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereCatalogResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="catalogName"> Name of catalog. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.Sphere.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Catalogs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

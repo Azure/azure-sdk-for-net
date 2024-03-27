@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources.Models;
@@ -123,6 +123,152 @@ namespace Azure.ResourceManager.Resources
                         value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateMoveResourcesRequest(string subscriptionId, string sourceResourceGroupName, ResourcesMoveContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(sourceResourceGroupName, true);
+            uri.AppendPath("/moveResources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue<ResourcesMoveContent>(content, new ModelReaderWriterOptions("W"));
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> The resources to be moved must be in the same source resource group in the source subscription being used. The target resource group may be in a different subscription. When moving resources, both the source group and the target group are locked for the duration of the operation. Write and delete operations are blocked on the groups until the move completes. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="sourceResourceGroupName"> The name of the resource group from the source subscription containing the resources to be moved. </param>
+        /// <param name="content"> Parameters for moving resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="sourceResourceGroupName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="sourceResourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> MoveResourcesAsync(string subscriptionId, string sourceResourceGroupName, ResourcesMoveContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(sourceResourceGroupName, nameof(sourceResourceGroupName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateMoveResourcesRequest(subscriptionId, sourceResourceGroupName, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> The resources to be moved must be in the same source resource group in the source subscription being used. The target resource group may be in a different subscription. When moving resources, both the source group and the target group are locked for the duration of the operation. Write and delete operations are blocked on the groups until the move completes. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="sourceResourceGroupName"> The name of the resource group from the source subscription containing the resources to be moved. </param>
+        /// <param name="content"> Parameters for moving resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="sourceResourceGroupName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="sourceResourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response MoveResources(string subscriptionId, string sourceResourceGroupName, ResourcesMoveContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(sourceResourceGroupName, nameof(sourceResourceGroupName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateMoveResourcesRequest(subscriptionId, sourceResourceGroupName, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateValidateMoveResourcesRequest(string subscriptionId, string sourceResourceGroupName, ResourcesMoveContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(sourceResourceGroupName, true);
+            uri.AppendPath("/validateMoveResources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue<ResourcesMoveContent>(content, new ModelReaderWriterOptions("W"));
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> This operation checks whether the specified resources can be moved to the target. The resources to be moved must be in the same source resource group in the source subscription being used. The target resource group may be in a different subscription. If validation succeeds, it returns HTTP response code 204 (no content). If validation fails, it returns HTTP response code 409 (Conflict) with an error message. Retrieve the URL in the Location header value to check the result of the long-running operation. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="sourceResourceGroupName"> The name of the resource group from the source subscription containing the resources to be validated for move. </param>
+        /// <param name="content"> Parameters for moving resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="sourceResourceGroupName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="sourceResourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> ValidateMoveResourcesAsync(string subscriptionId, string sourceResourceGroupName, ResourcesMoveContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(sourceResourceGroupName, nameof(sourceResourceGroupName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateValidateMoveResourcesRequest(subscriptionId, sourceResourceGroupName, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> This operation checks whether the specified resources can be moved to the target. The resources to be moved must be in the same source resource group in the source subscription being used. The target resource group may be in a different subscription. If validation succeeds, it returns HTTP response code 204 (no content). If validation fails, it returns HTTP response code 409 (Conflict) with an error message. Retrieve the URL in the Location header value to check the result of the long-running operation. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="sourceResourceGroupName"> The name of the resource group from the source subscription containing the resources to be validated for move. </param>
+        /// <param name="content"> Parameters for moving resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="sourceResourceGroupName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="sourceResourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response ValidateMoveResources(string subscriptionId, string sourceResourceGroupName, ResourcesMoveContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(sourceResourceGroupName, nameof(sourceResourceGroupName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateValidateMoveResourcesRequest(subscriptionId, sourceResourceGroupName, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                case 204:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -289,7 +435,7 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<GenericResourceData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -359,7 +505,7 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<GenericResourceData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;

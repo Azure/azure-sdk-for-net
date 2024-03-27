@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> language = default;
+            string language = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("language"u8))
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new KqlScriptContentMetadata(language.Value);
+            return new KqlScriptContentMetadata(language);
         }
     }
 }

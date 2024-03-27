@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (TextWeights != null)
                 {
                     writer.WritePropertyName("text"u8);
-                    writer.WriteObjectValue(TextWeights);
+                    writer.WriteObjectValue<TextWeights>(TextWeights);
                 }
                 else
                 {
@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Functions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScoringFunction>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -62,9 +62,9 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string name = default;
-            Optional<TextWeights> text = default;
-            Optional<IList<ScoringFunction>> functions = default;
-            Optional<ScoringFunctionAggregation?> functionAggregation = default;
+            TextWeights text = default;
+            IList<ScoringFunction> functions = default;
+            ScoringFunctionAggregation? functionAggregation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -107,7 +107,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new ScoringProfile(name, text.Value, Optional.ToList(functions), Optional.ToNullable(functionAggregation));
+            return new ScoringProfile(name, text, functions ?? new ChangeTrackingList<ScoringFunction>(), functionAggregation);
         }
     }
 }

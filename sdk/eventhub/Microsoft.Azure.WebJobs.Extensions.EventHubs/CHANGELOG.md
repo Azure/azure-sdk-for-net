@@ -1,6 +1,6 @@
 # Release History
 
-## 6.1.0-beta.1 (Unreleased)
+## 6.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,36 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 6.2.0 (2024-03-05)
+
+### Other Changes
+
+- Adjusted checkpointing logic to no longer write a checkpoint when the listener is shutting down.  This was necessary to prevent potential data loss from occurring when shutting down Function retries.  Because the trigger cannot know if the Function host would have retried a failure if it were not shutting down, we cannot assume that it is safe to checkpoint. This change ensures that the batch of events being processed when shut down was requested will be retried by another instance or the next time the Function app is run.
+
+- Updated the `Azure.Messaging.EventHubs`, which includes a new build of the AMQP transport library.  The notable bug fix addresses an obscure race condition when a cancellation token is signaled while service operations are being invoked concurrently which caused those operations to hang.
+
+## 6.1.0 (2024-02-13)
+
+### Bugs Fixed
+
+- The `SystemProperties` binding will now return certain item as string values instead of an AMQP structure that requires calling `ToString()` to read.  The affected system properties are:
+  - MessageId
+  - CorelationId
+  - To
+  - ReplyTo
+
+- Avoid race condition when determining whether to checkpoint when the host is in the process of shutting down.
+
+### Other Changes
+
+- Updated the `Azure.Messaging.EventHubs` dependency, which includes optimized defaults of the host platform to be used for AMQP buffers.  This offers non-trivial performance increase on Linux-based platforms and a minor improvement on macOS.  This update also enables support for TLS 1.3.
+
+## 6.0.2 (2023-11-13)
+
+### Other Changes
+
+- Bump dependency on `Microsoft.Extensions.Azure` to prevent transitive dependency on deprecated version of `Azure.Identity`.
 
 ## 6.0.1 (2023-10-10)
 

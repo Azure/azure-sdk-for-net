@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Common;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -2689,7 +2690,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual Response<ShareInfo> SetAccessPolicy(
             IEnumerable<ShareSignedIdentifier> permissions,
             ShareFileRequestConditions conditions = default,
@@ -2730,7 +2731,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual async Task<Response<ShareInfo>> SetAccessPolicyAsync(
             IEnumerable<ShareSignedIdentifier> permissions,
             ShareFileRequestConditions conditions = default,
@@ -2768,7 +2769,7 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<ShareInfo> SetAccessPolicy(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -2807,7 +2808,7 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<ShareInfo>> SetAccessPolicyAsync(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -3112,6 +3113,7 @@ namespace Azure.Storage.Files.Shares
         #region GetPermission
         /// <summary>
         /// Gets the file permission in Security Descriptor Definition Language (SDDL).
+        /// Note that this API is not applicable for Share Snapshots.
         /// </summary>
         /// <param name="filePermissionKey">
         /// The file permission key.
@@ -3134,6 +3136,7 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary>
         /// Gets the file permission in Security Descriptor Definition Language (SDDL).
+        /// Note that this API is not applicable for Share Snapshots.
         /// </summary>
         /// <param name="filePermissionKey">
         /// The file permission key.
@@ -3223,7 +3226,7 @@ namespace Azure.Storage.Files.Shares
         /// <returns>
         /// A <see cref="Response{PermissionInfo}"/> with ID of the newly created file permission.
         /// </returns>
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual Response<PermissionInfo> CreatePermission(
             string permission,
             CancellationToken cancellationToken = default) =>
@@ -3249,7 +3252,7 @@ namespace Azure.Storage.Files.Shares
         /// <returns>
         /// A <see cref="Response{PermissionInfo}"/> with ID of the newly created file permission.
         /// </returns>
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual async Task<Response<PermissionInfo>> CreatePermissionAsync(
             string permission,
             CancellationToken cancellationToken = default) =>
@@ -3507,7 +3510,7 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual Uri GenerateSasUri(ShareSasPermissions permissions, DateTimeOffset expiresOn) =>
             GenerateSasUri(new ShareSasBuilder(permissions, expiresOn) { ShareName = Name });
 
@@ -3533,7 +3536,7 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual Uri GenerateSasUri(ShareSasBuilder builder)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));

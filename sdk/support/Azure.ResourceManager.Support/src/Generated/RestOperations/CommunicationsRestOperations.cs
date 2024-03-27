@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Support.Models;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Support
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-09-01-preview";
+            _apiVersion = apiVersion ?? "2023-06-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.Support
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue<SupportNameAvailabilityContent>(content, new ModelReaderWriterOptions("W"));
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Check the availability of a resource name. This API should be used to check the uniqueness of the name for adding a new communication to the support ticket. </summary>
-        /// <param name="subscriptionId"> Azure subscription Id. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Check the availability of a resource name. This API should be used to check the uniqueness of the name for adding a new communication to the support ticket. </summary>
-        /// <param name="subscriptionId"> Azure subscription Id. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Lists all communications (attachments not included) for a support ticket. &lt;br/&gt;&lt;/br&gt; You can also filter support ticket communications by _CreatedDate_ or _CommunicationType_ using the $filter parameter. The only type of communication supported today is _Web_. Output will be a paged result with _nextLink_, using which you can retrieve the next set of Communication results. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error. </summary>
-        /// <param name="subscriptionId"> Azure subscription Id. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="top"> The number of values to return in the collection. Default is 10 and max is 10. </param>
         /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals ('eq') operator and createdDate supports Greater Than ('gt') and Greater Than or Equals ('ge') operators. You may combine the CommunicationType and CreatedDate filters by Logical And ('and') operator. </param>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Lists all communications (attachments not included) for a support ticket. &lt;br/&gt;&lt;/br&gt; You can also filter support ticket communications by _CreatedDate_ or _CommunicationType_ using the $filter parameter. The only type of communication supported today is _Web_. Output will be a paged result with _nextLink_, using which you can retrieve the next set of Communication results. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error. </summary>
-        /// <param name="subscriptionId"> Azure subscription Id. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="top"> The number of values to return in the collection. Default is 10 and max is 10. </param>
         /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals ('eq') operator and createdDate supports Greater Than ('gt') and Greater Than or Equals ('ge') operators. You may combine the CommunicationType and CreatedDate filters by Logical And ('and') operator. </param>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Returns communication details for a support ticket. </summary>
-        /// <param name="subscriptionId"> Azure subscription Id. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="communicationName"> Communication name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Returns communication details for a support ticket. </summary>
-        /// <param name="subscriptionId"> Azure subscription Id. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="communicationName"> Communication name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -303,14 +303,14 @@ namespace Azure.ResourceManager.Support
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<SupportTicketCommunicationData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Adds a new customer communication to an Azure support ticket. </summary>
-        /// <param name="subscriptionId"> Azure subscription Id. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="communicationName"> Communication name. </param>
         /// <param name="data"> Communication object. </param>
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Adds a new customer communication to an Azure support ticket. </summary>
-        /// <param name="subscriptionId"> Azure subscription Id. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="communicationName"> Communication name. </param>
         /// <param name="data"> Communication object. </param>
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Support
 
         /// <summary> Lists all communications (attachments not included) for a support ticket. &lt;br/&gt;&lt;/br&gt; You can also filter support ticket communications by _CreatedDate_ or _CommunicationType_ using the $filter parameter. The only type of communication supported today is _Web_. Output will be a paged result with _nextLink_, using which you can retrieve the next set of Communication results. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Azure subscription Id. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="top"> The number of values to return in the collection. Default is 10 and max is 10. </param>
         /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals ('eq') operator and createdDate supports Greater Than ('gt') and Greater Than or Equals ('ge') operators. You may combine the CommunicationType and CreatedDate filters by Logical And ('and') operator. </param>
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Support
 
         /// <summary> Lists all communications (attachments not included) for a support ticket. &lt;br/&gt;&lt;/br&gt; You can also filter support ticket communications by _CreatedDate_ or _CommunicationType_ using the $filter parameter. The only type of communication supported today is _Web_. Output will be a paged result with _nextLink_, using which you can retrieve the next set of Communication results. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Azure subscription Id. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="top"> The number of values to return in the collection. Default is 10 and max is 10. </param>
         /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals ('eq') operator and createdDate supports Greater Than ('gt') and Greater Than or Equals ('ge') operators. You may combine the CommunicationType and CreatedDate filters by Logical And ('and') operator. </param>

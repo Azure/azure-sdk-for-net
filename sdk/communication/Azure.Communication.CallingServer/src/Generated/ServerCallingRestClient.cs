@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -53,7 +52,7 @@ namespace Azure.Communication.CallingServer
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(createCallRequest);
+            content.JsonWriter.WriteObjectValue<CreateCallRequestInternal>(createCallRequest);
             request.Content = content;
             return message;
         }
@@ -127,7 +126,7 @@ namespace Azure.Communication.CallingServer
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(answerCallRequest);
+            content.JsonWriter.WriteObjectValue<AnswerCallRequestInternal>(answerCallRequest);
             request.Content = content;
             return message;
         }
@@ -202,13 +201,13 @@ namespace Azure.Communication.CallingServer
             request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(redirectCallRequest);
+            content.JsonWriter.WriteObjectValue<RedirectCallRequestInternal>(redirectCallRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Redirect a call. </summary>
-        /// <param name="redirectCallRequest"> The RedirectCallRequest to use. </param>
+        /// <param name="redirectCallRequest"> The <see cref="RedirectCallRequestInternal"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="redirectCallRequest"/> is null. </exception>
         public async Task<Response> RedirectCallAsync(RedirectCallRequestInternal redirectCallRequest, CancellationToken cancellationToken = default)
@@ -230,7 +229,7 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Redirect a call. </summary>
-        /// <param name="redirectCallRequest"> The RedirectCallRequest to use. </param>
+        /// <param name="redirectCallRequest"> The <see cref="RedirectCallRequestInternal"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="redirectCallRequest"/> is null. </exception>
         public Response RedirectCall(RedirectCallRequestInternal redirectCallRequest, CancellationToken cancellationToken = default)
@@ -265,7 +264,7 @@ namespace Azure.Communication.CallingServer
             request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(rejectCallRequest);
+            content.JsonWriter.WriteObjectValue<RejectCallRequestInternal>(rejectCallRequest);
             request.Content = content;
             return message;
         }

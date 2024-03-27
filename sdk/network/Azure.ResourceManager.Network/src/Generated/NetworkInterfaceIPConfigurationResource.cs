@@ -9,18 +9,16 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a NetworkInterfaceIPConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkInterfaceIPConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkInterfaceIPConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkInterfaceResource" /> using the GetNetworkInterfaceIPConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkInterfaceIPConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkInterfaceIPConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkInterfaceResource"/> using the GetNetworkInterfaceIPConfiguration method.
     /// </summary>
     public partial class NetworkInterfaceIPConfigurationResource : ArmResource
     {
@@ -39,12 +37,15 @@ namespace Azure.ResourceManager.Network
         private readonly NetworkInterfaceIPConfigurationsRestOperations _networkInterfaceIPConfigurationRestClient;
         private readonly NetworkInterfaceIPConfigurationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/networkInterfaces/ipConfigurations";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceIPConfigurationResource"/> class for mocking. </summary>
         protected NetworkInterfaceIPConfigurationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkInterfaceIPConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceIPConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkInterfaceIPConfigurationResource(ArmClient client, NetworkInterfaceIPConfigurationData data) : this(client, data.Id)
@@ -65,9 +66,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/networkInterfaces/ipConfigurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +99,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaceIPConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkInterfaceIPConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +138,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaceIPConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkInterfaceIPConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

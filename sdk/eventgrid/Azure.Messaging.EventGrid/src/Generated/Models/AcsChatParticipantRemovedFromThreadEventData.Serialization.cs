@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,12 +20,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<DateTimeOffset> time = default;
-            Optional<CommunicationIdentifierModel> removedByCommunicationIdentifier = default;
-            Optional<AcsChatThreadParticipantProperties> participantRemoved = default;
-            Optional<long> version = default;
-            Optional<string> transactionId = default;
-            Optional<string> threadId = default;
+            DateTimeOffset? time = default;
+            CommunicationIdentifierModel removedByCommunicationIdentifier = default;
+            AcsChatThreadParticipantProperties participantRemoved = default;
+            long? version = default;
+            string transactionId = default;
+            string threadId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("time"u8))
@@ -76,7 +75,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsChatParticipantRemovedFromThreadEventData(transactionId.Value, threadId.Value, Optional.ToNullable(time), removedByCommunicationIdentifier.Value, participantRemoved.Value, Optional.ToNullable(version));
+            return new AcsChatParticipantRemovedFromThreadEventData(
+                transactionId,
+                threadId,
+                time,
+                removedByCommunicationIdentifier,
+                participantRemoved,
+                version);
         }
 
         internal partial class AcsChatParticipantRemovedFromThreadEventDataConverter : JsonConverter<AcsChatParticipantRemovedFromThreadEventData>

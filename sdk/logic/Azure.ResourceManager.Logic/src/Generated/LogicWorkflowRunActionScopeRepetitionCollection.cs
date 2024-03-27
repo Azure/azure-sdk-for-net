@@ -12,17 +12,15 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Logic
 {
     /// <summary>
-    /// A class representing a collection of <see cref="LogicWorkflowRunActionScopeRepetitionResource" /> and their operations.
-    /// Each <see cref="LogicWorkflowRunActionScopeRepetitionResource" /> in the collection will belong to the same instance of <see cref="LogicWorkflowRunActionResource" />.
-    /// To get a <see cref="LogicWorkflowRunActionScopeRepetitionCollection" /> instance call the GetLogicWorkflowRunActionScopeRepetitions method from an instance of <see cref="LogicWorkflowRunActionResource" />.
+    /// A class representing a collection of <see cref="LogicWorkflowRunActionScopeRepetitionResource"/> and their operations.
+    /// Each <see cref="LogicWorkflowRunActionScopeRepetitionResource"/> in the collection will belong to the same instance of <see cref="LogicWorkflowRunActionResource"/>.
+    /// To get a <see cref="LogicWorkflowRunActionScopeRepetitionCollection"/> instance call the GetLogicWorkflowRunActionScopeRepetitions method from an instance of <see cref="LogicWorkflowRunActionResource"/>.
     /// </summary>
     public partial class LogicWorkflowRunActionScopeRepetitionCollection : ArmCollection, IEnumerable<LogicWorkflowRunActionScopeRepetitionResource>, IAsyncEnumerable<LogicWorkflowRunActionScopeRepetitionResource>
     {
@@ -64,6 +62,14 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowRunActionScopeRepetitions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunActionScopeRepetitionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="repetitionName"> The workflow repetition. </param>
@@ -100,6 +106,14 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowRunActionScopeRepetitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunActionScopeRepetitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +152,18 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowRunActionScopeRepetitions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunActionScopeRepetitionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LogicWorkflowRunActionScopeRepetitionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LogicWorkflowRunActionScopeRepetitionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LogicWorkflowRunActionScopeRepetitionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowRunActionScopeRepetitionWorkflowRunActionScopeRepetitionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -159,10 +181,18 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowRunActionScopeRepetitions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunActionScopeRepetitionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LogicWorkflowRunActionScopeRepetitionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LogicWorkflowRunActionScopeRepetitionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LogicWorkflowRunActionScopeRepetitionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowRunActionScopeRepetitionWorkflowRunActionScopeRepetitionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -179,6 +209,14 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowRunActionScopeRepetitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunActionScopeRepetitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,6 +253,14 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowRunActionScopeRepetitions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunActionScopeRepetitionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="repetitionName"> The workflow repetition. </param>
@@ -249,6 +295,14 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowRunActionScopeRepetitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunActionScopeRepetitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,6 +340,14 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowRunActionScopeRepetitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunActionScopeRepetitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -18,11 +18,11 @@ namespace Azure.Communication.CallAutomation
             writer.WritePropertyName("incomingCallContext"u8);
             writer.WriteStringValue(IncomingCallContext);
             writer.WritePropertyName("target"u8);
-            writer.WriteObjectValue(Target);
-            if (Optional.IsDefined(CustomContext))
+            writer.WriteObjectValue<CommunicationIdentifierModel>(Target);
+            if (Optional.IsDefined(CustomCallingContext))
             {
-                writer.WritePropertyName("customContext"u8);
-                writer.WriteObjectValue(CustomContext);
+                writer.WritePropertyName("customCallingContext"u8);
+                writer.WriteObjectValue<CustomCallingContextInternal>(CustomCallingContext);
             }
             writer.WriteEndObject();
         }

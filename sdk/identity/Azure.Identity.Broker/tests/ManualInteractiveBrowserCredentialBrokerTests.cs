@@ -3,10 +3,13 @@
 
 using System;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Identity.Broker.Tests
@@ -31,6 +34,93 @@ namespace Azure.Identity.Broker.Tests
             AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
 
             Assert.NotNull(token.Token);
+        }
+
+        [Test]
+        [Ignore("This test is an integration test which can only be run with user interaction")]
+        public async Task AuthenticateWithBrokerWithUseOperatingSystemAccount_DoesNotPrompt()
+        {
+            IntPtr parentWindowHandle = GetForegroundWindow();
+
+            var cred = new InteractiveBrowserCredential(new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle) { UseDefaultBrokerAccount = true });
+
+            AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
+
+            Assert.NotNull(token.Token);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        [Ignore("This test is an integration test which can only be run with user interaction")]
+        public async Task GetPopToken(bool isAsync)
+        {
+            using var logger = AzureEventSourceListener.CreateConsoleLogger();
+            IntPtr parentWindowHandle = GetForegroundWindow();
+
+            var client = new PopTestClient(new InteractiveBrowserCredential(
+                new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle)),
+                new PopClientOptions() { Diagnostics = { IsLoggingContentEnabled = true, LoggedHeaderNames = { "Authorization" } } });
+            var response = isAsync ?
+                await client.GetAsync(new Uri("https://20.190.132.47/beta/me"), CancellationToken.None) :
+                client.Get(new Uri("https://20.190.132.47/beta/me"), CancellationToken.None);
+            Assert.IsNotNull(response);
+            Assert.AreEqual(200, response.Status);
+
+            response = isAsync ?
+                await client.GetAsync(new Uri("https://20.190.132.47/beta/me"), CancellationToken.None) :
+                client.Get(new Uri("https://20.190.132.47/beta/me"), CancellationToken.None);
+            Assert.IsNotNull(response);
+            Assert.AreEqual(200, response.Status);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        [Ignore("This test is an integration test which can only be run with user interaction")]
+        public async Task GetPopTokenWithAuthenticate(bool isAsync)
+        {
+            using var logger = AzureEventSourceListener.CreateConsoleLogger();
+            IntPtr parentWindowHandle = GetForegroundWindow();
+
+            // Issue the unauthorized request to get the PoP challenge
+            var scopes = new[] { "https://graph.microsoft.com/.default" };
+            string nonce = null;
+            Uri resourceUri = new Uri("https://20.190.132.47/beta/me");
+            string nonceToken = "nonce=\"";
+            var handler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (_, _, _, _) => true
+            };
+            HttpClient httpClient = new(handler);
+            var resp = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, resourceUri));
+            // parse the nonce
+            var popChallenge = resp.Headers.WwwAuthenticate.First(wa => wa.Scheme == "PoP");
+            var nonceStart = popChallenge.Parameter.IndexOf(nonceToken) + nonceToken.Length;
+            var nonceEnd = popChallenge.Parameter.IndexOf('"', nonceStart);
+            nonce = popChallenge.Parameter.Substring(nonceStart, nonceEnd - nonceStart);
+
+            InteractiveBrowserCredential credential = new InteractiveBrowserCredential(
+                            new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle));
+
+            var client = new PopTestClient(
+                credential,
+                new PopClientOptions() { Diagnostics = { IsLoggingContentEnabled = true, LoggedHeaderNames = { "Authorization" } } });
+
+            using Request request = new MockRequest();
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(resourceUri);
+
+            var popContext = new PopTokenRequestContext(scopes, proofOfPossessionNonce: nonce, request: request);
+            // this should pop browser amd validate the AuthenticateAsync path.
+            var record = await credential.AuthenticateAsync(popContext).ConfigureAwait(false);
+            credential.Record = record;
+
+            var response = isAsync ?
+                await client.GetAsync(resourceUri, CancellationToken.None) :
+                client.Get(resourceUri, CancellationToken.None);
+            Assert.IsNotNull(response);
+            Assert.AreEqual(200, response.Status);
         }
 
         [Test]
@@ -60,7 +150,6 @@ namespace Azure.Identity.Broker.Tests
                 AccessToken token = isAsync ? await cred.GetTokenAsync(context).ConfigureAwait(false) : cred.GetToken(context);
                 Console.WriteLine("got token");
                 evt.Set();
-                // });
             });
 
             Thread thread2 = new Thread(async () =>
@@ -80,7 +169,6 @@ namespace Azure.Identity.Broker.Tests
                 AccessToken token = isAsync ? await cred.GetTokenAsync(context).ConfigureAwait(false) : cred.GetToken(context);
                 Console.WriteLine("got token");
                 thread.Start();
-                // });
             });
 #pragma warning disable CA1416 // Validate platform compatibility
             thread.SetApartmentState(ApartmentState.STA);

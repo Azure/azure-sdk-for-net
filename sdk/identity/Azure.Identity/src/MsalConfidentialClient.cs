@@ -143,11 +143,12 @@ namespace Azure.Identity
         public virtual async ValueTask<AuthenticationResult> AcquireTokenForClientAsync(
             string[] scopes,
             string tenantId,
+            string claims,
             bool enableCae,
             bool async,
             CancellationToken cancellationToken)
         {
-            var result = await AcquireTokenForClientCoreAsync(scopes, tenantId, enableCae, async, cancellationToken).ConfigureAwait(false);
+            var result = await AcquireTokenForClientCoreAsync(scopes, tenantId, claims, enableCae, async, cancellationToken).ConfigureAwait(false);
             LogAccountDetails(result);
             return result;
         }
@@ -155,6 +156,7 @@ namespace Azure.Identity
         public virtual async ValueTask<AuthenticationResult> AcquireTokenForClientCoreAsync(
             string[] scopes,
             string tenantId,
+            string claims,
             bool enableCae,
             bool async,
             CancellationToken cancellationToken)
@@ -167,7 +169,15 @@ namespace Azure.Identity
 
             if (!string.IsNullOrEmpty(tenantId))
             {
-                builder.WithAuthority(AuthorityHost.AbsoluteUri, tenantId);
+                UriBuilder uriBuilder = new UriBuilder(AuthorityHost)
+                {
+                    Path = tenantId
+                };
+                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
+            }
+            if (!string.IsNullOrEmpty(claims))
+            {
+                builder.WithClaims(claims);
             }
             return await builder
                 .ExecuteAsync(async, cancellationToken)
@@ -179,11 +189,12 @@ namespace Azure.Identity
             AuthenticationAccount account,
             string tenantId,
             string redirectUri,
+            string claims,
             bool enableCae,
             bool async,
             CancellationToken cancellationToken)
         {
-            var result = await AcquireTokenSilentCoreAsync(scopes, account, tenantId, redirectUri, enableCae, async, cancellationToken).ConfigureAwait(false);
+            var result = await AcquireTokenSilentCoreAsync(scopes, account, tenantId, redirectUri, claims, enableCae, async, cancellationToken).ConfigureAwait(false);
             LogAccountDetails(result);
             return result;
         }
@@ -193,6 +204,7 @@ namespace Azure.Identity
             AuthenticationAccount account,
             string tenantId,
             string redirectUri,
+            string claims,
             bool enableCae,
             bool async,
             CancellationToken cancellationToken)
@@ -202,7 +214,15 @@ namespace Azure.Identity
             var builder = client.AcquireTokenSilent(scopes, account);
             if (!string.IsNullOrEmpty(tenantId))
             {
-                builder.WithAuthority(AuthorityHost.AbsoluteUri, tenantId);
+                UriBuilder uriBuilder = new UriBuilder(AuthorityHost)
+                {
+                    Path = tenantId
+                };
+                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
+            }
+            if (string.IsNullOrEmpty(claims))
+            {
+                builder.WithClaims(claims);
             }
             return await builder
                 .ExecuteAsync(async, cancellationToken)
@@ -214,11 +234,12 @@ namespace Azure.Identity
             string code,
             string tenantId,
             string redirectUri,
+            string claims,
             bool enableCae,
             bool async,
             CancellationToken cancellationToken)
         {
-            var result = await AcquireTokenByAuthorizationCodeCoreAsync(scopes, code, tenantId, redirectUri, enableCae, async, cancellationToken).ConfigureAwait(false);
+            var result = await AcquireTokenByAuthorizationCodeCoreAsync(scopes, code, tenantId, redirectUri, claims, enableCae, async, cancellationToken).ConfigureAwait(false);
             LogAccountDetails(result);
             return result;
         }
@@ -227,6 +248,7 @@ namespace Azure.Identity
             string[] scopes,
             string code,
             string tenantId,
+            string claims,
             string redirectUri,
             bool enableCae,
             bool async,
@@ -238,7 +260,15 @@ namespace Azure.Identity
 
             if (!string.IsNullOrEmpty(tenantId))
             {
-                builder.WithAuthority(AuthorityHost.AbsoluteUri, tenantId);
+                UriBuilder uriBuilder = new UriBuilder(AuthorityHost)
+                {
+                    Path = tenantId
+                };
+                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
+            }
+            if (!string.IsNullOrEmpty(claims))
+            {
+                builder.WithClaims(claims);
             }
             return await builder
                 .ExecuteAsync(async, cancellationToken)
@@ -249,11 +279,12 @@ namespace Azure.Identity
             string[] scopes,
             string tenantId,
             UserAssertion userAssertionValue,
+            string claims,
             bool enableCae,
             bool async,
             CancellationToken cancellationToken)
         {
-            var result = await AcquireTokenOnBehalfOfCoreAsync(scopes, tenantId, userAssertionValue, enableCae, async, cancellationToken).ConfigureAwait(false);
+            var result = await AcquireTokenOnBehalfOfCoreAsync(scopes, tenantId, userAssertionValue, claims, enableCae, async, cancellationToken).ConfigureAwait(false);
             LogAccountDetails(result);
             return result;
         }
@@ -262,6 +293,7 @@ namespace Azure.Identity
             string[] scopes,
             string tenantId,
             UserAssertion userAssertionValue,
+            string claims,
             bool enableCae,
             bool async,
             CancellationToken cancellationToken)
@@ -274,7 +306,11 @@ namespace Azure.Identity
 
             if (!string.IsNullOrEmpty(tenantId))
             {
-                builder.WithAuthority(AuthorityHost.AbsoluteUri, tenantId);
+                UriBuilder uriBuilder = new UriBuilder(AuthorityHost)
+                {
+                    Path = tenantId
+                };
+                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
             }
             return await builder
                 .ExecuteAsync(async, cancellationToken)

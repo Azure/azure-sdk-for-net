@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ExecuteDataFlowActivity : IUtf8JsonSerializable
+    public partial class ExecuteDataFlowActivity : IUtf8JsonSerializable, IJsonModel<ExecuteDataFlowActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExecuteDataFlowActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ExecuteDataFlowActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExecuteDataFlowActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExecuteDataFlowActivity)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedServiceName))
             {
@@ -26,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                writer.WriteObjectValue<PipelineActivityPolicy>(Policy, options);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -53,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivityDependency>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -63,28 +72,28 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivityUserProperty>(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("dataFlow"u8);
-            writer.WriteObjectValue(DataFlow);
+            writer.WriteObjectValue<DataFlowReference>(DataFlow, options);
             if (Optional.IsDefined(Staging))
             {
                 writer.WritePropertyName("staging"u8);
-                writer.WriteObjectValue(Staging);
+                writer.WriteObjectValue<DataFlowStagingInfo>(Staging, options);
             }
             if (Optional.IsDefined(IntegrationRuntime))
             {
                 writer.WritePropertyName("integrationRuntime"u8);
-                writer.WriteObjectValue(IntegrationRuntime);
+                writer.WriteObjectValue<IntegrationRuntimeReference>(IntegrationRuntime, options);
             }
             if (Optional.IsDefined(Compute))
             {
                 writer.WritePropertyName("compute"u8);
-                writer.WriteObjectValue(Compute);
+                writer.WriteObjectValue<ExecuteDataFlowActivityComputeType>(Compute, options);
             }
             if (Optional.IsDefined(TraceLevel))
             {
@@ -122,29 +131,43 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static ExecuteDataFlowActivity DeserializeExecuteDataFlowActivity(JsonElement element)
+        ExecuteDataFlowActivity IJsonModel<ExecuteDataFlowActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExecuteDataFlowActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExecuteDataFlowActivity)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExecuteDataFlowActivity(document.RootElement, options);
+        }
+
+        internal static ExecuteDataFlowActivity DeserializeExecuteDataFlowActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Optional<PipelineActivityPolicy> policy = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
+            PipelineActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
+            string description = default;
+            PipelineActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
+            IList<PipelineActivityDependency> dependsOn = default;
+            IList<PipelineActivityUserProperty> userProperties = default;
             DataFlowReference dataFlow = default;
-            Optional<DataFlowStagingInfo> staging = default;
-            Optional<IntegrationRuntimeReference> integrationRuntime = default;
-            Optional<ExecuteDataFlowActivityComputeType> compute = default;
-            Optional<DataFactoryElement<string>> traceLevel = default;
-            Optional<DataFactoryElement<bool>> continueOnError = default;
-            Optional<DataFactoryElement<bool>> runConcurrently = default;
-            Optional<DataFactoryElement<int>> sourceStagingConcurrency = default;
+            DataFlowStagingInfo staging = default;
+            IntegrationRuntimeReference integrationRuntime = default;
+            ExecuteDataFlowActivityComputeType compute = default;
+            DataFactoryElement<string> traceLevel = default;
+            DataFactoryElement<bool> continueOnError = default;
+            DataFactoryElement<bool> runConcurrently = default;
+            DataFactoryElement<int> sourceStagingConcurrency = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +187,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value);
+                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -209,7 +232,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
+                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -223,7 +246,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
+                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
                     }
                     userProperties = array;
                     continue;
@@ -239,7 +262,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("dataFlow"u8))
                         {
-                            dataFlow = DataFlowReference.DeserializeDataFlowReference(property0.Value);
+                            dataFlow = DataFlowReference.DeserializeDataFlowReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("staging"u8))
@@ -248,7 +271,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            staging = DataFlowStagingInfo.DeserializeDataFlowStagingInfo(property0.Value);
+                            staging = DataFlowStagingInfo.DeserializeDataFlowStagingInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("integrationRuntime"u8))
@@ -257,7 +280,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            integrationRuntime = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property0.Value);
+                            integrationRuntime = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("compute"u8))
@@ -266,7 +289,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            compute = ExecuteDataFlowActivityComputeType.DeserializeExecuteDataFlowActivityComputeType(property0.Value);
+                            compute = ExecuteDataFlowActivityComputeType.DeserializeExecuteDataFlowActivityComputeType(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("traceLevel"u8))
@@ -311,7 +334,56 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ExecuteDataFlowActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, dataFlow, staging.Value, integrationRuntime.Value, compute.Value, traceLevel.Value, continueOnError.Value, runConcurrently.Value, sourceStagingConcurrency.Value);
+            return new ExecuteDataFlowActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy,
+                dataFlow,
+                staging,
+                integrationRuntime,
+                compute,
+                traceLevel,
+                continueOnError,
+                runConcurrently,
+                sourceStagingConcurrency);
         }
+
+        BinaryData IPersistableModel<ExecuteDataFlowActivity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExecuteDataFlowActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ExecuteDataFlowActivity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ExecuteDataFlowActivity IPersistableModel<ExecuteDataFlowActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExecuteDataFlowActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeExecuteDataFlowActivity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExecuteDataFlowActivity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ExecuteDataFlowActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

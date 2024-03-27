@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Search.Documents.Indexes.Models;
@@ -33,7 +32,7 @@ namespace Azure.Search.Documents
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public SynonymMapsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2023-11-01")
+        public SynonymMapsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2024-03-01-Preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -66,7 +65,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(synonymMap);
+            content.JsonWriter.WriteObjectValue<SynonymMap>(synonymMap);
             request.Content = content;
             return message;
         }
@@ -304,7 +303,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Lists all synonym maps available for a search service. </summary>
-        /// <param name="select"> Selects which top-level properties of the synonym maps to retrieve. Specified as a comma-separated list of JSON property names, or `*` for all properties. The default is all properties. </param>
+        /// <param name="select"> Selects which top-level properties of the synonym maps to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<ListSynonymMapsResult>> ListAsync(string select = null, CancellationToken cancellationToken = default)
         {
@@ -325,7 +324,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Lists all synonym maps available for a search service. </summary>
-        /// <param name="select"> Selects which top-level properties of the synonym maps to retrieve. Specified as a comma-separated list of JSON property names, or `*` for all properties. The default is all properties. </param>
+        /// <param name="select"> Selects which top-level properties of the synonym maps to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<ListSynonymMapsResult> List(string select = null, CancellationToken cancellationToken = default)
         {
@@ -358,7 +357,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(synonymMap);
+            content.JsonWriter.WriteObjectValue<SynonymMap>(synonymMap);
             request.Content = content;
             return message;
         }

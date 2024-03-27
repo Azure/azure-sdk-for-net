@@ -206,11 +206,8 @@ namespace Azure.Core.Tests
 
             activity.Stop();
 
-#if NET5_0_OR_GREATER
-            Assert.True(transport.SingleRequest.TryGetHeader("traceparent", out string requestId));
-#else
-            Assert.True(transport.SingleRequest.TryGetHeader("Request-Id", out string requestId));
-#endif
+            string headerName = Activity.DefaultIdFormat == ActivityIdFormat.W3C ? "traceparent" : "Request-Id";
+            Assert.True(transport.SingleRequest.TryGetHeader(headerName, out string requestId));
             Assert.AreEqual(activity.Id, requestId);
         }
 
@@ -290,13 +287,6 @@ namespace Azure.Core.Tests
             ActivityExtensions.ResetFeatureSwitch();
         }
 
-        private static TestAppContextSwitch SetAppConfigSwitch()
-        {
-            var s = new TestAppContextSwitch("Azure.Experimental.EnableActivitySource", "true");
-            ActivityExtensions.ResetFeatureSwitch();
-            return s;
-        }
-
         [Test]
         [TestCase(443)]
         [TestCase(8080)]
@@ -304,8 +294,6 @@ namespace Azure.Core.Tests
         [NonParallelizable]
         public async Task ActivitySourceActivityStartedOnRequest(int? port)
         {
-            using var _ = SetAppConfigSwitch();
-
             ActivityIdFormat previousFormat = Activity.DefaultIdFormat;
             Activity.DefaultIdFormat = ActivityIdFormat.W3C;
             try
@@ -368,13 +356,11 @@ namespace Azure.Core.Tests
         [NonParallelizable]
         public async Task HttpActivityNeverSuppressed()
         {
-            using var _ = SetAppConfigSwitch();
-
             ActivityIdFormat previousFormat = Activity.DefaultIdFormat;
             Activity.DefaultIdFormat = ActivityIdFormat.W3C;
 
             using var clientListener = new TestActivitySourceListener("Azure.Clients.ClientName");
-            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, true);
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, true, true);
             using DiagnosticScope outerScope = clientDiagnostics.CreateScope("ClientName.ActivityName", ActivityKind.Internal);
             outerScope.Start();
 
@@ -404,7 +390,6 @@ namespace Azure.Core.Tests
         [NonParallelizable]
         public void ActivityShouldBeStoppedWhenTransportThrowsActivitySource()
         {
-            using var _ = SetAppConfigSwitch();
             HttpRequestException exception = new HttpRequestException("Test exception");
             using var clientListener = new TestActivitySourceListener("Azure.Core.Http");
 
@@ -427,7 +412,6 @@ namespace Azure.Core.Tests
         [NonParallelizable]
         public async Task ActivityMarkedAsErrorForErrorResponseActivitySource()
         {
-            using var _ = SetAppConfigSwitch();
             using var clientListener = new TestActivitySourceListener("Azure.Core.Http");
 
             MockTransport mockTransport = CreateMockTransport(_ =>
@@ -450,7 +434,6 @@ namespace Azure.Core.Tests
         [NonParallelizable]
         public async Task ActivityHasHttpResendCountOnRetries()
         {
-            using var _ = SetAppConfigSwitch();
             Activity.DefaultIdFormat = ActivityIdFormat.W3C;
             using var clientListener = new TestActivitySourceListener("Azure.Core.Http");
 

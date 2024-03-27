@@ -18,6 +18,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -49,27 +50,16 @@ acronym-mapping:
   URI: Uri
   Etag: ETag|etag
 
-no-property-type-replacement:
-- VirtualMachineDeleteCheckpoint
-- VirtualMachineRestoreCheckpoint
+rename-mapping:
+  AvailabilitySet: ScVmmAvailabilitySet
+  Cloud: ScVmmCloud
+  VMMServer: ScVmmServer
+  VirtualMachine: ScVmmVirtualMachine
+  VirtualMachineTemplate: ScVmmVirtualMachineTemplate
+  VirtualNetwork: ScVmmVirtualNetwork
 
 directive:
-  - rename-model:
-      from: AvailabilitySet
-      to: ScVmmAvailabilitySet
-  - rename-model:
-      from: Cloud
-      to: ScVmmCloud
-  - rename-model:
-      from: VirtualMachine
-      to: ScVmmVirtualMachine
-  - rename-model:
-      from: VirtualMachineTemplate
-      to: ScVmmVirtualMachineTemplate
-  - rename-model:
-      from: VirtualNetwork
-      to: ScVmmVirtualNetwork
-  - rename-model:
-      from: VMMServer
-      to: ScVmmServer
+  - from: swagger-document
+    where: $.definitions.InventoryItem.properties.properties
+    transform: $["x-ms-client-flatten"] = false;
 ```

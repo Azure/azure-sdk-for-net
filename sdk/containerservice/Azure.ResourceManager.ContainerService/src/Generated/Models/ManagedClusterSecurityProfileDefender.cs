@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
@@ -12,18 +14,52 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Microsoft Defender settings for the security profile. </summary>
     public partial class ManagedClusterSecurityProfileDefender
     {
-        /// <summary> Initializes a new instance of ManagedClusterSecurityProfileDefender. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileDefender"/>. </summary>
         public ManagedClusterSecurityProfileDefender()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterSecurityProfileDefender. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileDefender"/>. </summary>
         /// <param name="logAnalyticsWorkspaceResourceId"> Resource ID of the Log Analytics workspace to be associated with Microsoft Defender. When Microsoft Defender is enabled, this field is required and must be a valid workspace resource ID. When Microsoft Defender is disabled, leave the field empty. </param>
         /// <param name="securityMonitoring"> Microsoft Defender threat detection for Cloud settings for the security profile. </param>
-        internal ManagedClusterSecurityProfileDefender(ResourceIdentifier logAnalyticsWorkspaceResourceId, ManagedClusterSecurityProfileDefenderSecurityMonitoring securityMonitoring)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterSecurityProfileDefender(ResourceIdentifier logAnalyticsWorkspaceResourceId, ManagedClusterSecurityProfileDefenderSecurityMonitoring securityMonitoring, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LogAnalyticsWorkspaceResourceId = logAnalyticsWorkspaceResourceId;
             SecurityMonitoring = securityMonitoring;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource ID of the Log Analytics workspace to be associated with Microsoft Defender. When Microsoft Defender is enabled, this field is required and must be a valid workspace resource ID. When Microsoft Defender is disabled, leave the field empty. </summary>

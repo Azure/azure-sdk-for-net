@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.TrafficManager;
 using Azure.ResourceManager.TrafficManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager.Mocking
@@ -45,7 +42,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         }
 
         /// <summary> Gets an object representing a TrafficManagerGeographicHierarchyResource along with the instance operations that can be performed on it in the TenantResource. </summary>
-        /// <returns> Returns a <see cref="TrafficManagerGeographicHierarchyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="TrafficManagerGeographicHierarchyResource"/> object. </returns>
         public virtual TrafficManagerGeographicHierarchyResource GetTrafficManagerGeographicHierarchy()
         {
             return new TrafficManagerGeographicHierarchyResource(Client, Id.AppendProviderResource("Microsoft.Network", "trafficManagerGeographicHierarchies", "default"));
@@ -61,6 +58,14 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Profiles_CheckTrafficManagerRelativeDnsNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -95,6 +100,14 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Profiles_CheckTrafficManagerRelativeDnsNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

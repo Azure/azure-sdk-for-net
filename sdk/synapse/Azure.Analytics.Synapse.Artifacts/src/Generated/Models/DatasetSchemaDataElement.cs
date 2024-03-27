@@ -6,20 +6,19 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Columns that define the physical type schema of the dataset. </summary>
     public partial class DatasetSchemaDataElement
     {
-        /// <summary> Initializes a new instance of DatasetSchemaDataElement. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatasetSchemaDataElement"/>. </summary>
         public DatasetSchemaDataElement()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of DatasetSchemaDataElement. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatasetSchemaDataElement"/>. </summary>
         /// <param name="name"> Name of the schema column. Type: string (or Expression with resultType string). </param>
         /// <param name="type"> Type of the schema column. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>

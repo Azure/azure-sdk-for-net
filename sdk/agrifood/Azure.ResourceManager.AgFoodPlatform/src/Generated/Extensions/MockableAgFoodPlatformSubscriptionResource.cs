@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AgFoodPlatform;
 using Azure.ResourceManager.AgFoodPlatform.Models;
 
 namespace Azure.ResourceManager.AgFoodPlatform.Mocking
@@ -60,6 +57,14 @@ namespace Azure.ResourceManager.AgFoodPlatform.Mocking
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="maxPageSize">
@@ -68,7 +73,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Mocking
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FarmBeatResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="FarmBeatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FarmBeatResource> GetFarmBeatsAsync(int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => FarmBeatFarmBeatsModelsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, pageSizeHint, skipToken);
@@ -87,6 +92,14 @@ namespace Azure.ResourceManager.AgFoodPlatform.Mocking
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="maxPageSize">
@@ -95,7 +108,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Mocking
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FarmBeatResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FarmBeatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FarmBeatResource> GetFarmBeats(int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => FarmBeatFarmBeatsModelsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, pageSizeHint, skipToken);
@@ -113,6 +126,10 @@ namespace Azure.ResourceManager.AgFoodPlatform.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -147,6 +164,10 @@ namespace Azure.ResourceManager.AgFoodPlatform.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>

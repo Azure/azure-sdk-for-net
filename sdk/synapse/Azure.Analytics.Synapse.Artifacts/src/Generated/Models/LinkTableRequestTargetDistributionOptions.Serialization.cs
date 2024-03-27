@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<string> distributionColumn = default;
+            string type = default;
+            string distributionColumn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -52,14 +52,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkTableRequestTargetDistributionOptions(type.Value, distributionColumn.Value);
+            return new LinkTableRequestTargetDistributionOptions(type, distributionColumn);
         }
 
         internal partial class LinkTableRequestTargetDistributionOptionsConverter : JsonConverter<LinkTableRequestTargetDistributionOptions>
         {
             public override void Write(Utf8JsonWriter writer, LinkTableRequestTargetDistributionOptions model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<LinkTableRequestTargetDistributionOptions>(model);
             }
             public override LinkTableRequestTargetDistributionOptions Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

@@ -9,18 +9,16 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a HostingEnvironmentRecommendation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HostingEnvironmentRecommendationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHostingEnvironmentRecommendationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppServiceEnvironmentResource" /> using the GetHostingEnvironmentRecommendation method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HostingEnvironmentRecommendationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHostingEnvironmentRecommendationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppServiceEnvironmentResource"/> using the GetHostingEnvironmentRecommendation method.
     /// </summary>
     public partial class HostingEnvironmentRecommendationResource : ArmResource
     {
@@ -39,12 +37,15 @@ namespace Azure.ResourceManager.AppService
         private readonly RecommendationsRestOperations _hostingEnvironmentRecommendationRecommendationsRestClient;
         private readonly RecommendationRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/hostingEnvironments/recommendations";
+
         /// <summary> Initializes a new instance of the <see cref="HostingEnvironmentRecommendationResource"/> class for mocking. </summary>
         protected HostingEnvironmentRecommendationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HostingEnvironmentRecommendationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HostingEnvironmentRecommendationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HostingEnvironmentRecommendationResource(ArmClient client, RecommendationRuleData data) : this(client, data.Id)
@@ -65,9 +66,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/hostingEnvironments/recommendations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -100,6 +98,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Recommendations_GetRuleDetailsByHostingEnvironment</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostingEnvironmentRecommendationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,6 +141,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Recommendations_GetRuleDetailsByHostingEnvironment</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostingEnvironmentRecommendationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
@@ -169,6 +183,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Recommendations_DisableRecommendationForHostingEnvironment</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostingEnvironmentRecommendationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="environmentName"> Site name. </param>
@@ -202,6 +224,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Recommendations_DisableRecommendationForHostingEnvironment</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostingEnvironmentRecommendationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

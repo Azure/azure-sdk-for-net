@@ -9,17 +9,15 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Consumption.Models;
 
 namespace Azure.ResourceManager.Consumption
 {
     /// <summary>
     /// A class extending from the ManagementGroupBillingPeriodResource in Azure.ResourceManager.Consumption along with the instance operations that can be performed on it.
-    /// You can only construct a <see cref="ManagementGroupBillingPeriodConsumptionResource" /> from a <see cref="ResourceIdentifier" /> with a resource type of Microsoft.Billing/billingPeriods.
+    /// You can only construct a <see cref="ManagementGroupBillingPeriodConsumptionResource"/> from a <see cref="ResourceIdentifier"/> with a resource type of Microsoft.Billing/billingPeriods.
     /// </summary>
     public partial class ManagementGroupBillingPeriodConsumptionResource : ArmResource
     {
@@ -72,6 +70,10 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>AggregatedCost_GetForBillingPeriodByManagementGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -101,6 +103,10 @@ namespace Azure.ResourceManager.Consumption
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AggregatedCost_GetForBillingPeriodByManagementGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// </summary>

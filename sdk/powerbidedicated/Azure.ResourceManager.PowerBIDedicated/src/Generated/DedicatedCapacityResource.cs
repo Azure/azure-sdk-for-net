@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.PowerBIDedicated.Models;
 using Azure.ResourceManager.Resources;
 
@@ -22,9 +20,9 @@ namespace Azure.ResourceManager.PowerBIDedicated
 {
     /// <summary>
     /// A Class representing a DedicatedCapacity along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DedicatedCapacityResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDedicatedCapacityResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDedicatedCapacity method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DedicatedCapacityResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDedicatedCapacityResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDedicatedCapacity method.
     /// </summary>
     public partial class DedicatedCapacityResource : ArmResource
     {
@@ -42,12 +40,15 @@ namespace Azure.ResourceManager.PowerBIDedicated
         private readonly CapacitiesRestOperations _dedicatedCapacityCapacitiesRestClient;
         private readonly DedicatedCapacityData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.PowerBIDedicated/capacities";
+
         /// <summary> Initializes a new instance of the <see cref="DedicatedCapacityResource"/> class for mocking. </summary>
         protected DedicatedCapacityResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DedicatedCapacityResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DedicatedCapacityResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DedicatedCapacityResource(ArmClient client, DedicatedCapacityData data) : this(client, new ResourceIdentifier(data.Id))
@@ -68,9 +69,6 @@ namespace Azure.ResourceManager.PowerBIDedicated
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.PowerBIDedicated/capacities";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -104,6 +102,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <term>Operation Id</term>
         /// <description>Capacities_GetDetails</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -136,6 +142,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <term>Operation Id</term>
         /// <description>Capacities_GetDetails</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,6 +181,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Capacities_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -202,6 +224,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <term>Operation Id</term>
         /// <description>Capacities_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -235,6 +265,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Capacities_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -274,6 +312,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <term>Operation Id</term>
         /// <description>Capacities_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -312,6 +358,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <term>Operation Id</term>
         /// <description>Capacities_Suspend</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -345,6 +399,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Capacities_Suspend</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -380,6 +442,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <term>Operation Id</term>
         /// <description>Capacities_Resume</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -413,6 +483,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Capacities_Resume</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -448,14 +526,22 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <term>Operation Id</term>
         /// <description>Capacities_ListSkusForCapacity</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SkuDetails" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SkuDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SkuDetails> GetSkusForCapacityAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dedicatedCapacityCapacitiesRestClient.CreateListSkusForCapacityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SkuDetails.DeserializeSkuDetails, _dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "DedicatedCapacityResource.GetSkusForCapacity", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SkuDetails.DeserializeSkuDetails(e), _dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "DedicatedCapacityResource.GetSkusForCapacity", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -469,14 +555,22 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <term>Operation Id</term>
         /// <description>Capacities_ListSkusForCapacity</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SkuDetails" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SkuDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SkuDetails> GetSkusForCapacity(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dedicatedCapacityCapacitiesRestClient.CreateListSkusForCapacityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SkuDetails.DeserializeSkuDetails, _dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "DedicatedCapacityResource.GetSkusForCapacity", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SkuDetails.DeserializeSkuDetails(e), _dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "DedicatedCapacityResource.GetSkusForCapacity", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -489,6 +583,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Capacities_GetDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -544,6 +646,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <term>Operation Id</term>
         /// <description>Capacities_GetDetails</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -598,6 +708,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <term>Operation Id</term>
         /// <description>Capacities_GetDetails</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -647,6 +765,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <term>Operation Id</term>
         /// <description>Capacities_GetDetails</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -695,6 +821,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Capacities_GetDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -747,6 +881,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Capacities_GetDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

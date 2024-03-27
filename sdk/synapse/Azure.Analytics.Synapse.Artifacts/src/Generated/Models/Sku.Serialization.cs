@@ -42,9 +42,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> tier = default;
-            Optional<string> name = default;
-            Optional<int> capacity = default;
+            string tier = default;
+            string name = default;
+            int? capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tier"u8))
@@ -67,14 +67,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new Sku(tier.Value, name.Value, Optional.ToNullable(capacity));
+            return new Sku(tier, name, capacity);
         }
 
         internal partial class SkuConverter : JsonConverter<Sku>
         {
             public override void Write(Utf8JsonWriter writer, Sku model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<Sku>(model);
             }
             public override Sku Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

@@ -12,17 +12,15 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Batch
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BatchAccountPoolResource" /> and their operations.
-    /// Each <see cref="BatchAccountPoolResource" /> in the collection will belong to the same instance of <see cref="BatchAccountResource" />.
-    /// To get a <see cref="BatchAccountPoolCollection" /> instance call the GetBatchAccountPools method from an instance of <see cref="BatchAccountResource" />.
+    /// A class representing a collection of <see cref="BatchAccountPoolResource"/> and their operations.
+    /// Each <see cref="BatchAccountPoolResource"/> in the collection will belong to the same instance of <see cref="BatchAccountResource"/>.
+    /// To get a <see cref="BatchAccountPoolCollection"/> instance call the GetBatchAccountPools method from an instance of <see cref="BatchAccountResource"/>.
     /// </summary>
     public partial class BatchAccountPoolCollection : ArmCollection, IEnumerable<BatchAccountPoolResource>, IAsyncEnumerable<BatchAccountPoolResource>
     {
@@ -63,6 +61,14 @@ namespace Azure.ResourceManager.Batch
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Pool_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +113,14 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>Pool_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -150,6 +164,14 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>Pool_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="poolName"> The pool name. This must be unique within the account. </param>
@@ -186,6 +208,14 @@ namespace Azure.ResourceManager.Batch
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Pool_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -224,6 +254,14 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>Pool_ListByBatchAccount</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
@@ -244,7 +282,7 @@ namespace Azure.ResourceManager.Batch
         ///  properties/scaleSettings/fixedScale
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BatchAccountPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BatchAccountPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BatchAccountPoolResource> GetAllAsync(int? maxresults = null, string select = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountPoolPoolRestClient.CreateListByBatchAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter);
@@ -263,6 +301,14 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>Pool_ListByBatchAccount</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
@@ -283,7 +329,7 @@ namespace Azure.ResourceManager.Batch
         ///  properties/scaleSettings/fixedScale
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BatchAccountPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BatchAccountPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BatchAccountPoolResource> GetAll(int? maxresults = null, string select = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountPoolPoolRestClient.CreateListByBatchAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter);
@@ -301,6 +347,14 @@ namespace Azure.ResourceManager.Batch
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Pool_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -337,6 +391,14 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>Pool_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="poolName"> The pool name. This must be unique within the account. </param>
@@ -371,6 +433,14 @@ namespace Azure.ResourceManager.Batch
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Pool_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -408,6 +478,14 @@ namespace Azure.ResourceManager.Batch
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Pool_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

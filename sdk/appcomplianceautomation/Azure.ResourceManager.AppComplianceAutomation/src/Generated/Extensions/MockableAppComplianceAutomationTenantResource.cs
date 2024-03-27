@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         /// <term>Operation Id</term>
         /// <description>Report_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReportResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="reportName"> Report Name. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Report_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

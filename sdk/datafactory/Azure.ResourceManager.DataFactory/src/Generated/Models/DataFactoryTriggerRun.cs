@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Trigger runs. </summary>
     public partial class DataFactoryTriggerRun
     {
-        /// <summary> Initializes a new instance of DataFactoryTriggerRun. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerRun"/>. </summary>
         internal DataFactoryTriggerRun()
         {
             Properties = new ChangeTrackingDictionary<string, string>();
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryTriggerRun. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerRun"/>. </summary>
         /// <param name="triggerRunId"> Trigger run id. </param>
         /// <param name="triggerName"> Trigger name. </param>
         /// <param name="triggerType"> Trigger type. </param>

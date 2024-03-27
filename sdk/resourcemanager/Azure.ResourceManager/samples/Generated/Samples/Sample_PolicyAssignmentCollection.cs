@@ -8,12 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources.Samples
@@ -123,7 +120,7 @@ Value = BinaryData.FromString("\"-LC\""),
                 {
                     ["assignedBy"] = "Foo Bar"
                 }),
-                EnforcementMode = new EnforcementMode("Default"),
+                EnforcementMode = EnforcementMode.Default,
             };
             ArmOperation<PolicyAssignmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, policyAssignmentName, data);
             PolicyAssignmentResource result = lro.Value;
@@ -186,7 +183,7 @@ Value = BinaryData.FromString("\"-LC\""),
                 {
                     ["assignedBy"] = "Foo Bar"
                 }),
-                EnforcementMode = new EnforcementMode("Default"),
+                EnforcementMode = EnforcementMode.Default,
             };
             ArmOperation<PolicyAssignmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, policyAssignmentName, data);
             PolicyAssignmentResource result = lro.Value;

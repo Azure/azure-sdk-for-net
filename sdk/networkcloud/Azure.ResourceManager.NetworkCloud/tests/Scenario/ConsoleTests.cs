@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public ConsoleTests (bool isAsync) : base(isAsync) {}
 
         [Test, MaxTime(1800000)]
+        [RecordedTest]
         public async Task Console()
         {
             // A console's name will always be set to "default"

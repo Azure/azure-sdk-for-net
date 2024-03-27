@@ -9,19 +9,17 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a ManagedDatabaseAdvancedThreatProtection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedDatabaseAdvancedThreatProtectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedDatabaseAdvancedThreatProtectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedDatabaseResource" /> using the GetManagedDatabaseAdvancedThreatProtection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedDatabaseAdvancedThreatProtectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagedDatabaseAdvancedThreatProtectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedDatabaseResource"/> using the GetManagedDatabaseAdvancedThreatProtection method.
     /// </summary>
     public partial class ManagedDatabaseAdvancedThreatProtectionResource : ArmResource
     {
@@ -41,12 +39,15 @@ namespace Azure.ResourceManager.Sql
         private readonly ManagedDatabaseAdvancedThreatProtectionSettingsRestOperations _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsRestClient;
         private readonly ManagedDatabaseAdvancedThreatProtectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/databases/advancedThreatProtectionSettings";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedDatabaseAdvancedThreatProtectionResource"/> class for mocking. </summary>
         protected ManagedDatabaseAdvancedThreatProtectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedDatabaseAdvancedThreatProtectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedDatabaseAdvancedThreatProtectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagedDatabaseAdvancedThreatProtectionResource(ArmClient client, ManagedDatabaseAdvancedThreatProtectionData data) : this(client, data.Id)
@@ -67,9 +68,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/databases/advancedThreatProtectionSettings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -103,6 +101,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ManagedDatabaseAdvancedThreatProtectionSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseAdvancedThreatProtectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -135,6 +141,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ManagedDatabaseAdvancedThreatProtectionSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseAdvancedThreatProtectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -166,6 +180,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedDatabaseAdvancedThreatProtectionSettings_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseAdvancedThreatProtectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,6 +226,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedDatabaseAdvancedThreatProtectionSettings_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseAdvancedThreatProtectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -20,11 +20,7 @@ namespace Azure.Core.Pipeline
         private const string RequestIdHeaderName = "Request-Id";
 
         private static readonly DiagnosticListener s_diagnosticSource = new DiagnosticListener("Azure.Core");
-#if NETCOREAPP2_1
-        private static readonly object? s_activitySource = ActivityExtensions.CreateActivitySource("Azure.Core.Http");
-#else
         private static readonly ActivitySource s_activitySource = new ActivitySource("Azure.Core.Http");
-#endif
 
         public RequestActivityPolicy(bool isDistributedTracingEnabled, string? resourceProviderNamespace, HttpMessageSanitizer httpMessageSanitizer)
         {
@@ -78,10 +74,7 @@ namespace Azure.Core.Pipeline
                 scope.AddIntegerAttribute("server.port", message.Request.Uri.Port);
             }
 
-            if (_resourceProviderNamespace != null)
-            {
-                scope.AddAttribute("az.namespace", _resourceProviderNamespace);
-            }
+            scope.AddAttribute("az.namespace", _resourceProviderNamespace);
 
             if (!isActivitySourceEnabled && message.Request.Headers.TryGetValue("User-Agent", out string? userAgent))
             {
@@ -125,31 +118,20 @@ namespace Azure.Core.Pipeline
 
             if (message.Response.IsError)
             {
-                if (isActivitySourceEnabled)
-                {
-                    scope.AddAttribute("error.type", statusCodeStr);
-                }
-                else
-                {
-                    scope.AddAttribute("otel.status_code", "ERROR");
-                }
                 scope.Failed(statusCodeStr);
             }
-            else if (!isActivitySourceEnabled)
+
+            if (!isActivitySourceEnabled)
             {
                 // Set the status to UNSET so the AppInsights doesn't try to infer it from the status code
-                scope.AddAttribute("otel.status_code",  "UNSET");
+                scope.AddAttribute("otel.status_code", message.Response.IsError ? "ERROR" : "UNSET");
             }
         }
 
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The values being passed into Write have the commonly used properties being preserved with DynamicallyAccessedMembers.")]
         private DiagnosticScope CreateDiagnosticScope<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T>(T sourceArgs)
         {
-#if NETCOREAPP2_1
-            return new DiagnosticScope("Azure.Core.Http.Request", s_diagnosticSource, sourceArgs, s_activitySource, DiagnosticScope.ActivityKind.Client, false);
-#else
             return new DiagnosticScope("Azure.Core.Http.Request", s_diagnosticSource, sourceArgs, s_activitySource, System.Diagnostics.ActivityKind.Client, false);
-#endif
         }
 
         private static ValueTask ProcessNextAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
@@ -159,20 +141,12 @@ namespace Azure.Core.Pipeline
             if (currentActivity != null)
             {
                 var currentActivityId = currentActivity.Id ?? string.Empty;
-#if NETCOREAPP2_1
-                if (currentActivity.IsW3CFormat())
-#else
                 if (currentActivity.IdFormat == ActivityIdFormat.W3C)
-#endif
                 {
                     if (!message.Request.Headers.Contains(TraceParentHeaderName))
                     {
                         message.Request.Headers.Add(TraceParentHeaderName, currentActivityId);
-#if NETCOREAPP2_1
-                        if (currentActivity.GetTraceState() is string traceStateString)
-#else
                         if (currentActivity.TraceStateString is string traceStateString)
-#endif
                         {
                             message.Request.Headers.Add(TraceStateHeaderName, traceStateString);
                         }
@@ -200,16 +174,8 @@ namespace Azure.Core.Pipeline
 
         private bool ShouldCreateActivity =>
             _isDistributedTracingEnabled &&
-#if NETCOREAPP2_1
-            (s_diagnosticSource.IsEnabled() || ActivityExtensions.ActivitySourceHasListeners(s_activitySource));
-#else
             (s_diagnosticSource.IsEnabled() || IsActivitySourceEnabled);
-#endif
 
-#if NETCOREAPP2_1
-        private bool IsActivitySourceEnabled => _isDistributedTracingEnabled && ActivityExtensions.ActivitySourceHasListeners(s_activitySource);
-#else
-        private bool IsActivitySourceEnabled => _isDistributedTracingEnabled && s_activitySource.HasListeners() && ActivityExtensions.SupportsActivitySource;
-#endif
+        private bool IsActivitySourceEnabled => _isDistributedTracingEnabled && s_activitySource.HasListeners();
     }
 }

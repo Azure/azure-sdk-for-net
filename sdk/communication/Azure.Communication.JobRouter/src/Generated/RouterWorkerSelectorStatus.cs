@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> The status of the worker selector. </summary>
+    /// <summary> Describes the status of a worker selector. </summary>
     public readonly partial struct RouterWorkerSelectorStatus : IEquatable<RouterWorkerSelectorStatus>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.Communication.JobRouter
         private const string ActiveValue = "active";
         private const string ExpiredValue = "expired";
 
-        /// <summary> Active. </summary>
+        /// <summary> Worker selector is valid. </summary>
         public static RouterWorkerSelectorStatus Active { get; } = new RouterWorkerSelectorStatus(ActiveValue);
-        /// <summary> Expired. </summary>
+        /// <summary> Worker selector is not valid. </summary>
         public static RouterWorkerSelectorStatus Expired { get; } = new RouterWorkerSelectorStatus(ExpiredValue);
         /// <summary> Determines if two <see cref="RouterWorkerSelectorStatus"/> values are the same. </summary>
         public static bool operator ==(RouterWorkerSelectorStatus left, RouterWorkerSelectorStatus right) => left.Equals(right);

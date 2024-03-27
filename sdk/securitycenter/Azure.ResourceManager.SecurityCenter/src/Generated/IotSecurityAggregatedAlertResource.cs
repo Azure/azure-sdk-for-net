@@ -9,18 +9,16 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing an IotSecurityAggregatedAlert along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IotSecurityAggregatedAlertResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetIotSecurityAggregatedAlertResource method.
-    /// Otherwise you can get one from its parent resource <see cref="IotSecuritySolutionAnalyticsModelResource" /> using the GetIotSecurityAggregatedAlert method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IotSecurityAggregatedAlertResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetIotSecurityAggregatedAlertResource method.
+    /// Otherwise you can get one from its parent resource <see cref="IotSecuritySolutionAnalyticsModelResource"/> using the GetIotSecurityAggregatedAlert method.
     /// </summary>
     public partial class IotSecurityAggregatedAlertResource : ArmResource
     {
@@ -39,12 +37,15 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly IotSecuritySolutionsAnalyticsAggregatedAlertRestOperations _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertRestClient;
         private readonly IotSecurityAggregatedAlertData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/iotSecuritySolutions/analyticsModels/aggregatedAlerts";
+
         /// <summary> Initializes a new instance of the <see cref="IotSecurityAggregatedAlertResource"/> class for mocking. </summary>
         protected IotSecurityAggregatedAlertResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "IotSecurityAggregatedAlertResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IotSecurityAggregatedAlertResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal IotSecurityAggregatedAlertResource(ArmClient client, IotSecurityAggregatedAlertData data) : this(client, data.Id)
@@ -65,9 +66,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/iotSecuritySolutions/analyticsModels/aggregatedAlerts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +99,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>IotSecuritySolutionsAnalyticsAggregatedAlert_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotSecurityAggregatedAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +138,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotSecuritySolutionsAnalyticsAggregatedAlert_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotSecurityAggregatedAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,6 +179,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>IotSecuritySolutionsAnalyticsAggregatedAlert_Dismiss</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotSecurityAggregatedAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -194,6 +216,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotSecuritySolutionsAnalyticsAggregatedAlert_Dismiss</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotSecurityAggregatedAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

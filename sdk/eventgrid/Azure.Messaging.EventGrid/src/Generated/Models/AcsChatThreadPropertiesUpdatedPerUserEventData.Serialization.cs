@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -22,15 +21,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<CommunicationIdentifierModel> editedByCommunicationIdentifier = default;
-            Optional<DateTimeOffset> editTime = default;
-            Optional<IReadOnlyDictionary<string, string>> metadata = default;
-            Optional<IReadOnlyDictionary<string, object>> properties = default;
-            Optional<DateTimeOffset> createTime = default;
-            Optional<long> version = default;
-            Optional<CommunicationIdentifierModel> recipientCommunicationIdentifier = default;
-            Optional<string> transactionId = default;
-            Optional<string> threadId = default;
+            CommunicationIdentifierModel editedByCommunicationIdentifier = default;
+            DateTimeOffset? editTime = default;
+            IReadOnlyDictionary<string, string> metadata = default;
+            IReadOnlyDictionary<string, object> properties = default;
+            DateTimeOffset? createTime = default;
+            long? version = default;
+            CommunicationIdentifierModel recipientCommunicationIdentifier = default;
+            string transactionId = default;
+            string threadId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("editedByCommunicationIdentifier"u8))
@@ -124,7 +123,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsChatThreadPropertiesUpdatedPerUserEventData(recipientCommunicationIdentifier.Value, transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), editedByCommunicationIdentifier.Value, Optional.ToNullable(editTime), Optional.ToDictionary(metadata), Optional.ToDictionary(properties));
+            return new AcsChatThreadPropertiesUpdatedPerUserEventData(
+                recipientCommunicationIdentifier,
+                transactionId,
+                threadId,
+                createTime,
+                version,
+                editedByCommunicationIdentifier,
+                editTime,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                properties ?? new ChangeTrackingDictionary<string, object>());
         }
 
         internal partial class AcsChatThreadPropertiesUpdatedPerUserEventDataConverter : JsonConverter<AcsChatThreadPropertiesUpdatedPerUserEventData>

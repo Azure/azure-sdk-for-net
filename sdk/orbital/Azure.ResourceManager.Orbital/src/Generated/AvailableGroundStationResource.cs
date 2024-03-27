@@ -9,19 +9,17 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Orbital
 {
     /// <summary>
     /// A Class representing an AvailableGroundStation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AvailableGroundStationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAvailableGroundStationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetAvailableGroundStation method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AvailableGroundStationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAvailableGroundStationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetAvailableGroundStation method.
     /// </summary>
     public partial class AvailableGroundStationResource : ArmResource
     {
@@ -38,12 +36,15 @@ namespace Azure.ResourceManager.Orbital
         private readonly AvailableGroundStationsRestOperations _availableGroundStationRestClient;
         private readonly AvailableGroundStationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Orbital/availableGroundStations";
+
         /// <summary> Initializes a new instance of the <see cref="AvailableGroundStationResource"/> class for mocking. </summary>
         protected AvailableGroundStationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AvailableGroundStationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AvailableGroundStationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AvailableGroundStationResource(ArmClient client, AvailableGroundStationData data) : this(client, data.Id)
@@ -64,9 +65,6 @@ namespace Azure.ResourceManager.Orbital
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Orbital/availableGroundStations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -100,6 +98,14 @@ namespace Azure.ResourceManager.Orbital
         /// <term>Operation Id</term>
         /// <description>AvailableGroundStations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailableGroundStationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -131,6 +137,14 @@ namespace Azure.ResourceManager.Orbital
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailableGroundStations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailableGroundStationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

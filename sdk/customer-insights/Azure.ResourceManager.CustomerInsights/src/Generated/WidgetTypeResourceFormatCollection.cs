@@ -12,17 +12,15 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WidgetTypeResourceFormatResource" /> and their operations.
-    /// Each <see cref="WidgetTypeResourceFormatResource" /> in the collection will belong to the same instance of <see cref="HubResource" />.
-    /// To get a <see cref="WidgetTypeResourceFormatCollection" /> instance call the GetWidgetTypeResourceFormats method from an instance of <see cref="HubResource" />.
+    /// A class representing a collection of <see cref="WidgetTypeResourceFormatResource"/> and their operations.
+    /// Each <see cref="WidgetTypeResourceFormatResource"/> in the collection will belong to the same instance of <see cref="HubResource"/>.
+    /// To get a <see cref="WidgetTypeResourceFormatCollection"/> instance call the GetWidgetTypeResourceFormats method from an instance of <see cref="HubResource"/>.
     /// </summary>
     public partial class WidgetTypeResourceFormatCollection : ArmCollection, IEnumerable<WidgetTypeResourceFormatResource>, IAsyncEnumerable<WidgetTypeResourceFormatResource>
     {
@@ -64,6 +62,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <term>Operation Id</term>
         /// <description>WidgetTypes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-26</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WidgetTypeResourceFormatResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="widgetTypeName"> The name of the widget type. </param>
@@ -100,6 +106,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WidgetTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-26</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WidgetTypeResourceFormatResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +152,18 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <term>Operation Id</term>
         /// <description>WidgetTypes_ListByHub</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-26</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WidgetTypeResourceFormatResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WidgetTypeResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WidgetTypeResourceFormatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WidgetTypeResourceFormatResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _widgetTypeResourceFormatWidgetTypesRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -160,10 +182,18 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <term>Operation Id</term>
         /// <description>WidgetTypes_ListByHub</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-26</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WidgetTypeResourceFormatResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WidgetTypeResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WidgetTypeResourceFormatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WidgetTypeResourceFormatResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _widgetTypeResourceFormatWidgetTypesRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -181,6 +211,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WidgetTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-26</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WidgetTypeResourceFormatResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +255,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <term>Operation Id</term>
         /// <description>WidgetTypes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-26</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WidgetTypeResourceFormatResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="widgetTypeName"> The name of the widget type. </param>
@@ -251,6 +297,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WidgetTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-26</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WidgetTypeResourceFormatResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,6 +342,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WidgetTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-26</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WidgetTypeResourceFormatResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -12,17 +12,15 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Nginx
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NginxConfigurationResource" /> and their operations.
-    /// Each <see cref="NginxConfigurationResource" /> in the collection will belong to the same instance of <see cref="NginxDeploymentResource" />.
-    /// To get a <see cref="NginxConfigurationCollection" /> instance call the GetNginxConfigurations method from an instance of <see cref="NginxDeploymentResource" />.
+    /// A class representing a collection of <see cref="NginxConfigurationResource"/> and their operations.
+    /// Each <see cref="NginxConfigurationResource"/> in the collection will belong to the same instance of <see cref="NginxDeploymentResource"/>.
+    /// To get a <see cref="NginxConfigurationCollection"/> instance call the GetNginxConfigurations method from an instance of <see cref="NginxDeploymentResource"/>.
     /// </summary>
     public partial class NginxConfigurationCollection : ArmCollection, IEnumerable<NginxConfigurationResource>, IAsyncEnumerable<NginxConfigurationResource>
     {
@@ -54,7 +52,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// Create or update the Nginx configuration for given Nginx deployment
+        /// Create or update the NGINX configuration for given NGINX deployment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -64,11 +62,19 @@ namespace Azure.ResourceManager.Nginx
         /// <term>Operation Id</term>
         /// <description>Configurations_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of Nginx conf. </param>
-        /// <param name="data"> The Nginx configuration. </param>
+        /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of NGINX conf. </param>
+        /// <param name="data"> The NGINX configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> or <paramref name="data"/> is null. </exception>
@@ -95,7 +101,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// Create or update the Nginx configuration for given Nginx deployment
+        /// Create or update the NGINX configuration for given NGINX deployment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -105,11 +111,19 @@ namespace Azure.ResourceManager.Nginx
         /// <term>Operation Id</term>
         /// <description>Configurations_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of Nginx conf. </param>
-        /// <param name="data"> The Nginx configuration. </param>
+        /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of NGINX conf. </param>
+        /// <param name="data"> The NGINX configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> or <paramref name="data"/> is null. </exception>
@@ -136,7 +150,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// Get the Nginx configuration of given Nginx deployment
+        /// Get the NGINX configuration of given NGINX deployment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -146,9 +160,17 @@ namespace Azure.ResourceManager.Nginx
         /// <term>Operation Id</term>
         /// <description>Configurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of Nginx conf. </param>
+        /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of NGINX conf. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
@@ -173,7 +195,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// Get the Nginx configuration of given Nginx deployment
+        /// Get the NGINX configuration of given NGINX deployment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -183,9 +205,17 @@ namespace Azure.ResourceManager.Nginx
         /// <term>Operation Id</term>
         /// <description>Configurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of Nginx conf. </param>
+        /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of NGINX conf. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
@@ -210,7 +240,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// List the Nginx configuration of given Nginx deployment.
+        /// List the NGINX configuration of given NGINX deployment.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -220,10 +250,18 @@ namespace Azure.ResourceManager.Nginx
         /// <term>Operation Id</term>
         /// <description>Configurations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NginxConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NginxConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NginxConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nginxConfigurationConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -232,7 +270,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// List the Nginx configuration of given Nginx deployment.
+        /// List the NGINX configuration of given NGINX deployment.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -242,10 +280,18 @@ namespace Azure.ResourceManager.Nginx
         /// <term>Operation Id</term>
         /// <description>Configurations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NginxConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NginxConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NginxConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nginxConfigurationConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -264,9 +310,17 @@ namespace Azure.ResourceManager.Nginx
         /// <term>Operation Id</term>
         /// <description>Configurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of Nginx conf. </param>
+        /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of NGINX conf. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
@@ -299,9 +353,17 @@ namespace Azure.ResourceManager.Nginx
         /// <term>Operation Id</term>
         /// <description>Configurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of Nginx conf. </param>
+        /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of NGINX conf. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
@@ -334,9 +396,17 @@ namespace Azure.ResourceManager.Nginx
         /// <term>Operation Id</term>
         /// <description>Configurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of Nginx conf. </param>
+        /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of NGINX conf. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
@@ -371,9 +441,17 @@ namespace Azure.ResourceManager.Nginx
         /// <term>Operation Id</term>
         /// <description>Configurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of Nginx conf. </param>
+        /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of NGINX conf. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>

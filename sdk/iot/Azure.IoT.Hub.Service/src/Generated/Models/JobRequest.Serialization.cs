@@ -28,12 +28,12 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(CloudToDeviceMethod))
             {
                 writer.WritePropertyName("cloudToDeviceMethod"u8);
-                writer.WriteObjectValue(CloudToDeviceMethod);
+                writer.WriteObjectValue<CloudToDeviceMethodRequest>(CloudToDeviceMethod);
             }
             if (Optional.IsDefined(UpdateTwin))
             {
                 writer.WritePropertyName("updateTwin"u8);
-                writer.WriteObjectValue(UpdateTwin);
+                writer.WriteObjectValue<TwinData>(UpdateTwin);
             }
             if (Optional.IsDefined(QueryCondition))
             {

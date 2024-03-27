@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DeviceUpdate;
 using Azure.ResourceManager.DeviceUpdate.Models;
 
 namespace Azure.ResourceManager.DeviceUpdate.Mocking
@@ -60,12 +57,16 @@ namespace Azure.ResourceManager.DeviceUpdate.Mocking
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Check Name Availability Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckDeviceUpdateNameAvailabilityAsync(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeviceUpdateNameAvailabilityResult>> CheckDeviceUpdateNameAvailabilityAsync(DeviceUpdateAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -94,12 +95,16 @@ namespace Azure.ResourceManager.DeviceUpdate.Mocking
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Check Name Availability Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckNameAvailabilityResponse> CheckDeviceUpdateNameAvailability(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<DeviceUpdateNameAvailabilityResult> CheckDeviceUpdateNameAvailability(DeviceUpdateAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -128,10 +133,18 @@ namespace Azure.ResourceManager.DeviceUpdate.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdateAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeviceUpdateAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DeviceUpdateAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceUpdateAccountResource> GetDeviceUpdateAccountsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DeviceUpdateAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -150,10 +163,18 @@ namespace Azure.ResourceManager.DeviceUpdate.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdateAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeviceUpdateAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DeviceUpdateAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceUpdateAccountResource> GetDeviceUpdateAccounts(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DeviceUpdateAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);

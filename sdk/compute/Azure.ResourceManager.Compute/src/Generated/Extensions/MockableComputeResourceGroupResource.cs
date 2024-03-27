@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute.Mocking
@@ -55,6 +52,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineScaleSets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
@@ -78,6 +83,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineScaleSets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -110,6 +123,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vmName"> The name of the virtual machine. </param>
@@ -133,6 +154,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,6 +194,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>AvailabilitySets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailabilitySetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="availabilitySetName"> The name of the availability set. </param>
@@ -187,6 +224,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailabilitySets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailabilitySetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,6 +263,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>ProximityPlacementGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProximityPlacementGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="proximityPlacementGroupName"> The name of the proximity placement group. </param>
@@ -241,6 +294,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProximityPlacementGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProximityPlacementGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,6 +334,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>DedicatedHostGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHostGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="hostGroupName"> The name of the dedicated host group. </param>
@@ -296,6 +365,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DedicatedHostGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHostGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -328,6 +405,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>SshPublicKeys_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SshPublicKeyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sshPublicKeyName"> The name of the SSH public key. </param>
@@ -350,6 +435,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SshPublicKeys_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SshPublicKeyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -381,6 +474,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>Images_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiskImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="imageName"> The name of the image. </param>
@@ -404,6 +505,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Images_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiskImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -436,6 +545,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>RestorePointCollections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorePointGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="restorePointGroupName"> The name of the restore point collection. </param>
@@ -459,6 +576,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RestorePointCollections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorePointGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -491,6 +616,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>CapacityReservationGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapacityReservationGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
@@ -514,6 +647,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CapacityReservationGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapacityReservationGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -546,6 +687,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>Disks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDiskResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="diskName"> The name of the managed disk that is being created. The name can't be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
@@ -568,6 +717,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Disks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDiskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -599,6 +756,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>DiskAccesses_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiskAccessResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="diskAccessName"> The name of the disk access resource that is being created. The name can't be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
@@ -621,6 +786,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiskAccesses_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiskAccessResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -652,6 +825,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>DiskEncryptionSets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiskEncryptionSetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can't be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
@@ -674,6 +855,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiskEncryptionSets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiskEncryptionSetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -705,6 +894,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>Snapshots_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotName"> The name of the snapshot that is being created. The name can't be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The max name length is 80 characters. </param>
@@ -727,6 +924,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Snapshots_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -758,6 +963,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>Galleries_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GalleryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
@@ -782,6 +995,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Galleries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GalleryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -815,6 +1036,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>CloudServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
@@ -837,6 +1066,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CloudServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

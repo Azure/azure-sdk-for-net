@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Indexes;
 using NUnit.Framework;
+using Azure.Core.TestFramework;
 
 namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 {
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_03_01_Preview), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2024_03_01_Preview)]
     public partial class VectorSearchUsingFieldBuilder : SearchTestBase
     {
         public VectorSearchUsingFieldBuilder(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -27,7 +29,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                 string vectorSearchProfileName = "my-vector-profile";
                 string vectorSearchHnswConfig = "my-hsnw-vector-config";
 
-                string indexName = "MyDocument";
+                string indexName = "my-document";
 #if !SNIPPET
                 indexName = Recording.Random.GetName();
                 resources.IndexName = indexName;

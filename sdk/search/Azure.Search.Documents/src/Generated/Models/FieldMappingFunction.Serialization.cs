@@ -20,19 +20,26 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Name);
             if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters"u8);
-                writer.WriteStartObject();
-                foreach (var item in Parameters)
+                if (Parameters != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("parameters"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Parameters)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteObjectValue<object>(item.Value);
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("parameters");
+                }
             }
             writer.WriteEndObject();
         }
@@ -44,7 +51,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string name = default;
-            Optional<IDictionary<string, object>> parameters = default;
+            IDictionary<string, object> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -56,6 +63,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        parameters = null;
                         continue;
                     }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
@@ -74,7 +82,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new FieldMappingFunction(name, Optional.ToDictionary(parameters));
+            return new FieldMappingFunction(name, parameters ?? new ChangeTrackingDictionary<string, object>());
         }
     }
 }

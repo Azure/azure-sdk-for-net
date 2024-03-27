@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.BotService;
 using Azure.ResourceManager.BotService.Models;
 
 namespace Azure.ResourceManager.BotService.Mocking
@@ -55,6 +52,14 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// <term>Operation Id</term>
         /// <description>Bots_GetCheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The request body parameters to provide for the check name availability request. </param>
@@ -88,6 +93,14 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Bots_GetCheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

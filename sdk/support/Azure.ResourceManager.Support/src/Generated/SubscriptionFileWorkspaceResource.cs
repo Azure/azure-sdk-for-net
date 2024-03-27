@@ -9,19 +9,17 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Support
 {
     /// <summary>
     /// A Class representing a SubscriptionFileWorkspace along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SubscriptionFileWorkspaceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSubscriptionFileWorkspaceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSubscriptionFileWorkspace method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SubscriptionFileWorkspaceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSubscriptionFileWorkspaceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetSubscriptionFileWorkspace method.
     /// </summary>
     public partial class SubscriptionFileWorkspaceResource : ArmResource
     {
@@ -38,12 +36,15 @@ namespace Azure.ResourceManager.Support
         private readonly FileWorkspacesRestOperations _subscriptionFileWorkspaceFileWorkspacesRestClient;
         private readonly FileWorkspaceDetailData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Support/fileWorkspaces";
+
         /// <summary> Initializes a new instance of the <see cref="SubscriptionFileWorkspaceResource"/> class for mocking. </summary>
         protected SubscriptionFileWorkspaceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SubscriptionFileWorkspaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionFileWorkspaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SubscriptionFileWorkspaceResource(ArmClient client, FileWorkspaceDetailData data) : this(client, data.Id)
@@ -64,9 +65,6 @@ namespace Azure.ResourceManager.Support
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Support/fileWorkspaces";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -107,6 +105,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>Files_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketFileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileName"> File Name. </param>
@@ -130,6 +136,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>Files_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketFileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileName"> File Name. </param>
@@ -152,6 +166,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FileWorkspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionFileWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -185,6 +207,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>FileWorkspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionFileWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -216,6 +246,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FileWorkspaces_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionFileWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -250,6 +288,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FileWorkspaces_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionFileWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

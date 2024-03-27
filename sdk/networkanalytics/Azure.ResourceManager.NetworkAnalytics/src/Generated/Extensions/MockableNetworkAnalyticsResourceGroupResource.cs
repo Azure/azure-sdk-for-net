@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.NetworkAnalytics;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>DataProducts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProductResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataProductName"> The data product resource name. </param>
@@ -77,6 +82,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>DataProducts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProductResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataProductName"> The data product resource name. </param>
@@ -90,7 +103,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Mocking
         }
 
         /// <summary> Gets an object representing a DataProductsCatalogResource along with the instance operations that can be performed on it in the ResourceGroupResource. </summary>
-        /// <returns> Returns a <see cref="DataProductsCatalogResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataProductsCatalogResource"/> object. </returns>
         public virtual DataProductsCatalogResource GetDataProductsCatalog()
         {
             return new DataProductsCatalogResource(Client, Id.AppendProviderResource("Microsoft.NetworkAnalytics", "dataProductsCatalogs", "default"));

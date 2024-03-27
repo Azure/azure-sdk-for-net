@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_CheckNameExists</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> Cosmos DB database account name. </param>
@@ -88,6 +93,14 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_CheckNameExists</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

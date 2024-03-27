@@ -9,10 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.Verticals.AgriFood.Farming;
 using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
@@ -23,8 +21,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetCascadeDeleteJobDetails_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ApplicationData client = new FarmBeatsClient(credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
+            ApplicationData client = new FarmBeatsClient(endpoint, credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -38,8 +37,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetCascadeDeleteJobDetails_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ApplicationData client = new FarmBeatsClient(credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
+            ApplicationData client = new FarmBeatsClient(endpoint, credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -53,8 +53,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetCascadeDeleteJobDetails_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ApplicationData client = new FarmBeatsClient(credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
+            ApplicationData client = new FarmBeatsClient(endpoint, credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -77,8 +78,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetCascadeDeleteJobDetails_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ApplicationData client = new FarmBeatsClient(credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
+            ApplicationData client = new FarmBeatsClient(endpoint, credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -101,8 +103,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetApplicationData_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ApplicationData client = new FarmBeatsClient(credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
+            ApplicationData client = new FarmBeatsClient(endpoint, credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.GetApplicationData("<partyId>", "<applicationDataId>", null);
 
@@ -114,8 +117,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetApplicationData_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ApplicationData client = new FarmBeatsClient(credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
+            ApplicationData client = new FarmBeatsClient(endpoint, credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.GetApplicationDataAsync("<partyId>", "<applicationDataId>", null);
 
@@ -127,8 +131,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetApplicationData_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ApplicationData client = new FarmBeatsClient(credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
+            ApplicationData client = new FarmBeatsClient(endpoint, credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.GetApplicationData("<partyId>", "<applicationDataId>", null);
 
@@ -168,8 +173,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetApplicationData_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ApplicationData client = new FarmBeatsClient(credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
+            ApplicationData client = new FarmBeatsClient(endpoint, credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.GetApplicationDataAsync("<partyId>", "<applicationDataId>", null);
 
@@ -209,8 +215,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ApplicationData client = new FarmBeatsClient(credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
+            ApplicationData client = new FarmBeatsClient(endpoint, credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdate("<partyId>", "<applicationDataId>", content);
@@ -223,8 +230,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdate_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ApplicationData client = new FarmBeatsClient(credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
+            ApplicationData client = new FarmBeatsClient(endpoint, credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateAsync("<partyId>", "<applicationDataId>", content);
@@ -237,8 +245,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ApplicationData client = new FarmBeatsClient(credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
+            ApplicationData client = new FarmBeatsClient(endpoint, credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -306,8 +315,9 @@ value = 123.45,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdate_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ApplicationData client = new FarmBeatsClient(credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
+            ApplicationData client = new FarmBeatsClient(endpoint, credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -375,8 +385,9 @@ value = 123.45,
         [Ignore("Only validating compilation of examples")]
         public void Example_Delete_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ApplicationData client = new FarmBeatsClient(credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
+            ApplicationData client = new FarmBeatsClient(endpoint, credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<applicationDataId>");
 
@@ -387,8 +398,9 @@ value = 123.45,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ApplicationData client = new FarmBeatsClient(credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
+            ApplicationData client = new FarmBeatsClient(endpoint, credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<applicationDataId>");
 
@@ -399,8 +411,9 @@ value = 123.45,
         [Ignore("Only validating compilation of examples")]
         public void Example_Delete_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ApplicationData client = new FarmBeatsClient(credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
+            ApplicationData client = new FarmBeatsClient(endpoint, credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<applicationDataId>");
 
@@ -411,8 +424,9 @@ value = 123.45,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ApplicationData client = new FarmBeatsClient(credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
+            ApplicationData client = new FarmBeatsClient(endpoint, credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<applicationDataId>");
 
@@ -423,8 +437,9 @@ value = 123.45,
         [Ignore("Only validating compilation of examples")]
         public void Example_GetAllApplicationData_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ApplicationData client = new FarmBeatsClient(credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
+            ApplicationData client = new FarmBeatsClient(endpoint, credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
 
             foreach (BinaryData item in client.GetAllApplicationData(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -437,8 +452,9 @@ value = 123.45,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetAllApplicationData_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ApplicationData client = new FarmBeatsClient(credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
+            ApplicationData client = new FarmBeatsClient(endpoint, credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
 
             await foreach (BinaryData item in client.GetAllApplicationDataAsync(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -451,8 +467,9 @@ value = 123.45,
         [Ignore("Only validating compilation of examples")]
         public void Example_GetAllApplicationData_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ApplicationData client = new FarmBeatsClient(credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
+            ApplicationData client = new FarmBeatsClient(endpoint, credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
 
             foreach (BinaryData item in client.GetAllApplicationData(123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<applicationIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -493,8 +510,9 @@ value = 123.45,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetAllApplicationData_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ApplicationData client = new FarmBeatsClient(credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
+            ApplicationData client = new FarmBeatsClient(endpoint, credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
 
             await foreach (BinaryData item in client.GetAllApplicationDataAsync(123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<applicationIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -535,8 +553,9 @@ value = 123.45,
         [Ignore("Only validating compilation of examples")]
         public void Example_GetAllApplicationDataByPartyId_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ApplicationData client = new FarmBeatsClient(credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
+            ApplicationData client = new FarmBeatsClient(endpoint, credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
 
             foreach (BinaryData item in client.GetAllApplicationDataByPartyId("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -549,8 +568,9 @@ value = 123.45,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetAllApplicationDataByPartyId_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ApplicationData client = new FarmBeatsClient(credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
+            ApplicationData client = new FarmBeatsClient(endpoint, credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
 
             await foreach (BinaryData item in client.GetAllApplicationDataByPartyIdAsync("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -563,8 +583,9 @@ value = 123.45,
         [Ignore("Only validating compilation of examples")]
         public void Example_GetAllApplicationDataByPartyId_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ApplicationData client = new FarmBeatsClient(credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
+            ApplicationData client = new FarmBeatsClient(endpoint, credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
 
             foreach (BinaryData item in client.GetAllApplicationDataByPartyId("<partyId>", 123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -605,8 +626,9 @@ value = 123.45,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetAllApplicationDataByPartyId_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ApplicationData client = new FarmBeatsClient(credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
+            ApplicationData client = new FarmBeatsClient(endpoint, credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
 
             await foreach (BinaryData item in client.GetAllApplicationDataByPartyIdAsync("<partyId>", 123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -647,8 +669,9 @@ value = 123.45,
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateCascadeDeleteJob_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ApplicationData client = new FarmBeatsClient(credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
+            ApplicationData client = new FarmBeatsClient(endpoint, credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
 
             Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<applicationDataId>", null);
             BinaryData responseData = operation.Value;
@@ -663,8 +686,9 @@ value = 123.45,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateCascadeDeleteJob_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ApplicationData client = new FarmBeatsClient(credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
+            ApplicationData client = new FarmBeatsClient(endpoint, credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
 
             Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<applicationDataId>", null);
             BinaryData responseData = operation.Value;
@@ -679,8 +703,9 @@ value = 123.45,
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateCascadeDeleteJob_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ApplicationData client = new FarmBeatsClient(credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
+            ApplicationData client = new FarmBeatsClient(endpoint, credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
 
             Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<applicationDataId>", null);
             BinaryData responseData = operation.Value;
@@ -704,8 +729,9 @@ value = 123.45,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateCascadeDeleteJob_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ApplicationData client = new FarmBeatsClient(credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
+            ApplicationData client = new FarmBeatsClient(endpoint, credential).GetApplicationDataClient(apiVersion: "2022-11-01-preview");
 
             Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<applicationDataId>", null);
             BinaryData responseData = operation.Value;

@@ -12,18 +12,16 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SubscriptionSecurityAlertResource" /> and their operations.
-    /// Each <see cref="SubscriptionSecurityAlertResource" /> in the collection will belong to the same instance of <see cref="SecurityCenterLocationResource" />.
-    /// To get a <see cref="SubscriptionSecurityAlertCollection" /> instance call the GetSubscriptionSecurityAlerts method from an instance of <see cref="SecurityCenterLocationResource" />.
+    /// A class representing a collection of <see cref="SubscriptionSecurityAlertResource"/> and their operations.
+    /// Each <see cref="SubscriptionSecurityAlertResource"/> in the collection will belong to the same instance of <see cref="SecurityCenterLocationResource"/>.
+    /// To get a <see cref="SubscriptionSecurityAlertCollection"/> instance call the GetSubscriptionSecurityAlerts method from an instance of <see cref="SecurityCenterLocationResource"/>.
     /// </summary>
     public partial class SubscriptionSecurityAlertCollection : ArmCollection, IEnumerable<SubscriptionSecurityAlertResource>, IAsyncEnumerable<SubscriptionSecurityAlertResource>
     {
@@ -69,6 +67,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Alerts_GetSubscriptionLevel</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSecurityAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="alertName"> Name of the alert object. </param>
@@ -105,6 +111,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_GetSubscriptionLevel</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSecurityAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -143,10 +157,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Alerts_ListSubscriptionLevelByRegion</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSecurityAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SubscriptionSecurityAlertResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SubscriptionSecurityAlertResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SubscriptionSecurityAlertResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionSecurityAlertAlertsRestClient.CreateListSubscriptionLevelByRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
@@ -165,10 +187,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Alerts_ListSubscriptionLevelByRegion</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSecurityAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SubscriptionSecurityAlertResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SubscriptionSecurityAlertResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SubscriptionSecurityAlertResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionSecurityAlertAlertsRestClient.CreateListSubscriptionLevelByRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
@@ -186,6 +216,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_Simulate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,6 +259,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Alerts_Simulate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -263,6 +301,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Alerts_GetSubscriptionLevel</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSecurityAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="alertName"> Name of the alert object. </param>
@@ -298,6 +344,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Alerts_GetSubscriptionLevel</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSecurityAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="alertName"> Name of the alert object. </param>
@@ -332,6 +386,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_GetSubscriptionLevel</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSecurityAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -369,6 +431,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_GetSubscriptionLevel</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSecurityAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

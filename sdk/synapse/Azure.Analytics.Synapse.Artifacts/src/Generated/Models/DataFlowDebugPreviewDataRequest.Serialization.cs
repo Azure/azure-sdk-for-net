@@ -47,10 +47,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> sessionId = default;
-            Optional<string> dataFlowName = default;
-            Optional<string> streamName = default;
-            Optional<int> rowLimits = default;
+            string sessionId = default;
+            string dataFlowName = default;
+            string streamName = default;
+            int? rowLimits = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sessionId"u8))
@@ -78,14 +78,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DataFlowDebugPreviewDataRequest(sessionId.Value, dataFlowName.Value, streamName.Value, Optional.ToNullable(rowLimits));
+            return new DataFlowDebugPreviewDataRequest(sessionId, dataFlowName, streamName, rowLimits);
         }
 
         internal partial class DataFlowDebugPreviewDataRequestConverter : JsonConverter<DataFlowDebugPreviewDataRequest>
         {
             public override void Write(Utf8JsonWriter writer, DataFlowDebugPreviewDataRequest model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DataFlowDebugPreviewDataRequest>(model);
             }
             public override DataFlowDebugPreviewDataRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

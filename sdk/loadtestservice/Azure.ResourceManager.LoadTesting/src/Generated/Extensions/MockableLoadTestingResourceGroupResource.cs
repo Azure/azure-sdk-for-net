@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.LoadTesting;
 
 namespace Azure.ResourceManager.LoadTesting.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// <term>Operation Id</term>
         /// <description>LoadTests_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="loadTestName"> Load Test name. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LoadTests_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

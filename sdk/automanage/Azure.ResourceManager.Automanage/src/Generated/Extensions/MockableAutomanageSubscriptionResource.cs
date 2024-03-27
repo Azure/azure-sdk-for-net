@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Automanage;
 using Azure.ResourceManager.Automanage.Models;
 
 namespace Azure.ResourceManager.Automanage.Mocking
@@ -60,10 +57,18 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfiles_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageConfigurationProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomanageConfigurationProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutomanageConfigurationProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfilesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AutomanageConfigurationProfileConfigurationProfilesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -81,10 +86,18 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfiles_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageConfigurationProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomanageConfigurationProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutomanageConfigurationProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfiles(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AutomanageConfigurationProfileConfigurationProfilesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -102,14 +115,18 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// <term>Operation Id</term>
         /// <description>ServicePrincipals_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomanageServicePrincipalData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutomanageServicePrincipalData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomanageServicePrincipalData> GetServicePrincipalsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServicePrincipalsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AutomanageServicePrincipalData.DeserializeAutomanageServicePrincipalData, ServicePrincipalsClientDiagnostics, Pipeline, "MockableAutomanageSubscriptionResource.GetServicePrincipals", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AutomanageServicePrincipalData.DeserializeAutomanageServicePrincipalData(e), ServicePrincipalsClientDiagnostics, Pipeline, "MockableAutomanageSubscriptionResource.GetServicePrincipals", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -123,14 +140,18 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// <term>Operation Id</term>
         /// <description>ServicePrincipals_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomanageServicePrincipalData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutomanageServicePrincipalData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomanageServicePrincipalData> GetServicePrincipals(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServicePrincipalsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AutomanageServicePrincipalData.DeserializeAutomanageServicePrincipalData, ServicePrincipalsClientDiagnostics, Pipeline, "MockableAutomanageSubscriptionResource.GetServicePrincipals", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AutomanageServicePrincipalData.DeserializeAutomanageServicePrincipalData(e), ServicePrincipalsClientDiagnostics, Pipeline, "MockableAutomanageSubscriptionResource.GetServicePrincipals", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -143,6 +164,10 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ServicePrincipals_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -173,6 +198,10 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ServicePrincipals_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
         /// </item>
         /// </list>
         /// </summary>

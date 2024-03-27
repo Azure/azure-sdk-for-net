@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DevSpaces.Mocking;
 using Azure.ResourceManager.DevSpaces.Models;
 using Azure.ResourceManager.Resources;
@@ -45,9 +43,12 @@ namespace Azure.ResourceManager.DevSpaces
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ControllerResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ControllerResource"/> object. </returns>
         public static ControllerResource GetControllerResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDevSpacesArmClient(client).GetControllerResource(id);
         }
 
@@ -59,9 +60,12 @@ namespace Azure.ResourceManager.DevSpaces
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of ControllerResources and their operations over a ControllerResource. </returns>
         public static ControllerCollection GetControllers(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableDevSpacesResourceGroupResource(resourceGroupResource).GetControllers();
         }
 
@@ -76,6 +80,14 @@ namespace Azure.ResourceManager.DevSpaces
         /// <term>Operation Id</term>
         /// <description>Controllers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ControllerResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -85,11 +97,13 @@ namespace Azure.ResourceManager.DevSpaces
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ControllerResource>> GetControllerAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableDevSpacesResourceGroupResource(resourceGroupResource).GetControllerAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
@@ -104,6 +118,14 @@ namespace Azure.ResourceManager.DevSpaces
         /// <term>Operation Id</term>
         /// <description>Controllers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ControllerResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -113,11 +135,13 @@ namespace Azure.ResourceManager.DevSpaces
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<ControllerResource> GetController(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableDevSpacesResourceGroupResource(resourceGroupResource).GetController(name, cancellationToken);
         }
 
@@ -132,6 +156,10 @@ namespace Azure.ResourceManager.DevSpaces
         /// <term>Operation Id</term>
         /// <description>ContainerHostMappings_GetContainerHostMapping</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-04-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -140,11 +168,13 @@ namespace Azure.ResourceManager.DevSpaces
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of the container host. </param>
-        /// <param name="containerHostMapping"> The ContainerHostMapping to use. </param>
+        /// <param name="containerHostMapping"> The <see cref="ContainerHostMapping"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerHostMapping"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="containerHostMapping"/> is null. </exception>
         public static async Task<Response<ContainerHostMapping>> GetContainerHostMappingContainerHostMappingAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, ContainerHostMapping containerHostMapping, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableDevSpacesResourceGroupResource(resourceGroupResource).GetContainerHostMappingContainerHostMappingAsync(location, containerHostMapping, cancellationToken).ConfigureAwait(false);
         }
 
@@ -159,6 +189,10 @@ namespace Azure.ResourceManager.DevSpaces
         /// <term>Operation Id</term>
         /// <description>ContainerHostMappings_GetContainerHostMapping</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-04-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -167,11 +201,13 @@ namespace Azure.ResourceManager.DevSpaces
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of the container host. </param>
-        /// <param name="containerHostMapping"> The ContainerHostMapping to use. </param>
+        /// <param name="containerHostMapping"> The <see cref="ContainerHostMapping"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerHostMapping"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="containerHostMapping"/> is null. </exception>
         public static Response<ContainerHostMapping> GetContainerHostMappingContainerHostMapping(this ResourceGroupResource resourceGroupResource, AzureLocation location, ContainerHostMapping containerHostMapping, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableDevSpacesResourceGroupResource(resourceGroupResource).GetContainerHostMappingContainerHostMapping(location, containerHostMapping, cancellationToken);
         }
 
@@ -186,6 +222,14 @@ namespace Azure.ResourceManager.DevSpaces
         /// <term>Operation Id</term>
         /// <description>Controllers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ControllerResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -194,9 +238,12 @@ namespace Azure.ResourceManager.DevSpaces
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ControllerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ControllerResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ControllerResource> GetControllersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableDevSpacesSubscriptionResource(subscriptionResource).GetControllersAsync(cancellationToken);
         }
 
@@ -211,6 +258,14 @@ namespace Azure.ResourceManager.DevSpaces
         /// <term>Operation Id</term>
         /// <description>Controllers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ControllerResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -219,9 +274,12 @@ namespace Azure.ResourceManager.DevSpaces
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ControllerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ControllerResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ControllerResource> GetControllers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableDevSpacesSubscriptionResource(subscriptionResource).GetControllers(cancellationToken);
         }
     }

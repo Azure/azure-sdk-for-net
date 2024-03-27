@@ -13,17 +13,15 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WorkloadMonitor
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HealthMonitorStateChangeResource" /> and their operations.
-    /// Each <see cref="HealthMonitorStateChangeResource" /> in the collection will belong to the same instance of <see cref="HealthMonitorResource" />.
-    /// To get a <see cref="HealthMonitorStateChangeCollection" /> instance call the GetHealthMonitorStateChanges method from an instance of <see cref="HealthMonitorResource" />.
+    /// A class representing a collection of <see cref="HealthMonitorStateChangeResource"/> and their operations.
+    /// Each <see cref="HealthMonitorStateChangeResource"/> in the collection will belong to the same instance of <see cref="HealthMonitorResource"/>.
+    /// To get a <see cref="HealthMonitorStateChangeCollection"/> instance call the GetHealthMonitorStateChanges method from an instance of <see cref="HealthMonitorResource"/>.
     /// </summary>
     public partial class HealthMonitorStateChangeCollection : ArmCollection, IEnumerable<HealthMonitorStateChangeResource>, IAsyncEnumerable<HealthMonitorStateChangeResource>
     {
@@ -65,6 +63,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_GetStateChange</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorStateChangeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="timestampUnix"> The timestamp of the state change (unix format). </param>
@@ -102,6 +108,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_GetStateChange</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorStateChangeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -141,6 +155,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_ListStateChanges</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorStateChangeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Optionally filter by heartbeat condition. Example: $filter=isHeartbeat eq false. </param>
@@ -148,7 +170,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <param name="startTimestampUtc"> The start of the time window. </param>
         /// <param name="endTimestampUtc"> The end of the time window. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HealthMonitorStateChangeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HealthMonitorStateChangeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HealthMonitorStateChangeResource> GetAllAsync(string filter = null, string expand = null, DateTimeOffset? startTimestampUtc = null, DateTimeOffset? endTimestampUtc = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthMonitorStateChangeHealthMonitorsRestClient.CreateListStateChangesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, filter, expand, startTimestampUtc, endTimestampUtc);
@@ -167,6 +189,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_ListStateChanges</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorStateChangeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Optionally filter by heartbeat condition. Example: $filter=isHeartbeat eq false. </param>
@@ -174,7 +204,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <param name="startTimestampUtc"> The start of the time window. </param>
         /// <param name="endTimestampUtc"> The end of the time window. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HealthMonitorStateChangeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HealthMonitorStateChangeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HealthMonitorStateChangeResource> GetAll(string filter = null, string expand = null, DateTimeOffset? startTimestampUtc = null, DateTimeOffset? endTimestampUtc = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthMonitorStateChangeHealthMonitorsRestClient.CreateListStateChangesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, filter, expand, startTimestampUtc, endTimestampUtc);
@@ -192,6 +222,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_GetStateChange</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorStateChangeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -229,6 +267,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_GetStateChange</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorStateChangeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="timestampUnix"> The timestamp of the state change (unix format). </param>
@@ -264,6 +310,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_GetStateChange</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorStateChangeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,6 +356,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_GetStateChange</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorStateChangeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

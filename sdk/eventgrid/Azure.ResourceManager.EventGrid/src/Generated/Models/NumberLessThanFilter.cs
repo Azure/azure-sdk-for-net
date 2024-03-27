@@ -5,22 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> NumberLessThan Filter. </summary>
     public partial class NumberLessThanFilter : EventGridFilter
     {
-        /// <summary> Initializes a new instance of NumberLessThanFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="NumberLessThanFilter"/>. </summary>
         public NumberLessThanFilter()
         {
             OperatorType = FilterOperatorType.NumberLessThan;
         }
 
-        /// <summary> Initializes a new instance of NumberLessThanFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="NumberLessThanFilter"/>. </summary>
         /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>
         /// <param name="key"> The field/property in the event based on which you want to filter. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The filter value. </param>
-        internal NumberLessThanFilter(FilterOperatorType operatorType, string key, double? value) : base(operatorType, key)
+        internal NumberLessThanFilter(FilterOperatorType operatorType, string key, IDictionary<string, BinaryData> serializedAdditionalRawData, double? value) : base(operatorType, key, serializedAdditionalRawData)
         {
             Value = value;
             OperatorType = operatorType;

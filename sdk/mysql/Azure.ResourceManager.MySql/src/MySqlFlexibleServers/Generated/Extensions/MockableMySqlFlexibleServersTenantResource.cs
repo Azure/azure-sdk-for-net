@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.MySql.FlexibleServers;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
@@ -55,6 +52,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// <term>Operation Id</term>
         /// <description>GetPrivateDnsZoneSuffix_Execute</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,6 +85,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GetPrivateDnsZoneSuffix_Execute</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>

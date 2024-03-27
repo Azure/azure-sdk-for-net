@@ -18,6 +18,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_03_01_Preview), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2024_03_01_Preview)]
     public partial class HelloWorld : SearchTestBase
     {
         public HelloWorld(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -464,6 +465,50 @@ namespace Azure.Search.Documents.Tests.Samples
             Response<long> count = await searchClient.GetDocumentCountAsync();
             Console.WriteLine($"Search index {indexName} has {count.Value} documents.");
             #endregion Snippet:Azure_Search_Tests_Samples_GetCountAsync
+        }
+
+        [Test]
+        public async Task QuerySession()
+        {
+            const int size = 150;
+            await using SearchResources resources = await SearchResources.CreateLargeHotelsIndexAsync(this, size, false, true);
+            Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
+            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
+            Environment.SetEnvironmentVariable("SEARCH_INDEX", resources.IndexName);
+
+            HashSet<string> uniqueDocuments = new HashSet<string>();
+            bool hasDuplicates = false;
+
+            #region Snippet:Azure_Search_Tests_Samples_QuerySession
+            Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
+            AzureKeyCredential credential = new AzureKeyCredential(Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+            string indexName = Environment.GetEnvironmentVariable("SEARCH_INDEX");
+
+            SearchClient searchClient = new SearchClient(endpoint, indexName, credential);
+#if !SNIPPET
+            searchClient = InstrumentClient(new SearchClient(endpoint, indexName, credential, GetSearchClientOptions()));
+#endif
+            SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
+                    new SearchOptions
+                    {
+                        Filter = "Rating gt 2",
+                        SessionId = "Session-1"
+                    });
+
+            await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
+            {
+                Hotel hotel = result.Document;
+#if !SNIPPET
+                if (!uniqueDocuments.Add(hotel.HotelId))
+                {
+                    hasDuplicates = true;
+                }
+#endif
+                Console.WriteLine($"{hotel.HotelName} ({hotel.HotelId})");
+            }
+            #endregion Snippet:Azure_Search_Tests_Samples_QuerySession
+
+            Assert.False(hasDuplicates, "Duplicate documents found.");
         }
     }
 }

@@ -10,5 +10,7 @@ namespace Azure.Identity
     internal interface IMsalPublicClientInitializerOptions
     {
         Action<PublicClientApplicationBuilder> BeforeBuildClient { get; }
+
+        bool UseDefaultBrokerAccount { get; set; }
     }
 }

@@ -9,19 +9,17 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Relay.Models;
 
 namespace Azure.ResourceManager.Relay
 {
     /// <summary>
     /// A Class representing a RelayHybridConnectionAuthorizationRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RelayHybridConnectionAuthorizationRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRelayHybridConnectionAuthorizationRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="RelayHybridConnectionResource" /> using the GetRelayHybridConnectionAuthorizationRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RelayHybridConnectionAuthorizationRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRelayHybridConnectionAuthorizationRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="RelayHybridConnectionResource"/> using the GetRelayHybridConnectionAuthorizationRule method.
     /// </summary>
     public partial class RelayHybridConnectionAuthorizationRuleResource : ArmResource
     {
@@ -41,12 +39,15 @@ namespace Azure.ResourceManager.Relay
         private readonly HybridConnectionsRestOperations _relayHybridConnectionAuthorizationRuleHybridConnectionsRestClient;
         private readonly RelayAuthorizationRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Relay/namespaces/hybridConnections/authorizationRules";
+
         /// <summary> Initializes a new instance of the <see cref="RelayHybridConnectionAuthorizationRuleResource"/> class for mocking. </summary>
         protected RelayHybridConnectionAuthorizationRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RelayHybridConnectionAuthorizationRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RelayHybridConnectionAuthorizationRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RelayHybridConnectionAuthorizationRuleResource(ArmClient client, RelayAuthorizationRuleData data) : this(client, data.Id)
@@ -67,9 +68,6 @@ namespace Azure.ResourceManager.Relay
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Relay/namespaces/hybridConnections/authorizationRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -103,6 +101,14 @@ namespace Azure.ResourceManager.Relay
         /// <term>Operation Id</term>
         /// <description>HybridConnections_GetAuthorizationRule</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RelayHybridConnectionAuthorizationRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -135,6 +141,14 @@ namespace Azure.ResourceManager.Relay
         /// <term>Operation Id</term>
         /// <description>HybridConnections_GetAuthorizationRule</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RelayHybridConnectionAuthorizationRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -166,6 +180,14 @@ namespace Azure.ResourceManager.Relay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HybridConnections_DeleteAuthorizationRule</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RelayHybridConnectionAuthorizationRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -201,6 +223,14 @@ namespace Azure.ResourceManager.Relay
         /// <term>Operation Id</term>
         /// <description>HybridConnections_DeleteAuthorizationRule</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RelayHybridConnectionAuthorizationRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -234,6 +264,14 @@ namespace Azure.ResourceManager.Relay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HybridConnections_CreateOrUpdateAuthorizationRule</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RelayHybridConnectionAuthorizationRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,6 +311,14 @@ namespace Azure.ResourceManager.Relay
         /// <term>Operation Id</term>
         /// <description>HybridConnections_CreateOrUpdateAuthorizationRule</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RelayHybridConnectionAuthorizationRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -311,6 +357,14 @@ namespace Azure.ResourceManager.Relay
         /// <term>Operation Id</term>
         /// <description>HybridConnections_ListKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RelayHybridConnectionAuthorizationRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -341,6 +395,14 @@ namespace Azure.ResourceManager.Relay
         /// <term>Operation Id</term>
         /// <description>HybridConnections_ListKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RelayHybridConnectionAuthorizationRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -370,6 +432,14 @@ namespace Azure.ResourceManager.Relay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HybridConnections_RegenerateKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RelayHybridConnectionAuthorizationRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -404,6 +474,14 @@ namespace Azure.ResourceManager.Relay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HybridConnections_RegenerateKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RelayHybridConnectionAuthorizationRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

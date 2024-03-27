@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.LoadTesting;
 
 namespace Azure.ResourceManager.LoadTesting.Mocking
 {
@@ -63,6 +60,14 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// <term>Operation Id</term>
         /// <description>Quotas_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingQuotaResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
@@ -86,6 +91,14 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Quotas_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -111,10 +124,18 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// <term>Operation Id</term>
         /// <description>LoadTests_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LoadTestingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LoadTestingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LoadTestingResource> GetLoadTestingResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LoadTestingResourceLoadTestsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -133,10 +154,18 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// <term>Operation Id</term>
         /// <description>LoadTests_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LoadTestingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LoadTestingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LoadTestingResource> GetLoadTestingResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LoadTestingResourceLoadTestsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);

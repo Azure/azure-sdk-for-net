@@ -1,8 +1,11 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
+
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Added model factory for all `DnsRecordData`
 
 ### Breaking Changes
 
@@ -10,11 +13,21 @@
 
 ### Other Changes
 
+## 1.1.0 (2023-11-21)
+
+### Features Added
+
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
 ## 1.1.0-beta.1 (2023-05-29)
 
 ### Features Added
 
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
 ### Other Changes
 
@@ -34,8 +47,8 @@ This package is the first stable release of the Azure DNS management library.
 
 ### Breaking Changes
 
- - Add `Dns` prefix for some models
- - Rename `RecordSet` to `Record`
+ - Added `Dns` prefix for some models
+ - Renamed `RecordSet` to `Record`
  - Renamed some properties to more comprehensive names.
 
 ### Other Changes

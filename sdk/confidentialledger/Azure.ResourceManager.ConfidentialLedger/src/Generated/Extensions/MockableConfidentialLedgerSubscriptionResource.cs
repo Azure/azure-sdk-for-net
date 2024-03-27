@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ConfidentialLedger;
 using Azure.ResourceManager.ConfidentialLedger.Models;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Mocking
@@ -64,6 +61,10 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-26-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Name availability request payload. </param>
@@ -97,6 +98,10 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-26-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -132,11 +137,19 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// <term>Operation Id</term>
         /// <description>Ledger_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-26-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfidentialLedgerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq 'Public'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfidentialLedgerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ConfidentialLedgerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConfidentialLedgerResource> GetConfidentialLedgersAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfidentialLedgerLedgerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
@@ -155,11 +168,19 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// <term>Operation Id</term>
         /// <description>Ledger_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-26-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfidentialLedgerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq 'Public'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfidentialLedgerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ConfidentialLedgerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConfidentialLedgerResource> GetConfidentialLedgers(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfidentialLedgerLedgerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
@@ -178,11 +199,19 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedCCF_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-26-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedCcfResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq 'Public'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedCcfResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedCcfResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedCcfResource> GetManagedCcfsAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedCcfManagedCCFRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
@@ -201,11 +230,19 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedCCF_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-26-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedCcfResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq 'Public'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedCcfResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedCcfResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedCcfResource> GetManagedCcfs(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedCcfManagedCCFRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);

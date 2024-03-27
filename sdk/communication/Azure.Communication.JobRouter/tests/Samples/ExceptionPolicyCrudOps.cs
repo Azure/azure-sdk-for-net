@@ -18,6 +18,20 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         {
             // create a client
             JobRouterAdministrationClient routerClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
+            string ClassificationPolicyId1 = "escalation-on-q-over-flow";
+            string ClassificationPolicyId2 = "escalation-on-wait-time-exceeded";
+
+            routerClient.CreateClassificationPolicy(
+                new CreateClassificationPolicyOptions(ClassificationPolicyId1)
+                {
+                    PrioritizationRule = new StaticRouterRule(new RouterValue(10))
+                });
+
+            routerClient.CreateClassificationPolicy(
+                new CreateClassificationPolicyOptions(ClassificationPolicyId2)
+                {
+                    PrioritizationRule = new StaticRouterRule(new RouterValue(10))
+                });
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CreateExceptionPolicy
 
@@ -140,7 +154,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetExceptionPolicies
 
-            Pageable<ExceptionPolicy> exceptionPolicies = routerClient.GetExceptionPolicies();
+            Pageable<ExceptionPolicy> exceptionPolicies = routerClient.GetExceptionPolicies(cancellationToken: default);
             foreach (Page<ExceptionPolicy> asPage in exceptionPolicies.AsPages(pageSizeHint: 10))
             {
                 foreach (ExceptionPolicy? policy in asPage.Values)

@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Incoming video stream out of sync event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventIncomingVideoStreamsOutOfSync event. </summary>
     public partial class MediaLiveEventIncomingVideoStreamsOutOfSyncEventData
     {
-        /// <summary> Initializes a new instance of MediaLiveEventIncomingVideoStreamsOutOfSyncEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventIncomingVideoStreamsOutOfSyncEventData"/>. </summary>
         internal MediaLiveEventIncomingVideoStreamsOutOfSyncEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaLiveEventIncomingVideoStreamsOutOfSyncEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventIncomingVideoStreamsOutOfSyncEventData"/>. </summary>
         /// <param name="firstTimestamp"> Gets the first timestamp received for one of the quality levels. </param>
         /// <param name="firstDuration"> Gets the duration of the data chunk with first timestamp. </param>
         /// <param name="secondTimestamp"> Gets the timestamp received for some other quality levels. </param>

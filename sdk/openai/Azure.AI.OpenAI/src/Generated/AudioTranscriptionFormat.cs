@@ -27,6 +27,14 @@ namespace Azure.AI.OpenAI
         private const string InternalPlainTextValue = "text";
         private const string SrtValue = "srt";
         private const string VttValue = "vtt";
+
+        /// <summary> Use a response body that is a JSON object containing a single 'text' field for the transcription. </summary>
+        public static AudioTranscriptionFormat Simple { get; } = new AudioTranscriptionFormat(SimpleValue);
+        /// <summary>
+        /// Use a response body that is a JSON object containing transcription text along with timing, segments, and other
+        /// metadata.
+        /// </summary>
+        public static AudioTranscriptionFormat Verbose { get; } = new AudioTranscriptionFormat(VerboseValue);
         /// <summary> Use a response body that is plain text in SubRip (SRT) format that also includes timing information. </summary>
         public static AudioTranscriptionFormat Srt { get; } = new AudioTranscriptionFormat(SrtValue);
         /// <summary> Use a response body that is plain text in Web Video Text Tracks (VTT) format that also includes timing information. </summary>

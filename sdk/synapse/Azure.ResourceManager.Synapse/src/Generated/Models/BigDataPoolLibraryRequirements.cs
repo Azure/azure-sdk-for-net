@@ -6,26 +6,61 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> Library requirements for a Big Data pool powered by Apache Spark. </summary>
     public partial class BigDataPoolLibraryRequirements
     {
-        /// <summary> Initializes a new instance of BigDataPoolLibraryRequirements. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BigDataPoolLibraryRequirements"/>. </summary>
         public BigDataPoolLibraryRequirements()
         {
         }
 
-        /// <summary> Initializes a new instance of BigDataPoolLibraryRequirements. </summary>
+        /// <summary> Initializes a new instance of <see cref="BigDataPoolLibraryRequirements"/>. </summary>
         /// <param name="updatedOn"> The last update time of the library requirements file. </param>
         /// <param name="content"> The library requirements. </param>
         /// <param name="filename"> The filename of the library requirements file. </param>
-        internal BigDataPoolLibraryRequirements(DateTimeOffset? updatedOn, string content, string filename)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BigDataPoolLibraryRequirements(DateTimeOffset? updatedOn, string content, string filename, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UpdatedOn = updatedOn;
             Content = content;
             Filename = filename;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The last update time of the library requirements file. </summary>

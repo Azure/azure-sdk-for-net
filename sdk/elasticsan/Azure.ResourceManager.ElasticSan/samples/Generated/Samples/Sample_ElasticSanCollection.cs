@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ElasticSan;
 using Azure.ResourceManager.ElasticSan.Models;
 using Azure.ResourceManager.Resources;
 
@@ -125,7 +122,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 {
 "1"
 },
-                PublicNetworkAccess = PublicNetworkAccess.Enabled,
+                PublicNetworkAccess = ElasticSanPublicNetworkAccess.Enabled,
                 Tags =
 {
 ["key9316"] = "ihndtieqibtob",

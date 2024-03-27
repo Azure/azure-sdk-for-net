@@ -21,17 +21,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PartitionColumnName))
             {
                 writer.WritePropertyName("partitionColumnName"u8);
-                writer.WriteObjectValue(PartitionColumnName);
+                writer.WriteObjectValue<object>(PartitionColumnName);
             }
             if (Optional.IsDefined(PartitionUpperBound))
             {
                 writer.WritePropertyName("partitionUpperBound"u8);
-                writer.WriteObjectValue(PartitionUpperBound);
+                writer.WriteObjectValue<object>(PartitionUpperBound);
             }
             if (Optional.IsDefined(PartitionLowerBound))
             {
                 writer.WritePropertyName("partitionLowerBound"u8);
-                writer.WriteObjectValue(PartitionLowerBound);
+                writer.WriteObjectValue<object>(PartitionLowerBound);
             }
             writer.WriteEndObject();
         }
@@ -42,9 +42,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> partitionColumnName = default;
-            Optional<object> partitionUpperBound = default;
-            Optional<object> partitionLowerBound = default;
+            object partitionColumnName = default;
+            object partitionUpperBound = default;
+            object partitionLowerBound = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionColumnName"u8))
@@ -75,14 +75,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SqlPartitionSettings(partitionColumnName.Value, partitionUpperBound.Value, partitionLowerBound.Value);
+            return new SqlPartitionSettings(partitionColumnName, partitionUpperBound, partitionLowerBound);
         }
 
         internal partial class SqlPartitionSettingsConverter : JsonConverter<SqlPartitionSettings>
         {
             public override void Write(Utf8JsonWriter writer, SqlPartitionSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SqlPartitionSettings>(model);
             }
             public override SqlPartitionSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

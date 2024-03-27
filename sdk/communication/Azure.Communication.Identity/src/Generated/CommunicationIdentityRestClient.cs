@@ -11,7 +11,6 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Communication.Identity.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -33,7 +32,7 @@ namespace Azure.Communication.Identity
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CommunicationIdentityRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2022-10-01")
+        public CommunicationIdentityRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2023-10-01")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -66,7 +65,7 @@ namespace Azure.Communication.Identity
             }
             var model = communicationIdentityCreateRequest;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue<CommunicationIdentityCreateRequest>(model);
             request.Content = content;
             return message;
         }
@@ -248,7 +247,7 @@ namespace Azure.Communication.Identity
             request.Headers.Add("Content-Type", "application/json");
             var model = new TeamsUserExchangeTokenRequest(token, appId, userId);
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue<TeamsUserExchangeTokenRequest>(model);
             request.Content = content;
             return message;
         }
@@ -346,7 +345,7 @@ namespace Azure.Communication.Identity
                 ExpiresInMinutes = expiresInMinutes
             };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue<CommunicationIdentityAccessTokenRequest>(model);
             request.Content = content;
             return message;
         }

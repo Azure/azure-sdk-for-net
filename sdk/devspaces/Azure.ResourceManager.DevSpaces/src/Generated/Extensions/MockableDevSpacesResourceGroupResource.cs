@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DevSpaces;
 using Azure.ResourceManager.DevSpaces.Models;
 
 namespace Azure.ResourceManager.DevSpaces.Mocking
@@ -62,6 +59,14 @@ namespace Azure.ResourceManager.DevSpaces.Mocking
         /// <term>Operation Id</term>
         /// <description>Controllers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ControllerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the resource. </param>
@@ -84,6 +89,14 @@ namespace Azure.ResourceManager.DevSpaces.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Controllers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ControllerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -108,10 +121,14 @@ namespace Azure.ResourceManager.DevSpaces.Mocking
         /// <term>Operation Id</term>
         /// <description>ContainerHostMappings_GetContainerHostMapping</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Location of the container host. </param>
-        /// <param name="containerHostMapping"> The ContainerHostMapping to use. </param>
+        /// <param name="containerHostMapping"> The <see cref="ContainerHostMapping"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerHostMapping"/> is null. </exception>
         public virtual async Task<Response<ContainerHostMapping>> GetContainerHostMappingContainerHostMappingAsync(AzureLocation location, ContainerHostMapping containerHostMapping, CancellationToken cancellationToken = default)
@@ -143,10 +160,14 @@ namespace Azure.ResourceManager.DevSpaces.Mocking
         /// <term>Operation Id</term>
         /// <description>ContainerHostMappings_GetContainerHostMapping</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Location of the container host. </param>
-        /// <param name="containerHostMapping"> The ContainerHostMapping to use. </param>
+        /// <param name="containerHostMapping"> The <see cref="ContainerHostMapping"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerHostMapping"/> is null. </exception>
         public virtual Response<ContainerHostMapping> GetContainerHostMappingContainerHostMapping(AzureLocation location, ContainerHostMapping containerHostMapping, CancellationToken cancellationToken = default)

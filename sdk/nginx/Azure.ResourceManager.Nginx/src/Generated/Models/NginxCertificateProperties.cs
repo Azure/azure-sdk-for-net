@@ -5,31 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Nginx.Models
 {
     /// <summary> The NginxCertificateProperties. </summary>
     public partial class NginxCertificateProperties
     {
-        /// <summary> Initializes a new instance of NginxCertificateProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NginxCertificateProperties"/>. </summary>
         public NginxCertificateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of NginxCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxCertificateProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="keyVirtualPath"></param>
         /// <param name="certificateVirtualPath"></param>
         /// <param name="keyVaultSecretId"></param>
-        internal NginxCertificateProperties(ProvisioningState? provisioningState, string keyVirtualPath, string certificateVirtualPath, string keyVaultSecretId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NginxCertificateProperties(NginxProvisioningState? provisioningState, string keyVirtualPath, string certificateVirtualPath, string keyVaultSecretId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             KeyVirtualPath = keyVirtualPath;
             CertificateVirtualPath = certificateVirtualPath;
             KeyVaultSecretId = keyVaultSecretId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NginxProvisioningState? ProvisioningState { get; }
         /// <summary> Gets or sets the key virtual path. </summary>
         public string KeyVirtualPath { get; set; }
         /// <summary> Gets or sets the certificate virtual path. </summary>

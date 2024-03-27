@@ -3,6 +3,7 @@
 
 using System.Threading;
 using Azure.Core;
+using Azure.Storage.Common;
 using Azure.Storage.Queues.Models;
 
 namespace Azure.Storage.Queues

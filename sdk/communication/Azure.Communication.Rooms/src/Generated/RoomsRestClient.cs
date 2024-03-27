@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -68,7 +67,7 @@ namespace Azure.Communication.Rooms
             }
             var model = createRoomRequest;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue<CreateRoomRequest>(model);
             request.Content = content;
             return message;
         }
@@ -264,7 +263,7 @@ namespace Azure.Communication.Rooms
                 PstnDialOutEnabled = pstnDialOutEnabled
             };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue<UpdateRoomRequest>(model);
             request.Content = content;
             return message;
         }

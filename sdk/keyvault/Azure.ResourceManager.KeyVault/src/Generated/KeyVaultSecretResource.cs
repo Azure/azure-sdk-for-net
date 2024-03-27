@@ -9,19 +9,17 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.KeyVault.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary>
     /// A Class representing a KeyVaultSecret along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="KeyVaultSecretResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetKeyVaultSecretResource method.
-    /// Otherwise you can get one from its parent resource <see cref="KeyVaultResource" /> using the GetKeyVaultSecret method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="KeyVaultSecretResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetKeyVaultSecretResource method.
+    /// Otherwise you can get one from its parent resource <see cref="KeyVaultResource"/> using the GetKeyVaultSecret method.
     /// </summary>
     public partial class KeyVaultSecretResource : ArmResource
     {
@@ -40,12 +38,15 @@ namespace Azure.ResourceManager.KeyVault
         private readonly SecretsRestOperations _keyVaultSecretSecretsRestClient;
         private readonly KeyVaultSecretData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.KeyVault/vaults/secrets";
+
         /// <summary> Initializes a new instance of the <see cref="KeyVaultSecretResource"/> class for mocking. </summary>
         protected KeyVaultSecretResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "KeyVaultSecretResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="KeyVaultSecretResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal KeyVaultSecretResource(ArmClient client, KeyVaultSecretData data) : this(client, data.Id)
@@ -66,9 +67,6 @@ namespace Azure.ResourceManager.KeyVault
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.KeyVault/vaults/secrets";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -102,6 +100,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <term>Operation Id</term>
         /// <description>Secrets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KeyVaultSecretResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,6 +140,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <term>Operation Id</term>
         /// <description>Secrets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KeyVaultSecretResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -165,6 +179,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Secrets_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KeyVaultSecretResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,6 +221,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Secrets_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KeyVaultSecretResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

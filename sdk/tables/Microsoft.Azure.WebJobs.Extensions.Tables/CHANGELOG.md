@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.2.1 (2023-11-13)
+
+### Other Changes
+
+- Bump dependency on `Microsoft.Extensions.Azure` to prevent transitive dependency on deprecated version of `Azure.Identity`.
+
 ## 1.2.0 (2023-08-10)
 
 ### Features Added

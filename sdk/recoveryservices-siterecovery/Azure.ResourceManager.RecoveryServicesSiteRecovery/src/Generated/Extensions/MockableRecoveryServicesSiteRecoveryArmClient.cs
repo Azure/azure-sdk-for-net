@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
 {
@@ -37,11 +35,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryAlertResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryAlertResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryAlertResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SiteRecoveryAlertResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteRecoveryAlertResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryAlertResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteRecoveryAlertResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SiteRecoveryAlertResource"/> object. </returns>
         public virtual SiteRecoveryAlertResource GetSiteRecoveryAlertResource(ResourceIdentifier id)
         {
             SiteRecoveryAlertResource.ValidateResourceId(id);
@@ -49,11 +47,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ReplicationEligibilityResultResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReplicationEligibilityResultResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationEligibilityResultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ReplicationEligibilityResultResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReplicationEligibilityResultResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationEligibilityResultResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReplicationEligibilityResultResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ReplicationEligibilityResultResource"/> object. </returns>
         public virtual ReplicationEligibilityResultResource GetReplicationEligibilityResultResource(ResourceIdentifier id)
         {
             ReplicationEligibilityResultResource.ValidateResourceId(id);
@@ -61,11 +59,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryEventResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryEventResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryEventResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SiteRecoveryEventResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteRecoveryEventResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryEventResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteRecoveryEventResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SiteRecoveryEventResource"/> object. </returns>
         public virtual SiteRecoveryEventResource GetSiteRecoveryEventResource(ResourceIdentifier id)
         {
             SiteRecoveryEventResource.ValidateResourceId(id);
@@ -73,11 +71,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryFabricResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryFabricResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryFabricResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SiteRecoveryFabricResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteRecoveryFabricResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryFabricResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteRecoveryFabricResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SiteRecoveryFabricResource"/> object. </returns>
         public virtual SiteRecoveryFabricResource GetSiteRecoveryFabricResource(ResourceIdentifier id)
         {
             SiteRecoveryFabricResource.ValidateResourceId(id);
@@ -85,11 +83,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryLogicalNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryLogicalNetworkResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryLogicalNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SiteRecoveryLogicalNetworkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteRecoveryLogicalNetworkResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryLogicalNetworkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteRecoveryLogicalNetworkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SiteRecoveryLogicalNetworkResource"/> object. </returns>
         public virtual SiteRecoveryLogicalNetworkResource GetSiteRecoveryLogicalNetworkResource(ResourceIdentifier id)
         {
             SiteRecoveryLogicalNetworkResource.ValidateResourceId(id);
@@ -97,11 +95,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryNetworkResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SiteRecoveryNetworkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteRecoveryNetworkResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryNetworkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteRecoveryNetworkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SiteRecoveryNetworkResource"/> object. </returns>
         public virtual SiteRecoveryNetworkResource GetSiteRecoveryNetworkResource(ResourceIdentifier id)
         {
             SiteRecoveryNetworkResource.ValidateResourceId(id);
@@ -109,11 +107,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryNetworkMappingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryNetworkMappingResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryNetworkMappingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SiteRecoveryNetworkMappingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteRecoveryNetworkMappingResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryNetworkMappingResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteRecoveryNetworkMappingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SiteRecoveryNetworkMappingResource"/> object. </returns>
         public virtual SiteRecoveryNetworkMappingResource GetSiteRecoveryNetworkMappingResource(ResourceIdentifier id)
         {
             SiteRecoveryNetworkMappingResource.ValidateResourceId(id);
@@ -121,11 +119,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryProtectionContainerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryProtectionContainerResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryProtectionContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SiteRecoveryProtectionContainerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteRecoveryProtectionContainerResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryProtectionContainerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteRecoveryProtectionContainerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SiteRecoveryProtectionContainerResource"/> object. </returns>
         public virtual SiteRecoveryProtectionContainerResource GetSiteRecoveryProtectionContainerResource(ResourceIdentifier id)
         {
             SiteRecoveryProtectionContainerResource.ValidateResourceId(id);
@@ -133,11 +131,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryMigrationItemResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryMigrationItemResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryMigrationItemResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SiteRecoveryMigrationItemResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteRecoveryMigrationItemResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryMigrationItemResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteRecoveryMigrationItemResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SiteRecoveryMigrationItemResource"/> object. </returns>
         public virtual SiteRecoveryMigrationItemResource GetSiteRecoveryMigrationItemResource(ResourceIdentifier id)
         {
             SiteRecoveryMigrationItemResource.ValidateResourceId(id);
@@ -145,11 +143,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MigrationRecoveryPointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MigrationRecoveryPointResource.CreateResourceIdentifier" /> to create a <see cref="MigrationRecoveryPointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MigrationRecoveryPointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationRecoveryPointResource.CreateResourceIdentifier" /> to create a <see cref="MigrationRecoveryPointResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MigrationRecoveryPointResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MigrationRecoveryPointResource"/> object. </returns>
         public virtual MigrationRecoveryPointResource GetMigrationRecoveryPointResource(ResourceIdentifier id)
         {
             MigrationRecoveryPointResource.ValidateResourceId(id);
@@ -157,11 +155,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryProtectableItemResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryProtectableItemResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryProtectableItemResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SiteRecoveryProtectableItemResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteRecoveryProtectableItemResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryProtectableItemResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteRecoveryProtectableItemResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SiteRecoveryProtectableItemResource"/> object. </returns>
         public virtual SiteRecoveryProtectableItemResource GetSiteRecoveryProtectableItemResource(ResourceIdentifier id)
         {
             SiteRecoveryProtectableItemResource.ValidateResourceId(id);
@@ -169,11 +167,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ReplicationProtectedItemResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReplicationProtectedItemResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationProtectedItemResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ReplicationProtectedItemResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReplicationProtectedItemResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationProtectedItemResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReplicationProtectedItemResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ReplicationProtectedItemResource"/> object. </returns>
         public virtual ReplicationProtectedItemResource GetReplicationProtectedItemResource(ResourceIdentifier id)
         {
             ReplicationProtectedItemResource.ValidateResourceId(id);
@@ -181,11 +179,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryPointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryPointResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryPointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SiteRecoveryPointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteRecoveryPointResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryPointResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteRecoveryPointResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SiteRecoveryPointResource"/> object. </returns>
         public virtual SiteRecoveryPointResource GetSiteRecoveryPointResource(ResourceIdentifier id)
         {
             SiteRecoveryPointResource.ValidateResourceId(id);
@@ -193,11 +191,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProtectionContainerMappingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProtectionContainerMappingResource.CreateResourceIdentifier" /> to create a <see cref="ProtectionContainerMappingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ProtectionContainerMappingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProtectionContainerMappingResource.CreateResourceIdentifier" /> to create a <see cref="ProtectionContainerMappingResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProtectionContainerMappingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ProtectionContainerMappingResource"/> object. </returns>
         public virtual ProtectionContainerMappingResource GetProtectionContainerMappingResource(ResourceIdentifier id)
         {
             ProtectionContainerMappingResource.ValidateResourceId(id);
@@ -205,11 +203,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryServicesProviderResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryServicesProviderResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryServicesProviderResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SiteRecoveryServicesProviderResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteRecoveryServicesProviderResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryServicesProviderResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteRecoveryServicesProviderResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SiteRecoveryServicesProviderResource"/> object. </returns>
         public virtual SiteRecoveryServicesProviderResource GetSiteRecoveryServicesProviderResource(ResourceIdentifier id)
         {
             SiteRecoveryServicesProviderResource.ValidateResourceId(id);
@@ -217,11 +215,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StorageClassificationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageClassificationResource.CreateResourceIdentifier" /> to create a <see cref="StorageClassificationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StorageClassificationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageClassificationResource.CreateResourceIdentifier" /> to create a <see cref="StorageClassificationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageClassificationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="StorageClassificationResource"/> object. </returns>
         public virtual StorageClassificationResource GetStorageClassificationResource(ResourceIdentifier id)
         {
             StorageClassificationResource.ValidateResourceId(id);
@@ -229,11 +227,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StorageClassificationMappingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageClassificationMappingResource.CreateResourceIdentifier" /> to create a <see cref="StorageClassificationMappingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StorageClassificationMappingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageClassificationMappingResource.CreateResourceIdentifier" /> to create a <see cref="StorageClassificationMappingResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageClassificationMappingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="StorageClassificationMappingResource"/> object. </returns>
         public virtual StorageClassificationMappingResource GetStorageClassificationMappingResource(ResourceIdentifier id)
         {
             StorageClassificationMappingResource.ValidateResourceId(id);
@@ -241,11 +239,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryVCenterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryVCenterResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryVCenterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SiteRecoveryVCenterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteRecoveryVCenterResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryVCenterResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteRecoveryVCenterResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SiteRecoveryVCenterResource"/> object. </returns>
         public virtual SiteRecoveryVCenterResource GetSiteRecoveryVCenterResource(ResourceIdentifier id)
         {
             SiteRecoveryVCenterResource.ValidateResourceId(id);
@@ -253,11 +251,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryJobResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryJobResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryJobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SiteRecoveryJobResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteRecoveryJobResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryJobResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteRecoveryJobResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SiteRecoveryJobResource"/> object. </returns>
         public virtual SiteRecoveryJobResource GetSiteRecoveryJobResource(ResourceIdentifier id)
         {
             SiteRecoveryJobResource.ValidateResourceId(id);
@@ -265,11 +263,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SiteRecoveryPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteRecoveryPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteRecoveryPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SiteRecoveryPolicyResource"/> object. </returns>
         public virtual SiteRecoveryPolicyResource GetSiteRecoveryPolicyResource(ResourceIdentifier id)
         {
             SiteRecoveryPolicyResource.ValidateResourceId(id);
@@ -277,11 +275,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ReplicationProtectionIntentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReplicationProtectionIntentResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationProtectionIntentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ReplicationProtectionIntentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReplicationProtectionIntentResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationProtectionIntentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReplicationProtectionIntentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ReplicationProtectionIntentResource"/> object. </returns>
         public virtual ReplicationProtectionIntentResource GetReplicationProtectionIntentResource(ResourceIdentifier id)
         {
             ReplicationProtectionIntentResource.ValidateResourceId(id);
@@ -289,11 +287,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryRecoveryPlanResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryRecoveryPlanResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryRecoveryPlanResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SiteRecoveryRecoveryPlanResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteRecoveryRecoveryPlanResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryRecoveryPlanResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteRecoveryRecoveryPlanResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SiteRecoveryRecoveryPlanResource"/> object. </returns>
         public virtual SiteRecoveryRecoveryPlanResource GetSiteRecoveryRecoveryPlanResource(ResourceIdentifier id)
         {
             SiteRecoveryRecoveryPlanResource.ValidateResourceId(id);
@@ -301,11 +299,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryVaultSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryVaultSettingResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryVaultSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SiteRecoveryVaultSettingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteRecoveryVaultSettingResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryVaultSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteRecoveryVaultSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SiteRecoveryVaultSettingResource"/> object. </returns>
         public virtual SiteRecoveryVaultSettingResource GetSiteRecoveryVaultSettingResource(ResourceIdentifier id)
         {
             SiteRecoveryVaultSettingResource.ValidateResourceId(id);

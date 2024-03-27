@@ -8,11 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AppPlatform;
 using Azure.ResourceManager.AppPlatform.Models;
 using Azure.ResourceManager.Models;
 
@@ -273,11 +270,11 @@ namespace Azure.ResourceManager.AppPlatform.Samples
 {
 ["ApplicationConfigurationService"] = new Dictionary<string, BinaryData>()
 {
-["resourceId"] = BinaryData.FromString("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/configurationServices/myacs"),
+["resourceId"] = BinaryData.FromString("\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/configurationServices/myacs\""),
 },
 ["ServiceRegistry"] = new Dictionary<string, BinaryData>()
 {
-["resourceId"] = BinaryData.FromString("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/serviceRegistries/myServiceRegistry"),
+["resourceId"] = BinaryData.FromString("\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/serviceRegistries/myServiceRegistry\""),
 },
 },
                     IsHttpsOnly = false,
@@ -371,11 +368,11 @@ LoadTrustStore = true,
 {
 ["ApplicationConfigurationService"] = new Dictionary<string, BinaryData>()
 {
-["resourceId"] = BinaryData.FromString("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/configurationServices/myacs"),
+["resourceId"] = BinaryData.FromString("\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/configurationServices/myacs\""),
 },
 ["ServiceRegistry"] = new Dictionary<string, BinaryData>()
 {
-["resourceId"] = BinaryData.FromString("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/serviceRegistries/myServiceRegistry"),
+["resourceId"] = BinaryData.FromString("\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/serviceRegistries/myServiceRegistry\""),
 },
 },
                     IsHttpsOnly = false,

@@ -13,6 +13,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
+#nullable disable
+
 namespace Azure.ResourceManager.TestFramework
 {
     public abstract class ManagementRecordedTestBase<TEnvironment> : RecordedTestBase<TEnvironment>
@@ -73,6 +75,17 @@ namespace Azure.ResourceManager.TestFramework
             // Ignore the api-version of Network operations
             UriRegexSanitizers.Add(new UriRegexSanitizer(
                 @"/providers\/Microsoft.Network\/(.*?)\?api-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
+        }
+
+        protected void IgnoreAuthorizationDependencyVersions()
+        {
+            // Ignore the api-version of Authorization operations
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/providers\/Microsoft.Authorization\/(.*?)\?api-version=(?<group>[a-z0-9-]+)", "**"
             )
             {
                 GroupForReplace = "group"

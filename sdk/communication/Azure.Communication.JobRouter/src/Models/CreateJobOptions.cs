@@ -8,16 +8,16 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter
 {
     /// <summary>
-    /// Options for creating job with direct queue assignment.
+    /// Options for creating a new job to be routed.
     /// </summary>
     public class CreateJobOptions
     {
         /// <summary>
-        /// Public constructor.
+        /// Initializes a new instance of CreateJobOptions.
         /// </summary>
-        /// <param name="jobId"> Id of the job. </param>
-        /// <param name="channelId"> The channel or modality upon which this job will be executed. </param>
-        /// <param name="queueId"> The classification policy that will determine queue, priority and required abilities. </param>
+        /// <param name="jobId"> Id of a job. </param>
+        /// <param name="channelId"> The channel identifier. eg. voice, chat, etc. </param>
+        /// <param name="queueId"> Id of a queue that this job is queued to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="channelId"/> is null. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
@@ -33,12 +33,12 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary>
-        /// Id of the job.
+        /// Id of a job.
         /// </summary>
         public string JobId { get; }
 
         /// <summary>
-        /// The channel or modality upon which this job will be executed.
+        /// The channel identifier. eg. voice, chat, etc.
         /// </summary>
         public string ChannelId { get; }
 
@@ -50,13 +50,13 @@ namespace Azure.Communication.JobRouter
         /// <summary> Reference to an external parent context, eg. call ID. </summary>
         public string ChannelReference { get; set; }
 
-        /// <summary> The priority of this job (range from -100 to 100). </summary>
+        /// <summary> Priority of this job. </summary>
         public int? Priority { get; set; }
 
-        /// <summary> A collection of manually specified label selectors, which a worker must satisfy in order to process this job. </summary>
+        /// <summary> A collection of manually specified worker selectors, which a worker must satisfy in order to process this job. </summary>
         public IList<RouterWorkerSelector> RequestedWorkerSelectors { get; } = new List<RouterWorkerSelector>();
 
-        /// <summary> Notes attached to a job, sorted by timestamp. </summary>
+        /// <summary> A collection of notes attached to a job. </summary>
         public IList<RouterJobNote> Notes { get; } = new List<RouterJobNote>();
 
         /// <summary> A set of non-identifying attributes attached to this job. Values must be primitive values - number, string, boolean. </summary>

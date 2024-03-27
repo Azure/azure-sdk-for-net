@@ -9,18 +9,16 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a PeerExpressRouteCircuitConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PeerExpressRouteCircuitConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPeerExpressRouteCircuitConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ExpressRouteCircuitPeeringResource" /> using the GetPeerExpressRouteCircuitConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PeerExpressRouteCircuitConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPeerExpressRouteCircuitConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ExpressRouteCircuitPeeringResource"/> using the GetPeerExpressRouteCircuitConnection method.
     /// </summary>
     public partial class PeerExpressRouteCircuitConnectionResource : ArmResource
     {
@@ -40,12 +38,15 @@ namespace Azure.ResourceManager.Network
         private readonly PeerExpressRouteCircuitConnectionsRestOperations _peerExpressRouteCircuitConnectionRestClient;
         private readonly PeerExpressRouteCircuitConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/expressRouteCircuits/peerings/peerConnections";
+
         /// <summary> Initializes a new instance of the <see cref="PeerExpressRouteCircuitConnectionResource"/> class for mocking. </summary>
         protected PeerExpressRouteCircuitConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PeerExpressRouteCircuitConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PeerExpressRouteCircuitConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PeerExpressRouteCircuitConnectionResource(ArmClient client, PeerExpressRouteCircuitConnectionData data) : this(client, data.Id)
@@ -66,9 +67,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/expressRouteCircuits/peerings/peerConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -102,6 +100,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>PeerExpressRouteCircuitConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeerExpressRouteCircuitConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,6 +139,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PeerExpressRouteCircuitConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeerExpressRouteCircuitConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

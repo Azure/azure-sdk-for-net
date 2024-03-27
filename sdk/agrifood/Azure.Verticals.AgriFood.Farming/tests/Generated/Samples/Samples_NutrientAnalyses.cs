@@ -9,10 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.Verticals.AgriFood.Farming;
 using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
@@ -23,8 +21,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetNutrientAnalysis_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.GetNutrientAnalysis("<partyId>", "<nutrientAnalysisId>", null);
 
@@ -36,8 +35,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetNutrientAnalysis_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.GetNutrientAnalysisAsync("<partyId>", "<nutrientAnalysisId>", null);
 
@@ -49,8 +49,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetNutrientAnalysis_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.GetNutrientAnalysis("<partyId>", "<nutrientAnalysisId>", null);
 
@@ -84,8 +85,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetNutrientAnalysis_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.GetNutrientAnalysisAsync("<partyId>", "<nutrientAnalysisId>", null);
 
@@ -119,8 +121,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdate("<partyId>", "<nutrientAnalysisId>", content);
@@ -133,8 +136,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdate_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateAsync("<partyId>", "<nutrientAnalysisId>", content);
@@ -147,8 +151,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -210,8 +215,9 @@ product = "<product>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdate_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -273,8 +279,9 @@ product = "<product>",
         [Ignore("Only validating compilation of examples")]
         public void Example_Delete_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<nutrientAnalysisId>");
 
@@ -285,8 +292,9 @@ product = "<product>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<nutrientAnalysisId>");
 
@@ -297,8 +305,9 @@ product = "<product>",
         [Ignore("Only validating compilation of examples")]
         public void Example_Delete_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<nutrientAnalysisId>");
 
@@ -309,8 +318,9 @@ product = "<product>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<nutrientAnalysisId>");
 
@@ -321,8 +331,9 @@ product = "<product>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetNutrientAnalyses_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
 
             foreach (BinaryData item in client.GetNutrientAnalyses(null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -335,8 +346,9 @@ product = "<product>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetNutrientAnalyses_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
 
             await foreach (BinaryData item in client.GetNutrientAnalysesAsync(null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -349,8 +361,9 @@ product = "<product>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetNutrientAnalyses_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
 
             foreach (BinaryData item in client.GetNutrientAnalyses("<parentType>", new string[] { "<parentIds>" }, new string[] { "<classifications>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -385,8 +398,9 @@ product = "<product>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetNutrientAnalyses_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
 
             await foreach (BinaryData item in client.GetNutrientAnalysesAsync("<parentType>", new string[] { "<parentIds>" }, new string[] { "<classifications>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -421,8 +435,9 @@ product = "<product>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetNutrientAnalysesByPartyId_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
 
             foreach (BinaryData item in client.GetNutrientAnalysesByPartyId("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -435,8 +450,9 @@ product = "<product>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetNutrientAnalysesByPartyId_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
 
             await foreach (BinaryData item in client.GetNutrientAnalysesByPartyIdAsync("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -449,8 +465,9 @@ product = "<product>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetNutrientAnalysesByPartyId_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
 
             foreach (BinaryData item in client.GetNutrientAnalysesByPartyId("<partyId>", "<parentType>", new string[] { "<parentIds>" }, new string[] { "<classifications>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -485,8 +502,9 @@ product = "<product>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetNutrientAnalysesByPartyId_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
 
             await foreach (BinaryData item in client.GetNutrientAnalysesByPartyIdAsync("<partyId>", "<parentType>", new string[] { "<parentIds>" }, new string[] { "<classifications>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {

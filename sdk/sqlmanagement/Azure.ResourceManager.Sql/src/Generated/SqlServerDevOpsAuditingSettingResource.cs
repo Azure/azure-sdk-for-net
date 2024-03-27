@@ -9,18 +9,16 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a SqlServerDevOpsAuditingSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SqlServerDevOpsAuditingSettingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSqlServerDevOpsAuditingSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource" /> using the GetSqlServerDevOpsAuditingSetting method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlServerDevOpsAuditingSettingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSqlServerDevOpsAuditingSettingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource"/> using the GetSqlServerDevOpsAuditingSetting method.
     /// </summary>
     public partial class SqlServerDevOpsAuditingSettingResource : ArmResource
     {
@@ -39,12 +37,15 @@ namespace Azure.ResourceManager.Sql
         private readonly ServerDevOpsAuditSettingsRestOperations _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient;
         private readonly SqlServerDevOpsAuditingSettingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/devOpsAuditingSettings";
+
         /// <summary> Initializes a new instance of the <see cref="SqlServerDevOpsAuditingSettingResource"/> class for mocking. </summary>
         protected SqlServerDevOpsAuditingSettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SqlServerDevOpsAuditingSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlServerDevOpsAuditingSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SqlServerDevOpsAuditingSettingResource(ArmClient client, SqlServerDevOpsAuditingSettingData data) : this(client, data.Id)
@@ -65,9 +66,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/devOpsAuditingSettings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +99,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ServerDevOpsAuditSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerDevOpsAuditingSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,6 +139,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ServerDevOpsAuditSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerDevOpsAuditingSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -164,6 +178,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ServerDevOpsAuditSettings_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerDevOpsAuditingSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -202,6 +224,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ServerDevOpsAuditSettings_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerDevOpsAuditingSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

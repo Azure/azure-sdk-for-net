@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.PowerBIDedicated;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <term>Operation Id</term>
         /// <description>Capacities_GetDetails</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dedicatedCapacityName"> The name of the dedicated capacity. It must be a minimum of 3 characters, and a maximum of 63. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Capacities_GetDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +120,14 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <term>Operation Id</term>
         /// <description>AutoScaleVCores_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoScaleVCoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vcoreName"> The name of the auto scale v-core. It must be a minimum of 3 characters, and a maximum of 63. </param>
@@ -129,6 +150,14 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutoScaleVCores_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoScaleVCoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

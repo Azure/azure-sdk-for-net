@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Restore file specs like file path, type and target folder path info. </summary>
     public partial class RestoreFileSpecs
     {
-        /// <summary> Initializes a new instance of RestoreFileSpecs. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestoreFileSpecs"/>. </summary>
         public RestoreFileSpecs()
         {
         }
 
-        /// <summary> Initializes a new instance of RestoreFileSpecs. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreFileSpecs"/>. </summary>
         /// <param name="path"> Source File/Folder path. </param>
         /// <param name="fileSpecType"> Indicates what the Path variable stands for. </param>
         /// <param name="targetFolderPath"> Destination folder path in target FileShare. </param>
-        internal RestoreFileSpecs(string path, string fileSpecType, string targetFolderPath)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestoreFileSpecs(string path, string fileSpecType, string targetFolderPath, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Path = path;
             FileSpecType = fileSpecType;
             TargetFolderPath = targetFolderPath;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Source File/Folder path. </summary>

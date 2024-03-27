@@ -10,7 +10,7 @@ using Azure.ResourceManager.AppContainers.Models;
 
 namespace Azure.ResourceManager.AppContainers.Tests
 {
-    public class ContainerAppCollectionTests: AppContainersManagementTestBase
+    public class ContainerAppCollectionTests : AppContainersManagementTestBase
     {
         public ContainerAppCollectionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
@@ -22,80 +22,17 @@ namespace Azure.ResourceManager.AppContainers.Tests
         public async Task CreateOrUpdate()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg", AzureLocation.WestUS);
+            ResourceGroupResource rg = await CreateResourceGroupAsync();
             string envName = Recording.GenerateAssetName("env");
-            ContainerAppManagedEnvironmentData data = new ContainerAppManagedEnvironmentData(AzureLocation.WestUS)
-            {
-                WorkloadProfiles =
-                {
-                    new ContainerAppWorkloadProfile("Consumption", "Consumption"),
-                    new ContainerAppWorkloadProfile("gp1", "D4")
-                    {
-                        MinimumCount = 1,
-                        MaximumCount = 3
-                    }
-                }
-            };
+            var envResource = await CreateContainerAppManagedEnvironment(rg, envName);
+            Assert.AreEqual(envName, envResource.Data.Name);
 
-            var containerAppManagedEnvironmentCollection = rg.GetContainerAppManagedEnvironments();
-            var envResource = await containerAppManagedEnvironmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, envName, data);
-            Assert.AreEqual(envName, envResource.Value.Data.Name);
-
+            var ContainerAppCollection = rg.GetContainerApps();
             string resourceName = Recording.GenerateAssetName("resource");
-            ContainerAppData appData = new ContainerAppData(AzureLocation.WestUS)
-            {
-                WorkloadProfileName = "gp1",
-                ManagedEnvironmentId = new ResourceIdentifier(envResource.Value.Data.Id),
-                Configuration = new ContainerAppConfiguration
-                {
-                    Ingress = new ContainerAppIngressConfiguration
-                    {
-                        External = true,
-                        TargetPort = 3000
-                    },
-                },
-                Template = new ContainerAppTemplate
-                {
-                    Containers =
-                        {
-                            new ContainerAppContainer
-                            {
-                                Image = $"mcr.microsoft.com/k8se/quickstart-jobs:latest",
-                                Name = "appcontainer",
-                                Resources = new AppContainerResources
-                                {
-                                    Cpu = 0.25,
-                                    Memory = "0.5Gi"
-                                }
-                            }
-                        },
-                    Scale = new ContainerAppScale
-                    {
-                        MinReplicas = 1,
-                        MaxReplicas = 5,
-                        Rules =
-                            {
-                                new ContainerAppScaleRule
-                                {
-                                    Name = "httpscale",
-                                    Custom = new ContainerAppCustomScaleRule
-                                    {
-                                        CustomScaleRuleType = "http",
-                                        Metadata =
-                                        {
-                                            { "concurrentRequests", "50" }
-                                        }
-                                    }
-                                }
-                            }
-                    },
-                }
-            };
 
             // Create
-            var ContainerAppCollection = rg.GetContainerApps();
-            var resource = await ContainerAppCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, appData);
-            Assert.AreEqual(resourceName, resource.Value.Data.Name);
+            var resource = await CreateContainerApp(rg, envResource, resourceName);
+            Assert.AreEqual(resourceName, resource.Data.Name);
 
             // Exists
             var result = await ContainerAppCollection.ExistsAsync(resourceName);
@@ -111,7 +48,7 @@ namespace Azure.ResourceManager.AppContainers.Tests
             Assert.AreEqual(listResult[0].Data.Name, resourceName);
 
             // Delete
-            await resource.Value.DeleteAsync(WaitUntil.Completed);
+            await resource.DeleteAsync(WaitUntil.Completed);
             result = await ContainerAppCollection.ExistsAsync(resourceName);
             Assert.IsFalse(result);
         }

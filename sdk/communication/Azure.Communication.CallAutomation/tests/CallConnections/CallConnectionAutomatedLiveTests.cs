@@ -112,7 +112,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         /// 5. Cancel the add participant
         /// </summary>
         /// <returns></returns>
-        [Ignore("ignore until record asset infrastructure is in place")]
         [RecordedTest]
         public async Task CancelAddParticipantTest()
         {
@@ -165,13 +164,17 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                 await Task.Delay(3000);
 
                 // cancel add participant
-                await callConnection.CancelAddParticipantAsync(addParticipantResponse.Value.InvitationId);
+                CancelAddParticipantOperationOptions cancelOption = new CancelAddParticipantOperationOptions(addParticipantResponse.Value.InvitationId)
+                {
+                    OperationContext = operationContext,
+                };
+                await callConnection.CancelAddParticipantOperationAsync(cancelOption);
 
                 // wait for cancel event
-                var addParticipantCancelledEvent = await WaitForEvent<AddParticipantCancelled>(callConnectionId, TimeSpan.FromSeconds(20));
-                Assert.IsNotNull(addParticipantCancelledEvent);
-                Assert.IsTrue(addParticipantCancelledEvent is AddParticipantCancelled);
-                Assert.AreEqual(((AddParticipantCancelled)addParticipantCancelledEvent!).InvitationId, addParticipantResponse.Value.InvitationId);
+                var CancelAddParticipantSucceededEvent = await WaitForEvent<CancelAddParticipantSucceeded>(callConnectionId, TimeSpan.FromSeconds(20));
+                Assert.IsNotNull(CancelAddParticipantSucceededEvent);
+                Assert.IsTrue(CancelAddParticipantSucceededEvent is CancelAddParticipantSucceeded);
+                Assert.AreEqual(((CancelAddParticipantSucceeded)CancelAddParticipantSucceededEvent!).InvitationId, addParticipantResponse.Value.InvitationId);
             }
             catch (Exception ex)
             {

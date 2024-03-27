@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
@@ -21,7 +20,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             }
             int @from = default;
             int total = default;
-            Optional<IReadOnlyList<SparkSession>> sessions = default;
+            IReadOnlyList<SparkSession> sessions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("from"u8))
@@ -49,7 +48,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     continue;
                 }
             }
-            return new SparkSessionCollection(@from, total, Optional.ToList(sessions));
+            return new SparkSessionCollection(@from, total, sessions ?? new ChangeTrackingList<SparkSession>());
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> purviewResourceId = default;
+            string purviewResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("purviewResourceId"u8))
@@ -41,14 +41,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new PurviewConfiguration(purviewResourceId.Value);
+            return new PurviewConfiguration(purviewResourceId);
         }
 
         internal partial class PurviewConfigurationConverter : JsonConverter<PurviewConfiguration>
         {
             public override void Write(Utf8JsonWriter writer, PurviewConfiguration model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<PurviewConfiguration>(model);
             }
             public override PurviewConfiguration Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

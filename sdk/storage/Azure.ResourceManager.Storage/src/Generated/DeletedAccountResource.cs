@@ -9,19 +9,17 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Storage
 {
     /// <summary>
     /// A Class representing a DeletedAccount along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DeletedAccountResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDeletedAccountResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetDeletedAccount method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeletedAccountResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDeletedAccountResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetDeletedAccount method.
     /// </summary>
     public partial class DeletedAccountResource : ArmResource
     {
@@ -39,12 +37,15 @@ namespace Azure.ResourceManager.Storage
         private readonly DeletedAccountsRestOperations _deletedAccountRestClient;
         private readonly DeletedAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Storage/locations/deletedAccounts";
+
         /// <summary> Initializes a new instance of the <see cref="DeletedAccountResource"/> class for mocking. </summary>
         protected DeletedAccountResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DeletedAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeletedAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DeletedAccountResource(ArmClient client, DeletedAccountData data) : this(client, data.Id)
@@ -65,9 +66,6 @@ namespace Azure.ResourceManager.Storage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Storage/locations/deletedAccounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +99,14 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +138,14 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

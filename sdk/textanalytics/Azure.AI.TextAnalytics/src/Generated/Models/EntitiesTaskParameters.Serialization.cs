@@ -39,9 +39,9 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            Optional<StringIndexType> stringIndexType = default;
-            Optional<string> modelVersion = default;
-            Optional<bool> loggingOptOut = default;
+            StringIndexType? stringIndexType = default;
+            string modelVersion = default;
+            bool? loggingOptOut = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("stringIndexType"u8))
@@ -68,7 +68,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new EntitiesTaskParameters(Optional.ToNullable(loggingOptOut), modelVersion.Value, Optional.ToNullable(stringIndexType));
+            return new EntitiesTaskParameters(loggingOptOut, modelVersion, stringIndexType);
         }
     }
 }

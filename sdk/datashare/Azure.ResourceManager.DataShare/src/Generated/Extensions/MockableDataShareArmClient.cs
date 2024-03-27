@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataShare;
 
 namespace Azure.ResourceManager.DataShare.Mocking
 {
@@ -37,11 +35,11 @@ namespace Azure.ResourceManager.DataShare.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataShareAccountResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataShareAccountResource.CreateResourceIdentifier" /> to create a <see cref="DataShareAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataShareAccountResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataShareAccountResource.CreateResourceIdentifier" /> to create a <see cref="DataShareAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataShareAccountResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataShareAccountResource"/> object. </returns>
         public virtual DataShareAccountResource GetDataShareAccountResource(ResourceIdentifier id)
         {
             DataShareAccountResource.ValidateResourceId(id);
@@ -49,11 +47,11 @@ namespace Azure.ResourceManager.DataShare.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataShareConsumerInvitationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataShareConsumerInvitationResource.CreateResourceIdentifier" /> to create a <see cref="DataShareConsumerInvitationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataShareConsumerInvitationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataShareConsumerInvitationResource.CreateResourceIdentifier" /> to create a <see cref="DataShareConsumerInvitationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataShareConsumerInvitationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataShareConsumerInvitationResource"/> object. </returns>
         public virtual DataShareConsumerInvitationResource GetDataShareConsumerInvitationResource(ResourceIdentifier id)
         {
             DataShareConsumerInvitationResource.ValidateResourceId(id);
@@ -61,11 +59,11 @@ namespace Azure.ResourceManager.DataShare.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ShareDataSetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ShareDataSetResource.CreateResourceIdentifier" /> to create a <see cref="ShareDataSetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ShareDataSetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ShareDataSetResource.CreateResourceIdentifier" /> to create a <see cref="ShareDataSetResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ShareDataSetResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ShareDataSetResource"/> object. </returns>
         public virtual ShareDataSetResource GetShareDataSetResource(ResourceIdentifier id)
         {
             ShareDataSetResource.ValidateResourceId(id);
@@ -73,11 +71,11 @@ namespace Azure.ResourceManager.DataShare.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ShareDataSetMappingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ShareDataSetMappingResource.CreateResourceIdentifier" /> to create a <see cref="ShareDataSetMappingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ShareDataSetMappingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ShareDataSetMappingResource.CreateResourceIdentifier" /> to create a <see cref="ShareDataSetMappingResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ShareDataSetMappingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ShareDataSetMappingResource"/> object. </returns>
         public virtual ShareDataSetMappingResource GetShareDataSetMappingResource(ResourceIdentifier id)
         {
             ShareDataSetMappingResource.ValidateResourceId(id);
@@ -85,11 +83,11 @@ namespace Azure.ResourceManager.DataShare.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataShareInvitationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataShareInvitationResource.CreateResourceIdentifier" /> to create a <see cref="DataShareInvitationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataShareInvitationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataShareInvitationResource.CreateResourceIdentifier" /> to create a <see cref="DataShareInvitationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataShareInvitationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataShareInvitationResource"/> object. </returns>
         public virtual DataShareInvitationResource GetDataShareInvitationResource(ResourceIdentifier id)
         {
             DataShareInvitationResource.ValidateResourceId(id);
@@ -97,11 +95,11 @@ namespace Azure.ResourceManager.DataShare.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataShareResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataShareResource.CreateResourceIdentifier" /> to create a <see cref="DataShareResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataShareResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataShareResource.CreateResourceIdentifier" /> to create a <see cref="DataShareResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataShareResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataShareResource"/> object. </returns>
         public virtual DataShareResource GetDataShareResource(ResourceIdentifier id)
         {
             DataShareResource.ValidateResourceId(id);
@@ -109,11 +107,11 @@ namespace Azure.ResourceManager.DataShare.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProviderShareSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProviderShareSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="ProviderShareSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ProviderShareSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProviderShareSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="ProviderShareSubscriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProviderShareSubscriptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ProviderShareSubscriptionResource"/> object. </returns>
         public virtual ProviderShareSubscriptionResource GetProviderShareSubscriptionResource(ResourceIdentifier id)
         {
             ProviderShareSubscriptionResource.ValidateResourceId(id);
@@ -121,11 +119,11 @@ namespace Azure.ResourceManager.DataShare.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ShareSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ShareSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="ShareSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ShareSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ShareSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="ShareSubscriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ShareSubscriptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ShareSubscriptionResource"/> object. </returns>
         public virtual ShareSubscriptionResource GetShareSubscriptionResource(ResourceIdentifier id)
         {
             ShareSubscriptionResource.ValidateResourceId(id);
@@ -133,11 +131,11 @@ namespace Azure.ResourceManager.DataShare.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataShareSynchronizationSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataShareSynchronizationSettingResource.CreateResourceIdentifier" /> to create a <see cref="DataShareSynchronizationSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataShareSynchronizationSettingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataShareSynchronizationSettingResource.CreateResourceIdentifier" /> to create a <see cref="DataShareSynchronizationSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataShareSynchronizationSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataShareSynchronizationSettingResource"/> object. </returns>
         public virtual DataShareSynchronizationSettingResource GetDataShareSynchronizationSettingResource(ResourceIdentifier id)
         {
             DataShareSynchronizationSettingResource.ValidateResourceId(id);
@@ -145,11 +143,11 @@ namespace Azure.ResourceManager.DataShare.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataShareTriggerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataShareTriggerResource.CreateResourceIdentifier" /> to create a <see cref="DataShareTriggerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataShareTriggerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataShareTriggerResource.CreateResourceIdentifier" /> to create a <see cref="DataShareTriggerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataShareTriggerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataShareTriggerResource"/> object. </returns>
         public virtual DataShareTriggerResource GetDataShareTriggerResource(ResourceIdentifier id)
         {
             DataShareTriggerResource.ValidateResourceId(id);

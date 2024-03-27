@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.MachineLearningCompute;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.MachineLearningCompute.Mocking
         /// <term>Operation Id</term>
         /// <description>OperationalizationClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalizationClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the cluster. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.MachineLearningCompute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>OperationalizationClusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalizationClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

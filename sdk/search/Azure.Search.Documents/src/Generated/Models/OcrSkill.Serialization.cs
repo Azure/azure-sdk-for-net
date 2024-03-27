@@ -40,6 +40,11 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("detectOrientation");
                 }
             }
+            if (Optional.IsDefined(LineEnding))
+            {
+                writer.WritePropertyName("lineEnding"u8);
+                writer.WriteStringValue(LineEnding.Value.ToString());
+            }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
             if (Optional.IsDefined(Name))
@@ -61,14 +66,14 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<InputFieldMappingEntry>(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("outputs"u8);
             writer.WriteStartArray();
             foreach (var item in Outputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<OutputFieldMappingEntry>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -80,12 +85,13 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<OcrSkillLanguage?> defaultLanguageCode = default;
-            Optional<bool?> detectOrientation = default;
+            OcrSkillLanguage? defaultLanguageCode = default;
+            bool? detectOrientation = default;
+            LineEnding? lineEnding = default;
             string odataType = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> context = default;
+            string name = default;
+            string description = default;
+            string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
@@ -108,6 +114,15 @@ namespace Azure.Search.Documents.Indexes.Models
                         continue;
                     }
                     detectOrientation = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("lineEnding"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lineEnding = new LineEnding(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("@odata.type"u8))
@@ -151,7 +166,16 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new OcrSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(defaultLanguageCode), Optional.ToNullable(detectOrientation));
+            return new OcrSkill(
+                odataType,
+                name,
+                description,
+                context,
+                inputs,
+                outputs,
+                defaultLanguageCode,
+                detectOrientation,
+                lineEnding);
         }
     }
 }

@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Mocking
 {
@@ -37,11 +35,11 @@ namespace Azure.ResourceManager.Confluent.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ConfluentOrganizationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConfluentOrganizationResource.CreateResourceIdentifier" /> to create a <see cref="ConfluentOrganizationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ConfluentOrganizationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConfluentOrganizationResource.CreateResourceIdentifier" /> to create a <see cref="ConfluentOrganizationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConfluentOrganizationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ConfluentOrganizationResource"/> object. </returns>
         public virtual ConfluentOrganizationResource GetConfluentOrganizationResource(ResourceIdentifier id)
         {
             ConfluentOrganizationResource.ValidateResourceId(id);

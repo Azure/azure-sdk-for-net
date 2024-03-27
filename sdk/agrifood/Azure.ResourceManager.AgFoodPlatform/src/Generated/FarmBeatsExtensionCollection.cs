@@ -12,18 +12,16 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AgFoodPlatform
 {
     /// <summary>
-    /// A class representing a collection of <see cref="FarmBeatsExtensionResource" /> and their operations.
-    /// Each <see cref="FarmBeatsExtensionResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="FarmBeatsExtensionCollection" /> instance call the GetFarmBeatsExtensions method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="FarmBeatsExtensionResource"/> and their operations.
+    /// Each <see cref="FarmBeatsExtensionResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="FarmBeatsExtensionCollection"/> instance call the GetFarmBeatsExtensions method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class FarmBeatsExtensionCollection : ArmCollection, IEnumerable<FarmBeatsExtensionResource>, IAsyncEnumerable<FarmBeatsExtensionResource>
     {
@@ -65,6 +63,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <term>Operation Id</term>
         /// <description>FarmBeatsExtensions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatsExtensionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="farmBeatsExtensionId"> farmBeatsExtensionId to be queried. </param>
@@ -101,6 +107,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FarmBeatsExtensions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatsExtensionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,6 +153,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <term>Operation Id</term>
         /// <description>FarmBeatsExtensions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatsExtensionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="farmBeatsExtensionIds"> FarmBeatsExtension ids. </param>
@@ -150,7 +172,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FarmBeatsExtensionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="FarmBeatsExtensionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FarmBeatsExtensionResource> GetAllAsync(IEnumerable<string> farmBeatsExtensionIds = null, IEnumerable<string> farmBeatsExtensionNames = null, IEnumerable<string> extensionCategories = null, IEnumerable<string> publisherIds = null, int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _farmBeatsExtensionRestClient.CreateListRequest(farmBeatsExtensionIds, farmBeatsExtensionNames, extensionCategories, publisherIds, pageSizeHint);
@@ -169,6 +191,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <term>Operation Id</term>
         /// <description>FarmBeatsExtensions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatsExtensionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="farmBeatsExtensionIds"> FarmBeatsExtension ids. </param>
@@ -180,7 +210,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FarmBeatsExtensionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FarmBeatsExtensionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FarmBeatsExtensionResource> GetAll(IEnumerable<string> farmBeatsExtensionIds = null, IEnumerable<string> farmBeatsExtensionNames = null, IEnumerable<string> extensionCategories = null, IEnumerable<string> publisherIds = null, int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _farmBeatsExtensionRestClient.CreateListRequest(farmBeatsExtensionIds, farmBeatsExtensionNames, extensionCategories, publisherIds, pageSizeHint);
@@ -198,6 +228,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FarmBeatsExtensions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatsExtensionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -234,6 +272,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <term>Operation Id</term>
         /// <description>FarmBeatsExtensions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatsExtensionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="farmBeatsExtensionId"> farmBeatsExtensionId to be queried. </param>
@@ -268,6 +314,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FarmBeatsExtensions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatsExtensionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -305,6 +359,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FarmBeatsExtensions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatsExtensionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

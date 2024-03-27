@@ -21,12 +21,6 @@
         "description": "The application client ID used to run tests."
       }
     },
-    "testApplicationSecret": {
-      "type": "string",
-      "metadata": {
-        "description": "The application client secret used to run tests."
-      }
-    },
     "testApplicationOid": {
       "type": "string",
       "metadata": {
@@ -89,7 +83,7 @@
     }
   },
   "variables": {
-    "cloudHsmApiVersion": "2022-08-31-preview",
+    "cloudHsmApiVersion": "2023-12-10-preview",
     "cloudHsmName": "sdk-test-chsm",
     "dedicatedhsmApiVersion": "2021-11-30",
     "dedicatedHsmName": "sdk-test-dhsm",
@@ -176,10 +170,6 @@
     "AZURE_CLIENT_ID": {
       "type": "string",
       "value": "[parameters('testApplicationId')]"
-    },
-    "AZURE_CLIENT_SECRET": {
-      "type": "string",
-      "value": "[parameters('testApplicationSecret')]"
     },
     "RESOURCE_GROUP_NAME": {
       "type": "string",

@@ -8,15 +8,15 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter
 {
     /// <summary>
-    /// Options for creating a job queue.
+    /// Options for creating a queue.
     /// </summary>
     public class CreateQueueOptions
     {
         /// <summary>
-        /// Public constructor.
+        /// Initializes a new instance of CreateQueueOptions.
         /// </summary>
-        /// <param name="queueId"> The id of this queue. </param>
-        /// <param name="distributionPolicyId"> The ID of the distribution policy that will determine how a job is distributed to workers. </param>
+        /// <param name="queueId"> Id of a queue. </param>
+        /// <param name="distributionPolicyId"> Id of a distribution policy that will determine how a job is distributed to workers. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="distributionPolicyId"/> is null. </exception>
         public CreateQueueOptions(string queueId, string distributionPolicyId)
@@ -29,7 +29,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary>
-        /// Unique key that identifies this queue.
+        /// Id of a queue.
         /// </summary>
         public string QueueId { get; }
 
@@ -38,9 +38,10 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         public string DistributionPolicyId { get; }
 
-        /// <summary> The name of this queue. </summary>
+        /// <summary> Friendly name of this queue. </summary>
         public string Name { get; set; }
-        /// <summary> (Optional) The ID of the exception policy that determines various job escalation rules. </summary>
+
+        /// <summary> Id of an exception policy that determines various job escalation rules. </summary>
         public string ExceptionPolicyId { get; set; }
 
         /// <summary>

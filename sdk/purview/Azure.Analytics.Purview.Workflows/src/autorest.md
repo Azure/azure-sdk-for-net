@@ -7,8 +7,16 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-- https://github.com/Azure/azure-rest-api-specs/blob/3a1ca5a2130250382e65e4585d8e88bfab6d93e4/specification/purview/data-plane/Azure.Analytics.Purview.Workflow/preview/2022-05-01-preview/purviewWorkflow.json
+- https://github.com/Azure/azure-rest-api-specs/blob/afa158ef56a05f6603924f4a493817cec332b113/specification/purview/data-plane/Azure.Analytics.Purview.Workflow/preview/2023-10-01-preview/purviewWorkflow.json
 security: AADToken
 security-scopes: https://purview.azure.net/.default
 
 ```
+
+
+
+
+
+
+
+

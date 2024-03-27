@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Mocking
 {
@@ -37,11 +35,11 @@ namespace Azure.ResourceManager.Peering.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PeerAsnResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PeerAsnResource.CreateResourceIdentifier" /> to create a <see cref="PeerAsnResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PeerAsnResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PeerAsnResource.CreateResourceIdentifier" /> to create a <see cref="PeerAsnResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PeerAsnResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PeerAsnResource"/> object. </returns>
         public virtual PeerAsnResource GetPeerAsnResource(ResourceIdentifier id)
         {
             PeerAsnResource.ValidateResourceId(id);
@@ -49,11 +47,11 @@ namespace Azure.ResourceManager.Peering.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PeeringRegisteredAsnResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PeeringRegisteredAsnResource.CreateResourceIdentifier" /> to create a <see cref="PeeringRegisteredAsnResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PeeringRegisteredAsnResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PeeringRegisteredAsnResource.CreateResourceIdentifier" /> to create a <see cref="PeeringRegisteredAsnResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PeeringRegisteredAsnResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PeeringRegisteredAsnResource"/> object. </returns>
         public virtual PeeringRegisteredAsnResource GetPeeringRegisteredAsnResource(ResourceIdentifier id)
         {
             PeeringRegisteredAsnResource.ValidateResourceId(id);
@@ -61,11 +59,11 @@ namespace Azure.ResourceManager.Peering.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PeeringRegisteredPrefixResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PeeringRegisteredPrefixResource.CreateResourceIdentifier" /> to create a <see cref="PeeringRegisteredPrefixResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PeeringRegisteredPrefixResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PeeringRegisteredPrefixResource.CreateResourceIdentifier" /> to create a <see cref="PeeringRegisteredPrefixResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PeeringRegisteredPrefixResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PeeringRegisteredPrefixResource"/> object. </returns>
         public virtual PeeringRegisteredPrefixResource GetPeeringRegisteredPrefixResource(ResourceIdentifier id)
         {
             PeeringRegisteredPrefixResource.ValidateResourceId(id);
@@ -73,11 +71,11 @@ namespace Azure.ResourceManager.Peering.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PeeringResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PeeringResource.CreateResourceIdentifier" /> to create a <see cref="PeeringResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PeeringResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PeeringResource.CreateResourceIdentifier" /> to create a <see cref="PeeringResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PeeringResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PeeringResource"/> object. </returns>
         public virtual PeeringResource GetPeeringResource(ResourceIdentifier id)
         {
             PeeringResource.ValidateResourceId(id);
@@ -85,11 +83,11 @@ namespace Azure.ResourceManager.Peering.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ConnectionMonitorTestResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConnectionMonitorTestResource.CreateResourceIdentifier" /> to create a <see cref="ConnectionMonitorTestResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ConnectionMonitorTestResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConnectionMonitorTestResource.CreateResourceIdentifier" /> to create a <see cref="ConnectionMonitorTestResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConnectionMonitorTestResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ConnectionMonitorTestResource"/> object. </returns>
         public virtual ConnectionMonitorTestResource GetConnectionMonitorTestResource(ResourceIdentifier id)
         {
             ConnectionMonitorTestResource.ValidateResourceId(id);
@@ -97,11 +95,11 @@ namespace Azure.ResourceManager.Peering.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PeeringServicePrefixResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PeeringServicePrefixResource.CreateResourceIdentifier" /> to create a <see cref="PeeringServicePrefixResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PeeringServicePrefixResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PeeringServicePrefixResource.CreateResourceIdentifier" /> to create a <see cref="PeeringServicePrefixResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PeeringServicePrefixResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PeeringServicePrefixResource"/> object. </returns>
         public virtual PeeringServicePrefixResource GetPeeringServicePrefixResource(ResourceIdentifier id)
         {
             PeeringServicePrefixResource.ValidateResourceId(id);
@@ -109,11 +107,11 @@ namespace Azure.ResourceManager.Peering.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PeeringServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PeeringServiceResource.CreateResourceIdentifier" /> to create a <see cref="PeeringServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PeeringServiceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PeeringServiceResource.CreateResourceIdentifier" /> to create a <see cref="PeeringServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PeeringServiceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PeeringServiceResource"/> object. </returns>
         public virtual PeeringServiceResource GetPeeringServiceResource(ResourceIdentifier id)
         {
             PeeringServiceResource.ValidateResourceId(id);

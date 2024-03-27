@@ -6,19 +6,25 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> Describes a queue selector that will be attached to the job. </summary>
+    /// <summary> Describes a queue selector that will be attached to a job. </summary>
     public partial class StaticQueueSelectorAttachment : QueueSelectorAttachment
     {
-        /// <summary> Initializes a new instance of StaticQueueSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticQueueSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of QueueSelectorAttachment. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="queueSelector"> The queue selector to attach. </param>
-        internal StaticQueueSelectorAttachment(string kind, RouterQueueSelector queueSelector) : base(kind)
+        internal StaticQueueSelectorAttachment(QueueSelectorAttachmentKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, RouterQueueSelector queueSelector) : base(kind, serializedAdditionalRawData)
         {
             QueueSelector = queueSelector;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StaticQueueSelectorAttachment"/> for deserialization. </summary>
+        internal StaticQueueSelectorAttachment()
+        {
         }
 
         /// <summary> The queue selector to attach. </summary>

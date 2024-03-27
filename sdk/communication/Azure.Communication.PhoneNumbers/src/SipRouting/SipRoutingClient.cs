@@ -69,15 +69,15 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         #region private constructors
 
         private SipRoutingClient(ConnectionString connectionString, SipRoutingClientOptions options)
-            : this(connectionString.GetRequired("endpoint"), options.BuildHttpPipeline(connectionString), options)
+            : this(connectionString.GetRequired("endpoint"), options.BuildSipRoutingHttpPipeline(connectionString), options)
         { }
 
         private SipRoutingClient(string endpoint, AzureKeyCredential keyCredential, SipRoutingClientOptions options)
-            : this(endpoint, options.BuildHttpPipeline(keyCredential), options)
+            : this(endpoint, options.BuildSipRoutingHttpPipeline(keyCredential), options)
         { }
 
         private SipRoutingClient(string endpoint, TokenCredential tokenCredential, SipRoutingClientOptions options)
-            : this(endpoint, options.BuildHttpPipeline(tokenCredential), options)
+            : this(endpoint, options.BuildSipRoutingHttpPipeline(tokenCredential), options)
         { }
 
         private SipRoutingClient(string endpoint, HttpPipeline httpPipeline, SipRoutingClientOptions options)

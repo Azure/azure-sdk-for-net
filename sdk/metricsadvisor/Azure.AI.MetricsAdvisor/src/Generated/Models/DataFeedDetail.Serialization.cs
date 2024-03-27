@@ -42,7 +42,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartArray();
             foreach (var item in Metrics)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DataFeedMetric>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Dimension))
@@ -51,7 +51,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WriteStartArray();
                 foreach (var item in Dimension)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataFeedDimension>(item);
                 }
                 writer.WriteEndArray();
             }

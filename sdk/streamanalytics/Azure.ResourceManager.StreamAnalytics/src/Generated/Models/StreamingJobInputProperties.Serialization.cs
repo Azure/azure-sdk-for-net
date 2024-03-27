@@ -5,27 +5,48 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamingJobInputProperties : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownInputProperties))]
+    public partial class StreamingJobInputProperties : IUtf8JsonSerializable, IJsonModel<StreamingJobInputProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingJobInputProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StreamingJobInputProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamingJobInputProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StreamingJobInputProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(InputPropertiesType);
             if (Optional.IsDefined(Serialization))
             {
                 writer.WritePropertyName("serialization"u8);
-                writer.WriteObjectValue(Serialization);
+                writer.WriteObjectValue<StreamAnalyticsDataSerialization>(Serialization, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Diagnostics))
+            {
+                writer.WritePropertyName("diagnostics"u8);
+                writer.WriteObjectValue<StreamingJobDiagnostics>(Diagnostics, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsDefined(Compression))
             {
                 writer.WritePropertyName("compression"u8);
-                writer.WriteObjectValue(Compression);
+                writer.WriteObjectValue<StreamingCompression>(Compression, options);
             }
             if (Optional.IsDefined(PartitionKey))
             {
@@ -35,13 +56,42 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(WatermarkSettings))
             {
                 writer.WritePropertyName("watermarkSettings"u8);
-                writer.WriteObjectValue(WatermarkSettings);
+                writer.WriteObjectValue<StreamingJobInputWatermarkProperties>(WatermarkSettings, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static StreamingJobInputProperties DeserializeStreamingJobInputProperties(JsonElement element)
+        StreamingJobInputProperties IJsonModel<StreamingJobInputProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamingJobInputProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StreamingJobInputProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamingJobInputProperties(document.RootElement, options);
+        }
+
+        internal static StreamingJobInputProperties DeserializeStreamingJobInputProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -50,11 +100,42 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Reference": return ReferenceInputProperties.DeserializeReferenceInputProperties(element);
-                    case "Stream": return StreamInputProperties.DeserializeStreamInputProperties(element);
+                    case "Reference": return ReferenceInputProperties.DeserializeReferenceInputProperties(element, options);
+                    case "Stream": return StreamInputProperties.DeserializeStreamInputProperties(element, options);
                 }
             }
-            return UnknownInputProperties.DeserializeUnknownInputProperties(element);
+            return UnknownInputProperties.DeserializeUnknownInputProperties(element, options);
         }
+
+        BinaryData IPersistableModel<StreamingJobInputProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamingJobInputProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StreamingJobInputProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        StreamingJobInputProperties IPersistableModel<StreamingJobInputProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamingJobInputProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStreamingJobInputProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StreamingJobInputProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StreamingJobInputProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

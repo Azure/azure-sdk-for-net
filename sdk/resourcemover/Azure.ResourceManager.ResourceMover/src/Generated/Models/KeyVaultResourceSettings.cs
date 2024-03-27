@@ -5,22 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     /// <summary> Defines the key vault resource settings. </summary>
     public partial class KeyVaultResourceSettings : MoverResourceSettings
     {
-        /// <summary> Initializes a new instance of KeyVaultResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultResourceSettings"/>. </summary>
         public KeyVaultResourceSettings()
         {
             ResourceType = "Microsoft.KeyVault/vaults";
         }
 
-        /// <summary> Initializes a new instance of KeyVaultResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultResourceSettings"/>. </summary>
         /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         /// <param name="targetResourceGroupName"> Gets or sets the target resource group name. </param>
-        internal KeyVaultResourceSettings(string resourceType, string targetResourceName, string targetResourceGroupName) : base(resourceType, targetResourceName, targetResourceGroupName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultResourceSettings(string resourceType, string targetResourceName, string targetResourceGroupName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(resourceType, targetResourceName, targetResourceGroupName, serializedAdditionalRawData)
         {
             ResourceType = resourceType ?? "Microsoft.KeyVault/vaults";
         }

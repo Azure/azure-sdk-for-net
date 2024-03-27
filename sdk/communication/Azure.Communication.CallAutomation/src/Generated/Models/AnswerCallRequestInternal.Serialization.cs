@@ -27,22 +27,22 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(MediaStreamingConfiguration))
             {
                 writer.WritePropertyName("mediaStreamingConfiguration"u8);
-                writer.WriteObjectValue(MediaStreamingConfiguration);
+                writer.WriteObjectValue<MediaStreamingOptionsInternal>(MediaStreamingConfiguration);
             }
             if (Optional.IsDefined(TranscriptionConfiguration))
             {
                 writer.WritePropertyName("transcriptionConfiguration"u8);
-                writer.WriteObjectValue(TranscriptionConfiguration);
+                writer.WriteObjectValue<TranscriptionOptionsInternal>(TranscriptionConfiguration);
             }
-            if (Optional.IsDefined(AzureCognitiveServicesEndpointUrl))
+            if (Optional.IsDefined(CallIntelligenceOptions))
             {
-                writer.WritePropertyName("azureCognitiveServicesEndpointUrl"u8);
-                writer.WriteStringValue(AzureCognitiveServicesEndpointUrl);
+                writer.WritePropertyName("callIntelligenceOptions"u8);
+                writer.WriteObjectValue<CallIntelligenceOptionsInternal>(CallIntelligenceOptions);
             }
-            if (Optional.IsDefined(AnsweredByIdentifier))
+            if (Optional.IsDefined(AnsweredBy))
             {
-                writer.WritePropertyName("answeredByIdentifier"u8);
-                writer.WriteObjectValue(AnsweredByIdentifier);
+                writer.WritePropertyName("answeredBy"u8);
+                writer.WriteObjectValue<CommunicationUserIdentifierModel>(AnsweredBy);
             }
             writer.WriteEndObject();
         }

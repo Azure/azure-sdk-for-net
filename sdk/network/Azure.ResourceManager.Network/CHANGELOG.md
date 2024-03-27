@@ -1,6 +1,6 @@
 # Release History
 
-## 1.6.0-beta.2 (Unreleased)
+## 1.8.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -8,9 +8,29 @@
 
 ### Bugs Fixed
 
+### Other Changes
+
+## 1.7.0 (2024-01-12)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-06' to 'package-2023-09'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/2f74f79b243484837a6d7b6dfa78b3e16274d006/specification/network/resource-manager/readme.md
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
+## 1.6.0 (2023-11-21)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-05' to 'package-2023-06'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/4b55e2d0e29fb2e829985485c9150f46157c3b80/specification/network/resource-manager/readme.md
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Bugs Fixed
+
 - Fix an issue that the `DeserializeHopLink` can't handle empty `resourceId`.
 
 ### Other Changes
+
+- Upgraded Azure.ResourceManager to 1.9.0.
 
 ## 1.6.0-beta.1 (2023-09-25)
 

@@ -12,14 +12,14 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Represents a schedule for indexer execution. </summary>
     public partial class IndexingSchedule
     {
-        /// <summary> Initializes a new instance of IndexingSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="IndexingSchedule"/>. </summary>
         /// <param name="interval"> The interval of time between indexer executions. </param>
         public IndexingSchedule(TimeSpan interval)
         {
             Interval = interval;
         }
 
-        /// <summary> Initializes a new instance of IndexingSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="IndexingSchedule"/>. </summary>
         /// <param name="interval"> The interval of time between indexer executions. </param>
         /// <param name="startTime"> The time when an indexer should start running. </param>
         internal IndexingSchedule(TimeSpan interval, DateTimeOffset? startTime)

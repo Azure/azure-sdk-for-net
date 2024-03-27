@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -21,20 +20,41 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             IndexerExecutionStatus status = default;
-            Optional<string> errorMessage = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
+            IndexerExecutionStatusDetail? statusDetail = default;
+            IndexerState currentState = default;
+            string errorMessage = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
             IReadOnlyList<SearchIndexerError> errors = default;
             IReadOnlyList<SearchIndexerWarning> warnings = default;
             int itemsProcessed = default;
             int itemsFailed = default;
-            Optional<string> initialTrackingState = default;
-            Optional<string> finalTrackingState = default;
+            string initialTrackingState = default;
+            string finalTrackingState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString().ToIndexerExecutionStatus();
+                    continue;
+                }
+                if (property.NameEquals("statusDetail"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        statusDetail = null;
+                        continue;
+                    }
+                    statusDetail = new IndexerExecutionStatusDetail(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("currentState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    currentState = IndexerState.DeserializeIndexerState(property.Value);
                     continue;
                 }
                 if (property.NameEquals("errorMessage"u8))
@@ -102,7 +122,19 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new IndexerExecutionResult(status, errorMessage.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), errors, warnings, itemsProcessed, itemsFailed, initialTrackingState.Value, finalTrackingState.Value);
+            return new IndexerExecutionResult(
+                status,
+                statusDetail,
+                currentState,
+                errorMessage,
+                startTime,
+                endTime,
+                errors,
+                warnings,
+                itemsProcessed,
+                itemsFailed,
+                initialTrackingState,
+                finalTrackingState);
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
@@ -19,10 +18,10 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            Optional<double> score = default;
-            Optional<string> key = default;
-            Optional<string> text = default;
-            Optional<string> highlights = default;
+            double? score = default;
+            string key = default;
+            string text = default;
+            string highlights = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -59,7 +58,7 @@ namespace Azure.Search.Documents.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new QueryAnswerResult(Optional.ToNullable(score), key.Value, text.Value, highlights.Value, additionalProperties);
+            return new QueryAnswerResult(score, key, text, highlights, additionalProperties);
         }
     }
 }

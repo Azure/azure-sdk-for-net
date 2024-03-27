@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -100,7 +99,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Gets status of the database. </summary>
-        /// <param name="id"> The String to use. </param>
+        /// <param name="id"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<MetastoreRequestSuccessResponse>> GetDatabaseOperationsAsync(string id, CancellationToken cancellationToken = default)
         {
@@ -118,7 +117,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Gets status of the database. </summary>
-        /// <param name="id"> The String to use. </param>
+        /// <param name="id"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MetastoreRequestSuccessResponse> GetDatabaseOperations(string id, CancellationToken cancellationToken = default)
         {
@@ -174,7 +173,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Remove files in Syms. </summary>
-        /// <param name="id"> The String to use. </param>
+        /// <param name="id"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DeleteAsync(string id, CancellationToken cancellationToken = default)
         {
@@ -192,7 +191,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Remove files in Syms. </summary>
-        /// <param name="id"> The String to use. </param>
+        /// <param name="id"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Delete(string id, CancellationToken cancellationToken = default)
         {

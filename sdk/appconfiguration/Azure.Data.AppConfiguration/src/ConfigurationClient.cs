@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -14,8 +15,10 @@ namespace Azure.Data.AppConfiguration
     /// <summary>
     /// The client to use for interacting with the Azure Configuration Store.
     /// </summary>
+    [CodeGenSuppress("ConfigurationClient", typeof(Uri), typeof(AzureKeyCredential), typeof(ConfigurationClientOptions))]
     public partial class ConfigurationClient
     {
+        private const string OTelAttributeKey = "az.appconfiguration.key";
         private readonly SyncTokenPolicy _syncTokenPolicy;
 
         /// <summary>
@@ -179,7 +182,7 @@ namespace Azure.Data.AppConfiguration
         public virtual async Task<Response<ConfigurationSetting>> AddConfigurationSettingAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(AddConfigurationSetting)}");
-            scope.AddAttribute("key", setting?.Key);
+            scope.AddAttribute(OTelAttributeKey, setting?.Key);
             scope.Start();
 
             try
@@ -219,7 +222,7 @@ namespace Azure.Data.AppConfiguration
         public virtual Response<ConfigurationSetting> AddConfigurationSetting(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(AddConfigurationSetting)}");
-            scope.AddAttribute("key", setting?.Key);
+            scope.AddAttribute(OTelAttributeKey, setting?.Key);
             scope.Start();
 
             try
@@ -291,7 +294,7 @@ namespace Azure.Data.AppConfiguration
         {
             Argument.AssertNotNull(setting, nameof(setting));
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetConfigurationSetting)}");
-            scope.AddAttribute("key", setting?.Key);
+            scope.AddAttribute(OTelAttributeKey, setting?.Key);
             scope.Start();
 
             try
@@ -333,7 +336,7 @@ namespace Azure.Data.AppConfiguration
         {
             Argument.AssertNotNull(setting, nameof(setting));
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetConfigurationSetting)}");
-            scope.AddAttribute("key", setting?.Key);
+            scope.AddAttribute(OTelAttributeKey, setting?.Key);
             scope.Start();
 
             try
@@ -425,7 +428,7 @@ namespace Azure.Data.AppConfiguration
         private async Task<Response> DeleteConfigurationSettingAsync(string key, string label, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(DeleteConfigurationSetting)}");
-            scope.AddAttribute("key", key);
+            scope.AddAttribute(OTelAttributeKey, key);
             scope.Start();
 
             try
@@ -454,7 +457,7 @@ namespace Azure.Data.AppConfiguration
         private Response DeleteConfigurationSetting(string key, string label, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(DeleteConfigurationSetting)}");
-            scope.AddAttribute("key", key);
+            scope.AddAttribute(OTelAttributeKey, key);
             scope.Start();
 
             try
@@ -578,7 +581,7 @@ namespace Azure.Data.AppConfiguration
         internal virtual async Task<Response<ConfigurationSetting>> GetConfigurationSettingAsync(string key, string label, DateTimeOffset? acceptDateTime, MatchConditions conditions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSetting)}");
-            scope.AddAttribute(nameof(key), key);
+            scope.AddAttribute(OTelAttributeKey, key);
             scope.Start();
 
             try
@@ -614,7 +617,7 @@ namespace Azure.Data.AppConfiguration
         internal virtual Response<ConfigurationSetting> GetConfigurationSetting(string key, string label, DateTimeOffset? acceptDateTime, MatchConditions conditions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSetting)}");
-            scope.AddAttribute(nameof(key), key);
+            scope.AddAttribute(OTelAttributeKey, key);
             scope.Start();
 
             try
@@ -653,10 +656,23 @@ namespace Azure.Data.AppConfiguration
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
             IEnumerable<string> fieldsString = selector.Fields.Split();
+            int nextConditionsIndex = 0;
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(key, label, null, dateTime, fieldsString, null, null, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, null, null, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettings", "items", "@nextLink", context);
+            context.AddClassifier(304, false);
+
+            HttpMessage FirstPageRequest(int? pageSizeHint)
+            {
+                MatchConditions conditions = (nextConditionsIndex < selector.MatchConditions.Count) ? selector.MatchConditions[nextConditionsIndex++] : null;
+                return CreateGetConfigurationSettingsRequest(key, label, null, dateTime, fieldsString, null, conditions, context);
+            };
+
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink)
+            {
+                MatchConditions conditions = (nextConditionsIndex < selector.MatchConditions.Count) ? selector.MatchConditions[nextConditionsIndex++] : null;
+                return CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, null, conditions, context);
+            }
+
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ParseGetConfigurationSettingsResponse, ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettings", context);
         }
 
         /// <summary>
@@ -673,10 +689,23 @@ namespace Azure.Data.AppConfiguration
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
             IEnumerable<string> fieldsString = selector.Fields.Split();
+            int nextConditionsIndex = 0;
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(key, label, null, dateTime, fieldsString, null, null, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, null, null, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettings", "items", "@nextLink", context);
+            context.AddClassifier(304, false);
+
+            HttpMessage FirstPageRequest(int? pageSizeHint)
+            {
+                MatchConditions conditions = (nextConditionsIndex < selector.MatchConditions.Count) ? selector.MatchConditions[nextConditionsIndex++] : null;
+                return CreateGetConfigurationSettingsRequest(key, label, null, dateTime, fieldsString, null, conditions, context);
+            };
+
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink)
+            {
+                MatchConditions conditions = (nextConditionsIndex < selector.MatchConditions.Count) ? selector.MatchConditions[nextConditionsIndex++] : null;
+                return CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, null, conditions, context);
+            }
+
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ParseGetConfigurationSettingsResponse, ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettings", context);
         }
 
         /// <summary>
@@ -1356,7 +1385,7 @@ namespace Azure.Data.AppConfiguration
         private async ValueTask<Response<ConfigurationSetting>> SetReadOnlyAsync(string key, string label, MatchConditions requestOptions, bool isReadOnly, bool async, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetReadOnly)}");
-            scope.AddAttribute("key", key);
+            scope.AddAttribute(OTelAttributeKey, key);
             scope.Start();
 
             try
@@ -1399,6 +1428,46 @@ namespace Azure.Data.AppConfiguration
         {
             Argument.AssertNotNull(token, nameof(token));
             _syncTokenPolicy.AddToken(token);
+        }
+
+        /// <summary>
+        /// Parses the response of a <see cref="GetConfigurationSettings(SettingSelector, CancellationToken)"/> request.
+        /// The "@nextLink" JSON property is not reliable since the service does not return a response body for 304
+        /// responses. This method also attempts to extract the next link address from the "Link" header.
+        /// </summary>
+        private (List<ConfigurationSetting> Values, string NextLink) ParseGetConfigurationSettingsResponse(Response response)
+        {
+            var values = new List<ConfigurationSetting>();
+            string nextLink = null;
+
+            if (response.Status == 200)
+            {
+                var document = response.ContentStream != null ? JsonDocument.Parse(response.ContentStream) : JsonDocument.Parse(response.Content);
+
+                if (document.RootElement.TryGetProperty("items", out var itemsValue))
+                {
+                    foreach (var jsonItem in itemsValue.EnumerateArray())
+                    {
+                        ConfigurationSetting setting = ConfigurationServiceSerializer.ReadSetting(jsonItem);
+                        values.Add(setting);
+                    }
+                }
+
+                if (document.RootElement.TryGetProperty("@nextLink", out var nextLinkValue))
+                {
+                    nextLink = nextLinkValue.GetString();
+                }
+            }
+
+            // The "Link" header is formatted as:
+            // <nextLink>; rel="next"
+            if (nextLink == null && response.Headers.TryGetValue("Link", out string linkHeader))
+            {
+                int nextLinkEndIndex = linkHeader.IndexOf('>');
+                nextLink = linkHeader.Substring(1, nextLinkEndIndex - 1);
+            }
+
+            return (values, nextLink);
         }
 
         private static RequestContext CreateRequestContext(ErrorOptions errorOptions, CancellationToken cancellationToken)

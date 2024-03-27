@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.SecurityInsights.Mocking;
 
 namespace Azure.ResourceManager.SecurityInsights
@@ -34,9 +34,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityInsightsAlertRuleResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsAlertRuleResource"/> object. </returns>
         public static SecurityInsightsAlertRuleResource GetSecurityInsightsAlertRuleResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsAlertRuleResource(id);
         }
 
@@ -50,9 +53,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityInsightsAlertRuleActionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsAlertRuleActionResource"/> object. </returns>
         public static SecurityInsightsAlertRuleActionResource GetSecurityInsightsAlertRuleActionResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsAlertRuleActionResource(id);
         }
 
@@ -66,9 +72,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityInsightsAlertRuleTemplateResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsAlertRuleTemplateResource"/> object. </returns>
         public static SecurityInsightsAlertRuleTemplateResource GetSecurityInsightsAlertRuleTemplateResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsAlertRuleTemplateResource(id);
         }
 
@@ -82,9 +91,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityInsightsAutomationRuleResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsAutomationRuleResource"/> object. </returns>
         public static SecurityInsightsAutomationRuleResource GetSecurityInsightsAutomationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsAutomationRuleResource(id);
         }
 
@@ -98,9 +110,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityInsightsBookmarkResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsBookmarkResource"/> object. </returns>
         public static SecurityInsightsBookmarkResource GetSecurityInsightsBookmarkResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsBookmarkResource(id);
         }
 
@@ -114,9 +129,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityInsightsDataConnectorResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsDataConnectorResource"/> object. </returns>
         public static SecurityInsightsDataConnectorResource GetSecurityInsightsDataConnectorResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsDataConnectorResource(id);
         }
 
@@ -130,9 +148,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityInsightsIncidentResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsIncidentResource"/> object. </returns>
         public static SecurityInsightsIncidentResource GetSecurityInsightsIncidentResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsIncidentResource(id);
         }
 
@@ -146,9 +167,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityInsightsIncidentCommentResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsIncidentCommentResource"/> object. </returns>
         public static SecurityInsightsIncidentCommentResource GetSecurityInsightsIncidentCommentResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsIncidentCommentResource(id);
         }
 
@@ -162,9 +186,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityInsightsIncidentRelationResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsIncidentRelationResource"/> object. </returns>
         public static SecurityInsightsIncidentRelationResource GetSecurityInsightsIncidentRelationResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsIncidentRelationResource(id);
         }
 
@@ -178,9 +205,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityInsightsSentinelOnboardingStateResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsSentinelOnboardingStateResource"/> object. </returns>
         public static SecurityInsightsSentinelOnboardingStateResource GetSecurityInsightsSentinelOnboardingStateResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsSentinelOnboardingStateResource(id);
         }
 
@@ -194,9 +224,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityMLAnalyticsSettingResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityMLAnalyticsSettingResource"/> object. </returns>
         public static SecurityMLAnalyticsSettingResource GetSecurityMLAnalyticsSettingResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityInsightsArmClient(client).GetSecurityMLAnalyticsSettingResource(id);
         }
 
@@ -210,9 +243,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityInsightsThreatIntelligenceIndicatorResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/> object. </returns>
         public static SecurityInsightsThreatIntelligenceIndicatorResource GetSecurityInsightsThreatIntelligenceIndicatorResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsThreatIntelligenceIndicatorResource(id);
         }
 
@@ -226,9 +262,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityInsightsWatchlistResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsWatchlistResource"/> object. </returns>
         public static SecurityInsightsWatchlistResource GetSecurityInsightsWatchlistResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsWatchlistResource(id);
         }
 
@@ -242,9 +281,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityInsightsWatchlistItemResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsWatchlistItemResource"/> object. </returns>
         public static SecurityInsightsWatchlistItemResource GetSecurityInsightsWatchlistItemResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsWatchlistItemResource(id);
         }
 
@@ -258,9 +300,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/> object. </returns>
         public static OperationalInsightsWorkspaceSecurityInsightsResource GetOperationalInsightsWorkspaceSecurityInsightsResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityInsightsArmClient(client).GetOperationalInsightsWorkspaceSecurityInsightsResource(id);
         }
     }

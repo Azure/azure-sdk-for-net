@@ -28,6 +28,11 @@ namespace Azure.Search.Documents.Models
             AnswerType = answerType;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QueryAnswer"/> class.
+        /// </summary>
+        internal QueryAnswer() { }
+
         /// <summary> A value that specifies whether <see cref="SemanticSearchResults.Answers"/> should be returned as part of the search response. </summary>
         public QueryAnswerType AnswerType { get; internal set; }
 

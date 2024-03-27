@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the Application Insights component resource. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +120,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>WebTests_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebTestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="webTestName"> The name of the Application Insights WebTest resource. </param>
@@ -129,6 +150,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebTests_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebTestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -160,6 +189,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>WorkbookTemplates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkbookTemplateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the Application Insights component resource. </param>
@@ -182,6 +219,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkbookTemplates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkbookTemplateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,6 +258,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>MyWorkbooks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MyWorkbookResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the Application Insights component resource. </param>
@@ -235,6 +288,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MyWorkbooks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MyWorkbookResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,6 +327,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>Workbooks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkbookResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the resource. </param>
@@ -289,6 +358,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workbooks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkbookResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

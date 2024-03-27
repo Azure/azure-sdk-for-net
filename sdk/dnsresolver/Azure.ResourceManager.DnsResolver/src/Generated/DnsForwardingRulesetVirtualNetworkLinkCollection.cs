@@ -12,17 +12,15 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DnsResolver
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DnsForwardingRulesetVirtualNetworkLinkResource" /> and their operations.
-    /// Each <see cref="DnsForwardingRulesetVirtualNetworkLinkResource" /> in the collection will belong to the same instance of <see cref="DnsForwardingRulesetResource" />.
-    /// To get a <see cref="DnsForwardingRulesetVirtualNetworkLinkCollection" /> instance call the GetDnsForwardingRulesetVirtualNetworkLinks method from an instance of <see cref="DnsForwardingRulesetResource" />.
+    /// A class representing a collection of <see cref="DnsForwardingRulesetVirtualNetworkLinkResource"/> and their operations.
+    /// Each <see cref="DnsForwardingRulesetVirtualNetworkLinkResource"/> in the collection will belong to the same instance of <see cref="DnsForwardingRulesetResource"/>.
+    /// To get a <see cref="DnsForwardingRulesetVirtualNetworkLinkCollection"/> instance call the GetDnsForwardingRulesetVirtualNetworkLinks method from an instance of <see cref="DnsForwardingRulesetResource"/>.
     /// </summary>
     public partial class DnsForwardingRulesetVirtualNetworkLinkCollection : ArmCollection, IEnumerable<DnsForwardingRulesetVirtualNetworkLinkResource>, IAsyncEnumerable<DnsForwardingRulesetVirtualNetworkLinkResource>
     {
@@ -63,6 +61,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkLinks_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsForwardingRulesetVirtualNetworkLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +113,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkLinks_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsForwardingRulesetVirtualNetworkLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -150,6 +164,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkLinks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsForwardingRulesetVirtualNetworkLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
@@ -186,6 +208,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkLinks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsForwardingRulesetVirtualNetworkLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -224,11 +254,19 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkLinks_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsForwardingRulesetVirtualNetworkLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DnsForwardingRulesetVirtualNetworkLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DnsForwardingRulesetVirtualNetworkLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DnsForwardingRulesetVirtualNetworkLinkResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
@@ -247,11 +285,19 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkLinks_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsForwardingRulesetVirtualNetworkLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DnsForwardingRulesetVirtualNetworkLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DnsForwardingRulesetVirtualNetworkLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DnsForwardingRulesetVirtualNetworkLinkResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
@@ -269,6 +315,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkLinks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsForwardingRulesetVirtualNetworkLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -305,6 +359,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkLinks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsForwardingRulesetVirtualNetworkLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
@@ -339,6 +401,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkLinks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsForwardingRulesetVirtualNetworkLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -376,6 +446,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkLinks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsForwardingRulesetVirtualNetworkLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

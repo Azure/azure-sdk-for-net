@@ -9,19 +9,17 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Billing
 {
     /// <summary>
     /// A Class representing a BillingPaymentMethod along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BillingPaymentMethodResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBillingPaymentMethodResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetBillingPaymentMethod method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingPaymentMethodResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBillingPaymentMethodResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetBillingPaymentMethod method.
     /// </summary>
     public partial class BillingPaymentMethodResource : ArmResource
     {
@@ -37,12 +35,15 @@ namespace Azure.ResourceManager.Billing
         private readonly PaymentMethodsRestOperations _billingPaymentMethodPaymentMethodsRestClient;
         private readonly BillingPaymentMethodData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Billing/paymentMethods";
+
         /// <summary> Initializes a new instance of the <see cref="BillingPaymentMethodResource"/> class for mocking. </summary>
         protected BillingPaymentMethodResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BillingPaymentMethodResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BillingPaymentMethodResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BillingPaymentMethodResource(ArmClient client, BillingPaymentMethodData data) : this(client, data.Id)
@@ -63,9 +64,6 @@ namespace Azure.ResourceManager.Billing
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Billing/paymentMethods";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -99,6 +97,14 @@ namespace Azure.ResourceManager.Billing
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByUser</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingPaymentMethodResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -131,6 +137,14 @@ namespace Azure.ResourceManager.Billing
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByUser</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingPaymentMethodResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -162,6 +176,14 @@ namespace Azure.ResourceManager.Billing
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_DeleteByUser</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingPaymentMethodResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,6 +218,14 @@ namespace Azure.ResourceManager.Billing
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_DeleteByUser</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingPaymentMethodResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <term>Operation Id</term>
         /// <description>BareMetalMachines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BareMetalMachines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +120,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <term>Operation Id</term>
         /// <description>CloudServicesNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudCloudServicesNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cloudServicesNetworkName"> The name of the cloud services network. </param>
@@ -129,6 +150,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CloudServicesNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudCloudServicesNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -160,6 +189,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <term>Operation Id</term>
         /// <description>ClusterManagers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudClusterManagerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterManagerName"> The name of the cluster manager. </param>
@@ -182,6 +219,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ClusterManagers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudClusterManagerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,6 +258,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the cluster. </param>
@@ -235,6 +288,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,6 +327,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <term>Operation Id</term>
         /// <description>KubernetesClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudKubernetesClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="kubernetesClusterName"> The name of the Kubernetes cluster. </param>
@@ -288,6 +357,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KubernetesClusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudKubernetesClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -319,6 +396,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <term>Operation Id</term>
         /// <description>L2Networks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudL2NetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="l2NetworkName"> The name of the L2 network. </param>
@@ -341,6 +426,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>L2Networks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudL2NetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -372,6 +465,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <term>Operation Id</term>
         /// <description>L3Networks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudL3NetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="l3NetworkName"> The name of the L3 network. </param>
@@ -394,6 +495,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>L3Networks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudL3NetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -425,6 +534,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <term>Operation Id</term>
         /// <description>Racks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudRackResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="rackName"> The name of the rack. </param>
@@ -447,6 +564,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Racks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudRackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -478,6 +603,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <term>Operation Id</term>
         /// <description>StorageAppliances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudStorageApplianceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageApplianceName"> The name of the storage appliance. </param>
@@ -500,6 +633,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageAppliances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudStorageApplianceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -531,6 +672,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <term>Operation Id</term>
         /// <description>TrunkedNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudTrunkedNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="trunkedNetworkName"> The name of the trunked network. </param>
@@ -553,6 +702,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TrunkedNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudTrunkedNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -584,6 +741,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudVirtualMachineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualMachineName"> The name of the virtual machine. </param>
@@ -606,6 +771,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudVirtualMachineResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -637,6 +810,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <term>Operation Id</term>
         /// <description>Volumes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudVolumeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="volumeName"> The name of the volume. </param>
@@ -659,6 +840,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Volumes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudVolumeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

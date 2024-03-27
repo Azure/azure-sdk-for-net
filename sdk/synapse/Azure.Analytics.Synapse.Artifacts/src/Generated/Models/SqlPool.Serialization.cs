@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<Sku>(Sku);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -94,21 +94,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<Sku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Sku sku = default;
+            IDictionary<string, string> tags = default;
             string location = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<long> maxSizeBytes = default;
-            Optional<string> collation = default;
-            Optional<string> sourceDatabaseId = default;
-            Optional<string> recoverableDatabaseId = default;
-            Optional<string> provisioningState = default;
-            Optional<string> status = default;
-            Optional<string> restorePointInTime = default;
-            Optional<CreateMode> createMode = default;
-            Optional<DateTimeOffset> creationDate = default;
+            string id = default;
+            string name = default;
+            string type = default;
+            long? maxSizeBytes = default;
+            string collation = default;
+            string sourceDatabaseId = default;
+            string recoverableDatabaseId = default;
+            string provisioningState = default;
+            string status = default;
+            string restorePointInTime = default;
+            CreateMode? createMode = default;
+            DateTimeOffset? creationDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -224,14 +224,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SqlPool(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(maxSizeBytes), collation.Value, sourceDatabaseId.Value, recoverableDatabaseId.Value, provisioningState.Value, status.Value, restorePointInTime.Value, Optional.ToNullable(createMode), Optional.ToNullable(creationDate));
+            return new SqlPool(
+                id,
+                name,
+                type,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                maxSizeBytes,
+                collation,
+                sourceDatabaseId,
+                recoverableDatabaseId,
+                provisioningState,
+                status,
+                restorePointInTime,
+                createMode,
+                creationDate);
         }
 
         internal partial class SqlPoolConverter : JsonConverter<SqlPool>
         {
             public override void Write(Utf8JsonWriter writer, SqlPool model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SqlPool>(model);
             }
             public override SqlPool Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

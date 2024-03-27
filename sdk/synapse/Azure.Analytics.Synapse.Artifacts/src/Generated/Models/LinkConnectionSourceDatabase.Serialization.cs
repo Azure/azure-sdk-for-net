@@ -21,12 +21,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
-                writer.WriteObjectValue(LinkedService);
+                writer.WriteObjectValue<LinkedServiceReference>(LinkedService);
             }
             if (Optional.IsDefined(TypeProperties))
             {
                 writer.WritePropertyName("typeProperties"u8);
-                writer.WriteObjectValue(TypeProperties);
+                writer.WriteObjectValue<LinkConnectionSourceDatabaseTypeProperties>(TypeProperties);
             }
             writer.WriteEndObject();
         }
@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkedServiceReference> linkedService = default;
-            Optional<LinkConnectionSourceDatabaseTypeProperties> typeProperties = default;
+            LinkedServiceReference linkedService = default;
+            LinkConnectionSourceDatabaseTypeProperties typeProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedService"u8))
@@ -60,14 +60,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkConnectionSourceDatabase(linkedService.Value, typeProperties.Value);
+            return new LinkConnectionSourceDatabase(linkedService, typeProperties);
         }
 
         internal partial class LinkConnectionSourceDatabaseConverter : JsonConverter<LinkConnectionSourceDatabase>
         {
             public override void Write(Utf8JsonWriter writer, LinkConnectionSourceDatabase model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<LinkConnectionSourceDatabase>(model);
             }
             public override LinkConnectionSourceDatabase Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

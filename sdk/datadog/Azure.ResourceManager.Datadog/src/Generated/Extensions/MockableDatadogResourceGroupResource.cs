@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="monitorName"> Monitor resource name. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

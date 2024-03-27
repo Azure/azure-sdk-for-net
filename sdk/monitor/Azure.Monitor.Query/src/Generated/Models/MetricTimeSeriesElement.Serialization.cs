@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -19,8 +18,8 @@ namespace Azure.Monitor.Query.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MetadataValue>> metadatavalues = default;
-            Optional<IReadOnlyList<MetricValue>> data = default;
+            IReadOnlyList<MetadataValue> metadatavalues = default;
+            IReadOnlyList<MetricValue> data = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metadatavalues"u8))
@@ -52,7 +51,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new MetricTimeSeriesElement(Optional.ToList(metadatavalues), Optional.ToList(data));
+            return new MetricTimeSeriesElement(metadatavalues ?? new ChangeTrackingList<MetadataValue>(), data ?? new ChangeTrackingList<MetricValue>());
         }
     }
 }

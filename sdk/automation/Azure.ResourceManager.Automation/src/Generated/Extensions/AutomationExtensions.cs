@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Automation.Mocking;
 using Azure.ResourceManager.Automation.Models;
 using Azure.ResourceManager.Resources;
@@ -45,9 +43,12 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutomationPrivateEndpointConnectionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomationPrivateEndpointConnectionResource"/> object. </returns>
         public static AutomationPrivateEndpointConnectionResource GetAutomationPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAutomationArmClient(client).GetAutomationPrivateEndpointConnectionResource(id);
         }
 
@@ -61,9 +62,12 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutomationAccountPython2PackageResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomationAccountPython2PackageResource"/> object. </returns>
         public static AutomationAccountPython2PackageResource GetAutomationAccountPython2PackageResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAutomationArmClient(client).GetAutomationAccountPython2PackageResource(id);
         }
 
@@ -77,9 +81,12 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutomationAccountModuleResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomationAccountModuleResource"/> object. </returns>
         public static AutomationAccountModuleResource GetAutomationAccountModuleResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAutomationArmClient(client).GetAutomationAccountModuleResource(id);
         }
 
@@ -93,9 +100,12 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DscNodeResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DscNodeResource"/> object. </returns>
         public static DscNodeResource GetDscNodeResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAutomationArmClient(client).GetDscNodeResource(id);
         }
 
@@ -109,9 +119,12 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DscNodeConfigurationResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DscNodeConfigurationResource"/> object. </returns>
         public static DscNodeConfigurationResource GetDscNodeConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAutomationArmClient(client).GetDscNodeConfigurationResource(id);
         }
 
@@ -125,9 +138,12 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DscCompilationJobResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DscCompilationJobResource"/> object. </returns>
         public static DscCompilationJobResource GetDscCompilationJobResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAutomationArmClient(client).GetDscCompilationJobResource(id);
         }
 
@@ -141,9 +157,12 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutomationSourceControlResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomationSourceControlResource"/> object. </returns>
         public static AutomationSourceControlResource GetAutomationSourceControlResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAutomationArmClient(client).GetAutomationSourceControlResource(id);
         }
 
@@ -157,9 +176,12 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutomationAccountResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomationAccountResource"/> object. </returns>
         public static AutomationAccountResource GetAutomationAccountResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAutomationArmClient(client).GetAutomationAccountResource(id);
         }
 
@@ -173,9 +195,12 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutomationCertificateResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomationCertificateResource"/> object. </returns>
         public static AutomationCertificateResource GetAutomationCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAutomationArmClient(client).GetAutomationCertificateResource(id);
         }
 
@@ -189,9 +214,12 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutomationConnectionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomationConnectionResource"/> object. </returns>
         public static AutomationConnectionResource GetAutomationConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAutomationArmClient(client).GetAutomationConnectionResource(id);
         }
 
@@ -205,9 +233,12 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutomationConnectionTypeResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomationConnectionTypeResource"/> object. </returns>
         public static AutomationConnectionTypeResource GetAutomationConnectionTypeResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAutomationArmClient(client).GetAutomationConnectionTypeResource(id);
         }
 
@@ -221,9 +252,12 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutomationCredentialResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomationCredentialResource"/> object. </returns>
         public static AutomationCredentialResource GetAutomationCredentialResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAutomationArmClient(client).GetAutomationCredentialResource(id);
         }
 
@@ -237,9 +271,12 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutomationJobScheduleResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomationJobScheduleResource"/> object. </returns>
         public static AutomationJobScheduleResource GetAutomationJobScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAutomationArmClient(client).GetAutomationJobScheduleResource(id);
         }
 
@@ -253,9 +290,12 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutomationScheduleResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomationScheduleResource"/> object. </returns>
         public static AutomationScheduleResource GetAutomationScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAutomationArmClient(client).GetAutomationScheduleResource(id);
         }
 
@@ -269,9 +309,12 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutomationVariableResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomationVariableResource"/> object. </returns>
         public static AutomationVariableResource GetAutomationVariableResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAutomationArmClient(client).GetAutomationVariableResource(id);
         }
 
@@ -285,9 +328,12 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutomationWatcherResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomationWatcherResource"/> object. </returns>
         public static AutomationWatcherResource GetAutomationWatcherResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAutomationArmClient(client).GetAutomationWatcherResource(id);
         }
 
@@ -301,9 +347,12 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DscConfigurationResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DscConfigurationResource"/> object. </returns>
         public static DscConfigurationResource GetDscConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAutomationArmClient(client).GetDscConfigurationResource(id);
         }
 
@@ -317,9 +366,12 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutomationJobResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomationJobResource"/> object. </returns>
         public static AutomationJobResource GetAutomationJobResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAutomationArmClient(client).GetAutomationJobResource(id);
         }
 
@@ -333,9 +385,12 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SoftwareUpdateConfigurationResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SoftwareUpdateConfigurationResource"/> object. </returns>
         public static SoftwareUpdateConfigurationResource GetSoftwareUpdateConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAutomationArmClient(client).GetSoftwareUpdateConfigurationResource(id);
         }
 
@@ -349,9 +404,12 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutomationRunbookResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomationRunbookResource"/> object. </returns>
         public static AutomationRunbookResource GetAutomationRunbookResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAutomationArmClient(client).GetAutomationRunbookResource(id);
         }
 
@@ -365,9 +423,12 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutomationWebhookResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomationWebhookResource"/> object. </returns>
         public static AutomationWebhookResource GetAutomationWebhookResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAutomationArmClient(client).GetAutomationWebhookResource(id);
         }
 
@@ -381,9 +442,12 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HybridRunbookWorkerResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HybridRunbookWorkerResource"/> object. </returns>
         public static HybridRunbookWorkerResource GetHybridRunbookWorkerResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAutomationArmClient(client).GetHybridRunbookWorkerResource(id);
         }
 
@@ -397,9 +461,12 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HybridRunbookWorkerGroupResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HybridRunbookWorkerGroupResource"/> object. </returns>
         public static HybridRunbookWorkerGroupResource GetHybridRunbookWorkerGroupResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAutomationArmClient(client).GetHybridRunbookWorkerGroupResource(id);
         }
 
@@ -411,9 +478,12 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of AutomationAccountResources and their operations over a AutomationAccountResource. </returns>
         public static AutomationAccountCollection GetAutomationAccounts(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableAutomationResourceGroupResource(resourceGroupResource).GetAutomationAccounts();
         }
 
@@ -428,6 +498,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -437,11 +515,13 @@ namespace Azure.ResourceManager.Automation
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="automationAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="automationAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<AutomationAccountResource>> GetAutomationAccountAsync(this ResourceGroupResource resourceGroupResource, string automationAccountName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableAutomationResourceGroupResource(resourceGroupResource).GetAutomationAccountAsync(automationAccountName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -456,6 +536,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -465,11 +553,13 @@ namespace Azure.ResourceManager.Automation
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="automationAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="automationAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<AutomationAccountResource> GetAutomationAccount(this ResourceGroupResource resourceGroupResource, string automationAccountName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableAutomationResourceGroupResource(resourceGroupResource).GetAutomationAccount(automationAccountName, cancellationToken);
         }
 
@@ -484,6 +574,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -492,9 +590,12 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomationAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="AutomationAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AutomationAccountResource> GetAutomationAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableAutomationSubscriptionResource(subscriptionResource).GetAutomationAccountsAsync(cancellationToken);
         }
 
@@ -509,6 +610,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -517,9 +626,12 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomationAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="AutomationAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AutomationAccountResource> GetAutomationAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableAutomationSubscriptionResource(subscriptionResource).GetAutomationAccounts(cancellationToken);
         }
 
@@ -534,6 +646,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>deletedAutomationAccounts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-31</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -542,9 +658,12 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeletedAutomationAccount" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="DeletedAutomationAccount"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DeletedAutomationAccount> GetDeletedAutomationAccountsBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableAutomationSubscriptionResource(subscriptionResource).GetDeletedAutomationAccountsBySubscriptionAsync(cancellationToken);
         }
 
@@ -559,6 +678,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>deletedAutomationAccounts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-31</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -567,9 +690,12 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedAutomationAccount" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DeletedAutomationAccount"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DeletedAutomationAccount> GetDeletedAutomationAccountsBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableAutomationSubscriptionResource(subscriptionResource).GetDeletedAutomationAccountsBySubscription(cancellationToken);
         }
     }

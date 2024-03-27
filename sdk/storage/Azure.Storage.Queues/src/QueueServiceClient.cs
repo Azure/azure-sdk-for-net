@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Common;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Specialized;
 using Azure.Storage.Sas;
@@ -639,7 +640,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response"/>
         /// </returns>
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-queues")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-queues")]
         public virtual Response SetProperties(
             QueueServiceProperties properties,
             CancellationToken cancellationToken = default) =>
@@ -664,7 +665,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response"/>
         /// </returns>
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-queues")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-queues")]
         public virtual async Task<Response> SetPropertiesAsync(
             QueueServiceProperties properties,
             CancellationToken cancellationToken = default) =>
@@ -991,7 +992,7 @@ namespace Azure.Storage.Queues
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-queues")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-queues")]
         public Uri GenerateAccountSasUri(
             AccountSasPermissions permissions,
             DateTimeOffset expiresOn,
@@ -1020,7 +1021,7 @@ namespace Azure.Storage.Queues
         /// A <see cref="Exception"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-queues")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-queues")]
         public Uri GenerateAccountSasUri(AccountSasBuilder builder)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));

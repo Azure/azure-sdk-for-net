@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
@@ -21,7 +20,7 @@ namespace Azure.ResourceManager.DataFactory
     /// </summary>
     public partial class DataFactoryChangeDataCaptureData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataFactoryChangeDataCaptureData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryChangeDataCaptureData"/>. </summary>
         /// <param name="sourceConnectionsInfo"> List of sources connections that can be used as sources in the CDC. </param>
         /// <param name="targetConnectionsInfo"> List of target connections that can be used as sources in the CDC. </param>
         /// <param name="policy"> CDC policy. </param>
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryChangeDataCaptureData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryChangeDataCaptureData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -63,6 +62,11 @@ namespace Azure.ResourceManager.DataFactory
             Status = status;
             ETag = eTag;
             AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryChangeDataCaptureData"/> for deserialization. </summary>
+        internal DataFactoryChangeDataCaptureData()
+        {
         }
 
         /// <summary> The folder that this CDC is in. If not specified, CDC will appear at the root level. </summary>

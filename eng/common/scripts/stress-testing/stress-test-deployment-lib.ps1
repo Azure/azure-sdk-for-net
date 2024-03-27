@@ -257,7 +257,7 @@ function DeployStressPackage(
     if ($pkg.Dockerfile -or $pkg.DockerBuildDir) {
         throw "The chart.yaml docker config is deprecated, please use the scenarios matrix instead."
     }
-    
+
 
     foreach ($dockerBuildConfig in $dockerBuildConfigs) {
         $dockerFilePath = $dockerBuildConfig.dockerFilePath
@@ -285,7 +285,7 @@ function DeployStressPackage(
             $dockerBuildCmd += $dockerBuildFolder
 
             Run @dockerBuildCmd
-            
+
             Write-Host "`nContainer image '$imageTag' successfully built. To run commands on the container locally:" -ForegroundColor Blue
             Write-Host "  docker run -it $imageTag" -ForegroundColor DarkBlue
             Write-Host "  docker run -it $imageTag <shell, e.g. 'bash' 'pwsh' 'sh'>" -ForegroundColor DarkBlue
@@ -302,7 +302,7 @@ function DeployStressPackage(
             }
         }
         $generatedHelmValues.scenarios = @( foreach ($scenario in $generatedHelmValues.scenarios) {
-            $dockerPath = if ("image" -notin $scenario) {
+            $dockerPath = if ("image" -notin $scenario.keys) {
                 $dockerFilePath
             } else {
                 Join-Path $pkg.Directory $scenario.image
@@ -321,7 +321,18 @@ function DeployStressPackage(
     $generatedConfigPath = Join-Path $pkg.Directory generatedValues.yaml
     $subCommand = $Template ? "template" : "upgrade"
     $subCommandFlag = $Template ? "--debug" : "--install"
-    $helmCommandArg = "helm", $subCommand, $releaseName, $pkg.Directory, "-n", $pkg.Namespace, $subCommandFlag, "--values", $generatedConfigPath, "--set", "stress-test-addons.env=$environment"
+    $helmCommandArg = @(
+        "helm", $subCommand, $releaseName, $pkg.Directory,
+        "-n", $pkg.Namespace,
+        $subCommandFlag,
+        "--values", $generatedConfigPath,
+        "--set", "stress-test-addons.env=$environment"
+    )
+
+    $gitCommit = git -C $pkg.Directory rev-parse HEAD 2>&1
+    if (!$LASTEXITCODE) {
+        $helmCommandArg += "--set", "GitCommit=$gitCommit"
+    }
 
     if ($LockDeletionForDays) {
         $date = (Get-Date).AddDays($LockDeletionForDays).ToUniversalTime()
@@ -476,7 +487,7 @@ function generateRetryTestsHelmValues ($pkg, $releaseName, $generatedHelmValues)
             $failedJobsScenario += $job.split("-$($pkg.ReleaseName)")[0]
         }
     }
-    
+
     $releaseName = "$($pkg.ReleaseName)-$revision-retry"
 
     $retryTestsHelmVal = @{"scenarios"=@()}

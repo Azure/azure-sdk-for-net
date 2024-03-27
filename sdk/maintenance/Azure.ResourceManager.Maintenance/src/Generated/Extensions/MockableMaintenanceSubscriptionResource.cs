@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Maintenance;
 using Azure.ResourceManager.Maintenance.Models;
 
 namespace Azure.ResourceManager.Maintenance.Mocking
@@ -75,6 +72,14 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>PublicMaintenanceConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenancePublicConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> Maintenance Configuration Name. </param>
@@ -97,6 +102,14 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PublicMaintenanceConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenancePublicConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,10 +134,18 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceApplyUpdateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MaintenanceApplyUpdateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MaintenanceApplyUpdateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdatesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MaintenanceApplyUpdateApplyUpdatesRestClient.CreateListRequest(Id.SubscriptionId);
@@ -142,10 +163,18 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceApplyUpdateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceApplyUpdateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MaintenanceApplyUpdateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdates(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MaintenanceApplyUpdateApplyUpdatesRestClient.CreateListRequest(Id.SubscriptionId);
@@ -163,10 +192,18 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MaintenanceConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MaintenanceConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MaintenanceConfigurationResource> GetMaintenanceConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MaintenanceConfigurationRestClient.CreateListRequest(Id.SubscriptionId);
@@ -184,10 +221,18 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MaintenanceConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MaintenanceConfigurationResource> GetMaintenanceConfigurations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MaintenanceConfigurationRestClient.CreateListRequest(Id.SubscriptionId);
@@ -205,14 +250,18 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignmentsWithinSubscription_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MaintenanceConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MaintenanceConfigurationAssignmentData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsBySubscriptionAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationAssignmentsWithinSubscriptionRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData, ConfigurationAssignmentsWithinSubscriptionClientDiagnostics, Pipeline, "MockableMaintenanceSubscriptionResource.GetConfigurationAssignmentsBySubscription", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(e), ConfigurationAssignmentsWithinSubscriptionClientDiagnostics, Pipeline, "MockableMaintenanceSubscriptionResource.GetConfigurationAssignmentsBySubscription", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -226,14 +275,18 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignmentsWithinSubscription_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsBySubscription(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationAssignmentsWithinSubscriptionRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData, ConfigurationAssignmentsWithinSubscriptionClientDiagnostics, Pipeline, "MockableMaintenanceSubscriptionResource.GetConfigurationAssignmentsBySubscription", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(e), ConfigurationAssignmentsWithinSubscriptionClientDiagnostics, Pipeline, "MockableMaintenanceSubscriptionResource.GetConfigurationAssignmentsBySubscription", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -246,6 +299,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignmentsForSubscriptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,6 +339,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignmentsForSubscriptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
@@ -316,6 +377,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignmentsForSubscriptions_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -354,6 +419,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignmentsForSubscriptions_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
@@ -390,6 +459,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignmentsForSubscriptions_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -428,6 +501,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignmentsForSubscriptions_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
@@ -465,6 +542,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignmentsForSubscriptions_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationAssignmentName"> Unique configuration assignment name. </param>
@@ -499,6 +580,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignmentsForSubscriptions_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>

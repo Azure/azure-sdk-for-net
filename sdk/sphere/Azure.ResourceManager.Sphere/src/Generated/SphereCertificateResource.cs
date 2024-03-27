@@ -9,19 +9,17 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere
 {
     /// <summary>
     /// A Class representing a SphereCertificate along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SphereCertificateResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSphereCertificateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SphereCatalogResource" /> using the GetSphereCertificate method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SphereCertificateResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSphereCertificateResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SphereCatalogResource"/> using the GetSphereCertificate method.
     /// </summary>
     public partial class SphereCertificateResource : ArmResource
     {
@@ -40,12 +38,15 @@ namespace Azure.ResourceManager.Sphere
         private readonly CertificatesRestOperations _sphereCertificateCertificatesRestClient;
         private readonly SphereCertificateData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AzureSphere/catalogs/certificates";
+
         /// <summary> Initializes a new instance of the <see cref="SphereCertificateResource"/> class for mocking. </summary>
         protected SphereCertificateResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SphereCertificateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SphereCertificateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SphereCertificateResource(ArmClient client, SphereCertificateData data) : this(client, data.Id)
@@ -66,9 +67,6 @@ namespace Azure.ResourceManager.Sphere
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureSphere/catalogs/certificates";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -102,6 +100,14 @@ namespace Azure.ResourceManager.Sphere
         /// <term>Operation Id</term>
         /// <description>Certificates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereCertificateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,6 +139,14 @@ namespace Azure.ResourceManager.Sphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Certificates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -166,6 +180,14 @@ namespace Azure.ResourceManager.Sphere
         /// <term>Operation Id</term>
         /// <description>Certificates_RetrieveCertChain</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereCertificateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -196,6 +218,14 @@ namespace Azure.ResourceManager.Sphere
         /// <term>Operation Id</term>
         /// <description>Certificates_RetrieveCertChain</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereCertificateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -225,6 +255,14 @@ namespace Azure.ResourceManager.Sphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Certificates_RetrieveProofOfPossessionNonce</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -259,6 +297,14 @@ namespace Azure.ResourceManager.Sphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Certificates_RetrieveProofOfPossessionNonce</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

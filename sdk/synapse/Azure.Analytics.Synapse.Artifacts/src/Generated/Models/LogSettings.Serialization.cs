@@ -21,15 +21,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(EnableCopyActivityLog))
             {
                 writer.WritePropertyName("enableCopyActivityLog"u8);
-                writer.WriteObjectValue(EnableCopyActivityLog);
+                writer.WriteObjectValue<object>(EnableCopyActivityLog);
             }
             if (Optional.IsDefined(CopyActivityLogSettings))
             {
                 writer.WritePropertyName("copyActivityLogSettings"u8);
-                writer.WriteObjectValue(CopyActivityLogSettings);
+                writer.WriteObjectValue<CopyActivityLogSettings>(CopyActivityLogSettings);
             }
             writer.WritePropertyName("logLocationSettings"u8);
-            writer.WriteObjectValue(LogLocationSettings);
+            writer.WriteObjectValue<LogLocationSettings>(LogLocationSettings);
             writer.WriteEndObject();
         }
 
@@ -39,8 +39,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> enableCopyActivityLog = default;
-            Optional<CopyActivityLogSettings> copyActivityLogSettings = default;
+            object enableCopyActivityLog = default;
+            CopyActivityLogSettings copyActivityLogSettings = default;
             LogLocationSettings logLocationSettings = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -68,14 +68,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LogSettings(enableCopyActivityLog.Value, copyActivityLogSettings.Value, logLocationSettings);
+            return new LogSettings(enableCopyActivityLog, copyActivityLogSettings, logLocationSettings);
         }
 
         internal partial class LogSettingsConverter : JsonConverter<LogSettings>
         {
             public override void Write(Utf8JsonWriter writer, LogSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<LogSettings>(model);
             }
             public override LogSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

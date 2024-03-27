@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Mocking
 {
@@ -37,11 +35,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HDInsightClusterPoolResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HDInsightClusterPoolResource.CreateResourceIdentifier" /> to create a <see cref="HDInsightClusterPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HDInsightClusterPoolResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HDInsightClusterPoolResource.CreateResourceIdentifier" /> to create a <see cref="HDInsightClusterPoolResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HDInsightClusterPoolResource" /> object. </returns>
+        /// <returns> Returns a <see cref="HDInsightClusterPoolResource"/> object. </returns>
         public virtual HDInsightClusterPoolResource GetHDInsightClusterPoolResource(ResourceIdentifier id)
         {
             HDInsightClusterPoolResource.ValidateResourceId(id);
@@ -49,11 +47,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HDInsightClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HDInsightClusterResource.CreateResourceIdentifier" /> to create a <see cref="HDInsightClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HDInsightClusterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HDInsightClusterResource.CreateResourceIdentifier" /> to create a <see cref="HDInsightClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HDInsightClusterResource" /> object. </returns>
+        /// <returns> Returns a <see cref="HDInsightClusterResource"/> object. </returns>
         public virtual HDInsightClusterResource GetHDInsightClusterResource(ResourceIdentifier id)
         {
             HDInsightClusterResource.ValidateResourceId(id);

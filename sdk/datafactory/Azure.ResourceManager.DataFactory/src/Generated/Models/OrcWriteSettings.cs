@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Orc write settings. </summary>
     public partial class OrcWriteSettings : FormatWriteSettings
     {
-        /// <summary> Initializes a new instance of OrcWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrcWriteSettings"/>. </summary>
         public OrcWriteSettings()
         {
             FormatWriteSettingsType = "OrcWriteSettings";
         }
 
-        /// <summary> Initializes a new instance of OrcWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrcWriteSettings"/>. </summary>
         /// <param name="formatWriteSettingsType"> The write setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="maxRowsPerFile"> Limit the written file's row count to be smaller than or equal to the specified count. Type: integer (or Expression with resultType integer). </param>

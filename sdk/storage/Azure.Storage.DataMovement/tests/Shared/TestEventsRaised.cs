@@ -22,7 +22,7 @@ namespace Azure.Storage.DataMovement.Tests
     /// Also if there's multiple failures then we will catch all of them.
     /// Which would mainly occur during <see cref="DataTransferErrorMode.ContinueOnFailure"/>
     /// </summary>
-    internal class TestEventsRaised : IDisposable
+    public class TestEventsRaised : IDisposable
     {
         private static readonly DataTransferStatus InProgressStatus = new DataTransferStatusInternal(DataTransferState.InProgress, false, false);
         private static readonly DataTransferStatus InProgressFailedStatus = new DataTransferStatusInternal(DataTransferState.InProgress, true, false);
@@ -33,6 +33,7 @@ namespace Azure.Storage.DataMovement.Tests
         private static readonly DataTransferStatus FailedCompletedStatus = new DataTransferStatusInternal(DataTransferState.Completed, true, false);
 
         public List<TransferItemFailedEventArgs> FailedEvents { get; internal set; }
+        private object _failedEventsLock = new();
         public List<TransferStatusEventArgs> StatusEvents { get; internal set; }
         public List<TransferItemSkippedEventArgs> SkippedEvents { get; internal set; }
         public ConcurrentBag<TransferItemCompletedEventArgs> SingleCompletedEvents { get; internal set; }
@@ -84,7 +85,10 @@ namespace Azure.Storage.DataMovement.Tests
 
         private Task AppendFailedArg(TransferItemFailedEventArgs args)
         {
-            FailedEvents.Add(args);
+            lock (_failedEventsLock)
+            {
+                FailedEvents.Add(args);
+            }
             return Task.CompletedTask;
         }
 
@@ -148,11 +152,12 @@ namespace Azure.Storage.DataMovement.Tests
         /// </summary>
         public async Task AssertSingleCompletedCheck()
         {
+            await WaitForStatusEventsAsync().ConfigureAwait(false);
+
             AssertUnexpectedFailureCheck();
             Assert.IsEmpty(SkippedEvents);
             Assert.IsEmpty(SingleCompletedEvents);
 
-            await WaitForStatusEventsAsync().ConfigureAwait(false);
             AssertTransferStatusCollection(
                 new DataTransferStatus[] {
                     InProgressStatus,
@@ -167,13 +172,14 @@ namespace Azure.Storage.DataMovement.Tests
         /// </summary>
         public async Task AssertSingleSkippedCheck()
         {
+            await WaitForStatusEventsAsync().ConfigureAwait(false);
+
             AssertUnexpectedFailureCheck();
             Assert.IsEmpty(SingleCompletedEvents);
             Assert.AreEqual(1, SkippedEvents.Count);
             Assert.NotNull(SkippedEvents.First().SourceResource.Uri);
             Assert.NotNull(SkippedEvents.First().DestinationResource.Uri);
 
-            await WaitForStatusEventsAsync().ConfigureAwait(false);
             AssertTransferStatusCollection(
                 new DataTransferStatus[] {
                     InProgressStatus,
@@ -188,6 +194,8 @@ namespace Azure.Storage.DataMovement.Tests
         /// </summary>
         public async Task AssertSingleFailedCheck(int failureCount)
         {
+            await WaitForStatusEventsAsync().ConfigureAwait(false);
+
             Assert.IsEmpty(SkippedEvents);
             Assert.IsEmpty(SingleCompletedEvents);
             Assert.AreEqual(failureCount, FailedEvents.Count);
@@ -198,7 +206,6 @@ namespace Azure.Storage.DataMovement.Tests
                 Assert.NotNull(args.DestinationResource.Uri);
             }
 
-            await WaitForStatusEventsAsync().ConfigureAwait(false);
             AssertTransferStatusCollection(
                 new DataTransferStatus[] {
                     InProgressStatus,
@@ -218,11 +225,12 @@ namespace Azure.Storage.DataMovement.Tests
         /// </param>
         public async Task AssertContainerCompletedCheck(int transferCount)
         {
+            await WaitForStatusEventsAsync().ConfigureAwait(false);
+
             AssertUnexpectedFailureCheck();
             Assert.IsEmpty(SkippedEvents);
             Assert.AreEqual(transferCount, SingleCompletedEvents.Count);
 
-            await WaitForStatusEventsAsync().ConfigureAwait(false);
             AssertTransferStatusCollection(
                 new DataTransferStatus[] {
                     InProgressStatus,
@@ -240,6 +248,8 @@ namespace Azure.Storage.DataMovement.Tests
         /// </param>
         public async Task AssertContainerCompletedWithFailedCheck(int expectedFailureCount)
         {
+            await WaitForStatusEventsAsync().ConfigureAwait(false);
+
             if (expectedFailureCount != FailedEvents.Count)
             {
                 // We want to call this to print out to see
@@ -252,7 +262,6 @@ namespace Azure.Storage.DataMovement.Tests
             }
             Assert.IsEmpty(SkippedEvents);
 
-            await WaitForStatusEventsAsync().ConfigureAwait(false);
             AssertTransferStatusCollection(
                 new DataTransferStatus[] {
                     InProgressStatus,
@@ -272,6 +281,8 @@ namespace Azure.Storage.DataMovement.Tests
         /// </param>
         public async Task AssertContainerCompletedWithFailedCheckContinue(int expectedFailureCount)
         {
+            await WaitForStatusEventsAsync().ConfigureAwait(false);
+
             if (expectedFailureCount != FailedEvents.Count)
             {
                 // We want to call this to print out to see
@@ -284,7 +295,6 @@ namespace Azure.Storage.DataMovement.Tests
             }
             Assert.IsEmpty(SkippedEvents);
 
-            await WaitForStatusEventsAsync().ConfigureAwait(false);
             AssertTransferStatusCollection(
                 new DataTransferStatus[] {
                     InProgressStatus,
@@ -302,10 +312,11 @@ namespace Azure.Storage.DataMovement.Tests
         /// </param>
         public async Task AssertContainerCompletedWithSkippedCheck(int expectedSkipCount)
         {
+            await WaitForStatusEventsAsync().ConfigureAwait(false);
+
             AssertUnexpectedFailureCheck();
             Assert.AreEqual(expectedSkipCount, SkippedEvents.Count);
 
-            await WaitForStatusEventsAsync().ConfigureAwait(false);
             AssertTransferStatusCollection(
                 new DataTransferStatus[] {
                     InProgressStatus,
@@ -316,10 +327,11 @@ namespace Azure.Storage.DataMovement.Tests
 
         public async Task AssertPausedCheck()
         {
+            await WaitForStatusEventsAsync().ConfigureAwait(false);
+
             AssertUnexpectedFailureCheck();
             Assert.IsEmpty(SkippedEvents);
 
-            await WaitForStatusEventsAsync().ConfigureAwait(false);
             AssertTransferStatusCollection(
                 new DataTransferStatus[] {
                     InProgressStatus,

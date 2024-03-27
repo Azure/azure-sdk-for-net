@@ -10,9 +10,18 @@ namespace Azure.DigitalTwins.Core
     /// <summary> Parameter group. </summary>
     internal partial class ImportJobsDeleteOptions
     {
-        /// <summary> Initializes a new instance of ImportJobsDeleteOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImportJobsDeleteOptions"/>. </summary>
         public ImportJobsDeleteOptions()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ImportJobsDeleteOptions"/>. </summary>
+        /// <param name="traceparent"> Identifies the request in a distributed tracing system. </param>
+        /// <param name="tracestate"> Provides vendor-specific trace identification information and is a companion to traceparent. </param>
+        internal ImportJobsDeleteOptions(string traceparent, string tracestate)
+        {
+            Traceparent = traceparent;
+            Tracestate = tracestate;
         }
 
         /// <summary> Identifies the request in a distributed tracing system. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,13 +15,45 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Load balancer backend addresses. </summary>
     public partial class LoadBalancerBackendAddress
     {
-        /// <summary> Initializes a new instance of LoadBalancerBackendAddress. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerBackendAddress"/>. </summary>
         public LoadBalancerBackendAddress()
         {
             InboundNatRulesPortMapping = new ChangeTrackingList<NatRulePortMapping>();
         }
 
-        /// <summary> Initializes a new instance of LoadBalancerBackendAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerBackendAddress"/>. </summary>
         /// <param name="name"> Name of the backend address. </param>
         /// <param name="virtualNetwork"> Reference to an existing virtual network. </param>
         /// <param name="subnet"> Reference to an existing subnet. </param>
@@ -29,7 +62,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="loadBalancerFrontendIPConfiguration"> Reference to the frontend ip address configuration defined in regional loadbalancer. </param>
         /// <param name="inboundNatRulesPortMapping"> Collection of inbound NAT rule port mappings. </param>
         /// <param name="adminState"> A list of administrative states which once set can override health probe so that Load Balancer will always forward new connections to backend, or deny new connections and reset existing connections. </param>
-        internal LoadBalancerBackendAddress(string name, WritableSubResource virtualNetwork, WritableSubResource subnet, string ipAddress, WritableSubResource networkInterfaceIPConfiguration, WritableSubResource loadBalancerFrontendIPConfiguration, IReadOnlyList<NatRulePortMapping> inboundNatRulesPortMapping, LoadBalancerBackendAddressAdminState? adminState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LoadBalancerBackendAddress(string name, WritableSubResource virtualNetwork, WritableSubResource subnet, string ipAddress, WritableSubResource networkInterfaceIPConfiguration, WritableSubResource loadBalancerFrontendIPConfiguration, IReadOnlyList<NatRulePortMapping> inboundNatRulesPortMapping, LoadBalancerBackendAddressAdminState? adminState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             VirtualNetwork = virtualNetwork;
@@ -39,6 +73,7 @@ namespace Azure.ResourceManager.Network.Models
             LoadBalancerFrontendIPConfiguration = loadBalancerFrontendIPConfiguration;
             InboundNatRulesPortMapping = inboundNatRulesPortMapping;
             AdminState = adminState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the backend address. </summary>

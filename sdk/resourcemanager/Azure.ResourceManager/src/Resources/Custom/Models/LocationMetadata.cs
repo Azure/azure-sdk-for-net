@@ -9,13 +9,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
+    [CodeGenSerialization(nameof(Longitude), SerializationValueHook = nameof(WriteLongitude), DeserializationValueHook = nameof(ReadLongitude))]
+    [CodeGenSerialization(nameof(Latitude), SerializationValueHook = nameof(WriteLatitude), DeserializationValueHook = nameof(ReadLatitude))]
     public partial class LocationMetadata
     {
         /// <summary> The longitude of the location. </summary>
-        [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(WriteLongitude), DeserializationValueHook = nameof(ReadLongitude))]
         public double? Longitude { get; }
         /// <summary> The latitude of the location. </summary>
-        [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(WriteLatitude), DeserializationValueHook = nameof(ReadLatitude))]
         public double? Latitude { get; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static void ReadLongitude(JsonProperty property, ref Optional<double> longitude)
+        internal static void ReadLongitude(JsonProperty property, ref double? longitude)
         {
             if (property.Value.ValueKind == JsonValueKind.Null)
                 return;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static void ReadLatitude(JsonProperty property, ref Optional<double> latitude)
+        internal static void ReadLatitude(JsonProperty property, ref double? latitude)
         {
             if (property.Value.ValueKind == JsonValueKind.Null)
                 return;

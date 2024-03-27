@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> Component state details. </summary>
     public partial class ComponentStateDetails : ResourceData
     {
-        /// <summary> Initializes a new instance of ComponentStateDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentStateDetails"/>. </summary>
         internal ComponentStateDetails()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ComponentStateDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentStateDetails"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

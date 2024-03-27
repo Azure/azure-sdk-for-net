@@ -10,12 +10,12 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The response payload for removing participants of the call. </summary>
     internal partial class RemoveParticipantResponseInternal
     {
-        /// <summary> Initializes a new instance of RemoveParticipantResponseInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoveParticipantResponseInternal"/>. </summary>
         internal RemoveParticipantResponseInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of RemoveParticipantResponseInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoveParticipantResponseInternal"/>. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
         internal RemoveParticipantResponseInternal(string operationContext)
         {

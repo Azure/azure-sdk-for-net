@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Primitives;
 using NUnit.Framework;
 
@@ -431,8 +432,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var storageManager = new InMemoryCheckpointStore();
 
-            await storageManager.UpdateCheckpointAsync("namespace", "eventHubName", "consumerGroup1", "partitionId", 10, 20);
-            await storageManager.UpdateCheckpointAsync("namespace", "eventHubName", "consumerGroup2", "partitionId", 10, 20);
+            await storageManager.UpdateCheckpointAsync("namespace", "eventHubName", "consumerGroup1", "partitionId", "Id", new CheckpointPosition(10));
+            await storageManager.UpdateCheckpointAsync("namespace", "eventHubName", "consumerGroup2", "partitionId", "Id", new CheckpointPosition(10));
 
             var storedCheckpoint1 = await storageManager.GetCheckpointAsync("namespace", "eventHubName", "consumerGroup1", "partitionId");
             var storedCheckpoint2 = await storageManager.GetCheckpointAsync("namespace", "eventHubName", "consumerGroup2", "partitionId");
@@ -451,8 +452,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var storageManager = new InMemoryCheckpointStore();
 
-            await storageManager.UpdateCheckpointAsync("namespace", "eventHubName1", "consumerGroup", "partitionId", 10, 20);
-            await storageManager.UpdateCheckpointAsync("namespace", "eventHubName2", "consumerGroup", "partitionId", 10, 20);
+            await storageManager.UpdateCheckpointAsync("namespace", "eventHubName1", "consumerGroup", "partitionId", "Id", new CheckpointPosition(10));
+            await storageManager.UpdateCheckpointAsync("namespace", "eventHubName2", "consumerGroup", "partitionId", "Id", new CheckpointPosition(10));
 
             var storedCheckpoint1 = await storageManager.GetCheckpointAsync("namespace", "eventHubName1", "consumerGroup", "partitionId");
             var storedCheckpoint2 = await storageManager.GetCheckpointAsync("namespace", "eventHubName2", "consumerGroup", "partitionId");
@@ -471,8 +472,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var storageManager = new InMemoryCheckpointStore();
 
-            await storageManager.UpdateCheckpointAsync("namespace1", "eventHubName", "consumerGroup", "partitionId", 10, 20);
-            await storageManager.UpdateCheckpointAsync("namespace2", "eventHubName", "consumerGroup", "partitionId", 10, 20);
+            await storageManager.UpdateCheckpointAsync("namespace1", "eventHubName", "consumerGroup", "partitionId", "Id", new CheckpointPosition(10));
+            await storageManager.UpdateCheckpointAsync("namespace2", "eventHubName", "consumerGroup", "partitionId", "Id", new CheckpointPosition(10));
 
             var storedCheckpoint1 = await storageManager.GetCheckpointAsync("namespace1", "eventHubName", "consumerGroup", "partitionId");
             var storedCheckpoint2 = await storageManager.GetCheckpointAsync("namespace2", "eventHubName", "consumerGroup", "partitionId");
@@ -491,8 +492,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var storageManager = new InMemoryCheckpointStore();
 
-            await storageManager.UpdateCheckpointAsync("namespace", "eventHubName", "consumerGroup", "partitionId1", 10, 20);
-            await storageManager.UpdateCheckpointAsync("namespace", "eventHubName", "consumerGroup", "partitionId2", 10, 20);
+            await storageManager.UpdateCheckpointAsync("namespace", "eventHubName", "consumerGroup", "partitionId1", "Id", new CheckpointPosition(10));
+            await storageManager.UpdateCheckpointAsync("namespace", "eventHubName", "consumerGroup", "partitionId2", "Id", new CheckpointPosition(10));
 
             var storedCheckpoint1 = await storageManager.GetCheckpointAsync("namespace", "eventHubName", "consumerGroup", "partitionId1");
             var storedCheckpoint2 = await storageManager.GetCheckpointAsync("namespace", "eventHubName", "consumerGroup", "partitionId2");

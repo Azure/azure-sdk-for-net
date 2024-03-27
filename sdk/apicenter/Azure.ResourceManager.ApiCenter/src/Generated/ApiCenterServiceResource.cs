@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ApiCenter.Models;
 using Azure.ResourceManager.Resources;
 
@@ -20,9 +18,9 @@ namespace Azure.ResourceManager.ApiCenter
 {
     /// <summary>
     /// A Class representing an ApiCenterService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiCenterServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiCenterServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetApiCenterService method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiCenterServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiCenterServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetApiCenterService method.
     /// </summary>
     public partial class ApiCenterServiceResource : ArmResource
     {
@@ -40,12 +38,15 @@ namespace Azure.ResourceManager.ApiCenter
         private readonly ServicesRestOperations _apiCenterServiceServicesRestClient;
         private readonly ApiCenterServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiCenter/services";
+
         /// <summary> Initializes a new instance of the <see cref="ApiCenterServiceResource"/> class for mocking. </summary>
         protected ApiCenterServiceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiCenterServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiCenterServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiCenterServiceResource(ArmClient client, ApiCenterServiceData data) : this(client, data.Id)
@@ -66,9 +67,6 @@ namespace Azure.ResourceManager.ApiCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiCenter/services";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -102,6 +100,14 @@ namespace Azure.ResourceManager.ApiCenter
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiCenterServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,6 +140,14 @@ namespace Azure.ResourceManager.ApiCenter
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiCenterServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -165,6 +179,14 @@ namespace Azure.ResourceManager.ApiCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiCenterServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -200,6 +222,14 @@ namespace Azure.ResourceManager.ApiCenter
         /// <term>Operation Id</term>
         /// <description>Services_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiCenterServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -234,6 +264,14 @@ namespace Azure.ResourceManager.ApiCenter
         /// <term>Operation Id</term>
         /// <description>Services_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiCenterServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The service properties to be updated. </param>
@@ -267,6 +305,14 @@ namespace Azure.ResourceManager.ApiCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiCenterServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

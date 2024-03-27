@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The recurrence schedule. </summary>
     public partial class DataFactoryRecurrenceSchedule
     {
-        /// <summary> Initializes a new instance of DataFactoryRecurrenceSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryRecurrenceSchedule"/>. </summary>
         public DataFactoryRecurrenceSchedule()
         {
             Minutes = new ChangeTrackingList<int>();
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryRecurrenceSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryRecurrenceSchedule"/>. </summary>
         /// <param name="minutes"> The minutes. </param>
         /// <param name="hours"> The hours. </param>
         /// <param name="weekDays"> The days of the week. </param>

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
@@ -19,7 +18,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FilterInfo>> filters = default;
+            IReadOnlyList<FilterInfo> filters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Filters"u8))
@@ -37,7 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                     continue;
                 }
             }
-            return new FilterConjunctionGroupInfo(Optional.ToList(filters));
+            return new FilterConjunctionGroupInfo(filters ?? new ChangeTrackingList<FilterInfo>());
         }
     }
 }

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.5 (Unreleased)
+## 1.4.0-beta.8 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,31 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0-beta.7 (2024-03-26)
+
+### Features Added
+
+- Added experimental Bicep serialization.
+
+## 1.4.0-beta.6 (2024-03-25)
+
+### Features Added
+
+- Updated Microsoft.DocumentDB RP API version to `2024-02-15-preview`
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Add support for 'restoreWithTtlDisabled' in RestoreParameter to disable ttl on restored account
+- Adds support for PerRegionPerPartitionAutoscale feature.
+
+## 1.4.0-beta.5 (2023-11-21)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
 
 ## 1.4.0-beta.4 (2023-10-30)
 

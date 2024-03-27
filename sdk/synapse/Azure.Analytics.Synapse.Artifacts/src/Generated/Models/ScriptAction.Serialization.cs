@@ -23,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri);
             writer.WritePropertyName("roles"u8);
-            writer.WriteObjectValue(Roles);
+            writer.WriteObjectValue<object>(Roles);
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             string name = default;
             string uri = default;
             object roles = default;
-            Optional<string> parameters = default;
+            string parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -65,14 +65,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new ScriptAction(name, uri, roles, parameters.Value);
+            return new ScriptAction(name, uri, roles, parameters);
         }
 
         internal partial class ScriptActionConverter : JsonConverter<ScriptAction>
         {
             public override void Write(Utf8JsonWriter writer, ScriptAction model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<ScriptAction>(model);
             }
             public override ScriptAction Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

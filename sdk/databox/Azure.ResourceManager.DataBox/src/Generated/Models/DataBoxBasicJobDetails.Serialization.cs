@@ -5,22 +5,53 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxBasicJobDetails : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownJobDetails))]
+    public partial class DataBoxBasicJobDetails : IUtf8JsonSerializable, IJsonModel<DataBoxBasicJobDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxBasicJobDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataBoxBasicJobDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxBasicJobDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataBoxBasicJobDetails)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsCollectionDefined(JobStages))
+            {
+                writer.WritePropertyName("jobStages"u8);
+                writer.WriteStartArray();
+                foreach (var item in JobStages)
+                {
+                    writer.WriteObjectValue<DataBoxJobStage>(item, options);
+                }
+                writer.WriteEndArray();
+            }
             writer.WritePropertyName("contactDetails"u8);
-            writer.WriteObjectValue(ContactDetails);
+            writer.WriteObjectValue<DataBoxContactDetails>(ContactDetails, options);
             if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue(ShippingAddress);
+                writer.WriteObjectValue<DataBoxShippingAddress>(ShippingAddress, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DeliveryPackage))
+            {
+                writer.WritePropertyName("deliveryPackage"u8);
+                writer.WriteObjectValue<PackageShippingDetails>(DeliveryPackage, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ReturnPackage))
+            {
+                writer.WritePropertyName("returnPackage"u8);
+                writer.WriteObjectValue<PackageShippingDetails>(ReturnPackage, options);
             }
             if (Optional.IsCollectionDefined(DataImportDetails))
             {
@@ -28,7 +59,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in DataImportDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataImportDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -38,7 +69,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in DataExportDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataExportDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,28 +78,107 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(Preferences))
             {
                 writer.WritePropertyName("preferences"u8);
-                writer.WriteObjectValue(Preferences);
+                writer.WriteObjectValue<DataBoxOrderPreferences>(Preferences, options);
             }
             if (Optional.IsDefined(ReverseShippingDetails))
             {
                 writer.WritePropertyName("reverseShippingDetails"u8);
-                writer.WriteObjectValue(ReverseShippingDetails);
+                writer.WriteObjectValue<ReverseShippingDetails>(ReverseShippingDetails, options);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(CopyLogDetails))
+            {
+                writer.WritePropertyName("copyLogDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in CopyLogDetails)
+                {
+                    writer.WriteObjectValue<CopyLogDetails>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ReverseShipmentLabelSasKey))
+            {
+                writer.WritePropertyName("reverseShipmentLabelSasKey"u8);
+                writer.WriteStringValue(ReverseShipmentLabelSasKey);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ChainOfCustodySasKey))
+            {
+                writer.WritePropertyName("chainOfCustodySasKey"u8);
+                writer.WriteStringValue(ChainOfCustodySasKey);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DeviceErasureDetails))
+            {
+                writer.WritePropertyName("deviceErasureDetails"u8);
+                writer.WriteObjectValue<DeviceErasureDetails>(DeviceErasureDetails, options);
             }
             if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
-                writer.WriteObjectValue(KeyEncryptionKey);
+                writer.WriteObjectValue<DataBoxKeyEncryptionKey>(KeyEncryptionKey, options);
             }
             if (Optional.IsDefined(ExpectedDataSizeInTerabytes))
             {
                 writer.WritePropertyName("expectedDataSizeInTeraBytes"u8);
                 writer.WriteNumberValue(ExpectedDataSizeInTerabytes.Value);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Actions))
+            {
+                writer.WritePropertyName("actions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Actions)
+                {
+                    writer.WriteStringValue(item.ToSerialString());
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastMitigationActionOnJob))
+            {
+                writer.WritePropertyName("lastMitigationActionOnJob"u8);
+                writer.WriteObjectValue<LastMitigationActionOnJob>(LastMitigationActionOnJob, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DataCenterAddress))
+            {
+                writer.WritePropertyName("datacenterAddress"u8);
+                writer.WriteObjectValue<DataCenterAddressResult>(DataCenterAddress, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DataCenterCode))
+            {
+                writer.WritePropertyName("dataCenterCode"u8);
+                writer.WriteStringValue(DataCenterCode.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataBoxBasicJobDetails DeserializeDataBoxBasicJobDetails(JsonElement element)
+        DataBoxBasicJobDetails IJsonModel<DataBoxBasicJobDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxBasicJobDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataBoxBasicJobDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxBasicJobDetails(document.RootElement, options);
+        }
+
+        internal static DataBoxBasicJobDetails DeserializeDataBoxBasicJobDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -77,13 +187,44 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DataBox": return DataBoxJobDetails.DeserializeDataBoxJobDetails(element);
-                    case "DataBoxCustomerDisk": return DataBoxCustomerDiskJobDetails.DeserializeDataBoxCustomerDiskJobDetails(element);
-                    case "DataBoxDisk": return DataBoxDiskJobDetails.DeserializeDataBoxDiskJobDetails(element);
-                    case "DataBoxHeavy": return DataBoxHeavyJobDetails.DeserializeDataBoxHeavyJobDetails(element);
+                    case "DataBox": return DataBoxJobDetails.DeserializeDataBoxJobDetails(element, options);
+                    case "DataBoxCustomerDisk": return DataBoxCustomerDiskJobDetails.DeserializeDataBoxCustomerDiskJobDetails(element, options);
+                    case "DataBoxDisk": return DataBoxDiskJobDetails.DeserializeDataBoxDiskJobDetails(element, options);
+                    case "DataBoxHeavy": return DataBoxHeavyJobDetails.DeserializeDataBoxHeavyJobDetails(element, options);
                 }
             }
-            return UnknownJobDetails.DeserializeUnknownJobDetails(element);
+            return UnknownJobDetails.DeserializeUnknownJobDetails(element, options);
         }
+
+        BinaryData IPersistableModel<DataBoxBasicJobDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxBasicJobDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxBasicJobDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataBoxBasicJobDetails IPersistableModel<DataBoxBasicJobDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxBasicJobDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataBoxBasicJobDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxBasicJobDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataBoxBasicJobDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

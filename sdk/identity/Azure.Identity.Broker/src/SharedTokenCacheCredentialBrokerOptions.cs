@@ -19,6 +19,11 @@ namespace Azure.Identity.Broker
         public bool? IsLegacyMsaPassthroughEnabled { get; set; }
 
         /// <summary>
+        /// Gets or sets whether to authenticate with the currently signed in user instead of prompting the user with a login dialog.
+        /// </summary>
+        public bool UseDefaultBrokerAccount { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of <see cref="SharedTokenCacheCredentialBrokerOptions"/>.
         /// </summary>
         public SharedTokenCacheCredentialBrokerOptions()

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -19,8 +18,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<DataFeedDetail>> value = default;
+            string nextLink = default;
+            IReadOnlyList<DataFeedDetail> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@nextLink"u8))
@@ -43,7 +42,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new DataFeedList(nextLink.Value, Optional.ToList(value));
+            return new DataFeedList(nextLink, value ?? new ChangeTrackingList<DataFeedDetail>());
         }
     }
 }

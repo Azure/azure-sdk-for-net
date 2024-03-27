@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,12 +18,44 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiReleaseData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiReleaseData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiReleaseData"/>. </summary>
         public ApiReleaseData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiReleaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiReleaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,12 +64,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="createdOn"> The time the API was released. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
         /// <param name="updatedOn"> The time the API release was updated. </param>
         /// <param name="notes"> Release Notes. </param>
-        internal ApiReleaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier apiId, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string notes) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiReleaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier apiId, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string notes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ApiId = apiId;
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
             Notes = notes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Identifier of the API the release belongs to. </summary>

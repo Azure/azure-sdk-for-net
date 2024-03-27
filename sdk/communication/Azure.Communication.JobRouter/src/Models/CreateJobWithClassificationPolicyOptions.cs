@@ -8,16 +8,16 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter
 {
     /// <summary>
-    /// Options for creating job with classification properties.
+    /// Options for creating a new job to be routed with classification property.
     /// </summary>
     public class CreateJobWithClassificationPolicyOptions
     {
         /// <summary>
-        /// Public constructor.
+        /// Initializes a new instance of CreateJobWithClassificationPolicyOptions.
         /// </summary>
-        /// <param name="jobId"> Id of the job. </param>
-        /// <param name="channelId"> The channel or modality upon which this job will be executed. </param>
-        /// <param name="classificationPolicyId"> The classification policy that will determine queue, priority and required abilities. </param>
+        /// <param name="jobId"> Id of a job. </param>
+        /// <param name="channelId"> The channel identifier. eg. voice, chat, etc. </param>
+        /// <param name="classificationPolicyId"> Id of a classification policy used for classifying this job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="channelId"/> is null. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="classificationPolicyId"/> is null. </exception>
@@ -33,33 +33,33 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary>
-        /// Id of the job.
+        /// Id of a job.
         /// </summary>
         public string JobId { get; }
 
         /// <summary>
-        /// The channel or modality upon which this job will be executed.
+        /// The channel identifier. eg. voice, chat, etc.
         /// </summary>
         public string ChannelId { get; }
 
         /// <summary>
-        /// The classification policy that will determine queue, priority and required abilities.
+        /// Id of a classification policy used for classifying this job.
         /// </summary>
         public string ClassificationPolicyId { get; set; }
 
         /// <summary> Reference to an external parent context, eg. call ID. </summary>
         public string ChannelReference { get; set; }
 
-        /// <summary> The Id of the Queue that this job is queued to. </summary>
+        /// <summary> Id of a queue that this job is queued to. </summary>
         public string QueueId { get; set; }
 
-        /// <summary> The priority of this job. </summary>
+        /// <summary> Priority of this job. </summary>
         public int? Priority { get; set; }
 
-        /// <summary> A collection of manually specified label selectors, which a worker must satisfy in order to process this job. </summary>
+        /// <summary> A collection of manually specified worker selectors, which a worker must satisfy in order to process this job. </summary>
         public IList<RouterWorkerSelector> RequestedWorkerSelectors { get; } = new List<RouterWorkerSelector>();
 
-        /// <summary> Notes attached to a job, sorted by timestamp. </summary>
+        /// <summary> A collection of notes attached to a job. </summary>
         public IList<RouterJobNote> Notes { get; } = new List<RouterJobNote>();
 
         /// <summary> A set of non-identifying attributes attached to this job. Values must be primitive values - number, string, boolean. </summary>

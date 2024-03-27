@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Data.SchemaRegistry.Models
 {
@@ -19,8 +18,8 @@ namespace Azure.Data.SchemaRegistry.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> schemaGroups = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<string> schemaGroups = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schemaGroups"u8))
@@ -43,7 +42,7 @@ namespace Azure.Data.SchemaRegistry.Models
                     continue;
                 }
             }
-            return new SchemaGroups(Optional.ToList(schemaGroups), nextLink.Value);
+            return new SchemaGroups(schemaGroups ?? new ChangeTrackingList<string>(), nextLink);
         }
     }
 }

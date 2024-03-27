@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Mocking
 {
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.Nginx.Mocking
         }
 
         /// <summary>
-        /// Get the Nginx deployment
+        /// Get the NGINX deployment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -54,9 +51,17 @@ namespace Azure.ResourceManager.Nginx.Mocking
         /// <term>Operation Id</term>
         /// <description>Deployments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="deploymentName"> The name of targeted Nginx deployment. </param>
+        /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -67,7 +72,7 @@ namespace Azure.ResourceManager.Nginx.Mocking
         }
 
         /// <summary>
-        /// Get the Nginx deployment
+        /// Get the NGINX deployment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -77,9 +82,17 @@ namespace Azure.ResourceManager.Nginx.Mocking
         /// <term>Operation Id</term>
         /// <description>Deployments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="deploymentName"> The name of targeted Nginx deployment. </param>
+        /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>

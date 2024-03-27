@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MonitoringSignalBase : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownMonitoringSignalBase))]
+    public partial class MonitoringSignalBase : IUtf8JsonSerializable, IJsonModel<MonitoringSignalBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoringSignalBase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MonitoringSignalBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoringSignalBase>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonitoringSignalBase)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Mode))
             {
@@ -40,11 +51,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("signalType"u8);
             writer.WriteStringValue(SignalType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MonitoringSignalBase DeserializeMonitoringSignalBase(JsonElement element)
+        MonitoringSignalBase IJsonModel<MonitoringSignalBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoringSignalBase>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonitoringSignalBase)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitoringSignalBase(document.RootElement, options);
+        }
+
+        internal static MonitoringSignalBase DeserializeMonitoringSignalBase(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -53,17 +93,48 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Custom": return CustomMonitoringSignal.DeserializeCustomMonitoringSignal(element);
-                    case "DataDrift": return DataDriftMonitoringSignal.DeserializeDataDriftMonitoringSignal(element);
-                    case "DataQuality": return DataQualityMonitoringSignal.DeserializeDataQualityMonitoringSignal(element);
-                    case "FeatureAttributionDrift": return FeatureAttributionDriftMonitoringSignal.DeserializeFeatureAttributionDriftMonitoringSignal(element);
-                    case "GenerationSafetyQuality": return GenerationSafetyQualityMonitoringSignal.DeserializeGenerationSafetyQualityMonitoringSignal(element);
-                    case "GenerationTokenStatistics": return GenerationTokenStatisticsSignal.DeserializeGenerationTokenStatisticsSignal(element);
-                    case "ModelPerformance": return ModelPerformanceSignal.DeserializeModelPerformanceSignal(element);
-                    case "PredictionDrift": return PredictionDriftMonitoringSignal.DeserializePredictionDriftMonitoringSignal(element);
+                    case "Custom": return CustomMonitoringSignal.DeserializeCustomMonitoringSignal(element, options);
+                    case "DataDrift": return DataDriftMonitoringSignal.DeserializeDataDriftMonitoringSignal(element, options);
+                    case "DataQuality": return DataQualityMonitoringSignal.DeserializeDataQualityMonitoringSignal(element, options);
+                    case "FeatureAttributionDrift": return FeatureAttributionDriftMonitoringSignal.DeserializeFeatureAttributionDriftMonitoringSignal(element, options);
+                    case "GenerationSafetyQuality": return GenerationSafetyQualityMonitoringSignal.DeserializeGenerationSafetyQualityMonitoringSignal(element, options);
+                    case "GenerationTokenStatistics": return GenerationTokenStatisticsSignal.DeserializeGenerationTokenStatisticsSignal(element, options);
+                    case "ModelPerformance": return ModelPerformanceSignal.DeserializeModelPerformanceSignal(element, options);
+                    case "PredictionDrift": return PredictionDriftMonitoringSignal.DeserializePredictionDriftMonitoringSignal(element, options);
                 }
             }
-            return UnknownMonitoringSignalBase.DeserializeUnknownMonitoringSignalBase(element);
+            return UnknownMonitoringSignalBase.DeserializeUnknownMonitoringSignalBase(element, options);
         }
+
+        BinaryData IPersistableModel<MonitoringSignalBase>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoringSignalBase>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MonitoringSignalBase)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MonitoringSignalBase IPersistableModel<MonitoringSignalBase>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoringSignalBase>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMonitoringSignalBase(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MonitoringSignalBase)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MonitoringSignalBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

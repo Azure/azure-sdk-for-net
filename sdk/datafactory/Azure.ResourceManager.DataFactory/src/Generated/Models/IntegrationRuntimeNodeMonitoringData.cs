@@ -7,20 +7,19 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Monitoring data for integration runtime node. </summary>
     public partial class IntegrationRuntimeNodeMonitoringData
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeNodeMonitoringData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeNodeMonitoringData"/>. </summary>
         internal IntegrationRuntimeNodeMonitoringData()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeNodeMonitoringData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeNodeMonitoringData"/>. </summary>
         /// <param name="nodeName"> Name of the integration runtime node. </param>
         /// <param name="availableMemoryInMB"> Available memory (MB) on the integration runtime node. </param>
         /// <param name="cpuUtilization"> CPU percentage on the integration runtime node. </param>

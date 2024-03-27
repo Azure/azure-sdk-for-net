@@ -9,18 +9,16 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Logic
 {
     /// <summary>
     /// A Class representing a LogicWorkflowRunOperation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LogicWorkflowRunOperationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLogicWorkflowRunOperationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="LogicWorkflowRunResource" /> using the GetLogicWorkflowRunOperation method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LogicWorkflowRunOperationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLogicWorkflowRunOperationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="LogicWorkflowRunResource"/> using the GetLogicWorkflowRunOperation method.
     /// </summary>
     public partial class LogicWorkflowRunOperationResource : ArmResource
     {
@@ -40,12 +38,15 @@ namespace Azure.ResourceManager.Logic
         private readonly WorkflowRunRestOperations _logicWorkflowRunOperationWorkflowRunOperationsRestClient;
         private readonly LogicWorkflowRunData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Logic/workflows/runs/operations";
+
         /// <summary> Initializes a new instance of the <see cref="LogicWorkflowRunOperationResource"/> class for mocking. </summary>
         protected LogicWorkflowRunOperationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LogicWorkflowRunOperationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LogicWorkflowRunOperationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LogicWorkflowRunOperationResource(ArmClient client, LogicWorkflowRunData data) : this(client, data.Id)
@@ -66,9 +67,6 @@ namespace Azure.ResourceManager.Logic
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Logic/workflows/runs/operations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -102,6 +100,14 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowRunOperations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunOperationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,6 +139,14 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowRunOperations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunOperationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

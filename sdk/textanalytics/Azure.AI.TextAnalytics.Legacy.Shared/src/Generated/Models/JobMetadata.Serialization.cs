@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using Azure.AI.TextAnalytics.Legacy.Models;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -21,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 return null;
             }
             DateTimeOffset createdDateTime = default;
-            Optional<DateTimeOffset> expirationDateTime = default;
+            DateTimeOffset? expirationDateTime = default;
             Guid jobId = default;
             DateTimeOffset lastUpdateDateTime = default;
             State status = default;
@@ -57,7 +56,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new JobMetadata(createdDateTime, Optional.ToNullable(expirationDateTime), jobId, lastUpdateDateTime, status);
+            return new JobMetadata(createdDateTime, expirationDateTime, jobId, lastUpdateDateTime, status);
         }
     }
 }

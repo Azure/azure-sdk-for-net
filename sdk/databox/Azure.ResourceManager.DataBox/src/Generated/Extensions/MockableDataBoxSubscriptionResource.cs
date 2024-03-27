@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataBox;
 using Azure.ResourceManager.DataBox.Models;
 
 namespace Azure.ResourceManager.DataBox.Mocking
@@ -60,11 +57,19 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <term>Operation Id</term>
         /// <description>Jobs_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> $skipToken is supported on Get list of jobs, which provides the next page in the list of jobs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataBoxJobResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataBoxJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxJobResource> GetDataBoxJobsAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataBoxJobJobsRestClient.CreateListRequest(Id.SubscriptionId, skipToken);
@@ -83,11 +88,19 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <term>Operation Id</term>
         /// <description>Jobs_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> $skipToken is supported on Get list of jobs, which provides the next page in the list of jobs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataBoxJobResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataBoxJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxJobResource> GetDataBoxJobs(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataBoxJobJobsRestClient.CreateListRequest(Id.SubscriptionId, skipToken);
@@ -105,6 +118,10 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Service_ValidateAddress</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -141,6 +158,10 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <term>Operation Id</term>
         /// <description>Service_ValidateAddress</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
@@ -175,6 +196,10 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Service_ValidateInputs</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -211,6 +236,10 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <term>Operation Id</term>
         /// <description>Service_ValidateInputs</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
@@ -246,6 +275,10 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <term>Operation Id</term>
         /// <description>Service_RegionConfiguration</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
@@ -280,6 +313,10 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Service_RegionConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
         /// </item>
         /// </list>
         /// </summary>

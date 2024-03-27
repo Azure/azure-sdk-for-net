@@ -6,20 +6,19 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> A list of ONVIF devices that were discovered in the same subnet as the IoT Edge device. </summary>
     public partial class DiscoveredOnvifDeviceCollection
     {
-        /// <summary> Initializes a new instance of DiscoveredOnvifDeviceCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscoveredOnvifDeviceCollection"/>. </summary>
         public DiscoveredOnvifDeviceCollection()
         {
             Value = new ChangeTrackingList<DiscoveredOnvifDevice>();
         }
 
-        /// <summary> Initializes a new instance of DiscoveredOnvifDeviceCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscoveredOnvifDeviceCollection"/>. </summary>
         /// <param name="value"> An array of ONVIF devices that have been discovered in the same subnet as the IoT Edge device. </param>
         internal DiscoveredOnvifDeviceCollection(IList<DiscoveredOnvifDevice> value)
         {

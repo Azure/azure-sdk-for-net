@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AlertsManagement;
 using Azure.ResourceManager.AlertsManagement.Models;
 
 namespace Azure.ResourceManager.AlertsManagement.Mocking
@@ -67,6 +64,14 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>Alerts_GetById</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="alertId"> Unique ID of an alert instance. </param>
@@ -87,6 +92,14 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_GetById</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,6 +129,14 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>SmartGroups_GetById</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SmartGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="smartGroupId"> Smart group unique id. </param>
@@ -136,6 +157,14 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SmartGroups_GetById</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SmartGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -158,10 +187,18 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>AlertProcessingRules_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AlertProcessingRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AlertProcessingRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AlertProcessingRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AlertProcessingRuleResource> GetAlertProcessingRulesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AlertProcessingRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -180,10 +217,18 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>AlertProcessingRules_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AlertProcessingRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AlertProcessingRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AlertProcessingRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AlertProcessingRuleResource> GetAlertProcessingRules(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AlertProcessingRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -201,6 +246,14 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_GetSummary</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,6 +288,14 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_GetSummary</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -5,23 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MonitoringFeatureFilterBase : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownMonitoringFeatureFilterBase))]
+    public partial class MonitoringFeatureFilterBase : IUtf8JsonSerializable, IJsonModel<MonitoringFeatureFilterBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoringFeatureFilterBase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MonitoringFeatureFilterBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoringFeatureFilterBase>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonitoringFeatureFilterBase)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("filterType"u8);
             writer.WriteStringValue(FilterType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MonitoringFeatureFilterBase DeserializeMonitoringFeatureFilterBase(JsonElement element)
+        MonitoringFeatureFilterBase IJsonModel<MonitoringFeatureFilterBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoringFeatureFilterBase>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonitoringFeatureFilterBase)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitoringFeatureFilterBase(document.RootElement, options);
+        }
+
+        internal static MonitoringFeatureFilterBase DeserializeMonitoringFeatureFilterBase(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,12 +70,43 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AllFeatures": return MachineLearningAllFeatures.DeserializeMachineLearningAllFeatures(element);
-                    case "FeatureSubset": return FeatureSubset.DeserializeFeatureSubset(element);
-                    case "TopNByAttribution": return TopNFeaturesByAttribution.DeserializeTopNFeaturesByAttribution(element);
+                    case "AllFeatures": return MachineLearningAllFeatures.DeserializeMachineLearningAllFeatures(element, options);
+                    case "FeatureSubset": return FeatureSubset.DeserializeFeatureSubset(element, options);
+                    case "TopNByAttribution": return TopNFeaturesByAttribution.DeserializeTopNFeaturesByAttribution(element, options);
                 }
             }
-            return UnknownMonitoringFeatureFilterBase.DeserializeUnknownMonitoringFeatureFilterBase(element);
+            return UnknownMonitoringFeatureFilterBase.DeserializeUnknownMonitoringFeatureFilterBase(element, options);
         }
+
+        BinaryData IPersistableModel<MonitoringFeatureFilterBase>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoringFeatureFilterBase>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MonitoringFeatureFilterBase)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MonitoringFeatureFilterBase IPersistableModel<MonitoringFeatureFilterBase>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoringFeatureFilterBase>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMonitoringFeatureFilterBase(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MonitoringFeatureFilterBase)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MonitoringFeatureFilterBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

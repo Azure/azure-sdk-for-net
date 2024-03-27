@@ -18,12 +18,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             if (Optional.IsDefined(AzureBlobSource))
             {
                 writer.WritePropertyName("azureBlobSource"u8);
-                writer.WriteObjectValue(AzureBlobSource);
+                writer.WriteObjectValue<BlobContentSource>(AzureBlobSource);
             }
             if (Optional.IsDefined(AzureBlobFileListSource))
             {
                 writer.WritePropertyName("azureBlobFileListSource"u8);
-                writer.WriteObjectValue(AzureBlobFileListSource);
+                writer.WriteObjectValue<BlobFileListContentSource>(AzureBlobFileListSource);
             }
             writer.WriteEndObject();
         }
@@ -34,8 +34,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 return null;
             }
-            Optional<BlobContentSource> azureBlobSource = default;
-            Optional<BlobFileListContentSource> azureBlobFileListSource = default;
+            BlobContentSource azureBlobSource = default;
+            BlobFileListContentSource azureBlobFileListSource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureBlobSource"u8))
@@ -57,7 +57,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new ClassifierDocumentTypeDetails(azureBlobSource.Value, azureBlobFileListSource.Value);
+            return new ClassifierDocumentTypeDetails(azureBlobSource, azureBlobFileListSource);
         }
     }
 }

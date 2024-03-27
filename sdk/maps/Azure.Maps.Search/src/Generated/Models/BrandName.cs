@@ -10,12 +10,12 @@ namespace Azure.Maps.Search.Models
     /// <summary> The name of the brand for the POI being returned. </summary>
     public partial class BrandName
     {
-        /// <summary> Initializes a new instance of BrandName. </summary>
+        /// <summary> Initializes a new instance of <see cref="BrandName"/>. </summary>
         internal BrandName()
         {
         }
 
-        /// <summary> Initializes a new instance of BrandName. </summary>
+        /// <summary> Initializes a new instance of <see cref="BrandName"/>. </summary>
         /// <param name="name"> Name of the brand. </param>
         internal BrandName(string name)
         {

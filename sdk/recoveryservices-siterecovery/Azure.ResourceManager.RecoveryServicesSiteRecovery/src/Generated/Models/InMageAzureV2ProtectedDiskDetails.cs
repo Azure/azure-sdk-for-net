@@ -6,18 +6,51 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> InMageAzureV2 protected disk details. </summary>
     public partial class InMageAzureV2ProtectedDiskDetails
     {
-        /// <summary> Initializes a new instance of InMageAzureV2ProtectedDiskDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2ProtectedDiskDetails"/>. </summary>
         internal InMageAzureV2ProtectedDiskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of InMageAzureV2ProtectedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2ProtectedDiskDetails"/>. </summary>
         /// <param name="diskId"> The disk id. </param>
         /// <param name="diskName"> The disk name. </param>
         /// <param name="protectionStage"> The protection stage. </param>
@@ -41,7 +74,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="progressHealth"> The Progress Health. </param>
         /// <param name="progressStatus"> The Progress Status. </param>
         /// <param name="secondsToTakeSwitchProvider"> The seconds to take for switch provider. </param>
-        internal InMageAzureV2ProtectedDiskDetails(string diskId, string diskName, string protectionStage, string healthErrorCode, long? rpoInSeconds, string resyncRequired, int? resyncProgressPercentage, long? resyncDurationInSeconds, long? diskCapacityInBytes, long? fileSystemCapacityInBytes, double? sourceDataInMegaBytes, double? psDataInMegaBytes, double? targetDataInMegaBytes, string diskResized, DateTimeOffset? lastRpoCalculatedOn, long? resyncProcessedBytes, long? resyncTotalTransferredBytes, long? resyncLast15MinutesTransferredBytes, DateTimeOffset? resyncLastDataTransferOn, DateTimeOffset? resyncStartOn, string progressHealth, string progressStatus, long? secondsToTakeSwitchProvider)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InMageAzureV2ProtectedDiskDetails(string diskId, string diskName, string protectionStage, string healthErrorCode, long? rpoInSeconds, string resyncRequired, int? resyncProgressPercentage, long? resyncDurationInSeconds, long? diskCapacityInBytes, long? fileSystemCapacityInBytes, double? sourceDataInMegaBytes, double? psDataInMegaBytes, double? targetDataInMegaBytes, string diskResized, DateTimeOffset? lastRpoCalculatedOn, long? resyncProcessedBytes, long? resyncTotalTransferredBytes, long? resyncLast15MinutesTransferredBytes, DateTimeOffset? resyncLastDataTransferOn, DateTimeOffset? resyncStartOn, string progressHealth, string progressStatus, long? secondsToTakeSwitchProvider, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiskId = diskId;
             DiskName = diskName;
@@ -66,6 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ProgressHealth = progressHealth;
             ProgressStatus = progressStatus;
             SecondsToTakeSwitchProvider = secondsToTakeSwitchProvider;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The disk id. </summary>

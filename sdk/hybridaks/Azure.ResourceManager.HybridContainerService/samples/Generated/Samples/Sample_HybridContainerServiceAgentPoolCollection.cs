@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.HybridContainerService;
 using Azure.ResourceManager.HybridContainerService.Models;
 
 namespace Azure.ResourceManager.HybridContainerService.Samples
@@ -23,7 +20,7 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAgentPool()
         {
-            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/preview/2022-09-01-preview/examples/GetAgentPool.json
+            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/stable/2024-01-01/examples/GetAgentPool.json
             // this example is just showing the usage of "agentPool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -33,17 +30,15 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
 
             // this example assumes you already have this ProvisionedClusterResource created on azure
             // for more information of creating ProvisionedClusterResource, please refer to the document of ProvisionedClusterResource
-            string subscriptionId = "a3e42606-29b1-4d7d-b1d9-9ff6b9d3c71b";
-            string resourceGroupName = "test-arcappliance-resgrp";
-            string resourceName = "test-hybridakscluster";
-            ResourceIdentifier provisionedClusterResourceId = ProvisionedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            string connectedClusterResourceUri = "subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/testrg/providers/Microsoft.Kubernetes/connectedClusters/test-hybridakscluster";
+            ResourceIdentifier provisionedClusterResourceId = ProvisionedClusterResource.CreateResourceIdentifier(connectedClusterResourceUri);
             ProvisionedClusterResource provisionedCluster = client.GetProvisionedClusterResource(provisionedClusterResourceId);
 
             // get the collection of this HybridContainerServiceAgentPoolResource
             HybridContainerServiceAgentPoolCollection collection = provisionedCluster.GetHybridContainerServiceAgentPools();
 
             // invoke the operation
-            string agentPoolName = "test-hybridaksnodepool";
+            string agentPoolName = "testnodepool";
             HybridContainerServiceAgentPoolResource result = await collection.GetAsync(agentPoolName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -58,7 +53,7 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetAgentPool()
         {
-            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/preview/2022-09-01-preview/examples/GetAgentPool.json
+            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/stable/2024-01-01/examples/GetAgentPool.json
             // this example is just showing the usage of "agentPool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -68,17 +63,15 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
 
             // this example assumes you already have this ProvisionedClusterResource created on azure
             // for more information of creating ProvisionedClusterResource, please refer to the document of ProvisionedClusterResource
-            string subscriptionId = "a3e42606-29b1-4d7d-b1d9-9ff6b9d3c71b";
-            string resourceGroupName = "test-arcappliance-resgrp";
-            string resourceName = "test-hybridakscluster";
-            ResourceIdentifier provisionedClusterResourceId = ProvisionedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            string connectedClusterResourceUri = "subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/testrg/providers/Microsoft.Kubernetes/connectedClusters/test-hybridakscluster";
+            ResourceIdentifier provisionedClusterResourceId = ProvisionedClusterResource.CreateResourceIdentifier(connectedClusterResourceUri);
             ProvisionedClusterResource provisionedCluster = client.GetProvisionedClusterResource(provisionedClusterResourceId);
 
             // get the collection of this HybridContainerServiceAgentPoolResource
             HybridContainerServiceAgentPoolCollection collection = provisionedCluster.GetHybridContainerServiceAgentPools();
 
             // invoke the operation
-            string agentPoolName = "test-hybridaksnodepool";
+            string agentPoolName = "testnodepool";
             bool result = await collection.ExistsAsync(agentPoolName);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -89,7 +82,7 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetAgentPool()
         {
-            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/preview/2022-09-01-preview/examples/GetAgentPool.json
+            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/stable/2024-01-01/examples/GetAgentPool.json
             // this example is just showing the usage of "agentPool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -99,17 +92,15 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
 
             // this example assumes you already have this ProvisionedClusterResource created on azure
             // for more information of creating ProvisionedClusterResource, please refer to the document of ProvisionedClusterResource
-            string subscriptionId = "a3e42606-29b1-4d7d-b1d9-9ff6b9d3c71b";
-            string resourceGroupName = "test-arcappliance-resgrp";
-            string resourceName = "test-hybridakscluster";
-            ResourceIdentifier provisionedClusterResourceId = ProvisionedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            string connectedClusterResourceUri = "subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/testrg/providers/Microsoft.Kubernetes/connectedClusters/test-hybridakscluster";
+            ResourceIdentifier provisionedClusterResourceId = ProvisionedClusterResource.CreateResourceIdentifier(connectedClusterResourceUri);
             ProvisionedClusterResource provisionedCluster = client.GetProvisionedClusterResource(provisionedClusterResourceId);
 
             // get the collection of this HybridContainerServiceAgentPoolResource
             HybridContainerServiceAgentPoolCollection collection = provisionedCluster.GetHybridContainerServiceAgentPools();
 
             // invoke the operation
-            string agentPoolName = "test-hybridaksnodepool";
+            string agentPoolName = "testnodepool";
             NullableResponse<HybridContainerServiceAgentPoolResource> response = await collection.GetIfExistsAsync(agentPoolName);
             HybridContainerServiceAgentPoolResource result = response.HasValue ? response.Value : null;
 
@@ -132,7 +123,7 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_PutAgentPool()
         {
-            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/preview/2022-09-01-preview/examples/PutAgentPool.json
+            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/stable/2024-01-01/examples/PutAgentPool.json
             // this example is just showing the usage of "agentPool_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -142,21 +133,28 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
 
             // this example assumes you already have this ProvisionedClusterResource created on azure
             // for more information of creating ProvisionedClusterResource, please refer to the document of ProvisionedClusterResource
-            string subscriptionId = "a3e42606-29b1-4d7d-b1d9-9ff6b9d3c71b";
-            string resourceGroupName = "test-arcappliance-resgrp";
-            string resourceName = "test-hybridakscluster";
-            ResourceIdentifier provisionedClusterResourceId = ProvisionedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            string connectedClusterResourceUri = "subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/testrg/providers/Microsoft.Kubernetes/connectedClusters/test-hybridakscluster";
+            ResourceIdentifier provisionedClusterResourceId = ProvisionedClusterResource.CreateResourceIdentifier(connectedClusterResourceUri);
             ProvisionedClusterResource provisionedCluster = client.GetProvisionedClusterResource(provisionedClusterResourceId);
 
             // get the collection of this HybridContainerServiceAgentPoolResource
             HybridContainerServiceAgentPoolCollection collection = provisionedCluster.GetHybridContainerServiceAgentPools();
 
             // invoke the operation
-            string agentPoolName = "test-hybridaksnodepool";
-            HybridContainerServiceAgentPoolData data = new HybridContainerServiceAgentPoolData(new AzureLocation("westus"))
+            string agentPoolName = "testnodepool";
+            HybridContainerServiceAgentPoolData data = new HybridContainerServiceAgentPoolData()
             {
+                OSType = HybridContainerServiceOSType.Linux,
+                NodeLabels =
+{
+["env"] = "dev",
+["goal"] = "test",
+},
+                NodeTaints =
+{
+"env=prod:NoSchedule","sku=gpu:NoSchedule"
+},
                 Count = 1,
-                OSType = OSType.Linux,
                 VmSize = "Standard_A4_v2",
             };
             ArmOperation<HybridContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
@@ -169,12 +167,12 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ListAgentPoolByProvisionedCluster
+        // ListAgentPoolByProvisionedClusterInstance
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListAgentPoolByProvisionedCluster()
+        public async Task GetAll_ListAgentPoolByProvisionedClusterInstance()
         {
-            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/preview/2022-09-01-preview/examples/ListAgentPoolByProvisionedCluster.json
+            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/stable/2024-01-01/examples/ListAgentPoolByProvisionedClusterInstance.json
             // this example is just showing the usage of "agentPool_ListByProvisionedCluster" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -184,10 +182,8 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
 
             // this example assumes you already have this ProvisionedClusterResource created on azure
             // for more information of creating ProvisionedClusterResource, please refer to the document of ProvisionedClusterResource
-            string subscriptionId = "a3e42606-29b1-4d7d-b1d9-9ff6b9d3c71b";
-            string resourceGroupName = "test-arcappliance-resgrp";
-            string resourceName = "test-hybridakscluster";
-            ResourceIdentifier provisionedClusterResourceId = ProvisionedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            string connectedClusterResourceUri = "subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/testrg/providers/Microsoft.Kubernetes/connectedClusters/test-hybridakscluster";
+            ResourceIdentifier provisionedClusterResourceId = ProvisionedClusterResource.CreateResourceIdentifier(connectedClusterResourceUri);
             ProvisionedClusterResource provisionedCluster = client.GetProvisionedClusterResource(provisionedClusterResourceId);
 
             // get the collection of this HybridContainerServiceAgentPoolResource

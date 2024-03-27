@@ -9,19 +9,17 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Authorization
 {
     /// <summary>
     /// A Class representing an AuthorizationProviderOperationsMetadata along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AuthorizationProviderOperationsMetadataResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAuthorizationProviderOperationsMetadataResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetAuthorizationProviderOperationsMetadata method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AuthorizationProviderOperationsMetadataResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAuthorizationProviderOperationsMetadataResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetAuthorizationProviderOperationsMetadata method.
     /// </summary>
     public partial class AuthorizationProviderOperationsMetadataResource : ArmResource
     {
@@ -37,12 +35,15 @@ namespace Azure.ResourceManager.Authorization
         private readonly ProviderOperationsMetadataRestOperations _authorizationProviderOperationsMetadataProviderOperationsMetadataRestClient;
         private readonly AuthorizationProviderOperationsMetadataData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Authorization/providerOperations";
+
         /// <summary> Initializes a new instance of the <see cref="AuthorizationProviderOperationsMetadataResource"/> class for mocking. </summary>
         protected AuthorizationProviderOperationsMetadataResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AuthorizationProviderOperationsMetadataResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AuthorizationProviderOperationsMetadataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AuthorizationProviderOperationsMetadataResource(ArmClient client, AuthorizationProviderOperationsMetadataData data) : this(client, data.Id)
@@ -63,9 +64,6 @@ namespace Azure.ResourceManager.Authorization
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Authorization/providerOperations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -99,6 +97,14 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>ProviderOperationsMetadata_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AuthorizationProviderOperationsMetadataResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specifies whether to expand the values. </param>
@@ -131,6 +137,14 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProviderOperationsMetadata_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AuthorizationProviderOperationsMetadataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
