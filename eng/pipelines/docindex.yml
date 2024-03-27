@@ -2,6 +2,7 @@ trigger: none
 
 variables:
   - template: /eng/pipelines/templates/variables/globals.yml
+  - template: /eng/pipelines/templates/variables/image.yml
 
   # Globals sets skipComponentGovernanceDetection by default
   - name: skipComponentGovernanceDetection
