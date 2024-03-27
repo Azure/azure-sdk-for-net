@@ -124,7 +124,7 @@ namespace Azure.Core
                 headerSource = HeaderSource.None;
             }
 
-            return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, null);
+            return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, null, rehydrationToken.Id);
         }
 
         private static string GetContentFromRehydrationToken(Dictionary<string, string> lroDetails, string key)
@@ -145,7 +145,8 @@ namespace Azure.Core
             HeaderSource headerSource,
             string? lastKnownLocation,
             OperationFinalStateVia finalStateVia,
-            string? apiVersion)
+            string? apiVersion,
+            string? operationId = null)
         {
             AssertNotNull(pipeline, nameof(pipeline));
             AssertNotNull(requestMethod, nameof(requestMethod));
@@ -162,7 +163,7 @@ namespace Azure.Core
             _finalStateVia = finalStateVia;
             _pipeline = pipeline;
             _apiVersion = apiVersion;
-            OperationId = ParseOperationId(startRequestUri, nextRequestUri);
+            OperationId = operationId;
         }
 
         private string ParseOperationId(Uri startRequestUri, string nextRequestUri)

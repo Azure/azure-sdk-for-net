@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -149,65 +150,62 @@ namespace Azure.Core.Tests
         [Test]
         public void Rehydrate()
         {
-            var pipeline = CreateMockHttpPipeline(out _);
+            var pipeline = CreateMockHttpPipeline(HttpStatusCode.Accepted, out _);
             var operationId = Guid.NewGuid().ToString();
-            var rehydrationToken = new RehydrationToken(null, null, "None", $"https://management.azure.com/subscriptions/subscription-id/providers/Microsoft.Compute/locations/region/operations/{operationId}?api-version=2019-12-01", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
+            var rehydrationToken = new RehydrationToken(operationId, null, "Location", "test", "https://test", RequestMethod.Put, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
             var operation = Operation.Rehydrate(pipeline, rehydrationToken);
             Assert.NotNull(operation);
             Assert.AreEqual(operationId, operation.Id);
-            Assert.True(operation.HasCompleted);
-            Assert.AreEqual(200, operation.GetRawResponse().Status);
+            Assert.False(operation.HasCompleted);
+            Assert.AreEqual((int)HttpStatusCode.Accepted,operation.GetRawResponse().Status);
         }
 
         [Test]
         public async Task RehydrateAsync()
         {
-            var pipeline = CreateMockHttpPipeline(out _);
+            var pipeline = CreateMockHttpPipeline(HttpStatusCode.Accepted, out _);
             var operationId = Guid.NewGuid().ToString();
-            var rehydrationToken = new RehydrationToken(null, null, "None", $"https://management.azure.com/subscriptions/subscription-id/providers/Microsoft.Compute/locations/region/operations/{operationId}?api-version=2019-12-01", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
+            var rehydrationToken = new RehydrationToken(operationId, null, "Location", "test", "https://test", RequestMethod.Put, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
             var operation = await Operation.RehydrateAsync(pipeline, rehydrationToken);
             Assert.NotNull(operation);
             Assert.AreEqual(operationId, operation.Id);
-            Assert.True(operation.HasCompleted);
-            Assert.AreEqual(200, operation.GetRawResponse().Status);
+            Assert.False(operation.HasCompleted);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, operation.GetRawResponse().Status);
         }
 
         [Test]
         public void RehydrateOfT()
         {
-            var pipeline = CreateMockHttpPipeline(out var mockJsonModel);
+            var pipeline = CreateMockHttpPipeline(HttpStatusCode.OK, out var mockJsonModel);
             var operationId = Guid.NewGuid().ToString();
-            var rehydrationToken = new RehydrationToken(null, null, "None", $"https://management.azure.com/subscriptions/subscription-id/providers/Microsoft.Compute/locations/region/operations/{operationId}?api-version=2019-12-01", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
+            var rehydrationToken = new RehydrationToken(operationId, null, "None", "test", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
             var operation = Operation.Rehydrate<MockJsonModel>(pipeline, rehydrationToken);
             Assert.NotNull(operation);
             Assert.AreEqual(operationId, operation.Id);
             Assert.True(operation.HasCompleted);
             Assert.True(operation.HasValue);
-            Assert.AreEqual(200, operation.GetRawResponse().Status);
+            Assert.AreEqual((int)HttpStatusCode.OK, operation.GetRawResponse().Status);
             Assert.AreEqual(ModelReaderWriter.Write(mockJsonModel).ToString(), ModelReaderWriter.Write(operation.Value).ToString());
         }
 
         [Test]
         public async Task RehydrateAsyncOfT()
         {
-            var pipeline = CreateMockHttpPipeline(out var mockJsonModel);
-            var operationId = Guid.NewGuid().ToString();
-            var rehydrationToken = new RehydrationToken(null, null, "None", $"https://management.azure.com/subscriptions/subscription-id/providers/Microsoft.Compute/locations/region/operations/{operationId}?api-version=2019-12-01", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
+            var pipeline = CreateMockHttpPipeline(HttpStatusCode.OK, out var mockJsonModel);
+            var rehydrationToken = new RehydrationToken(null, null, "None", "test", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
             var operation = await Operation.RehydrateAsync<MockJsonModel>(pipeline, rehydrationToken);
             Assert.NotNull(operation);
-            Assert.AreEqual(operationId, operation.Id);
             Assert.True(operation.HasCompleted);
             Assert.True(operation.HasValue);
-            Assert.AreEqual(200, operation.GetRawResponse().Status);
+            Assert.AreEqual((int)HttpStatusCode.OK, operation.GetRawResponse().Status);
             Assert.AreEqual(ModelReaderWriter.Write(mockJsonModel).ToString(), ModelReaderWriter.Write(operation.Value).ToString());
         }
 
         [Test]
         public async Task ConstructOperationForRehydrationWithFailure()
         {
-            HttpPipeline pipeline = CreateMockHttpPipelineWithFailure();
-            var operationId = Guid.NewGuid().ToString();
-            var rehydrationToken = new RehydrationToken(null, null, "None", $"https://management.azure.com/subscriptions/subscription-id/providers/Microsoft.Compute/locations/region/operations/{operationId}?api-version=2019-12-01", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
+            HttpPipeline pipeline = CreateMockHttpPipeline(HttpStatusCode.InternalServerError, out _);
+            var rehydrationToken = new RehydrationToken(null, null, "None", "test", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
             var operation = await Operation.RehydrateAsync<MockJsonModel>(pipeline, rehydrationToken);
             Assert.NotNull(operation);
             Assert.AreEqual(500, operation.GetRawResponse().Status);
@@ -217,9 +215,9 @@ namespace Azure.Core.Tests
         [Test]
         public async Task GetRehydrationTokenAsync()
         {
-            var operationId = Guid.NewGuid().ToString();
-            var rehydrationToken = new RehydrationToken(operationId, null, "None", $"https://management.azure.com/subscriptions/subscription-id/providers/Microsoft.Compute/locations/region/operations/{operationId}?api-version=2019-12-01", "https://test/", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
-            var operation = await Operation.RehydrateAsync(HttpPipelineBuilder.Build(new MockClientOptions()), rehydrationToken);
+            var pipeline = CreateMockHttpPipeline(HttpStatusCode.OK, out _);
+            var rehydrationToken = new RehydrationToken(null, null, "None", "test", "https://test/", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
+            var operation = await Operation.RehydrateAsync(pipeline, rehydrationToken);
             var token = operation.GetRehydrationToken();
             Assert.AreEqual(ModelReaderWriter.Write(rehydrationToken).ToString(), ModelReaderWriter.Write(token).ToString());
         }
@@ -227,27 +225,29 @@ namespace Azure.Core.Tests
         [Test]
         public async Task GetRehydrationTokenOfTAsync()
         {
-            var operationId = Guid.NewGuid().ToString();
-            var rehydrationToken = new RehydrationToken(operationId, null, "None", $"https://management.azure.com/subscriptions/subscription-id/providers/Microsoft.Compute/locations/region/operations/{operationId}?api-version=2019-12-01", "https://test/", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
-            var operation = await Operation.RehydrateAsync<MockJsonModel>(HttpPipelineBuilder.Build(new MockClientOptions()), rehydrationToken);
+            var pipeline = CreateMockHttpPipeline(HttpStatusCode.OK, out _);
+            var rehydrationToken = new RehydrationToken(null, null, "None", "test", "https://test/", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
+            var operation = await Operation.RehydrateAsync<MockJsonModel>(pipeline, rehydrationToken);
             var token = operation.GetRehydrationToken();
             Assert.AreEqual(ModelReaderWriter.Write(rehydrationToken).ToString(), ModelReaderWriter.Write(token).ToString());
         }
 
-        private static HttpPipeline CreateMockHttpPipeline(out MockJsonModel mockJsonModel)
+        //private static HttpPipeline CreateMockHttpPipeline(out MockJsonModel mockJsonModel)
+        //{
+        //    var mockResponse = new MockResponse(202);
+        //    mockJsonModel = new MockJsonModel(1, "a");
+        //    mockResponse.SetContent(ModelReaderWriter.Write(mockJsonModel).ToString());
+        //    var transport = new MockTransport(mockResponse);
+        //    var pipeline = new HttpPipeline(transport, default);
+        //    return pipeline;
+        //}
+
+        private static HttpPipeline CreateMockHttpPipeline(HttpStatusCode statusCode, out MockJsonModel mockJsonModel)
         {
-            var mockResponse = new MockResponse(200);
+            var mockResponse = new MockResponse((int)statusCode);
             mockJsonModel = new MockJsonModel(1, "a");
             mockResponse.SetContent(ModelReaderWriter.Write(mockJsonModel).ToString());
             var transport = new MockTransport(mockResponse);
-            var pipeline = new HttpPipeline(transport, default);
-            return pipeline;
-        }
-
-        private static HttpPipeline CreateMockHttpPipelineWithFailure()
-        {
-            var mockResponse = new MockResponse(500);
-            var transport = new MockTransport(mockResponse, mockResponse);
             var pipeline = new HttpPipeline(transport, default);
             return pipeline;
         }
