@@ -107,3 +107,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [coc_contact]: mailto:opencode@microsoft.com
 [here]: https://learn.microsoft.com/azure/azure-health-insights/radiology-insights/inferences
 [sample_folder]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthinsights/Azure.Health.Insights.RadiologyInsights/samples
+[azure_sub]: https://azure.microsoft.com/en-us/free
+[nuget]: https://www.nuget.org
+[azure_portal]:https://learn.microsoft.com/en-us/azure/search/search-create-service-portal
+[azure_cli]:https://learn.microsoft.com/en-us/cli/azure
