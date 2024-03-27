@@ -122,8 +122,8 @@ namespace Azure.Communication.Chat.Tests
             updateOptionsWithNoneRetentionPolicy.RetentionPolicy = new NoneRetentionPolicy();
 
             await chatThreadClient.UpdatePropertiesAsync(updateOptionsWithNoneRetentionPolicy);
-            var updateResponseWithNullRetentionPolicy = await chatThreadClient.GetPropertiesAsync();
-            var noneDataRetentionPolicy = updateResponseWithNewRetentionPolicy.Value.RetentionPolicy as NoneRetentionPolicy;
+            var updateResponseWithNoneRetentionPolicy = await chatThreadClient.GetPropertiesAsync();
+            var noneDataRetentionPolicy = updateResponseWithNoneRetentionPolicy.Value.RetentionPolicy as NoneRetentionPolicy;
             Assert.IsNotNull(noneDataRetentionPolicy);
             Assert.AreEqual(RetentionPolicyKind.None, noneDataRetentionPolicy?.Kind);
 
