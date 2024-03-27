@@ -51,10 +51,10 @@ RoomsClient client = new RoomsClient(connectionString);
 To create a room, call the `CreateRoom` or `CreateRoomAsync` function from `RoomsClient`.
 The `validFrom`, `validUntil` and `participants` arguments are all optional. If `validFrom` and `validUntil` are not provided, then the default for `validFrom` is current date time and the default for `validUntil` is `validFrom + 180 days`.
 When defining `RoomParticipant`, if role is not specified, then it will be `Attendee` by default.
-Starting in 1.1.0-beta.1 release, `pstnDialOutEnabled` is added to enable PSTN Dial-Out feature in a Room. 
+Starting in 1.1.0 release, `pstnDialOutEnabled` is added to enable PSTN Dial-Out feature in a Room. 
 The returned value is `Response<CommunicationRoom>` which contains created room details as well as the status and associated error codes in case of a failure.
 
-Starting in 1.1.0-beta.1 release, ACS Rooms supports PSTN Dial-Out feature. To create room with PSTN Dial-Out property, call `CreateRoom` or `CreateRoomAsync` function with `createRoomOptions` parameter and set `PstnDialOutEnabled` to either true or false. If `PstnDialOutEnabled` is not provided, then the default value for `PstnDialOutEnabled` is false.
+Starting in 1.1.0 release, ACS Rooms supports PSTN Dial-Out feature. To create room with PSTN Dial-Out property, call `CreateRoom` or `CreateRoomAsync` function with `createRoomOptions` parameter and set `PstnDialOutEnabled` to either true or false. If `PstnDialOutEnabled` is not provided, then the default value for `PstnDialOutEnabled` is false.
 This parameter contains `ValidFrom`, `ValidUntil`, `PstnDialOutEnabled` and `Participants` properties. Those properties are optional.
 
 ```C# Snippet:Azure_Communication_Rooms_Tests_Samples_CreateRoomAsync
@@ -92,7 +92,7 @@ createCommunicationRoom = createRoomResponse.Value;
 ### Update a room
 The `validFrom` and `validUntil` properties of a created room can be updated by calling the `UpdateRoom` or `UpdateRoomAsync` function from `RoomsClient`.
 
-Starting in 1.1.0-beta.1 release, ACS Rooms supports PSTN Dial-Out feature. To update room with PSTN Dial-Out property, call `UpdateRoom` or `UpdateRoomAsync` function with `updateRoomOptions` parameter and set `PstnDialOutEnabled` to either true or false.If `PstnDialOutEnabled` is not provided, there there is no changes to `PstnDialOutEnabled` property in the room.
+Starting in 1.1.0 release, ACS Rooms supports PSTN Dial-Out feature. To update room with PSTN Dial-Out property, call `UpdateRoom` or `UpdateRoomAsync` function with `updateRoomOptions` parameter and set `PstnDialOutEnabled` to either true or false.If `PstnDialOutEnabled` is not provided, there there is no changes to `PstnDialOutEnabled` property in the room.
 The `updateRoomOptions` parameter contains `ValidFrom`, `ValidUntil` and `PstnDialOutEnabled` properties. Those properties are optional.
 
 ```C# Snippet:Azure_Communication_Rooms_Tests_Samples_UpdateRoomAsync
@@ -100,7 +100,7 @@ validUntil = validFrom.AddDays(30);
 Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, validFrom, validUntil);
 CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
 
-// Starting in 1.1.0-beta.1 release,UpdateRoom function also takes roomCreateOptions as parameter
+// Starting in 1.1.0 release,UpdateRoom function also takes roomCreateOptions as parameter
 UpdateRoomOptions roomUpdateOptions = new UpdateRoomOptions()
 {
     ValidFrom = validFrom,

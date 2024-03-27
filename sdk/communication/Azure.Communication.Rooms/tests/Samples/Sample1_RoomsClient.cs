@@ -24,7 +24,7 @@ namespace Azure.Communication.Rooms.Tests.samples
         [Test]
         public async Task AcsRoomRequestSample()
         {
-            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_10_30_Preview);
+            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2024_04_15);
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
 
             #region Snippet:Azure_Communication_Rooms_Tests_Samples_CreateRoomAsync
@@ -69,7 +69,7 @@ namespace Azure.Communication.Rooms.Tests.samples
             Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, validFrom, validUntil);
             CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
 
-            // Starting in 1.1.0-beta.1 release,UpdateRoom function also takes roomCreateOptions as parameter
+            // Starting in 1.1.0 release,UpdateRoom function also takes roomCreateOptions as parameter
             UpdateRoomOptions roomUpdateOptions = new UpdateRoomOptions()
             {
                 ValidFrom = validFrom,
@@ -122,7 +122,7 @@ namespace Azure.Communication.Rooms.Tests.samples
         [Test]
         public async Task AddUpdateAndRemoveParticipantsExample()
         {
-            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_10_30_Preview);
+            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2024_04_15);
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
             Response<CommunicationUserIdentifier> communicationUser1 = await communicationIdentityClient.CreateUserAsync();
             Response<CommunicationUserIdentifier> communicationUser2 = await communicationIdentityClient.CreateUserAsync();
@@ -179,7 +179,7 @@ namespace Azure.Communication.Rooms.Tests.samples
         [Test]
         public async Task RoomRequestsTroubleShooting()
         {
-            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_10_30_Preview);
+            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2024_04_15);
             #region Snippet:Azure_Communication_RoomsClient_Tests_Troubleshooting
             try
             {
