@@ -38,7 +38,7 @@ namespace Azure.Identity
             return new CloudShellManagedIdentitySource(endpointUri, options);
         }
 
-        private CloudShellManagedIdentitySource(Uri endpoint, ManagedIdentityClientOptions options) : base(options.Pipeline)
+        internal CloudShellManagedIdentitySource(Uri endpoint, ManagedIdentityClientOptions options) : base(options.Pipeline)
         {
             _endpoint = endpoint;
             if (!string.IsNullOrEmpty(options.ClientId) || null != options.ResourceIdentifier)
