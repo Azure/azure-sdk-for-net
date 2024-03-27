@@ -20,7 +20,7 @@ namespace Azure.Core
                 : new OperationInternal(_nextLinkOperation, new ClientDiagnostics(options ?? ClientOptions.Default), operationState.RawResponse);
         }
 
-        public override string Id => _nextLinkOperation.OperationId;
+        public override string Id => _nextLinkOperation.OperationId ?? string.Empty;
 
         public override RehydrationToken? GetRehydrationToken() => _nextLinkOperation.GetRehydrationToken();
 

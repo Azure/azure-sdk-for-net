@@ -32,7 +32,8 @@ namespace Azure.Core
         private string? _lastKnownLocation;
         private string _nextRequestUri;
 
-        public string OperationId { get; }
+        // We can only get OperationId if the operation is in progress when the nextRequestUri contains it
+        public string? OperationId { get; private set; }
         public RequestMethod RequestMethod { get; }
 
         public static IOperation Create(
@@ -164,7 +165,7 @@ namespace Azure.Core
             OperationId = ParseOperationId(startRequestUri, nextRequestUri);
         }
 
-        private static string ParseOperationId(Uri startRequestUri, string nextRequestUri)
+        private string ParseOperationId(Uri startRequestUri, string nextRequestUri)
         {
             if (Uri.TryCreate(nextRequestUri, UriKind.Absolute, out var nextLink) && nextLink.Scheme != "file")
             {
@@ -203,8 +204,7 @@ namespace Azure.Core
             }
             var headerSource = GetHeaderSource(requestMethod, startRequestUri, response, apiVersionStr, out var nextRequestUri);
             response.Headers.TryGetValue("Location", out var lastKnownLocation);
-            var operationId = ParseOperationId(startRequestUri, nextRequestUri);
-            return GetRehydrationToken(requestMethod, startRequestUri, nextRequestUri, headerSource.ToString(), lastKnownLocation, finalStateVia.ToString(), operationId);
+            return GetRehydrationToken(requestMethod, startRequestUri, nextRequestUri, headerSource.ToString(), lastKnownLocation, finalStateVia.ToString(), null);
         }
 
         public static RehydrationToken GetRehydrationToken(
@@ -269,12 +269,15 @@ namespace Azure.Core
             {
                 case HeaderSource.OperationLocation when headers.TryGetValue("Operation-Location", out string? operationLocation):
                     _nextRequestUri = AppendOrReplaceApiVersion(operationLocation, _apiVersion);
+                    OperationId = ParseOperationId(_startRequestUri, _nextRequestUri);
                     return;
                 case HeaderSource.AzureAsyncOperation when headers.TryGetValue("Azure-AsyncOperation", out string? azureAsyncOperation):
                     _nextRequestUri = AppendOrReplaceApiVersion(azureAsyncOperation, _apiVersion);
+                    OperationId = ParseOperationId(_startRequestUri, _nextRequestUri);
                     return;
                 case HeaderSource.Location when hasLocation:
                     _nextRequestUri = AppendOrReplaceApiVersion(location!, _apiVersion);
+                    OperationId = ParseOperationId(_startRequestUri, _nextRequestUri);
                     return;
             }
         }

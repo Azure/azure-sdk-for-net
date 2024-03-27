@@ -48,6 +48,7 @@ namespace Azure
         {
             Argument.AssertNotNull(pipeline, nameof(pipeline));
             Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
+
             var nextLinkOperation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(pipeline, rehydrationToken);
             var operationState = nextLinkOperation.UpdateStateAsync(false, default).EnsureCompleted();
             return new RehydrationOperation(nextLinkOperation, operationState);
