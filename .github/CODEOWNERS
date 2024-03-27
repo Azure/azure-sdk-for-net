@@ -927,7 +927,7 @@
 # ServiceLabel: %Network - CDN %Mgmt
 # ServiceOwners:                                                   @cdnfdsuppgithub
 
-# PRLabel: %CDN
+# PRLabel: %Network - CDN
 /sdk/cdn/                                                          @ptnan7
 
 # PRLabel: %Communication - Resource Manager
