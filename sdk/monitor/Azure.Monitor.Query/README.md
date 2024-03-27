@@ -673,7 +673,7 @@ foreach (MetricsQueryResult value in metricsQueryResults.Values)
 
 For an inventory of metrics and dimensions available for each Azure resource type, see [Supported metrics with Azure Monitor](https://learn.microsoft.com/azure/azure-monitor/essentials/metrics-supported).
 
-The `QueryResources` method also accepts a `MetricsQueryResourcesOptions`-typed argument, in which the user can specify extra properties to filter the results. The following example demonstrates the `RollUpBy` and `OrderBy` properties:
+The `QueryResources` method also accepts a `MetricsQueryResourcesOptions`-typed argument, in which the user can specify extra properties to filter the results. The following example demonstrates the `OrderBy` and `Size` properties:
 
 ```C# Snippet:QueryResourcesMetricsWithOptions
 string resourceId =
@@ -684,8 +684,7 @@ var client = new MetricsClient(
 var options = new MetricsQueryResourcesOptions
 {
     OrderBy = "sum asc",
-    Size = 10,
-    Filter = "a1"
+    Size = 10
 };
 
 Response<MetricsQueryResourcesResult> result = await client.QueryResourcesAsync(
