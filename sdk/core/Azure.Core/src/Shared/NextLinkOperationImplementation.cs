@@ -32,7 +32,9 @@ namespace Azure.Core
         private string? _lastKnownLocation;
         private string _nextRequestUri;
 
-        // We can only get OperationId if the operation is in progress when the nextRequestUri contains it
+        // We can only get OperationId when
+        // - The operation is still in progress and nextRequestUri contains it
+        // - During rehydration, rehydrationToken.Id is the operation id
         public string? OperationId { get; private set; }
         public RequestMethod RequestMethod { get; }
 
@@ -89,6 +91,7 @@ namespace Azure.Core
             AssertNotNull(rehydrationToken, nameof(rehydrationToken));
             AssertNotNull(pipeline, nameof(pipeline));
 
+            // TODO: Once we remove NextLinkOperationImplementation from internal shared and make it internal to Azure.Core only, we can access the internal members from RehydrationToken directly
             var lroDetails = ModelReaderWriter.Write(rehydrationToken!, ModelReaderWriterOptions.Json).ToObjectFromJson<Dictionary<string, string>>();
 
             var initialUri = GetContentFromRehydrationToken(lroDetails, "initialUri");
