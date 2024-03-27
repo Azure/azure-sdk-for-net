@@ -56,7 +56,7 @@ For Metrics queries across multiple Azure resources, use the following client:
 
 ```C# Snippet:CreateMetricsClient
 var client = new MetricsClient(
-    new Uri("https://metrics.monitor.azure.com/.default"),
+    new Uri("https://<region>.metrics.monitor.azure.com"),
     new DefaultAzureCredential());
 ```
 
@@ -657,7 +657,7 @@ Furthermore, the metric namespace containing the metrics to be queried must be p
 string resourceId =
     "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
 var client = new MetricsClient(
-    new Uri("https://metrics.monitor.azure.com/.default"),
+    new Uri("https://<region>.metrics.monitor.azure.com"),
     new DefaultAzureCredential());
 Response<MetricsQueryResourcesResult> result = await client.QueryResourcesAsync(
     resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
@@ -673,18 +673,18 @@ foreach (MetricsQueryResult value in metricsQueryResults.Values)
 
 For an inventory of metrics and dimensions available for each Azure resource type, see [Supported metrics with Azure Monitor](https://learn.microsoft.com/azure/azure-monitor/essentials/metrics-supported).
 
-The `QueryResources` method also accepts a `MetricsQueryResourcesOptions`-typed argument, in which the user can specify extra properties to filter the results. The following example demonstrates the `RollUpBy` and `OrderBy` properties:
+The `QueryResources` method also accepts a `MetricsQueryResourcesOptions`-typed argument, in which the user can specify extra properties to filter the results. The following example demonstrates the `OrderBy` and `Size` properties:
 
 ```C# Snippet:QueryResourcesMetricsWithOptions
 string resourceId =
     "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
 var client = new MetricsClient(
-    new Uri("https://metrics.monitor.azure.com/.default"),
+    new Uri("https://<region>.metrics.monitor.azure.com"),
     new DefaultAzureCredential());
 var options = new MetricsQueryResourcesOptions
 {
     OrderBy = "sum asc",
-    RollUpBy = { "RollUpBy=City" }
+    Size = 10
 };
 
 Response<MetricsQueryResourcesResult> result = await client.QueryResourcesAsync(
