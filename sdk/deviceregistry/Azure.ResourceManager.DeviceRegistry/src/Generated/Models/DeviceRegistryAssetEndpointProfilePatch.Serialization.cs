@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryAssetEndpointProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceRegistryAssetEndpointProfilePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceRegistryAssetEndpointProfilePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,12 +47,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             if (Optional.IsDefined(UserAuthentication))
             {
                 writer.WritePropertyName("userAuthentication"u8);
-                writer.WriteObjectValue(UserAuthentication);
+                writer.WriteObjectValue<UserAuthenticationUpdate>(UserAuthentication, options);
             }
             if (Optional.IsDefined(TransportAuthentication))
             {
                 writer.WritePropertyName("transportAuthentication"u8);
-                writer.WriteObjectValue(TransportAuthentication);
+                writer.WriteObjectValue<TransportAuthenticationUpdate>(TransportAuthentication, options);
             }
             if (Optional.IsDefined(AdditionalConfiguration))
             {
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryAssetEndpointProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceRegistryAssetEndpointProfilePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceRegistryAssetEndpointProfilePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -190,7 +189,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeviceRegistryAssetEndpointProfilePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceRegistryAssetEndpointProfilePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -206,7 +205,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                         return DeserializeDeviceRegistryAssetEndpointProfilePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeviceRegistryAssetEndpointProfilePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceRegistryAssetEndpointProfilePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

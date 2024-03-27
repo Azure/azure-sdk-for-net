@@ -172,6 +172,7 @@ trigger:
     - sdk/springappdiscovery/Azure.ResourceManager.SpringAppDiscovery
     - sdk/sqlmanagement/Azure.ResourceManager.Sql
     - sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine
+    - sdk/standbypool/Azure.ResourceManager.StandbyPool
     - sdk/storage/Azure.ResourceManager.Storage
     - sdk/storagecache/Azure.ResourceManager.StorageCache
     - sdk/storagemover/Azure.ResourceManager.StorageMover
@@ -360,6 +361,7 @@ pr:
     - sdk/springappdiscovery/Azure.ResourceManager.SpringAppDiscovery
     - sdk/sqlmanagement/Azure.ResourceManager.Sql
     - sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine
+    - sdk/standbypool/Azure.ResourceManager.StandbyPool
     - sdk/storage/Azure.ResourceManager.Storage
     - sdk/storagecache/Azure.ResourceManager.StorageCache
     - sdk/storagemover/Azure.ResourceManager.StorageMover
