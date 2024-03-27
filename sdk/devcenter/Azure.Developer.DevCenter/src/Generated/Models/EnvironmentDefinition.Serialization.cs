@@ -22,7 +22,7 @@ namespace Azure.Developer.DevCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<EnvironmentDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnvironmentDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EnvironmentDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,7 +46,7 @@ namespace Azure.Developer.DevCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EnvironmentDefinitionParameter>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -83,7 +83,7 @@ namespace Azure.Developer.DevCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<EnvironmentDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnvironmentDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EnvironmentDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -179,7 +179,7 @@ namespace Azure.Developer.DevCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EnvironmentDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnvironmentDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.Developer.DevCenter.Models
                         return DeserializeEnvironmentDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EnvironmentDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnvironmentDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -213,7 +213,7 @@ namespace Azure.Developer.DevCenter.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<EnvironmentDefinition>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }
