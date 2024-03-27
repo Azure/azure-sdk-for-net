@@ -40,6 +40,11 @@ namespace System.ClientModel
         public virtual T Value { get { throw null; } }
         public static implicit operator T (System.ClientModel.ClientResult<T> result) { throw null; }
     }
+    public abstract partial class StreamingClientResult<T> : System.ClientModel.ClientResult, System.Collections.Generic.IAsyncEnumerable<T>
+    {
+        protected internal StreamingClientResult(System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
+        public abstract System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    }
 }
 namespace System.ClientModel.Primitives
 {

@@ -92,5 +92,8 @@ public class ClientResult
     public static ClientResult<T?> FromOptionalValue<T>(T? value, PipelineResponse response)
         => new ClientResult<T?>(value, response);
 
+    //public static StreamingClientResult<T> FromStreamingValue<T>(T value, PipelineResponse response)
+    //    => new StreamingClientResult<T>(response);
+
     #endregion
 }
