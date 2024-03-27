@@ -33,7 +33,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
         {
             #region Snippet:APC_Sample_SimSwapVerifyTest
             string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
-            Uri _endpoint = new Uri("https://eastus.prod.apcgatewayapi.azure.com");
+            Uri _endpoint = new Uri("https://your-endpoint-here.com");
 #if SNIPPET
             TokenCredential _credential = new DefaultAzureCredential();
 #endif
@@ -45,7 +45,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             var client = baseClient.GetSimSwapClient();
             var content = new SimSwapVerificationContent(new NetworkIdentifier("NetworkCode", "Orange_Spain"))
             {
-                PhoneNumber = "+34665439999",
+                PhoneNumber = "+50000000000",
                 MaxAgeHours = 120,
             };
 
@@ -60,7 +60,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
         public void SimSwapVerifyHeaderRetrievalTest()
         {
             string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
-            Uri _endpoint = new Uri("https://eastus.prod.apcgatewayapi.azure.com");
+            Uri _endpoint = new Uri("https://your-endpoint-here.com");
 #if SNIPPET
             TokenCredential _credential = new DefaultAzureCredential();
 #endif
@@ -72,7 +72,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             var client = baseClient.GetSimSwapClient();
             var content = new SimSwapVerificationContent(new NetworkIdentifier("NetworkCode", "Orange_Spain"))
             {
-                PhoneNumber = "+34665439999",
+                PhoneNumber = "+50000000000",
                 MaxAgeHours = 120,
             };
 
@@ -89,7 +89,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
         public void SimSwapVerifyBadResponseTest()
         {
             string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
-            Uri _endpoint = new Uri("https://eastus.prod.apcgatewayapi.azure.com");
+            Uri _endpoint = new Uri("https://your-endpoint-here.com");
 #if SNIPPET
             TokenCredential _credential = new DefaultAzureCredential();
 #endif
@@ -101,7 +101,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             var client = baseClient.GetSimSwapClient();
             var content = new SimSwapVerificationContent(new NetworkIdentifier("NetworkCode", "Orange_Spain"))
             {
-                PhoneNumber = "+34665439999",
+                PhoneNumber = "+50000000000",
                 MaxAgeHours = -10,
             };
 
@@ -121,7 +121,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
         {
             #region Snippet:APC_Sample_SimSwapRetrieveTest
             string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
-            Uri _endpoint = new Uri("https://eastus.prod.apcgatewayapi.azure.com");
+            Uri _endpoint = new Uri("https://your-endpoint-here.com");
 #if SNIPPET
             TokenCredential _credential = new DefaultAzureCredential();
 #endif
@@ -133,7 +133,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             var client = baseClient.GetSimSwapClient();
             var content = new SimSwapRetrievalContent(new NetworkIdentifier("NetworkCode", "Orange_Spain"))
             {
-                PhoneNumber = "+34665439999",
+                PhoneNumber = "+50000000000",
             };
 
             Response<SimSwapRetrievalResult> response = client.Retrieve(ApcGatewayId, content);
@@ -149,7 +149,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
         {
             #region Snippet:APC_Sample_LocationVerifyTest
             string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
-            Uri _endpoint = new Uri("https://eastus.prod.apcgatewayapi.azure.com");
+            Uri _endpoint = new Uri("https://your-endpoint-here.com");
 #if SNIPPET
             TokenCredential _credential = new DefaultAzureCredential();
 #endif
@@ -161,7 +161,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             var client = baseClient.GetDeviceLocationClient();
             var deviceLocationVerificationContent = new DeviceLocationVerificationContent(new NetworkIdentifier("NetworkCode", "Telefonica_Brazil"), 80.0, 85.1, 50, new LocationDevice
             {
-                PhoneNumber = "+5551980449999",
+                PhoneNumber = "+8000000000000",
             });
 
             Response<DeviceLocationVerificationResult> result = client.Verify(ApcGatewayId, deviceLocationVerificationContent);
@@ -177,7 +177,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
         {
             #region Snippet:APC_Sample_NetworkRetrievalTest
             string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
-            Uri _endpoint = new Uri("https://eastus.prod.apcgatewayapi.azure.com");
+            Uri _endpoint = new Uri("https://your-endpoint-here.com");
 #if SNIPPET
             TokenCredential _credential = new DefaultAzureCredential();
 #endif
@@ -201,7 +201,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
         {
             #region Snippet:APC_Sample_NetworkRetrievalBadIdentifierTest
             string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
-            Uri _endpoint = new Uri("https://eastus.prod.apcgatewayapi.azure.com");
+            Uri _endpoint = new Uri("https://your-endpoint-here.com");
 #if SNIPPET
             TokenCredential _credential = new DefaultAzureCredential();
 #endif
