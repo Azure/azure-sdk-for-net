@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Defines the SKU of an Azure Cognitive Search Service, which determines price tier and capacity limits. </summary>
+    /// <summary> Defines the SKU of a search service, which determines billing rate and capacity limits. </summary>
     internal partial class SearchSku
     {
         /// <summary>

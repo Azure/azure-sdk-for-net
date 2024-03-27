@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="EnvironmentListResult"/>. </summary>
         /// <param name="value"> The Environment items on this page. </param>
-        internal EnvironmentListResult(IEnumerable<EnvironmentData> value)
+        internal EnvironmentListResult(IEnumerable<EnvironmentEntityData> value)
         {
             Value = value.ToList();
         }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// <param name="value"> The Environment items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EnvironmentListResult(IReadOnlyList<EnvironmentData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EnvironmentListResult(IReadOnlyList<EnvironmentEntityData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         }
 
         /// <summary> The Environment items on this page. </summary>
-        public IReadOnlyList<EnvironmentData> Value { get; }
+        public IReadOnlyList<EnvironmentEntityData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

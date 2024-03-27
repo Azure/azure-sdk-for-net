@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<ApiVersionData>(item, options);
+                    writer.WriteObjectValue<ApiVersionEntityData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             {
                 return null;
             }
-            IReadOnlyList<ApiVersionData> value = default;
+            IReadOnlyList<ApiVersionEntityData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.ApiCenter.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ApiVersionData> array = new List<ApiVersionData>();
+                    List<ApiVersionEntityData> array = new List<ApiVersionEntityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiVersionData.DeserializeApiVersionData(item, options));
+                        array.Add(ApiVersionEntityData.DeserializeApiVersionEntityData(item, options));
                     }
                     value = array;
                     continue;

@@ -8,7 +8,7 @@ csharp: true
 library-name: ApiCenter
 namespace: Azure.ResourceManager.ApiCenter
 require: https://github.com/Azure/azure-rest-api-specs/blob/2d701c73fb5ee44f95b97b6c3eaf8c4aeb051e73/specification/apicenter/resource-manager/readme.md
-tag: package-2024-03
+#tag: package-2024-03
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -23,11 +23,29 @@ use-model-reader-writer: true
 #  show-serialized-names: true
 
 rename-mapping:
-  ServiceCollection: ApiCenterServiceListResult
+  Api: ApiEntity
+  ApiProperties: ApiEntityProperties
+  ApiDefinition: ApiDefinitionEntity
+  ApiDefinitionProperties: ApiDefinitionEntityProperties
+  ApiVersion: ApiVersionEntity
+  ApiVersionProperties: ApiVersionEntityProperties
+  Contact: ApiContact
+  Deployment: ApiDeploymentEntity
+  DeploymentProperties: ApiDeploymentEntityProperties
+  Environment: EnvironmentEntity
+  EnvironmentProperties: EnvironmentEntityProperties
+  License: ApiLicense
+  MetadataSchema: MetadataSchemaEntity
+  MetadataSchemaProperties: MetadataSchemaEntityProperties
+  Onboarding: EnvironmentOnboarding
+  Service: ServiceEntity
+  ServiceProperties: ServiceEntityProperties
+  Workspace: WorkspaceEntity
+  WorkspaceProperties: WorkspaceEntityProperties
+  ApiDefinitionPropertiesSpecification: ApiSpecification
 
 prepend-rp-prefix:
   - ProvisioningState
-  - Service
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -58,5 +76,7 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  API: Api|api
+  AWSAPI: AwsApi
 
 ```

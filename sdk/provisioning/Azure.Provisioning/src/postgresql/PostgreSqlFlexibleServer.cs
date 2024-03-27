@@ -31,7 +31,6 @@ namespace Azure.Provisioning.PostgreSql
         /// <param name="sku">The Sku.</param>
         /// <param name="serverVersion">The version.</param>
         /// <param name="highAvailability">The high availability.</param>
-        /// <param name="storage">The storage.</param>
         /// <param name="encryption"></param>
         /// <param name="backup">The backup.</param>
         /// <param name="network">The network.</param>
@@ -47,7 +46,6 @@ namespace Azure.Provisioning.PostgreSql
             PostgreSqlFlexibleServerSku? sku = default,
             PostgreSqlFlexibleServerVersion? serverVersion = default,
             PostgreSqlFlexibleServerHighAvailability? highAvailability = default,
-            PostgreSqlFlexibleServerStorage? storage = default,
             PostgreSqlFlexibleServerDataEncryption? encryption = default,
             PostgreSqlFlexibleServerBackupProperties? backup = default,
             PostgreSqlFlexibleServerNetwork? network = default,
@@ -61,7 +59,6 @@ namespace Azure.Provisioning.PostgreSql
                 // create new instances so the properties can be overriden by user if needed
                 version: serverVersion ?? new PostgreSqlFlexibleServerVersion(),
                 highAvailability: highAvailability ?? new PostgreSqlFlexibleServerHighAvailability(),
-                storage: storage ?? new PostgreSqlFlexibleServerStorage(),
                 backup: backup ?? new PostgreSqlFlexibleServerBackupProperties(),
                 network: network ?? new PostgreSqlFlexibleServerNetwork(),
                 sku: sku ?? new PostgreSqlFlexibleServerSku("Standard_D4s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
