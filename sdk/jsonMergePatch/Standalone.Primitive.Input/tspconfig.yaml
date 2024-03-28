@@ -1,0 +1,6 @@
+options:
+  "@azure-tools/typespec-csharp":
+    package-dir: "Standalone.Primitive.Input"
+    namespace: "Standalone.Primitive.Input"
+    model-namespace: false
+    flavor: azure
