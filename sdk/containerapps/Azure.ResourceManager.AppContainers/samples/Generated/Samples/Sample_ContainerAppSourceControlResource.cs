@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetContainerAppSSourceControl()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/SourceControls_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2024-02-02-preview/examples/SourceControls_Get.json
             // this example is just showing the usage of "ContainerAppsSourceControls_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateOrUpdateContainerAppSourceControl()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/SourceControls_CreateOrUpdate.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2024-02-02-preview/examples/SourceControls_CreateOrUpdate.json
             // this example is just showing the usage of "ContainerAppsSourceControls_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -92,6 +92,10 @@ namespace Azure.ResourceManager.AppContainers.Samples
                     ContextPath = "./",
                     GitHubPersonalAccessToken = "test",
                     Image = "image/tag",
+                    BuildEnvironmentVariables =
+{
+new EnvironmentVariable("foo1","bar1"),new EnvironmentVariable("foo2","bar2")
+},
                 },
             };
             ArmOperation<ContainerAppSourceControlResource> lro = await containerAppSourceControl.UpdateAsync(WaitUntil.Completed, data);
@@ -109,7 +113,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteContainerAppSourceControl()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/SourceControls_Delete.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2024-02-02-preview/examples/SourceControls_Delete.json
             // this example is just showing the usage of "ContainerAppsSourceControls_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

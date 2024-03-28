@@ -282,13 +282,16 @@ SecretRef = "masterkey",
         {
             ContainerAppManagedEnvironmentStorageData data = new ContainerAppManagedEnvironmentStorageData()
             {
-                ManagedEnvironmentStorageAzureFile = new ContainerAppAzureFileProperties()
+                Properties = new ManagedEnvironmentStorageProperties()
                 {
-                    AccountName = "account1",
-                    AccountKey = "key",
-                    AccessMode = ContainerAppAccessMode.ReadOnly,
-                    ShareName = "share1",
-                },
+                    AzureFile = new ContainerAppAzureFileProperties()
+                    {
+                        AccountName = "account1",
+                        AccountKey = "key",
+                        AccessMode = ContainerAppAccessMode.ReadOnly,
+                        ShareName = "share1",
+                    },
+                }
             };
             return data;
         }
@@ -296,10 +299,10 @@ SecretRef = "masterkey",
         public static void AssertManagedEnviromentStorageData(ContainerAppManagedEnvironmentStorageData data1, ContainerAppManagedEnvironmentStorageData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.ManagedEnvironmentStorageAzureFile.AccountName, data2.ManagedEnvironmentStorageAzureFile.AccountName);
-            Assert.AreEqual(data1.ManagedEnvironmentStorageAzureFile.AccountKey, data2.ManagedEnvironmentStorageAzureFile.AccountKey);
-            Assert.AreEqual(data1.ManagedEnvironmentStorageAzureFile.ShareName, data2.ManagedEnvironmentStorageAzureFile.ShareName);
-            Assert.AreEqual(data1.ManagedEnvironmentStorageAzureFile.AccessMode, data2.ManagedEnvironmentStorageAzureFile.AccessMode);
+            Assert.AreEqual(data1.Properties.AzureFile.AccountName, data2.Properties.AzureFile.AccountName);
+            Assert.AreEqual(data1.Properties.AzureFile.AccountKey, data2.Properties.AzureFile.AccountKey);
+            Assert.AreEqual(data1.Properties.AzureFile.ShareName, data2.Properties.AzureFile.ShareName);
+            Assert.AreEqual(data1.Properties.AzureFile.AccessMode, data2.Properties.AzureFile.AccessMode);
         }
         #endregion
 

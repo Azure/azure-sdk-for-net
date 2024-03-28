@@ -61,6 +61,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("dapr"u8);
                 writer.WriteObjectValue<ContainerAppDaprConfiguration>(Dapr, options);
             }
+            if (Optional.IsDefined(Runtime))
+            {
+                writer.WritePropertyName("runtime"u8);
+                writer.WriteObjectValue<Runtime>(Runtime, options);
+            }
             if (Optional.IsDefined(MaxInactiveRevisions))
             {
                 writer.WritePropertyName("maxInactiveRevisions"u8);
@@ -114,6 +119,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             ContainerAppIngressConfiguration ingress = default;
             IList<ContainerAppRegistryCredentials> registries = default;
             ContainerAppDaprConfiguration dapr = default;
+            Runtime runtime = default;
             int? maxInactiveRevisions = default;
             Service service = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -175,6 +181,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                     dapr = ContainerAppDaprConfiguration.DeserializeContainerAppDaprConfiguration(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("runtime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    runtime = Runtime.DeserializeRuntime(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("maxInactiveRevisions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -205,6 +220,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 ingress,
                 registries ?? new ChangeTrackingList<ContainerAppRegistryCredentials>(),
                 dapr,
+                runtime,
                 maxInactiveRevisions,
                 service,
                 serializedAdditionalRawData);

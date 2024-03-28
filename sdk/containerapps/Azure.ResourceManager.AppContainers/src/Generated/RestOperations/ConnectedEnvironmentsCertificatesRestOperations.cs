@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-05-01";
+            _apiVersion = apiVersion ?? "2024-02-02-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get the Certificates in a given connected environment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the Connected Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get the Certificates in a given connected environment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the Connected Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get the specified Certificate. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the Connected Environment. </param>
         /// <param name="certificateName"> Name of the Certificate. </param>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get the specified Certificate. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the Connected Environment. </param>
         /// <param name="certificateName"> Name of the Certificate. </param>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Create or Update a Certificate. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the Connected Environment. </param>
         /// <param name="certificateName"> Name of the Certificate. </param>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Create or Update a Certificate. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the Connected Environment. </param>
         /// <param name="certificateName"> Name of the Certificate. </param>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Deletes the specified Certificate. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the Connected Environment. </param>
         /// <param name="certificateName"> Name of the Certificate. </param>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Deletes the specified Certificate. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the Connected Environment. </param>
         /// <param name="certificateName"> Name of the Certificate. </param>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Patches a certificate. Currently only patching of tags is supported. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the Connected Environment. </param>
         /// <param name="certificateName"> Name of the Certificate. </param>
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Patches a certificate. Currently only patching of tags is supported. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the Connected Environment. </param>
         /// <param name="certificateName"> Name of the Certificate. </param>
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Get the Certificates in a given connected environment. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the Connected Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Get the Certificates in a given connected environment. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the Connected Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

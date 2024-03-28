@@ -59,12 +59,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// </param>
         /// <param name="metadata"> Metadata properties to describe custom scale rule. </param>
         /// <param name="auth"> Authentication secrets for the custom scale rule. </param>
+        /// <param name="identity"> The resource ID of a user-assigned managed identity that is assigned to the Container App, or 'system' for system-assigned identity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppCustomScaleRule(string customScaleRuleType, IDictionary<string, string> metadata, IList<ContainerAppScaleRuleAuth> auth, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppCustomScaleRule(string customScaleRuleType, IDictionary<string, string> metadata, IList<ContainerAppScaleRuleAuth> auth, string identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CustomScaleRuleType = customScaleRuleType;
             Metadata = metadata;
             Auth = auth;
+            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -77,5 +79,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public IDictionary<string, string> Metadata { get; }
         /// <summary> Authentication secrets for the custom scale rule. </summary>
         public IList<ContainerAppScaleRuleAuth> Auth { get; }
+        /// <summary> The resource ID of a user-assigned managed identity that is assigned to the Container App, or 'system' for system-assigned identity. </summary>
+        public string Identity { get; set; }
     }
 }

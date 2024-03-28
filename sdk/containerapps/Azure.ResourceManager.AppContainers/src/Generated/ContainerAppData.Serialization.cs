@@ -100,6 +100,11 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("workloadProfileName"u8);
                 writer.WriteStringValue(WorkloadProfileName);
             }
+            if (Optional.IsDefined(PatchingConfiguration))
+            {
+                writer.WritePropertyName("patchingConfiguration"u8);
+                writer.WriteObjectValue<ContainerAppPropertiesPatchingConfiguration>(PatchingConfiguration, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(LatestRevisionName))
             {
                 writer.WritePropertyName("latestRevisionName"u8);
@@ -202,6 +207,7 @@ namespace Azure.ResourceManager.AppContainers
             ResourceIdentifier managedEnvironmentId = default;
             ResourceIdentifier environmentId = default;
             string workloadProfileName = default;
+            ContainerAppPropertiesPatchingConfiguration patchingConfiguration = default;
             string latestRevisionName = default;
             string latestReadyRevisionName = default;
             string latestRevisionFqdn = default;
@@ -322,6 +328,15 @@ namespace Azure.ResourceManager.AppContainers
                             workloadProfileName = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("patchingConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            patchingConfiguration = ContainerAppPropertiesPatchingConfiguration.DeserializeContainerAppPropertiesPatchingConfiguration(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("latestRevisionName"u8))
                         {
                             latestRevisionName = property0.Value.GetString();
@@ -413,6 +428,7 @@ namespace Azure.ResourceManager.AppContainers
                 managedEnvironmentId,
                 environmentId,
                 workloadProfileName,
+                patchingConfiguration,
                 latestRevisionName,
                 latestReadyRevisionName,
                 latestRevisionFqdn,

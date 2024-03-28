@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppBillingMeterProperties"/>. </summary>
-        public ContainerAppBillingMeterProperties()
+        internal ContainerAppBillingMeterProperties()
         {
         }
 
@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Used to categorize billing meters. </summary>
-        public string WorkloadProfileCategory { get; set; }
+        public string WorkloadProfileCategory { get; }
         /// <summary> Billing meter type. </summary>
-        public string MeterType { get; set; }
+        public string MeterType { get; }
         /// <summary> The everyday name of the billing meter. </summary>
-        public string DisplayName { get; set; }
+        public string DisplayName { get; }
     }
 }
