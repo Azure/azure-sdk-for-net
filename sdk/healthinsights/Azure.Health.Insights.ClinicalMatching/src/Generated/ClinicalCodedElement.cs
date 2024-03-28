@@ -49,7 +49,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <param name="system"> The clinical coding system, e.g. ICD-10, SNOMED-CT, UMLS. </param>
         /// <param name="code"> The code within the given clinical coding system. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="system"/> or <paramref name="code"/> is null. </exception>
-        public ClinicalCodedElement(string system, string code)
+        internal ClinicalCodedElement(string system, string code)
         {
             Argument.AssertNotNull(system, nameof(system));
             Argument.AssertNotNull(code, nameof(code));
@@ -79,12 +79,12 @@ namespace Azure.Health.Insights.ClinicalMatching
         }
 
         /// <summary> The clinical coding system, e.g. ICD-10, SNOMED-CT, UMLS. </summary>
-        public string System { get; set; }
+        public string System { get; }
         /// <summary> The code within the given clinical coding system. </summary>
-        public string Code { get; set; }
+        public string Code { get; }
         /// <summary> The name of this coded concept in the coding system. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> A value associated with the code within the given clinical coding system. </summary>
-        public string Value { get; set; }
+        public string Value { get; }
     }
 }

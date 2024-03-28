@@ -26,8 +26,8 @@ namespace Azure.Health.Insights.ClinicalMatching
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
+            writer.WritePropertyName("patientId"u8);
+            writer.WriteStringValue(PatientId);
             writer.WritePropertyName("inferences"u8);
             writer.WriteStartArray();
             foreach (var item in Inferences)
@@ -83,16 +83,16 @@ namespace Azure.Health.Insights.ClinicalMatching
             {
                 return null;
             }
-            string id = default;
+            string patientId = default;
             IReadOnlyList<TrialMatcherInference> inferences = default;
             IReadOnlyList<ExtendedClinicalCodedElement> neededClinicalInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (property.NameEquals("patientId"u8))
                 {
-                    id = property.Value.GetString();
+                    patientId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("inferences"u8))
@@ -125,7 +125,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrialMatcherPatientResult(id, inferences, neededClinicalInfo ?? new ChangeTrackingList<ExtendedClinicalCodedElement>(), serializedAdditionalRawData);
+            return new TrialMatcherPatientResult(patientId, inferences, neededClinicalInfo ?? new ChangeTrackingList<ExtendedClinicalCodedElement>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrialMatcherPatientResult>.Write(ModelReaderWriterOptions options)

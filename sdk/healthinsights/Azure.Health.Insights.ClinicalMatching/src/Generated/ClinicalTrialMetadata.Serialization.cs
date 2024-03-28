@@ -121,13 +121,13 @@ namespace Azure.Health.Insights.ClinicalMatching
             {
                 return null;
             }
-            IList<ClinicalTrialPhase> phases = default;
+            IReadOnlyList<ClinicalTrialPhase> phases = default;
             ClinicalTrialStudyType? studyType = default;
             ClinicalTrialRecruitmentStatus? recruitmentStatus = default;
-            IList<string> conditions = default;
-            IList<string> sponsors = default;
-            IList<ContactDetails> contacts = default;
-            IList<ClinicalTrialResearchFacility> facilities = default;
+            IReadOnlyList<string> conditions = default;
+            IReadOnlyList<string> sponsors = default;
+            IReadOnlyList<ContactDetails> contacts = default;
+            IReadOnlyList<ClinicalTrialResearchFacility> facilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

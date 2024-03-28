@@ -26,8 +26,8 @@ namespace Azure.Health.Insights.CancerProfiling
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
+            writer.WritePropertyName("patientId"u8);
+            writer.WriteStringValue(PatientId);
             writer.WritePropertyName("inferences"u8);
             writer.WriteStartArray();
             foreach (var item in Inferences)
@@ -73,15 +73,15 @@ namespace Azure.Health.Insights.CancerProfiling
             {
                 return null;
             }
-            string id = default;
+            string patientId = default;
             IReadOnlyList<OncoPhenotypeInference> inferences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (property.NameEquals("patientId"u8))
                 {
-                    id = property.Value.GetString();
+                    patientId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("inferences"u8))
@@ -100,7 +100,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OncoPhenotypePatientResult(id, inferences, serializedAdditionalRawData);
+            return new OncoPhenotypePatientResult(patientId, inferences, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OncoPhenotypePatientResult>.Write(ModelReaderWriterOptions options)

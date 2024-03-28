@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Health.Insights.RadiologyInsights
 {
     /// <summary> Imaging procedure. </summary>
-    public partial class ImagingProcedure
+    internal partial class ImagingProcedure
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

@@ -30,6 +30,7 @@ namespace Azure.Health.Insights.CancerProfiling
         private const string PathologicStageTValue = "pathologicStageT";
         private const string PathologicStageNValue = "pathologicStageN";
         private const string PathologicStageMValue = "pathologicStageM";
+        private const string DiagnosisDateValue = "diagnosisDate";
 
         /// <summary> tumorSite. </summary>
         public static OncoPhenotypeInferenceType TumorSite { get; } = new OncoPhenotypeInferenceType(TumorSiteValue);
@@ -47,6 +48,8 @@ namespace Azure.Health.Insights.CancerProfiling
         public static OncoPhenotypeInferenceType PathologicStageN { get; } = new OncoPhenotypeInferenceType(PathologicStageNValue);
         /// <summary> pathologicStageM. </summary>
         public static OncoPhenotypeInferenceType PathologicStageM { get; } = new OncoPhenotypeInferenceType(PathologicStageMValue);
+        /// <summary> diagnosisDate. </summary>
+        public static OncoPhenotypeInferenceType DiagnosisDate { get; } = new OncoPhenotypeInferenceType(DiagnosisDateValue);
         /// <summary> Determines if two <see cref="OncoPhenotypeInferenceType"/> values are the same. </summary>
         public static bool operator ==(OncoPhenotypeInferenceType left, OncoPhenotypeInferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OncoPhenotypeInferenceType"/> values are not the same. </summary>

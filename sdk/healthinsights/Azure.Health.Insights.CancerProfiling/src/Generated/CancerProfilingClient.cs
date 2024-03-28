@@ -68,14 +68,14 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <exception cref="ArgumentNullException"> <paramref name="oncoPhenotypeData"/> is null. </exception>
         /// <remarks> Creates an Onco Phenotype job with the given request body. </remarks>
         /// <include file="Docs/CancerProfilingClient.xml" path="doc/members/member[@name='InferCancerProfileAsync(WaitUntil,OncoPhenotypeData,CancellationToken)']/*" />
-        public virtual async Task<Operation<OncoPhenotypeResults>> InferCancerProfileAsync(WaitUntil waitUntil, OncoPhenotypeData oncoPhenotypeData, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<OncoPhenotypeInferenceResult>> InferCancerProfileAsync(WaitUntil waitUntil, OncoPhenotypeData oncoPhenotypeData, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(oncoPhenotypeData, nameof(oncoPhenotypeData));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = oncoPhenotypeData.ToRequestContent();
             Operation<BinaryData> response = await InferCancerProfileAsync(waitUntil, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, FetchOncoPhenotypeResultsFromOncoPhenotypeResult, ClientDiagnostics, "CancerProfilingClient.InferCancerProfile");
+            return ProtocolOperationHelpers.Convert(response, FetchOncoPhenotypeInferenceResultFromOncoPhenotypeResult, ClientDiagnostics, "CancerProfilingClient.InferCancerProfile");
         }
 
         /// <summary> Create Onco Phenotype job. </summary>
@@ -85,14 +85,14 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <exception cref="ArgumentNullException"> <paramref name="oncoPhenotypeData"/> is null. </exception>
         /// <remarks> Creates an Onco Phenotype job with the given request body. </remarks>
         /// <include file="Docs/CancerProfilingClient.xml" path="doc/members/member[@name='InferCancerProfile(WaitUntil,OncoPhenotypeData,CancellationToken)']/*" />
-        public virtual Operation<OncoPhenotypeResults> InferCancerProfile(WaitUntil waitUntil, OncoPhenotypeData oncoPhenotypeData, CancellationToken cancellationToken = default)
+        public virtual Operation<OncoPhenotypeInferenceResult> InferCancerProfile(WaitUntil waitUntil, OncoPhenotypeData oncoPhenotypeData, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(oncoPhenotypeData, nameof(oncoPhenotypeData));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = oncoPhenotypeData.ToRequestContent();
             Operation<BinaryData> response = InferCancerProfile(waitUntil, content, context);
-            return ProtocolOperationHelpers.Convert(response, FetchOncoPhenotypeResultsFromOncoPhenotypeResult, ClientDiagnostics, "CancerProfilingClient.InferCancerProfile");
+            return ProtocolOperationHelpers.Convert(response, FetchOncoPhenotypeInferenceResultFromOncoPhenotypeResult, ClientDiagnostics, "CancerProfilingClient.InferCancerProfile");
         }
 
         /// <summary>
@@ -177,13 +177,13 @@ namespace Azure.Health.Insights.CancerProfiling
 
         internal HttpMessage CreateInferCancerProfileRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/healthinsights", false);
-            uri.AppendPath("/oncophenotype/jobs", false);
+            uri.AppendRaw("/health-insights", false);
+            uri.AppendPath("/onco-phenotype/jobs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -205,13 +205,13 @@ namespace Azure.Health.Insights.CancerProfiling
             return new RequestContext() { CancellationToken = cancellationToken };
         }
 
-        private static ResponseClassifier _responseClassifier200202;
-        private static ResponseClassifier ResponseClassifier200202 => _responseClassifier200202 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 202 });
+        private static ResponseClassifier _responseClassifier202;
+        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
 
-        private OncoPhenotypeResults FetchOncoPhenotypeResultsFromOncoPhenotypeResult(Response response)
+        private OncoPhenotypeInferenceResult FetchOncoPhenotypeInferenceResultFromOncoPhenotypeResult(Response response)
         {
-            var resultJsonElement = JsonDocument.Parse(response.Content).RootElement.GetProperty("results");
-            return OncoPhenotypeResults.DeserializeOncoPhenotypeResults(resultJsonElement);
+            var resultJsonElement = JsonDocument.Parse(response.Content).RootElement.GetProperty("result");
+            return OncoPhenotypeInferenceResult.DeserializeOncoPhenotypeInferenceResult(resultJsonElement);
         }
     }
 }

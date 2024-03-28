@@ -25,11 +25,11 @@ namespace Azure.Health.Insights.CancerProfiling
         private const string ConsultationValue = "consultation";
         private const string DischargeSummaryValue = "dischargeSummary";
         private const string HistoryAndPhysicalValue = "historyAndPhysical";
+        private const string RadiologyReportValue = "radiologyReport";
         private const string ProcedureValue = "procedure";
         private const string ProgressValue = "progress";
-        private const string ImagingValue = "imaging";
         private const string LaboratoryValue = "laboratory";
-        private const string PathologyValue = "pathology";
+        private const string PathologyReportValue = "pathologyReport";
 
         /// <summary> consultation. </summary>
         public static ClinicalDocumentType Consultation { get; } = new ClinicalDocumentType(ConsultationValue);
@@ -37,16 +37,16 @@ namespace Azure.Health.Insights.CancerProfiling
         public static ClinicalDocumentType DischargeSummary { get; } = new ClinicalDocumentType(DischargeSummaryValue);
         /// <summary> historyAndPhysical. </summary>
         public static ClinicalDocumentType HistoryAndPhysical { get; } = new ClinicalDocumentType(HistoryAndPhysicalValue);
+        /// <summary> radiologyReport. </summary>
+        public static ClinicalDocumentType RadiologyReport { get; } = new ClinicalDocumentType(RadiologyReportValue);
         /// <summary> procedure. </summary>
         public static ClinicalDocumentType Procedure { get; } = new ClinicalDocumentType(ProcedureValue);
         /// <summary> progress. </summary>
         public static ClinicalDocumentType Progress { get; } = new ClinicalDocumentType(ProgressValue);
-        /// <summary> imaging. </summary>
-        public static ClinicalDocumentType Imaging { get; } = new ClinicalDocumentType(ImagingValue);
         /// <summary> laboratory. </summary>
         public static ClinicalDocumentType Laboratory { get; } = new ClinicalDocumentType(LaboratoryValue);
-        /// <summary> pathology. </summary>
-        public static ClinicalDocumentType Pathology { get; } = new ClinicalDocumentType(PathologyValue);
+        /// <summary> pathologyReport. </summary>
+        public static ClinicalDocumentType PathologyReport { get; } = new ClinicalDocumentType(PathologyReportValue);
         /// <summary> Determines if two <see cref="ClinicalDocumentType"/> values are the same. </summary>
         public static bool operator ==(ClinicalDocumentType left, ClinicalDocumentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClinicalDocumentType"/> values are not the same. </summary>

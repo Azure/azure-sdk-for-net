@@ -52,7 +52,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <summary> Initializes a new instance of <see cref="ClinicalTrials"/>. </summary>
         public ClinicalTrials()
         {
-            CustomTrials = new ChangeTrackingList<ClinicalTrialDetails>();
+            CustomTrials = new ChangeTrackingList<FhirR4ResearchStudy>();
             RegistryFilters = new ChangeTrackingList<ClinicalTrialRegistryFilter>();
         }
 
@@ -63,7 +63,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// clinical trial registry.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClinicalTrials(IList<ClinicalTrialDetails> customTrials, IList<ClinicalTrialRegistryFilter> registryFilters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClinicalTrials(IList<FhirR4ResearchStudy> customTrials, IList<ClinicalTrialRegistryFilter> registryFilters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CustomTrials = customTrials;
             RegistryFilters = registryFilters;
@@ -71,7 +71,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         }
 
         /// <summary> A list of clinical trials. </summary>
-        public IList<ClinicalTrialDetails> CustomTrials { get; }
+        public IList<FhirR4ResearchStudy> CustomTrials { get; }
         /// <summary>
         /// A list of filters, each one creating a selection of trials from a given
         /// clinical trial registry.

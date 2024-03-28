@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Health.Insights.RadiologyInsights
 {
     /// <summary> Generic procedure information. </summary>
-    public partial class GenericProcedureRecommendation : ProcedureRecommendation
+    internal partial class GenericProcedureRecommendation : ProcedureRecommendation
     {
         /// <summary> Initializes a new instance of <see cref="GenericProcedureRecommendation"/>. </summary>
         /// <param name="code"> Procedure modality : SNOMED CT code. </param>

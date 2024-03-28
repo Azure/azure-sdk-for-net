@@ -46,7 +46,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContactDetails"/>. </summary>
-        public ContactDetails()
+        internal ContactDetails()
         {
         }
 
@@ -64,10 +64,10 @@ namespace Azure.Health.Insights.ClinicalMatching
         }
 
         /// <summary> The person's name. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> The person's email. </summary>
-        public string Email { get; set; }
+        public string Email { get; }
         /// <summary> A person's phone number. </summary>
-        public string Phone { get; set; }
+        public string Phone { get; }
     }
 }

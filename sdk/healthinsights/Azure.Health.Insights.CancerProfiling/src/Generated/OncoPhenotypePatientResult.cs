@@ -47,25 +47,25 @@ namespace Azure.Health.Insights.CancerProfiling
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="OncoPhenotypePatientResult"/>. </summary>
-        /// <param name="id"> The identifier given for the patient in the request. </param>
+        /// <param name="patientId"> The identifier given for the patient in the request. </param>
         /// <param name="inferences"> The model's inferences for the given patient. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="inferences"/> is null. </exception>
-        internal OncoPhenotypePatientResult(string id, IEnumerable<OncoPhenotypeInference> inferences)
+        /// <exception cref="ArgumentNullException"> <paramref name="patientId"/> or <paramref name="inferences"/> is null. </exception>
+        internal OncoPhenotypePatientResult(string patientId, IEnumerable<OncoPhenotypeInference> inferences)
         {
-            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(patientId, nameof(patientId));
             Argument.AssertNotNull(inferences, nameof(inferences));
 
-            Id = id;
+            PatientId = patientId;
             Inferences = inferences.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="OncoPhenotypePatientResult"/>. </summary>
-        /// <param name="id"> The identifier given for the patient in the request. </param>
+        /// <param name="patientId"> The identifier given for the patient in the request. </param>
         /// <param name="inferences"> The model's inferences for the given patient. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OncoPhenotypePatientResult(string id, IReadOnlyList<OncoPhenotypeInference> inferences, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OncoPhenotypePatientResult(string patientId, IReadOnlyList<OncoPhenotypeInference> inferences, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Id = id;
+            PatientId = patientId;
             Inferences = inferences;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -76,7 +76,7 @@ namespace Azure.Health.Insights.CancerProfiling
         }
 
         /// <summary> The identifier given for the patient in the request. </summary>
-        public string Id { get; }
+        public string PatientId { get; }
         /// <summary> The model's inferences for the given patient. </summary>
         public IReadOnlyList<OncoPhenotypeInference> Inferences { get; }
     }
