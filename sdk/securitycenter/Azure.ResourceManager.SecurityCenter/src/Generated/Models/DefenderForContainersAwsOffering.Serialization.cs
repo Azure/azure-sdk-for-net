@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -23,39 +22,39 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefenderForContainersAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderForContainersAwsOffering)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderForContainersAwsOffering)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(KubernetesService))
             {
                 writer.WritePropertyName("kubernetesService"u8);
-                writer.WriteObjectValue(KubernetesService);
+                writer.WriteObjectValue<DefenderForContainersAwsOfferingKubernetesService>(KubernetesService, options);
             }
             if (Optional.IsDefined(KubernetesScubaReader))
             {
                 writer.WritePropertyName("kubernetesScubaReader"u8);
-                writer.WriteObjectValue(KubernetesScubaReader);
+                writer.WriteObjectValue<DefenderForContainersAwsOfferingKubernetesScubaReader>(KubernetesScubaReader, options);
             }
             if (Optional.IsDefined(CloudWatchToKinesis))
             {
                 writer.WritePropertyName("cloudWatchToKinesis"u8);
-                writer.WriteObjectValue(CloudWatchToKinesis);
+                writer.WriteObjectValue<DefenderForContainersAwsOfferingCloudWatchToKinesis>(CloudWatchToKinesis, options);
             }
             if (Optional.IsDefined(KinesisToS3))
             {
                 writer.WritePropertyName("kinesisToS3"u8);
-                writer.WriteObjectValue(KinesisToS3);
+                writer.WriteObjectValue<DefenderForContainersAwsOfferingKinesisToS3>(KinesisToS3, options);
             }
             if (Optional.IsDefined(ContainerVulnerabilityAssessment))
             {
                 writer.WritePropertyName("containerVulnerabilityAssessment"u8);
-                writer.WriteObjectValue(ContainerVulnerabilityAssessment);
+                writer.WriteObjectValue<DefenderForContainersAwsOfferingContainerVulnerabilityAssessment>(ContainerVulnerabilityAssessment, options);
             }
             if (Optional.IsDefined(ContainerVulnerabilityAssessmentTask))
             {
                 writer.WritePropertyName("containerVulnerabilityAssessmentTask"u8);
-                writer.WriteObjectValue(ContainerVulnerabilityAssessmentTask);
+                writer.WriteObjectValue<DefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask>(ContainerVulnerabilityAssessmentTask, options);
             }
             if (Optional.IsDefined(IsContainerVulnerabilityAssessmentEnabled))
             {
@@ -80,12 +79,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(MdcContainersImageAssessment))
             {
                 writer.WritePropertyName("mdcContainersImageAssessment"u8);
-                writer.WriteObjectValue(MdcContainersImageAssessment);
+                writer.WriteObjectValue<DefenderForContainersAwsOfferingMdcContainersImageAssessment>(MdcContainersImageAssessment, options);
             }
             if (Optional.IsDefined(MdcContainersAgentlessDiscoveryK8S))
             {
                 writer.WritePropertyName("mdcContainersAgentlessDiscoveryK8s"u8);
-                writer.WriteObjectValue(MdcContainersAgentlessDiscoveryK8S);
+                writer.WriteObjectValue<DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S>(MdcContainersAgentlessDiscoveryK8S, options);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefenderForContainersAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderForContainersAwsOffering)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderForContainersAwsOffering)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -297,7 +296,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DefenderForContainersAwsOffering)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderForContainersAwsOffering)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -313,7 +312,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeDefenderForContainersAwsOffering(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DefenderForContainersAwsOffering)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderForContainersAwsOffering)} does not support reading '{options.Format}' format.");
             }
         }
 

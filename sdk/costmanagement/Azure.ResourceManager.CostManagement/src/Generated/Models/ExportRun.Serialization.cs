@@ -9,9 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.CostManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
@@ -25,7 +23,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExportRun>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportRun)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportRun)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -94,12 +92,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(RunSettings))
             {
                 writer.WritePropertyName("runSettings"u8);
-                writer.WriteObjectValue(RunSettings);
+                writer.WriteObjectValue<CommonExportProperties>(RunSettings, options);
             }
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<ExportRunErrorDetails>(Error, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -125,7 +123,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExportRun>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportRun)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportRun)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -309,7 +307,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExportRun)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportRun)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -325,7 +323,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeExportRun(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExportRun)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportRun)} does not support reading '{options.Format}' format.");
             }
         }
 

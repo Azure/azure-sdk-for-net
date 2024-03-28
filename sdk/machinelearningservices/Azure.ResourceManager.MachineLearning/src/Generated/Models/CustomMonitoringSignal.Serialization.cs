@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomMonitoringSignal)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomMonitoringSignal)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in InputAssets)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteObjectValue<MonitoringInputDataBase>(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -56,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Inputs)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteObjectValue<MachineLearningJobInput>(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -69,11 +68,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartArray();
             foreach (var item in MetricThresholds)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<CustomMetricThreshold>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("workspaceConnection"u8);
-            writer.WriteObjectValue(WorkspaceConnection);
+            writer.WriteObjectValue<MonitoringWorkspaceConnection>(WorkspaceConnection, options);
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
@@ -122,7 +121,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomMonitoringSignal)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomMonitoringSignal)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -255,7 +254,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CustomMonitoringSignal)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomMonitoringSignal)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -271,7 +270,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeCustomMonitoringSignal(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomMonitoringSignal)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomMonitoringSignal)} does not support reading '{options.Format}' format.");
             }
         }
 

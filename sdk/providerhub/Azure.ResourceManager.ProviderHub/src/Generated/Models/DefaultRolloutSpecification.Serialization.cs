@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -23,44 +22,44 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefaultRolloutSpecification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefaultRolloutSpecification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefaultRolloutSpecification)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Canary))
             {
                 writer.WritePropertyName("canary"u8);
-                writer.WriteObjectValue(Canary);
+                writer.WriteObjectValue<CanaryTrafficRegionRolloutConfiguration>(Canary, options);
             }
             if (Optional.IsDefined(LowTraffic))
             {
                 writer.WritePropertyName("lowTraffic"u8);
-                writer.WriteObjectValue(LowTraffic);
+                writer.WriteObjectValue<TrafficRegionRolloutConfiguration>(LowTraffic, options);
             }
             if (Optional.IsDefined(MediumTraffic))
             {
                 writer.WritePropertyName("mediumTraffic"u8);
-                writer.WriteObjectValue(MediumTraffic);
+                writer.WriteObjectValue<TrafficRegionRolloutConfiguration>(MediumTraffic, options);
             }
             if (Optional.IsDefined(HighTraffic))
             {
                 writer.WritePropertyName("highTraffic"u8);
-                writer.WriteObjectValue(HighTraffic);
+                writer.WriteObjectValue<TrafficRegionRolloutConfiguration>(HighTraffic, options);
             }
             if (Optional.IsDefined(RestOfTheWorldGroupOne))
             {
                 writer.WritePropertyName("restOfTheWorldGroupOne"u8);
-                writer.WriteObjectValue(RestOfTheWorldGroupOne);
+                writer.WriteObjectValue<TrafficRegionRolloutConfiguration>(RestOfTheWorldGroupOne, options);
             }
             if (Optional.IsDefined(RestOfTheWorldGroupTwo))
             {
                 writer.WritePropertyName("restOfTheWorldGroupTwo"u8);
-                writer.WriteObjectValue(RestOfTheWorldGroupTwo);
+                writer.WriteObjectValue<TrafficRegionRolloutConfiguration>(RestOfTheWorldGroupTwo, options);
             }
             if (Optional.IsDefined(ProviderRegistration))
             {
                 writer.WritePropertyName("providerRegistration"u8);
-                writer.WriteObjectValue(ProviderRegistration);
+                writer.WriteObjectValue<ProviderRegistrationData>(ProviderRegistration, options);
             }
             if (Optional.IsCollectionDefined(ResourceTypeRegistrations))
             {
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceTypeRegistrations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceTypeRegistrationData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefaultRolloutSpecification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefaultRolloutSpecification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefaultRolloutSpecification)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -226,7 +225,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DefaultRolloutSpecification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefaultRolloutSpecification)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -242,7 +241,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeDefaultRolloutSpecification(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DefaultRolloutSpecification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefaultRolloutSpecification)} does not support reading '{options.Format}' format.");
             }
         }
 

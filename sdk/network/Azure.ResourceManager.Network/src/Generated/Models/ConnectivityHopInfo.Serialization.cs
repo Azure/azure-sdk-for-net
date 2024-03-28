@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectivityHopInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectivityHopInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectivityHopInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -73,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HopLink>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in PreviousLinks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HopLink>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -93,7 +92,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Issues)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConnectivityIssueInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectivityHopInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectivityHopInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectivityHopInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -270,7 +269,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectivityHopInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectivityHopInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -286,7 +285,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeConnectivityHopInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectivityHopInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectivityHopInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

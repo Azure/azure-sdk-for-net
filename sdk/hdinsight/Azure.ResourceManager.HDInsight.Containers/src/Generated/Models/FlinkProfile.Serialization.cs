@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -23,30 +22,40 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<FlinkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FlinkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FlinkProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("storage"u8);
-            writer.WriteObjectValue(Storage);
+            writer.WriteObjectValue<FlinkStorageProfile>(Storage, options);
             if (Optional.IsDefined(NumReplicas))
             {
                 writer.WritePropertyName("numReplicas"u8);
                 writer.WriteNumberValue(NumReplicas.Value);
             }
             writer.WritePropertyName("jobManager"u8);
-            writer.WriteObjectValue(JobManager);
+            writer.WriteObjectValue<ComputeResourceRequirement>(JobManager, options);
             if (Optional.IsDefined(HistoryServer))
             {
                 writer.WritePropertyName("historyServer"u8);
-                writer.WriteObjectValue(HistoryServer);
+                writer.WriteObjectValue<ComputeResourceRequirement>(HistoryServer, options);
             }
             writer.WritePropertyName("taskManager"u8);
-            writer.WriteObjectValue(TaskManager);
+            writer.WriteObjectValue<ComputeResourceRequirement>(TaskManager, options);
             if (Optional.IsDefined(CatalogOptions))
             {
                 writer.WritePropertyName("catalogOptions"u8);
-                writer.WriteObjectValue(CatalogOptions);
+                writer.WriteObjectValue<FlinkCatalogOptions>(CatalogOptions, options);
+            }
+            if (Optional.IsDefined(DeploymentMode))
+            {
+                writer.WritePropertyName("deploymentMode"u8);
+                writer.WriteStringValue(DeploymentMode.Value.ToString());
+            }
+            if (Optional.IsDefined(JobSpec))
+            {
+                writer.WritePropertyName("jobSpec"u8);
+                writer.WriteObjectValue<FlinkJobProfile>(JobSpec, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -71,7 +80,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<FlinkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FlinkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FlinkProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -92,6 +101,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             ComputeResourceRequirement historyServer = default;
             ComputeResourceRequirement taskManager = default;
             FlinkCatalogOptions catalogOptions = default;
+            DeploymentMode? deploymentMode = default;
+            FlinkJobProfile jobSpec = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,6 +149,24 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     catalogOptions = FlinkCatalogOptions.DeserializeFlinkCatalogOptions(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("deploymentMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deploymentMode = new DeploymentMode(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("jobSpec"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    jobSpec = FlinkJobProfile.DeserializeFlinkJobProfile(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -151,6 +180,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 historyServer,
                 taskManager,
                 catalogOptions,
+                deploymentMode,
+                jobSpec,
                 serializedAdditionalRawData);
         }
 
@@ -163,7 +194,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FlinkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FlinkProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +210,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeFlinkProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FlinkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FlinkProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

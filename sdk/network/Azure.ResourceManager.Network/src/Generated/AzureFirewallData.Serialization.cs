@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<AzureFirewallData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureFirewallData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureFirewallData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ApplicationRuleCollections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AzureFirewallApplicationRuleCollectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -93,7 +92,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in NatRuleCollections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AzureFirewallNatRuleCollectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in NetworkRuleCollections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AzureFirewallNetworkRuleCollectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -113,14 +112,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AzureFirewallIPConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ManagementIPConfiguration))
             {
                 writer.WritePropertyName("managementIpConfiguration"u8);
-                writer.WriteObjectValue(ManagementIPConfiguration);
+                writer.WriteObjectValue<AzureFirewallIPConfiguration>(ManagementIPConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -145,7 +144,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(HubIPAddresses))
             {
                 writer.WritePropertyName("hubIPAddresses"u8);
-                writer.WriteObjectValue(HubIPAddresses);
+                writer.WriteObjectValue<HubIPAddresses>(HubIPAddresses, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(IPGroups))
             {
@@ -153,14 +152,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AzureFirewallIPGroups>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<AzureFirewallSku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(AdditionalProperties))
             {
@@ -197,7 +196,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<AzureFirewallData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureFirewallData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureFirewallData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -503,7 +502,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureFirewallData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureFirewallData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -519,7 +518,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeAzureFirewallData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureFirewallData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureFirewallData)} does not support reading '{options.Format}' format.");
             }
         }
 

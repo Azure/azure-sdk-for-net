@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -23,12 +22,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningScheduleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningScheduleProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningScheduleProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("action"u8);
-            writer.WriteObjectValue(Action);
+            writer.WriteObjectValue<MachineLearningScheduleAction>(Action, options);
             if (Optional.IsDefined(DisplayName))
             {
                 if (DisplayName != null)
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("trigger"u8);
-            writer.WriteObjectValue(Trigger);
+            writer.WriteObjectValue<MachineLearningTriggerBase>(Trigger, options);
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningScheduleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningScheduleProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningScheduleProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -256,7 +255,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningScheduleProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningScheduleProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -272,7 +271,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningScheduleProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningScheduleProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningScheduleProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

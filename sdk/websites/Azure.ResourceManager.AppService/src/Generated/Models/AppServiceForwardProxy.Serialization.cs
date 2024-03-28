@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceForwardProxy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceForwardProxy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceForwardProxy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceForwardProxy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceForwardProxy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceForwardProxy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -115,6 +115,79 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceForwardProxy(convention, customHostHeaderName, customProtoHeaderName, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Convention), out propertyOverride);
+            if (Optional.IsDefined(Convention) || hasPropertyOverride)
+            {
+                builder.Append("  convention: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Convention.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomHostHeaderName), out propertyOverride);
+            if (Optional.IsDefined(CustomHostHeaderName) || hasPropertyOverride)
+            {
+                builder.Append("  customHostHeaderName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (CustomHostHeaderName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CustomHostHeaderName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CustomHostHeaderName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomProtoHeaderName), out propertyOverride);
+            if (Optional.IsDefined(CustomProtoHeaderName) || hasPropertyOverride)
+            {
+                builder.Append("  customProtoHeaderName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (CustomProtoHeaderName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CustomProtoHeaderName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CustomProtoHeaderName}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AppServiceForwardProxy>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceForwardProxy>)this).GetFormatFromOptions(options) : options.Format;
@@ -123,8 +196,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceForwardProxy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceForwardProxy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +215,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAppServiceForwardProxy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceForwardProxy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceForwardProxy)} does not support reading '{options.Format}' format.");
             }
         }
 

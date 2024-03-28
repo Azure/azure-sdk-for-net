@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformAppProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformAppProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformAppProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -89,12 +88,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(TemporaryDisk))
             {
                 writer.WritePropertyName("temporaryDisk"u8);
-                writer.WriteObjectValue(TemporaryDisk);
+                writer.WriteObjectValue<AppTemporaryDisk>(TemporaryDisk, options);
             }
             if (Optional.IsDefined(PersistentDisk))
             {
                 writer.WritePropertyName("persistentDisk"u8);
-                writer.WriteObjectValue(PersistentDisk);
+                writer.WriteObjectValue<AppPersistentDisk>(PersistentDisk, options);
             }
             if (Optional.IsCollectionDefined(CustomPersistentDisks))
             {
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomPersistentDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AppCustomPersistentDisk>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -117,19 +116,19 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in LoadedCertificates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AppLoadedCertificate>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(VnetAddons))
             {
                 writer.WritePropertyName("vnetAddons"u8);
-                writer.WriteObjectValue(VnetAddons);
+                writer.WriteObjectValue<AppVnetAddons>(VnetAddons, options);
             }
             if (Optional.IsDefined(IngressSettings))
             {
                 writer.WritePropertyName("ingressSettings"u8);
-                writer.WriteObjectValue(IngressSettings);
+                writer.WriteObjectValue<AppIngressSettings>(IngressSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -154,7 +153,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformAppProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformAppProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformAppProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -361,7 +360,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformAppProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformAppProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -377,7 +376,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppPlatformAppProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformAppProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformAppProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

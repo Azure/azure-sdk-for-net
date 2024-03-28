@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             var format = options.Format == "W" ? ((IPersistableModel<SnapshotResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnapshotResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnapshotResourceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<SnapshotProperties>(Properties, options);
             }
             if (options.Format != "W")
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             var format = options.Format == "W" ? ((IPersistableModel<SnapshotResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnapshotResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnapshotResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SnapshotResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnapshotResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                         return DeserializeSnapshotResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SnapshotResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnapshotResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 

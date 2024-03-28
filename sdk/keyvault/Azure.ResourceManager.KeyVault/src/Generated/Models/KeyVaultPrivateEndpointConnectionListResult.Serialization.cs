@@ -8,9 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultPrivateEndpointConnectionListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyVaultPrivateEndpointConnectionListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyVaultPrivateEndpointConnectionListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KeyVaultPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultPrivateEndpointConnectionListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyVaultPrivateEndpointConnectionListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyVaultPrivateEndpointConnectionListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,6 +115,65 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new KeyVaultPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<KeyVaultPrivateEndpointConnectionData>(), nextLink, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
+            if (Optional.IsCollectionDefined(Value) || hasPropertyOverride)
+            {
+                if (Value.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  value: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Value)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  value: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextLink), out propertyOverride);
+            if (Optional.IsDefined(NextLink) || hasPropertyOverride)
+            {
+                builder.Append("  nextLink: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (NextLink.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NextLink}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NextLink}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<KeyVaultPrivateEndpointConnectionListResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultPrivateEndpointConnectionListResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -122,8 +182,10 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(KeyVaultPrivateEndpointConnectionListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultPrivateEndpointConnectionListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +201,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         return DeserializeKeyVaultPrivateEndpointConnectionListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KeyVaultPrivateEndpointConnectionListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultPrivateEndpointConnectionListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

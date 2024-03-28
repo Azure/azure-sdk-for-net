@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesSkuChangeInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesSkuChangeInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesSkuChangeInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesSkuChangeInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesSkuChangeInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesSkuChangeInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,6 +123,64 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesSkuChangeInfo(countOfDowngrades, countOfUpgradesAfterDowngrades, lastChangeDate, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CountOfDowngrades), out propertyOverride);
+            if (Optional.IsDefined(CountOfDowngrades) || hasPropertyOverride)
+            {
+                builder.Append("  countOfDowngrades: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{CountOfDowngrades.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CountOfUpgradesAfterDowngrades), out propertyOverride);
+            if (Optional.IsDefined(CountOfUpgradesAfterDowngrades) || hasPropertyOverride)
+            {
+                builder.Append("  countOfUpgradesAfterDowngrades: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{CountOfUpgradesAfterDowngrades.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastChangedOn), out propertyOverride);
+            if (Optional.IsDefined(LastChangedOn) || hasPropertyOverride)
+            {
+                builder.Append("  lastChangeDate: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(LastChangedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<CognitiveServicesSkuChangeInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesSkuChangeInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -131,8 +189,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesSkuChangeInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesSkuChangeInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +208,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         return DeserializeCognitiveServicesSkuChangeInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesSkuChangeInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesSkuChangeInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

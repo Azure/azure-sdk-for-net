@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterHttpProxyConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterHttpProxyConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterHttpProxyConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterHttpProxyConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterHttpProxyConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterHttpProxyConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -145,7 +144,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterHttpProxyConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterHttpProxyConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -161,7 +160,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeManagedClusterHttpProxyConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterHttpProxyConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterHttpProxyConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

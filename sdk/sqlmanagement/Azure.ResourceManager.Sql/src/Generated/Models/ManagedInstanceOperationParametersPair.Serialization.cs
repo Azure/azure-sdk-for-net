@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceOperationParametersPair>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedInstanceOperationParametersPair)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedInstanceOperationParametersPair)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(CurrentParameters))
             {
                 writer.WritePropertyName("currentParameters"u8);
-                writer.WriteObjectValue(CurrentParameters);
+                writer.WriteObjectValue<UpsertManagedServerOperationParameters>(CurrentParameters, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RequestedParameters))
             {
                 writer.WritePropertyName("requestedParameters"u8);
-                writer.WriteObjectValue(RequestedParameters);
+                writer.WriteObjectValue<UpsertManagedServerOperationParameters>(RequestedParameters, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceOperationParametersPair>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedInstanceOperationParametersPair)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedInstanceOperationParametersPair)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,6 +108,49 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceOperationParametersPair(currentParameters, requestedParameters, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentParameters), out propertyOverride);
+            if (Optional.IsDefined(CurrentParameters) || hasPropertyOverride)
+            {
+                builder.Append("  currentParameters: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, CurrentParameters, options, 2, false, "  currentParameters: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestedParameters), out propertyOverride);
+            if (Optional.IsDefined(RequestedParameters) || hasPropertyOverride)
+            {
+                builder.Append("  requestedParameters: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, RequestedParameters, options, 2, false, "  requestedParameters: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ManagedInstanceOperationParametersPair>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceOperationParametersPair>)this).GetFormatFromOptions(options) : options.Format;
@@ -116,8 +159,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedInstanceOperationParametersPair)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedInstanceOperationParametersPair)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +178,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeManagedInstanceOperationParametersPair(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedInstanceOperationParametersPair)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedInstanceOperationParametersPair)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -24,14 +23,14 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageAccountPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageAccountPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<StorageSku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -60,22 +59,22 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(CustomDomain))
             {
                 writer.WritePropertyName("customDomain"u8);
-                writer.WriteObjectValue(CustomDomain);
+                writer.WriteObjectValue<StorageCustomDomain>(CustomDomain, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<StorageAccountEncryption>(Encryption, options);
             }
             if (Optional.IsDefined(SasPolicy))
             {
                 writer.WritePropertyName("sasPolicy"u8);
-                writer.WriteObjectValue(SasPolicy);
+                writer.WriteObjectValue<StorageAccountSasPolicy>(SasPolicy, options);
             }
             if (Optional.IsDefined(KeyPolicy))
             {
                 writer.WritePropertyName("keyPolicy"u8);
-                writer.WriteObjectValue(KeyPolicy);
+                writer.WriteObjectValue<StorageAccountKeyPolicy>(KeyPolicy, options);
             }
             if (Optional.IsDefined(AccessTier))
             {
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(AzureFilesIdentityBasedAuthentication))
             {
                 writer.WritePropertyName("azureFilesIdentityBasedAuthentication"u8);
-                writer.WriteObjectValue(AzureFilesIdentityBasedAuthentication);
+                writer.WriteObjectValue<FilesIdentityBasedAuthentication>(AzureFilesIdentityBasedAuthentication, options);
             }
             if (Optional.IsDefined(EnableHttpsTrafficOnly))
             {
@@ -105,7 +104,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue(NetworkRuleSet);
+                writer.WriteObjectValue<StorageAccountNetworkRuleSet>(NetworkRuleSet, options);
             }
             if (Optional.IsDefined(LargeFileSharesState))
             {
@@ -115,7 +114,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(RoutingPreference))
             {
                 writer.WritePropertyName("routingPreference"u8);
-                writer.WriteObjectValue(RoutingPreference);
+                writer.WriteObjectValue<StorageRoutingPreference>(RoutingPreference, options);
             }
             if (Optional.IsDefined(AllowBlobPublicAccess))
             {
@@ -150,7 +149,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(ImmutableStorageWithVersioning))
             {
                 writer.WritePropertyName("immutableStorageWithVersioning"u8);
-                writer.WriteObjectValue(ImmutableStorageWithVersioning);
+                writer.WriteObjectValue<ImmutableStorageAccount>(ImmutableStorageWithVersioning, options);
             }
             if (Optional.IsDefined(AllowedCopyScope))
             {
@@ -186,7 +185,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageAccountPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageAccountPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -517,7 +516,7 @@ namespace Azure.ResourceManager.Storage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageAccountPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageAccountPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -533,7 +532,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeStorageAccountPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageAccountPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageAccountPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

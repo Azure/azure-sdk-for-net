@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -24,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri);
             writer.WritePropertyName("roles"u8);
-            writer.WriteObjectValue(Roles);
+            writer.WriteObjectValue<object>(Roles);
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
@@ -73,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, ScriptAction model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<ScriptAction>(model);
             }
             public override ScriptAction Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

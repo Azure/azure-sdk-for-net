@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComputeApiError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeApiError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeApiError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,14 +32,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ComputeApiErrorBase>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Innererror))
             {
                 writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue(Innererror);
+                writer.WriteObjectValue<InnerError>(Innererror, options);
             }
             if (Optional.IsDefined(Code))
             {
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComputeApiError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeApiError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeApiError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -166,7 +165,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ComputeApiError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeApiError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +181,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeComputeApiError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComputeApiError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeApiError)} does not support reading '{options.Format}' format.");
             }
         }
 

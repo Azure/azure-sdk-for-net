@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Blueprint
             var format = options.Format == "W" ? ((IPersistableModel<BlueprintData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BlueprintData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BlueprintData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Blueprint
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<BlueprintStatus>(Status, options);
             }
             if (Optional.IsDefined(TargetScope))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Blueprint
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ParameterDefinition>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Blueprint
                 foreach (var item in ResourceGroups)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ResourceGroupDefinition>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Blueprint
             var format = options.Format == "W" ? ((IPersistableModel<BlueprintData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BlueprintData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BlueprintData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Blueprint
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BlueprintData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlueprintData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Blueprint
                         return DeserializeBlueprintData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BlueprintData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlueprintData)} does not support reading '{options.Format}' format.");
             }
         }
 

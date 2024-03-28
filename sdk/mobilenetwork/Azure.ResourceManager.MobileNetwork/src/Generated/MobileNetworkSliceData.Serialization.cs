@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MobileNetwork
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkSliceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkSliceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkSliceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("snssai"u8);
-            writer.WriteObjectValue(Snssai);
+            writer.WriteObjectValue<Snssai>(Snssai, options);
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MobileNetwork
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkSliceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkSliceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkSliceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkSliceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkSliceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         return DeserializeMobileNetworkSliceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkSliceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkSliceData)} does not support reading '{options.Format}' format.");
             }
         }
 

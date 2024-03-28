@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             var format = options.Format == "W" ? ((IPersistableModel<VMwareVCenterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareVCenterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareVCenterData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                writer.WriteObjectValue<VICredential>(Credentials, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Statuses))
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VMwareResourceStatus>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             var format = options.Format == "W" ? ((IPersistableModel<VMwareVCenterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareVCenterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareVCenterData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareVCenterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareVCenterData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         return DeserializeVMwareVCenterData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareVCenterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareVCenterData)} does not support reading '{options.Format}' format.");
             }
         }
 

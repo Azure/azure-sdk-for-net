@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.LabServices
             var format = options.Format == "W" ? ((IPersistableModel<LabPlanData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabPlanData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabPlanData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,17 +71,17 @@ namespace Azure.ResourceManager.LabServices
             if (Optional.IsDefined(DefaultConnectionProfile))
             {
                 writer.WritePropertyName("defaultConnectionProfile"u8);
-                writer.WriteObjectValue(DefaultConnectionProfile);
+                writer.WriteObjectValue<LabConnectionProfile>(DefaultConnectionProfile, options);
             }
             if (Optional.IsDefined(DefaultAutoShutdownProfile))
             {
                 writer.WritePropertyName("defaultAutoShutdownProfile"u8);
-                writer.WriteObjectValue(DefaultAutoShutdownProfile);
+                writer.WriteObjectValue<LabAutoShutdownProfile>(DefaultAutoShutdownProfile, options);
             }
             if (Optional.IsDefined(DefaultNetworkProfile))
             {
                 writer.WritePropertyName("defaultNetworkProfile"u8);
-                writer.WriteObjectValue(DefaultNetworkProfile);
+                writer.WriteObjectValue<LabPlanNetworkProfile>(DefaultNetworkProfile, options);
             }
             if (Optional.IsCollectionDefined(AllowedRegions))
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.LabServices
             if (Optional.IsDefined(SupportInfo))
             {
                 writer.WritePropertyName("supportInfo"u8);
-                writer.WriteObjectValue(SupportInfo);
+                writer.WriteObjectValue<LabPlanSupportInfo>(SupportInfo, options);
             }
             if (Optional.IsDefined(LinkedLmsInstance))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.LabServices
             var format = options.Format == "W" ? ((IPersistableModel<LabPlanData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabPlanData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabPlanData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.LabServices
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabPlanData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabPlanData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.LabServices
                         return DeserializeLabPlanData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabPlanData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabPlanData)} does not support reading '{options.Format}' format.");
             }
         }
 

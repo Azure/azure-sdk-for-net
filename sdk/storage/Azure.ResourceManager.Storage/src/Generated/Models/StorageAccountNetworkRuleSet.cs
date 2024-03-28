@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -79,14 +78,19 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Specifies whether traffic is bypassed for Logging/Metrics/AzureServices. Possible values are any combination of Logging|Metrics|AzureServices (For example, "Logging, Metrics"), or None to bypass none of those traffics. </summary>
+        [WirePath("bypass")]
         public StorageNetworkBypass? Bypass { get; set; }
         /// <summary> Sets the resource access rules. </summary>
+        [WirePath("resourceAccessRules")]
         public IList<StorageAccountResourceAccessRule> ResourceAccessRules { get; }
         /// <summary> Sets the virtual network rules. </summary>
+        [WirePath("virtualNetworkRules")]
         public IList<StorageAccountVirtualNetworkRule> VirtualNetworkRules { get; }
         /// <summary> Sets the IP ACL rules. </summary>
+        [WirePath("ipRules")]
         public IList<StorageAccountIPRule> IPRules { get; }
         /// <summary> Specifies the default action of allow or deny when no other rules match. </summary>
+        [WirePath("defaultAction")]
         public StorageNetworkDefaultAction DefaultAction { get; set; }
     }
 }

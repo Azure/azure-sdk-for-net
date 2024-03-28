@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -81,10 +80,13 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> This is the filter tag name, it can have 1 - 128 characters. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> This is the comparison operator which is used for object comparison and filtering. Only == (equality operator) is currently supported. </summary>
+        [WirePath("op")]
         public string Operator { get; set; }
         /// <summary> This is the filter tag value field used for tag based filtering, it can have 0 - 256 characters. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

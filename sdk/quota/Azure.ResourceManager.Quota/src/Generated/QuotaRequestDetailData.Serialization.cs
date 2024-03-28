@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Quota
             var format = options.Format == "W" ? ((IPersistableModel<QuotaRequestDetailData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaRequestDetailData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaRequestDetailData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Quota
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<ServiceErrorDetail>(Error, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RequestSubmitOn))
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Quota
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<QuotaSubRequestDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Quota
             var format = options.Format == "W" ? ((IPersistableModel<QuotaRequestDetailData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaRequestDetailData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaRequestDetailData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Quota
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QuotaRequestDetailData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaRequestDetailData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Quota
                         return DeserializeQuotaRequestDetailData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QuotaRequestDetailData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaRequestDetailData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -98,12 +96,16 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Denotes the state of provisioning. </summary>
+        [WirePath("provisioningState")]
         public ResourcesProvisioningState? ProvisioningState { get; }
         /// <summary> The correlation ID of the deployment. </summary>
+        [WirePath("correlationId")]
         public string CorrelationId { get; }
         /// <summary> The timestamp of the template deployment. </summary>
+        [WirePath("timestamp")]
         public DateTimeOffset? Timestamp { get; }
         /// <summary> The duration of the template deployment. </summary>
+        [WirePath("duration")]
         public TimeSpan? Duration { get; }
         /// <summary>
         /// Key/value pairs that represent deployment output.
@@ -135,12 +137,16 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("outputs")]
         public BinaryData Outputs { get; }
         /// <summary> The list of resource providers needed for the deployment. </summary>
+        [WirePath("providers")]
         public IReadOnlyList<ResourceProviderData> Providers { get; }
         /// <summary> The list of deployment dependencies. </summary>
+        [WirePath("dependencies")]
         public IReadOnlyList<ArmDependency> Dependencies { get; }
         /// <summary> The URI referencing the template. </summary>
+        [WirePath("templateLink")]
         public ArmDeploymentTemplateLink TemplateLink { get; }
         /// <summary>
         /// Deployment parameters.
@@ -172,23 +178,31 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("parameters")]
         public BinaryData Parameters { get; }
         /// <summary> The URI referencing the parameters. </summary>
+        [WirePath("parametersLink")]
         public ArmDeploymentParametersLink ParametersLink { get; }
         /// <summary> The deployment mode. Possible values are Incremental and Complete. </summary>
+        [WirePath("mode")]
         public ArmDeploymentMode? Mode { get; }
         /// <summary> The debug setting of the deployment. </summary>
         internal DebugSetting DebugSetting { get; }
 
         /// <summary> The deployment on error behavior. </summary>
+        [WirePath("onErrorDeployment")]
         public ErrorDeploymentExtended ErrorDeployment { get; }
         /// <summary> The hash produced for the template. </summary>
+        [WirePath("templateHash")]
         public string TemplateHash { get; }
         /// <summary> Array of provisioned resources. </summary>
+        [WirePath("outputResources")]
         public IReadOnlyList<SubResource> OutputResources { get; }
         /// <summary> Array of validated resources. </summary>
+        [WirePath("validatedResources")]
         public IReadOnlyList<SubResource> ValidatedResources { get; }
         /// <summary> The deployment error. </summary>
+        [WirePath("error")]
         public ResponseError Error { get; }
     }
 }

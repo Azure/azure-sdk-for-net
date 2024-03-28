@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Automation
             var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Automation
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("updateConfiguration"u8);
-            writer.WriteObjectValue(UpdateConfiguration);
+            writer.WriteObjectValue<SoftwareUpdateConfigurationSpecificProperties>(UpdateConfiguration, options);
             writer.WritePropertyName("scheduleInfo"u8);
-            writer.WriteObjectValue(ScheduleInfo);
+            writer.WriteObjectValue<SoftwareUpdateConfigurationScheduleProperties>(ScheduleInfo, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<AutomationResponseError>(Error, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Tasks))
             {
                 writer.WritePropertyName("tasks"u8);
-                writer.WriteObjectValue(Tasks);
+                writer.WriteObjectValue<SoftwareUpdateConfigurationTasks>(Tasks, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Automation
             var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Automation
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Automation
                         return DeserializeSoftwareUpdateConfigurationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationData)} does not support reading '{options.Format}' format.");
             }
         }
 

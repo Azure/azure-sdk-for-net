@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -79,14 +78,19 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The name of the group. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The group's display name. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
         /// <summary> The group's category. </summary>
+        [WirePath("category")]
         public string Category { get; set; }
         /// <summary> The group's description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> A resource ID of a resource that contains additional metadata about the group. </summary>
+        [WirePath("additionalMetadataId")]
         public string AdditionalMetadataId { get; set; }
     }
 }

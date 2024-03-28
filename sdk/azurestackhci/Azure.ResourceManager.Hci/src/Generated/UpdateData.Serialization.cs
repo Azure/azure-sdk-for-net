@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Hci
             var format = options.Format == "W" ? ((IPersistableModel<UpdateData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Hci
                 writer.WriteStartArray();
                 foreach (var item in Prerequisites)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UpdatePrerequisite>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Hci
                 writer.WriteStartArray();
                 foreach (var item in ComponentVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HciPackageVersionInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Hci
                 writer.WriteStartArray();
                 foreach (var item in HealthCheckResult)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HciPrecheckResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Hci
             var format = options.Format == "W" ? ((IPersistableModel<UpdateData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.Hci
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UpdateData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.Hci
                         return DeserializeUpdateData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpdateData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateData)} does not support reading '{options.Format}' format.");
             }
         }
 

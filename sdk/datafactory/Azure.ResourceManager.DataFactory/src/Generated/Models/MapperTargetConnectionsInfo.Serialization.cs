@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<MapperTargetConnectionsInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MapperTargetConnectionsInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MapperTargetConnectionsInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,14 +32,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetEntities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MapperTable>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Connection))
             {
                 writer.WritePropertyName("connection"u8);
-                writer.WriteObjectValue(Connection);
+                writer.WriteObjectValue<MapperConnection>(Connection, options);
             }
             if (Optional.IsCollectionDefined(DataMapperMappings))
             {
@@ -48,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DataMapperMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataMapperMapping>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<MapperTargetConnectionsInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MapperTargetConnectionsInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MapperTargetConnectionsInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -196,7 +195,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MapperTargetConnectionsInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MapperTargetConnectionsInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -212,7 +211,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeMapperTargetConnectionsInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MapperTargetConnectionsInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MapperTargetConnectionsInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

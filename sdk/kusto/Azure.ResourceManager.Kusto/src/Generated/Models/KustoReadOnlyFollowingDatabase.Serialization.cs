@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoReadOnlyFollowingDatabase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoReadOnlyFollowingDatabase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoReadOnlyFollowingDatabase)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (options.Format != "W" && Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics);
+                writer.WriteObjectValue<DatabaseStatistics>(Statistics, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LeaderClusterResourceId))
             {
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (options.Format != "W" && Optional.IsDefined(TableLevelSharingProperties))
             {
                 writer.WritePropertyName("tableLevelSharingProperties"u8);
-                writer.WriteObjectValue(TableLevelSharingProperties);
+                writer.WriteObjectValue<KustoDatabaseTableLevelSharingProperties>(TableLevelSharingProperties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OriginalDatabaseName))
             {
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (options.Format != "W" && Optional.IsDefined(SuspensionDetails))
             {
                 writer.WritePropertyName("suspensionDetails"u8);
-                writer.WriteObjectValue(SuspensionDetails);
+                writer.WriteObjectValue<SuspensionDetails>(SuspensionDetails, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoReadOnlyFollowingDatabase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoReadOnlyFollowingDatabase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoReadOnlyFollowingDatabase)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -345,7 +344,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KustoReadOnlyFollowingDatabase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoReadOnlyFollowingDatabase)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -361,7 +360,7 @@ namespace Azure.ResourceManager.Kusto.Models
                         return DeserializeKustoReadOnlyFollowingDatabase(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KustoReadOnlyFollowingDatabase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoReadOnlyFollowingDatabase)} does not support reading '{options.Format}' format.");
             }
         }
 

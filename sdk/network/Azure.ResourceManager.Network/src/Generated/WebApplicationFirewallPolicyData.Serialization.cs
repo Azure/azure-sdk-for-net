@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebApplicationFirewallPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebApplicationFirewallPolicyData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(PolicySettings))
             {
                 writer.WritePropertyName("policySettings"u8);
-                writer.WriteObjectValue(PolicySettings);
+                writer.WriteObjectValue<PolicySettings>(PolicySettings, options);
             }
             if (Optional.IsCollectionDefined(CustomRules))
             {
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in CustomRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WebApplicationFirewallCustomRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ApplicationGateways)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplicationGatewayData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -105,7 +104,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ManagedRules))
             {
                 writer.WritePropertyName("managedRules"u8);
-                writer.WriteObjectValue(ManagedRules);
+                writer.WriteObjectValue<ManagedRulesDefinition>(ManagedRules, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(HttpListeners))
             {
@@ -151,7 +150,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebApplicationFirewallPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebApplicationFirewallPolicyData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -376,7 +375,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WebApplicationFirewallPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebApplicationFirewallPolicyData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -392,7 +391,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeWebApplicationFirewallPolicyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebApplicationFirewallPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebApplicationFirewallPolicyData)} does not support reading '{options.Format}' format.");
             }
         }
 

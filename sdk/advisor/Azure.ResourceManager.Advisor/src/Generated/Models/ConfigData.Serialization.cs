@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Advisor;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Advisor.Models
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.Advisor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 writer.WriteStartArray();
                 foreach (var item in Digests)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DigestConfig>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.Advisor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -214,7 +213,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConfigData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -230,7 +229,7 @@ namespace Azure.ResourceManager.Advisor.Models
                         return DeserializeConfigData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfigData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigData)} does not support reading '{options.Format}' format.");
             }
         }
 

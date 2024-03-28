@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<DiskRestorePointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskRestorePointData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskRestorePointData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(PurchasePlan))
             {
                 writer.WritePropertyName("purchasePlan"u8);
-                writer.WriteObjectValue(PurchasePlan);
+                writer.WriteObjectValue<DiskPurchasePlan>(PurchasePlan, options);
             }
             if (Optional.IsDefined(SupportedCapabilities))
             {
                 writer.WritePropertyName("supportedCapabilities"u8);
-                writer.WriteObjectValue(SupportedCapabilities);
+                writer.WriteObjectValue<SupportedCapabilities>(SupportedCapabilities, options);
             }
             if (options.Format != "W" && Optional.IsDefined(FamilyId))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute
             if (options.Format != "W" && Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<DiskEncryption>(Encryption, options);
             }
             if (Optional.IsDefined(SupportsHibernation))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                writer.WriteObjectValue<DiskSecurityProfile>(SecurityProfile, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<DiskRestorePointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskRestorePointData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskRestorePointData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Compute
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiskRestorePointData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskRestorePointData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.Compute
                         return DeserializeDiskRestorePointData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiskRestorePointData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskRestorePointData)} does not support reading '{options.Format}' format.");
             }
         }
 

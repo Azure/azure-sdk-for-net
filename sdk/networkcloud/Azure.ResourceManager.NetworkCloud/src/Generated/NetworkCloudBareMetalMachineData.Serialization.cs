@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.NetworkCloud
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudBareMetalMachineData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudBareMetalMachineData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudBareMetalMachineData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation);
+            writer.WriteObjectValue<ExtendedLocation>(ExtendedLocation, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WritePropertyName("bmcConnectionString"u8);
             writer.WriteStringValue(BmcConnectionString);
             writer.WritePropertyName("bmcCredentials"u8);
-            writer.WriteObjectValue(BmcCredentials);
+            writer.WriteObjectValue<AdministrativeCredentials>(BmcCredentials, options);
             writer.WritePropertyName("bmcMacAddress"u8);
             writer.WriteStringValue(BmcMacAddress);
             writer.WritePropertyName("bootMacAddress"u8);
@@ -112,12 +112,12 @@ namespace Azure.ResourceManager.NetworkCloud
             if (options.Format != "W" && Optional.IsDefined(HardwareInventory))
             {
                 writer.WritePropertyName("hardwareInventory"u8);
-                writer.WriteObjectValue(HardwareInventory);
+                writer.WriteObjectValue<HardwareInventory>(HardwareInventory, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HardwareValidationStatus))
             {
                 writer.WritePropertyName("hardwareValidationStatus"u8);
-                writer.WriteObjectValue(HardwareValidationStatus);
+                writer.WriteObjectValue<HardwareValidationStatus>(HardwareValidationStatus, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(HybridAksClustersAssociatedIds))
             {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.NetworkCloud
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudBareMetalMachineData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudBareMetalMachineData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudBareMetalMachineData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudBareMetalMachineData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudBareMetalMachineData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.NetworkCloud
                         return DeserializeNetworkCloudBareMetalMachineData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudBareMetalMachineData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudBareMetalMachineData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> An array that contains the connection strings for a mongo cluster. </summary>
+        [WirePath("connectionStrings")]
         public IReadOnlyList<CosmosDBConnectionString> ConnectionStrings { get; }
     }
 }

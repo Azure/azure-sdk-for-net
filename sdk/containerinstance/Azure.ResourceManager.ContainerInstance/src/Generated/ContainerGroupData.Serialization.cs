@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ContainerInstance
             var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerGroupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ContainerInstance
             writer.WriteStartArray();
             foreach (var item in Containers)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ContainerInstanceContainer>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(ImageRegistryCredentials))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WriteStartArray();
                 foreach (var item in ImageRegistryCredentials)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerGroupImageRegistryCredential>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ContainerInstance
             if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteObjectValue(IPAddress);
+                writer.WriteObjectValue<ContainerGroupIPAddress>(IPAddress, options);
             }
             writer.WritePropertyName("osType"u8);
             writer.WriteStringValue(OSType.ToString());
@@ -118,19 +118,19 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WriteStartArray();
                 foreach (var item in Volumes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerVolume>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                writer.WriteObjectValue<ContainerGroupInstanceView>(InstanceView, options);
             }
             if (Optional.IsDefined(Diagnostics))
             {
                 writer.WritePropertyName("diagnostics"u8);
-                writer.WriteObjectValue(Diagnostics);
+                writer.WriteObjectValue<ContainerGroupDiagnostics>(Diagnostics, options);
             }
             if (Optional.IsCollectionDefined(SubnetIds))
             {
@@ -138,14 +138,14 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WriteStartArray();
                 foreach (var item in SubnetIds)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerGroupSubnetId>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DnsConfig))
             {
                 writer.WritePropertyName("dnsConfig"u8);
-                writer.WriteObjectValue(DnsConfig);
+                writer.WriteObjectValue<ContainerGroupDnsConfiguration>(DnsConfig, options);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ContainerInstance
             if (Optional.IsDefined(EncryptionProperties))
             {
                 writer.WritePropertyName("encryptionProperties"u8);
-                writer.WriteObjectValue(EncryptionProperties);
+                writer.WriteObjectValue<ContainerGroupEncryptionProperties>(EncryptionProperties, options);
             }
             if (Optional.IsCollectionDefined(InitContainers))
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WriteStartArray();
                 foreach (var item in InitContainers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InitContainerDefinitionContent>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -173,14 +173,14 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DeploymentExtensionSpec>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ConfidentialComputeProperties))
             {
                 writer.WritePropertyName("confidentialComputeProperties"u8);
-                writer.WriteObjectValue(ConfidentialComputeProperties);
+                writer.WriteObjectValue<ConfidentialComputeProperties>(ConfidentialComputeProperties, options);
             }
             if (Optional.IsDefined(Priority))
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ContainerInstance
             var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerGroupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.ContainerInstance
                         return DeserializeContainerGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 

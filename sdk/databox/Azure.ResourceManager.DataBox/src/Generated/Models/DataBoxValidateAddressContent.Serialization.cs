@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -23,18 +22,18 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxValidateAddressContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxValidateAddressContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxValidateAddressContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("shippingAddress"u8);
-            writer.WriteObjectValue(ShippingAddress);
+            writer.WriteObjectValue<DataBoxShippingAddress>(ShippingAddress, options);
             writer.WritePropertyName("deviceType"u8);
             writer.WriteStringValue(DeviceType.ToSerialString());
             if (Optional.IsDefined(TransportPreferences))
             {
                 writer.WritePropertyName("transportPreferences"u8);
-                writer.WriteObjectValue(TransportPreferences);
+                writer.WriteObjectValue<TransportPreferences>(TransportPreferences, options);
             }
             writer.WritePropertyName("validationType"u8);
             writer.WriteStringValue(ValidationType.ToSerialString());
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxValidateAddressContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxValidateAddressContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxValidateAddressContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxValidateAddressContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxValidateAddressContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +141,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataBoxValidateAddressContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxValidateAddressContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxValidateAddressContent)} does not support reading '{options.Format}' format.");
             }
         }
 

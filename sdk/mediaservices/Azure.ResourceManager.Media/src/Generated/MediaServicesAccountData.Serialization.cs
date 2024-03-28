@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Media
             var format = options.Format == "W" ? ((IPersistableModel<MediaServicesAccountData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaServicesAccountData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaServicesAccountData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Media
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MediaServicesStorageAccount>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<AccountEncryption>(Encryption, options);
             }
             if (Optional.IsDefined(KeyDelivery))
             {
                 writer.WritePropertyName("keyDelivery"u8);
-                writer.WriteObjectValue(KeyDelivery);
+                writer.WriteObjectValue<MediaKeyDelivery>(KeyDelivery, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Media
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MediaServicesPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Media
             var format = options.Format == "W" ? ((IPersistableModel<MediaServicesAccountData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaServicesAccountData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaServicesAccountData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Media
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaServicesAccountData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaServicesAccountData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Media
                         return DeserializeMediaServicesAccountData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaServicesAccountData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaServicesAccountData)} does not support reading '{options.Format}' format.");
             }
         }
 

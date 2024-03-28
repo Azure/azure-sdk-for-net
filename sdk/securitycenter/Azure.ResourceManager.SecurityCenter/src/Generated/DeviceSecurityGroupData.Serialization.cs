@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<DeviceSecurityGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceSecurityGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceSecurityGroupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in ThresholdRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ThresholdCustomAlertRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in TimeWindowRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TimeWindowCustomAlertRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in AllowlistRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AllowlistCustomAlertRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in DenylistRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DenylistCustomAlertRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<DeviceSecurityGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceSecurityGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceSecurityGroupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeviceSecurityGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceSecurityGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         return DeserializeDeviceSecurityGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeviceSecurityGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceSecurityGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 

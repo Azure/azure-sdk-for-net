@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.ContainerRegistry
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            writer.WriteObjectValue<ContainerRegistrySku>(Sku, options);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<ContainerRegistryResourceStatus>(Status, options);
             }
             if (Optional.IsDefined(IsAdminUserEnabled))
             {
@@ -98,17 +98,17 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkRuleSet"u8);
-                writer.WriteObjectValue(NetworkRuleSet);
+                writer.WriteObjectValue<ContainerRegistryNetworkRuleSet>(NetworkRuleSet, options);
             }
             if (Optional.IsDefined(Policies))
             {
                 writer.WritePropertyName("policies"u8);
-                writer.WriteObjectValue(Policies);
+                writer.WriteObjectValue<ContainerRegistryPolicies>(Policies, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<ContainerRegistryEncryption>(Encryption, options);
             }
             if (Optional.IsDefined(IsDataEndpointEnabled))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerRegistryPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                         return DeserializeContainerRegistryData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Quota.Models
             var format = options.Format == "W" ? ((IPersistableModel<QuotaOperationDisplay>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaOperationDisplay)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaOperationDisplay)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.Quota.Models
             var format = options.Format == "W" ? ((IPersistableModel<QuotaOperationDisplay>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaOperationDisplay)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaOperationDisplay)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +130,7 @@ namespace Azure.ResourceManager.Quota.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QuotaOperationDisplay)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaOperationDisplay)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +146,7 @@ namespace Azure.ResourceManager.Quota.Models
                         return DeserializeQuotaOperationDisplay(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QuotaOperationDisplay)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaOperationDisplay)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,10 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -108,6 +106,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties")]
         public IReadOnlyDictionary<string, BinaryData> Properties { get; }
     }
 }

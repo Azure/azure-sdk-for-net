@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -22,12 +21,12 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteStringValue(DisplayName);
             }
             writer.WritePropertyName("analysisInput"u8);
-            writer.WriteObjectValue(AnalysisInput);
+            writer.WriteObjectValue<MultiLanguageAnalysisInput>(AnalysisInput);
             writer.WritePropertyName("tasks"u8);
             writer.WriteStartArray();
             foreach (var item in Tasks)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<AnalyzeTextLROTask>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

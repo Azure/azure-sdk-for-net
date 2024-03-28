@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -23,24 +22,24 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<SwaggerCustomDynamicTree>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SwaggerCustomDynamicTree)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SwaggerCustomDynamicTree)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
-                writer.WriteObjectValue(Settings);
+                writer.WriteObjectValue<SwaggerCustomDynamicTreeSettings>(Settings, options);
             }
             if (Optional.IsDefined(Open))
             {
                 writer.WritePropertyName("open"u8);
-                writer.WriteObjectValue(Open);
+                writer.WriteObjectValue<SwaggerCustomDynamicTreeCommand>(Open, options);
             }
             if (Optional.IsDefined(Browse))
             {
                 writer.WritePropertyName("browse"u8);
-                writer.WriteObjectValue(Browse);
+                writer.WriteObjectValue<SwaggerCustomDynamicTreeCommand>(Browse, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<SwaggerCustomDynamicTree>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SwaggerCustomDynamicTree)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SwaggerCustomDynamicTree)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SwaggerCustomDynamicTree)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SwaggerCustomDynamicTree)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +147,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeSwaggerCustomDynamicTree(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SwaggerCustomDynamicTree)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SwaggerCustomDynamicTree)} does not support reading '{options.Format}' format.");
             }
         }
 

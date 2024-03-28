@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapacityReservationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CapacityReservationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            writer.WriteObjectValue<ComputeSku>(Sku, options);
             if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                writer.WriteObjectValue<CapacityReservationInstanceView>(InstanceView, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TimeCreated))
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapacityReservationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CapacityReservationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Compute
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CapacityReservationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapacityReservationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Compute
                         return DeserializeCapacityReservationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CapacityReservationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapacityReservationData)} does not support reading '{options.Format}' format.");
             }
         }
 

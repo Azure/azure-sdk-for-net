@@ -28,7 +28,6 @@ namespace Azure.Monitor.Query.Tests
         public string ConnectionString => GetRecordedOptionalVariable("CONNECTION_STRING");
         public string StorageAccountId => GetRecordedOptionalVariable("STORAGE_ID");
         public string StorageAccountConnectionString => GetRecordedOptionalVariable("STORAGE_CONNECTION_STRING");
-        public string MetricsLocation => GetRecordedVariable("METRICS_LOCATION");
         public string GetLogsAudience()
         {
             Uri authorityHost = new(AuthorityHostUrl);

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CustomerInsights
             var format = options.Format == "W" ? ((IPersistableModel<RelationshipLinkResourceFormatData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelationshipLinkResourceFormatData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RelationshipLinkResourceFormatData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in Mappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RelationshipLinkFieldMapping>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in ProfilePropertyReferences)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ParticipantProfilePropertyReference>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in RelatedProfilePropertyReferences)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ParticipantProfilePropertyReference>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.CustomerInsights
             var format = options.Format == "W" ? ((IPersistableModel<RelationshipLinkResourceFormatData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelationshipLinkResourceFormatData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RelationshipLinkResourceFormatData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RelationshipLinkResourceFormatData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RelationshipLinkResourceFormatData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.CustomerInsights
                         return DeserializeRelationshipLinkResourceFormatData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RelationshipLinkResourceFormatData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RelationshipLinkResourceFormatData)} does not support reading '{options.Format}' format.");
             }
         }
 

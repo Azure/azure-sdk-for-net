@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAlertData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAlertData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAlertData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in ResourceIdentifiers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SecurityAlertResourceIdentifier>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Entities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SecurityAlertEntity>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(SupportingEvidence))
             {
                 writer.WritePropertyName("supportingEvidence"u8);
-                writer.WriteObjectValue(SupportingEvidence);
+                writer.WriteObjectValue<SecurityAlertSupportingEvidence>(SupportingEvidence, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAlertData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAlertData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAlertData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAlertData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAlertData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         return DeserializeSecurityAlertData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAlertData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAlertData)} does not support reading '{options.Format}' format.");
             }
         }
 

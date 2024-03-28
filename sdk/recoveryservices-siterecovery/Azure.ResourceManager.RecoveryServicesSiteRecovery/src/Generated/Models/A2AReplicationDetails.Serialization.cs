@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2AReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2AReplicationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2AReplicationDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -50,12 +49,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(InitialPrimaryExtendedLocation))
             {
                 writer.WritePropertyName("initialPrimaryExtendedLocation"u8);
-                writer.WriteObjectValue(InitialPrimaryExtendedLocation);
+                writer.WriteObjectValue<SiteRecoveryExtendedLocation>(InitialPrimaryExtendedLocation, options);
             }
             if (Optional.IsDefined(InitialRecoveryExtendedLocation))
             {
                 writer.WritePropertyName("initialRecoveryExtendedLocation"u8);
-                writer.WriteObjectValue(InitialRecoveryExtendedLocation);
+                writer.WriteObjectValue<SiteRecoveryExtendedLocation>(InitialRecoveryExtendedLocation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(InitialRecoveryFabricLocation))
             {
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<A2AProtectedDiskDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in UnprotectedDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<A2AUnprotectedDiskDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -108,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedManagedDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<A2AProtectedManagedDiskDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -173,14 +172,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VmNicDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(VmSyncedConfigDetails))
             {
                 writer.WritePropertyName("vmSyncedConfigDetails"u8);
-                writer.WriteObjectValue(VmSyncedConfigDetails);
+                writer.WriteObjectValue<A2AVmSyncedConfigDetails>(VmSyncedConfigDetails, options);
             }
             if (Optional.IsDefined(MonitoringPercentageCompletion))
             {
@@ -270,12 +269,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(PrimaryExtendedLocation))
             {
                 writer.WritePropertyName("primaryExtendedLocation"u8);
-                writer.WriteObjectValue(PrimaryExtendedLocation);
+                writer.WriteObjectValue<SiteRecoveryExtendedLocation>(PrimaryExtendedLocation, options);
             }
             if (Optional.IsDefined(RecoveryExtendedLocation))
             {
                 writer.WritePropertyName("recoveryExtendedLocation"u8);
-                writer.WriteObjectValue(RecoveryExtendedLocation);
+                writer.WriteObjectValue<SiteRecoveryExtendedLocation>(RecoveryExtendedLocation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(VmEncryptionType))
             {
@@ -342,7 +341,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2AReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2AReplicationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2AReplicationDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -925,7 +924,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(A2AReplicationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2AReplicationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -941,7 +940,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeA2AReplicationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(A2AReplicationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2AReplicationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

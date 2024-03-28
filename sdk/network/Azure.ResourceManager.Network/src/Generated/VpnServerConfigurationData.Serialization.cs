@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<VpnServerConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnServerConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnServerConfigurationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VpnClientRootCertificates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VpnServerConfigVpnClientRootCertificate>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VpnClientRevokedCertificates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VpnServerConfigVpnClientRevokedCertificate>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in RadiusServerRootCertificates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VpnServerConfigRadiusServerRootCertificate>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +121,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in RadiusClientRootCertificates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VpnServerConfigRadiusClientRootCertificate>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VpnClientIPsecPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IPsecPolicy>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -152,14 +151,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in RadiusServers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RadiusServer>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(AadAuthenticationParameters))
             {
                 writer.WritePropertyName("aadAuthenticationParameters"u8);
-                writer.WriteObjectValue(AadAuthenticationParameters);
+                writer.WriteObjectValue<AadAuthenticationParameters>(AadAuthenticationParameters, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -172,7 +171,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in P2SVpnGateways)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<P2SVpnGatewayData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -182,7 +181,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ConfigurationPolicyGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VpnServerConfigurationPolicyGroupData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -210,7 +209,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<VpnServerConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnServerConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnServerConfigurationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -519,7 +518,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VpnServerConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnServerConfigurationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -535,7 +534,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeVpnServerConfigurationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VpnServerConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnServerConfigurationData)} does not support reading '{options.Format}' format.");
             }
         }
 

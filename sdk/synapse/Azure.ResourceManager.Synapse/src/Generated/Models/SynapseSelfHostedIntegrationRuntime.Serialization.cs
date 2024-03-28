@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseSelfHostedIntegrationRuntime>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseSelfHostedIntegrationRuntime)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseSelfHostedIntegrationRuntime)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +38,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(LinkedInfo))
             {
                 writer.WritePropertyName("linkedInfo"u8);
-                writer.WriteObjectValue(LinkedInfo);
+                writer.WriteObjectValue<SynapseLinkedIntegrationRuntimeType>(LinkedInfo, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseSelfHostedIntegrationRuntime>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseSelfHostedIntegrationRuntime)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseSelfHostedIntegrationRuntime)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,7 +129,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseSelfHostedIntegrationRuntime)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseSelfHostedIntegrationRuntime)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +145,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeSynapseSelfHostedIntegrationRuntime(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseSelfHostedIntegrationRuntime)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseSelfHostedIntegrationRuntime)} does not support reading '{options.Format}' format.");
             }
         }
 

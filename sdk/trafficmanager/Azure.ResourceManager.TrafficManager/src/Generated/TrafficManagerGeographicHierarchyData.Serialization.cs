@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.TrafficManager
             var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerGeographicHierarchyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrafficManagerGeographicHierarchyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrafficManagerGeographicHierarchyData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.TrafficManager
             if (Optional.IsDefined(GeographicHierarchy))
             {
                 writer.WritePropertyName("geographicHierarchy"u8);
-                writer.WriteObjectValue(GeographicHierarchy);
+                writer.WriteObjectValue<TrafficManagerRegion>(GeographicHierarchy, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.TrafficManager
             var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerGeographicHierarchyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrafficManagerGeographicHierarchyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrafficManagerGeographicHierarchyData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.TrafficManager
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TrafficManagerGeographicHierarchyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrafficManagerGeographicHierarchyData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.TrafficManager
                         return DeserializeTrafficManagerGeographicHierarchyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrafficManagerGeographicHierarchyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrafficManagerGeographicHierarchyData)} does not support reading '{options.Format}' format.");
             }
         }
 

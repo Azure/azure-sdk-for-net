@@ -8,9 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<FunctionAppRuntimeSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FunctionAppRuntimeSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FunctionAppRuntimeSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,12 +41,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(AppInsightsSettings))
             {
                 writer.WritePropertyName("appInsightsSettings"u8);
-                writer.WriteObjectValue(AppInsightsSettings);
+                writer.WriteObjectValue<AppInsightsWebAppStackSettings>(AppInsightsSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(GitHubActionSettings))
             {
                 writer.WritePropertyName("gitHubActionSettings"u8);
-                writer.WriteObjectValue(GitHubActionSettings);
+                writer.WriteObjectValue<GitHubActionWebAppStackSettings>(GitHubActionSettings, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AppSettingsDictionary))
             {
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(SiteConfigPropertiesDictionary))
             {
                 writer.WritePropertyName("siteConfigPropertiesDictionary"u8);
-                writer.WriteObjectValue(SiteConfigPropertiesDictionary);
+                writer.WriteObjectValue<SiteConfigPropertiesDictionary>(SiteConfigPropertiesDictionary, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedFunctionsExtensionVersions))
             {
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<FunctionAppRuntimeSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FunctionAppRuntimeSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FunctionAppRuntimeSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -320,6 +321,276 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuntimeVersion), out propertyOverride);
+            if (Optional.IsDefined(RuntimeVersion) || hasPropertyOverride)
+            {
+                builder.Append("  runtimeVersion: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (RuntimeVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RuntimeVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RuntimeVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRemoteDebuggingSupported), out propertyOverride);
+            if (Optional.IsDefined(IsRemoteDebuggingSupported) || hasPropertyOverride)
+            {
+                builder.Append("  remoteDebuggingSupported: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsRemoteDebuggingSupported.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppInsightsSettings), out propertyOverride);
+            if (Optional.IsDefined(AppInsightsSettings) || hasPropertyOverride)
+            {
+                builder.Append("  appInsightsSettings: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, AppInsightsSettings, options, 2, false, "  appInsightsSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GitHubActionSettings), out propertyOverride);
+            if (Optional.IsDefined(GitHubActionSettings) || hasPropertyOverride)
+            {
+                builder.Append("  gitHubActionSettings: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, GitHubActionSettings, options, 2, false, "  gitHubActionSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppSettingsDictionary), out propertyOverride);
+            if (Optional.IsCollectionDefined(AppSettingsDictionary) || hasPropertyOverride)
+            {
+                if (AppSettingsDictionary.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  appSettingsDictionary: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("{");
+                        foreach (var item in AppSettingsDictionary)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SiteConfigPropertiesDictionary), out propertyOverride);
+            if (Optional.IsDefined(SiteConfigPropertiesDictionary) || hasPropertyOverride)
+            {
+                builder.Append("  siteConfigPropertiesDictionary: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, SiteConfigPropertiesDictionary, options, 2, false, "  siteConfigPropertiesDictionary: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedFunctionsExtensionVersions), out propertyOverride);
+            if (Optional.IsCollectionDefined(SupportedFunctionsExtensionVersions) || hasPropertyOverride)
+            {
+                if (SupportedFunctionsExtensionVersions.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  supportedFunctionsExtensionVersions: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedFunctionsExtensionVersions)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsPreview), out propertyOverride);
+            if (Optional.IsDefined(IsPreview) || hasPropertyOverride)
+            {
+                builder.Append("  isPreview: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsPreview.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDeprecated), out propertyOverride);
+            if (Optional.IsDefined(IsDeprecated) || hasPropertyOverride)
+            {
+                builder.Append("  isDeprecated: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsDeprecated.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsHidden), out propertyOverride);
+            if (Optional.IsDefined(IsHidden) || hasPropertyOverride)
+            {
+                builder.Append("  isHidden: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsHidden.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndOfLifeOn), out propertyOverride);
+            if (Optional.IsDefined(EndOfLifeOn) || hasPropertyOverride)
+            {
+                builder.Append("  endOfLifeDate: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(EndOfLifeOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAutoUpdate), out propertyOverride);
+            if (Optional.IsDefined(IsAutoUpdate) || hasPropertyOverride)
+            {
+                builder.Append("  isAutoUpdate: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsAutoUpdate.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEarlyAccess), out propertyOverride);
+            if (Optional.IsDefined(IsEarlyAccess) || hasPropertyOverride)
+            {
+                builder.Append("  isEarlyAccess: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsEarlyAccess.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDefault), out propertyOverride);
+            if (Optional.IsDefined(IsDefault) || hasPropertyOverride)
+            {
+                builder.Append("  isDefault: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsDefault.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<FunctionAppRuntimeSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FunctionAppRuntimeSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -328,8 +599,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(FunctionAppRuntimeSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FunctionAppRuntimeSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -345,7 +618,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeFunctionAppRuntimeSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FunctionAppRuntimeSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FunctionAppRuntimeSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

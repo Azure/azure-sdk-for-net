@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
@@ -73,10 +72,13 @@ namespace Azure.ResourceManager.ServiceBus.Models
         }
 
         /// <summary> Gets the group id. </summary>
+        [WirePath("properties.groupId")]
         public string GroupId { get; }
         /// <summary> Required Members. </summary>
+        [WirePath("properties.requiredMembers")]
         public IReadOnlyList<string> RequiredMembers { get; }
         /// <summary> Required Zone Names. </summary>
+        [WirePath("properties.requiredZoneNames")]
         public IReadOnlyList<string> RequiredZoneNames { get; }
     }
 }

@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The directory in which the tokens will be stored. </summary>
+        [WirePath("directory")]
         public string Directory { get; set; }
     }
 }

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<KeySetUser>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeySetUser)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KeySetUser)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,7 +34,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("sshPublicKey"u8);
-            writer.WriteObjectValue(SshPublicKey);
+            writer.WriteObjectValue<NetworkCloudSshPublicKey>(SshPublicKey, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<KeySetUser>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeySetUser)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KeySetUser)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KeySetUser)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeySetUser)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -130,7 +129,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeKeySetUser(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KeySetUser)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeySetUser)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -70,14 +69,19 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Database name of the database in which this query was executed. </summary>
+        [WirePath("databaseName")]
         public string DatabaseName { get; }
         /// <summary> Unique query id (unique within one database). </summary>
+        [WirePath("queryId")]
         public string QueryId { get; }
         /// <summary> The start time for the metric (ISO-8601 format). </summary>
+        [WirePath("startTime")]
         public string StartTime { get; }
         /// <summary> The end time for the metric (ISO-8601 format). </summary>
+        [WirePath("endTime")]
         public string EndTime { get; }
         /// <summary> List of intervals with appropriate metric data. </summary>
+        [WirePath("intervals")]
         public IReadOnlyList<QueryMetricInterval> Intervals { get; }
     }
 }

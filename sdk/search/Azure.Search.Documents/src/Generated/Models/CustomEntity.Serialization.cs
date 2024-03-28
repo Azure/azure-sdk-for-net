@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -147,7 +146,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteStartArray();
                     foreach (var item in Aliases)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<CustomEntityAlias>(item);
                     }
                     writer.WriteEndArray();
                 }

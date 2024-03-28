@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn
             var format = options.Format == "W" ? ((IPersistableModel<CdnEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CdnEndpointData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CdnEndpointData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStartArray();
                 foreach (var item in GeoFilters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GeoFilter>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Cdn
                 if (DefaultOriginGroup != null)
                 {
                     writer.WritePropertyName("defaultOriginGroup"u8);
-                    writer.WriteObjectValue(DefaultOriginGroup);
+                    writer.WriteObjectValue<EndpointPropertiesUpdateParametersDefaultOriginGroup>(DefaultOriginGroup, options);
                 }
                 else
                 {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteStartArray();
                     foreach (var item in UriSigningKeys)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<UriSigningKey>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Cdn
                 if (DeliveryPolicy != null)
                 {
                     writer.WritePropertyName("deliveryPolicy"u8);
-                    writer.WriteObjectValue(DeliveryPolicy);
+                    writer.WriteObjectValue<EndpointDeliveryPolicy>(DeliveryPolicy, options);
                 }
                 else
                 {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Cdn
                 if (WebApplicationFirewallPolicyLink != null)
                 {
                     writer.WritePropertyName("webApplicationFirewallPolicyLink"u8);
-                    writer.WriteObjectValue(WebApplicationFirewallPolicyLink);
+                    writer.WriteObjectValue<EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink>(WebApplicationFirewallPolicyLink, options);
                 }
                 else
                 {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStartArray();
                 foreach (var item in Origins)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DeepCreatedOrigin>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStartArray();
                 foreach (var item in OriginGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DeepCreatedOriginGroup>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStartArray();
                 foreach (var item in CustomDomains)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CdnCustomDomainData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Cdn
             var format = options.Format == "W" ? ((IPersistableModel<CdnEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CdnEndpointData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CdnEndpointData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.Cdn
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CdnEndpointData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CdnEndpointData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.Cdn
                         return DeserializeCdnEndpointData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CdnEndpointData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CdnEndpointData)} does not support reading '{options.Format}' format.");
             }
         }
 

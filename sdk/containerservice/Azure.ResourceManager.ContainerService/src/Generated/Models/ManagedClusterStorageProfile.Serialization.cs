@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -23,29 +22,29 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterStorageProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterStorageProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(DiskCsiDriver))
             {
                 writer.WritePropertyName("diskCSIDriver"u8);
-                writer.WriteObjectValue(DiskCsiDriver);
+                writer.WriteObjectValue<ManagedClusterStorageProfileDiskCsiDriver>(DiskCsiDriver, options);
             }
             if (Optional.IsDefined(FileCsiDriver))
             {
                 writer.WritePropertyName("fileCSIDriver"u8);
-                writer.WriteObjectValue(FileCsiDriver);
+                writer.WriteObjectValue<ManagedClusterStorageProfileFileCsiDriver>(FileCsiDriver, options);
             }
             if (Optional.IsDefined(SnapshotController))
             {
                 writer.WritePropertyName("snapshotController"u8);
-                writer.WriteObjectValue(SnapshotController);
+                writer.WriteObjectValue<ManagedClusterStorageProfileSnapshotController>(SnapshotController, options);
             }
             if (Optional.IsDefined(BlobCsiDriver))
             {
                 writer.WritePropertyName("blobCSIDriver"u8);
-                writer.WriteObjectValue(BlobCsiDriver);
+                writer.WriteObjectValue<ManagedClusterStorageProfileBlobCsiDriver>(BlobCsiDriver, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterStorageProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterStorageProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +146,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterStorageProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterStorageProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +162,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeManagedClusterStorageProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterStorageProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterStorageProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

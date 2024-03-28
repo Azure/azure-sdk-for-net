@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<DateAfterModification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DateAfterModification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DateAfterModification)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<DateAfterModification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DateAfterModification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DateAfterModification)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,6 +138,77 @@ namespace Azure.ResourceManager.Storage.Models
             return new DateAfterModification(daysAfterModificationGreaterThan, daysAfterLastAccessTimeGreaterThan, daysAfterLastTierChangeGreaterThan, daysAfterCreationGreaterThan, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DaysAfterModificationGreaterThan), out propertyOverride);
+            if (Optional.IsDefined(DaysAfterModificationGreaterThan) || hasPropertyOverride)
+            {
+                builder.Append("  daysAfterModificationGreaterThan: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{DaysAfterModificationGreaterThan.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DaysAfterLastAccessTimeGreaterThan), out propertyOverride);
+            if (Optional.IsDefined(DaysAfterLastAccessTimeGreaterThan) || hasPropertyOverride)
+            {
+                builder.Append("  daysAfterLastAccessTimeGreaterThan: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{DaysAfterLastAccessTimeGreaterThan.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DaysAfterLastTierChangeGreaterThan), out propertyOverride);
+            if (Optional.IsDefined(DaysAfterLastTierChangeGreaterThan) || hasPropertyOverride)
+            {
+                builder.Append("  daysAfterLastTierChangeGreaterThan: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{DaysAfterLastTierChangeGreaterThan.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DaysAfterCreationGreaterThan), out propertyOverride);
+            if (Optional.IsDefined(DaysAfterCreationGreaterThan) || hasPropertyOverride)
+            {
+                builder.Append("  daysAfterCreationGreaterThan: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{DaysAfterCreationGreaterThan.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<DateAfterModification>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DateAfterModification>)this).GetFormatFromOptions(options) : options.Format;
@@ -146,8 +217,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(DateAfterModification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DateAfterModification)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +236,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeDateAfterModification(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DateAfterModification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DateAfterModification)} does not support reading '{options.Format}' format.");
             }
         }
 

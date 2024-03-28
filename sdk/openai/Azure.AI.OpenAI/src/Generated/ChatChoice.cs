@@ -68,6 +68,8 @@ namespace Azure.AI.OpenAI
         /// <param name="finishDetails">
         /// The reason the model stopped generating tokens, together with any applicable details.
         /// This structured representation replaces 'finish_reason' for some models.
+        /// Please note <see cref="ChatFinishDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MaxTokensFinishDetails"/> and <see cref="StopFinishDetails"/>.
         /// </param>
         /// <param name="internalStreamingDeltaMessage"> The delta message content for a streaming response. </param>
         /// <param name="contentFilterResults">

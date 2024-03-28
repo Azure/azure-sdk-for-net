@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.ConfidentialLedger
             var format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfidentialLedgerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfidentialLedgerData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<ConfidentialLedgerProperties>(Properties, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             var format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfidentialLedgerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfidentialLedgerData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConfidentialLedgerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfidentialLedgerData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
                         return DeserializeConfidentialLedgerData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfidentialLedgerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfidentialLedgerData)} does not support reading '{options.Format}' format.");
             }
         }
 

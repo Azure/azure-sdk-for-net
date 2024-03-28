@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             var format = options.Format == "W" ? ((IPersistableModel<VmInstanceGuestAgentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmInstanceGuestAgentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmInstanceGuestAgentData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                writer.WriteObjectValue<VmInstanceGuestCredential>(Credentials, options);
             }
             if (Optional.IsDefined(PrivateLinkScopeResourceId))
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             if (Optional.IsDefined(HttpProxyConfig))
             {
                 writer.WritePropertyName("httpProxyConfig"u8);
-                writer.WriteObjectValue(HttpProxyConfig);
+                writer.WriteObjectValue<HttpProxyConfiguration>(HttpProxyConfig, options);
             }
             if (Optional.IsDefined(ProvisioningAction))
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VMwareResourceStatus>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             var format = options.Format == "W" ? ((IPersistableModel<VmInstanceGuestAgentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmInstanceGuestAgentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmInstanceGuestAgentData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VmInstanceGuestAgentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmInstanceGuestAgentData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         return DeserializeVmInstanceGuestAgentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VmInstanceGuestAgentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmInstanceGuestAgentData)} does not support reading '{options.Format}' format.");
             }
         }
 

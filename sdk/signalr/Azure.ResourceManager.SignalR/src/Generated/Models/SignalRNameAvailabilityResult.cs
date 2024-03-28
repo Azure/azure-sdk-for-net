@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Indicates whether the name is available or not. </summary>
+        [WirePath("nameAvailable")]
         public bool? IsNameAvailable { get; }
         /// <summary> The reason of the availability. Required if name is not available. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
         /// <summary> The message of the operation. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

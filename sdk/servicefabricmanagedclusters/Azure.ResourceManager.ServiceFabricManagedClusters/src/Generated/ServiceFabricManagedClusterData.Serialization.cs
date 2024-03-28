@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
@@ -26,12 +25,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceFabricManagedClusterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricManagedClusterData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            writer.WriteObjectValue<ServiceFabricManagedClustersSku>(Sku, options);
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -145,7 +144,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancingRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedClusterLoadBalancingRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -160,7 +159,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in NetworkSecurityRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ServiceFabricManagedNetworkSecurityRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -170,14 +169,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in Clients)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedClusterClientCertificate>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(AzureActiveDirectory))
             {
                 writer.WritePropertyName("azureActiveDirectory"u8);
-                writer.WriteObjectValue(AzureActiveDirectory);
+                writer.WriteObjectValue<ManagedClusterAzureActiveDirectory>(AzureActiveDirectory, options);
             }
             if (Optional.IsCollectionDefined(FabricSettings))
             {
@@ -185,7 +184,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in FabricSettings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ClusterFabricSettingsSection>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -232,7 +231,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             if (Optional.IsDefined(ApplicationTypeVersionsCleanupPolicy))
             {
                 writer.WritePropertyName("applicationTypeVersionsCleanupPolicy"u8);
-                writer.WriteObjectValue(ApplicationTypeVersionsCleanupPolicy);
+                writer.WriteObjectValue<ApplicationTypeVersionsCleanupPolicy>(ApplicationTypeVersionsCleanupPolicy, options);
             }
             if (Optional.IsDefined(IsIPv6Enabled))
             {
@@ -250,7 +249,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in IPTags)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedClusterIPTag>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -270,7 +269,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in AuxiliarySubnets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedClusterSubnet>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -280,7 +279,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in ServiceEndpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedClusterServiceEndpoint>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -312,7 +311,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             if (Optional.IsDefined(UpgradeDescription))
             {
                 writer.WritePropertyName("upgradeDescription"u8);
-                writer.WriteObjectValue(UpgradeDescription);
+                writer.WriteObjectValue<ManagedClusterUpgradePolicy>(UpgradeDescription, options);
             }
             if (Optional.IsDefined(HttpGatewayTokenAuthConnectionPort))
             {
@@ -348,7 +347,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceFabricManagedClusterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricManagedClusterData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -928,7 +927,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceFabricManagedClusterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricManagedClusterData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -944,7 +943,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         return DeserializeServiceFabricManagedClusterData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceFabricManagedClusterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricManagedClusterData)} does not support reading '{options.Format}' format.");
             }
         }
 

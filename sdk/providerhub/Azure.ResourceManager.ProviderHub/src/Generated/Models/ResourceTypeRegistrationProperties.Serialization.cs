@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeRegistrationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceTypeRegistrationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceTypeRegistrationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,14 +42,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceTypeEndpoint>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ExtensionOptions))
             {
                 writer.WritePropertyName("extensionOptions"u8);
-                writer.WriteObjectValue(ExtensionOptions);
+                writer.WriteObjectValue<ResourceTypeExtensionOptions>(ExtensionOptions, options);
             }
             if (Optional.IsDefined(MarketplaceType))
             {
@@ -63,7 +62,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in SwaggerSpecifications)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SwaggerSpecification>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in AuthorizationActionMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AuthorizationActionMapping>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -93,7 +92,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in LinkedAccessChecks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LinkedAccessCheck>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -108,7 +107,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in LoggingRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LoggingRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +117,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ThrottlingRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ThrottlingRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -135,7 +134,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(FeaturesRule))
             {
                 writer.WritePropertyName("featuresRule"u8);
-                writer.WriteObjectValue(FeaturesRule);
+                writer.WriteObjectValue<FeaturesRule>(FeaturesRule, options);
             }
             if (Optional.IsDefined(IsAsyncOperationEnabled))
             {
@@ -155,7 +154,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(SubscriptionLifecycleNotificationSpecifications))
             {
                 writer.WritePropertyName("subscriptionLifecycleNotificationSpecifications"u8);
-                writer.WriteObjectValue(SubscriptionLifecycleNotificationSpecifications);
+                writer.WriteObjectValue<SubscriptionLifecycleNotificationSpecifications>(SubscriptionLifecycleNotificationSpecifications, options);
             }
             if (Optional.IsDefined(IsPureProxy))
             {
@@ -165,12 +164,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(IdentityManagement))
             {
                 writer.WritePropertyName("identityManagement"u8);
-                writer.WriteObjectValue(IdentityManagement);
+                writer.WriteObjectValue<IdentityManagementProperties>(IdentityManagement, options);
             }
             if (Optional.IsDefined(CheckNameAvailabilitySpecifications))
             {
                 writer.WritePropertyName("checkNameAvailabilitySpecifications"u8);
-                writer.WriteObjectValue(CheckNameAvailabilitySpecifications);
+                writer.WriteObjectValue<CheckNameAvailabilitySpecifications>(CheckNameAvailabilitySpecifications, options);
             }
             if (Optional.IsCollectionDefined(DisallowedActionVerbs))
             {
@@ -188,14 +187,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceTreeInfos)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ServiceTreeInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(RequestHeaderOptions))
             {
                 writer.WritePropertyName("requestHeaderOptions"u8);
-                writer.WriteObjectValue(RequestHeaderOptions);
+                writer.WriteObjectValue<RequestHeaderOptions>(RequestHeaderOptions, options);
             }
             if (Optional.IsCollectionDefined(SubscriptionStateRules))
             {
@@ -203,14 +202,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in SubscriptionStateRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ProviderSubscriptionStateRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(TemplateDeploymentOptions))
             {
                 writer.WritePropertyName("templateDeploymentOptions"u8);
-                writer.WriteObjectValue(TemplateDeploymentOptions);
+                writer.WriteObjectValue<TemplateDeploymentOptions>(TemplateDeploymentOptions, options);
             }
             if (Optional.IsCollectionDefined(ExtendedLocations))
             {
@@ -218,14 +217,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ExtendedLocations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ProviderHubExtendedLocationOptions>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ResourceMovePolicy))
             {
                 writer.WritePropertyName("resourceMovePolicy"u8);
-                writer.WriteObjectValue(ResourceMovePolicy);
+                writer.WriteObjectValue<ResourceMovePolicy>(ResourceMovePolicy, options);
             }
             if (Optional.IsDefined(ResourceDeletionPolicy))
             {
@@ -255,7 +254,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeRegistrationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceTypeRegistrationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceTypeRegistrationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -668,7 +667,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceTypeRegistrationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceTypeRegistrationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -684,7 +683,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeResourceTypeRegistrationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceTypeRegistrationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceTypeRegistrationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

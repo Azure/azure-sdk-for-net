@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeOrderData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeOrderData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeOrderData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,17 +63,17 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (Optional.IsDefined(ContactInformation))
             {
                 writer.WritePropertyName("contactInformation"u8);
-                writer.WriteObjectValue(ContactInformation);
+                writer.WriteObjectValue<DataBoxEdgeContactDetails>(ContactInformation, options);
             }
             if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue(ShippingAddress);
+                writer.WriteObjectValue<DataBoxEdgeShippingAddress>(ShippingAddress, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CurrentStatus))
             {
                 writer.WritePropertyName("currentStatus"u8);
-                writer.WriteObjectValue(CurrentStatus);
+                writer.WriteObjectValue<DataBoxEdgeOrderStatus>(CurrentStatus, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(OrderHistory))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in OrderHistory)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataBoxEdgeOrderStatus>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in DeliveryTrackingInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataBoxEdgeTrackingInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in ReturnTrackingInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataBoxEdgeTrackingInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeOrderData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeOrderData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeOrderData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeOrderData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeOrderData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                         return DeserializeDataBoxEdgeOrderData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeOrderData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeOrderData)} does not support reading '{options.Format}' format.");
             }
         }
 

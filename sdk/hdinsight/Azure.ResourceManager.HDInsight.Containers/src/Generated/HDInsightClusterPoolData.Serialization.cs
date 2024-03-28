@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterPoolData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterPoolData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -86,27 +86,27 @@ namespace Azure.ResourceManager.HDInsight.Containers
             if (Optional.IsDefined(ClusterPoolProfile))
             {
                 writer.WritePropertyName("clusterPoolProfile"u8);
-                writer.WriteObjectValue(ClusterPoolProfile);
+                writer.WriteObjectValue<ClusterPoolProfile>(ClusterPoolProfile, options);
             }
             if (Optional.IsDefined(ComputeProfile))
             {
                 writer.WritePropertyName("computeProfile"u8);
-                writer.WriteObjectValue(ComputeProfile);
+                writer.WriteObjectValue<ClusterPoolComputeProfile>(ComputeProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AksClusterProfile))
             {
                 writer.WritePropertyName("aksClusterProfile"u8);
-                writer.WriteObjectValue(AksClusterProfile);
+                writer.WriteObjectValue<AksClusterProfile>(AksClusterProfile, options);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue<ClusterPoolNetworkProfile>(NetworkProfile, options);
             }
             if (Optional.IsDefined(LogAnalyticsProfile))
             {
                 writer.WritePropertyName("logAnalyticsProfile"u8);
-                writer.WriteObjectValue(LogAnalyticsProfile);
+                writer.WriteObjectValue<ClusterPoolLogAnalyticsProfile>(LogAnalyticsProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterPoolData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterPoolData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterPoolData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterPoolData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                         return DeserializeHDInsightClusterPoolData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterPoolData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterPoolData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -72,6 +71,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </summary>
+        [WirePath("id")]
         public ResourceIdentifier SubnetId { get; set; }
     }
 }

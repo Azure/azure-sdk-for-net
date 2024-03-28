@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -67,10 +66,13 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The selector kind. </summary>
+        [WirePath("kind")]
         public ResourceSelectorKind? Kind { get; set; }
         /// <summary> The list of values to filter in. </summary>
+        [WirePath("in")]
         public IList<string> In { get; }
         /// <summary> The list of values to filter out. </summary>
+        [WirePath("notIn")]
         public IList<string> NotIn { get; }
     }
 }

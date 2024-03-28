@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Subscription;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Subscription.Models
             var format = options.Format == "W" ? ((IPersistableModel<CanceledSubscriptionId>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CanceledSubscriptionId)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CanceledSubscriptionId)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.Subscription.Models
             var format = options.Format == "W" ? ((IPersistableModel<CanceledSubscriptionId>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CanceledSubscriptionId)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CanceledSubscriptionId)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,7 +97,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CanceledSubscriptionId)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CanceledSubscriptionId)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.Subscription.Models
                         return DeserializeCanceledSubscriptionId(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CanceledSubscriptionId)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CanceledSubscriptionId)} does not support reading '{options.Format}' format.");
             }
         }
 

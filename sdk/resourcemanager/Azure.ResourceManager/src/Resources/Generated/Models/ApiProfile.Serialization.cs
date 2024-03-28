@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -100,6 +100,65 @@ namespace Azure.ResourceManager.Resources.Models
             return new ApiProfile(profileVersion, apiVersion, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProfileVersion), out propertyOverride);
+            if (Optional.IsDefined(ProfileVersion) || hasPropertyOverride)
+            {
+                builder.Append("  profileVersion: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ProfileVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ProfileVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ProfileVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiVersion), out propertyOverride);
+            if (Optional.IsDefined(ApiVersion) || hasPropertyOverride)
+            {
+                builder.Append("  apiVersion: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ApiVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ApiVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ApiVersion}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ApiProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApiProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -108,8 +167,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +186,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeApiProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

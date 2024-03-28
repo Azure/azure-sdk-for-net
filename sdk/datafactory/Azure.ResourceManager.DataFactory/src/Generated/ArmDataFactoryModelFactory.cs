@@ -9,10 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -160,11 +158,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="state"> The state of integration runtime. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.IntegrationRuntimeStatus"/> instance for mocking. </returns>
-        public static IntegrationRuntimeStatus IntegrationRuntimeStatus(string runtimeType = "Unknown", string dataFactoryName = null, IntegrationRuntimeState? state = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static IntegrationRuntimeStatus IntegrationRuntimeStatus(string runtimeType = null, string dataFactoryName = null, IntegrationRuntimeState? state = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new UnknownIntegrationRuntimeStatus(runtimeType, dataFactoryName, state, additionalProperties);
+            return new UnknownIntegrationRuntimeStatus(runtimeType == null ? default : new IntegrationRuntimeType(runtimeType), dataFactoryName, state, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint"/>. </summary>
@@ -284,9 +282,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="name"> Metadata name. </param>
         /// <param name="description"> Metadata description. </param>
         /// <returns> A new <see cref="Models.SsisObjectMetadata"/> instance for mocking. </returns>
-        public static SsisObjectMetadata SsisObjectMetadata(string metadataType = "Unknown", long? id = null, string name = null, string description = null)
+        public static SsisObjectMetadata SsisObjectMetadata(string metadataType = null, long? id = null, string name = null, string description = null)
         {
-            return new UnknownSsisObjectMetadata(metadataType, id, name, description, serializedAdditionalRawData: null);
+            return new UnknownSsisObjectMetadata(metadataType == null ? default : new SsisObjectMetadataType(metadataType), id, name, description, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SelfHostedIntegrationRuntimeNode"/>. </summary>

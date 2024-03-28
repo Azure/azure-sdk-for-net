@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -71,14 +70,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> A user-friendly name for the Role Definition. Must be unique for the database account. </summary>
+        [WirePath("properties.roleName")]
         public string RoleName { get; set; }
         /// <summary> Indicates whether the Role Definition was built-in or user created. </summary>
+        [WirePath("properties.type")]
         public MongoDBRoleDefinitionType? DefinitionType { get; set; }
         /// <summary> The database name for which access is being granted for this Role Definition. </summary>
+        [WirePath("properties.databaseName")]
         public string DatabaseName { get; set; }
         /// <summary> A set of privileges contained by the Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Scopes higher than Database are not enforceable as privilege. </summary>
+        [WirePath("properties.privileges")]
         public IList<MongoDBPrivilege> Privileges { get; }
         /// <summary> The set of roles inherited by this Role Definition. </summary>
+        [WirePath("properties.roles")]
         public IList<MongoDBRole> Roles { get; }
     }
 }

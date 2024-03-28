@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ArcScVmm
             var format = options.Format == "W" ? ((IPersistableModel<ScVmmVirtualMachineData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScVmmVirtualMachineData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScVmmVirtualMachineData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ArcScVmm
                 writer.WriteStartArray();
                 foreach (var item in Checkpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<Checkpoint>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -107,29 +107,29 @@ namespace Azure.ResourceManager.ArcScVmm
                 writer.WriteStartArray();
                 foreach (var item in AvailabilitySets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AvailabilitySetListItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile);
+                writer.WriteObjectValue<OSProfile>(OSProfile, options);
             }
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile);
+                writer.WriteObjectValue<HardwareProfile>(HardwareProfile, options);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue<NetworkProfile>(NetworkProfile, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                writer.WriteObjectValue<StorageProfile>(StorageProfile, options);
             }
             if (Optional.IsDefined(VmName))
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ArcScVmm
             var format = options.Format == "W" ? ((IPersistableModel<ScVmmVirtualMachineData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScVmmVirtualMachineData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScVmmVirtualMachineData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.ArcScVmm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScVmmVirtualMachineData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScVmmVirtualMachineData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.ArcScVmm
                         return DeserializeScVmmVirtualMachineData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScVmmVirtualMachineData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScVmmVirtualMachineData)} does not support reading '{options.Format}' format.");
             }
         }
 

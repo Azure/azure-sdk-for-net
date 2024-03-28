@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -19,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("exhaustiveKnnParameters"u8);
-                writer.WriteObjectValue(Parameters);
+                writer.WriteObjectValue<ExhaustiveKnnParameters>(Parameters);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);

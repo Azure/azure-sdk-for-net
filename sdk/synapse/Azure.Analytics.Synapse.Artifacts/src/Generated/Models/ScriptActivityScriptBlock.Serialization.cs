@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -21,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
-            writer.WriteObjectValue(Text);
+            writer.WriteObjectValue<object>(Text);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             if (Optional.IsCollectionDefined(Parameters))
@@ -30,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScriptActivityParameter>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +79,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, ScriptActivityScriptBlock model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<ScriptActivityScriptBlock>(model);
             }
             public override ScriptActivityScriptBlock Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

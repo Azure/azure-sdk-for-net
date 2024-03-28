@@ -9,9 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
@@ -25,7 +23,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<PriceSheetResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PriceSheetResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PriceSheetResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -73,7 +71,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in Pricesheets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PriceSheetProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +83,7 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(Download))
             {
                 writer.WritePropertyName("download"u8);
-                writer.WriteObjectValue(Download);
+                writer.WriteObjectValue<ConsumptionMeterDetails>(Download, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -111,7 +109,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<PriceSheetResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PriceSheetResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PriceSheetResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -254,7 +252,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PriceSheetResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PriceSheetResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -270,7 +268,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializePriceSheetResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PriceSheetResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PriceSheetResult)} does not support reading '{options.Format}' format.");
             }
         }
 

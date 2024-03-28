@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTaskData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryTaskData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryTaskData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -86,12 +86,12 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
-                writer.WriteObjectValue(Platform);
+                writer.WriteObjectValue<ContainerRegistryPlatformProperties>(Platform, options);
             }
             if (Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
-                writer.WriteObjectValue(AgentConfiguration);
+                writer.WriteObjectValue<ContainerRegistryAgentProperties>(AgentConfiguration, options);
             }
             if (Optional.IsDefined(AgentPoolName))
             {
@@ -106,17 +106,17 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(Step))
             {
                 writer.WritePropertyName("step"u8);
-                writer.WriteObjectValue(Step);
+                writer.WriteObjectValue<ContainerRegistryTaskStepProperties>(Step, options);
             }
             if (Optional.IsDefined(Trigger))
             {
                 writer.WritePropertyName("trigger"u8);
-                writer.WriteObjectValue(Trigger);
+                writer.WriteObjectValue<ContainerRegistryTriggerProperties>(Trigger, options);
             }
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                writer.WriteObjectValue<ContainerRegistryCredentials>(Credentials, options);
             }
             if (Optional.IsDefined(LogTemplate))
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTaskData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryTaskData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryTaskData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryTaskData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryTaskData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                         return DeserializeContainerRegistryTaskData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryTaskData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryTaskData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -23,7 +22,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<RunStep>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunStep)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunStep)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,11 +41,11 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             writer.WritePropertyName("step_details"u8);
-            writer.WriteObjectValue(StepDetails);
+            writer.WriteObjectValue<RunStepDetails>(StepDetails, options);
             if (LastError != null)
             {
                 writer.WritePropertyName("last_error"u8);
-                writer.WriteObjectValue(LastError);
+                writer.WriteObjectValue<RunStepError>(LastError, options);
             }
             else
             {
@@ -128,7 +127,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<RunStep>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunStep)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunStep)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -286,7 +285,7 @@ namespace Azure.AI.OpenAI.Assistants
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RunStep)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunStep)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -302,7 +301,7 @@ namespace Azure.AI.OpenAI.Assistants
                         return DeserializeRunStep(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RunStep)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunStep)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -320,7 +319,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<RunStep>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CustomerInsights
             var format = options.Format == "W" ? ((IPersistableModel<KpiResourceFormatData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KpiResourceFormatData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KpiResourceFormatData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in GroupByMetadata)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KpiGroupByMetadata>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in ParticipantProfilesMetadata)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KpiParticipantProfilesMetadata>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.CustomerInsights
             if (Optional.IsDefined(ThresHolds))
             {
                 writer.WritePropertyName("thresHolds"u8);
-                writer.WriteObjectValue(ThresHolds);
+                writer.WriteObjectValue<KpiThresholds>(ThresHolds, options);
             }
             if (Optional.IsCollectionDefined(Aliases))
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in Aliases)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KpiAlias>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in Extracts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KpiExtract>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.CustomerInsights
             var format = options.Format == "W" ? ((IPersistableModel<KpiResourceFormatData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KpiResourceFormatData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KpiResourceFormatData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KpiResourceFormatData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KpiResourceFormatData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.CustomerInsights
                         return DeserializeKpiResourceFormatData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KpiResourceFormatData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KpiResourceFormatData)} does not support reading '{options.Format}' format.");
             }
         }
 

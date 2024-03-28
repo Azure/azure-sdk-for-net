@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -24,32 +23,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Pfx))
             {
                 writer.WritePropertyName("pfx"u8);
-                writer.WriteObjectValue(Pfx);
+                writer.WriteObjectValue<SecretBase>(Pfx);
             }
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                writer.WriteObjectValue(Username);
+                writer.WriteObjectValue<object>(Username);
             }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password);
+                writer.WriteObjectValue<SecretBase>(Password);
             }
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue(Resource);
+                writer.WriteObjectValue<object>(Resource);
             }
             if (Optional.IsDefined(UserTenant))
             {
                 writer.WritePropertyName("userTenant"u8);
-                writer.WriteObjectValue(UserTenant);
+                writer.WriteObjectValue<object>(UserTenant);
             }
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue(Credential);
+                writer.WriteObjectValue<CredentialReference>(Credential);
             }
             writer.WriteEndObject();
         }
@@ -143,7 +142,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, WebActivityAuthentication model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<WebActivityAuthentication>(model);
             }
             public override WebActivityAuthentication Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

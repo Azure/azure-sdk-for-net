@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerMemoryStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerMemoryStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerMemoryStatistics)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerMemoryStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerMemoryStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerMemoryStatistics)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,6 +123,63 @@ namespace Azure.ResourceManager.AppService.Models
             return new ContainerMemoryStatistics(usage, maxUsage, limit, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Usage), out propertyOverride);
+            if (Optional.IsDefined(Usage) || hasPropertyOverride)
+            {
+                builder.Append("  usage: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Usage.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxUsage), out propertyOverride);
+            if (Optional.IsDefined(MaxUsage) || hasPropertyOverride)
+            {
+                builder.Append("  maxUsage: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{MaxUsage.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Limit), out propertyOverride);
+            if (Optional.IsDefined(Limit) || hasPropertyOverride)
+            {
+                builder.Append("  limit: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Limit.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ContainerMemoryStatistics>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerMemoryStatistics>)this).GetFormatFromOptions(options) : options.Format;
@@ -131,8 +188,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerMemoryStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerMemoryStatistics)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +207,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeContainerMemoryStatistics(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerMemoryStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerMemoryStatistics)} does not support reading '{options.Format}' format.");
             }
         }
 

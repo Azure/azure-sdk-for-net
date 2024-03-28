@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyAssignmentSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyAssignmentSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyAssignmentSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,7 +39,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (Optional.IsDefined(Results))
             {
                 writer.WritePropertyName("results"u8);
-                writer.WriteObjectValue(Results);
+                writer.WriteObjectValue<PolicySummaryResults>(Results, options);
             }
             if (Optional.IsCollectionDefined(PolicyDefinitions))
             {
@@ -48,7 +47,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in PolicyDefinitions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PolicyDefinitionSummary>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in PolicyGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PolicyGroupSummary>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyAssignmentSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyAssignmentSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyAssignmentSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -188,7 +187,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicyAssignmentSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyAssignmentSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -204,7 +203,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializePolicyAssignmentSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicyAssignmentSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyAssignmentSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -22,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
-                writer.WriteObjectValue(Count);
+                writer.WriteObjectValue<object>(Count);
             }
             if (Optional.IsDefined(IntervalInSeconds))
             {
@@ -68,7 +67,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, RetryPolicy model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<RetryPolicy>(model);
             }
             public override RetryPolicy Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

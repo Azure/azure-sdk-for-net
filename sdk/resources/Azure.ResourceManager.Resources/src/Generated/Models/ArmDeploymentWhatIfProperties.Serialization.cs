@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -23,14 +22,14 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentWhatIfProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmDeploymentWhatIfProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmDeploymentWhatIfProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(WhatIfSettings))
             {
                 writer.WritePropertyName("whatIfSettings"u8);
-                writer.WriteObjectValue(WhatIfSettings);
+                writer.WriteObjectValue<ArmDeploymentWhatIfSettings>(WhatIfSettings, options);
             }
             if (Optional.IsDefined(Template))
             {
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(TemplateLink))
             {
                 writer.WritePropertyName("templateLink"u8);
-                writer.WriteObjectValue(TemplateLink);
+                writer.WriteObjectValue<ArmDeploymentTemplateLink>(TemplateLink, options);
             }
             if (Optional.IsDefined(Parameters))
             {
@@ -64,24 +63,24 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(ParametersLink))
             {
                 writer.WritePropertyName("parametersLink"u8);
-                writer.WriteObjectValue(ParametersLink);
+                writer.WriteObjectValue<ArmDeploymentParametersLink>(ParametersLink, options);
             }
             writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToSerialString());
             if (Optional.IsDefined(DebugSetting))
             {
                 writer.WritePropertyName("debugSetting"u8);
-                writer.WriteObjectValue(DebugSetting);
+                writer.WriteObjectValue<DebugSetting>(DebugSetting, options);
             }
             if (Optional.IsDefined(ErrorDeployment))
             {
                 writer.WritePropertyName("onErrorDeployment"u8);
-                writer.WriteObjectValue(ErrorDeployment);
+                writer.WriteObjectValue<ErrorDeployment>(ErrorDeployment, options);
             }
             if (Optional.IsDefined(ExpressionEvaluation))
             {
                 writer.WritePropertyName("expressionEvaluationOptions"u8);
-                writer.WriteObjectValue(ExpressionEvaluation);
+                writer.WriteObjectValue<ExpressionEvaluationOptions>(ExpressionEvaluation, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -106,7 +105,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentWhatIfProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmDeploymentWhatIfProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmDeploymentWhatIfProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -239,7 +238,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ArmDeploymentWhatIfProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmDeploymentWhatIfProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -255,7 +254,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeArmDeploymentWhatIfProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArmDeploymentWhatIfProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmDeploymentWhatIfProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

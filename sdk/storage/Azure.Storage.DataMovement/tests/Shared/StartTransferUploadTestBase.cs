@@ -291,7 +291,7 @@ namespace Azure.Storage.DataMovement.Tests
         /// <summary>
         /// Upload and verify the contents of the object
         ///
-        /// By default in this function an event arguement will be added to the options event handler
+        /// By default in this function an event argument will be added to the options event handler
         /// to detect when the upload has finished.
         /// </summary>
         /// <param name="size"></param>
@@ -762,6 +762,6 @@ namespace Azure.Storage.DataMovement.Tests
                 waitTimeInSec: waitTimeInSec,
                 objectCount: objectCount);
         }
-#endregion
+        #endregion
     }
 }

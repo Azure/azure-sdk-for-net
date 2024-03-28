@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusFilterAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceBusFilterAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusFilterAction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusFilterAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceBusFilterAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusFilterAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,6 +119,72 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return new ServiceBusFilterAction(sqlExpression, compatibilityLevel, requiresPreprocessing, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SqlExpression), out propertyOverride);
+            if (Optional.IsDefined(SqlExpression) || hasPropertyOverride)
+            {
+                builder.Append("  sqlExpression: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SqlExpression.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SqlExpression}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SqlExpression}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CompatibilityLevel), out propertyOverride);
+            if (Optional.IsDefined(CompatibilityLevel) || hasPropertyOverride)
+            {
+                builder.Append("  compatibilityLevel: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{CompatibilityLevel.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequiresPreprocessing), out propertyOverride);
+            if (Optional.IsDefined(RequiresPreprocessing) || hasPropertyOverride)
+            {
+                builder.Append("  requiresPreprocessing: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = RequiresPreprocessing.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ServiceBusFilterAction>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusFilterAction>)this).GetFormatFromOptions(options) : options.Format;
@@ -127,8 +193,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceBusFilterAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusFilterAction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -144,7 +212,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                         return DeserializeServiceBusFilterAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceBusFilterAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusFilterAction)} does not support reading '{options.Format}' format.");
             }
         }
 

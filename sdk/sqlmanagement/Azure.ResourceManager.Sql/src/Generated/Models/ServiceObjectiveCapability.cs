@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -91,32 +90,46 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The unique ID of the service objective. </summary>
+        [WirePath("id")]
         public Guid? Id { get; }
         /// <summary> The service objective name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The list of supported maximum database sizes. </summary>
+        [WirePath("supportedMaxSizes")]
         public IReadOnlyList<MaxSizeRangeCapability> SupportedMaxSizes { get; }
         /// <summary> The performance level. </summary>
+        [WirePath("performanceLevel")]
         public PerformanceLevelCapability PerformanceLevel { get; }
         /// <summary> The sku. </summary>
+        [WirePath("sku")]
         public SqlSku Sku { get; }
         /// <summary> List of supported license types. </summary>
+        [WirePath("supportedLicenseTypes")]
         public IReadOnlyList<LicenseTypeCapability> SupportedLicenseTypes { get; }
         /// <summary> The included (free) max size. </summary>
+        [WirePath("includedMaxSize")]
         public MaxSizeCapability IncludedMaxSize { get; }
         /// <summary> Whether or not zone redundancy is supported for the service objective. </summary>
+        [WirePath("zoneRedundant")]
         public bool? IsZoneRedundant { get; }
         /// <summary> Supported time range for auto pause delay. </summary>
+        [WirePath("supportedAutoPauseDelay")]
         public AutoPauseDelayTimeRange SupportedAutoPauseDelay { get; }
         /// <summary> List of supported min capacities. </summary>
+        [WirePath("supportedMinCapacities")]
         public IReadOnlyList<MinCapacityCapability> SupportedMinCapacities { get; }
         /// <summary> The compute model. </summary>
+        [WirePath("computeModel")]
         public string ComputeModel { get; }
         /// <summary> List of supported maintenance configurations. </summary>
+        [WirePath("supportedMaintenanceConfigurations")]
         public IReadOnlyList<MaintenanceConfigurationCapability> SupportedMaintenanceConfigurations { get; }
         /// <summary> The status of the capability. </summary>
+        [WirePath("status")]
         public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
     }
 }

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -23,14 +22,14 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<UefiKeySignatures>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UefiKeySignatures)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UefiKeySignatures)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Pk))
             {
                 writer.WritePropertyName("pk"u8);
-                writer.WriteObjectValue(Pk);
+                writer.WriteObjectValue<UefiKey>(Pk, options);
             }
             if (Optional.IsCollectionDefined(Kek))
             {
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Kek)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UefiKey>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -48,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Db)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UefiKey>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Dbx)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UefiKey>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<UefiKeySignatures>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UefiKeySignatures)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UefiKeySignatures)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -177,7 +176,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UefiKeySignatures)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UefiKeySignatures)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -193,7 +192,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeUefiKeySignatures(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UefiKeySignatures)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UefiKeySignatures)} does not support reading '{options.Format}' format.");
             }
         }
 

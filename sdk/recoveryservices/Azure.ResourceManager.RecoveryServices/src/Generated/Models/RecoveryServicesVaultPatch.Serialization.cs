@@ -9,10 +9,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -25,19 +23,19 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesVaultPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryServicesVaultPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryServicesVaultPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<RecoveryServicesVaultProperties>(Properties, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<RecoveryServicesSku>(Sku, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -105,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesVaultPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryServicesVaultPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryServicesVaultPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -242,7 +240,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryServicesVaultPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryServicesVaultPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -258,7 +256,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         return DeserializeRecoveryServicesVaultPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryServicesVaultPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryServicesVaultPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

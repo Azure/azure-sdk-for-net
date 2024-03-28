@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.VoiceServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<VoiceServicesServiceRegionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceServicesServiceRegionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VoiceServicesServiceRegionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("primaryRegionProperties"u8);
-            writer.WriteObjectValue(PrimaryRegionProperties);
+            writer.WriteObjectValue<VoiceServicesPrimaryRegionProperties>(PrimaryRegionProperties, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<VoiceServicesServiceRegionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceServicesServiceRegionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VoiceServicesServiceRegionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceServicesServiceRegionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VoiceServicesServiceRegionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                         return DeserializeVoiceServicesServiceRegionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceServicesServiceRegionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VoiceServicesServiceRegionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.Monitor
             var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCollectionRuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionRuleData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.Monitor
             if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                writer.WriteObjectValue<DataCollectionRuleMetadata>(Metadata, options);
             }
             if (Optional.IsCollectionDefined(StreamDeclarations))
             {
@@ -106,19 +105,19 @@ namespace Azure.ResourceManager.Monitor
                 foreach (var item in StreamDeclarations)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<DataStreamDeclaration>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(DataSources))
             {
                 writer.WritePropertyName("dataSources"u8);
-                writer.WriteObjectValue(DataSources);
+                writer.WriteObjectValue<DataCollectionRuleDataSources>(DataSources, options);
             }
             if (Optional.IsDefined(Destinations))
             {
                 writer.WritePropertyName("destinations"u8);
-                writer.WriteObjectValue(Destinations);
+                writer.WriteObjectValue<DataCollectionRuleDestinations>(Destinations, options);
             }
             if (Optional.IsCollectionDefined(DataFlows))
             {
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in DataFlows)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataFlow>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -159,7 +158,7 @@ namespace Azure.ResourceManager.Monitor
             var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCollectionRuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionRuleData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -398,7 +397,7 @@ namespace Azure.ResourceManager.Monitor
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataCollectionRuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionRuleData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -414,7 +413,7 @@ namespace Azure.ResourceManager.Monitor
                         return DeserializeDataCollectionRuleData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataCollectionRuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionRuleData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -78,18 +77,25 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The type of the region. </summary>
+        [WirePath("regionType")]
         public RegionType? RegionType { get; }
         /// <summary> The category of the region. </summary>
+        [WirePath("regionCategory")]
         public RegionCategory? RegionCategory { get; }
         /// <summary> The geography of the location. </summary>
+        [WirePath("geography")]
         public string Geography { get; }
         /// <summary> The geography group of the location. </summary>
+        [WirePath("geographyGroup")]
         public string GeographyGroup { get; }
         /// <summary> The physical location of the Azure location. </summary>
+        [WirePath("physicalLocation")]
         public string PhysicalLocation { get; }
         /// <summary> The regions paired to this region. </summary>
+        [WirePath("pairedRegion")]
         public IReadOnlyList<PairedRegion> PairedRegions { get; }
         /// <summary> The home location of an edge zone. </summary>
+        [WirePath("homeLocation")]
         public string HomeLocation { get; }
     }
 }

@@ -69,6 +69,14 @@
       MSB3245; <!-- Do not warn if a package reference is unavailable -->
     </NoWarn>
 
+    <!--
+      Experimental Azure SDK features
+    -->
+    <NoWarn>
+      $(NoWarn);
+      AZPROVISION001; <!-- BicepModelReaderWriterOptions -->
+    </NoWarn>
+
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <IncludeSymbols>true</IncludeSymbols>

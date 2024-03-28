@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -83,18 +82,25 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The SKU name. Required for account creation; optional for update. Note that in older versions, SKU name was called accountType. </summary>
+        [WirePath("name")]
         public StorageSkuName Name { get; }
         /// <summary> The SKU tier. This is based on the SKU name. </summary>
+        [WirePath("tier")]
         public StorageSkuTier? Tier { get; }
         /// <summary> The type of the resource, usually it is 'storageAccounts'. </summary>
+        [WirePath("resourceType")]
         public string ResourceType { get; }
         /// <summary> Indicates the type of storage account. </summary>
+        [WirePath("kind")]
         public StorageKind? Kind { get; }
         /// <summary> The set of locations that the SKU is available. This will be supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). </summary>
+        [WirePath("locations")]
         public IReadOnlyList<string> Locations { get; }
         /// <summary> The capability information in the specified SKU, including file encryption, network ACLs, change notification, etc. </summary>
+        [WirePath("capabilities")]
         public IReadOnlyList<StorageSkuCapability> Capabilities { get; }
         /// <summary> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </summary>
+        [WirePath("restrictions")]
         public IReadOnlyList<StorageSkuRestriction> Restrictions { get; }
     }
 }

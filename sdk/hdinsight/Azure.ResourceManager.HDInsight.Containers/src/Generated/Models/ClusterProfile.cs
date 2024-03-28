@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -49,23 +48,19 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Initializes a new instance of <see cref="ClusterProfile"/>. </summary>
         /// <param name="clusterVersion"> Version with 3/4 part. </param>
         /// <param name="ossVersion"> Version with three part. </param>
-        /// <param name="identityProfile"> Identity Profile with details of an MSI. </param>
         /// <param name="authorizationProfile"> Authorization profile with details of AAD user Ids and group Ids authorized for data plane access. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterVersion"/>, <paramref name="ossVersion"/>, <paramref name="identityProfile"/> or <paramref name="authorizationProfile"/> is null. </exception>
-        public ClusterProfile(string clusterVersion, string ossVersion, HDInsightIdentityProfile identityProfile, AuthorizationProfile authorizationProfile)
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterVersion"/>, <paramref name="ossVersion"/> or <paramref name="authorizationProfile"/> is null. </exception>
+        public ClusterProfile(string clusterVersion, string ossVersion, AuthorizationProfile authorizationProfile)
         {
             Argument.AssertNotNull(clusterVersion, nameof(clusterVersion));
             Argument.AssertNotNull(ossVersion, nameof(ossVersion));
-            Argument.AssertNotNull(identityProfile, nameof(identityProfile));
             Argument.AssertNotNull(authorizationProfile, nameof(authorizationProfile));
 
             ClusterVersion = clusterVersion;
             OssVersion = ossVersion;
             Components = new ChangeTrackingList<ClusterComponentItem>();
-            IdentityProfile = identityProfile;
             AuthorizationProfile = authorizationProfile;
             ServiceConfigsProfiles = new ChangeTrackingList<ClusterServiceConfigsProfile>();
-            KafkaProfile = new ChangeTrackingDictionary<string, BinaryData>();
             LlapProfile = new ChangeTrackingDictionary<string, BinaryData>();
             StubProfile = new ChangeTrackingDictionary<string, BinaryData>();
             ScriptActionProfiles = new ChangeTrackingList<ScriptActionProfile>();
@@ -75,24 +70,27 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="clusterVersion"> Version with 3/4 part. </param>
         /// <param name="ossVersion"> Version with three part. </param>
         /// <param name="components"> Component list of this cluster type and version. </param>
-        /// <param name="identityProfile"> Identity Profile with details of an MSI. </param>
+        /// <param name="identityProfile"> This property is required by Trino, Spark and Flink cluster but is optional for Kafka cluster. </param>
         /// <param name="authorizationProfile"> Authorization profile with details of AAD user Ids and group Ids authorized for data plane access. </param>
         /// <param name="secretsProfile"> The cluster secret profile. </param>
         /// <param name="serviceConfigsProfiles"> The service configs profiles. </param>
         /// <param name="connectivityProfile"> Cluster connectivity profile. </param>
+        /// <param name="clusterAccessProfile"> Cluster access profile. </param>
         /// <param name="logAnalyticsProfile"> Cluster log analytics profile to enable or disable OMS agent for cluster. </param>
         /// <param name="prometheusProfile"> Cluster Prometheus profile. </param>
         /// <param name="sshProfile"> Ssh profile for the cluster. </param>
         /// <param name="autoscaleProfile"> This is the Autoscale profile for the cluster. This will allow customer to create cluster enabled with Autoscale. </param>
-        /// <param name="kafkaProfile"> Kafka cluster profile. </param>
+        /// <param name="rangerPluginProfile"> Cluster Ranger plugin profile. </param>
+        /// <param name="kafkaProfile"> The Kafka cluster profile. </param>
         /// <param name="trinoProfile"> Trino Cluster profile. </param>
         /// <param name="llapProfile"> LLAP cluster profile. </param>
         /// <param name="flinkProfile"> The Flink cluster profile. </param>
         /// <param name="sparkProfile"> The spark cluster profile. </param>
+        /// <param name="rangerProfile"> The ranger cluster profile. </param>
         /// <param name="stubProfile"> Stub cluster profile. </param>
         /// <param name="scriptActionProfiles"> The script action profile list. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterProfile(string clusterVersion, string ossVersion, IReadOnlyList<ClusterComponentItem> components, HDInsightIdentityProfile identityProfile, AuthorizationProfile authorizationProfile, ClusterSecretsProfile secretsProfile, IList<ClusterServiceConfigsProfile> serviceConfigsProfiles, ClusterConnectivityProfile connectivityProfile, ClusterLogAnalyticsProfile logAnalyticsProfile, ClusterPrometheusProfile prometheusProfile, ClusterSshProfile sshProfile, ClusterAutoscaleProfile autoscaleProfile, IDictionary<string, BinaryData> kafkaProfile, TrinoProfile trinoProfile, IDictionary<string, BinaryData> llapProfile, FlinkProfile flinkProfile, SparkProfile sparkProfile, IDictionary<string, BinaryData> stubProfile, IList<ScriptActionProfile> scriptActionProfiles, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClusterProfile(string clusterVersion, string ossVersion, IReadOnlyList<ClusterComponentItem> components, HDInsightIdentityProfile identityProfile, AuthorizationProfile authorizationProfile, ClusterSecretsProfile secretsProfile, IList<ClusterServiceConfigsProfile> serviceConfigsProfiles, ClusterConnectivityProfile connectivityProfile, ClusterAccessProfile clusterAccessProfile, ClusterLogAnalyticsProfile logAnalyticsProfile, ClusterPrometheusProfile prometheusProfile, ClusterSshProfile sshProfile, ClusterAutoscaleProfile autoscaleProfile, ClusterRangerPluginProfile rangerPluginProfile, KafkaProfile kafkaProfile, TrinoProfile trinoProfile, IDictionary<string, BinaryData> llapProfile, FlinkProfile flinkProfile, SparkProfile sparkProfile, RangerProfile rangerProfile, IDictionary<string, BinaryData> stubProfile, IList<ScriptActionProfile> scriptActionProfiles, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClusterVersion = clusterVersion;
             OssVersion = ossVersion;
@@ -102,15 +100,18 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             SecretsProfile = secretsProfile;
             ServiceConfigsProfiles = serviceConfigsProfiles;
             ConnectivityProfile = connectivityProfile;
+            ClusterAccessProfile = clusterAccessProfile;
             LogAnalyticsProfile = logAnalyticsProfile;
             PrometheusProfile = prometheusProfile;
             SshProfile = sshProfile;
             AutoscaleProfile = autoscaleProfile;
+            RangerPluginProfile = rangerPluginProfile;
             KafkaProfile = kafkaProfile;
             TrinoProfile = trinoProfile;
             LlapProfile = llapProfile;
             FlinkProfile = flinkProfile;
             SparkProfile = sparkProfile;
+            RangerProfile = rangerProfile;
             StubProfile = stubProfile;
             ScriptActionProfiles = scriptActionProfiles;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public string OssVersion { get; set; }
         /// <summary> Component list of this cluster type and version. </summary>
         public IReadOnlyList<ClusterComponentItem> Components { get; }
-        /// <summary> Identity Profile with details of an MSI. </summary>
+        /// <summary> This property is required by Trino, Spark and Flink cluster but is optional for Kafka cluster. </summary>
         public HDInsightIdentityProfile IdentityProfile { get; set; }
         /// <summary> Authorization profile with details of AAD user Ids and group Ids authorized for data plane access. </summary>
         public AuthorizationProfile AuthorizationProfile { get; set; }
@@ -137,6 +138,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public IList<ClusterServiceConfigsProfile> ServiceConfigsProfiles { get; }
         /// <summary> Cluster connectivity profile. </summary>
         public ClusterConnectivityProfile ConnectivityProfile { get; }
+        /// <summary> Cluster access profile. </summary>
+        public ClusterAccessProfile ClusterAccessProfile { get; set; }
         /// <summary> Cluster log analytics profile to enable or disable OMS agent for cluster. </summary>
         public ClusterLogAnalyticsProfile LogAnalyticsProfile { get; set; }
         /// <summary> Cluster Prometheus profile. </summary>
@@ -155,37 +158,20 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public ClusterSshProfile SshProfile { get; set; }
         /// <summary> This is the Autoscale profile for the cluster. This will allow customer to create cluster enabled with Autoscale. </summary>
         public ClusterAutoscaleProfile AutoscaleProfile { get; set; }
-        /// <summary>
-        /// Kafka cluster profile.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IDictionary<string, BinaryData> KafkaProfile { get; }
+        /// <summary> Cluster Ranger plugin profile. </summary>
+        internal ClusterRangerPluginProfile RangerPluginProfile { get; set; }
+        /// <summary> Enable Ranger for cluster or not. </summary>
+        public bool? RangerPluginProfileEnabled
+        {
+            get => RangerPluginProfile is null ? default(bool?) : RangerPluginProfile.Enabled;
+            set
+            {
+                RangerPluginProfile = value.HasValue ? new ClusterRangerPluginProfile(value.Value) : null;
+            }
+        }
+
+        /// <summary> The Kafka cluster profile. </summary>
+        public KafkaProfile KafkaProfile { get; set; }
         /// <summary> Trino Cluster profile. </summary>
         public TrinoProfile TrinoProfile { get; set; }
         /// <summary>
@@ -223,6 +209,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public FlinkProfile FlinkProfile { get; set; }
         /// <summary> The spark cluster profile. </summary>
         public SparkProfile SparkProfile { get; set; }
+        /// <summary> The ranger cluster profile. </summary>
+        public RangerProfile RangerProfile { get; set; }
         /// <summary>
         /// Stub cluster profile.
         /// <para>

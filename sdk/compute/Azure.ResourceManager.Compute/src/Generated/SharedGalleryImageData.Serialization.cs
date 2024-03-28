@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<SharedGalleryImageData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharedGalleryImageData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SharedGalleryImageData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,17 +57,17 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
-                writer.WriteObjectValue(Identifier);
+                writer.WriteObjectValue<GalleryImageIdentifier>(Identifier, options);
             }
             if (Optional.IsDefined(Recommended))
             {
                 writer.WritePropertyName("recommended"u8);
-                writer.WriteObjectValue(Recommended);
+                writer.WriteObjectValue<RecommendedMachineConfiguration>(Recommended, options);
             }
             if (Optional.IsDefined(Disallowed))
             {
                 writer.WritePropertyName("disallowed"u8);
-                writer.WriteObjectValue(Disallowed);
+                writer.WriteObjectValue<Disallowed>(Disallowed, options);
             }
             if (Optional.IsDefined(HyperVGeneration))
             {
@@ -80,14 +80,14 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in Features)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GalleryImageFeature>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PurchasePlan))
             {
                 writer.WritePropertyName("purchasePlan"u8);
-                writer.WriteObjectValue(PurchasePlan);
+                writer.WriteObjectValue<ImagePurchasePlan>(PurchasePlan, options);
             }
             if (Optional.IsDefined(Architecture))
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<SharedGalleryImageData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharedGalleryImageData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SharedGalleryImageData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Compute
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SharedGalleryImageData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharedGalleryImageData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Compute
                         return DeserializeSharedGalleryImageData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SharedGalleryImageData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharedGalleryImageData)} does not support reading '{options.Format}' format.");
             }
         }
 

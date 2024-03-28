@@ -8,9 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -23,19 +24,19 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebAppLoginInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebAppLoginInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebAppLoginInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
-                writer.WriteObjectValue(Routes);
+                writer.WriteObjectValue<LoginRoutes>(Routes, options);
             }
             if (Optional.IsDefined(TokenStore))
             {
                 writer.WritePropertyName("tokenStore"u8);
-                writer.WriteObjectValue(TokenStore);
+                writer.WriteObjectValue<AppServiceTokenStore>(TokenStore, options);
             }
             if (Optional.IsDefined(PreserveUrlFragmentsForLogins))
             {
@@ -55,12 +56,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(CookieExpiration))
             {
                 writer.WritePropertyName("cookieExpiration"u8);
-                writer.WriteObjectValue(CookieExpiration);
+                writer.WriteObjectValue<WebAppCookieExpiration>(CookieExpiration, options);
             }
             if (Optional.IsDefined(Nonce))
             {
                 writer.WritePropertyName("nonce"u8);
-                writer.WriteObjectValue(Nonce);
+                writer.WriteObjectValue<LoginFlowNonceSettings>(Nonce, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebAppLoginInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebAppLoginInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebAppLoginInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -185,6 +186,149 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            if (propertyOverrides != null)
+            {
+                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
+            }
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Routes), out propertyOverride);
+            if (Optional.IsDefined(Routes) || hasPropertyOverride)
+            {
+                builder.Append("  routes: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Routes, options, 2, false, "  routes: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TokenStore), out propertyOverride);
+            if (Optional.IsDefined(TokenStore) || hasPropertyOverride)
+            {
+                builder.Append("  tokenStore: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, TokenStore, options, 2, false, "  tokenStore: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreserveUrlFragmentsForLogins), out propertyOverride);
+            if (Optional.IsDefined(PreserveUrlFragmentsForLogins) || hasPropertyOverride)
+            {
+                builder.Append("  preserveUrlFragmentsForLogins: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = PreserveUrlFragmentsForLogins.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedExternalRedirectUrls), out propertyOverride);
+            if (Optional.IsCollectionDefined(AllowedExternalRedirectUrls) || hasPropertyOverride)
+            {
+                if (AllowedExternalRedirectUrls.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  allowedExternalRedirectUrls: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in AllowedExternalRedirectUrls)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CookieExpiration), out propertyOverride);
+            if (Optional.IsDefined(CookieExpiration) || hasPropertyOverride)
+            {
+                builder.Append("  cookieExpiration: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, CookieExpiration, options, 2, false, "  cookieExpiration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Nonce), out propertyOverride);
+            if (Optional.IsDefined(Nonce) || hasPropertyOverride)
+            {
+                builder.Append("  nonce: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Nonce, options, 2, false, "  nonce: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
+        {
+            foreach (var item in propertyOverrides.ToList())
+            {
+                switch (item.Key)
+                {
+                    case "RoutesLogoutEndpoint":
+                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
+                        propertyDictionary.Add("LogoutEndpoint", item.Value);
+                        bicepOptions.PropertyOverrides.Add(Routes, propertyDictionary);
+                        break;
+                    default:
+                        continue;
+                }
+            }
+        }
+
         BinaryData IPersistableModel<WebAppLoginInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WebAppLoginInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -193,8 +337,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(WebAppLoginInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebAppLoginInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -210,7 +356,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeWebAppLoginInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebAppLoginInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebAppLoginInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -70,14 +69,19 @@ namespace Azure.ResourceManager.Resources
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> The namespace of the resource provider. </summary>
+        [WirePath("namespace")]
         public string Namespace { get; }
         /// <summary> The registration state of the resource provider. </summary>
+        [WirePath("registrationState")]
         public string RegistrationState { get; }
         /// <summary> The registration policy of the resource provider. </summary>
+        [WirePath("registrationPolicy")]
         public string RegistrationPolicy { get; }
         /// <summary> The collection of provider resource types. </summary>
+        [WirePath("resourceTypes")]
         public IReadOnlyList<ProviderResourceType> ResourceTypes { get; }
         /// <summary> The provider authorization consent state. </summary>
+        [WirePath("providerAuthorizationConsentState")]
         public ProviderAuthorizationConsentState? ProviderAuthorizationConsentState { get; }
     }
 }

@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusAccessKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceBusAccessKeys)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusAccessKeys)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusAccessKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceBusAccessKeys)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusAccessKeys)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -163,6 +163,175 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryConnectionString), out propertyOverride);
+            if (Optional.IsDefined(PrimaryConnectionString) || hasPropertyOverride)
+            {
+                builder.Append("  primaryConnectionString: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (PrimaryConnectionString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrimaryConnectionString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrimaryConnectionString}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryConnectionString), out propertyOverride);
+            if (Optional.IsDefined(SecondaryConnectionString) || hasPropertyOverride)
+            {
+                builder.Append("  secondaryConnectionString: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SecondaryConnectionString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SecondaryConnectionString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SecondaryConnectionString}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AliasPrimaryConnectionString), out propertyOverride);
+            if (Optional.IsDefined(AliasPrimaryConnectionString) || hasPropertyOverride)
+            {
+                builder.Append("  aliasPrimaryConnectionString: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (AliasPrimaryConnectionString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AliasPrimaryConnectionString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AliasPrimaryConnectionString}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AliasSecondaryConnectionString), out propertyOverride);
+            if (Optional.IsDefined(AliasSecondaryConnectionString) || hasPropertyOverride)
+            {
+                builder.Append("  aliasSecondaryConnectionString: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (AliasSecondaryConnectionString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AliasSecondaryConnectionString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AliasSecondaryConnectionString}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryKey), out propertyOverride);
+            if (Optional.IsDefined(PrimaryKey) || hasPropertyOverride)
+            {
+                builder.Append("  primaryKey: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (PrimaryKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrimaryKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrimaryKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryKey), out propertyOverride);
+            if (Optional.IsDefined(SecondaryKey) || hasPropertyOverride)
+            {
+                builder.Append("  secondaryKey: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SecondaryKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SecondaryKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SecondaryKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyName), out propertyOverride);
+            if (Optional.IsDefined(KeyName) || hasPropertyOverride)
+            {
+                builder.Append("  keyName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (KeyName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{KeyName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{KeyName}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ServiceBusAccessKeys>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusAccessKeys>)this).GetFormatFromOptions(options) : options.Format;
@@ -171,8 +340,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceBusAccessKeys)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusAccessKeys)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +359,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                         return DeserializeServiceBusAccessKeys(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceBusAccessKeys)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusAccessKeys)} does not support reading '{options.Format}' format.");
             }
         }
 

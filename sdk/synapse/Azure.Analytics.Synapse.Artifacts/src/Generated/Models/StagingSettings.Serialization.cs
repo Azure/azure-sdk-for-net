@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -21,21 +20,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("linkedServiceName"u8);
-            writer.WriteObjectValue(LinkedServiceName);
+            writer.WriteObjectValue<LinkedServiceReference>(LinkedServiceName);
             if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
-                writer.WriteObjectValue(Path);
+                writer.WriteObjectValue<object>(Path);
             }
             if (Optional.IsDefined(EnableCompression))
             {
                 writer.WritePropertyName("enableCompression"u8);
-                writer.WriteObjectValue(EnableCompression);
+                writer.WriteObjectValue<object>(EnableCompression);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -86,7 +85,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, StagingSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<StagingSettings>(model);
             }
             public override StagingSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

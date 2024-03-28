@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<ApiOperationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiOperationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiOperationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WriteStartArray();
                 foreach (var item in TemplateParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ParameterContract>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
-                writer.WriteObjectValue(Request);
+                writer.WriteObjectValue<RequestContract>(Request, options);
             }
             if (Optional.IsCollectionDefined(Responses))
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WriteStartArray();
                 foreach (var item in Responses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResponseContract>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<ApiOperationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiOperationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiOperationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiOperationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiOperationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.ApiManagement
                         return DeserializeApiOperationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiOperationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiOperationData)} does not support reading '{options.Format}' format.");
             }
         }
 

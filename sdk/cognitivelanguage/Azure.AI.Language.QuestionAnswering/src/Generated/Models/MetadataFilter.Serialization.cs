@@ -21,7 +21,7 @@ namespace Azure.AI.Language.QuestionAnswering
                 writer.WriteStartArray();
                 foreach (var item in Metadata)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MetadataRecord>(item);
                 }
                 writer.WriteEndArray();
             }

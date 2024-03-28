@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -30,13 +29,13 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in Warnings)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DocumentWarning>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics);
+                writer.WriteObjectValue<TextDocumentStatistics?>(Statistics);
             }
             writer.WriteEndObject();
         }

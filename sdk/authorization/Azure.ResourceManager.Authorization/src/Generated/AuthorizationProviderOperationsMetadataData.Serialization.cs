@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Authorization.Models;
@@ -24,7 +26,7 @@ namespace Azure.ResourceManager.Authorization
             var format = options.Format == "W" ? ((IPersistableModel<AuthorizationProviderOperationsMetadataData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthorizationProviderOperationsMetadataData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthorizationProviderOperationsMetadataData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +41,7 @@ namespace Azure.ResourceManager.Authorization
                 writer.WriteStartArray();
                 foreach (var item in ResourceTypes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AuthorizationProviderResourceType>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -49,7 +51,7 @@ namespace Azure.ResourceManager.Authorization
                 writer.WriteStartArray();
                 foreach (var item in Operations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AuthorizationProviderOperationInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +98,7 @@ namespace Azure.ResourceManager.Authorization
             var format = options.Format == "W" ? ((IPersistableModel<AuthorizationProviderOperationsMetadataData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthorizationProviderOperationsMetadataData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthorizationProviderOperationsMetadataData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -196,6 +198,137 @@ namespace Azure.ResourceManager.Authorization
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
+            if (Optional.IsDefined(DisplayName) || hasPropertyOverride)
+            {
+                builder.Append("  displayName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DisplayName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DisplayName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DisplayName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceTypes), out propertyOverride);
+            if (Optional.IsCollectionDefined(ResourceTypes) || hasPropertyOverride)
+            {
+                if (ResourceTypes.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  resourceTypes: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in ResourceTypes)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  resourceTypes: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Operations), out propertyOverride);
+            if (Optional.IsCollectionDefined(Operations) || hasPropertyOverride)
+            {
+                if (Operations.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  operations: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Operations)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  operations: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AuthorizationProviderOperationsMetadataData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AuthorizationProviderOperationsMetadataData>)this).GetFormatFromOptions(options) : options.Format;
@@ -204,8 +337,10 @@ namespace Azure.ResourceManager.Authorization
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AuthorizationProviderOperationsMetadataData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthorizationProviderOperationsMetadataData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -221,7 +356,7 @@ namespace Azure.ResourceManager.Authorization
                         return DeserializeAuthorizationProviderOperationsMetadataData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AuthorizationProviderOperationsMetadataData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthorizationProviderOperationsMetadataData)} does not support reading '{options.Format}' format.");
             }
         }
 

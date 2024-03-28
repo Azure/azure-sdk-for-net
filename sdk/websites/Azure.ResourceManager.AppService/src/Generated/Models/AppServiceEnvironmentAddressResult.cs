@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -78,14 +77,19 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Main public virtual IP. </summary>
+        [WirePath("properties.serviceIpAddress")]
         public IPAddress ServiceIPAddress { get; set; }
         /// <summary> Virtual Network internal IP address of the App Service Environment if it is in internal load-balancing mode. </summary>
+        [WirePath("properties.internalIpAddress")]
         public IPAddress InternalIPAddress { get; set; }
         /// <summary> IP addresses appearing on outbound connections. </summary>
+        [WirePath("properties.outboundIpAddresses")]
         public IList<IPAddress> OutboundIPAddresses { get; }
         /// <summary> Additional virtual IPs. </summary>
+        [WirePath("properties.vipMappings")]
         public IList<VirtualIPMapping> VirtualIPMappings { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

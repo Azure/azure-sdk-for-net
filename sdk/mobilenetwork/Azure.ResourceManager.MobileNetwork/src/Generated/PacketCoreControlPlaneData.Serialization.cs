@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.MobileNetwork
             var format = options.Format == "W" ? ((IPersistableModel<PacketCoreControlPlaneData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PacketCoreControlPlaneData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PacketCoreControlPlaneData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(UserAssignedIdentity);
+                writer.WriteObjectValue<MobileNetworkManagedServiceIdentity>(UserAssignedIdentity, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MobileNetwork
             if (Optional.IsDefined(Installation))
             {
                 writer.WritePropertyName("installation"u8);
-                writer.WriteObjectValue(Installation);
+                writer.WriteObjectValue<MobileNetworkInstallation>(Installation, options);
             }
             writer.WritePropertyName("sites"u8);
             writer.WriteStartArray();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MobileNetwork
             }
             writer.WriteEndArray();
             writer.WritePropertyName("platform"u8);
-            writer.WriteObjectValue(Platform);
+            writer.WriteObjectValue<MobileNetworkPlatformConfiguration>(Platform, options);
             if (Optional.IsDefined(CoreNetworkTechnology))
             {
                 writer.WritePropertyName("coreNetworkTechnology"u8);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStringValue(RollbackVersion);
             }
             writer.WritePropertyName("controlPlaneAccessInterface"u8);
-            writer.WriteObjectValue(ControlPlaneAccessInterface);
+            writer.WriteObjectValue<MobileNetworkInterfaceProperties>(ControlPlaneAccessInterface, options);
             if (Optional.IsCollectionDefined(ControlPlaneAccessVirtualIPv4Addresses))
             {
                 writer.WritePropertyName("controlPlaneAccessVirtualIpv4Addresses"u8);
@@ -122,27 +122,27 @@ namespace Azure.ResourceManager.MobileNetwork
             }
             writer.WritePropertyName("sku"u8);
             writer.WriteStringValue(Sku.ToString());
-            if (Optional.IsDefined(UeMtu))
+            if (Optional.IsDefined(UEMtu))
             {
                 writer.WritePropertyName("ueMtu"u8);
-                writer.WriteNumberValue(UeMtu.Value);
+                writer.WriteNumberValue(UEMtu.Value);
             }
             writer.WritePropertyName("localDiagnosticsAccess"u8);
-            writer.WriteObjectValue(LocalDiagnosticsAccess);
+            writer.WriteObjectValue<MobileNetworkLocalDiagnosticsAccessConfiguration>(LocalDiagnosticsAccess, options);
             if (Optional.IsDefined(DiagnosticsUpload))
             {
                 writer.WritePropertyName("diagnosticsUpload"u8);
-                writer.WriteObjectValue(DiagnosticsUpload);
+                writer.WriteObjectValue<DiagnosticsUploadConfiguration>(DiagnosticsUpload, options);
             }
             if (Optional.IsDefined(EventHub))
             {
                 writer.WritePropertyName("eventHub"u8);
-                writer.WriteObjectValue(EventHub);
+                writer.WriteObjectValue<MobileNetworkEventHubConfiguration>(EventHub, options);
             }
             if (Optional.IsDefined(Signaling))
             {
                 writer.WritePropertyName("signaling"u8);
-                writer.WriteObjectValue(Signaling);
+                writer.WriteObjectValue<SignalingConfiguration>(Signaling, options);
             }
             if (Optional.IsDefined(InteropSettings))
             {
@@ -155,6 +155,11 @@ namespace Azure.ResourceManager.MobileNetwork
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
+            }
+            if (options.Format != "W" && Optional.IsDefined(HomeNetworkPrivateKeysProvisioning))
+            {
+                writer.WritePropertyName("homeNetworkPrivateKeysProvisioning"u8);
+                writer.WriteObjectValue<HomeNetworkPrivateKeysProvisioning>(HomeNetworkPrivateKeysProvisioning, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -180,7 +185,7 @@ namespace Azure.ResourceManager.MobileNetwork
             var format = options.Format == "W" ? ((IPersistableModel<PacketCoreControlPlaneData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PacketCoreControlPlaneData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PacketCoreControlPlaneData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -219,6 +224,7 @@ namespace Azure.ResourceManager.MobileNetwork
             MobileNetworkEventHubConfiguration eventHub = default;
             SignalingConfiguration signaling = default;
             BinaryData interopSettings = default;
+            HomeNetworkPrivateKeysProvisioning homeNetworkPrivateKeysProvisioning = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -415,6 +421,15 @@ namespace Azure.ResourceManager.MobileNetwork
                             interopSettings = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("homeNetworkPrivateKeysProvisioning"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            homeNetworkPrivateKeysProvisioning = HomeNetworkPrivateKeysProvisioning.DeserializeHomeNetworkPrivateKeysProvisioning(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -449,6 +464,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 eventHub,
                 signaling,
                 interopSettings,
+                homeNetworkPrivateKeysProvisioning,
                 serializedAdditionalRawData);
         }
 
@@ -461,7 +477,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PacketCoreControlPlaneData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PacketCoreControlPlaneData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -477,7 +493,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         return DeserializePacketCoreControlPlaneData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PacketCoreControlPlaneData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PacketCoreControlPlaneData)} does not support reading '{options.Format}' format.");
             }
         }
 

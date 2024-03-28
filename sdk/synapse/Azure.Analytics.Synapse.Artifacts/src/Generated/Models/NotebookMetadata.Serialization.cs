@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -23,14 +22,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Kernelspec))
             {
                 writer.WritePropertyName("kernelspec"u8);
-                writer.WriteObjectValue(Kernelspec);
+                writer.WriteObjectValue<NotebookKernelSpec>(Kernelspec);
             }
             if (Optional.IsDefined(LanguageInfo))
             {
                 if (LanguageInfo != null)
                 {
                     writer.WritePropertyName("language_info"u8);
-                    writer.WriteObjectValue(LanguageInfo);
+                    writer.WriteObjectValue<NotebookLanguageInfo>(LanguageInfo);
                 }
                 else
                 {
@@ -40,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -86,7 +85,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, NotebookMetadata model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<NotebookMetadata>(model);
             }
             public override NotebookMetadata Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

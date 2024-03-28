@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryImagePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryImagePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryImagePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -104,22 +103,22 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
-                writer.WriteObjectValue(Identifier);
+                writer.WriteObjectValue<GalleryImageIdentifier>(Identifier, options);
             }
             if (Optional.IsDefined(Recommended))
             {
                 writer.WritePropertyName("recommended"u8);
-                writer.WriteObjectValue(Recommended);
+                writer.WriteObjectValue<RecommendedMachineConfiguration>(Recommended, options);
             }
             if (Optional.IsDefined(Disallowed))
             {
                 writer.WritePropertyName("disallowed"u8);
-                writer.WriteObjectValue(Disallowed);
+                writer.WriteObjectValue<Disallowed>(Disallowed, options);
             }
             if (Optional.IsDefined(PurchasePlan))
             {
                 writer.WritePropertyName("purchasePlan"u8);
-                writer.WriteObjectValue(PurchasePlan);
+                writer.WriteObjectValue<ImagePurchasePlan>(PurchasePlan, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Features)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GalleryImageFeature>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -165,7 +164,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryImagePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryImagePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryImagePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -425,7 +424,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GalleryImagePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryImagePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -441,7 +440,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeGalleryImagePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GalleryImagePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryImagePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -47,28 +46,24 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FlinkHiveCatalogOption"/>. </summary>
-        /// <param name="metastoreDBConnectionPasswordSecret"> Secret reference name from secretsProfile.secrets containing password for database connection. </param>
         /// <param name="metastoreDBConnectionUriString"> Connection string for hive metastore database. </param>
-        /// <param name="metastoreDBConnectionUserName"> User name for database connection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metastoreDBConnectionPasswordSecret"/>, <paramref name="metastoreDBConnectionUriString"/> or <paramref name="metastoreDBConnectionUserName"/> is null. </exception>
-        public FlinkHiveCatalogOption(string metastoreDBConnectionPasswordSecret, string metastoreDBConnectionUriString, string metastoreDBConnectionUserName)
+        /// <exception cref="ArgumentNullException"> <paramref name="metastoreDBConnectionUriString"/> is null. </exception>
+        public FlinkHiveCatalogOption(string metastoreDBConnectionUriString)
         {
-            Argument.AssertNotNull(metastoreDBConnectionPasswordSecret, nameof(metastoreDBConnectionPasswordSecret));
             Argument.AssertNotNull(metastoreDBConnectionUriString, nameof(metastoreDBConnectionUriString));
-            Argument.AssertNotNull(metastoreDBConnectionUserName, nameof(metastoreDBConnectionUserName));
 
-            MetastoreDBConnectionPasswordSecret = metastoreDBConnectionPasswordSecret;
             MetastoreDBConnectionUriString = metastoreDBConnectionUriString;
-            MetastoreDBConnectionUserName = metastoreDBConnectionUserName;
         }
 
         /// <summary> Initializes a new instance of <see cref="FlinkHiveCatalogOption"/>. </summary>
+        /// <param name="metastoreDBConnectionAuthenticationMode"> The authentication mode to connect to your Hive metastore database. More details: https://learn.microsoft.com/en-us/azure/azure-sql/database/logins-create-manage?view=azuresql#authentication-and-authorization. </param>
         /// <param name="metastoreDBConnectionPasswordSecret"> Secret reference name from secretsProfile.secrets containing password for database connection. </param>
         /// <param name="metastoreDBConnectionUriString"> Connection string for hive metastore database. </param>
         /// <param name="metastoreDBConnectionUserName"> User name for database connection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FlinkHiveCatalogOption(string metastoreDBConnectionPasswordSecret, string metastoreDBConnectionUriString, string metastoreDBConnectionUserName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FlinkHiveCatalogOption(MetastoreDBConnectionAuthenticationMode? metastoreDBConnectionAuthenticationMode, string metastoreDBConnectionPasswordSecret, string metastoreDBConnectionUriString, string metastoreDBConnectionUserName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            MetastoreDBConnectionAuthenticationMode = metastoreDBConnectionAuthenticationMode;
             MetastoreDBConnectionPasswordSecret = metastoreDBConnectionPasswordSecret;
             MetastoreDBConnectionUriString = metastoreDBConnectionUriString;
             MetastoreDBConnectionUserName = metastoreDBConnectionUserName;
@@ -80,6 +75,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         {
         }
 
+        /// <summary> The authentication mode to connect to your Hive metastore database. More details: https://learn.microsoft.com/en-us/azure/azure-sql/database/logins-create-manage?view=azuresql#authentication-and-authorization. </summary>
+        public MetastoreDBConnectionAuthenticationMode? MetastoreDBConnectionAuthenticationMode { get; set; }
         /// <summary> Secret reference name from secretsProfile.secrets containing password for database connection. </summary>
         public string MetastoreDBConnectionPasswordSecret { get; set; }
         /// <summary> Connection string for hive metastore database. </summary>

@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -23,34 +23,34 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementPolicyBaseBlob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementPolicyBaseBlob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementPolicyBaseBlob)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(TierToCool))
             {
                 writer.WritePropertyName("tierToCool"u8);
-                writer.WriteObjectValue(TierToCool);
+                writer.WriteObjectValue<DateAfterModification>(TierToCool, options);
             }
             if (Optional.IsDefined(TierToArchive))
             {
                 writer.WritePropertyName("tierToArchive"u8);
-                writer.WriteObjectValue(TierToArchive);
+                writer.WriteObjectValue<DateAfterModification>(TierToArchive, options);
             }
             if (Optional.IsDefined(TierToCold))
             {
                 writer.WritePropertyName("tierToCold"u8);
-                writer.WriteObjectValue(TierToCold);
+                writer.WriteObjectValue<DateAfterModification>(TierToCold, options);
             }
             if (Optional.IsDefined(TierToHot))
             {
                 writer.WritePropertyName("tierToHot"u8);
-                writer.WriteObjectValue(TierToHot);
+                writer.WriteObjectValue<DateAfterModification>(TierToHot, options);
             }
             if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete"u8);
-                writer.WriteObjectValue(Delete);
+                writer.WriteObjectValue<DateAfterModification>(Delete, options);
             }
             if (Optional.IsDefined(EnableAutoTierToHotFromCool))
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementPolicyBaseBlob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementPolicyBaseBlob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementPolicyBaseBlob)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -175,6 +175,106 @@ namespace Azure.ResourceManager.Storage.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TierToCool), out propertyOverride);
+            if (Optional.IsDefined(TierToCool) || hasPropertyOverride)
+            {
+                builder.Append("  tierToCool: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, TierToCool, options, 2, false, "  tierToCool: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TierToArchive), out propertyOverride);
+            if (Optional.IsDefined(TierToArchive) || hasPropertyOverride)
+            {
+                builder.Append("  tierToArchive: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, TierToArchive, options, 2, false, "  tierToArchive: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TierToCold), out propertyOverride);
+            if (Optional.IsDefined(TierToCold) || hasPropertyOverride)
+            {
+                builder.Append("  tierToCold: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, TierToCold, options, 2, false, "  tierToCold: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TierToHot), out propertyOverride);
+            if (Optional.IsDefined(TierToHot) || hasPropertyOverride)
+            {
+                builder.Append("  tierToHot: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, TierToHot, options, 2, false, "  tierToHot: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Delete), out propertyOverride);
+            if (Optional.IsDefined(Delete) || hasPropertyOverride)
+            {
+                builder.Append("  delete: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Delete, options, 2, false, "  delete: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableAutoTierToHotFromCool), out propertyOverride);
+            if (Optional.IsDefined(EnableAutoTierToHotFromCool) || hasPropertyOverride)
+            {
+                builder.Append("  enableAutoTierToHotFromCool: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = EnableAutoTierToHotFromCool.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ManagementPolicyBaseBlob>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagementPolicyBaseBlob>)this).GetFormatFromOptions(options) : options.Format;
@@ -183,8 +283,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagementPolicyBaseBlob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementPolicyBaseBlob)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -200,7 +302,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeManagementPolicyBaseBlob(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagementPolicyBaseBlob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementPolicyBaseBlob)} does not support reading '{options.Format}' format.");
             }
         }
 

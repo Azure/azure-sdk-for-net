@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryPipelineData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryPipelineData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryPipelineData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory
                 writer.WriteStartArray();
                 foreach (var item in Activities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivity>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<EntityParameterSpecification>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory
                 foreach (var item in Variables)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<PipelineVariableSpecification>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -146,12 +145,12 @@ namespace Azure.ResourceManager.DataFactory
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                writer.WriteObjectValue<PipelineFolder>(Folder, options);
             }
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                writer.WriteObjectValue<DataFactoryPipelinePolicy>(Policy, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -174,7 +173,7 @@ namespace Azure.ResourceManager.DataFactory
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryPipelineData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryPipelineData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryPipelineData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -398,7 +397,7 @@ namespace Azure.ResourceManager.DataFactory
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryPipelineData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryPipelineData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -414,7 +413,7 @@ namespace Azure.ResourceManager.DataFactory
                         return DeserializeDataFactoryPipelineData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryPipelineData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryPipelineData)} does not support reading '{options.Format}' format.");
             }
         }
 

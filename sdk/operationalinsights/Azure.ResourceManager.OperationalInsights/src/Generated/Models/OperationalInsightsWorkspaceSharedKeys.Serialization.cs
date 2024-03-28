@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspaceSharedKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceSharedKeys)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceSharedKeys)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspaceSharedKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceSharedKeys)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceSharedKeys)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -100,6 +100,65 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsWorkspaceSharedKeys(primarySharedKey, secondarySharedKey, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimarySharedKey), out propertyOverride);
+            if (Optional.IsDefined(PrimarySharedKey) || hasPropertyOverride)
+            {
+                builder.Append("  primarySharedKey: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (PrimarySharedKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrimarySharedKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrimarySharedKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondarySharedKey), out propertyOverride);
+            if (Optional.IsDefined(SecondarySharedKey) || hasPropertyOverride)
+            {
+                builder.Append("  secondarySharedKey: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SecondarySharedKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SecondarySharedKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SecondarySharedKey}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<OperationalInsightsWorkspaceSharedKeys>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspaceSharedKeys>)this).GetFormatFromOptions(options) : options.Format;
@@ -108,8 +167,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceSharedKeys)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceSharedKeys)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +186,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         return DeserializeOperationalInsightsWorkspaceSharedKeys(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceSharedKeys)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceSharedKeys)} does not support reading '{options.Format}' format.");
             }
         }
 

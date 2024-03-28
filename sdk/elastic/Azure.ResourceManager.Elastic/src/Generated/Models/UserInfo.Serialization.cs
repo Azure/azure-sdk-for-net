@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Elastic;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Elastic.Models
             var format = options.Format == "W" ? ((IPersistableModel<UserInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.Elastic.Models
             if (Optional.IsDefined(CompanyInfo))
             {
                 writer.WritePropertyName("companyInfo"u8);
-                writer.WriteObjectValue(CompanyInfo);
+                writer.WriteObjectValue<CompanyInfo>(CompanyInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.Elastic.Models
             var format = options.Format == "W" ? ((IPersistableModel<UserInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -152,7 +151,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UserInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +167,7 @@ namespace Azure.ResourceManager.Elastic.Models
                         return DeserializeUserInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UserInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

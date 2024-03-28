@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Members of the target group. </summary>
+        [WirePath("properties.members")]
         public IList<JobTarget> Members { get; }
     }
 }

@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -23,29 +23,29 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebAppRuntimes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebAppRuntimes)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebAppRuntimes)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(LinuxRuntimeSettings))
             {
                 writer.WritePropertyName("linuxRuntimeSettings"u8);
-                writer.WriteObjectValue(LinuxRuntimeSettings);
+                writer.WriteObjectValue<WebAppRuntimeSettings>(LinuxRuntimeSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(WindowsRuntimeSettings))
             {
                 writer.WritePropertyName("windowsRuntimeSettings"u8);
-                writer.WriteObjectValue(WindowsRuntimeSettings);
+                writer.WriteObjectValue<WebAppRuntimeSettings>(WindowsRuntimeSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LinuxContainerSettings))
             {
                 writer.WritePropertyName("linuxContainerSettings"u8);
-                writer.WriteObjectValue(LinuxContainerSettings);
+                writer.WriteObjectValue<LinuxJavaContainerSettings>(LinuxContainerSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(WindowsContainerSettings))
             {
                 writer.WritePropertyName("windowsContainerSettings"u8);
-                writer.WriteObjectValue(WindowsContainerSettings);
+                writer.WriteObjectValue<WindowsJavaContainerSettings>(WindowsContainerSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebAppRuntimes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebAppRuntimes)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebAppRuntimes)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,6 +138,77 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppRuntimes(linuxRuntimeSettings, windowsRuntimeSettings, linuxContainerSettings, windowsContainerSettings, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinuxRuntimeSettings), out propertyOverride);
+            if (Optional.IsDefined(LinuxRuntimeSettings) || hasPropertyOverride)
+            {
+                builder.Append("  linuxRuntimeSettings: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, LinuxRuntimeSettings, options, 2, false, "  linuxRuntimeSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WindowsRuntimeSettings), out propertyOverride);
+            if (Optional.IsDefined(WindowsRuntimeSettings) || hasPropertyOverride)
+            {
+                builder.Append("  windowsRuntimeSettings: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, WindowsRuntimeSettings, options, 2, false, "  windowsRuntimeSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinuxContainerSettings), out propertyOverride);
+            if (Optional.IsDefined(LinuxContainerSettings) || hasPropertyOverride)
+            {
+                builder.Append("  linuxContainerSettings: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, LinuxContainerSettings, options, 2, false, "  linuxContainerSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WindowsContainerSettings), out propertyOverride);
+            if (Optional.IsDefined(WindowsContainerSettings) || hasPropertyOverride)
+            {
+                builder.Append("  windowsContainerSettings: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, WindowsContainerSettings, options, 2, false, "  windowsContainerSettings: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<WebAppRuntimes>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WebAppRuntimes>)this).GetFormatFromOptions(options) : options.Format;
@@ -146,8 +217,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(WebAppRuntimes)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebAppRuntimes)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +236,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeWebAppRuntimes(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebAppRuntimes)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebAppRuntimes)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ResourceConnector
             var format = options.Format == "W" ? ((IPersistableModel<ResourceConnectorApplianceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceConnectorApplianceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceConnectorApplianceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ResourceConnector
             if (Optional.IsDefined(InfrastructureConfig))
             {
                 writer.WritePropertyName("infrastructureConfig"u8);
-                writer.WriteObjectValue(InfrastructureConfig);
+                writer.WriteObjectValue<AppliancePropertiesInfrastructureConfig>(InfrastructureConfig, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ResourceConnector
             var format = options.Format == "W" ? ((IPersistableModel<ResourceConnectorApplianceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceConnectorApplianceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceConnectorApplianceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceConnectorApplianceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceConnectorApplianceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.ResourceConnector
                         return DeserializeResourceConnectorApplianceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceConnectorApplianceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceConnectorApplianceData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,8 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Analytics.Synapse.Monitoring;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Monitoring.Models
 {

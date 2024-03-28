@@ -8,9 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<TopQueries>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TopQueries)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TopQueries)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Queries)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<QueryStatisticsProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<TopQueries>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TopQueries)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TopQueries)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -185,6 +186,159 @@ namespace Azure.ResourceManager.Sql.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfQueries), out propertyOverride);
+            if (Optional.IsDefined(NumberOfQueries) || hasPropertyOverride)
+            {
+                builder.Append("  numberOfQueries: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{NumberOfQueries.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AggregationFunction), out propertyOverride);
+            if (Optional.IsDefined(AggregationFunction) || hasPropertyOverride)
+            {
+                builder.Append("  aggregationFunction: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (AggregationFunction.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AggregationFunction}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AggregationFunction}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ObservationMetric), out propertyOverride);
+            if (Optional.IsDefined(ObservationMetric) || hasPropertyOverride)
+            {
+                builder.Append("  observationMetric: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ObservationMetric.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ObservationMetric}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ObservationMetric}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IntervalType), out propertyOverride);
+            if (Optional.IsDefined(IntervalType) || hasPropertyOverride)
+            {
+                builder.Append("  intervalType: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{IntervalType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartTime), out propertyOverride);
+            if (Optional.IsDefined(StartTime) || hasPropertyOverride)
+            {
+                builder.Append("  startTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (StartTime.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StartTime}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StartTime}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndTime), out propertyOverride);
+            if (Optional.IsDefined(EndTime) || hasPropertyOverride)
+            {
+                builder.Append("  endTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (EndTime.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EndTime}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EndTime}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Queries), out propertyOverride);
+            if (Optional.IsCollectionDefined(Queries) || hasPropertyOverride)
+            {
+                if (Queries.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  queries: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Queries)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  queries: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<TopQueries>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TopQueries>)this).GetFormatFromOptions(options) : options.Format;
@@ -193,8 +347,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(TopQueries)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TopQueries)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -210,7 +366,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeTopQueries(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TopQueries)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TopQueries)} does not support reading '{options.Format}' format.");
             }
         }
 

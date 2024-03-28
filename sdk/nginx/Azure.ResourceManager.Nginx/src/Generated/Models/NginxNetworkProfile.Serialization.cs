@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
@@ -23,19 +22,19 @@ namespace Azure.ResourceManager.Nginx.Models
             var format = options.Format == "W" ? ((IPersistableModel<NginxNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxNetworkProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(FrontEndIPConfiguration))
             {
                 writer.WritePropertyName("frontEndIPConfiguration"u8);
-                writer.WriteObjectValue(FrontEndIPConfiguration);
+                writer.WriteObjectValue<NginxFrontendIPConfiguration>(FrontEndIPConfiguration, options);
             }
             if (Optional.IsDefined(NetworkInterfaceConfiguration))
             {
                 writer.WritePropertyName("networkInterfaceConfiguration"u8);
-                writer.WriteObjectValue(NetworkInterfaceConfiguration);
+                writer.WriteObjectValue<NginxNetworkInterfaceConfiguration>(NetworkInterfaceConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.Nginx.Models
             var format = options.Format == "W" ? ((IPersistableModel<NginxNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxNetworkProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NginxNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxNetworkProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +132,7 @@ namespace Azure.ResourceManager.Nginx.Models
                         return DeserializeNginxNetworkProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NginxNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxNetworkProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

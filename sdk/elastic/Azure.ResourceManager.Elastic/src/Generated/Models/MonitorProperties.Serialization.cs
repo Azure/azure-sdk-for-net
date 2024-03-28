@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Elastic;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Elastic.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,12 +39,12 @@ namespace Azure.ResourceManager.Elastic.Models
             if (Optional.IsDefined(ElasticProperties))
             {
                 writer.WritePropertyName("elasticProperties"u8);
-                writer.WriteObjectValue(ElasticProperties);
+                writer.WriteObjectValue<ElasticProperties>(ElasticProperties, options);
             }
             if (Optional.IsDefined(UserInfo))
             {
                 writer.WritePropertyName("userInfo"u8);
-                writer.WriteObjectValue(UserInfo);
+                writer.WriteObjectValue<UserInfo>(UserInfo, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LiftrResourceCategory))
             {
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.Elastic.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -200,7 +199,7 @@ namespace Azure.ResourceManager.Elastic.Models
                         return DeserializeMonitorProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

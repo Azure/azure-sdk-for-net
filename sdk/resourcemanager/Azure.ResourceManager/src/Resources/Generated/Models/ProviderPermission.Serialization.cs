@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProviderPermission>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProviderPermission)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProviderPermission)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(RoleDefinition))
             {
                 writer.WritePropertyName("roleDefinition"u8);
-                writer.WriteObjectValue(RoleDefinition);
+                writer.WriteObjectValue<AzureRoleDefinition>(RoleDefinition, options);
             }
             if (Optional.IsDefined(ManagedByRoleDefinition))
             {
                 writer.WritePropertyName("managedByRoleDefinition"u8);
-                writer.WriteObjectValue(ManagedByRoleDefinition);
+                writer.WriteObjectValue<AzureRoleDefinition>(ManagedByRoleDefinition, options);
             }
             if (Optional.IsDefined(ProviderAuthorizationConsentState))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProviderPermission>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProviderPermission)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProviderPermission)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,6 +134,85 @@ namespace Azure.ResourceManager.Resources.Models
             return new ProviderPermission(applicationId, roleDefinition, managedByRoleDefinition, providerAuthorizationConsentState, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationId), out propertyOverride);
+            if (Optional.IsDefined(ApplicationId) || hasPropertyOverride)
+            {
+                builder.Append("  applicationId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ApplicationId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ApplicationId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ApplicationId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoleDefinition), out propertyOverride);
+            if (Optional.IsDefined(RoleDefinition) || hasPropertyOverride)
+            {
+                builder.Append("  roleDefinition: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, RoleDefinition, options, 2, false, "  roleDefinition: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagedByRoleDefinition), out propertyOverride);
+            if (Optional.IsDefined(ManagedByRoleDefinition) || hasPropertyOverride)
+            {
+                builder.Append("  managedByRoleDefinition: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, ManagedByRoleDefinition, options, 2, false, "  managedByRoleDefinition: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProviderAuthorizationConsentState), out propertyOverride);
+            if (Optional.IsDefined(ProviderAuthorizationConsentState) || hasPropertyOverride)
+            {
+                builder.Append("  providerAuthorizationConsentState: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ProviderAuthorizationConsentState.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ProviderPermission>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ProviderPermission>)this).GetFormatFromOptions(options) : options.Format;
@@ -142,8 +221,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ProviderPermission)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProviderPermission)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -159,7 +240,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeProviderPermission(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProviderPermission)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProviderPermission)} does not support reading '{options.Format}' format.");
             }
         }
 

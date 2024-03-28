@@ -24,10 +24,15 @@ namespace Azure.ResourceManager.MobileNetwork
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue<MobileNetworkManagedServiceIdentity>(Identity, options);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -69,7 +74,17 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("publicLandMobileNetworkIdentifier"u8);
-            writer.WriteObjectValue(PublicLandMobileNetworkIdentifier);
+            writer.WriteObjectValue<MobileNetworkPlmnId>(PublicLandMobileNetworkIdentifier, options);
+            if (Optional.IsCollectionDefined(PublicLandMobileNetworks))
+            {
+                writer.WritePropertyName("publicLandMobileNetworks"u8);
+                writer.WriteStartArray();
+                foreach (var item in PublicLandMobileNetworks)
+                {
+                    writer.WriteObjectValue<PublicLandMobileNetwork>(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && Optional.IsDefined(ServiceKey))
             {
                 writer.WritePropertyName("serviceKey"u8);
@@ -99,7 +114,7 @@ namespace Azure.ResourceManager.MobileNetwork
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,6 +129,7 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 return null;
             }
+            MobileNetworkManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -122,11 +138,21 @@ namespace Azure.ResourceManager.MobileNetwork
             SystemData systemData = default;
             MobileNetworkProvisioningState? provisioningState = default;
             MobileNetworkPlmnId publicLandMobileNetworkIdentifier = default;
+            IList<PublicLandMobileNetwork> publicLandMobileNetworks = default;
             string serviceKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = MobileNetworkManagedServiceIdentity.DeserializeMobileNetworkManagedServiceIdentity(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -193,6 +219,20 @@ namespace Azure.ResourceManager.MobileNetwork
                             publicLandMobileNetworkIdentifier = MobileNetworkPlmnId.DeserializeMobileNetworkPlmnId(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("publicLandMobileNetworks"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<PublicLandMobileNetwork> array = new List<PublicLandMobileNetwork>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(PublicLandMobileNetwork.DeserializePublicLandMobileNetwork(item, options));
+                            }
+                            publicLandMobileNetworks = array;
+                            continue;
+                        }
                         if (property0.NameEquals("serviceKey"u8))
                         {
                             serviceKey = property0.Value.GetString();
@@ -214,8 +254,10 @@ namespace Azure.ResourceManager.MobileNetwork
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                identity,
                 provisioningState,
                 publicLandMobileNetworkIdentifier,
+                publicLandMobileNetworks ?? new ChangeTrackingList<PublicLandMobileNetwork>(),
                 serviceKey,
                 serializedAdditionalRawData);
         }
@@ -229,7 +271,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -245,7 +287,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         return DeserializeMobileNetworkData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkData)} does not support reading '{options.Format}' format.");
             }
         }
 

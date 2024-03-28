@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -23,34 +22,34 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrinoProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrinoProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrinoProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(CatalogOptions))
             {
                 writer.WritePropertyName("catalogOptions"u8);
-                writer.WriteObjectValue(CatalogOptions);
+                writer.WriteObjectValue<CatalogOptions>(CatalogOptions, options);
             }
             if (Optional.IsDefined(Coordinator))
             {
                 writer.WritePropertyName("coordinator"u8);
-                writer.WriteObjectValue(Coordinator);
+                writer.WriteObjectValue<TrinoCoordinator>(Coordinator, options);
             }
             if (Optional.IsDefined(UserPluginsSpec))
             {
                 writer.WritePropertyName("userPluginsSpec"u8);
-                writer.WriteObjectValue(UserPluginsSpec);
+                writer.WriteObjectValue<TrinoUserPluginListResult>(UserPluginsSpec, options);
             }
             if (Optional.IsDefined(UserTelemetrySpec))
             {
                 writer.WritePropertyName("userTelemetrySpec"u8);
-                writer.WriteObjectValue(UserTelemetrySpec);
+                writer.WriteObjectValue<TrinoUserTelemetry>(UserTelemetrySpec, options);
             }
             if (Optional.IsDefined(Worker))
             {
                 writer.WritePropertyName("worker"u8);
-                writer.WriteObjectValue(Worker);
+                writer.WriteObjectValue<TrinoWorker>(Worker, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrinoProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrinoProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrinoProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -168,7 +167,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TrinoProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrinoProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeTrinoProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrinoProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrinoProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

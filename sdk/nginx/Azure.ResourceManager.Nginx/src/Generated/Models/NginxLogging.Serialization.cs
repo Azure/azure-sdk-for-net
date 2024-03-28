@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
@@ -23,14 +22,14 @@ namespace Azure.ResourceManager.Nginx.Models
             var format = options.Format == "W" ? ((IPersistableModel<NginxLogging>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxLogging)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxLogging)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
-                writer.WriteObjectValue(StorageAccount);
+                writer.WriteObjectValue<NginxStorageAccount>(StorageAccount, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.Nginx.Models
             var format = options.Format == "W" ? ((IPersistableModel<NginxLogging>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxLogging)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxLogging)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NginxLogging)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxLogging)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +117,7 @@ namespace Azure.ResourceManager.Nginx.Models
                         return DeserializeNginxLogging(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NginxLogging)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxLogging)} does not support reading '{options.Format}' format.");
             }
         }
 

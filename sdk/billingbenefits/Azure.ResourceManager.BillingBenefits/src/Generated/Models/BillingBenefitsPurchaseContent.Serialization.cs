@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
@@ -23,14 +22,14 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             var format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsPurchaseContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingBenefitsPurchaseContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingBenefitsPurchaseContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<BillingBenefitsSku>(Sku, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             if (Optional.IsDefined(Commitment))
             {
                 writer.WritePropertyName("commitment"u8);
-                writer.WriteObjectValue(Commitment);
+                writer.WriteObjectValue<BillingBenefitsCommitment>(Commitment, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EffectOn))
             {
@@ -77,7 +76,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue(AppliedScopeProperties);
+                writer.WriteObjectValue<BillingBenefitsAppliedScopeProperties>(AppliedScopeProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             var format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsPurchaseContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingBenefitsPurchaseContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingBenefitsPurchaseContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -259,7 +258,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BillingBenefitsPurchaseContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingBenefitsPurchaseContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -275,7 +274,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         return DeserializeBillingBenefitsPurchaseContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BillingBenefitsPurchaseContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingBenefitsPurchaseContent)} does not support reading '{options.Format}' format.");
             }
         }
 

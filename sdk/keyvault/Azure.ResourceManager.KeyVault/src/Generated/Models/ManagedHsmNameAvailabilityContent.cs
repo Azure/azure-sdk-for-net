@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -71,6 +70,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> The managed hsm name. </summary>
+        [WirePath("name")]
         public string Name { get; }
     }
 }

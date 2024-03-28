@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -34,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Filters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RunQueryFilter>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -44,7 +43,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in OrderBy)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RunQueryOrderBy>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, RunFilterParameters model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<RunFilterParameters>(model);
             }
             public override RunFilterParameters Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

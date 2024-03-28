@@ -22,16 +22,27 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<FlinkHiveCatalogOption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FlinkHiveCatalogOption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FlinkHiveCatalogOption)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("metastoreDbConnectionPasswordSecret"u8);
-            writer.WriteStringValue(MetastoreDBConnectionPasswordSecret);
+            if (Optional.IsDefined(MetastoreDBConnectionAuthenticationMode))
+            {
+                writer.WritePropertyName("metastoreDbConnectionAuthenticationMode"u8);
+                writer.WriteStringValue(MetastoreDBConnectionAuthenticationMode.Value.ToString());
+            }
+            if (Optional.IsDefined(MetastoreDBConnectionPasswordSecret))
+            {
+                writer.WritePropertyName("metastoreDbConnectionPasswordSecret"u8);
+                writer.WriteStringValue(MetastoreDBConnectionPasswordSecret);
+            }
             writer.WritePropertyName("metastoreDbConnectionURL"u8);
             writer.WriteStringValue(MetastoreDBConnectionUriString);
-            writer.WritePropertyName("metastoreDbConnectionUserName"u8);
-            writer.WriteStringValue(MetastoreDBConnectionUserName);
+            if (Optional.IsDefined(MetastoreDBConnectionUserName))
+            {
+                writer.WritePropertyName("metastoreDbConnectionUserName"u8);
+                writer.WriteStringValue(MetastoreDBConnectionUserName);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -55,7 +66,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<FlinkHiveCatalogOption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FlinkHiveCatalogOption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FlinkHiveCatalogOption)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,6 +81,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
+            MetastoreDBConnectionAuthenticationMode? metastoreDBConnectionAuthenticationMode = default;
             string metastoreDBConnectionPasswordSecret = default;
             string metastoreDBConnectionURL = default;
             string metastoreDBConnectionUserName = default;
@@ -77,6 +89,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("metastoreDbConnectionAuthenticationMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    metastoreDBConnectionAuthenticationMode = new MetastoreDBConnectionAuthenticationMode(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("metastoreDbConnectionPasswordSecret"u8))
                 {
                     metastoreDBConnectionPasswordSecret = property.Value.GetString();
@@ -98,7 +119,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FlinkHiveCatalogOption(metastoreDBConnectionPasswordSecret, metastoreDBConnectionURL, metastoreDBConnectionUserName, serializedAdditionalRawData);
+            return new FlinkHiveCatalogOption(metastoreDBConnectionAuthenticationMode, metastoreDBConnectionPasswordSecret, metastoreDBConnectionURL, metastoreDBConnectionUserName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FlinkHiveCatalogOption>.Write(ModelReaderWriterOptions options)
@@ -110,7 +131,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FlinkHiveCatalogOption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FlinkHiveCatalogOption)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -126,7 +147,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeFlinkHiveCatalogOption(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FlinkHiveCatalogOption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FlinkHiveCatalogOption)} does not support reading '{options.Format}' format.");
             }
         }
 

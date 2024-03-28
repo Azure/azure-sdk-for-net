@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -23,14 +22,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterConnectivityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterConnectivityProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterConnectivityProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (options.Format != "W")
             {
                 writer.WritePropertyName("web"u8);
-                writer.WriteObjectValue(Web);
+                writer.WriteObjectValue<WebConnectivityEndpoint>(Web, options);
             }
             if (Optional.IsCollectionDefined(Ssh))
             {
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in Ssh)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SshConnectivityEndpoint>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterConnectivityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterConnectivityProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterConnectivityProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterConnectivityProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterConnectivityProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeClusterConnectivityProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterConnectivityProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterConnectivityProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
