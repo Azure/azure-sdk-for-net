@@ -4,9 +4,9 @@ Following shows how to use the `/sim-swap:verify` endpoint
 
 ```C# Snippet:APC_Sample_SimSwapVerifyTest
 string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
-Uri _endpoint = new Uri("https://your-endpoint-here.com");
-TokenCredential _credential = new DefaultAzureCredential();
-ProgrammableConnectivityClient baseClient = new ProgrammableConnectivityClient(_endpoint, _credential);
+Uri endpoint = new Uri("https://your-endpoint-here.com");
+TokenCredential credential = new DefaultAzureCredential();
+ProgrammableConnectivityClient baseClient = new ProgrammableConnectivityClient(endpoint, credential);
 var client = baseClient.GetSimSwapClient();
 var content = new SimSwapVerificationContent(new NetworkIdentifier("NetworkCode", "Orange_Spain"))
 {
@@ -22,9 +22,9 @@ Following shows how to use the `/sim-swap:retrieve` endpoint
 
 ```C# Snippet:APC_Sample_SimSwapRetrieveTest
 string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
-Uri _endpoint = new Uri("https://your-endpoint-here.com");
-TokenCredential _credential = new DefaultAzureCredential();
-ProgrammableConnectivityClient baseClient = new ProgrammableConnectivityClient(_endpoint, _credential);
+Uri endpoint = new Uri("https://your-endpoint-here.com");
+TokenCredential credential = new DefaultAzureCredential();
+ProgrammableConnectivityClient baseClient = new ProgrammableConnectivityClient(endpoint, credential);
 var client = baseClient.GetSimSwapClient();
 var content = new SimSwapRetrievalContent(new NetworkIdentifier("NetworkCode", "Orange_Spain"))
 {

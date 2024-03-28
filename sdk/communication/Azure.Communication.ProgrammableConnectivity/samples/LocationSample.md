@@ -2,9 +2,9 @@
 
 ```C# Snippet:APC_Sample_LocationVerifyTest
 string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
-Uri _endpoint = new Uri("https://your-endpoint-here.com");
-TokenCredential _credential = new DefaultAzureCredential();
-ProgrammableConnectivityClient baseClient = new ProgrammableConnectivityClient(_endpoint, _credential);
+Uri endpoint = new Uri("https://your-endpoint-here.com");
+TokenCredential credential = new DefaultAzureCredential();
+ProgrammableConnectivityClient baseClient = new ProgrammableConnectivityClient(endpoint, credential);
 var client = baseClient.GetDeviceLocationClient();
 var deviceLocationVerificationContent = new DeviceLocationVerificationContent(new NetworkIdentifier("NetworkCode", "Telefonica_Brazil"), 80.0, 85.1, 50, new LocationDevice
 {
