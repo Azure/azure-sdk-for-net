@@ -97,6 +97,18 @@ namespace Azure.Security.KeyVault.Secrets
                 ? await _pipeline.GetResponseAsync(RequestMethod.Get, cancellationToken, SecretClient.DeletedSecretsPath, _value.Name).ConfigureAwait(false)
                 : _pipeline.GetResponse(RequestMethod.Get, cancellationToken, SecretClient.DeletedSecretsPath, _value.Name);
 
+            return GetOperationState(response);
+        }
+
+        OperationState IOperation.UpdateState(CancellationToken cancellationToken)
+        {
+            Response response = _pipeline.GetResponse(RequestMethod.Get, cancellationToken, SecretClient.DeletedSecretsPath, _value.Name);
+
+            return GetOperationState(response);
+        }
+
+        private static OperationState GetOperationState(Response response)
+        {
             switch (response.Status)
             {
                 case 200:

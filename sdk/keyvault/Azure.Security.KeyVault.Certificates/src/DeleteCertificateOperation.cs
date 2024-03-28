@@ -42,7 +42,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary> Initializes a new instance of <see cref="DeleteCertificateOperation" /> for mocking. </summary>
-        protected DeleteCertificateOperation() {}
+        protected DeleteCertificateOperation() { }
 
         /// <inheritdoc/>
         public override string Id => _value.Id.AbsoluteUri;
@@ -101,6 +101,18 @@ namespace Azure.Security.KeyVault.Certificates
                 ? await _pipeline.GetResponseAsync(RequestMethod.Get, cancellationToken, CertificateClient.DeletedCertificatesPath, _value.Name).ConfigureAwait(false)
                 : _pipeline.GetResponse(RequestMethod.Get, cancellationToken, CertificateClient.DeletedCertificatesPath, _value.Name);
 
+            return GetOperationState(response);
+        }
+
+        OperationState IOperation.UpdateState(CancellationToken cancellationToken)
+        {
+            Response response = _pipeline.GetResponse(RequestMethod.Get, cancellationToken, CertificateClient.DeletedCertificatesPath, _value.Name);
+
+            return GetOperationState(response);
+        }
+
+        private static OperationState GetOperationState(Response response)
+        {
             switch (response.Status)
             {
                 case 200:

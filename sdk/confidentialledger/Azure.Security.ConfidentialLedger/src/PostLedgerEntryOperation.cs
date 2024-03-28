@@ -79,6 +79,27 @@ namespace Azure.Security.ConfidentialLedger
             return OperationState.Pending(statusResponse);
         }
 
+        public OperationState UpdateState(CancellationToken cancellationToken)
+        {
+            var statusResponse = _client.GetTransactionStatus(Id, new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow });
+
+            if (statusResponse.Status != (int)HttpStatusCode.OK)
+            {
+                var ex = new RequestFailedException(statusResponse, null, new PostLedgerEntryRequestFailedDetailsParser(exceptionMessage));
+                return OperationState.Failure(statusResponse, new RequestFailedException(exceptionMessage, ex));
+            }
+
+            string status = JsonDocument.Parse(statusResponse.Content)
+                .RootElement
+                .GetProperty("state")
+                .GetString();
+            if (status != "Pending")
+            {
+                return OperationState.Success(statusResponse);
+            }
+            return OperationState.Pending(statusResponse);
+        }
+
         /// <summary>
         /// The transactionId of the posted ledger entry.
         /// </summary>

@@ -91,6 +91,18 @@ namespace Azure.Security.KeyVault.Keys
                 ? await _pipeline.GetResponseAsync(RequestMethod.Get, cancellationToken, KeyClient.KeysPath, _value.Name).ConfigureAwait(false)
                 : _pipeline.GetResponse(RequestMethod.Get, cancellationToken, KeyClient.KeysPath, _value.Name);
 
+            return GetOperationState(response);
+        }
+
+        OperationState IOperation.UpdateState(CancellationToken cancellationToken)
+        {
+            Response response = _pipeline.GetResponse(RequestMethod.Get, cancellationToken, KeyClient.KeysPath, _value.Name);
+
+            return GetOperationState(response);
+        }
+
+        private static OperationState GetOperationState(Response response)
+        {
             switch (response.Status)
             {
                 case 200:

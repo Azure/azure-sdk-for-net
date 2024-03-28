@@ -91,6 +91,18 @@ namespace Azure.Security.KeyVault.Certificates
                 ? await _pipeline.GetResponseAsync(RequestMethod.Get, cancellationToken, CertificateClient.CertificatesPath, _value.Name).ConfigureAwait(false)
                 : _pipeline.GetResponse(RequestMethod.Get, cancellationToken, CertificateClient.CertificatesPath, _value.Name);
 
+            return GetOperationState(response);
+        }
+
+        OperationState IOperation.UpdateState(CancellationToken cancellationToken)
+        {
+            Response response = _pipeline.GetResponse(RequestMethod.Get, cancellationToken, CertificateClient.CertificatesPath, _value.Name);
+
+            return GetOperationState(response);
+        }
+
+        private static OperationState GetOperationState(Response response)
+        {
             switch (response.Status)
             {
                 case 200:
