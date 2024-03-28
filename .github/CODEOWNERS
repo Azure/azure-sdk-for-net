@@ -237,7 +237,7 @@
 # PRLabel: %API Center
 /sdk/apicenter/                                                    @alexyaang @azaslonov
 
-# ServiceLabel: %API Center
+# ServiceLabel: %API Center %Mgmt
 # ServiceOwners:                                                   @alexyaang @azaslonov
 
 # ServiceLabel: %Cognitive - Anomaly Detector
