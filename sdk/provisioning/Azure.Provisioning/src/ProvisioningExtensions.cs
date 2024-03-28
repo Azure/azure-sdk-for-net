@@ -8,7 +8,7 @@ namespace Azure.Provisioning
     /// <summary>
     /// Extension methods for <see cref="IConstruct"/>.
     /// </summary>
-    public static class CdkExtensions
+    public static class ProvisioningExtensions
     {
         /// <summary>
         /// Gets the single resource of type <typeparamref name="T"/> in the construct or its ancestors.
