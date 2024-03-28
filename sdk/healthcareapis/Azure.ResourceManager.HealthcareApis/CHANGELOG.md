@@ -8,12 +8,6 @@
 
 - Upgraded api-version tag from 'package-2023-11' to 'package-2024-03-31'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/main/specification/healthcareapis/resource-manager/readme.md
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.2.0 (2023-12-08)
 
 ### Features Added
