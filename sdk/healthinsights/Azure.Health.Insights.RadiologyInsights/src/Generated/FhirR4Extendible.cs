@@ -43,7 +43,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FhirR4Extendible"/>. </summary>
         public FhirR4Extendible()

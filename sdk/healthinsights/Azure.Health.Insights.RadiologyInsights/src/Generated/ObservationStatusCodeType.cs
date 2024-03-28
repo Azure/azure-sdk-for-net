@@ -14,7 +14,7 @@ namespace Azure.Health.Insights.RadiologyInsights
     /// Observation Status
     /// Based on [FHIR ObservationStatus](https://www.hl7.org/fhir/R4/valueset-observation-status.html)
     /// </summary>
-    public readonly partial struct ObservationStatusCodeType : IEquatable<ObservationStatusCodeType>
+    internal readonly partial struct ObservationStatusCodeType : IEquatable<ObservationStatusCodeType>
     {
         private readonly string _value;
 

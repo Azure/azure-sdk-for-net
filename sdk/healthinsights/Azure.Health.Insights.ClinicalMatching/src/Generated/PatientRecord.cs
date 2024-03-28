@@ -53,19 +53,22 @@ namespace Azure.Health.Insights.ClinicalMatching
             Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
-            Data = new ChangeTrackingList<PatientDocument>();
+            Encounters = new ChangeTrackingList<Encounter>();
+            PatientDocuments = new ChangeTrackingList<PatientDocument>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PatientRecord"/>. </summary>
         /// <param name="id"> A given identifier for the patient. Has to be unique across all patients in a single request. </param>
         /// <param name="info"> Patient structured information, including demographics and known structured clinical information. </param>
-        /// <param name="data"> Patient unstructured clinical data, given as documents. </param>
+        /// <param name="encounters"> Patient encounters/visits. </param>
+        /// <param name="patientDocuments"> Patient unstructured clinical data, given as documents. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PatientRecord(string id, PatientInfo info, IList<PatientDocument> data, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PatientRecord(string id, PatientDetails info, IList<Encounter> encounters, IList<PatientDocument> patientDocuments, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Info = info;
-            Data = data;
+            Encounters = encounters;
+            PatientDocuments = patientDocuments;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -77,8 +80,10 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <summary> A given identifier for the patient. Has to be unique across all patients in a single request. </summary>
         public string Id { get; }
         /// <summary> Patient structured information, including demographics and known structured clinical information. </summary>
-        public PatientInfo Info { get; set; }
+        public PatientDetails Info { get; set; }
+        /// <summary> Patient encounters/visits. </summary>
+        public IList<Encounter> Encounters { get; }
         /// <summary> Patient unstructured clinical data, given as documents. </summary>
-        public IList<PatientDocument> Data { get; }
+        public IList<PatientDocument> PatientDocuments { get; }
     }
 }

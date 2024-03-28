@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.RadiologyInsights
     /// Please note <see cref="ProcedureRecommendation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="GenericProcedureRecommendation"/> and <see cref="ImagingProcedureRecommendation"/>.
     /// </summary>
-    public abstract partial class ProcedureRecommendation
+    internal abstract partial class ProcedureRecommendation
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

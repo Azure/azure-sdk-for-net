@@ -64,18 +64,18 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <param name="description"> The description corresponding to the inference value. </param>
         /// <param name="confidenceScore"> Confidence score for this inference. </param>
         /// <param name="evidence"> The evidence corresponding to the inference value. </param>
-        /// <param name="id"> The identifier of the clinical trial. </param>
+        /// <param name="clinicalTrialId"> The identifier of the clinical trial. </param>
         /// <param name="source"> Possible sources of a clinical trial. </param>
         /// <param name="metadata"> Trial data which is of interest to the potential participant. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrialMatcherInference(TrialMatcherInferenceType type, string value, string description, float? confidenceScore, IReadOnlyList<TrialMatcherInferenceEvidence> evidence, string id, ClinicalTrialSource? source, ClinicalTrialMetadata metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TrialMatcherInference(TrialMatcherInferenceType type, string value, string description, float? confidenceScore, IReadOnlyList<TrialMatcherInferenceEvidence> evidence, string clinicalTrialId, ClinicalTrialSource? source, ClinicalTrialMetadata metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             Value = value;
             Description = description;
             ConfidenceScore = confidenceScore;
             Evidence = evidence;
-            Id = id;
+            ClinicalTrialId = clinicalTrialId;
             Source = source;
             Metadata = metadata;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -97,7 +97,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <summary> The evidence corresponding to the inference value. </summary>
         public IReadOnlyList<TrialMatcherInferenceEvidence> Evidence { get; }
         /// <summary> The identifier of the clinical trial. </summary>
-        public string Id { get; }
+        public string ClinicalTrialId { get; }
         /// <summary> Possible sources of a clinical trial. </summary>
         public ClinicalTrialSource? Source { get; }
         /// <summary> Trial data which is of interest to the potential participant. </summary>

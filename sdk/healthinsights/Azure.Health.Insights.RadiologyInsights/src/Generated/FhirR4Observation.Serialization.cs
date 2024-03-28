@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.Health.Insights.RadiologyInsights
 {
-    public partial class FhirR4Observation : IUtf8JsonSerializable, IJsonModel<FhirR4Observation>
+    internal partial class FhirR4Observation : IUtf8JsonSerializable, IJsonModel<FhirR4Observation>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirR4Observation>)this).Write(writer, new ModelReaderWriterOptions("W"));
 

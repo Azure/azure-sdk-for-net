@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -38,9 +39,9 @@ id = "<id>",
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("patientId").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("value").ToString());
             Console.WriteLine(result.GetProperty("modelVersion").ToString());
         }
 
@@ -66,9 +67,9 @@ id = "<id>",
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("patientId").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("value").ToString());
             Console.WriteLine(result.GetProperty("modelVersion").ToString());
         }
 
@@ -84,8 +85,8 @@ id = "<id>",
             {
 new PatientRecord("<id>")
             });
-            Operation<OncoPhenotypeResults> operation = client.InferCancerProfile(WaitUntil.Completed, oncoPhenotypeData);
-            OncoPhenotypeResults responseData = operation.Value;
+            Operation<OncoPhenotypeInferenceResult> operation = client.InferCancerProfile(WaitUntil.Completed, oncoPhenotypeData);
+            OncoPhenotypeInferenceResult responseData = operation.Value;
         }
 
         [Test]
@@ -100,8 +101,8 @@ new PatientRecord("<id>")
             {
 new PatientRecord("<id>")
             });
-            Operation<OncoPhenotypeResults> operation = await client.InferCancerProfileAsync(WaitUntil.Completed, oncoPhenotypeData);
-            OncoPhenotypeResults responseData = operation.Value;
+            Operation<OncoPhenotypeInferenceResult> operation = await client.InferCancerProfileAsync(WaitUntil.Completed, oncoPhenotypeData);
+            OncoPhenotypeInferenceResult responseData = operation.Value;
         }
 
         [Test]
@@ -127,14 +128,157 @@ clinicalInfo = new object[]
 {
 new
 {
+resourceType = "<resourceType>",
+id = "<id>",
+meta = new
+{
+versionId = "<versionId>",
+lastUpdated = "<lastUpdated>",
+source = "<source>",
+profile = new object[]
+{
+"<profile>"
+},
+security = new object[]
+{
+new
+{
+system = "<system>",
+version = "<version>",
+code = "<code>",
+display = "<display>",
+id = "<id>",
+extension = new object[]
+{
+new
+{
+url = "<url>",
+valueQuantity = new
+{
+value = 123.45,
+comparator = "<comparator>",
+unit = "<unit>",
 system = "<system>",
 code = "<code>",
-name = "<name>",
+id = "<id>",
+extension = new object[]
+{
+null
+},
+},
+valueCodeableConcept = new
+{
+coding = new object[]
+{
+null
+},
+text = "<text>",
+id = "<id>",
+extension = new object[]
+{
+null
+},
+},
+valueString = "<valueString>",
+valueBoolean = true,
+valueInteger = 1234,
+valueRange = new
+{
+id = "<id>",
+extension = new object[]
+{
+null
+},
+},
+valueRatio = new
+{
+id = "<id>",
+extension = new object[]
+{
+null
+},
+},
+valueSampledData = new
+{
+period = 123.45,
+factor = 123.45,
+lowerLimit = 123.45,
+upperLimit = 123.45,
+dimensions = 1234,
+data = "<data>",
+id = "<id>",
+extension = new object[]
+{
+null
+},
+},
+valueTime = "01:23:45",
+valueDateTime = "<valueDateTime>",
+valuePeriod = new
+{
+start = "<start>",
+end = "<end>",
+id = "<id>",
+extension = new object[]
+{
+null
+},
+},
+valueReference = new
+{
+reference = "<reference>",
+type = "<type>",
+identifier = new
+{
+use = "<use>",
+system = "<system>",
 value = "<value>",
+id = "<id>",
+extension = new object[]
+{
+null
+},
+},
+display = "<display>",
+id = "<id>",
+extension = new object[]
+{
+null
+},
+},
+id = "<id>",
+extension = new object[]
+{
+null
+},
+}
+},
+}
+},
+tag = new object[]
+{
+null
+},
+},
+implicitRules = "<implicitRules>",
+language = "<language>",
 }
 },
 },
-data = new object[]
+encounters = new object[]
+{
+new Dictionary<string, object>
+{
+["id"] = "<id>",
+["period"] = new
+{
+start = "2022-05-10T14:57:31.2311892-04:00",
+end = "2022-05-10T14:57:31.2311892-04:00",
+},
+["class"] = "inpatient"
+}
+},
+patientDocuments = new object[]
 {
 new
 {
@@ -143,6 +287,30 @@ clinicalType = "consultation",
 id = "<id>",
 language = "<language>",
 createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
+authors = new object[]
+{
+new
+{
+id = "<id>",
+fullName = "<fullName>",
+}
+},
+specialtyType = "pathology",
+administrativeMetadata = new
+{
+orderedProcedures = new object[]
+{
+new
+{
+extension = new object[]
+{
+null
+},
+description = "<description>",
+}
+},
+encounterId = "<encounterId>",
+},
 content = new
 {
 sourceType = "inline",
@@ -167,21 +335,21 @@ value = "<value>",
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("confidenceScore").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("text").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("offset").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("length").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("system").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("importance").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("caseId").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("patientId").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("confidenceScore").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("text").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("offset").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("length").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("system").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("importance").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("caseId").ToString());
             Console.WriteLine(result.GetProperty("modelVersion").ToString());
         }
 
@@ -208,14 +376,157 @@ clinicalInfo = new object[]
 {
 new
 {
+resourceType = "<resourceType>",
+id = "<id>",
+meta = new
+{
+versionId = "<versionId>",
+lastUpdated = "<lastUpdated>",
+source = "<source>",
+profile = new object[]
+{
+"<profile>"
+},
+security = new object[]
+{
+new
+{
+system = "<system>",
+version = "<version>",
+code = "<code>",
+display = "<display>",
+id = "<id>",
+extension = new object[]
+{
+new
+{
+url = "<url>",
+valueQuantity = new
+{
+value = 123.45,
+comparator = "<comparator>",
+unit = "<unit>",
 system = "<system>",
 code = "<code>",
-name = "<name>",
+id = "<id>",
+extension = new object[]
+{
+null
+},
+},
+valueCodeableConcept = new
+{
+coding = new object[]
+{
+null
+},
+text = "<text>",
+id = "<id>",
+extension = new object[]
+{
+null
+},
+},
+valueString = "<valueString>",
+valueBoolean = true,
+valueInteger = 1234,
+valueRange = new
+{
+id = "<id>",
+extension = new object[]
+{
+null
+},
+},
+valueRatio = new
+{
+id = "<id>",
+extension = new object[]
+{
+null
+},
+},
+valueSampledData = new
+{
+period = 123.45,
+factor = 123.45,
+lowerLimit = 123.45,
+upperLimit = 123.45,
+dimensions = 1234,
+data = "<data>",
+id = "<id>",
+extension = new object[]
+{
+null
+},
+},
+valueTime = "01:23:45",
+valueDateTime = "<valueDateTime>",
+valuePeriod = new
+{
+start = "<start>",
+end = "<end>",
+id = "<id>",
+extension = new object[]
+{
+null
+},
+},
+valueReference = new
+{
+reference = "<reference>",
+type = "<type>",
+identifier = new
+{
+use = "<use>",
+system = "<system>",
 value = "<value>",
+id = "<id>",
+extension = new object[]
+{
+null
+},
+},
+display = "<display>",
+id = "<id>",
+extension = new object[]
+{
+null
+},
+},
+id = "<id>",
+extension = new object[]
+{
+null
+},
+}
+},
+}
+},
+tag = new object[]
+{
+null
+},
+},
+implicitRules = "<implicitRules>",
+language = "<language>",
 }
 },
 },
-data = new object[]
+encounters = new object[]
+{
+new Dictionary<string, object>
+{
+["id"] = "<id>",
+["period"] = new
+{
+start = "2022-05-10T14:57:31.2311892-04:00",
+end = "2022-05-10T14:57:31.2311892-04:00",
+},
+["class"] = "inpatient"
+}
+},
+patientDocuments = new object[]
 {
 new
 {
@@ -224,6 +535,30 @@ clinicalType = "consultation",
 id = "<id>",
 language = "<language>",
 createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
+authors = new object[]
+{
+new
+{
+id = "<id>",
+fullName = "<fullName>",
+}
+},
+specialtyType = "pathology",
+administrativeMetadata = new
+{
+orderedProcedures = new object[]
+{
+new
+{
+extension = new object[]
+{
+null
+},
+description = "<description>",
+}
+},
+encounterId = "<encounterId>",
+},
 content = new
 {
 sourceType = "inline",
@@ -248,21 +583,21 @@ value = "<value>",
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("confidenceScore").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("text").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("offset").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("length").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("system").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("importance").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("caseId").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("patientId").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("confidenceScore").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("text").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("offset").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("length").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("system").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("importance").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("caseId").ToString());
             Console.WriteLine(result.GetProperty("modelVersion").ToString());
         }
 
@@ -278,21 +613,62 @@ value = "<value>",
             {
 new PatientRecord("<id>")
 {
-Info = new PatientInfo
+Info = new PatientDetails
 {
-Sex = PatientInfoSex.Female,
+Sex = PatientSex.Female,
 BirthDate = DateTimeOffset.Parse("2022-05-10"),
-ClinicalInfo = {new ClinicalCodedElement("<system>", "<code>")
+ClinicalInfo = {new FhirR4Resource("<resourceType>")
 {
-Name = "<name>",
-Value = "<value>",
+Id = "<id>",
+Meta = new FhirR4Meta
+{
+VersionId = "<versionId>",
+LastUpdated = "<lastUpdated>",
+Source = "<source>",
+Profile = {"<profile>"},
+Security = {new FhirR4Coding
+{
+System = "<system>",
+Version = "<version>",
+Code = "<code>",
+Display = "<display>",
+}},
+Tag = {default},
+},
+ImplicitRules = "<implicitRules>",
+Language = "<language>",
 }},
 },
-Data = {new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(DocumentContentSourceType.Inline, "<value>"))
+Encounters = {new Encounter("<id>")
+{
+Period = new TimePeriod
+{
+Start = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+End = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+},
+Class = EncounterClass.InPatient,
+}},
+PatientDocuments = {new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(DocumentContentSourceType.Inline, "<value>"))
 {
 ClinicalType = ClinicalDocumentType.Consultation,
 Language = "<language>",
 CreatedDateTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+Authors = {new DocumentAuthor
+{
+Id = "<id>",
+FullName = "<fullName>",
+}},
+SpecialtyType = SpecialtyType.Pathology,
+AdministrativeMetadata = new DocumentAdministrativeMetadata
+{
+OrderedProcedures = {new FhirR4Extendible
+{
+Extension = {default},
+Code = default,
+Description = "<description>",
+}},
+EncounterId = "<encounterId>",
+},
 }},
 }
             })
@@ -305,8 +681,8 @@ CreatedDateTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
                     CheckForCancerCase = true,
                 },
             };
-            Operation<OncoPhenotypeResults> operation = client.InferCancerProfile(WaitUntil.Completed, oncoPhenotypeData);
-            OncoPhenotypeResults responseData = operation.Value;
+            Operation<OncoPhenotypeInferenceResult> operation = client.InferCancerProfile(WaitUntil.Completed, oncoPhenotypeData);
+            OncoPhenotypeInferenceResult responseData = operation.Value;
         }
 
         [Test]
@@ -321,21 +697,62 @@ CreatedDateTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
             {
 new PatientRecord("<id>")
 {
-Info = new PatientInfo
+Info = new PatientDetails
 {
-Sex = PatientInfoSex.Female,
+Sex = PatientSex.Female,
 BirthDate = DateTimeOffset.Parse("2022-05-10"),
-ClinicalInfo = {new ClinicalCodedElement("<system>", "<code>")
+ClinicalInfo = {new FhirR4Resource("<resourceType>")
 {
-Name = "<name>",
-Value = "<value>",
+Id = "<id>",
+Meta = new FhirR4Meta
+{
+VersionId = "<versionId>",
+LastUpdated = "<lastUpdated>",
+Source = "<source>",
+Profile = {"<profile>"},
+Security = {new FhirR4Coding
+{
+System = "<system>",
+Version = "<version>",
+Code = "<code>",
+Display = "<display>",
+}},
+Tag = {default},
+},
+ImplicitRules = "<implicitRules>",
+Language = "<language>",
 }},
 },
-Data = {new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(DocumentContentSourceType.Inline, "<value>"))
+Encounters = {new Encounter("<id>")
+{
+Period = new TimePeriod
+{
+Start = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+End = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+},
+Class = EncounterClass.InPatient,
+}},
+PatientDocuments = {new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(DocumentContentSourceType.Inline, "<value>"))
 {
 ClinicalType = ClinicalDocumentType.Consultation,
 Language = "<language>",
 CreatedDateTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+Authors = {new DocumentAuthor
+{
+Id = "<id>",
+FullName = "<fullName>",
+}},
+SpecialtyType = SpecialtyType.Pathology,
+AdministrativeMetadata = new DocumentAdministrativeMetadata
+{
+OrderedProcedures = {new FhirR4Extendible
+{
+Extension = {default},
+Code = default,
+Description = "<description>",
+}},
+EncounterId = "<encounterId>",
+},
 }},
 }
             })
@@ -348,8 +765,8 @@ CreatedDateTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
                     CheckForCancerCase = true,
                 },
             };
-            Operation<OncoPhenotypeResults> operation = await client.InferCancerProfileAsync(WaitUntil.Completed, oncoPhenotypeData);
-            OncoPhenotypeResults responseData = operation.Value;
+            Operation<OncoPhenotypeInferenceResult> operation = await client.InferCancerProfileAsync(WaitUntil.Completed, oncoPhenotypeData);
+            OncoPhenotypeInferenceResult responseData = operation.Value;
         }
     }
 }

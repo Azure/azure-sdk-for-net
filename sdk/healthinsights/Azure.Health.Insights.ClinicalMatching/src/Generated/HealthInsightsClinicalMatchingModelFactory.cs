@@ -17,13 +17,275 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <summary> Initializes a new instance of <see cref="ClinicalMatching.PatientRecord"/>. </summary>
         /// <param name="id"> A given identifier for the patient. Has to be unique across all patients in a single request. </param>
         /// <param name="info"> Patient structured information, including demographics and known structured clinical information. </param>
-        /// <param name="data"> Patient unstructured clinical data, given as documents. </param>
+        /// <param name="encounters"> Patient encounters/visits. </param>
+        /// <param name="patientDocuments"> Patient unstructured clinical data, given as documents. </param>
         /// <returns> A new <see cref="ClinicalMatching.PatientRecord"/> instance for mocking. </returns>
-        public static PatientRecord PatientRecord(string id = null, PatientInfo info = null, IEnumerable<PatientDocument> data = null)
+        public static PatientRecord PatientRecord(string id = null, PatientDetails info = null, IEnumerable<Encounter> encounters = null, IEnumerable<PatientDocument> patientDocuments = null)
         {
-            data ??= new List<PatientDocument>();
+            encounters ??= new List<Encounter>();
+            patientDocuments ??= new List<PatientDocument>();
 
-            return new PatientRecord(id, info, data?.ToList(), serializedAdditionalRawData: null);
+            return new PatientRecord(id, info, encounters?.ToList(), patientDocuments?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalMatching.FhirR4Resource"/>. </summary>
+        /// <param name="resourceType"> The type of resource. </param>
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="meta"> Metadata about the resource. </param>
+        /// <param name="implicitRules"> A set of rules under which this content was created. </param>
+        /// <param name="language"> Language of the resource content. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="ClinicalMatching.FhirR4Resource"/> instance for mocking. </returns>
+        public static FhirR4Resource FhirR4Resource(string resourceType = null, string id = null, FhirR4Meta meta = null, string implicitRules = null, string language = null, IDictionary<string, BinaryData> additionalProperties = null)
+        {
+            additionalProperties ??= new Dictionary<string, BinaryData>();
+
+            return new FhirR4Resource(
+                resourceType,
+                id,
+                meta,
+                implicitRules,
+                language,
+                additionalProperties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalMatching.FhirR4Element"/>. </summary>
+        /// <param name="id"> Unique id for inter-element referencing. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <returns> A new <see cref="ClinicalMatching.FhirR4Element"/> instance for mocking. </returns>
+        public static FhirR4Element FhirR4Element(string id = null, IEnumerable<FhirR4Extension> extension = null)
+        {
+            extension ??= new List<FhirR4Extension>();
+
+            return new FhirR4Element(id, extension?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalMatching.FhirR4Extension"/>. </summary>
+        /// <param name="id"> Unique id for inter-element referencing. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="url"> Source of the definition for the extension code - a logical name or a URL. </param>
+        /// <param name="valueQuantity"> Value as Quantity. </param>
+        /// <param name="valueCodeableConcept"> Value as CodeableConcept. </param>
+        /// <param name="valueString"> Value as string. </param>
+        /// <param name="valueBoolean"> Value as boolean. </param>
+        /// <param name="valueInteger"> Value as integer. </param>
+        /// <param name="valueRange"> Value as Range. </param>
+        /// <param name="valueRatio"> Value as Ratio. </param>
+        /// <param name="valueSampledData"> Value as SampledData. </param>
+        /// <param name="valueTime"> Value as time (hh:mm:ss). </param>
+        /// <param name="valueDateTime"> Value as dateTime. </param>
+        /// <param name="valuePeriod"> Value as Period. </param>
+        /// <param name="valueReference"> Value as reference. </param>
+        /// <returns> A new <see cref="ClinicalMatching.FhirR4Extension"/> instance for mocking. </returns>
+        public static FhirR4Extension FhirR4Extension(string id = null, IEnumerable<FhirR4Extension> extension = null, string url = null, FhirR4Quantity valueQuantity = null, FhirR4CodeableConcept valueCodeableConcept = null, string valueString = null, bool? valueBoolean = null, int? valueInteger = null, FhirR4Range valueRange = null, FhirR4Ratio valueRatio = null, FhirR4SampledData valueSampledData = null, TimeSpan? valueTime = null, string valueDateTime = null, FhirR4Period valuePeriod = null, FhirR4Reference valueReference = null)
+        {
+            extension ??= new List<FhirR4Extension>();
+
+            return new FhirR4Extension(
+                id,
+                extension?.ToList(),
+                serializedAdditionalRawData: null,
+                url,
+                valueQuantity,
+                valueCodeableConcept,
+                valueString,
+                valueBoolean,
+                valueInteger,
+                valueRange,
+                valueRatio,
+                valueSampledData,
+                valueTime,
+                valueDateTime,
+                valuePeriod,
+                valueReference);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalMatching.FhirR4Quantity"/>. </summary>
+        /// <param name="id"> Unique id for inter-element referencing. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="value"> Numerical value (with implicit precision). </param>
+        /// <param name="comparator"> &lt; | &lt;= | &gt;= | &gt; - how to understand the value. </param>
+        /// <param name="unit"> Unit representation. </param>
+        /// <param name="system"> System that defines coded unit form. </param>
+        /// <param name="code"> Coded form of the unit. </param>
+        /// <returns> A new <see cref="ClinicalMatching.FhirR4Quantity"/> instance for mocking. </returns>
+        public static FhirR4Quantity FhirR4Quantity(string id = null, IEnumerable<FhirR4Extension> extension = null, double? value = null, string comparator = null, string unit = null, string system = null, string code = null)
+        {
+            extension ??= new List<FhirR4Extension>();
+
+            return new FhirR4Quantity(
+                id,
+                extension?.ToList(),
+                serializedAdditionalRawData: null,
+                value,
+                comparator,
+                unit,
+                system,
+                code);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalMatching.FhirR4CodeableConcept"/>. </summary>
+        /// <param name="id"> Unique id for inter-element referencing. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="coding"> Code defined by a terminology system. </param>
+        /// <param name="text"> Plain text representation of the concept. </param>
+        /// <returns> A new <see cref="ClinicalMatching.FhirR4CodeableConcept"/> instance for mocking. </returns>
+        public static FhirR4CodeableConcept FhirR4CodeableConcept(string id = null, IEnumerable<FhirR4Extension> extension = null, IEnumerable<FhirR4Coding> coding = null, string text = null)
+        {
+            extension ??= new List<FhirR4Extension>();
+            coding ??= new List<FhirR4Coding>();
+
+            return new FhirR4CodeableConcept(id, extension?.ToList(), serializedAdditionalRawData: null, coding?.ToList(), text);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalMatching.FhirR4Coding"/>. </summary>
+        /// <param name="id"> Unique id for inter-element referencing. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="system"> Identity of the terminology system. </param>
+        /// <param name="version"> Version of the system - if relevant. </param>
+        /// <param name="code"> Symbol in syntax defined by the system. </param>
+        /// <param name="display"> Representation defined by the system. </param>
+        /// <returns> A new <see cref="ClinicalMatching.FhirR4Coding"/> instance for mocking. </returns>
+        public static FhirR4Coding FhirR4Coding(string id = null, IEnumerable<FhirR4Extension> extension = null, string system = null, string version = null, string code = null, string display = null)
+        {
+            extension ??= new List<FhirR4Extension>();
+
+            return new FhirR4Coding(
+                id,
+                extension?.ToList(),
+                serializedAdditionalRawData: null,
+                system,
+                version,
+                code,
+                display);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalMatching.FhirR4Range"/>. </summary>
+        /// <param name="id"> Unique id for inter-element referencing. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="low"> Low limit. </param>
+        /// <param name="high"> High limit. </param>
+        /// <returns> A new <see cref="ClinicalMatching.FhirR4Range"/> instance for mocking. </returns>
+        public static FhirR4Range FhirR4Range(string id = null, IEnumerable<FhirR4Extension> extension = null, FhirR4Quantity low = null, FhirR4Quantity high = null)
+        {
+            extension ??= new List<FhirR4Extension>();
+
+            return new FhirR4Range(id, extension?.ToList(), serializedAdditionalRawData: null, low, high);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalMatching.FhirR4Ratio"/>. </summary>
+        /// <param name="id"> Unique id for inter-element referencing. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="numerator"> Numerator value. </param>
+        /// <param name="denominator"> Denominator value. </param>
+        /// <returns> A new <see cref="ClinicalMatching.FhirR4Ratio"/> instance for mocking. </returns>
+        public static FhirR4Ratio FhirR4Ratio(string id = null, IEnumerable<FhirR4Extension> extension = null, FhirR4Quantity numerator = null, FhirR4Quantity denominator = null)
+        {
+            extension ??= new List<FhirR4Extension>();
+
+            return new FhirR4Ratio(id, extension?.ToList(), serializedAdditionalRawData: null, numerator, denominator);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalMatching.FhirR4SampledData"/>. </summary>
+        /// <param name="id"> Unique id for inter-element referencing. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="origin"> Zero value and units. </param>
+        /// <param name="period"> Number of milliseconds between samples. </param>
+        /// <param name="factor"> Multiply data by this before adding to origin. </param>
+        /// <param name="lowerLimit"> Lower limit of detection. </param>
+        /// <param name="upperLimit"> Upper limit of detection. </param>
+        /// <param name="dimensions"> Number of sample points at each time point. </param>
+        /// <param name="data"> Decimal values with spaces, or "E" | "U" | "L". </param>
+        /// <returns> A new <see cref="ClinicalMatching.FhirR4SampledData"/> instance for mocking. </returns>
+        public static FhirR4SampledData FhirR4SampledData(string id = null, IEnumerable<FhirR4Extension> extension = null, FhirR4Quantity origin = null, double period = default, double? factor = null, double? lowerLimit = null, double? upperLimit = null, int dimensions = default, string data = null)
+        {
+            extension ??= new List<FhirR4Extension>();
+
+            return new FhirR4SampledData(
+                id,
+                extension?.ToList(),
+                serializedAdditionalRawData: null,
+                origin,
+                period,
+                factor,
+                lowerLimit,
+                upperLimit,
+                dimensions,
+                data);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalMatching.FhirR4Period"/>. </summary>
+        /// <param name="id"> Unique id for inter-element referencing. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="start"> Starting time with inclusive boundary. </param>
+        /// <param name="end"> End time with inclusive boundary, if not ongoing. </param>
+        /// <returns> A new <see cref="ClinicalMatching.FhirR4Period"/> instance for mocking. </returns>
+        public static FhirR4Period FhirR4Period(string id = null, IEnumerable<FhirR4Extension> extension = null, string start = null, string end = null)
+        {
+            extension ??= new List<FhirR4Extension>();
+
+            return new FhirR4Period(id, extension?.ToList(), serializedAdditionalRawData: null, start, end);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalMatching.FhirR4Reference"/>. </summary>
+        /// <param name="id"> Unique id for inter-element referencing. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="reference"> Literal reference, Relative, internal or absolute URL. </param>
+        /// <param name="type"> Type the reference refers to (e.g. "Patient"). </param>
+        /// <param name="identifier"> Logical reference, when literal reference is not known. </param>
+        /// <param name="display"> Text alternative for the resource. </param>
+        /// <returns> A new <see cref="ClinicalMatching.FhirR4Reference"/> instance for mocking. </returns>
+        public static FhirR4Reference FhirR4Reference(string id = null, IEnumerable<FhirR4Extension> extension = null, string reference = null, string type = null, FhirR4Identifier identifier = null, string display = null)
+        {
+            extension ??= new List<FhirR4Extension>();
+
+            return new FhirR4Reference(
+                id,
+                extension?.ToList(),
+                serializedAdditionalRawData: null,
+                reference,
+                type,
+                identifier,
+                display);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalMatching.FhirR4Identifier"/>. </summary>
+        /// <param name="id"> Unique id for inter-element referencing. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="use"> usual | official | temp | secondary | old (If known). </param>
+        /// <param name="type"> Description of identifier. </param>
+        /// <param name="system"> The namespace for the identifier value. </param>
+        /// <param name="value"> The value that is unique. </param>
+        /// <param name="period"> Time period when id is/was valid for use. </param>
+        /// <param name="assigner"> Organization that issued id (may be just text). </param>
+        /// <returns> A new <see cref="ClinicalMatching.FhirR4Identifier"/> instance for mocking. </returns>
+        public static FhirR4Identifier FhirR4Identifier(string id = null, IEnumerable<FhirR4Extension> extension = null, string use = null, FhirR4CodeableConcept type = null, string system = null, string value = null, FhirR4Period period = null, FhirR4Reference assigner = null)
+        {
+            extension ??= new List<FhirR4Extension>();
+
+            return new FhirR4Identifier(
+                id,
+                extension?.ToList(),
+                serializedAdditionalRawData: null,
+                use,
+                type,
+                system,
+                value,
+                period,
+                assigner);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalMatching.Encounter"/>. </summary>
+        /// <param name="id"> The id of the visit. </param>
+        /// <param name="period">
+        /// Time period of the visit.
+        /// In case of admission, use timePeriod.start to indicate the admission time and timePeriod.end to indicate the discharge time.
+        /// </param>
+        /// <param name="class"> The class of the encounter. </param>
+        /// <returns> A new <see cref="ClinicalMatching.Encounter"/> instance for mocking. </returns>
+        public static Encounter Encounter(string id = null, TimePeriod period = null, EncounterClass? @class = null)
+        {
+            return new Encounter(id, period, @class, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ClinicalMatching.PatientDocument"/>. </summary>
@@ -32,16 +294,24 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <param name="id"> A given identifier for the document. Has to be unique across all documents for a single patient. </param>
         /// <param name="language"> A 2 letter ISO 639-1 representation of the language of the document. </param>
         /// <param name="createdDateTime"> The date and time when the document was created. </param>
+        /// <param name="authors"> Document author(s). </param>
+        /// <param name="specialtyType"> specialty type the document. </param>
+        /// <param name="administrativeMetadata"> Administrative metadata for the document. </param>
         /// <param name="content"> The content of the patient document. </param>
         /// <returns> A new <see cref="ClinicalMatching.PatientDocument"/> instance for mocking. </returns>
-        public static PatientDocument PatientDocument(DocumentType type = default, ClinicalDocumentType? clinicalType = null, string id = null, string language = null, DateTimeOffset? createdDateTime = null, DocumentContent content = null)
+        public static PatientDocument PatientDocument(DocumentType type = default, ClinicalDocumentType? clinicalType = null, string id = null, string language = null, DateTimeOffset? createdDateTime = null, IEnumerable<DocumentAuthor> authors = null, SpecialtyType? specialtyType = null, DocumentAdministrativeMetadata administrativeMetadata = null, DocumentContent content = null)
         {
+            authors ??= new List<DocumentAuthor>();
+
             return new PatientDocument(
                 type,
                 clinicalType,
                 id,
                 language,
                 createdDateTime,
+                authors?.ToList(),
+                specialtyType,
+                administrativeMetadata,
                 content,
                 serializedAdditionalRawData: null);
         }
@@ -61,15 +331,161 @@ namespace Azure.Health.Insights.ClinicalMatching
             return new TrialMatcherModelConfiguration(verbose, includeEvidence, clinicalTrials, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClinicalMatching.ClinicalTrialDetails"/>. </summary>
-        /// <param name="id"> A given identifier for the clinical trial. Has to be unique within a list of clinical trials. </param>
-        /// <param name="eligibilityCriteriaText"> The eligibility criteria of the clinical trial (inclusion and exclusion), given as text. </param>
-        /// <param name="demographics"> Demographic criteria for a clinical trial. </param>
-        /// <param name="metadata"> Trial data which is of interest to the potential participant. </param>
-        /// <returns> A new <see cref="ClinicalMatching.ClinicalTrialDetails"/> instance for mocking. </returns>
-        public static ClinicalTrialDetails ClinicalTrialDetails(string id = null, string eligibilityCriteriaText = null, ClinicalTrialDemographics demographics = null, ClinicalTrialMetadata metadata = null)
+        /// <summary> Initializes a new instance of <see cref="ClinicalMatching.FhirR4Narrative"/>. </summary>
+        /// <param name="id"> Unique id for inter-element referencing. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="status"> generated, extensions, additional, empty. </param>
+        /// <param name="div"> xhtml. </param>
+        /// <returns> A new <see cref="ClinicalMatching.FhirR4Narrative"/> instance for mocking. </returns>
+        public static FhirR4Narrative FhirR4Narrative(string id = null, IEnumerable<FhirR4Extension> extension = null, string status = null, string div = null)
         {
-            return new ClinicalTrialDetails(id, eligibilityCriteriaText, demographics, metadata, serializedAdditionalRawData: null);
+            extension ??= new List<FhirR4Extension>();
+
+            return new FhirR4Narrative(id, extension?.ToList(), serializedAdditionalRawData: null, status, div);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalMatching.FhirR4ResearchStudy"/>. </summary>
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="meta"> Metadata about the resource. </param>
+        /// <param name="implicitRules"> A set of rules under which this content was created. </param>
+        /// <param name="language"> Language of the resource content. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="text"> Text summary of the resource, for human interpretation. </param>
+        /// <param name="contained"> Contained, inline Resources. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="modifierExtension"> Extensions that cannot be ignored. </param>
+        /// <param name="identifier"> Business Identifier for study. </param>
+        /// <param name="title"> Name for this study. </param>
+        /// <param name="protocol"> Steps followed in executing study. </param>
+        /// <param name="partOf"> Part of larger study. </param>
+        /// <param name="status"> active | administratively-completed | approved | closed-to-accrual | closed-to-accrual-and-intervention | completed | disapproved | in-review | temporarily-closed-to-accrual | temporarily-closed-to-accrual-and-intervention | withdrawn. </param>
+        /// <param name="primaryPurposeType"> treatment | prevention | diagnostic | supportive-care | screening | health-services-research | basic-science | device-feasibility. </param>
+        /// <param name="phase"> n-a | early-phase-1 | phase-1 | phase-1-phase-2 | phase-2 | phase-2-phase-3 | phase-3 | phase-4. </param>
+        /// <param name="category"> Classifications for the study. </param>
+        /// <param name="focus"> Drugs, devices, etc. under study. </param>
+        /// <param name="condition"> Condition being studied. </param>
+        /// <param name="contact"> Contact details for the study. </param>
+        /// <param name="keyword"> Used to search for the study. </param>
+        /// <param name="location"> Geographic region(s) for study. </param>
+        /// <param name="description"> What this is study doing. </param>
+        /// <param name="enrollment"> Inclusion &amp; exclusion criteria. </param>
+        /// <param name="period"> When the study began and ended. </param>
+        /// <param name="sponsor"> Organization that initiates and is legally responsible for the study. </param>
+        /// <param name="principalInvestigator"> Researcher who oversees multiple aspects of the study. </param>
+        /// <param name="site"> Facility where study activities are conducted. </param>
+        /// <param name="reasonStopped"> accrual-goal-met | closed-due-to-toxicity | closed-due-to-lack-of-study-progress | temporarily-closed-per-study-design. </param>
+        /// <param name="note"> Comments made about the study. </param>
+        /// <param name="arm"> Defined path through the study for a subject. </param>
+        /// <param name="objective"> A goal for the study. </param>
+        /// <returns> A new <see cref="ClinicalMatching.FhirR4ResearchStudy"/> instance for mocking. </returns>
+        public static FhirR4ResearchStudy FhirR4ResearchStudy(string id = null, FhirR4Meta meta = null, string implicitRules = null, string language = null, IDictionary<string, BinaryData> additionalProperties = null, FhirR4Narrative text = null, IEnumerable<FhirR4Resource> contained = null, IEnumerable<FhirR4Extension> extension = null, IEnumerable<FhirR4Extension> modifierExtension = null, IEnumerable<FhirR4Identifier> identifier = null, string title = null, IEnumerable<FhirR4Reference> protocol = null, IEnumerable<FhirR4Reference> partOf = null, ResearchStudyStatusCodeType status = default, FhirR4CodeableConcept primaryPurposeType = null, FhirR4CodeableConcept phase = null, IEnumerable<FhirR4CodeableConcept> category = null, IEnumerable<FhirR4CodeableConcept> focus = null, IEnumerable<FhirR4CodeableConcept> condition = null, IEnumerable<FhirR4ContactDetail> contact = null, IEnumerable<FhirR4CodeableConcept> keyword = null, IEnumerable<FhirR4CodeableConcept> location = null, string description = null, IEnumerable<FhirR4Reference> enrollment = null, FhirR4Period period = null, FhirR4Reference sponsor = null, FhirR4Reference principalInvestigator = null, IEnumerable<FhirR4Reference> site = null, FhirR4CodeableConcept reasonStopped = null, IEnumerable<FhirR4Annotation> note = null, IEnumerable<ResearchStudyArm> arm = null, IEnumerable<ResearchStudyObjective> objective = null)
+        {
+            additionalProperties ??= new Dictionary<string, BinaryData>();
+            contained ??= new List<FhirR4Resource>();
+            extension ??= new List<FhirR4Extension>();
+            modifierExtension ??= new List<FhirR4Extension>();
+            identifier ??= new List<FhirR4Identifier>();
+            protocol ??= new List<FhirR4Reference>();
+            partOf ??= new List<FhirR4Reference>();
+            category ??= new List<FhirR4CodeableConcept>();
+            focus ??= new List<FhirR4CodeableConcept>();
+            condition ??= new List<FhirR4CodeableConcept>();
+            contact ??= new List<FhirR4ContactDetail>();
+            keyword ??= new List<FhirR4CodeableConcept>();
+            location ??= new List<FhirR4CodeableConcept>();
+            enrollment ??= new List<FhirR4Reference>();
+            site ??= new List<FhirR4Reference>();
+            note ??= new List<FhirR4Annotation>();
+            arm ??= new List<ResearchStudyArm>();
+            objective ??= new List<ResearchStudyObjective>();
+
+            return new FhirR4ResearchStudy(
+                "ResearchStudy",
+                id,
+                meta,
+                implicitRules,
+                language,
+                additionalProperties,
+                text,
+                contained?.ToList(),
+                extension?.ToList(),
+                modifierExtension?.ToList(),
+                identifier?.ToList(),
+                title,
+                protocol?.ToList(),
+                partOf?.ToList(),
+                status,
+                primaryPurposeType,
+                phase,
+                category?.ToList(),
+                focus?.ToList(),
+                condition?.ToList(),
+                contact?.ToList(),
+                keyword?.ToList(),
+                location?.ToList(),
+                description,
+                enrollment?.ToList(),
+                period,
+                sponsor,
+                principalInvestigator,
+                site?.ToList(),
+                reasonStopped,
+                note?.ToList(),
+                arm?.ToList(),
+                objective?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalMatching.FhirR4ContactDetail"/>. </summary>
+        /// <param name="id"> Unique id for inter-element referencing. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="name"> Name of an individual to contact. </param>
+        /// <param name="telecom"> Contact details for individual or organization. </param>
+        /// <returns> A new <see cref="ClinicalMatching.FhirR4ContactDetail"/> instance for mocking. </returns>
+        public static FhirR4ContactDetail FhirR4ContactDetail(string id = null, IEnumerable<FhirR4Extension> extension = null, string name = null, IEnumerable<FhirR4ContactPoint> telecom = null)
+        {
+            extension ??= new List<FhirR4Extension>();
+            telecom ??= new List<FhirR4ContactPoint>();
+
+            return new FhirR4ContactDetail(id, extension?.ToList(), serializedAdditionalRawData: null, name, telecom?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalMatching.FhirR4Annotation"/>. </summary>
+        /// <param name="id"> Unique id for inter-element referencing. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="authorString"> Individual responsible for the annotation. </param>
+        /// <param name="time"> When the annotation was made. </param>
+        /// <param name="text"> The annotation - text content (as markdown). </param>
+        /// <returns> A new <see cref="ClinicalMatching.FhirR4Annotation"/> instance for mocking. </returns>
+        public static FhirR4Annotation FhirR4Annotation(string id = null, IEnumerable<FhirR4Extension> extension = null, string authorString = null, string time = null, string text = null)
+        {
+            extension ??= new List<FhirR4Extension>();
+
+            return new FhirR4Annotation(
+                id,
+                extension?.ToList(),
+                serializedAdditionalRawData: null,
+                authorString,
+                time,
+                text);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalMatching.ResearchStudyArm"/>. </summary>
+        /// <param name="name"> Label for study arm. </param>
+        /// <param name="type"> Categorization of study arm. </param>
+        /// <param name="description"> Short explanation of study path. </param>
+        /// <returns> A new <see cref="ClinicalMatching.ResearchStudyArm"/> instance for mocking. </returns>
+        public static ResearchStudyArm ResearchStudyArm(string name = null, FhirR4CodeableConcept type = null, string description = null)
+        {
+            return new ResearchStudyArm(name, type, description, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalMatching.ResearchStudyObjective"/>. </summary>
+        /// <param name="name"> Label for the objective. </param>
+        /// <param name="type"> primary | secondary | exploratory. </param>
+        /// <returns> A new <see cref="ClinicalMatching.ResearchStudyObjective"/> instance for mocking. </returns>
+        public static ResearchStudyObjective ResearchStudyObjective(string name = null, FhirR4CodeableConcept type = null)
+        {
+            return new ResearchStudyObjective(name, type, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ClinicalMatching.GeographicLocation"/>. </summary>
@@ -82,29 +498,29 @@ namespace Azure.Health.Insights.ClinicalMatching
             return new GeographicLocation(city, state, countryOrRegion, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClinicalMatching.TrialMatcherResults"/>. </summary>
-        /// <param name="patients"> Results for the patients given in the request. </param>
+        /// <summary> Initializes a new instance of <see cref="ClinicalMatching.TrialMatcherInferenceResult"/>. </summary>
+        /// <param name="patientResults"> Results for the patients given in the request. </param>
         /// <param name="modelVersion"> The version of the model used for inference, expressed as the model date. </param>
         /// <param name="knowledgeGraphLastUpdateDate"> The date when the clinical trials knowledge graph was last updated. </param>
-        /// <returns> A new <see cref="ClinicalMatching.TrialMatcherResults"/> instance for mocking. </returns>
-        public static TrialMatcherResults TrialMatcherResults(IEnumerable<TrialMatcherPatientResult> patients = null, string modelVersion = null, DateTimeOffset? knowledgeGraphLastUpdateDate = null)
+        /// <returns> A new <see cref="ClinicalMatching.TrialMatcherInferenceResult"/> instance for mocking. </returns>
+        public static TrialMatcherInferenceResult TrialMatcherInferenceResult(IEnumerable<TrialMatcherPatientResult> patientResults = null, string modelVersion = null, DateTimeOffset? knowledgeGraphLastUpdateDate = null)
         {
-            patients ??= new List<TrialMatcherPatientResult>();
+            patientResults ??= new List<TrialMatcherPatientResult>();
 
-            return new TrialMatcherResults(patients?.ToList(), modelVersion, knowledgeGraphLastUpdateDate, serializedAdditionalRawData: null);
+            return new TrialMatcherInferenceResult(patientResults?.ToList(), modelVersion, knowledgeGraphLastUpdateDate, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ClinicalMatching.TrialMatcherPatientResult"/>. </summary>
-        /// <param name="id"> The identifier given for the patient in the request. </param>
-        /// <param name="inferences"> The model's inferences for the given patient. </param>
+        /// <param name="patientId"> The identifier given for the patient in the request. </param>
+        /// <param name="inferences"> The inference results for the patient. </param>
         /// <param name="neededClinicalInfo"> Clinical information which is needed to provide better trial matching results for the patient. </param>
         /// <returns> A new <see cref="ClinicalMatching.TrialMatcherPatientResult"/> instance for mocking. </returns>
-        public static TrialMatcherPatientResult TrialMatcherPatientResult(string id = null, IEnumerable<TrialMatcherInference> inferences = null, IEnumerable<ExtendedClinicalCodedElement> neededClinicalInfo = null)
+        public static TrialMatcherPatientResult TrialMatcherPatientResult(string patientId = null, IEnumerable<TrialMatcherInference> inferences = null, IEnumerable<ExtendedClinicalCodedElement> neededClinicalInfo = null)
         {
             inferences ??= new List<TrialMatcherInference>();
             neededClinicalInfo ??= new List<ExtendedClinicalCodedElement>();
 
-            return new TrialMatcherPatientResult(id, inferences?.ToList(), neededClinicalInfo?.ToList(), serializedAdditionalRawData: null);
+            return new TrialMatcherPatientResult(patientId, inferences?.ToList(), neededClinicalInfo?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ClinicalMatching.TrialMatcherInference"/>. </summary>
@@ -113,11 +529,11 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <param name="description"> The description corresponding to the inference value. </param>
         /// <param name="confidenceScore"> Confidence score for this inference. </param>
         /// <param name="evidence"> The evidence corresponding to the inference value. </param>
-        /// <param name="id"> The identifier of the clinical trial. </param>
+        /// <param name="clinicalTrialId"> The identifier of the clinical trial. </param>
         /// <param name="source"> Possible sources of a clinical trial. </param>
         /// <param name="metadata"> Trial data which is of interest to the potential participant. </param>
         /// <returns> A new <see cref="ClinicalMatching.TrialMatcherInference"/> instance for mocking. </returns>
-        public static TrialMatcherInference TrialMatcherInference(TrialMatcherInferenceType type = default, string value = null, string description = null, float? confidenceScore = null, IEnumerable<TrialMatcherInferenceEvidence> evidence = null, string id = null, ClinicalTrialSource? source = null, ClinicalTrialMetadata metadata = null)
+        public static TrialMatcherInference TrialMatcherInference(TrialMatcherInferenceType type = default, string value = null, string description = null, float? confidenceScore = null, IEnumerable<TrialMatcherInferenceEvidence> evidence = null, string clinicalTrialId = null, ClinicalTrialSource? source = null, ClinicalTrialMetadata metadata = null)
         {
             evidence ??= new List<TrialMatcherInferenceEvidence>();
 
@@ -127,7 +543,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 description,
                 confidenceScore,
                 evidence?.ToList(),
-                id,
+                clinicalTrialId,
                 source,
                 metadata,
                 serializedAdditionalRawData: null);
@@ -156,6 +572,69 @@ namespace Azure.Health.Insights.ClinicalMatching
         public static ClinicalNoteEvidence ClinicalNoteEvidence(string id = null, string text = null, int offset = default, int length = default)
         {
             return new ClinicalNoteEvidence(id, text, offset, length, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalMatching.ClinicalCodedElement"/>. </summary>
+        /// <param name="system"> The clinical coding system, e.g. ICD-10, SNOMED-CT, UMLS. </param>
+        /// <param name="code"> The code within the given clinical coding system. </param>
+        /// <param name="name"> The name of this coded concept in the coding system. </param>
+        /// <param name="value"> A value associated with the code within the given clinical coding system. </param>
+        /// <returns> A new <see cref="ClinicalMatching.ClinicalCodedElement"/> instance for mocking. </returns>
+        public static ClinicalCodedElement ClinicalCodedElement(string system = null, string code = null, string name = null, string value = null)
+        {
+            return new ClinicalCodedElement(system, code, name, value, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalMatching.ClinicalTrialMetadata"/>. </summary>
+        /// <param name="phases">
+        /// Phases which are relevant for the clinical trial.
+        /// Each clinical trial can be in a certain phase or in multiple phases.
+        /// </param>
+        /// <param name="studyType"> Possible study types of a clinical trial. </param>
+        /// <param name="recruitmentStatus"> Possible recruitment status of a clinical trial. </param>
+        /// <param name="conditions"> Medical conditions and their synonyms which are relevant for the clinical trial, given as strings. </param>
+        /// <param name="sponsors"> Sponsors/collaborators involved with the trial. </param>
+        /// <param name="contacts"> Contact details of the trial administrators, for patients that want to participate in the trial. </param>
+        /// <param name="facilities"> Research facilities where the clinical trial is conducted. </param>
+        /// <returns> A new <see cref="ClinicalMatching.ClinicalTrialMetadata"/> instance for mocking. </returns>
+        public static ClinicalTrialMetadata ClinicalTrialMetadata(IEnumerable<ClinicalTrialPhase> phases = null, ClinicalTrialStudyType? studyType = null, ClinicalTrialRecruitmentStatus? recruitmentStatus = null, IEnumerable<string> conditions = null, IEnumerable<string> sponsors = null, IEnumerable<ContactDetails> contacts = null, IEnumerable<ClinicalTrialResearchFacility> facilities = null)
+        {
+            phases ??= new List<ClinicalTrialPhase>();
+            conditions ??= new List<string>();
+            sponsors ??= new List<string>();
+            contacts ??= new List<ContactDetails>();
+            facilities ??= new List<ClinicalTrialResearchFacility>();
+
+            return new ClinicalTrialMetadata(
+                phases?.ToList(),
+                studyType,
+                recruitmentStatus,
+                conditions?.ToList(),
+                sponsors?.ToList(),
+                contacts?.ToList(),
+                facilities?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalMatching.ContactDetails"/>. </summary>
+        /// <param name="name"> The person's name. </param>
+        /// <param name="email"> The person's email. </param>
+        /// <param name="phone"> A person's phone number. </param>
+        /// <returns> A new <see cref="ClinicalMatching.ContactDetails"/> instance for mocking. </returns>
+        public static ContactDetails ContactDetails(string name = null, string email = null, string phone = null)
+        {
+            return new ContactDetails(name, email, phone, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalMatching.ClinicalTrialResearchFacility"/>. </summary>
+        /// <param name="name"> The facility's name. </param>
+        /// <param name="city"> City name. </param>
+        /// <param name="state"> State name. </param>
+        /// <param name="countryOrRegion"> Country/region name. </param>
+        /// <returns> A new <see cref="ClinicalMatching.ClinicalTrialResearchFacility"/> instance for mocking. </returns>
+        public static ClinicalTrialResearchFacility ClinicalTrialResearchFacility(string name = null, string city = null, string state = null, string countryOrRegion = null)
+        {
+            return new ClinicalTrialResearchFacility(name, city, state, countryOrRegion, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ClinicalMatching.ExtendedClinicalCodedElement"/>. </summary>

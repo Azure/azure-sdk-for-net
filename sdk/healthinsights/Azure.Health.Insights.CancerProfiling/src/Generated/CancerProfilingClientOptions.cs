@@ -13,13 +13,13 @@ namespace Azure.Health.Insights.CancerProfiling
     /// <summary> Client options for CancerProfilingClient. </summary>
     public partial class CancerProfilingClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2023_03_01_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2023_09_01_Preview;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2023-03-01-preview". </summary>
-            V2023_03_01_Preview = 1,
+            /// <summary> Service version "2023-09-01-preview". </summary>
+            V2023_09_01_Preview = 1,
         }
 
         internal string Version { get; }
@@ -29,7 +29,7 @@ namespace Azure.Health.Insights.CancerProfiling
         {
             Version = version switch
             {
-                ServiceVersion.V2023_03_01_Preview => "2023-03-01-preview",
+                ServiceVersion.V2023_09_01_Preview => "2023-09-01-preview",
                 _ => throw new NotSupportedException()
             };
         }

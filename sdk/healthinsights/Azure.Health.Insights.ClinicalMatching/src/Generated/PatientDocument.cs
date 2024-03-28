@@ -57,6 +57,7 @@ namespace Azure.Health.Insights.ClinicalMatching
 
             Type = type;
             Id = id;
+            Authors = new ChangeTrackingList<DocumentAuthor>();
             Content = content;
         }
 
@@ -66,15 +67,21 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <param name="id"> A given identifier for the document. Has to be unique across all documents for a single patient. </param>
         /// <param name="language"> A 2 letter ISO 639-1 representation of the language of the document. </param>
         /// <param name="createdDateTime"> The date and time when the document was created. </param>
+        /// <param name="authors"> Document author(s). </param>
+        /// <param name="specialtyType"> specialty type the document. </param>
+        /// <param name="administrativeMetadata"> Administrative metadata for the document. </param>
         /// <param name="content"> The content of the patient document. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PatientDocument(DocumentType type, ClinicalDocumentType? clinicalType, string id, string language, DateTimeOffset? createdDateTime, DocumentContent content, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PatientDocument(DocumentType type, ClinicalDocumentType? clinicalType, string id, string language, DateTimeOffset? createdDateTime, IList<DocumentAuthor> authors, SpecialtyType? specialtyType, DocumentAdministrativeMetadata administrativeMetadata, DocumentContent content, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             ClinicalType = clinicalType;
             Id = id;
             Language = language;
             CreatedDateTime = createdDateTime;
+            Authors = authors;
+            SpecialtyType = specialtyType;
+            AdministrativeMetadata = administrativeMetadata;
             Content = content;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -94,6 +101,12 @@ namespace Azure.Health.Insights.ClinicalMatching
         public string Language { get; set; }
         /// <summary> The date and time when the document was created. </summary>
         public DateTimeOffset? CreatedDateTime { get; set; }
+        /// <summary> Document author(s). </summary>
+        public IList<DocumentAuthor> Authors { get; }
+        /// <summary> specialty type the document. </summary>
+        public SpecialtyType? SpecialtyType { get; set; }
+        /// <summary> Administrative metadata for the document. </summary>
+        public DocumentAdministrativeMetadata AdministrativeMetadata { get; set; }
         /// <summary> The content of the patient document. </summary>
         public DocumentContent Content { get; }
     }

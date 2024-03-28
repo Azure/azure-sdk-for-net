@@ -49,7 +49,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <param name="name"> The facility's name. </param>
         /// <param name="countryOrRegion"> Country/region name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="countryOrRegion"/> is null. </exception>
-        public ClinicalTrialResearchFacility(string name, string countryOrRegion)
+        internal ClinicalTrialResearchFacility(string name, string countryOrRegion)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(countryOrRegion, nameof(countryOrRegion));
@@ -79,12 +79,12 @@ namespace Azure.Health.Insights.ClinicalMatching
         }
 
         /// <summary> The facility's name. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> City name. </summary>
-        public string City { get; set; }
+        public string City { get; }
         /// <summary> State name. </summary>
-        public string State { get; set; }
+        public string State { get; }
         /// <summary> Country/region name. </summary>
-        public string CountryOrRegion { get; set; }
+        public string CountryOrRegion { get; }
     }
 }

@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Health.Insights.RadiologyInsights
 {
     /// <summary> Imaging procedures. </summary>
-    public partial class ImagingProcedureRecommendation : ProcedureRecommendation
+    internal partial class ImagingProcedureRecommendation : ProcedureRecommendation
     {
         /// <summary> Initializes a new instance of <see cref="ImagingProcedureRecommendation"/>. </summary>
         /// <param name="imagingProcedures"> Imaging procedures. </param>
