@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppInitContainer"/>. </summary>
         /// <param name="image"> Container image tag. </param>
+        /// <param name="imageType"> The type of the image. Set to CloudBuild to let the system manages the image, where user will not be able to update image through image field. Set to ContainerImage for user provided image. </param>
         /// <param name="name"> Custom container name. </param>
         /// <param name="command"> Container start command. </param>
         /// <param name="args"> Container start command arguments. </param>
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="resources"> Container resource requirements. </param>
         /// <param name="volumeMounts"> Container volume mounts. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppInitContainer(string image, string name, IList<string> command, IList<string> args, IList<ContainerAppEnvironmentVariable> env, AppContainerResources resources, IList<ContainerAppVolumeMount> volumeMounts, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(image, name, command, args, env, resources, volumeMounts, serializedAdditionalRawData)
+        internal ContainerAppInitContainer(string image, ImageType? imageType, string name, IList<string> command, IList<string> args, IList<ContainerAppEnvironmentVariable> env, AppContainerResources resources, IList<ContainerAppVolumeMount> volumeMounts, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(image, imageType, name, command, args, env, resources, volumeMounts, serializedAdditionalRawData)
         {
         }
     }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-05-01";
+            _apiVersion = apiVersion ?? "2024-02-02-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get all Managed Environments for a subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get all Managed Environments for a subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get all the Managed Environments in a resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get all the Managed Environments in a resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get the properties of a Managed Environment used to host container apps. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get the properties of a Managed Environment used to host container apps. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Creates or updates a Managed Environment used to host container apps. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Environment. </param>
         /// <param name="data"> Configuration details of the Environment. </param>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Creates or updates a Managed Environment used to host container apps. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Environment. </param>
         /// <param name="data"> Configuration details of the Environment. </param>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Delete a Managed Environment if it does not have any container apps. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Delete a Managed Environment if it does not have any container apps. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Patches a Managed Environment using JSON Merge Patch. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Environment. </param>
         /// <param name="data"> Configuration details of the Environment. </param>
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Patches a Managed Environment using JSON Merge Patch. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Environment. </param>
         /// <param name="data"> Configuration details of the Environment. </param>
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Checks if resource name is available. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Checks if resource name is available. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get all workload Profile States for a Managed Environment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get all workload Profile States for a Managed Environment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Get all Managed Environments for a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Get all Managed Environments for a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Get all the Managed Environments in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -758,7 +758,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Get all the Managed Environments in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -801,7 +801,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Get all workload Profile States for a Managed Environment. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -832,7 +832,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Get all workload Profile States for a Managed Environment. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

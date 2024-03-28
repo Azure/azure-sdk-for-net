@@ -55,12 +55,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="queueName"> Queue name. </param>
         /// <param name="queueLength"> Queue length. </param>
         /// <param name="auth"> Authentication secrets for the queue scale rule. </param>
+        /// <param name="identity"> The resource ID of a user-assigned managed identity that is assigned to the Container App, or 'system' for system-assigned identity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppQueueScaleRule(string queueName, int? queueLength, IList<ContainerAppScaleRuleAuth> auth, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppQueueScaleRule(string queueName, int? queueLength, IList<ContainerAppScaleRuleAuth> auth, string identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             QueueName = queueName;
             QueueLength = queueLength;
             Auth = auth;
+            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -70,5 +72,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public int? QueueLength { get; set; }
         /// <summary> Authentication secrets for the queue scale rule. </summary>
         public IList<ContainerAppScaleRuleAuth> Auth { get; }
+        /// <summary> The resource ID of a user-assigned managed identity that is assigned to the Container App, or 'system' for system-assigned identity. </summary>
+        public string Identity { get; set; }
     }
 }

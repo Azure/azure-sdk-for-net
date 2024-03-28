@@ -35,6 +35,18 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing an <see cref="AppResiliencyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppResiliencyResource.CreateResourceIdentifier" /> to create an <see cref="AppResiliencyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AppResiliencyResource"/> object. </returns>
+        public virtual AppResiliencyResource GetAppResiliencyResource(ResourceIdentifier id)
+        {
+            AppResiliencyResource.ValidateResourceId(id);
+            return new AppResiliencyResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ContainerAppAuthConfigResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ContainerAppAuthConfigResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppAuthConfigResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -44,6 +56,30 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         {
             ContainerAppAuthConfigResource.ValidateResourceId(id);
             return new ContainerAppAuthConfigResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BuilderResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BuilderResource.CreateResourceIdentifier" /> to create a <see cref="BuilderResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BuilderResource"/> object. </returns>
+        public virtual BuilderResource GetBuilderResource(ResourceIdentifier id)
+        {
+            BuilderResource.ValidateResourceId(id);
+            return new BuilderResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BuildResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BuildResource.CreateResourceIdentifier" /> to create a <see cref="BuildResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BuildResource"/> object. </returns>
+        public virtual BuildResource GetBuildResource(ResourceIdentifier id)
+        {
+            BuildResource.ValidateResourceId(id);
+            return new BuildResource(Client, id);
         }
 
         /// <summary>
@@ -179,6 +215,30 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ContainerAppsBuildResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppsBuildResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppsBuildResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppsBuildResource"/> object. </returns>
+        public virtual ContainerAppsBuildResource GetContainerAppsBuildResource(ResourceIdentifier id)
+        {
+            ContainerAppsBuildResource.ValidateResourceId(id);
+            return new ContainerAppsBuildResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerAppsPatchResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppsPatchResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppsPatchResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppsPatchResource"/> object. </returns>
+        public virtual ContainerAppsPatchResource GetContainerAppsPatchResource(ResourceIdentifier id)
+        {
+            ContainerAppsPatchResource.ValidateResourceId(id);
+            return new ContainerAppsPatchResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ContainerAppDetectorResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ContainerAppDetectorResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppDetectorResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -200,6 +260,18 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         {
             ContainerAppManagedEnvironmentDetectorResource.ValidateResourceId(id);
             return new ContainerAppManagedEnvironmentDetectorResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="JobDetectorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="JobDetectorResource.CreateResourceIdentifier" /> to create a <see cref="JobDetectorResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="JobDetectorResource"/> object. </returns>
+        public virtual JobDetectorResource GetJobDetectorResource(ResourceIdentifier id)
+        {
+            JobDetectorResource.ValidateResourceId(id);
+            return new JobDetectorResource(Client, id);
         }
 
         /// <summary>
@@ -227,15 +299,51 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppJobResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppJobResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppJobResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="JobDetectorPropertyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="JobDetectorPropertyResource.CreateResourceIdentifier" /> to create a <see cref="JobDetectorPropertyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppJobResource"/> object. </returns>
-        public virtual ContainerAppJobResource GetContainerAppJobResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="JobDetectorPropertyResource"/> object. </returns>
+        public virtual JobDetectorPropertyResource GetJobDetectorPropertyResource(ResourceIdentifier id)
         {
-            ContainerAppJobResource.ValidateResourceId(id);
-            return new ContainerAppJobResource(Client, id);
+            JobDetectorPropertyResource.ValidateResourceId(id);
+            return new JobDetectorPropertyResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="JobResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="JobResource.CreateResourceIdentifier" /> to create a <see cref="JobResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="JobResource"/> object. </returns>
+        public virtual JobResource GetJobResource(ResourceIdentifier id)
+        {
+            JobResource.ValidateResourceId(id);
+            return new JobResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DotNetComponentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DotNetComponentResource.CreateResourceIdentifier" /> to create a <see cref="DotNetComponentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DotNetComponentResource"/> object. </returns>
+        public virtual DotNetComponentResource GetDotNetComponentResource(ResourceIdentifier id)
+        {
+            DotNetComponentResource.ValidateResourceId(id);
+            return new DotNetComponentResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="JavaComponentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="JavaComponentResource.CreateResourceIdentifier" /> to create a <see cref="JavaComponentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="JavaComponentResource"/> object. </returns>
+        public virtual JavaComponentResource GetJavaComponentResource(ResourceIdentifier id)
+        {
+            JavaComponentResource.ValidateResourceId(id);
+            return new JavaComponentResource(Client, id);
         }
 
         /// <summary>
@@ -260,6 +368,30 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         {
             ContainerAppManagedCertificateResource.ValidateResourceId(id);
             return new ContainerAppManagedCertificateResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DaprComponentResiliencyPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DaprComponentResiliencyPolicyResource.CreateResourceIdentifier" /> to create a <see cref="DaprComponentResiliencyPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DaprComponentResiliencyPolicyResource"/> object. </returns>
+        public virtual DaprComponentResiliencyPolicyResource GetDaprComponentResiliencyPolicyResource(ResourceIdentifier id)
+        {
+            DaprComponentResiliencyPolicyResource.ValidateResourceId(id);
+            return new DaprComponentResiliencyPolicyResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DaprSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DaprSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="DaprSubscriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DaprSubscriptionResource"/> object. </returns>
+        public virtual DaprSubscriptionResource GetDaprSubscriptionResource(ResourceIdentifier id)
+        {
+            DaprSubscriptionResource.ValidateResourceId(id);
+            return new DaprSubscriptionResource(Client, id);
         }
 
         /// <summary>

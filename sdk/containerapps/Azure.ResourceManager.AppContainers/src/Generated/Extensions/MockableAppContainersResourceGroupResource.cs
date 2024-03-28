@@ -33,6 +33,75 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             return apiVersion;
         }
 
+        /// <summary> Gets a collection of BuilderResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of BuilderResources and their operations over a BuilderResource. </returns>
+        public virtual BuilderResourceCollection GetBuilderResources()
+        {
+            return GetCachedClient(client => new BuilderResourceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a BuilderResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/builders/{builderName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Builders_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BuilderResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="builderName"> The name of the builder. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="builderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="builderName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BuilderResource>> GetBuilderResourceAsync(string builderName, CancellationToken cancellationToken = default)
+        {
+            return await GetBuilderResources().GetAsync(builderName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a BuilderResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/builders/{builderName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Builders_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BuilderResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="builderName"> The name of the builder. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="builderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="builderName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<BuilderResource> GetBuilderResource(string builderName, CancellationToken cancellationToken = default)
+        {
+            return GetBuilderResources().Get(builderName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ContainerAppConnectedEnvironmentResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ContainerAppConnectedEnvironmentResources and their operations over a ContainerAppConnectedEnvironmentResource. </returns>
         public virtual ContainerAppConnectedEnvironmentCollection GetContainerAppConnectedEnvironments()
@@ -53,7 +122,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-02-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -84,7 +153,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-02-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -122,7 +191,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-02-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -153,7 +222,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-02-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -191,7 +260,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-02-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -222,7 +291,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-02-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -240,11 +309,11 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             return GetContainerAppManagedEnvironments().Get(environmentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ContainerAppJobResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ContainerAppJobResources and their operations over a ContainerAppJobResource. </returns>
-        public virtual ContainerAppJobCollection GetContainerAppJobs()
+        /// <summary> Gets a collection of JobResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of JobResources and their operations over a JobResource. </returns>
+        public virtual JobCollection GetJobs()
         {
-            return GetCachedClient(client => new ContainerAppJobCollection(client, Id));
+            return GetCachedClient(client => new JobCollection(client, Id));
         }
 
         /// <summary>
@@ -260,11 +329,11 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-02-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ContainerAppJobResource"/></description>
+        /// <description><see cref="JobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,9 +342,9 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerAppJobResource>> GetContainerAppJobAsync(string jobName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<JobResource>> GetJobAsync(string jobName, CancellationToken cancellationToken = default)
         {
-            return await GetContainerAppJobs().GetAsync(jobName, cancellationToken).ConfigureAwait(false);
+            return await GetJobs().GetAsync(jobName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -291,11 +360,11 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-02-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ContainerAppJobResource"/></description>
+        /// <description><see cref="JobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,9 +373,9 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ContainerAppJobResource> GetContainerAppJob(string jobName, CancellationToken cancellationToken = default)
+        public virtual Response<JobResource> GetJob(string jobName, CancellationToken cancellationToken = default)
         {
-            return GetContainerAppJobs().Get(jobName, cancellationToken);
+            return GetJobs().Get(jobName, cancellationToken);
         }
     }
 }

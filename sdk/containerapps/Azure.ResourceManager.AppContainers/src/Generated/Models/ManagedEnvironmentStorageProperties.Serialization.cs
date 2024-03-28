@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    internal partial class ManagedEnvironmentStorageProperties : IUtf8JsonSerializable, IJsonModel<ManagedEnvironmentStorageProperties>
+    public partial class ManagedEnvironmentStorageProperties : IUtf8JsonSerializable, IJsonModel<ManagedEnvironmentStorageProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedEnvironmentStorageProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 writer.WritePropertyName("azureFile"u8);
                 writer.WriteObjectValue<ContainerAppAzureFileProperties>(AzureFile, options);
+            }
+            if (Optional.IsDefined(NfsAzureFile))
+            {
+                writer.WritePropertyName("nfsAzureFile"u8);
+                writer.WriteObjectValue<NfsAzureFileProperties>(NfsAzureFile, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -70,6 +75,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             ContainerAppAzureFileProperties azureFile = default;
+            NfsAzureFileProperties nfsAzureFile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -83,13 +89,22 @@ namespace Azure.ResourceManager.AppContainers.Models
                     azureFile = ContainerAppAzureFileProperties.DeserializeContainerAppAzureFileProperties(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("nfsAzureFile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nfsAzureFile = NfsAzureFileProperties.DeserializeNfsAzureFileProperties(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedEnvironmentStorageProperties(azureFile, serializedAdditionalRawData);
+            return new ManagedEnvironmentStorageProperties(azureFile, nfsAzureFile, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedEnvironmentStorageProperties>.Write(ModelReaderWriterOptions options)
