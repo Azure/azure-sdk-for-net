@@ -34,6 +34,7 @@ namespace Azure.Provisioning.PostgreSql
         /// <param name="encryption"></param>
         /// <param name="backup">The backup.</param>
         /// <param name="network">The network.</param>
+        /// <param name="storageSizeInGB">The storage size in GB.</param>
         /// <param name="availabilityZone">The availability zone.</param>
         /// <param name="parent">The parent.</param>
         /// <param name="name">The name.</param>
@@ -49,6 +50,7 @@ namespace Azure.Provisioning.PostgreSql
             PostgreSqlFlexibleServerDataEncryption? encryption = default,
             PostgreSqlFlexibleServerBackupProperties? backup = default,
             PostgreSqlFlexibleServerNetwork? network = default,
+            int? storageSizeInGB = default,
             string? availabilityZone = default,
             ResourceGroup? parent = default,
             string name = "postgres",
@@ -64,6 +66,7 @@ namespace Azure.Provisioning.PostgreSql
                 sku: sku ?? new PostgreSqlFlexibleServerSku("Standard_D4s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
                 dataEncryption: encryption ?? new PostgreSqlFlexibleServerDataEncryption(),
                 availabilityZone: availabilityZone,
+                storageSizeInGB: storageSizeInGB,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS))
         {
             AssignProperty(data => data.Name, GetAzureName(scope, name));
