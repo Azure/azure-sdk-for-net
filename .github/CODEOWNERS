@@ -234,12 +234,6 @@
 # PRLabel: %Cognitive - Anomaly Detector
 /sdk/anomalydetector/                                              @conhua @mengaims @juaduan @moreOver0
 
-# PRLabel: %API Center
-/sdk/apicenter/Azure.ResourceManager.ApiCenter/                     @alexyaang @azaslonov
-
-# ServiceLabel: %API Center %Mgmt
-# ServiceOwners:                                                   @alexyaang @azaslonov
-
 # ServiceLabel: %Cognitive - Anomaly Detector
 # ServiceOwners:                                                   @conhua @mengaims @juaduan @moreOver0
 
@@ -938,6 +932,12 @@
 # -----------------------------------------------------------------
 # ServiceLabel: %Mgmt
 # AzureSdkOwners:                                                  @ArthurMa1978
+
+# PRLabel: %API Center
+/sdk/apicenter/Azure.ResourceManager.ApiCenter/                     @alexyaang @azaslonov
+
+# ServiceLabel: %API Center %Mgmt
+# ServiceOwners:                                                   @alexyaang @azaslonov
 
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/            @archerzz @ArcturusZhang @ArthurMa1978
