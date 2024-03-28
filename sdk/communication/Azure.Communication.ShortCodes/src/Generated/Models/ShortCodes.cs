@@ -15,20 +15,20 @@ namespace Azure.Communication.ShortCodes.Models
         /// <summary> Initializes a new instance of <see cref="ShortCodes"/>. </summary>
         internal ShortCodes()
         {
-            ShortCodesProperty = new ChangeTrackingList<ShortCode>();
+            ShortCodesValue = new ChangeTrackingList<ShortCode>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ShortCodes"/>. </summary>
-        /// <param name="shortCodesProperty"> List of short codes. </param>
+        /// <param name="shortCodesValue"> List of short codes. </param>
         /// <param name="nextLink"> Represents the URL link to the next page. </param>
-        internal ShortCodes(IReadOnlyList<ShortCode> shortCodesProperty, string nextLink)
+        internal ShortCodes(IReadOnlyList<ShortCode> shortCodesValue, string nextLink)
         {
-            ShortCodesProperty = shortCodesProperty;
+            ShortCodesValue = shortCodesValue;
             NextLink = nextLink;
         }
 
         /// <summary> List of short codes. </summary>
-        public IReadOnlyList<ShortCode> ShortCodesProperty { get; }
+        public IReadOnlyList<ShortCode> ShortCodesValue { get; }
         /// <summary> Represents the URL link to the next page. </summary>
         public string NextLink { get; }
     }

@@ -20,11 +20,11 @@ namespace Azure.Communication.Messages
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="kind"> The type discriminator describing a notification type. </param>
         /// <returns> A new <see cref="Messages.NotificationContent"/> instance for mocking. </returns>
-        public static NotificationContent NotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = null, string kind = null)
+        public static NotificationContent NotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = null, string kind = "Unknown")
         {
             to ??= new List<string>();
 
-            return new UnknownNotificationContent(channelRegistrationId, to?.ToList(), kind == null ? default : new CommunicationMessageKind(kind), serializedAdditionalRawData: null);
+            return new UnknownNotificationContent(channelRegistrationId, to?.ToList(), kind, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.SendMessageResult"/>. </summary>
@@ -52,9 +52,9 @@ namespace Azure.Communication.Messages
         /// <param name="status"> The aggregated template status. </param>
         /// <param name="kind"> The type discriminator describing a template type. </param>
         /// <returns> A new <see cref="Messages.MessageTemplateItem"/> instance for mocking. </returns>
-        public static MessageTemplateItem MessageTemplateItem(string name = null, string language = null, MessageTemplateStatus status = default, string kind = null)
+        public static MessageTemplateItem MessageTemplateItem(string name = null, string language = null, MessageTemplateStatus status = default, string kind = "Unknown")
         {
-            return new UnknownMessageTemplateItem(name, language, status, kind == null ? default : new CommunicationMessagesChannel(kind), serializedAdditionalRawData: null);
+            return new UnknownMessageTemplateItem(name, language, status, kind, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.TextNotificationContent"/>. </summary>

@@ -12,5 +12,12 @@ namespace Azure.Communication.PhoneNumbers
 {
     internal partial class PhoneNumberCountries
     {
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PhoneNumberCountries FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return PhoneNumberCountries.DeserializePhoneNumberCountries(document.RootElement);
+        }
     }
 }

@@ -716,14 +716,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Role type. </param>
         /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeRoleData"/> instance for mocking. </returns>
-        public static DataBoxEdgeRoleData DataBoxEdgeRoleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
+        public static DataBoxEdgeRoleData DataBoxEdgeRoleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
         {
             return new DataBoxEdgeRoleData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                kind == null ? default : new DataBoxEdgeRoleType(kind),
+                kind,
                 serializedAdditionalRawData: null);
         }
 
@@ -734,14 +734,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Addon type. </param>
         /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeRoleAddonData"/> instance for mocking. </returns>
-        public static DataBoxEdgeRoleAddonData DataBoxEdgeRoleAddonData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
+        public static DataBoxEdgeRoleAddonData DataBoxEdgeRoleAddonData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
         {
             return new DataBoxEdgeRoleAddonData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                kind == null ? default : new AddonType(kind),
+                kind,
                 serializedAdditionalRawData: null);
         }
 
@@ -932,14 +932,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Trigger Kind. </param>
         /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeTriggerData"/> instance for mocking. </returns>
-        public static DataBoxEdgeTriggerData DataBoxEdgeTriggerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
+        public static DataBoxEdgeTriggerData DataBoxEdgeTriggerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
         {
             return new DataBoxEdgeTriggerData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                kind == null ? default : new TriggerEventType(kind),
+                kind,
                 serializedAdditionalRawData: null);
         }
 
