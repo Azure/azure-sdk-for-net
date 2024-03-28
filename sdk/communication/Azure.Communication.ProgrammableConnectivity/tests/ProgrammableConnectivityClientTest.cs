@@ -20,12 +20,12 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
 {
     public class ProgrammableConnectivityClientTest : RecordedTestBase
     {
-        private TokenCredential _credential;
+        private TokenCredential credential;
 
         public ProgrammableConnectivityClientTest(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
         {
             HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("apc-gateway-id", "**********/resourceGroups") { Regex = @"[A-Za-z0-9-\-]*/resourceGroups" });
-            _credential = new DefaultAzureCredential();
+            credential = new DefaultAzureCredential();
         }
 
         [RecordedTest]
@@ -33,14 +33,14 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
         {
             #region Snippet:APC_Sample_SimSwapVerifyTest
             string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
-            Uri _endpoint = new Uri("https://your-endpoint-here.com");
+            Uri endpoint = new Uri("https://your-endpoint-here.com");
 #if SNIPPET
-            TokenCredential _credential = new DefaultAzureCredential();
+            TokenCredential credential = new DefaultAzureCredential();
 #endif
-            ProgrammableConnectivityClient baseClient = new ProgrammableConnectivityClient(_endpoint, _credential);
+            ProgrammableConnectivityClient baseClient = new ProgrammableConnectivityClient(endpoint, credential);
 #if !SNIPPET
             var clientOptions = InstrumentClientOptions(new ProgrammableConnectivityClientOptions());
-            baseClient = InstrumentClient(new ProgrammableConnectivityClient(_endpoint, _credential, clientOptions));
+            baseClient = InstrumentClient(new ProgrammableConnectivityClient(endpoint, credential, clientOptions));
 #endif
             var client = baseClient.GetSimSwapClient();
             var content = new SimSwapVerificationContent(new NetworkIdentifier("NetworkCode", "Orange_Spain"))
@@ -60,14 +60,14 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
         public void SimSwapVerifyHeaderRetrievalTest()
         {
             string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
-            Uri _endpoint = new Uri("https://your-endpoint-here.com");
+            Uri endpoint = new Uri("https://your-endpoint-here.com");
 #if SNIPPET
-            TokenCredential _credential = new DefaultAzureCredential();
+            TokenCredential credential = new DefaultAzureCredential();
 #endif
-            ProgrammableConnectivityClient baseClient = new ProgrammableConnectivityClient(_endpoint, _credential);
+            ProgrammableConnectivityClient baseClient = new ProgrammableConnectivityClient(endpoint, credential);
 #if !SNIPPET
             var clientOptions = InstrumentClientOptions(new ProgrammableConnectivityClientOptions());
-            baseClient = InstrumentClient(new ProgrammableConnectivityClient(_endpoint, _credential, clientOptions));
+            baseClient = InstrumentClient(new ProgrammableConnectivityClient(endpoint, credential, clientOptions));
 #endif
             var client = baseClient.GetSimSwapClient();
             var content = new SimSwapVerificationContent(new NetworkIdentifier("NetworkCode", "Orange_Spain"))
@@ -89,14 +89,14 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
         public void SimSwapVerifyBadResponseTest()
         {
             string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
-            Uri _endpoint = new Uri("https://your-endpoint-here.com");
+            Uri endpoint = new Uri("https://your-endpoint-here.com");
 #if SNIPPET
-            TokenCredential _credential = new DefaultAzureCredential();
+            TokenCredential credential = new DefaultAzureCredential();
 #endif
-            ProgrammableConnectivityClient baseClient = new ProgrammableConnectivityClient(_endpoint, _credential);
+            ProgrammableConnectivityClient baseClient = new ProgrammableConnectivityClient(endpoint, credential);
 #if !SNIPPET
             var clientOptions = InstrumentClientOptions(new ProgrammableConnectivityClientOptions());
-            baseClient = InstrumentClient(new ProgrammableConnectivityClient(_endpoint, _credential, clientOptions));
+            baseClient = InstrumentClient(new ProgrammableConnectivityClient(endpoint, credential, clientOptions));
 #endif
             var client = baseClient.GetSimSwapClient();
             var content = new SimSwapVerificationContent(new NetworkIdentifier("NetworkCode", "Orange_Spain"))
@@ -121,14 +121,14 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
         {
             #region Snippet:APC_Sample_SimSwapRetrieveTest
             string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
-            Uri _endpoint = new Uri("https://your-endpoint-here.com");
+            Uri endpoint = new Uri("https://your-endpoint-here.com");
 #if SNIPPET
-            TokenCredential _credential = new DefaultAzureCredential();
+            TokenCredential credential = new DefaultAzureCredential();
 #endif
-            ProgrammableConnectivityClient baseClient = new ProgrammableConnectivityClient(_endpoint, _credential);
+            ProgrammableConnectivityClient baseClient = new ProgrammableConnectivityClient(endpoint, credential);
 #if !SNIPPET
             var clientOptions = InstrumentClientOptions(new ProgrammableConnectivityClientOptions());
-            baseClient = InstrumentClient(new ProgrammableConnectivityClient(_endpoint, _credential, clientOptions));
+            baseClient = InstrumentClient(new ProgrammableConnectivityClient(endpoint, credential, clientOptions));
 #endif
             var client = baseClient.GetSimSwapClient();
             var content = new SimSwapRetrievalContent(new NetworkIdentifier("NetworkCode", "Orange_Spain"))
@@ -149,14 +149,14 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
         {
             #region Snippet:APC_Sample_LocationVerifyTest
             string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
-            Uri _endpoint = new Uri("https://your-endpoint-here.com");
+            Uri endpoint = new Uri("https://your-endpoint-here.com");
 #if SNIPPET
-            TokenCredential _credential = new DefaultAzureCredential();
+            TokenCredential credential = new DefaultAzureCredential();
 #endif
-            ProgrammableConnectivityClient baseClient = new ProgrammableConnectivityClient(_endpoint, _credential);
+            ProgrammableConnectivityClient baseClient = new ProgrammableConnectivityClient(endpoint, credential);
 #if !SNIPPET
             var clientOptions = InstrumentClientOptions(new ProgrammableConnectivityClientOptions());
-            baseClient = InstrumentClient(new ProgrammableConnectivityClient(_endpoint, _credential, clientOptions));
+            baseClient = InstrumentClient(new ProgrammableConnectivityClient(endpoint, credential, clientOptions));
 #endif
             var client = baseClient.GetDeviceLocationClient();
             var deviceLocationVerificationContent = new DeviceLocationVerificationContent(new NetworkIdentifier("NetworkCode", "Telefonica_Brazil"), 80.0, 85.1, 50, new LocationDevice
@@ -177,14 +177,14 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
         {
             #region Snippet:APC_Sample_NetworkRetrievalTest
             string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
-            Uri _endpoint = new Uri("https://your-endpoint-here.com");
+            Uri endpoint = new Uri("https://your-endpoint-here.com");
 #if SNIPPET
-            TokenCredential _credential = new DefaultAzureCredential();
+            TokenCredential credential = new DefaultAzureCredential();
 #endif
-            ProgrammableConnectivityClient baseClient = new ProgrammableConnectivityClient(_endpoint, _credential);
+            ProgrammableConnectivityClient baseClient = new ProgrammableConnectivityClient(endpoint, credential);
 #if !SNIPPET
             var clientOptions = InstrumentClientOptions(new ProgrammableConnectivityClientOptions());
-            baseClient = InstrumentClient(new ProgrammableConnectivityClient(_endpoint, _credential, clientOptions));
+            baseClient = InstrumentClient(new ProgrammableConnectivityClient(endpoint, credential, clientOptions));
 #endif
             var client = baseClient.GetDeviceNetworkClient();
             var networkIdentifier = new NetworkIdentifier("IPv4", "127.0.0.1");
@@ -201,14 +201,14 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
         {
             #region Snippet:APC_Sample_NetworkRetrievalBadIdentifierTest
             string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
-            Uri _endpoint = new Uri("https://your-endpoint-here.com");
+            Uri endpoint = new Uri("https://your-endpoint-here.com");
 #if SNIPPET
-            TokenCredential _credential = new DefaultAzureCredential();
+            TokenCredential credential = new DefaultAzureCredential();
 #endif
-            ProgrammableConnectivityClient baseClient = new ProgrammableConnectivityClient(_endpoint, _credential);
+            ProgrammableConnectivityClient baseClient = new ProgrammableConnectivityClient(endpoint, credential);
 #if !SNIPPET
             var clientOptions = InstrumentClientOptions(new ProgrammableConnectivityClientOptions());
-            baseClient = InstrumentClient(new ProgrammableConnectivityClient(_endpoint, _credential, clientOptions));
+            baseClient = InstrumentClient(new ProgrammableConnectivityClient(endpoint, credential, clientOptions));
 #endif
             var client = baseClient.GetDeviceNetworkClient();
             var networkIdentifier = new NetworkIdentifier("IPv5", "127.0.0.1");

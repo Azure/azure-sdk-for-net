@@ -309,6 +309,9 @@
 # PRLabel: %Communication - Phone Numbers
 /sdk/communication/Azure.Communication.PhoneNumbers/               @miguhern @whisper6284 @RoyHerrod @danielav7
 
+# PRLabel: %Communication - Programmable Connectivity
+/sdk/communication/Azure.Communications.ProgrammableConnectivity/ @aronhegedusms
+
 # PRLabel: %Communication - Short Codes
 /sdk/communication/Azure.Communication.ShortCodes/                 @guilhermeluizsp @danielav7
 
@@ -907,12 +910,6 @@
 
 # ServiceLabel: %Playwright
 # ServiceOwners:                                                   @shreyaanand @mjmadhu
-
-# PRLabel: %Communication - Programmable Connectivity
-/sdk/programmableconnectivity/                                     @aronhegedusms
-
-# ServiceLabel: %Communication - Programmable Connectivity
-# ServiceOwners:                                                   @aronhegedusms
 
 # ######## Management Plane ########
 
