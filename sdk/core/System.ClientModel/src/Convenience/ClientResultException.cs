@@ -31,6 +31,8 @@ public class ClientResultException : Exception
     /// created.</returns>
     public static async Task<ClientResultException> CreateAsync(PipelineResponse response, Exception? innerException = default)
     {
+        Argument.AssertNotNull(response, nameof(response));
+
         string message = await CreateMessageAsync(response).ConfigureAwait(false);
         return new ClientResultException(message, response, innerException);
     }
@@ -76,8 +78,10 @@ public class ClientResultException : Exception
     /// <param name="innerException">The <see cref="Exception.InnerException"/>,
     /// if any, that threw the current exception.</param>
     public ClientResultException(string message, PipelineResponse? response = default, Exception? innerException = default)
-        : base(message ?? DefaultMessage, innerException)
+        : base(message, innerException)
     {
+        Argument.AssertNotNull(message, nameof(message));
+
         _response = response;
         _status = response?.Status ?? 0;
     }
@@ -96,6 +100,8 @@ public class ClientResultException : Exception
 
     private static async ValueTask<string> CreateMessageSyncOrAsync(PipelineResponse response, bool async)
     {
+        Argument.AssertNotNull(response, nameof(response));
+
         if (async)
         {
             await response.BufferContentAsync().ConfigureAwait(false);

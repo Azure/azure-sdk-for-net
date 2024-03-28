@@ -36,6 +36,9 @@ jobs:
         - smoke_test_eligibility
       condition: and(succeeded(), eq(dependencies.smoke_test_eligibility.outputs['output_eligibility.RunSmokeTests'], true),
           ne(${{ parameters.Matrix }}, '{}'))
+    ${{ else }}:
+      dependsOn: ${{ parameters.DependsOn }}
+      condition: ne(${{ parameters.Matrix }}, '{}')
     strategy:
       matrix: $[ ${{ parameters.Matrix }} ]
     pool:
