@@ -35,7 +35,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
     {
         public const int MaxReliabilityRetries = 5;
         private const string _fileResourcePrefix = "test-file-";
-        private const string _expectedOverwriteExceptionMessage = "BlobAlreadyExists";
+        private const string _expectedOverwriteExceptionMessage = "Cannot overwrite file.";
         protected readonly object _serviceVersion;
 
         public PageBlobToShareFileTests(
